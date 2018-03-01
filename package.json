@@ -1,0 +1,24 @@
+{
+  "name": "@canner/react-cms-core",
+  "version": "1.0.0",
+  "description": "the core-part of canner cms",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Canner/react-cms-core.git"
+  },
+  "keywords": [
+    "canner",
+    "cms",
+    "core"
+  ],
+  "author": "Canner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Canner/react-cms-core/issues"
+  },
+  "homepage": "https://github.com/Canner/react-cms-core#readme"
+}
