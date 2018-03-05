@@ -18,9 +18,7 @@ import isUndefined from 'lodash/isUndefined';
 import isFunction from 'lodash/isFunction';
 import mapValues from 'lodash/mapValues';
 import hocs from 'src/hocs';
-import containers from './containers';
-import {generateId, createEmptyData, transformData} from './utils';
-import type {GeneratorProps} from 'types/Geneartor';
+import {generateId, createEmptyData, transformData} from '../utils';
 function defaultHoc(Component) {
   return Component;
 }
@@ -40,16 +38,17 @@ type ContainerNode = {
 
 type Node = ComponentNode | ContainerNode
 
-type GeneratorProps = {
+type Props = {
   componentTree: {[string]: Node},
-  plugins: {[string]: ComponentType<*>},
-  hocs: {[string]: ComponentType<*>},
-  containers: {[string]: ComponentType<*>},
+  plugins: {[string]: React$Component<*>},
+  hocs: {[string]: React$Component<*>},
+  containers: {[string]: React$Component<*>},
   onChange: ((id: string, type: ChangeType, value?: any) => Promise<*>) | onChangeMulti,
   goTo: (path: string) => void,
   baseUrl: string,
   routes: Array<string>,
-  params: {[string]: string}
+  params: {[string]: string},
+  activeKey: string,
 }
 
 type childrenProps = {[string]: any};
@@ -58,9 +57,9 @@ type State = {
   componentTree: {[string]: any}
 }
 
-export default class QAGenerator extends React.PureComponent<GeneratorProps, State> {
+export default class QAGenerator extends React.PureComponent<Props, State> {
   cacheTree: {
-    [key: string]: NodeType
+    [key: string]: Node
   } // store the prerenders tree
   constructor(props: Props) {
     // prerender the tree in constructor, this action will add a
@@ -100,14 +99,8 @@ export default class QAGenerator extends React.PureComponent<GeneratorProps, Sta
     hideId: PropTypes.arrayOf(PropTypes.string),
   }
 
-  getChildContext() {
-    return {
-      hideId: this.state.hideId,
-    };
-  }
-
   // wrap the plugin with hoc if it has
-  prerender = (node: NodeType) => {
+  prerender = (node: Node) => {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
     const {plugins, containers} = this.props;
@@ -146,13 +139,12 @@ export default class QAGenerator extends React.PureComponent<GeneratorProps, Sta
     return component;
   }
 
-  renderNode = (node: NodeType, index: number, props: childrenProps = {}): React$Node => {
+  renderNode = (node: Node, index: number, props: childrenProps = {}): React$Node => {
     // take the node.component to render it, and give the component
     // some props it maybe needs such as renderChildren, generateId
 
     // eslint-disable-next-line no-unused-vars
     const {component, children, ...restNodeData} = node;
-    const {history} = this.props;
     if (component) {
       return <node.component
         {...restNodeData}
@@ -161,14 +153,13 @@ export default class QAGenerator extends React.PureComponent<GeneratorProps, Sta
         renderChildren={(props) => this.renderChildren(node, props)}
         createEmptyData={createEmptyData}
         transformData={transformData}
-        history={history}
         {...props}
       />;
     }
     return null;
   }
 
-  renderChildren = (node: NodeType, props: childrenProps | React$Node => childrenProps) => {
+  renderChildren = (node: Node, props: childrenProps | React$Node => childrenProps) => {
     // just get the props and call renderNode
     // this method is called by plugins themselves
     const {children} = node;
