@@ -15,7 +15,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
-import isFunction from 'lodash/isFunction';
 import mapValues from 'lodash/mapValues';
 import hocs from 'src/hocs';
 import {generateId, createEmptyData, transformData} from '../utils';
@@ -27,22 +26,19 @@ type ChangeType = 'create' | 'update' | 'delete' | 'swap';
 
 type onChangeMulti = Array<{id: string, type: ChangeType, value?: any}> => Promise<*>;
 
-type ComponentNode = {
+type Node = {
   name: string,
   nodeType: string,
+  hocs: Array<string>,
+  children: Array<Node>,
+  component: React.ComponentType<*>
 }
-
-type ContainerNode = {
-  nodeType: string,
-}
-
-type Node = ComponentNode | ContainerNode
 
 type Props = {
   componentTree: {[string]: Node},
-  plugins: {[string]: React$Component<*>},
-  hocs: {[string]: React$Component<*>},
-  containers: {[string]: React$Component<*>},
+  plugins: {[string]: React.ComponentType<*>},
+  hocs: {[string]: React.ComponentType<*>},
+  containers: {[string]: React.ComponentType<*>},
   onChange: ((id: string, type: ChangeType, value?: any) => Promise<*>) | onChangeMulti,
   goTo: (path: string) => void,
   baseUrl: string,
@@ -51,7 +47,10 @@ type Props = {
   activeKey: string,
 }
 
-type childrenProps = {[string]: any};
+type childrenProps = {
+  id: string,
+  [string]: any
+};
 
 type State = {
   componentTree: {[string]: any}
@@ -90,8 +89,8 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
   static defaultProps = {
     componentTree: {},
     plugins: {},
+    containers: {},
     hocs,
-    containers,
     history,
   }
 
@@ -100,14 +99,14 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
   }
 
   // wrap the plugin with hoc if it has
-  prerender = (node: Node) => {
+  prerender = (node: Node): Node => {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
     const {plugins, containers} = this.props;
-    let component = (props) => {
+    let component: React.ComponentType<*> = (props) => {
       const {renderChildren, id} = props;
       return <div>
-        {renderChildren({value: props.value, id})}
+        {renderChildren({id})}
       </div>;
     };
     if (node.nodeType.startsWith('container')) {
@@ -128,7 +127,7 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
     return node;
   }
 
-  wrapByHOC = (component: React$Component<*>, hocNames: Array<string>) => {
+  wrapByHOC = (component: React.ComponentType<*>, hocNames: Array<string>): React.ComponentType<*> => {
     // find hocs and wrap the component
     const {hocs} = this.props;
     while (hocNames.length) {
@@ -139,7 +138,7 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
     return component;
   }
 
-  renderNode = (node: Node, index: number, props: childrenProps = {}): React$Node => {
+  renderNode = (node: Node, index: number, props: childrenProps): React$Node => {
     // take the node.component to render it, and give the component
     // some props it maybe needs such as renderChildren, generateId
 
@@ -159,14 +158,13 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
     return null;
   }
 
-  renderChildren = (node: Node, props: childrenProps | React$Node => childrenProps) => {
+  renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {
     // just get the props and call renderNode
     // this method is called by plugins themselves
     const {children} = node;
     if (children) {
       return children.map((child, index) => {
-        // $FlowFixMe
-        const childrenProps = isFunction(props) ? props(child) : props;
+        const childrenProps = typeof props === 'function' ? props(child) : props;
         const {id} = childrenProps;
         if (isUndefined(id)) {
           throw new Error(`id is required for renderChildren, please check '${node.name || ''}'`);
