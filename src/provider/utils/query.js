@@ -123,7 +123,7 @@ export function isValid(value: any, condition: string, conditionValue: any) {
 }
 
 // eslint-disable-next-line max-len
-export function passQuery(action: Action, queryKey: string, totalPage: number) {
+export function passQuery(action: MutateAction, queryKey: string, totalPage: number) {
   if (action.type !== 'CREATE_ARRAY_ITEM') {
     return true;
   }

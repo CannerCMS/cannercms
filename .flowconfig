@@ -3,6 +3,8 @@
 [include]
 
 [libs]
+types/
+flow-typed/
 
 [lints]
 

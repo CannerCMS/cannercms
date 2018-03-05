@@ -2,21 +2,21 @@
  * @flow
  */
 
-import React, {PureComponent, Children} from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
-import {Spin} from 'antd';
 import App from '../app';
 import {Bucket, Cache, EndpointMiddleware, Store} from '../middleware';
-import Endpoint from '../endpoint';
+import {RingLoader} from 'react-spinners';
+import type Endpoint from '../endpoint';
 import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
 
 type Props = {
-  appId: string,
   schema: {[key: string]: any},
   endpoint: {[key: string]: Endpoint},
-  children: any,
-  dataDidChange: void => void
+  dataDidChange: void => void,
+  children: React.ChildrenArray<React.Node>,
+  loading: React.ComponentType<*>
 }
 
 type State = {
@@ -25,7 +25,7 @@ type State = {
   shouldFetch: boolean,
 }
 
-export default class Provider extends PureComponent<Props, State> {
+export default class Provider extends React.PureComponent<Props, State> {
   app: App
 
   static childContextTypes = {
@@ -136,20 +136,16 @@ export default class Provider extends PureComponent<Props, State> {
 
   render() {
     const {isFetching} = this.state;
-    const props = {
-      ...this.props,
-    };
+    const {loading} = this.props;
     if (isFetching) {
-      return <div style={{
-        'width': '100%',
-        'height': '100%',
-        'display': 'flex',
-        'align-items': 'center',
-        'justfy-content': 'center',
-      }}>
-          <Spin tip="讀取中..."/>
-        </div>;
+      return <div>
+        {
+          loading ?
+            <loading /> :
+            <RingLoader color="#f2a972" loading />
+        }
+      </div>;
     }
-    return Children.only(React.cloneElement(this.props.children, {...props}));
+    return React.Children.only(this.props.children);
   }
 }

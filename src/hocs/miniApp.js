@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {MiniApp} from '@canner/restful-qa';
+import {MiniApp} from '../provider';
 type Props = {
   id: string
 };

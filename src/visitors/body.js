@@ -56,7 +56,7 @@ function genRouteMap(currentRoute: string, node: NodeType): RouteMap {
   let routeMap = {};
 
   if (node.nodeType.indexOf('container') === -1) {
-    currentRoute = `${currentRoute ? currentRoute + '/' : ''}${node.name}`;
+    currentRoute = `${currentRoute ? currentRoute + '/' : ''}${node.name || ''}`;
     routeMap[currentRoute] = {
       title: node.title,
       description: node.description,

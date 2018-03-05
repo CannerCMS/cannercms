@@ -8,6 +8,7 @@ import Promise from 'promise-polyfill';
 export default class MiniEndpointMiddleware implements Middleware {
   request: Function;
   fetch: Function;
+  subscribe: Function;
 
   constructor({request, fetch, subscribe}: {request: Function, fetch: Function, subscribe: Function}) {
     (this: any).request = request;

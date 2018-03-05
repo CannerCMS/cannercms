@@ -30,7 +30,7 @@ type Data<V> = {
 
 export type RelationDef = OneRelationDef | OneToManyForeignKeyRelationDef | OneToManyIdMapRelationDef | OneToManyIdListRelationDef;
 
-type Fetch = (key: string, componentId: string, query?: Object) => Promise<any>;
+type Fetch = (key: string, componentId: string, query?: Object, mutate?: Mutate) => Promise<any>;
 
 type Relation<E, R> = (relation: R) => ({
   fetch: (fetch: Fetch, id: string, data: Data<E>) => Promise<any>,
@@ -51,6 +51,7 @@ const oneToManyForeignKey: Relation<string, OneToManyForeignKeyRelationDef> = (r
   return {
     fetch: (fetch, id, data) => {
       return fetch(relation.relationTo, id, {filter: {[relation.foreignKey]: {$eq: data.entityId}}}, function(list, action, defaultMutate) {
+        // $FlowFixMe
         const recordIndex = list.findIndex((item) => item.get('_id') === action.payload.value.get('_id'));
         switch (action.type) {
           case 'UPDATE_ARRAY': {
@@ -67,6 +68,7 @@ const oneToManyForeignKey: Relation<string, OneToManyForeignKeyRelationDef> = (r
             return list;
           }
           default:
+            // $FlowFixMe
             return defaultMutate(list, action);
         }
       });

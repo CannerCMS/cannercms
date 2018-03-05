@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {generateAction} from '@canner/restful-qa';
+import {generateAction} from '../provider';
 import isArray from 'lodash/isArray';
 import type {RelationDef} from './relationFactory';
 import {create} from './relationFactory';

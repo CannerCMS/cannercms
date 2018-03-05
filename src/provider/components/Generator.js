@@ -22,11 +22,7 @@ function defaultHoc(Component) {
   return Component;
 }
 
-type ChangeType = 'create' | 'update' | 'delete' | 'swap';
-
-type onChangeMulti = Array<{id: string, type: ChangeType, value?: any}> => Promise<*>;
-
-type Node = {
+export type Node = {
   name: string,
   nodeType: string,
   hocs: Array<string>,
@@ -39,7 +35,6 @@ type Props = {
   plugins: {[string]: React.ComponentType<*>},
   hocs: {[string]: React.ComponentType<*>},
   containers: {[string]: React.ComponentType<*>},
-  onChange: ((id: string, type: ChangeType, value?: any) => Promise<*>) | onChangeMulti,
   goTo: (path: string) => void,
   baseUrl: string,
   routes: Array<string>,
@@ -80,7 +75,7 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
     });
   }
 
-  genCacheTree = (tree: {[string]: any}) => {
+  genCacheTree = (tree: {[string]: Node}): {[string]: Node} => {
     return mapValues(tree, (branch) => {
       return this.prerender(branch);
     });
