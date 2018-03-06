@@ -1,8 +1,6 @@
 import {Cache} from '../../src/middleware';
-import {CollectionUpdate} from '../../src/actions';
 import {fromJS} from 'immutable';
 import queryToString from '../../src/utils/queryToString';
-import {findAndReplaceField} from '../../src/utils/replaceId';
 
 /* eslint-disable camelcase */
 const ID1= '1';

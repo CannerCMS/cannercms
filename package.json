@@ -12,9 +12,9 @@
     "build": "npm run build:commonjs && npm run build:flow",
     "prepublish": "npm run clean && npm run check:src && npm run build",
     "check:src": "npm run lint",
-    "start": "./node_modules/.bin/webpack-dev-server --mode development",
+    "start": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.dev.js",
     "postpublish": "npm run build:docs",
-    "build:docs": "./node_modules/.bin/webpack ./docs/index.js --mode production --ouput ./docs/static/bundle.js",
+    "build:docs": "./node_modules/.bin/webpack ./docs/index.js --mode production --ouput ./docs/static/bundle.js --config webpack.config.prod.js",
     "validate": "npm ls"
   },
   "repository": {
@@ -38,13 +38,19 @@
     "babel-loader": "^7.1.3",
     "babel-plugin-emotion": "^9.0.1",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "eslint": "^4.18.1",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-flowtype": "^2.46.1",
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.66.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "webpack": "^4.0.1",
-    "webpack-cli": "^2.0.10"
+    "webpack-cli": "^2.0.10",
+    "webpack-dev-server": "^3.1.0"
   },
   "dependencies": {
     "bson-objectid": "^1.2.2",

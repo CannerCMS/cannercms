@@ -13,17 +13,6 @@ const createArrayAction1 = {
   },
 };
 
-const createArrayAction2 = {
-  type: 'UPDATE_ARRAY',
-  payload: {
-    path: 'posts/1',
-    value: fromJS({
-      [UNIQUE_ID]: 1,
-      name: 2,
-    }),
-  },
-};
-
 const updateArrayAction1 = {
   type: 'UPDATE_ARRAY',
   payload: {
@@ -52,16 +41,6 @@ const deleteArrayAction1 = {
     path: 'posts/1',
     value: fromJS({
       [UNIQUE_ID]: 1,
-      name: 123,
-    }),
-  },
-};
-
-const updateObjectAction1 = {
-  type: 'UPDATE_OBJECT',
-  payload: {
-    path: 'info',
-    value: fromJS({
       name: 123,
     }),
   },

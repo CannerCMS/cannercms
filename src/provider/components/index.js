@@ -21,7 +21,6 @@ type Props = {
   baseUrl: string,
   routes: Array<string>,
   params: {[string]: string},
-  activeKey: string,
 }
 
 class CannerCMS extends React.Component<Props> {
@@ -37,7 +36,6 @@ class CannerCMS extends React.Component<Props> {
     baseUrl: '',
     routes: [],
     params: {},
-    activeKey: '',
   }
 
   render() {
@@ -54,7 +52,6 @@ class CannerCMS extends React.Component<Props> {
       baseUrl,
       routes,
       params,
-      activeKey,
     } = this.props;
     return (
       <Provider
@@ -72,7 +69,6 @@ class CannerCMS extends React.Component<Props> {
           baseUrl={baseUrl}
           routes={routes}
           params={params}
-          activeKey={activeKey}
         />
       </Provider>
     );

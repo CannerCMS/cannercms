@@ -1,8 +1,8 @@
 module.exports = {
   "extends": [
-    "plugin:flowtype/recommended",
-    "google",
-    "plugin:react/recommended"
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -13,24 +13,18 @@ module.exports = {
     }
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true,
+    "jest": true,
   },
   "plugins": [
     "react",
     "flowtype"
   ],
-  "settings": {
-    "react": {
-      "pragma": "React",
-      "version": "16.2"
-    }
-  },
   "rules": {
-    "max-len": 0,
-    "require-jsdoc": 0,
-    "react/prop-types":0,
-    "new-cap": 0,
-    "no-invalid-this": 0
+    "react/prop-types": 0,
+    "no-implicit-coercion": 0,
+    "max-len": 0
   },
   "globals": {
   }

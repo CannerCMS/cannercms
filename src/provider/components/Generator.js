@@ -12,7 +12,7 @@
  */
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import resolveUrl from 'resolve-url';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
@@ -39,7 +39,6 @@ type Props = {
   baseUrl: string,
   routes: Array<string>,
   params: {[string]: string},
-  activeKey: string,
 }
 
 type childrenProps = {
@@ -59,7 +58,8 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
     // prerender the tree in constructor, this action will add a
     // React Component with all hocs it needs in every node
     super(props);
-    const {componentTree, activeKey} = props;
+    const {componentTree, routes} = props;
+    const activeKey = routes[0];
     this.cacheTree = this.genCacheTree(componentTree);
     this.state = {
       componentTree: this.cacheTree[activeKey],
@@ -71,7 +71,7 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
       this.cacheTree = this.genCacheTree(nextProps.componentTree);
     }
     this.setState({
-      componentTree: this.cacheTree[nextProps.activeKey],
+      componentTree: this.cacheTree[nextProps.routes[0]],
     });
   }
 
@@ -87,10 +87,6 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
     containers: {},
     hocs,
     history,
-  }
-
-  static childContextTypes = {
-    hideId: PropTypes.arrayOf(PropTypes.string),
   }
 
   // wrap the plugin with hoc if it has
@@ -139,6 +135,7 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
 
     // eslint-disable-next-line no-unused-vars
     const {component, children, ...restNodeData} = node;
+    const {params, goTo, baseUrl} = this.props;
     if (component) {
       return <node.component
         {...restNodeData}
@@ -147,6 +144,9 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
         renderChildren={(props) => this.renderChildren(node, props)}
         createEmptyData={createEmptyData}
         transformData={transformData}
+        params={params}
+        goTo={(path) => {goTo(resolveUrl(baseUrl, path))}}
+        baseUrl={baseUrl} // should remove later
         {...props}
       />;
     }
@@ -175,9 +175,10 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
 
   render() {
     const {componentTree} = this.state;
+    const {routes, params} = this.props;
     return (
       <div>
-        {this.renderNode(componentTree, 0, {id: ''})}
+        {this.renderNode(componentTree, 0, {id: '', routes, params})}
       </div>
     );
   }

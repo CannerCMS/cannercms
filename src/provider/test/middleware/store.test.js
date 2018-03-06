@@ -2,7 +2,6 @@ import Rx from 'rxjs/Rx';
 import Store from '../../src/middleware/store';
 import Entity from '../../src/middleware/store/entity';
 import Resource from '../../src/middleware/store/resource';
-import Filter from '../../src/middleware/store/filter';
 
 import {fromJS, Map, List} from 'immutable';
 import {UNIQUE_ID} from '../../src/config';

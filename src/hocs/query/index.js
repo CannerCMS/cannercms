@@ -62,7 +62,6 @@ export default (Plugin) => {
       const {id} = this.props;
       const {filter, sort, pagination} = this.state;
       return fetch(id, this.componentId, {filter, sort, pagination}).then((ctx) => {
-        console.log(ctx);
         this.setState({
           paginationRes: ctx.response.pagination,
           value: ctx.response.body,
