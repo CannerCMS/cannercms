@@ -1,8 +1,7 @@
 // @flow
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import {Spin, Icon} from 'antd';
-const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
+import {RingLoader} from 'react-spinners';
 
 type Props = {
   id: string,
@@ -81,7 +80,7 @@ export default function withQuery(Com) {
     render() {
       const {value, isFetching} = this.state;
       if (isFetching) {
-        return <Spin indicator={antIcon} />;
+        return <RingLoader color="#f2a972" loading />;
       }
       return <Com {...this.props} value={value} />;
     }

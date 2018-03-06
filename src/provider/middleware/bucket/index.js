@@ -35,7 +35,7 @@ export default class Bucket implements Middleware {
         });
       }
       case 'deploy': {
-        const {key, id} = ctx.request;
+        const {key, id} = request;
         const actions = this._mergeActions(key, id);
         request.actions = actions;
         ctx.request = request;
@@ -51,7 +51,7 @@ export default class Bucket implements Middleware {
       }
 
       case 'reset': {
-        const {key, id} = ctx.request;
+        const {key, id} = request;
         this.clearQueue(key, id);
         return next();
       }

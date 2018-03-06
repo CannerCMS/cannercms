@@ -6,7 +6,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import App from '../app';
 import {Bucket, Cache, EndpointMiddleware, Store} from '../middleware';
-import {RingLoader} from 'react-spinners';
 import type Endpoint from '../endpoint';
 import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
@@ -20,9 +19,7 @@ type Props = {
 }
 
 type State = {
-  isFetching: boolean,
-  fetched: boolean,
-  shouldFetch: boolean,
+
 }
 
 export default class Provider extends React.PureComponent<Props, State> {
@@ -41,11 +38,6 @@ export default class Provider extends React.PureComponent<Props, State> {
     (this: any).subscribe = this.subscribe.bind(this);
     (this: any).fetch = this.fetch.bind(this);
     const {schema, endpoint} = props;
-    this.state = {
-      shouldFetch: false,
-      isFetching: false,
-      fetched: false,
-    };
     this.app = new App()
       .use(new Store())
       .use(new Bucket())
@@ -135,17 +127,6 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {isFetching} = this.state;
-    const {loading} = this.props;
-    if (isFetching) {
-      return <div>
-        {
-          loading ?
-            <loading /> :
-            <RingLoader color="#f2a972" loading />
-        }
-      </div>;
-    }
     return React.Children.only(this.props.children);
   }
 }
