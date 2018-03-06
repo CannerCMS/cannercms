@@ -13,11 +13,12 @@ npm i --save @canner/react-cms-core
 ```js
 import * as React from 'react';
 import {CMS} from '@canner/react-cms-core';
-
 class Demo extends React.Component {
   render() {
     return (
-      <CMS {...this.props}/>
+      <CMS
+        {...props}
+      />
     );
   }
 }
@@ -41,13 +42,19 @@ schema: {
   endpoint: {},
 },
 ```
-#### compoents
+#### components
 ```js
-(type: string, ui: string) => CannerComponent
+{
+  {[type: string]: {
+    [ui: string]: CannerComponent
+  }}
+}
 ```
 #### containers,
 ```js
-(containerName: string) => CannerContainer
+{
+  [containerName: string]: CannerContainer
+}
 ```
 #### goTo,
 ```js
@@ -74,5 +81,7 @@ Array<string>
 ---
 #### hocs,
 ```js
-(hocName: string) => CannerHOC
+{
+  [hocName: string]: CannerHOC
+}
 ```
