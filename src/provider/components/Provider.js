@@ -14,8 +14,7 @@ type Props = {
   schema: {[key: string]: any},
   endpoint: {[key: string]: Endpoint},
   dataDidChange: void => void,
-  children: React.ChildrenArray<React.Node>,
-  loading: React.ComponentType<*>
+  children: React.ChildrenArray<React.Node>
 }
 
 type State = {

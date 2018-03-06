@@ -4,14 +4,16 @@ import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
 import type {Node} from './Generator';
-import type {Endpoint} from '../endpoint';
+import type Endpoint from '../endpoint';
 
 type Props = {
-  schema: {[key: string]: any},
-  endpoint: {[key: string]: Endpoint},
+  schema: {
+    schema: {[key: string]: any},
+    endpoint: {[key: string]: Endpoint},
+    componentTree: {[key: string]: Node}
+  },
   dataDidChange: void => void,
   children: React.ChildrenArray<React.Node>,
-  loading: React.ComponentType<*>,
 
   componentTree: {[string]: Node},
   plugins: {[string]: React.ComponentType<*>},
@@ -25,7 +27,11 @@ type Props = {
 
 class CannerCMS extends React.Component<Props> {
   static defaultProps = {
-    schema: {},
+    schema: {
+      schema: {},
+      componentTree: {},
+      endpoint: {},
+    },
     endpoint: {},
     dataDidChange: () => {},
     componentTree: {},
@@ -41,10 +47,7 @@ class CannerCMS extends React.Component<Props> {
   render() {
     const {
       schema,
-      endpoint,
       dataDidChange,
-      loading,
-      componentTree,
       plugins,
       hocs,
       containers,
@@ -55,13 +58,12 @@ class CannerCMS extends React.Component<Props> {
     } = this.props;
     return (
       <Provider
-        schema={schema}
-        endpoint={endpoint}
+        schema={schema.schema}
+        endpoint={schema.endpoint}
         dataDidChange={dataDidChange}
-        loading={loading}
       >
         <Generator
-          componentTree={componentTree}
+          componentTree={schema.componentTree}
           plugins={plugins}
           hocs={hocs}
           containers={containers}

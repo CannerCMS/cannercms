@@ -31,16 +31,48 @@ ReactDOM.render(
 
 > WIP
 
-#### required
-### schema,
-### endpoint,
-### plugins,
-### containers,
-### goTo,
-### baseUrl,
-### routes,
-### params,
+### required
+---
+#### schema
+```js
+schema: {
+  schema: {},
+  componentTree: {},
+  endpoint: {},
+},
+```
+#### compoents
+```js
+(type: string, ui: string) => CannerComponent
+```
+#### containers,
+```js
+(containerName: string) => CannerContainer
+```
+#### goTo,
+```js
+(path: string) => void
+```
+#### baseUrl,
 
-#### optional
-### hocs,
-### loading,
+```js
+string
+```
+#### routes,
+```js
+Array<string>
+```
+#### params,
+``` js
+{
+  op?: 'create',
+  payload?: string, // json string
+  backUrl?: string
+}
+```
+### optional
+---
+#### hocs,
+```js
+(hocName: string) => CannerHOC
+```
