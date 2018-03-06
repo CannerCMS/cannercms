@@ -1,4 +1,4 @@
-# React CMS Code [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# React CMS Code 
 > The core of Canner CMS for react
 
 ## Installation
@@ -50,26 +50,26 @@ schema: {
   }}
 }
 ```
-#### containers,
+#### containers
 ```js
 {
   [containerName: string]: CannerContainer
 }
 ```
-#### goTo,
+#### goTo
 ```js
 (path: string) => void
 ```
-#### baseUrl,
+#### baseUrl
 
 ```js
 string
 ```
-#### routes,
+#### routes
 ```js
 Array<string>
 ```
-#### params,
+#### params
 ``` js
 {
   op?: 'create',
@@ -79,7 +79,7 @@ Array<string>
 ```
 ### optional
 ---
-#### hocs,
+#### hocs
 ```js
 {
   [hocName: string]: CannerHOC
