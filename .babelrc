@@ -5,6 +5,7 @@
     "stage-0"
   ],
   "plugins": [
-    "emotion"
+    "emotion",
+    "babel-plugin-transform-decorators-legacy"
   ]
 }

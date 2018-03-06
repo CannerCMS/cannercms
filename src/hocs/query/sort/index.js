@@ -5,7 +5,7 @@ import {Row, Col, Select, Icon} from 'antd';
 const Option = Select.Option;
 import styles from './style/sort.scss';
 import {FormattedMessage} from 'react-intl';
-import defaultMessage from '../../../locales/hocs';
+import defaultMessage from '../locale';
 
 @CSSModules(styles, {allowMultiple: true})
 export default class Sort extends Component {

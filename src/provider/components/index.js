@@ -9,9 +9,9 @@ import type Endpoint from '../endpoint';
 type Props = {
   schema: {
     schema: {[key: string]: any},
-    endpoint: {[key: string]: Endpoint},
     componentTree: {[key: string]: Node}
   },
+  endpoint: {[key: string]: Endpoint},
   dataDidChange: void => void,
   children: React.ChildrenArray<React.Node>,
 
@@ -55,11 +55,12 @@ class CannerCMS extends React.Component<Props> {
       baseUrl,
       routes,
       params,
+      endpoint
     } = this.props;
     return (
       <Provider
         schema={schema.schema}
-        endpoint={schema.endpoint}
+        endpoint={endpoint}
         dataDidChange={dataDidChange}
       >
         <Generator

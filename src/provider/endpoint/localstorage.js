@@ -2,7 +2,7 @@
  * @flow
  */
 
-import createEmptyData from '@canner/qa-generator/lib/utils/createEmptyData';
+import createEmptyData from 'provider/utils/createEmptyData';
 import Endpoint from './index';
 import {UNIQUE_ID} from '../config';
 import store from 'store';

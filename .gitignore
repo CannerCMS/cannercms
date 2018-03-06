@@ -4,4 +4,4 @@ npm-debug.log
 lib
 .DS_Store
 _gh-pages
-.log
+*.log

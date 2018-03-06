@@ -10,7 +10,7 @@ import styles from './style/filter.scss';
 import './style/filter.antd.scss';
 import isUndefined from 'lodash/isUndefined';
 import {FormattedMessage} from 'react-intl';
-import defaultMessage from '../../../locales/hocs';
+import defaultMessage from '../locale';
 
 @CSSModules(styles)
 export default class FilterGroup extends Component {
