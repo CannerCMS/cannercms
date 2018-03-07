@@ -1,5 +1,6 @@
 // @flow
-import React, {Component} from 'react';
+
+import * as React from 'react';
 
 type Props = {
   id: string,
@@ -10,9 +11,8 @@ type Props = {
   [string]: any
 };
 
-// $FlowFixMe
-export default function connectId(Com) {
-  return class ComponentConnectData extends Component<Props> {
+export default function connectId(Com: React.ComponentType<*>) {
+  return class ComponentConnectId extends React.Component<Props> {
     id: string
     constructor(props: Props) {
       super(props);

@@ -1,12 +1,5 @@
-import Provider from './components/Provider';
-import Generator from './components/Generator';
-import CMS from './components';
-import generateAction from './utils/generateAction';
-import MiniApp from './utils/miniApp';
-export default {
-  Provider,
-  generateAction,
-  MiniApp,
-  Generator,
-  CMS,
-};
+export {default as Provider} from './components/Provider';
+export {default as Generator} from './components/Generator';
+export {default as CMS} from './components';
+export {default as generateAction} from './utils/generateAction';
+export {default as MiniApp} from './utils/miniApp';

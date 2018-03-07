@@ -1,7 +1,7 @@
 // @flow
 
 /**
- * Genertaor is a Component that renders the plugins, containers
+ * Genertaor is a Component that renders the components, containers
  * with the a given componentTree which is created by qa-compiler
  *
  * First Step, prerender the tree in constructor, this action will add a
@@ -16,8 +16,8 @@ import resolveUrl from 'resolve-url';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
-import hocs from 'src/hocs';
 import {generateId, createEmptyData, transformData} from '../utils';
+
 function defaultHoc(Component) {
   return Component;
 }
@@ -32,7 +32,7 @@ export type Node = {
 
 type Props = {
   componentTree: {[string]: Node},
-  plugins: {[string]: React.ComponentType<*>},
+  components: {[string]: React.ComponentType<*>},
   hocs: {[string]: React.ComponentType<*>},
   containers: {[string]: React.ComponentType<*>},
   goTo: (path: string) => void,
@@ -50,7 +50,7 @@ type State = {
   componentTree: {[string]: any}
 }
 
-export default class QAGenerator extends React.PureComponent<Props, State> {
+export default class Generator extends React.PureComponent<Props, State> {
   cacheTree: {
     [key: string]: Node
   } // store the prerenders tree
@@ -59,7 +59,7 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
     // React Component with all hocs it needs in every node
     super(props);
     const {componentTree, routes} = props;
-    const activeKey = routes[0];
+    const activeKey = routes[0] || Object.keys(componentTree)[0];
     this.cacheTree = this.genCacheTree(componentTree);
     this.state = {
       componentTree: this.cacheTree[activeKey],
@@ -83,17 +83,16 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
 
   static defaultProps = {
     componentTree: {},
-    plugins: {},
+    components: {},
     containers: {},
-    hocs,
-    history,
+    hocs: {}
   }
 
   // wrap the plugin with hoc if it has
   prerender = (node: Node): Node => {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
-    const {plugins, containers} = this.props;
+    const {components, containers} = this.props;
     let component: React.ComponentType<*> = (props) => {
       const {renderChildren, id} = props;
       return <div>
@@ -103,10 +102,10 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
     if (node.nodeType.startsWith('container')) {
       const uselessStringLength = 'container.'.length;
       component = get(containers, node.nodeType.slice(uselessStringLength), component);
-    } else if (node.nodeType.startsWith('plugins')) {
+    } else if (node.nodeType.startsWith('plugins')) { // TODO: need to fix, turn plugins to components in compiler
       const uselessStringLength = 'plugins.'.length;
       // eslint-disable-next-line
-      component = get(plugins, node.nodeType.slice(uselessStringLength), component);
+      component = get(components, node.nodeType.slice(uselessStringLength), component);
       component = this.wrapByHOC(component, node.hocs.slice() || []);
     }
     node.component = component;
@@ -136,6 +135,7 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
     // eslint-disable-next-line no-unused-vars
     const {component, children, ...restNodeData} = node;
     const {params, goTo, baseUrl} = this.props;
+    console.log(node);
     if (component) {
       return <node.component
         {...restNodeData}
@@ -155,7 +155,7 @@ export default class QAGenerator extends React.PureComponent<Props, State> {
 
   renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {
     // just get the props and call renderNode
-    // this method is called by plugins themselves
+    // this method is called by components themselves
     const {children} = node;
     if (children) {
       return children.map((child, index) => {

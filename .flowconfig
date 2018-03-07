@@ -9,6 +9,9 @@ flow-typed/
 [lints]
 
 [options]
-module.name_mapper='^src/\(.*\)' -> '<PROJECT_ROOT>/src/\1'
+module.name_mapper='^src\(.*\)' -> '<PROJECT_ROOT>/src\1'
+module.name_mapper='^provider\(.*\)' -> '<PROJECT_ROOT>/src/provider\1'
+module.name_mapper='^hocs\(.*\)' -> '<PROJECT_ROOT>/src/hocs\1'
+module.name_mapper='^visitors\(.*\)' -> '<PROJECT_ROOT>/src/visitors\1'
 
 [strict]

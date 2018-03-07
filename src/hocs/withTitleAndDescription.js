@@ -1,5 +1,5 @@
 // @flow
-import React, {Component} from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 
 type Props = {
@@ -13,45 +13,48 @@ type Props = {
 };
 
 // $FlowFixMe
-export default function withTitleAndDescription(Com: React$Component<*>) {
-  return class ComponentWithTitleAndDescription extends Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
+export default function withTitleAndDescription(Com: React.ComponentType<*>) {
+  return class ComponentWithTitleAndDescription extends React.Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
     static contextTypes = {
-      hideId: PropTypes.arrayOf(PropTypes.string),
+      hideId: PropTypes.arrayOf(PropTypes.string)
     };
 
     render() {
-      const {id, title, name, layout, description, hideTitle} = this.props;
+      const {id, title, layout, description, hideTitle} = this.props;
       const {hideId} = this.context;
-      if (hideId && hideId.indexOf(id) === -1) {
+      if (hideTitle) {
+        return <Com {...this.props}/>;
+      }
+      if (!hideId || hideId.indexOf(id) === -1) {
         switch (layout) {
           case 'horizontal':
             return <div style={{
               display: 'flex',
               margin: '16px 0',
-              alignItems: 'center',
+              alignItems: 'center'
             }}>
               <div style={{
                 marginRight: 8,
                 display: 'flex',
                 flex: 1,
-                flexDirection: 'column',
+                flexDirection: 'column'
               }}>
                 <div style={{
                   fontSize: 18,
-                  fontWeight: 400,
+                  fontWeight: 400
                 }}>
-                  {hideTitle ? null : title || name}
+                  {title}
                 </div>
                 <div style={{
                   fontSize: 12,
                   marginTop: 16,
-                  color: '#aaa',
+                  color: "#aaa"
                 }}>
-                  {hideTitle ? null : description}
+                  {description}
                 </div>
               </div>
               <div style={{
-                flex: 2,
+                flex: 2
               }}>
                 <Com {...this.props}/>
               </div>
@@ -59,28 +62,28 @@ export default function withTitleAndDescription(Com: React$Component<*>) {
           case 'vertical':
           default:
             return <div style={{
-              margin: '16px 0 0',
+              margin: '16px 0 0'
             }}>
               <div style={{
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'center'
               }}>
                 <div style={{
                   fontSize: 18,
-                  fontWeight: 400,
+                  fontWeight: 400
                 }}>
-                  {hideTitle ? null : title || name}
+                  {title}
                 </div>
                 <div style={{
                   fontSize: 12,
-                  color: '#aaa',
-                  marginLeft: 16,
+                  color: "#aaa",
+                  marginLeft: 16
                 }}>
-                  {hideTitle ? null : description}
+                  {description}
                 </div>
               </div>
               <div style={{
-                marginBottom: 8,
+                marginBottom: 8
               }}>
                 <Com {...this.props}/>
               </div>

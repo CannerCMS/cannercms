@@ -1,10 +1,11 @@
 // @flow
-import React, {Component} from 'react';
+
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import {generateAction} from 'provider';
 import isArray from 'lodash/isArray';
-import type {RelationDef} from './relationFactory';
-import {create} from './relationFactory';
+import type {RelationDef} from "./relationFactory";
+import {create} from "./relationFactory";
 
 type Props = {
   id: string,
@@ -20,20 +21,19 @@ type Props = {
 
 type changeQueue = Array<{id: string | {firstId: string, secondId: string}, type: any, value: any}>;
 
-// $FlowFixMe
-export default function withRequest(Com) {
+export default function withRequest(Com: React.ComponentType<*>) {
   // this hoc will update data;
   // it's the onChange end
-  return class ComponentWithRequest extends Component<Props> {
+  return class ComponentWithRequest extends React.Component<Props> {
     static contextTypes = {
-      request: PropTypes.func,
+      request: PropTypes.func
     };
 
     onChange = (id: string | {firstId: string, secondId: string} | changeQueue, type: any, delta: any) => {
       if (isArray(id)) {
         const changeQueue = id;
         // $FlowFixMe
-        changeQueue.forEach((args) => {
+        changeQueue.forEach(args => {
           const {id, type, value} = args;
           this.onChange(id, type, value);
         });
@@ -48,11 +48,10 @@ export default function withRequest(Com) {
       }
 
       // quick and temp solution
-      if (relation && relation.relationship === 'oneToMany.foreignKey') {
-        request(action).then(() => this.props.fetchRelation());
-      } else {
-        request(action);
+      if (relation && (relation.relationship === 'oneToMany.foreignKey' || relation.relationship === 'manyToMany.foreignKeyMap')) {
+        return request(action).then(() => this.props.fetchRelation());
       }
+      return request(action);
     }
 
     render() {
@@ -71,9 +70,9 @@ function createAction(relation, id, type, delta, rootValue, value) {
   }
 
   const relationInstance = create(relation);
-  if (relation.relationship === 'oneToMany.foreignKey' && type === 'delete') {
+  if (relation.relationship === 'oneToMany.foreignKey' || relation.relationship === 'manyToMany.foreignKeyMap' && type === 'delete') {
     // give the correct rootValue
-    rootValue = value;
+    // rootValue = value;
   }
 
   if (relationInstance.transformValue) {
@@ -81,7 +80,7 @@ function createAction(relation, id, type, delta, rootValue, value) {
   }
 
   if (relationInstance.createAction) {
-    return relationInstance.createAction(id, type, delta, rootValue);
+    return relationInstance.createAction(id, type, delta, rootValue, value);
   }
 
   // default return

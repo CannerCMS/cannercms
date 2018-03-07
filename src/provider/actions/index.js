@@ -1,1 +1,1 @@
-export {mutate} from './mutate';
+export {default as mutate} from './mutate';

@@ -83,7 +83,7 @@ function loop(schema: Schema) {
           break;
       }
       break;
-    case 'relation':
+    case 'relation': {
       const {relationship} = schema.relation;
       switch (relationship) {
         case 'oneToOne':
@@ -101,6 +101,7 @@ function loop(schema: Schema) {
           break;
       }
       break;
+    }
     default:
       invariant(true, `unsupport type ${schema.type}`);
       break;

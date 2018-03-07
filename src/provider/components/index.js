@@ -5,6 +5,7 @@ import Provider from './Provider';
 import Generator from './Generator';
 import type {Node} from './Generator';
 import type Endpoint from '../endpoint';
+import hocs from 'hocs';
 
 type Props = {
   schema: {
@@ -19,6 +20,7 @@ type Props = {
   plugins: {[string]: React.ComponentType<*>},
   hocs: {[string]: React.ComponentType<*>},
   containers: {[string]: React.ComponentType<*>},
+  components: {[string]: React.ComponentType<*>},
   goTo: (path: string) => void,
   baseUrl: string,
   routes: Array<string>,
@@ -30,13 +32,12 @@ class CannerCMS extends React.Component<Props> {
     schema: {
       schema: {},
       componentTree: {},
-      endpoint: {},
     },
     endpoint: {},
     dataDidChange: () => {},
     componentTree: {},
-    plugins: {},
-    hocs: {},
+    components: {},
+    hocs,
     containers: {},
     goTo: () => {},
     baseUrl: '',
@@ -51,6 +52,7 @@ class CannerCMS extends React.Component<Props> {
       plugins,
       hocs,
       containers,
+      components,
       goTo,
       baseUrl,
       routes,
@@ -68,6 +70,7 @@ class CannerCMS extends React.Component<Props> {
           plugins={plugins}
           hocs={hocs}
           containers={containers}
+          components={components}
           goTo={goTo}
           baseUrl={baseUrl}
           routes={routes}

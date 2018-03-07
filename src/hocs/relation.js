@@ -1,5 +1,5 @@
 // @flow
-import React, {PureComponent} from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import {} from 'immutable';
 import isEqual from 'lodash/isEqual';
@@ -23,8 +23,8 @@ type State = {
 };
 
 // $FlowFixMe
-export default function relation(Com) {
-  return class ComponentWithRelation extends PureComponent<Props, State> {
+export default function relation(Com: React.ComponentType<*>) {
+  return class ComponentWithRelation extends React.PureComponent<Props, State> {
     componentId: string;
 
     static contextTypes = {

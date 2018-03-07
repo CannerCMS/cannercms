@@ -1,21 +1,21 @@
 // @flow
-import React, {Component} from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
-import {MiniApp} from '../provider';
+import {MiniApp} from 'provider';
+
 type Props = {
   id: string
 };
 
-// $FlowFixMe
-export default function withMiniApp(Com: React$Component<*>) {
-  return class ComponentWithMiniApp extends Component<Props> {
+export default function withMiniApp(Com: React.ComponentType<*>) {
+  return class ComponentWithMiniApp extends React.Component<Props> {
     app: MiniApp;
     static childContextTypes = {
       fetch: PropTypes.func,
       subscribe: PropTypes.func,
       request: PropTypes.func,
       deploy: PropTypes.func,
-      reset: PropTypes.func,
+      reset: PropTypes.func
     };
 
     getChildContext() {
@@ -23,8 +23,8 @@ export default function withMiniApp(Com: React$Component<*>) {
         fetch: this.app.fetch,
         subscribe: this.app.subscribe,
         request: this.app.request,
-        deploy: this.app.deploy,
-        reset: this.app.reset,
+        deploy: this.deploy,
+        reset: this.app.reset
       };
     }
 
@@ -32,6 +32,7 @@ export default function withMiniApp(Com: React$Component<*>) {
       request: PropTypes.func,
       fetch: PropTypes.func,
       subscribe: PropTypes.func,
+      deploy: PropTypes.func
     }
 
     constructor(props: Props, context: {request: Function, fetch: Function, subscribe: Function}) {
@@ -39,7 +40,29 @@ export default function withMiniApp(Com: React$Component<*>) {
       this.app = new MiniApp({
         request: context.request,
         fetch: context.fetch,
-        subscribe: context.subscribe,
+        subscribe: context.subscribe
+      });
+    }
+
+    componentWillMount() {
+      this.fetchData();
+    }
+
+    componentWillReceiveProps(nextProps: Props) {
+      if (nextProps.id !== this.props.id) {
+        this.fetchData();
+      }
+    }
+
+    fetchData = () => {
+      const {query, componentId} = this.context;
+      const {id} = this.props;
+      this.app.fetch(id.split('/')[0], componentId, query);
+    }
+
+    deploy = (key?: string, id?: string): Promise<*> => {
+      return this.app.deploy(key, id).then(() => {
+        return this.context.deploy(key, id);
       });
     }
 

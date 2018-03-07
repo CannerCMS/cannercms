@@ -1,14 +1,14 @@
 // @flow
 
-import Ajv from 'ajv';
-import React, {PureComponent} from 'react';
-import {fromJS, Map} from 'immutable';
+import Ajv from "ajv";
+import React, {PureComponent} from "react";
+import {fromJS, Map} from "immutable";
 
 const defaultErrorHandle = () => {
-  return '預設資料錯誤';
+  return "預設資料錯誤";
 };
 const ErrorText = ({text}) => {
-  return <p style={{color: 'red'}}>{text}</p>;
+  return <p style={{color: "red"}}>{text}</p>;
 };
 
 type Props = {
@@ -39,7 +39,7 @@ export default (Plugin: any) => {
       super(props);
       this.state = {
         valid: true,
-        safeToRender: false,
+        safeToRender: false
       };
     }
 
@@ -47,12 +47,12 @@ export default (Plugin: any) => {
       const {value, onChange, id, type, defaultData} = this.props;
       if (this.validate(value)) {
         this.setState({
-          safeToRender: true,
+          safeToRender: true
         });
       } else {
         onChange(
           id,
-          'update',
+          "update",
           fromJS(defaultData) || this.getDefaultData(type)
         );
       }
@@ -62,12 +62,12 @@ export default (Plugin: any) => {
       const {onChange, id, defaultData, type} = this.props;
       if (this.validate(nextProps.value)) {
         this.setState({
-          safeToRender: true,
+          safeToRender: true
         });
       } else {
         onChange(
           id,
-          'update',
+          "update",
           fromJS(defaultData) || this.getDefaultData(type)
         );
       }
@@ -97,9 +97,9 @@ export default (Plugin: any) => {
     onChange = (id: string, type: string, value: any) => {
       // id !== this.props.id: 如果傳上來更動資料的id !== this.props.id，表示現在的這個Plugin不是更動資料的那個Plugin，所以在這層不需要做驗證
       if (
-        type === 'swap' ||
-        type === 'ref' ||
-        type === 'delete' ||
+        type === "swap" ||
+        type === "ref" ||
+        type === "delete" ||
         id !== this.props.id
       ) {
         this.props.onChange(id, type, value);
