@@ -71,7 +71,7 @@ export default class Generator extends React.PureComponent<Props, State> {
       this.cacheTree = this.genCacheTree(nextProps.componentTree);
     }
     this.setState({
-      componentTree: this.cacheTree[nextProps.routes[0]],
+      componentTree: this.cacheTree[nextProps.routes[0] || Object.keys(nextProps.componentTree)[0]],
     });
   }
 

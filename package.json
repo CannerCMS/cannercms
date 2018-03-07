@@ -55,6 +55,7 @@
     "node-sass": "^4.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.2",
     "webpack": "^4.0.1",
@@ -62,6 +63,7 @@
     "webpack-dev-server": "^3.1.0"
   },
   "dependencies": {
+    "@canner/cms-locales": "^0.1.0-rc.35",
     "antd": "^3.2.3",
     "bson-objectid": "^1.2.2",
     "immutable": "4.0.0-rc.9",

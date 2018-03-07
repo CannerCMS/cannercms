@@ -6,6 +6,15 @@ import Generator from './Generator';
 import type {Node} from './Generator';
 import type Endpoint from '../endpoint';
 import hocs from 'hocs';
+import { IntlProvider, addLocaleData } from 'react-intl';
+import en from 'react-intl/locale-data/en';
+import zh from 'react-intl/locale-data/zh';
+import hocsLocales from 'hocs/query/locale';
+import pluginsLocales from '@canner/cms-locales';
+
+const lang = 'zh';
+addLocaleData([...en, ...zh]);
+
 
 type Props = {
   schema: {
@@ -17,7 +26,6 @@ type Props = {
   children: React.ChildrenArray<React.Node>,
 
   componentTree: {[string]: Node},
-  plugins: {[string]: React.ComponentType<*>},
   hocs: {[string]: React.ComponentType<*>},
   containers: {[string]: React.ComponentType<*>},
   components: {[string]: React.ComponentType<*>},
@@ -49,7 +57,6 @@ class CannerCMS extends React.Component<Props> {
     const {
       schema,
       dataDidChange,
-      plugins,
       hocs,
       containers,
       components,
@@ -60,23 +67,33 @@ class CannerCMS extends React.Component<Props> {
       endpoint
     } = this.props;
     return (
-      <Provider
-        schema={schema.schema}
-        endpoint={endpoint}
-        dataDidChange={dataDidChange}
+      <IntlProvider
+        locale={lang}
+        defaultLocale={lang}
+        key={lang}
+        messages={{
+          ...pluginsLocales[lang],
+          ...hocsLocales[lang],
+        }}
       >
-        <Generator
-          componentTree={schema.componentTree}
-          plugins={plugins}
-          hocs={hocs}
-          containers={containers}
-          components={components}
-          goTo={goTo}
-          baseUrl={baseUrl}
-          routes={routes}
-          params={params}
-        />
-      </Provider>
+        <Provider
+          schema={schema.schema}
+          endpoint={endpoint}
+          dataDidChange={dataDidChange}
+        >
+        
+          <Generator
+            componentTree={schema.componentTree}
+            hocs={hocs}
+            containers={containers}
+            components={components}
+            goTo={goTo}
+            baseUrl={baseUrl}
+            routes={routes}
+            params={params}
+          />
+        </Provider>
+      </IntlProvider>
     );
   }
 }
