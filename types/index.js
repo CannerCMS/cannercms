@@ -40,7 +40,7 @@ type paginationType = {
   }
 }
 
-declare type queryType = {} | filterType | sortType | paginationType;
+declare type queryType = filterType | sortType | paginationType;
 
 declare type CreateArrayItemAction = {
   type: 'CREATE_ARRAY_ITEM',

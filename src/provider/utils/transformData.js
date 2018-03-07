@@ -7,7 +7,7 @@ const isTransform = function(data: mixed): boolean {
   return isString(data) ||
     isBoolean(data) ||
     isNumber(data) ||
-    Immutable.Iterable.isIterable(data);
+    Immutable.isImmutable(data);
 };
 
 const transformData = function(data: mixed): mixed {

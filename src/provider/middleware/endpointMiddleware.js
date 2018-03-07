@@ -36,6 +36,7 @@ export default class EndpointMiddleware implements Middleware {
               set(ctx, 'response.pagination', {
                 totalPage: data.totalPage,
                 page: data.page,
+                // $FlowFixMe
                 goTo: genGoTo((query || {}).pagination || {}),
               });
               set(ctx, 'response.body', fromJS(data.data));
@@ -51,6 +52,7 @@ export default class EndpointMiddleware implements Middleware {
         return actions.reduce((prePromise: Promise.resolve<*>, action, index: number) => {
           return prePromise.then(() => this._deploy(action, ctx))
             .catch((e) => {
+              // $FlowFixMe
               ctx.response.actions = actions.slice(index);
               throw new Error(e);
             });

@@ -59,7 +59,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
     app: ?MiniApp;
     routesEndAtMe: boolean;
     isCreateOp: boolean;
-    queryCom: ?typeof Com;
+    queryCom: React.Ref<typeof Com>;
     static childContextTypes = {
       fetch: PropTypes.func,
       subscribe: PropTypes.func,
@@ -191,7 +191,8 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       const key = id.split('/')[0];
       if (this.state.app) {
         return this.state.app.reset(key, query) // reset the store and cache in miniapp
-          .then(() => this.queryCom.queryData()) // ask component to fetch new data
+          // $FlowFixMe
+          .then(() => this.queryCom && this.queryCom.queryData()) // ask component to fetch new data
           .then(this.resetButton);
       }
       return Promise.resolve();
@@ -229,7 +230,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
         // $FlowFixMe
         return <div>
           {/* $FlowFixMe */}
-          <Com {...this.props} ref={queryCom => {
+          <Com {...this.props} ref={(queryCom: React.Ref<typeof Com>) => {
             this.queryCom = queryCom;
           }} deploy={this.deploy} renderButton={renderButton}/>
           {

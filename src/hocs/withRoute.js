@@ -104,7 +104,10 @@ export default function withRoute(Com: React$Component<*>) {
             renderType = 1;
           }
           if (params.op === 'create') {
-            index = (rootValue.getIn(id.split('/').slice(1)): any).size - 1;
+            const valuePath = ((id.split('/').slice(1): any): Array<string | number>);
+            valuePath[0] = Number(valuePath[0]);
+            // $FlowFixMe
+            index = (rootValue.getIn(valuePath): any).size - 1;
             renderType = 1;
           }
         }
