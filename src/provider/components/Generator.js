@@ -135,7 +135,6 @@ export default class Generator extends React.PureComponent<Props, State> {
     // eslint-disable-next-line no-unused-vars
     const {component, children, ...restNodeData} = node;
     const {params, goTo, baseUrl} = this.props;
-    console.log(node);
     if (component) {
       return <node.component
         {...restNodeData}

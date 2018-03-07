@@ -13,6 +13,7 @@ npm i --save @canner/react-cms-core
 ```js
 import * as React from 'react';
 import {CMS} from '@canner/react-cms-core';
+
 class Demo extends React.Component {
   render() {
     return (
