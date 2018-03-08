@@ -75,6 +75,7 @@
     "react-intl": "^2.4.0",
     "react-spinners": "^0.2.6",
     "rxjs": "^5.5.6",
-    "store": "^2.0.12"
+    "store": "^2.0.12",
+    "styled-components": "^3.2.1"
   }
 }

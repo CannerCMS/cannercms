@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
-import styles from './style/pagination.scss';
 import {Pagination, Button} from 'antd';
+import styled from 'styled-components';
 
-@CSSModules(styles)
+const PaginationWrapper = styled.div`
+  margin-top: 20px;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export default class PaginationPlugin extends Component {
   static propTypes = {
     onChange: PropTypes.func,
@@ -39,7 +46,7 @@ export default class PaginationPlugin extends Component {
     const {limit} = this.props.pagination;
     if (page) {
       return (
-        <div styleName="pagination">
+        <PaginationWrapper>
           <Pagination onChange={this.onChange}
             onShowSizeChange={this.onSizeChange}
             showSizeChanger pageSize={limit}
@@ -47,12 +54,12 @@ export default class PaginationPlugin extends Component {
             total={Math.ceil(totalPage * limit)}
             pageSizeOptions={['5', '10', '20', '30', '40']}
           />
-        </div>
+        </PaginationWrapper>
       );
     }
-    return <div styleName="buttons">
+    return <ButtonsWrapper>
       <Button onClick={this.goPrev} type="primary">Prev</Button>
       <Button onClick={this.goNext} type="primary">Next</Button>
-    </div>;
+    </ButtonsWrapper>;
   }
 }

@@ -112,6 +112,7 @@ export default (Plugin) => {
               <Sort onChange={this.changeSort} options={sort}/>
           }
           <Plugin {...this.props} query={{filter: this.state.filter, sort: this.state.sort, pagination}} value={value} showPagination={false}/>
+          <Pagination onChange={this.changePagination} pagination={pagination} paginationRes={paginationRes}/>
         </div>
       );
     }
