@@ -1,4 +1,4 @@
-import LocalStorage from 'provider/endpoint/localStorage';
+import LocalStorage from '../src/provider/endpoint/localStorage';
 import schema from './canner.schema.js';
 
 const endpoint = new LocalStorage({

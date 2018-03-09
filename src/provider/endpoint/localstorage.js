@@ -1,8 +1,7 @@
 /**
  * @flow
  */
-
-import createEmptyData from 'provider/utils/createEmptyData';
+import createEmptyData from '../utils/createEmptyData';
 import Endpoint from './index';
 import {UNIQUE_ID} from '../config';
 import store from 'store';

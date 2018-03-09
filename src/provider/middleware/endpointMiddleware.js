@@ -82,7 +82,7 @@ export default class EndpointMiddleware implements Middleware {
     return this.endpoint[key].getObject(key);
   }
 
-  _deploy(action: transformedAction, ctx: ContextType): Promise.resolve<*> {
+  _deploy(action: transformedAction, ctx: ContextType): Promise<*> {
     switch (action.type) {
       case 'CREATE_ARRAY_ITEM': {
         let {value, key} = action.payload;

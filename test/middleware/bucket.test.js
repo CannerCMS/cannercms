@@ -1,7 +1,10 @@
+/* eslint-disable no-unused-vars */
+
 import {Bucket} from '../../src/middleware';
 import {fromJS} from 'immutable';
 import {UNIQUE_ID} from '../../src/config';
 import {List} from 'immutable';
+
 const createArrayAction1 = {
   type: 'CREATE_ARRAY_ITEM',
   payload: {
@@ -73,6 +76,86 @@ const updateObjectAction1 = {
     }),
   },
 };
+
+const deleteArrayNestedItemAction = {
+  type: 'DELETE_ARRAY_NESTED_ITEM',
+  payload: {
+    key: 'posts',
+    id: '1',
+    path: 'authors/0',
+    value: fromJS([{
+      [UNIQUE_ID]: '1',
+      authors: [{
+        name: 'author1'
+      }]
+    }])
+  }
+}
+
+const createArrayNestedItemAction = {
+  type: 'CREATE_ARRAY_NESTED_ITEM',
+  payload: {
+    key: 'posts',
+    id: '1',
+    path: 'authors',
+    value: fromJS([{
+      [UNIQUE_ID]: '1',
+      authors: []
+    }])
+  }
+}
+
+const deleteObjectNestedItemAction = {
+  type: 'DELETE_OBJECT_NESTED_ITEM',
+  payload: {
+    key: 'info',
+    path: 'authors/0',
+    value: fromJS({
+      authors: [{
+        name: 'author1'
+      }]
+    })
+  }
+}
+
+const createObjectNestedItemAction = {
+  type: 'CREATE_OBJECT_NESTED_ITEM',
+  payload: {
+    key: 'info',
+    path: 'authors',
+    value: fromJS({
+      authors: []
+    })
+  }
+}
+
+const swapArrayNestedItemAction = {
+  type: 'SWAP_ARRAY_NESTED_ITEM',
+  payload: {
+    key: 'posts',
+    id: '1',
+    path: 'authors',
+    value: fromJS([{
+      [UNIQUE_ID]: '1',
+      authors: [{name: 'author1'}, {name: 'author2'}]
+    }])
+  }
+}
+
+const swapObjectNestedItemAction = {
+  type: 'SWAP_OBJECT_NESTED_ITEM',
+  payload: {
+    key: 'info',
+    path: 'authors',
+    value: fromJS({
+      authors: [{name: 'author1'}, {name: 'author2'}]
+    })
+  }
+}
+
+describe('bucket transform action', () => {
+
+});
 
 describe('bucket actions optimize', () => {
   it('handleChange write', () => {

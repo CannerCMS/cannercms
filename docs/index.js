@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import queryString from 'query-string';
-import CMS from 'provider/components';
+import CMS from '../src/provider/components';
 import schema from './canner.schema';
 import endpoint from './endpoint';
 import components from '@canner/cms-plugins-all';

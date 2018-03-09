@@ -5,11 +5,11 @@ import Provider from './Provider';
 import Generator from './Generator';
 import type {Node} from './Generator';
 import type Endpoint from '../endpoint';
-import hocs from 'hocs';
+import hocs from '../../hocs';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
-import hocsLocales from 'hocs/query/locale';
+import hocsLocales from '../../hocs/query/locale';
 import pluginsLocales from '@canner/cms-locales';
 
 const lang = 'zh';

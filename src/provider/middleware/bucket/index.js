@@ -3,6 +3,7 @@
  */
 
 import createPattern from './pattern';
+import {Map} from 'immutable';
 import flatten from 'lodash/flatten';
 import get from 'lodash/get';
 import {passQuery} from '../../utils/query';
@@ -43,6 +44,7 @@ export default class Bucket implements Middleware {
           // should handle failed action
           this.clearQueue(key, id);
         }).catch(() => {
+          //  if deploy failed, bucket will get the undeployed actions back
           this.clearQueue(key, id);
           get(ctx, 'response.actions', []).forEach((action) => {
             this.addAction(action);
@@ -87,81 +89,52 @@ export default class Bucket implements Middleware {
   // UPDATE_OBJECT
   transformAction(action: MutateAction): transformedAction {
     switch (action.type) {
-      case 'UPDATE_ARRAY': {
-        const {key, id, mutatedValue} = action.payload;
+      case 'UPDATE_ARRAY': // array
+      case 'DELETE_ARRAY_NESTED_ITEM':
+      case 'CREATE_ARRAY_NESTED_ITEM':
+      case 'SWAP_ARRAY_NESTED_ITEM': {
+        const {key, mutatedValue, path, id} = action.payload;
+        const fieldName = typeof path === 'string' ?
+          path.split('/')[0] :
+          path[0].split('/')[0];
+        const value = fieldName ?
+          new Map().get(fieldName, mutatedValue && mutatedValue.get(fieldName)) :
+          mutatedValue;
         return {
-          type: 'UPDATE_ARRAY',
+          type: 'UPDATE_OBJECT',
           payload: {
             key,
             id,
             path: '',
-            value: mutatedValue,
+            value,
           },
         };
       }
+       // object
+      case 'DELETE_OBJECT_NESTED_ITEM':
+      case 'CREATE_OBJECT_NESTED_ITEM':
+      case 'SWAP_OBJECT_NESTED_ITEM':
       case 'UPDATE_OBJECT': {
-        const {key, mutatedValue} = action.payload;
+        const {key, mutatedValue, path} = action.payload;
+        const fieldName = typeof path === 'string' ?
+          path.split('/')[0] :
+          path[0].split('/')[0];
+        const value = fieldName ?
+          new Map().get(fieldName, mutatedValue && mutatedValue.get(fieldName)) :
+          mutatedValue;
         return {
           type: 'UPDATE_OBJECT',
           payload: {
             key,
             path: '',
-            value: mutatedValue,
+            value,
           },
         };
       }
       case 'DELETE_ARRAY_ITEM':
       case 'CREATE_ARRAY_ITEM':
         return action;
-      case 'DELETE_ARRAY_NESTED_ITEM':
-      case 'CREATE_ARRAY_NESTED_ITEM': {
-        const {key, id, mutatedValue} = action.payload;
-        return {
-          type: 'UPDATE_ARRAY',
-          payload: {
-            key,
-            id,
-            path: '',
-            value: mutatedValue,
-          },
-        };
-      }
-      case 'DELETE_OBJECT_NESTED_ITEM':
-      case 'CREATE_OBJECT_NESTED_ITEM': {
-        const {key, mutatedValue} = action.payload;
-        return {
-          type: 'UPDATE_OBJECT',
-          payload: {
-            key,
-            path: '',
-            value: mutatedValue,
-          },
-        };
-      }
-      case 'SWAP_ARRAY_ITEM':
-      case 'SWAP_ARRAY_NESTED_ITEM': {
-        const {mutatedValue, key, id} = action.payload;
-        return {
-          type: 'UPDATE_ARRAY',
-          payload: {
-            key,
-            id,
-            path: '',
-            value: mutatedValue,
-          },
-        };
-      }
-      case 'SWAP_OBJECT_NESTED_ITEM': {
-        const {key, mutatedValue} = action.payload;
-        return {
-          type: 'UPDATE_OBJECT',
-          payload: {
-            key,
-            path: '',
-            value: mutatedValue,
-          },
-        };
-      }
+     
       default:
         return {
           type: 'NOOP',
