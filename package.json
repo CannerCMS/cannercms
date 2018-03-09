@@ -14,7 +14,7 @@
     "check:src": "npm run lint",
     "start": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.dev.js",
     "postpublish": "npm run build:docs",
-    "build:docs": "./node_modules/.bin/webpack ./docs/index.js --mode production --ouput ./docs/static/bundle.js --config webpack.config.prod.js",
+    "build:docs": "./node_modules/.bin/webpack ./docs/index.js --output ./docs/static/bundle.js --mode production --config webpack.config.prod.js",
     "validate": "npm ls"
   },
   "repository": {

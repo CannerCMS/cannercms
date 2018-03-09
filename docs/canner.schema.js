@@ -17,7 +17,8 @@ module.exports = {
   }).ui('breadcrumb').title('Title').uiParams({
     columns: [{
       title: 'name',
-      dateIndex: 'name'
+      dataIndex: 'name',
+      key: 'name'
     }]
   })
 }

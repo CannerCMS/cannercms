@@ -44,7 +44,7 @@ export default (Plugin) => {
       this.componentId = props.id;
     }
 
-    componentDidMount() {
+    componentWillMount() {
       const {subscribe} = this.context;
       const {id} = this.props;
       this.queryData()
@@ -91,8 +91,9 @@ export default (Plugin) => {
     }
 
     render() {
-      const {filter, sort} = this.props;
+      const {filter, sort, params, routes} = this.props;
       const {paginationRes, pagination, value} = this.state;
+      const op = params && params.op;
       if (!value) {
         return null;
       }
@@ -102,17 +103,21 @@ export default (Plugin) => {
             // 如果是 string 則不是交給這個 filter 處理
             // 是 restful-qa 會在 render 前 filter
             // 目前只有 ireconcile 使用到
-            isString(filter) || isUndefined(filter) ?
+            op === 'create' || routes.length > 1 || isString(filter) || isUndefined(filter) ?
               null :
               <Filter onChange={this.changeFilter} schema={filter}/>
           }
           {
-            isUndefined(sort) ?
+            op === 'create' || routes.length > 1 || isUndefined(sort) ?
               null :
               <Sort onChange={this.changeSort} options={sort}/>
           }
           <Plugin {...this.props} query={{filter: this.state.filter, sort: this.state.sort, pagination}} value={value} showPagination={false}/>
-          <Pagination onChange={this.changePagination} pagination={pagination} paginationRes={paginationRes}/>
+          {
+            op === 'create' || routes.length > 1 ?
+              null :
+              <Pagination onChange={this.changePagination} pagination={pagination} paginationRes={paginationRes}/>
+          }
         </div>
       );
     }

@@ -94,7 +94,7 @@ export default function withRoute(Com: React$Component<*>) {
             if (paths.length === 0) {
               // first layer
               const recordId = restRoutes.shift();
-              index = rootValue.findIndex(record => record.get('_id') === recordId);
+              index = rootValue && rootValue.findIndex(record => record.get('_id') === recordId);
               if (index === -1) {
                 query = {filter: {_id: {$eq: recordId}}};
               }
@@ -107,14 +107,14 @@ export default function withRoute(Com: React$Component<*>) {
             const valuePath = ((id.split('/').slice(1): any): Array<string | number>);
             valuePath[0] = Number(valuePath[0]);
             // $FlowFixMe
-            index = (rootValue.getIn(valuePath): any).size - 1;
+            index = rootValue && rootValue.getIn(valuePath).size - 1;
             renderType = 1;
           }
         }
       }
       this.setState({
         restRoutes,
-        index: index === -1 ? 0 : index,
+        index: !index || index === -1 ? 0 : index,
         renderType,
         query,
         canRender: false
@@ -128,6 +128,7 @@ export default function withRoute(Com: React$Component<*>) {
     render() {
       const {id, renderChildren} = this.props;
       const {renderType, canRender, index, restRoutes} = this.state;
+      console.log(renderType);
       // const {op} = params;
       // id: arr/0/arr1
       // paths: ['0', 'arr1']
