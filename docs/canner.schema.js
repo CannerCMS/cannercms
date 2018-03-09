@@ -9,7 +9,7 @@ module.exports = {
   }).ui('popup').title('Title').uiParams({
     columns: [{
       title: 'name',
-      dateIndex: 'name'
+      dataIndex: 'name'
     }]
   }),
   breadcrumb: CannerTypes.array({

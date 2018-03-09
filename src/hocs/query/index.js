@@ -112,7 +112,7 @@ export default (Plugin) => {
               null :
               <Sort onChange={this.changeSort} options={sort}/>
           }
-          <Plugin {...this.props} query={{filter: this.state.filter, sort: this.state.sort, pagination}} value={value} showPagination={false}/>
+          <Plugin {...this.props} query={{filter: this.state.filter, sort: this.state.sort, pagination}} rootValue={value} value={value} showPagination={false}/>
           {
             op === 'create' || routes.length > 1 ?
               null :
