@@ -1,7 +1,7 @@
 import EndpointMiddleware from '../../src/middleware/endpointMiddleware';
 
 class Endpoint {
-  getArray(key, query) {
+  getArray() {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([{test: 123}]);

@@ -139,18 +139,6 @@ describe('store', () => {
   });
 
   it('subscribe subject', () => {
-    store.subscribe('info', 'info', 'value', (value) => {
-      console.log(value);
-    });
-    store.subscribe('posts', 'posts1', 'childAdded', (value) => {
-      console.log(value);
-    });
-    store.subscribe('posts', 'posts1', 'childRemoved', (value) => {
-      console.log(value);
-    });
-    store.subscribe('posts', 'posts1', 'childChanged', (value) => {
-      console.log(value);
-    });
     expect(store.entity.getSubject('info', 'value')).toBeInstanceOf(Rx.Subject);
     expect(store.entity.getSubject('posts1', 'childAdded')).toBeInstanceOf(Rx.Subject);
     expect(store.entity.getSubject('posts1', 'childRemoved')).toBeInstanceOf(Rx.Subject);
@@ -171,8 +159,7 @@ describe('store', () => {
       expect(value.toJS()).toEqual({[UNIQUE_ID]: 0, name: 321});
     });
     store.subscribe('posts', 'posts2', 'value', (value) => {
-      console.log(value);
-      // expect(value.toJS()).toEqual({[UNIQUE_ID]: 0, name: 321});
+      expect(value.toJS()).toEqual({[UNIQUE_ID]: 0, name: 321});
     });
     store.pushSubject('info', 'value', fromJS({name: 321}));
     store.pushSubject('posts1', 'childAdded', fromJS({[UNIQUE_ID]: 1, name: 321}));
