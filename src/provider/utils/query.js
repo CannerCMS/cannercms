@@ -60,7 +60,7 @@ export default class Query {
         limit: perPage,
       }),
       page,
-      totalPage: Math.ceil(data.length / perPage),
+      totalPage: Math.ceil(data.length / perPage) || 0,
       data: queryData,
     });
     return this;
