@@ -1,3 +1,5 @@
+/* globals CannerTypes */
+
 const title = CannerTypes.string().description('標題');
 const content = CannerTypes.string().description('內容').ui('editor');
 

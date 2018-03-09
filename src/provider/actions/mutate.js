@@ -4,6 +4,7 @@ import {UNIQUE_ID} from '../config';
 
 function isNotList(value: any): boolean {
   if (!List.isList(value)) {
+    // eslint-disable-next-line
     console.error('value is not a list');
     return true;
   }
@@ -12,6 +13,7 @@ function isNotList(value: any): boolean {
 
 function isNotMap(value: any): boolean {
   if (!Map.isMap(value)) {
+    // eslint-disable-next-line
     console.error('value is not a map');
     return true;
   }

@@ -46,21 +46,30 @@ export default class App {
     let requestId = '';
     if (process.env.NODE_ENV === 'development' && context.request.type !== 'subscribe') {
       requestId = Math.random().toString(36).substr(-3);
+      // eslint-disable-next-line
       console.log(`-----------request-${requestId}-start------------`);
+      // eslint-disable-next-line
       console.time(`request-${requestId}`);
     }
     return this.fn(context).then(() => {
       if (process.env.NODE_ENV === 'development' && context.request.type !== 'subscribe') {
+        // eslint-disable-next-line
         console.timeEnd(`request-${requestId}`);
+        // eslint-disable-next-line
         console.log(`type: ${context.request.type}, key: ${context.request.key},`, 'contenxt:', context);
+        // eslint-disable-next-line
         console.log(`-----------request-${requestId}-finished------------`);
       }
       return context;
     }).catch((e) => {
+      // eslint-disable-next-line
       console.log(e);
+      // eslint-disable-next-line
       console.log(context);
       if (process.env.NODE_ENV === 'development' && context.request.type !== 'subscribe') {
+        // eslint-disable-next-line
         console.timeEnd(`request-${requestId}`);
+        // eslint-disable-next-line
         console.log(`-----------request-${requestId}-failed------------`);
       }
       throw new Error(e);

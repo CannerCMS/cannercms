@@ -12,7 +12,6 @@
  */
 
 import * as React from 'react';
-import resolveUrl from 'resolve-url';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';

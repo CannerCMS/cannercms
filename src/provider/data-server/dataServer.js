@@ -25,5 +25,6 @@ server.use((req, res, next) => {
 // Use default router
 server.use(router);
 server.listen(9394, () => {
+  // eslint-disable-next-line
   console.log('JSON Server is running at http://localhost:9394');
 });
