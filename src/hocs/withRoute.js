@@ -128,7 +128,6 @@ export default function withRoute(Com: React$Component<*>) {
     render() {
       const {id, renderChildren} = this.props;
       const {renderType, canRender, index, restRoutes} = this.state;
-      console.log(renderType);
       // const {op} = params;
       // id: arr/0/arr1
       // paths: ['0', 'arr1']
