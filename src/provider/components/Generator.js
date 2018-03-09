@@ -144,7 +144,7 @@ export default class Generator extends React.PureComponent<Props, State> {
         createEmptyData={createEmptyData}
         transformData={transformData}
         params={params}
-        goTo={(path) => {goTo(resolveUrl(baseUrl, path))}}
+        goTo={goTo}
         baseUrl={baseUrl} // should remove later
         {...props}
       />;

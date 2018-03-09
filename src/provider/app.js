@@ -44,22 +44,22 @@ export default class App {
 
   handleChange(context: ContextType): Promise<any> {
     let requestId = '';
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && context.request.type !== 'subscribe') {
       requestId = Math.random().toString(36).substr(-3);
       console.log(`-----------request-${requestId}-start------------`);
       console.time(`request-${requestId}`);
     }
     return this.fn(context).then(() => {
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development' && context.request.type !== 'subscribe') {
         console.timeEnd(`request-${requestId}`);
-        console.log('contenxt:', context);
+        console.log(`type: ${context.request.type}, key: ${context.request.key},`, 'contenxt:', context);
         console.log(`-----------request-${requestId}-finished------------`);
       }
       return context;
     }).catch((e) => {
       console.log(e);
       console.log(context);
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === 'development' && context.request.type !== 'subscribe') {
         console.timeEnd(`request-${requestId}`);
         console.log(`-----------request-${requestId}-failed------------`);
       }
