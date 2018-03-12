@@ -3,6 +3,7 @@
  */
 
 import isUndefined from 'lodash/isUndefined';
+import {Map} from 'immutable';
 import get from 'lodash/get';
 import {chain} from 'lodash';
 import Pattern from './pattern';
@@ -78,30 +79,40 @@ export default class CollectionPattern extends Pattern {
     // 利用 id 分類
     // merge 修改的資料
     // {
-    //   id1: {
-    //     info: {
-    //       name: 'test'
-    //     }
-    //   },
-    //   id2: {
-    //     habit: 'test'
-    //   }
+    //   id1: [{action, index}]
+    //   id2: [{action, index}]
     // }
     // 利用 id 分類
     // 找到每個 id 裡最後的那個 updateAction index
     // [id1, id2]
-    const indexShouldBePreserved = chain(updateActions)
-      .groupBy((val) => getValueID(val.action))
-      .mapValues((val) => val[val.length - 1].index)
+    const actionObjShouldBePreserved = chain(updateActions)
+      .groupBy(val => getValueID(val.action))
+      .mapValues(val => {
+        const updateValue = val.reduce((result, v) => result.merge(v.action.value), new Map());
+        const lastActionObj = val[val.length - 1];
+        lastActionObj.action.value = updateValue;
+        return {
+          action: lastActionObj.action,
+          index: lastActionObj.index
+        }
+      })
       .values()
       .value();
 
     // 如果是 updateAction 且不在 indexShouldBePreserved 裡
     // 就刪除
-    this.actions = this.actions.filter(function(action, i) {
-      return action.type !== 'UPDATE_ARRAY' ||
-        indexShouldBePreserved.indexOf(i) !== -1;
-    });
+    this.actions = this.actions.map((action, i) => {
+      const preservedObj = actionObjShouldBePreserved.find(obj => obj.index === i);
+      if (action.type === 'UPDATE_ARRAY' && !preservedObj) {
+        // remove the action we don't need
+        // $FlowFixMe
+        return undefined;
+      }
+      if (action.type === 'UPDATE_ARRAY' && preservedObj) {
+        action.payload.value = preservedObj.action.value;
+      }
+      return action;
+    }).filter(action => !isUndefined(action));
   }
 
   mergeUpdateAfterCreate() {
