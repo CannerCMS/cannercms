@@ -88,9 +88,9 @@ export default class CollectionPattern extends Pattern {
     const actionObjShouldBePreserved = chain(updateActions)
       .groupBy(val => getValueID(val.action))
       .mapValues(val => {
-        const updateValue = val.reduce((result, v) => result.merge(v.action.value), new Map());
+        const updateValue = val.reduce((result, v) => result.merge(v.action.payload.value), new Map());
         const lastActionObj = val[val.length - 1];
-        lastActionObj.action.value = updateValue;
+        lastActionObj.action.payload.value = updateValue;
         return {
           action: lastActionObj.action,
           index: lastActionObj.index
@@ -109,7 +109,7 @@ export default class CollectionPattern extends Pattern {
         return undefined;
       }
       if (action.type === 'UPDATE_ARRAY' && preservedObj) {
-        action.payload.value = preservedObj.action.value;
+        action.payload.value = preservedObj.action.payload.value;
       }
       return action;
     }).filter(action => !isUndefined(action));

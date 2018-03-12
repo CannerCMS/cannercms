@@ -98,10 +98,10 @@ export default class Bucket implements Middleware {
           path.split('/')[0] :
           path[0].split('/')[0];
         const value = fieldName ?
-          new Map().get(fieldName, mutatedValue && mutatedValue.get(fieldName)) :
+          new Map().set(fieldName, mutatedValue && mutatedValue.get(fieldName)) :
           mutatedValue;
         return {
-          type: 'UPDATE_OBJECT',
+          type: 'UPDATE_ARRAY',
           payload: {
             key,
             id,
@@ -120,7 +120,7 @@ export default class Bucket implements Middleware {
           path.split('/')[0] :
           path[0].split('/')[0];
         const value = fieldName ?
-          new Map().get(fieldName, mutatedValue && mutatedValue.get(fieldName)) :
+          new Map().set(fieldName, mutatedValue && mutatedValue.get(fieldName)) :
           mutatedValue;
         return {
           type: 'UPDATE_OBJECT',
