@@ -230,7 +230,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
         // $FlowFixMe
         return <div>
           {/* $FlowFixMe */}
-          <Com {...this.props} ref={(queryCom: React.Ref<typeof Com>) => {
+          <Com {...this.props} ref={(queryCom: React$Ref<typeof Com>) => {
             this.queryCom = queryCom;
           }} deploy={this.deploy} renderButton={renderButton}/>
           {

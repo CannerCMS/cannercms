@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import mapKeys from 'lodash/mapKeys';
 import {Select} from 'antd';
-import CSSModules from 'react-css-modules';
-import styles from './style/filter.scss';
 import isUndefined from 'lodash/isUndefined';
 const Option = Select.Option;
 import {injectIntl} from 'react-intl';
+import {FilterPlugin, Label} from './share';
 
 @injectIntl
-@CSSModules(styles)
 export default class Filter extends Component {
   static propTypes = {
     onChange: PropTypes.func,
@@ -38,8 +36,8 @@ export default class Filter extends Component {
     const {label, options, intl} = this.props;
     const placeholder = intl.formatMessage({id: 'query.filter.select.placeholder'});
     return (
-      <div styleName="filter-plugin">
-        <div styleName="label">{label}</div>
+      <FilterPlugin>
+        <Label>{label}</Label>
         <Select
           style={{width: '100%'}}
           placeholder={placeholder}
@@ -52,7 +50,7 @@ export default class Filter extends Component {
             </Option>
           ))}
         </Select>
-      </div>
+      </FilterPlugin>
     );
   }
 }

@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Input, Select} from 'antd';
-import CSSModules from 'react-css-modules';
-import styles from './style/filter.scss';
 import isNaN from 'lodash/isNaN';
 import isEmpty from 'lodash/isEmpty';
 import {injectIntl} from 'react-intl';
-
+import {FilterPlugin, Label} from './share';
 const Option = Select.Option;
 const InputGroup = Input.Group;
 const operators = [
@@ -18,7 +16,6 @@ const operators = [
   {symbol: '~', value: '$between'},
 ];
 
-@CSSModules(styles)
 @injectIntl
 export default class NumberRangeFilter extends Component {
   static propTypes = {
@@ -89,8 +86,8 @@ export default class NumberRangeFilter extends Component {
       id: 'query.numberRange.placeholder',
     });
     return (
-      <div styleName="filter-plugin">
-        <div styleName="label">{label}</div>
+      <FilterPlugin>
+        <Label>{label}</Label>
         <InputGroup compact>
           <Input
             style={{width: '40%'}}
@@ -117,7 +114,7 @@ export default class NumberRangeFilter extends Component {
             onChange={this.onInput}
           />
         </InputGroup>
-      </div>
+      </FilterPlugin>
     );
   }
 }

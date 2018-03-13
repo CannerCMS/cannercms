@@ -1,19 +1,35 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
+import styled from 'styled-components';
 import TextFilter from './text';
 import SelectFilter from './select';
 import NumberRangeFilter from './numberRange';
 // import DateRangeFilter from './dateRange';
 import {Button, Row, Col} from 'antd';
-import styles from './style/filter.scss';
-import './style/filter.antd.scss';
 import isUndefined from 'lodash/isUndefined';
 import {FormattedMessage} from 'react-intl';
 import defaultMessage from '../locale';
 
-@CSSModules(styles)
-export default class FilterGroup extends Component {
+const FilterRow = styled(Row)`
+  margin-bottom: 30px;
+  border: 1px #f8f8f8 solid;
+  padding: 15px;
+  margin-top: 20px;
+  box-shadow: 1px 1px 4px #eee;
+`;
+
+const FilterPlugins = styled.div`
+  flex: 1;
+  margin-right: 15px;
+  min-width: 100px;
+`;
+
+const ButtonCol = styled(Col)`
+  text-align: right;
+  padding-top: 16px;
+`;
+
+class FilterGroup extends Component {
   static propTypes = {
     schema: PropTypes.object,
     onChange: PropTypes.func,
@@ -48,7 +64,7 @@ export default class FilterGroup extends Component {
   }
 
   render() {
-    const {schema} = this.props;
+    const {schema, className} = this.props;
     const filters = schema.map((val) => {
       switch (val.type) {
         case 'select':
@@ -65,21 +81,39 @@ export default class FilterGroup extends Component {
       }
     });
     return (
-      <Row id="filter-plugin" styleName="filter" type="flex" justify="space-between" align="bottom">
+      <FilterRow className={className} type="flex" justify="space-between" align="bottom">
         <Col span={20}>
-          <div styleName="filter-plugins">
+          <FilterPlugins>
             {Object.keys(filters).map((key) => filters[key])}
-          </div>
+          </FilterPlugins>
         </Col>
-        <Col span={4} styleName="button-col">
+        <ButtonCol span={4}>
           <Button type="primary" icon="search" size="large" onClick={this.submit}>
             <FormattedMessage
               id="query.filter.search"
               defaultMessage={defaultMessage.en['query.filter.search']}
             />
           </Button>
-        </Col>
-      </Row>
+        </ButtonCol>
+      </FilterRow>
     );
   }
 }
+
+export default styled(FilterGroup)`
+  .ant-input,
+  .ant-select-selection {
+    height: 32px;
+    line-height: 32px;
+    border-radius: 20px;
+  }
+
+  .ant-select-selection__placeholder {
+    height: 28px;
+    line-height: 28px;      
+  }
+
+  .ant-select-dropdown {
+    border-radius: 2px !important;
+  }
+`

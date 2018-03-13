@@ -52,5 +52,3 @@ class CMSExample extends React.Component {
 ReactDOM.render(
   <CMSExample />
 , document.getElementById('root'));
-
-export default CMS;

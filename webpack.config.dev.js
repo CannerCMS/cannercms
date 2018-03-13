@@ -9,6 +9,11 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/docs/static/',
   },
+  resolve: {
+    alias: {
+      'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
+    }
+  },
   resolveLoader: {
      moduleExtensions: ["-loader"]
   },
@@ -38,7 +43,7 @@ module.exports = {
         use: [{
             loader: "style-loader" // creates style nodes from JS strings
         }, {
-            loader: "css-loader" // translates CSS into CommonJS
+            loader: "css-loader", // translates CSS into CommonJS
         }, {
             loader: "sass-loader" // compiles Sass to CSS
         }]

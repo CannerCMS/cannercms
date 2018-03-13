@@ -67,7 +67,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     };
   }
 
-  fetch(key: string, componentId: string, query: queryType, mutate: Mutate): Promise.resolve<*> {
+  fetch(key: string, componentId: string, query: queryType, mutate: Mutate): Promise<*> {
     return this.app.handleChange({
       request: {
         type: 'fetch',

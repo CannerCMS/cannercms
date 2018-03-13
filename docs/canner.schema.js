@@ -11,6 +11,8 @@ module.exports = {
       title: 'name',
       dataIndex: 'name'
     }]
+  }).addFilter('name', '姓名', {
+    type: 'text',
   }),
   breadcrumb: CannerTypes.array({
     name: CannerTypes.string().title('Name')

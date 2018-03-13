@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Input} from 'antd';
-import CSSModules from 'react-css-modules';
-import styles from './style/filter.scss';
 import isEmpty from 'lodash/isEmpty';
 import template from 'lodash/template';
 import escapeRegExp from 'lodash/escapeRegExp';
 import {injectIntl} from 'react-intl';
+import {FilterPlugin, Label} from './share';
 
 @injectIntl
-@CSSModules(styles)
 export default class TextFilter extends Component {
   static propTypes = {
     onChange: PropTypes.func,
@@ -43,14 +41,14 @@ export default class TextFilter extends Component {
     const {label, intl} = this.props;
     const placeholder = intl.formatMessage({id: 'query.filter.text.placeholder'});
     return (
-      <div styleName="filter-plugin">
-        <div styleName="label">{label}</div>
+      <FilterPlugin>
+        <Label>{label}</Label>
         <Input
           style={{width: '100%'}}
           placeholder={placeholder}
           onChange={(e) => this.onChange(e.target.value)}
         />
-      </div>
+      </FilterPlugin>
     );
   }
 }
