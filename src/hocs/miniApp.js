@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {MiniApp} from '../provider';
+import {MiniApp} from '../app';
 
 type Props = {
   id: string

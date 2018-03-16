@@ -1,11 +1,10 @@
-import LocalStorage from '../src/provider/endpoint/localStorage';
+import LocalStorage from '../src/app/endpoint/localStorage';
 import schema from './canner.schema.js';
-
 const endpoint = new LocalStorage({
-  schema: schema.schema
+  schema: schema.cannerSchema
 });
 
-const endpointMap = Object.keys(schema.schema).reduce((result, key) => {
+const endpointMap = Object.keys(schema.cannerSchema).reduce((result, key) => {
   result[key] = endpoint;
   return result;
 }, {});

@@ -1,3 +1,4 @@
 export {hocs} from './hocs';
 export {visitors} from './visitors';
-export {Provider, CMS} from './provider';
+export {default as CMS} from './components';
+export {default as Provder} from './components/Provider';

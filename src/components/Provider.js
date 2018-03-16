@@ -4,9 +4,9 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import App from '../app';
-import {Bucket, Cache, EndpointMiddleware, Store} from '../middleware';
-import type Endpoint from '../endpoint';
+import {App} from '../app';
+import {Bucket, Cache, EndpointMiddleware, Store} from '../app/middleware';
+import type Endpoint from '../app/endpoint';
 import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
 

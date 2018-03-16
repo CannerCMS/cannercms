@@ -1,7 +1,6 @@
 import App from '../src/app';
-import {Bucket, Cache, Fetcher, Store} from '../src/middleware';
-import ChangeAdaptor from '../src/changeAdaptor';
-import Endpoint from '../src/endpoint/localstorage';
+import {Bucket, Cache, Fetcher, Store} from '../src/app/middleware';
+import Endpoint from '../src/app/endpoint/localstorage';
 import {fromJS} from 'immutable';
 
 const schema = {
@@ -21,7 +20,6 @@ const schema = {
   },
 };
 const endpoint = new Endpoint({schema});
-const changeAdaptor = new ChangeAdaptor({});
 const bucket = new Bucket();
 const cache = new Cache();
 const store = new Store();

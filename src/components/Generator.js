@@ -12,10 +12,11 @@
  */
 
 import * as React from 'react';
+import Loadable from 'react-loadable';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
-import {generateId, createEmptyData, transformData} from '../utils';
+import {generateId, createEmptyData, transformData} from '../app/utils';
 
 function defaultHoc(Component) {
   return Component;
@@ -26,12 +27,12 @@ export type Node = {
   nodeType: string,
   hocs: Array<string>,
   children: Array<Node>,
-  component: React.ComponentType<*>
+  component: React.ComponentType<*>,
+  loader: Promise<*>
 }
 
 type Props = {
   componentTree: {[string]: Node},
-  components: {[string]: React.ComponentType<*>},
   hocs: {[string]: React.ComponentType<*>},
   containers: {[string]: React.ComponentType<*>},
   goTo: (path: string) => void,
@@ -82,7 +83,6 @@ export default class Generator extends React.PureComponent<Props, State> {
 
   static defaultProps = {
     componentTree: {},
-    components: {},
     containers: {},
     hocs: {}
   }
@@ -91,7 +91,7 @@ export default class Generator extends React.PureComponent<Props, State> {
   prerender = (node: Node): Node => {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
-    const {components, containers} = this.props;
+    const {containers} = this.props;
     let component: React.ComponentType<*> = (props) => {
       const {renderChildren, id} = props;
       return <div>
@@ -102,9 +102,10 @@ export default class Generator extends React.PureComponent<Props, State> {
       const uselessStringLength = 'container.'.length;
       component = get(containers, node.nodeType.slice(uselessStringLength), component);
     } else if (node.nodeType.startsWith('plugins')) { // TODO: need to fix, turn plugins to components in compiler
-      const uselessStringLength = 'plugins.'.length;
-      // eslint-disable-next-line
-      component = get(components, node.nodeType.slice(uselessStringLength), component);
+      component = Loadable({
+        loader: () => node.loader,
+        loading: () => <div>loading</div>,
+      });
       component = this.wrapByHOC(component, node.hocs.slice() || []);
     }
     node.component = component;

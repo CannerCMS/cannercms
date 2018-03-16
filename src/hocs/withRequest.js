@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {generateAction} from '../provider';
+import {generateAction} from '../app';
 import isArray from 'lodash/isArray';
 import type {RelationDef} from "./relationFactory";
 import {create} from "./relationFactory";

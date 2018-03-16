@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {List, fromJS} from 'immutable';
 import {isEqual} from 'lodash';
 import {Button} from 'antd';
-import {MiniApp, generateAction} from '../provider';
+import {MiniApp, generateAction} from '../app';
 
 type Props = {
   type: string,
