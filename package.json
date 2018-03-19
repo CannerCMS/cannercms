@@ -10,6 +10,7 @@
     "clean": "rimraf lib dist",
     "build:flow": "flow-copy-source -v -i '**/test/**' src lib",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
+    "build:watch": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --watch",
     "build": "npm run build:commonjs && npm run build:flow",
     "prepublish": "npm run clean && npm run check:src && npm run build",
     "check:src": "npm run lint",
@@ -34,7 +35,7 @@
   },
   "homepage": "https://github.com/Canner/react-cms-core#readme",
   "devDependencies": {
-    "@canner/canner-schema-loader": "^1.0.1",
+    "@canner/canner-schema-loader": "1.0.3",
     "@canner/cms-plugins-all": "^0.1.0-rc.35",
     "@canner/react-cms-containers": "0.0.5",
     "babel-cli": "^6.26.0",

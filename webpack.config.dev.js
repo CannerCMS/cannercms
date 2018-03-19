@@ -17,6 +17,8 @@ module.exports = {
   resolve: {
     alias: {
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
+      react: path.resolve(__dirname, 'node_modules', 'react'),
+      'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
     }
   },
   resolveLoader: {
@@ -39,6 +41,9 @@ module.exports = {
         test: /canner\.schema\.js$/,
         use: [{
           loader: '@canner/canner-schema-loader',
+          options: {
+            visitors: path.resolve('lib', 'visitors')
+          }
         }, {
           loader: 'babel-loader',
         }],

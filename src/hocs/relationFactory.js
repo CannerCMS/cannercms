@@ -31,7 +31,7 @@ type ManyToManyForeignKeyMapRelationDef = {
   pickOne?: string
 };
 
-type Data<V> = {
+export type Data<V> = {
   entityId: string,
   fieldValue: V
 };

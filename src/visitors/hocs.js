@@ -5,9 +5,7 @@ const visitors = {
       path.node.hocs = ['withTitleAndDescription']; // the bottom HOC
 
       path.node.hocs.push('withRequest');
-      if (path.node.relation) {
-        path.node.hocs.push('relation');
-      }
+      path.node.hocs.push('relation');
 
       /**
        *  cache the popup data!

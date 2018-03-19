@@ -90,17 +90,17 @@
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@canner/canner-config/-/canner-config-0.1.2.tgz#5de7223ffe8df1cad9b71634cf211a9af0ac07dd"
 
-"@canner/canner-schema-loader@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@canner/canner-schema-loader/-/canner-schema-loader-1.0.1.tgz#f08a4df0b826979bc5c3f9799184aa0fe180cf7f"
+"@canner/canner-schema-loader@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@canner/canner-schema-loader/-/canner-schema-loader-1.0.3.tgz#44e0c287ab7a2e50534f4c1fee0ba76336bdd76c"
   dependencies:
-    "@canner/canner-types" "0.5.0-rc.1"
+    "@canner/canner-types" "0.5.0-rc.3"
     "@canner/qa-compiler" "^0.1.0-rc.7"
     schema-utils "^0.4.5"
 
-"@canner/canner-types@0.5.0-rc.1":
-  version "0.5.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@canner/canner-types/-/canner-types-0.5.0-rc.1.tgz#11508e6614b6b4fef9b2f145347718a0694e4aab"
+"@canner/canner-types@0.5.0-rc.3":
+  version "0.5.0-rc.3"
+  resolved "https://registry.yarnpkg.com/@canner/canner-types/-/canner-types-0.5.0-rc.3.tgz#3cf593ec6db5fde05c41b48e2333f59080727739"
 
 "@canner/cms-locales@^0.0.28":
   version "0.0.28"
