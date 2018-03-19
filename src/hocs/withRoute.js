@@ -104,10 +104,8 @@ export default function withRoute(Com: React$Component<*>) {
             renderType = 1;
           }
           if (params.op === 'create') {
-            const valuePath = ((id.split('/').slice(1): any): Array<string | number>);
-            valuePath[0] = Number(valuePath[0]);
             // $FlowFixMe
-            index = rootValue && rootValue.getIn(valuePath).size - 1;
+            index = rootValue && rootValue.size - 1;
             renderType = 1;
           }
         }
@@ -143,40 +141,6 @@ export default function withRoute(Com: React$Component<*>) {
       }
       
       return null;
-    //   if (restRoutes.length === 0) {
-    //     // block encounters the id with plugins will render!
-    //     return <Com {...this.props} routes={restRoutes} />;
-    //   } else if (restRoutes[0] === name) {
-    //     restRoutes.shift();
-    //     if (type === 'array') {
-    //       if (restRoutes.length > 0) {
-    //         let recordIndex = 0;
-    //         // find recordIndex and just render their children
-    //         if (paths.length === 0) {
-    //           // first layer
-    //           const recordId = restRoutes.shift();
-    //           recordIndex = rootValue.findIndex(record => record.get('_id') === recordId);
-    //         } else {
-    //           recordIndex = restRoutes.shift();
-    //         }
-
-    //         return <div>
-    //           {renderChildren({id: `${id}/${recordIndex}`, routes: restRoutes})}
-    //         </div>;
-    //         // return <Com {...this.props} routes={restRoutes} openIndex={recordIndex} />;
-    //       }
-    //       if (params.op === 'create') {
-    //         const size = rootValue.getIn(id.split('/').slice(1)).size - 1;
-    //         return <div>
-    //           {renderChildren({id: `${id}/${size}`, routes: restRoutes})}
-    //         </div>;
-    //       }
-    //       return <Com {...this.props} routes={restRoutes} />;
-    //     }
-    //     return <Com {...this.props} routes={restRoutes} />;
-    //   }
-    //   return null;
-    // }
     }
   };
 }

@@ -18,11 +18,13 @@ export default (Plugin) => {
 
     static childContextTypes = {
       rootValue: PropTypes.any,
+      componentId: PropTypes.string
     }
 
     getChildContext() {
       return {
         rootValue: this.state.value,
+        componentId: this.componentId
       };
     }
 

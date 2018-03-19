@@ -70,18 +70,26 @@ export default function mutate(originValue: any, action: MutateAction): any {
       if (index === -1) {
         return collection;
       }
-      const restPath = path ? [index].concat(path.split('/')) : [index];
-      collection = collection.setIn(restPath, value);
+
+      if (path) {
+        collection = collection.setIn([index].concat(path.split('/')), value);
+      } else {
+        collection = collection.setIn([index], collection.get(index).merge(value));
+      }
       return collection;
     }
     case 'UPDATE_OBJECT': {
       if (isNotMap(originValue)) {
         return originValue;
       }
+   
       const {path, value} = action.payload;
-      const restPath = path ? path.split('/') : [];
       let mapData = originValue;
-      mapData = mapData.setIn(restPath, value);
+      if (path) {
+        mapData = mapData.setIn(path.split('/'), value);
+      } else {
+        mapData = mapData.merge(value);
+      }
       return mapData;
     }
     case 'DELETE_ARRAY_ITEM': {

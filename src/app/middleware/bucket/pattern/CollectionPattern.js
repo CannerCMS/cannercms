@@ -75,7 +75,6 @@ export default class CollectionPattern extends Pattern {
       }
       return undefined;
     }).filter((actionWithIndex) => !isUndefined(actionWithIndex));
-
     // 利用 id 分類
     // merge 修改的資料
     // {
@@ -110,6 +109,7 @@ export default class CollectionPattern extends Pattern {
       }
       if (action.type === 'UPDATE_ARRAY' && preservedObj) {
         action.payload.value = preservedObj.action.payload.value;
+        action.payload.mutatedValue = preservedObj.action.payload.mutatedValue;
       }
       return action;
     }).filter(action => !isUndefined(action));
@@ -145,7 +145,7 @@ export default class CollectionPattern extends Pattern {
         if (action.type === 'CREATE_ARRAY_ITEM') {
           const lastAction = createActionGroup[getValueID(action)];
           if (lastAction.type === 'UPDATE_ARRAY') {
-            action.payload.value = lastAction.payload.value;
+            action.payload.value = lastAction.payload.mutatedValue;
           }
         }
         return action;

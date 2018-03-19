@@ -107,6 +107,7 @@ export default class Bucket implements Middleware {
             id,
             path: '',
             value,
+            mutatedValue
           },
         };
       }

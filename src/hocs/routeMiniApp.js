@@ -98,7 +98,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
         changed: false
       };
       if (routesEndAtMe && isCreateOp) {
-        this.create(props);
+        this.reset().then(() => this.create(props));
       }
     }
 
@@ -117,7 +117,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
           buttonType: isCreateOp ? CREATE : UPDATE
         }, () => {
           if (routesEndAtMe && isCreateOp) {
-            this.create(nextProps);
+            this.reset().then(() => this.create(nextProps));
           }
         });
       }

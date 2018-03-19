@@ -40,8 +40,9 @@ export default class ObservableStore implements Middleware {
           action.payload.mutatedValue = mutatedValue;
           request.action = action;
           ctx.request = request;
+          return next();
         }
-        return next();
+        break;
       }
       case 'reset':
       case 'fetch': {

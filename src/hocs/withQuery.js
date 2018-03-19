@@ -55,7 +55,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     getChildContext() {
       return {
-        componentId: this.context.componentId || this.props.id
+        componentId: this.componentId
       };
     }
 

@@ -33,7 +33,8 @@ export default function withMiniApp(Com: React.ComponentType<*>) {
       request: PropTypes.func,
       fetch: PropTypes.func,
       subscribe: PropTypes.func,
-      deploy: PropTypes.func
+      deploy: PropTypes.func,
+      componentId: PropTypes.string
     }
 
     constructor(props: Props, context: {request: Function, fetch: Function, subscribe: Function}) {

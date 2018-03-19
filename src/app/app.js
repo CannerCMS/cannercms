@@ -44,21 +44,19 @@ export default class App {
 
   handleChange(context: ContextType): Promise<any> {
     let requestId = '';
-    if (process.env.NODE_ENV === 'development' && context.request.type !== 'subscribe') {
+    const type = context.request.type;
+    const style = consoleStyle(type);
+    if (process.env.NODE_ENV === 'development' && type !== 'subscribe') {
       requestId = Math.random().toString(36).substr(-3);
       // eslint-disable-next-line
-      console.log(`-----------request-${requestId}-start------------`);
-      // eslint-disable-next-line
-      console.time(`request-${requestId}`);
+      console.log(`%c -----------request-${requestId}-start------------`, style);
     }
     return this.fn(context).then(() => {
-      if (process.env.NODE_ENV === 'development' && context.request.type !== 'subscribe') {
+      if (process.env.NODE_ENV === 'development' && type !== 'subscribe') {
         // eslint-disable-next-line
-        console.timeEnd(`request-${requestId}`);
+        console.log(`%c type: ${type}, key: ${context.request.key},`, style, 'contenxt:', context);
         // eslint-disable-next-line
-        console.log(`type: ${context.request.type}, key: ${context.request.key},`, 'contenxt:', context);
-        // eslint-disable-next-line
-        console.log(`-----------request-${requestId}-finished------------`);
+        console.log(`%c -----------request-${requestId}-finished------------`, style);
       }
       return context;
     }).catch((e) => {
@@ -66,9 +64,7 @@ export default class App {
       console.log(e);
       // eslint-disable-next-line
       console.log(context);
-      if (process.env.NODE_ENV === 'development' && context.request.type !== 'subscribe') {
-        // eslint-disable-next-line
-        console.timeEnd(`request-${requestId}`);
+      if (process.env.NODE_ENV === 'development' && type !== 'subscribe') {
         // eslint-disable-next-line
         console.log(`-----------request-${requestId}-failed------------`);
       }
@@ -76,3 +72,17 @@ export default class App {
     });
   }
 }
+
+function consoleStyle(type) {
+  switch (type) {
+    case 'write':
+      return 'color: red;';
+    case 'deploy':
+      return 'color: blue;';
+    case 'fetch':
+      return 'color: orange;';
+    default:
+      return '';
+  }
+}
+
