@@ -1,6 +1,11 @@
 const path = require('path');
 
 module.exports = {
+  devServer: {
+    historyApiFallback: {
+      index: '/docs/'
+    }
+  },
   entry: {
     index: './docs/index.js',
   },
