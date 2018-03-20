@@ -7,12 +7,6 @@ const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type Props = {
   id: string,
-  isEntity: boolean,
-  name: string,
-  title: string, // only used in withTitleAndDesription hoc
-  description: string, // only used in withTitleAndDesription hoc
-  layout?: 'horizontal' | 'vertical', // only used in withTitleAndDesription hoc
-  [string]: any
 };
 
 type State = {

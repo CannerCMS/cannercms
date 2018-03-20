@@ -76,7 +76,7 @@ export default function withRoute(Com: React$Component<*>) {
     }
 
     updateState = (props: Props) => {
-      const {type, rootValue, name, id, params, routes} = props;
+      const {type, rootValue, name, id, params, routes} = props || this.props;
       const restRoutes = routes ? routes.slice() : [];
       let {index, renderType} = this.state;
       let query = {};
@@ -117,7 +117,7 @@ export default function withRoute(Com: React$Component<*>) {
         query,
         canRender: false
       });
-      this.context.fetch(key, this.context.componentId, {...this.context.query, ...query})
+      return this.context.fetch(key, this.context.componentId, {...this.context.query, ...query})
         .then(() => {
           this.setState({canRender: true});
         });

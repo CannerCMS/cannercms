@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hocTemplate should render 1`] = `
+<MockComponent
+  fetchRelation={[Function]}
+  id="POSTS"
+  onChange={[Function]}
+  rootValue={
+    Immutable.List [
+      Immutable.Map {
+        "_id": "id1",
+        "title": "post1",
+      },
+    ]
+  }
+  value={
+    Immutable.List [
+      Immutable.Map {
+        "_id": "id1",
+        "title": "post1",
+      },
+    ]
+  }
+/>
+`;

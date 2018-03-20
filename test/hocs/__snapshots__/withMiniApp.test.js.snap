@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hocTemplate should render and new an app and fetchData 1`] = `
+<MockComponent
+  id="posts"
+/>
+`;

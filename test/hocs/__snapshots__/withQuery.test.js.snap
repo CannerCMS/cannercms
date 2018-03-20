@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`with Query should render 1`] = `
+<Spin
+  indicator={
+    <Icon
+      spin={true}
+      style={
+        Object {
+          "fontSize": 24,
+        }
+      }
+      type="loading"
+    />
+  }
+  prefixCls="ant-spin"
+  size="default"
+  spinning={true}
+  wrapperClassName=""
+/>
+`;

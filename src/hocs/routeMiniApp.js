@@ -48,7 +48,7 @@ const genDeployButton = deploy => function DeployButton({
   key,
   id,
   callback
-}) {
+} = {}) {
   return <Button disabled={disabled} style={style} type="primary" onClick={() => deploy(key, id, callback)}>
     {buttonType === CREATE ? '新增' : '更新'}
   </Button>;
@@ -187,10 +187,10 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
     }
 
     reset = (): Promise<*> => {
-      const {id, query} = this.props;
+      const {id} = this.props;
       const key = id.split('/')[0];
       if (this.state.app) {
-        return this.state.app.reset(key, query) // reset the store and cache in miniapp
+        return this.state.app.reset(key) // reset the store and cache in miniapp
           // $FlowFixMe
           .then(() => this.queryCom && this.queryCom.queryData()) // ask component to fetch new data
           .then(this.resetButton);
@@ -219,7 +219,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
 
     render() {
       const {canBeRendered, routesEndAtMe, isCreateOp, buttonType, changed} = this.state;
-      const {ui, routes, params} = this.props;
+      const {ui, routes, params, renderChildren} = this.props;
       const atArrayOutSide = (ui === 'popup' || ui === 'tab' || ui === 'panel' || ui === 'breadcrumb') && routesEndAtMe && routes.length === 1 && !isCreateOp;
       const buttonStyle = {
         left: '100%',
@@ -231,8 +231,12 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
         return <div>
           {/* $FlowFixMe */}
           <Com {...this.props} ref={(queryCom: React$Ref<typeof Com>) => {
-            this.queryCom = queryCom;
-          }} deploy={this.deploy} renderButton={renderButton}/>
+              this.queryCom = queryCom;
+            }} deploy={this.deploy} renderButton={renderButton}
+            renderChildren={(childrenProps) => <React.Fragment>
+              {renderChildren(childrenProps)}
+            </React.Fragment>}
+          />
           {
             routesEndAtMe && !atArrayOutSide ?
               // $FlowFixMe

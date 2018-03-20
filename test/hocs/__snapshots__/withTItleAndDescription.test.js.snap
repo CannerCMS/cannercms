@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withTitleAndDescription should render horizontal 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "margin": "16px 0",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "flex": 1,
+        "flexDirection": "column",
+        "marginRight": 8,
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": 400,
+        }
+      }
+    >
+      POSTS
+    </div>
+    <div
+      style={
+        Object {
+          "color": "#aaa",
+          "fontSize": 12,
+          "marginTop": 16,
+        }
+      }
+    >
+      many posts
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "flex": 2,
+      }
+    }
+  >
+    <MockComponent
+      description="many posts"
+      id="posts"
+      layout="horizontal"
+      title="POSTS"
+    />
+  </div>
+</div>
+`;
+
+exports[`withTitleAndDescription should render horizontal 2`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "margin": "16px 0",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "display": "flex",
+        "flex": 1,
+        "flexDirection": "column",
+        "marginRight": 8,
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": 400,
+        }
+      }
+    >
+      POSTS
+    </div>
+    <div
+      style={
+        Object {
+          "color": "#aaa",
+          "fontSize": 12,
+          "marginTop": 16,
+        }
+      }
+    >
+      many posts
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "flex": 2,
+      }
+    }
+  >
+    <MockComponent
+      description="many posts"
+      id="posts"
+      layout="horizontal"
+      title="POSTS"
+    />
+  </div>
+</div>
+`;
+
+exports[`withTitleAndDescription should render vertical by default 1`] = `
+<div
+  style={
+    Object {
+      "margin": "16px 0 0",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "fontSize": 18,
+          "fontWeight": 400,
+        }
+      }
+    >
+      POSTS
+    </div>
+    <div
+      style={
+        Object {
+          "color": "#aaa",
+          "fontSize": 12,
+          "marginLeft": 16,
+        }
+      }
+    >
+      many posts
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "marginBottom": 8,
+      }
+    }
+  >
+    <MockComponent
+      description="many posts"
+      id="posts"
+      title="POSTS"
+    />
+  </div>
+</div>
+`;

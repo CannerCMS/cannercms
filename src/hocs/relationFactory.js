@@ -312,7 +312,9 @@ export const create = (relationDef: RelationDef) => {
   }
 };
 
-export const fetchFromRelation = (id: string, relationDef: RelationDef, data: Data<any>, fetch: Fetch, pagination: {start: number, limit: number}): Promise<any> => {
+export type FetchFromRelationDef = (id: string, relationDef: RelationDef, data: Data<any>, fetch: Fetch, pagination: {start: number, limit: number}) => Promise<any>;
+
+export const fetchFromRelation: FetchFromRelationDef = (id, relationDef, data, fetch, pagination) => {
   const relation = create(relationDef);
   return relation.fetch(fetch, id, data, pagination)
     .then(ctx => ctx.response.body);

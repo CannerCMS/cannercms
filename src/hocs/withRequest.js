@@ -9,14 +9,10 @@ import {create} from "./relationFactory";
 
 type Props = {
   id: string,
-  isEntity: boolean,
-  name: string,
-  title: string, // only used in withTitleAndDesription hoc
-  description: string, // only used in withTitleAndDesription hoc
-  layout?: 'horizontal' | 'vertical', // only used in withTitleAndDesription hoc
-  [string]: any,
+  value: any,
   rootValue: any,
-  relation?: RelationDef
+  relation?: RelationDef,
+  fetchRelation: () => Promise<*>
 };
 
 type changeQueue = Array<{id: string | {firstId: string, secondId: string}, type: any, value: any}>;
@@ -33,18 +29,18 @@ export default function withRequest(Com: React.ComponentType<*>) {
       if (isArray(id)) {
         const changeQueue = id;
         // $FlowFixMe
-        changeQueue.forEach(args => {
+        return Promise.all(changeQueue.map(args => {
           const {id, type, value} = args;
-          this.onChange(id, type, value);
-        });
-        return;
+          return this.onChange(id, type, value);
+        }));
       }
       const {request} = this.context;
       const {rootValue, relation, value} = this.props;
       // generate action
+      // $FlowFixMe: id sould string here
       const action = createAction(relation, id, type, delta, rootValue, value);
       if (!action) {
-        return;
+        throw new Error('invalid change');
       }
 
       // quick and temp solution
@@ -55,15 +51,12 @@ export default function withRequest(Com: React.ComponentType<*>) {
     }
 
     render() {
-      // default onChange function is pass by this hoc not parent
-      // but in some situation maybe parent plugin want control the data like popup modal.
-      const {onChange} = this.props;
-      return <Com {...this.props} onChange={onChange || this.onChange} />;
+      return <Com {...this.props} onChange={this.onChange} />;
     }
   };
 }
 
-function createAction(relation, id, type, delta, rootValue, value) {
+export function createAction(relation: any, id: string, type: 'create' | 'update' | 'delete' | 'swap', delta: any, rootValue: any, value: any) {
   const defaultReturn = () => generateAction(id, type, delta, rootValue);
   if (!relation) {
     return defaultReturn();

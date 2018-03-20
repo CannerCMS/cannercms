@@ -5,20 +5,19 @@ import PropTypes from 'prop-types';
 import {Map, List} from 'immutable';
 import isEqual from 'lodash/isEqual';
 import {fetchFromRelation} from "./relationFactory";
-import type {RelationDef} from "./relationFactory";
+import type {RelationDef, FetchFromRelationDef} from "./relationFactory";
 import isObject from 'lodash/isObject';
 import pick from 'lodash/pick';
 
 type Props = {
   id: string,
   rootValue: any,
-  isEntity: boolean,
   name: string,
-  title: string, // only used in withTitleAndDesription hoc
-  description: string, // only used in withTitleAndDesription hoc
-  layout?: 'horizontal' | 'vertical', // only used in withTitleAndDesription hoc
-  [string]: any,
-  relation: RelationDef
+  relation: RelationDef,
+  ui: string,
+  pattern: string,
+  value: any,
+  items?: any
 };
 
 type State = {
@@ -26,7 +25,11 @@ type State = {
   canRender: boolean
 };
 
-export default function relation(Com: React.ComponentType<*>) {
+export default function createWithRelation(Com: React.ComponentType<*>) {
+  return withRelation(Com, fetchFromRelation);
+}
+
+export function withRelation(Com: React.ComponentType<*>, fetchFromRelation: FetchFromRelationDef) {
   return class ComponentWithRelation extends React.PureComponent<Props, State> {
     relationList: Array<{
       __key__: string,
@@ -82,7 +85,7 @@ export default function relation(Com: React.ComponentType<*>) {
             canRender: true
           });
         });
-      } else if ((ui === 'breadcrumb' || ui === 'popup') && pattern === 'array') {
+      } else if ((ui === 'breadcrumb' || ui === 'popup') && pattern === 'array' && items) {
         items.__key__ = name;
         return Promise.all(value.map(v => {
           return Promise.all(this.relationList.map(item => {

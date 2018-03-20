@@ -8,7 +8,11 @@ type Props = {
   id: string
 };
 
-export default function withMiniApp(Com: React.ComponentType<*>) {
+export function createWithMiniApp(Com: React.ComponentType<*>) {
+  return withMiniApp(Com, MiniApp);
+}
+
+export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
   return class ComponentWithMiniApp extends React.Component<Props> {
     app: MiniApp;
     static childContextTypes = {
@@ -69,8 +73,7 @@ export default function withMiniApp(Com: React.ComponentType<*>) {
     }
 
     render() {
-      const {id} = this.props;
-      return <Com {...this.props} id={id} />;
+      return <Com {...this.props} />;
     }
   };
 }
