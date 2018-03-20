@@ -20,7 +20,8 @@ type Props = {
   },
   createEmptyData: Function,
   items: {[string]: any},
-  query: {[string]: any}
+  query: {[string]: any},
+  renderChildren: Function
 };
 
 type State = {
@@ -40,19 +41,6 @@ type Context = {
 
 const CREATE = 'create';
 const UPDATE = 'update';
-
-const genDeployButton = deploy => function DeployButton({
-  disabled = false,
-  style = {},
-  buttonType = UPDATE,
-  key,
-  id,
-  callback
-} = {}) {
-  return <Button disabled={disabled} style={style} type="primary" onClick={() => deploy(key, id, callback)}>
-    {buttonType === CREATE ? '新增' : '更新'}
-  </Button>;
-};
 
 export default function routeMiniApp(Com: React.ComponentType<*>) {
   return class ComponentWithRouteMiniApp extends React.Component<Props, State> {
@@ -225,22 +213,24 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
         left: '100%',
         transform: 'translateX(-100%)'
       };
-      const renderButton = genDeployButton(this.deploy);
+      const renderDepolyoButton = genDeployButton(this.deploy);
       if (canBeRendered) {
         // $FlowFixMe
         return <div>
           {/* $FlowFixMe */}
           <Com {...this.props} ref={(queryCom: React$Ref<typeof Com>) => {
               this.queryCom = queryCom;
-            }} deploy={this.deploy} renderButton={renderButton}
-            renderChildren={(childrenProps) => <React.Fragment>
+            }} deploy={this.deploy} renderButton={renderDepolyoButton}
+            renderChildren={(childrenProps, deployButtonProps, cancelButtonProps) => <React.Fragment>
               {renderChildren(childrenProps)}
+              {renderDepolyoButton(deployButtonProps)}
+              {renderCancelButton(cancelButtonProps)}
             </React.Fragment>}
           />
           {
             routesEndAtMe && !atArrayOutSide ?
               // $FlowFixMe
-              renderButton({
+              renderDepolyoButton({
                 disabled: !changed,
                 style: buttonStyle,
                 buttonType,
@@ -254,5 +244,20 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       }
       return null;
     }
+  };
+}
+
+function genDeployButton(deploy) {
+  return function DeployButton({
+    disabled = false,
+    style = {},
+    buttonType = UPDATE,
+    key,
+    id,
+    callback
+  } = {}) {
+    return <Button disabled={disabled} style={style} type="primary" onClick={() => deploy(key, id, callback)}>
+      {buttonType === CREATE ? '新增' : '更新'}
+    </Button>;
   };
 }
