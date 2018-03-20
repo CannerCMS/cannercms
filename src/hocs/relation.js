@@ -58,12 +58,14 @@ export default function relation(Com: React.ComponentType<*>) {
       let nextValue = nextProps.value;
       thisValue = (thisValue && thisValue.toJS) ? thisValue.toJS() : thisValue;
       nextValue = (nextValue && nextValue.toJS) ? nextValue.toJS() : nextValue;
-      console.log('-------------');
-      console.log(nextValue.slice());
-      console.log(thisValue.slice());
-      console.log('-------------');
-      if ((relation || ((ui === 'breadcrumb' || ui === 'popup') && pattern === 'array')) && !isEqual(thisValue, nextValue)) {
-        // this.fetchRelationValue(nextProps, {start: 0, limit: 10});
+      if ((relation || ((ui === 'breadcrumb' || ui === 'popup') && pattern === 'array'))) {
+        if (!isEqual(thisValue, nextValue)){
+          this.fetchRelationValue(nextProps, {start: 0, limit: 10});
+        }
+      } else {
+        this.setState({
+          value: nextProps.value
+        });
       }
     }
 
@@ -97,7 +99,7 @@ export default function relation(Com: React.ComponentType<*>) {
               entityId: getParentId(rootValue, id),
               fieldValue: isOneToOne || isManyToOne ? idList[0] : idList
             }
-            return fetchFromRelation(id, relation, data, fetch, pagination || {start: 0, limit: 10})
+            return fetchFromRelation(`${id}/__RELATION__`, relation, data, fetch, pagination || {start: 0, limit: 10})
               .then(data => ({
                 __key__,
                 data
