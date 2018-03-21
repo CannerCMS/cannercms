@@ -63,11 +63,12 @@ export default class MiniApp {
     });
   }
 
-  reset = (key: string, query: {[string]: any}) => {
+  reset = (key?: string, id?: string, query?: {[string]: any}) => {
     return this.app.handleChange({
       request: {
         type: 'reset',
         key,
+        id,
         query,
         componentId: key,
       },

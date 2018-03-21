@@ -98,9 +98,13 @@ describe('hocTemplate', () => {
     });
     wrapper.render();
     expect(mockRenderChildren).toHaveBeenCalledWith({}, {
-      onClick: wrapper.instance().deploy
+      onClick: wrapper.instance().deploy,
+      key: props.id,
+      id: undefined
     }, {
-      onClick: wrapper.instance().app.reset
+      onClick: wrapper.instance().reset,
+      key: props.id,
+      id: undefined
     })
   });
 });

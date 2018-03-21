@@ -3,13 +3,15 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {MiniApp} from '../app';
+import type {Map} from 'immutable';
 
 type Props = {
   id: string,
+  value: Map<string, *>,
   renderChildren: (childrenProps: Object, deployButtonProps: Object, cancelButtonProps: Object) => React.Node
 };
 
-export function createWithMiniApp(Com: React.ComponentType<*>) {
+export default function createWithMiniApp(Com: React.ComponentType<*>) {
   return withMiniApp(Com, MiniApp);
 }
 
@@ -21,7 +23,12 @@ export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
       subscribe: PropTypes.func,
       request: PropTypes.func,
       deploy: PropTypes.func,
-      reset: PropTypes.func
+      reset: PropTypes.func,
+      query: PropTypes.shape({
+        filter: PropTypes.any,
+        sort: PropTypes.any,
+        pagination: PropTypes.any
+      }),
     };
 
     getChildContext() {
@@ -67,17 +74,27 @@ export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
       this.app.fetch(id.split('/')[0], componentId, query);
     }
 
-    deploy = (key?: string, id?: string): Promise<*> => {
+    deploy = (key?: string, id?: string, callback?: Function): Promise<*> => {
       return this.app.deploy(key, id).then(() => {
-        return this.context.deploy(key, id);
+        return this.context.deploy(key, id).then(callback);
       });
     }
 
+    reset = (key?: string, id?: string, callback?: Function): Promise<*> => {
+      return this.app.reset(key, id, this.context.query).then(callback)
+    }
+
     render() {
-      const {renderChildren} = this.props;
+      const {renderChildren, id, value} = this.props;
+      const key = id.split('/')[0];
+      const recordId = value && value.get('_id');
       const newRenderChildren = (childrenProps = {}, deployProps = {}, cancelProps = {}) => {
+        deployProps.key = deployProps.key || key;
+        deployProps.id = deployProps.id || recordId;
         deployProps.onClick = this.deploy;
-        cancelProps.onClick = this.app.reset;
+        cancelProps.key = cancelProps.key || key;
+        cancelProps.id = cancelProps.id || recordId;
+        cancelProps.onClick = this.reset;
         return renderChildren(childrenProps, deployProps, cancelProps);
       };
       return <Com {...this.props} renderChildren={newRenderChildren}/>;
