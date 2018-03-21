@@ -1,0 +1,307 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`with route mini app should not renderButton when first opup, breadcrumb 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="route"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "route",
+      ]
+    }
+    type="array"
+    ui="popup"
+  />
+</div>
+`;
+
+exports[`with route mini app should not renderButton when first opup, breadcrumb 2`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="route"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "route",
+      ]
+    }
+    type="array"
+    ui="breadcrumb"
+  />
+</div>
+`;
+
+exports[`with route mini app should not renderButton when first tab 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="tab"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "tab",
+      ]
+    }
+    type="array"
+    ui="tab"
+  />
+</div>
+`;
+
+exports[`with route mini app should not renderButton when nested popup, breadcrumb 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="route"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "route",
+      ]
+    }
+    type="array"
+    ui="popup"
+  />
+</div>
+`;
+
+exports[`with route mini app should not renderButton when nested popup, breadcrumb 2`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="route"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "route",
+      ]
+    }
+    type="array"
+    ui="breadcrumb"
+  />
+</div>
+`;
+
+exports[`with route mini app should not renderButton when nested tab, when route end at parent 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="info/tab"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={Array []}
+    type="array"
+    ui="tab"
+  />
+</div>
+`;
+
+exports[`with route mini app should not renderButton when routes end at children 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="posts"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "posts",
+        "<postId>",
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`with route mini app should not renderButton when routes end at parent 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="posts/<postId>/title"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={Array []}
+  />
+</div>
+`;
+
+exports[`with route mini app should not renderButton when routes end at parent, with nested popup, breadcrumb 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="route/route2"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "route2",
+      ]
+    }
+    type="array"
+    ui="popup"
+  />
+</div>
+`;
+
+exports[`with route mini app should not renderButton when routes end at parent, with nested popup, breadcrumb 2`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="route/route2"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "route2",
+      ]
+    }
+    type="array"
+    ui="breadcrumb"
+  />
+</div>
+`;
+
+exports[`with route mini app should render 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="posts"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+  />
+</div>
+`;
+
+exports[`with route mini app should renderButton when routedEndAtMe 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="posts"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "posts",
+      ]
+    }
+  />
+  <React.Fragment>
+    <Button
+      disabled={true}
+      ghost={false}
+      loading={false}
+      onClick={[Function]}
+      prefixCls="ant-btn"
+      style={
+        Object {
+          "left": "100%",
+          "transform": "translateX(-100%)",
+        }
+      }
+      type="primary"
+    >
+      新增
+    </Button>
+    <Button
+      disabled={true}
+      ghost={false}
+      loading={false}
+      onClick={[Function]}
+      prefixCls="ant-btn"
+      style={
+        Object {
+          "left": "100%",
+          "transform": "translateX(-100%)",
+        }
+      }
+    >
+      取消
+    </Button>
+  </React.Fragment>
+</div>
+`;
+
+exports[`with route mini app should renderButton when string of array 1`] = `
+<div>
+  <MockComponent
+    createEmptyData={[Function]}
+    deploy={[Function]}
+    id="tags"
+    params={Object {}}
+    renderButton={[Function]}
+    renderChildren={[Function]}
+    routes={
+      Array [
+        "tags",
+      ]
+    }
+    type="array"
+    ui="tags"
+  />
+  <React.Fragment>
+    <Button
+      disabled={true}
+      ghost={false}
+      loading={false}
+      onClick={[Function]}
+      prefixCls="ant-btn"
+      style={
+        Object {
+          "left": "100%",
+          "transform": "translateX(-100%)",
+        }
+      }
+      type="primary"
+    >
+      新增
+    </Button>
+    <Button
+      disabled={true}
+      ghost={false}
+      loading={false}
+      onClick={[Function]}
+      prefixCls="ant-btn"
+      style={
+        Object {
+          "left": "100%",
+          "transform": "translateX(-100%)",
+        }
+      }
+    >
+      取消
+    </Button>
+  </React.Fragment>
+</div>
+`;

@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import {MiniApp} from '../app';
 
 type Props = {
-  id: string
+  id: string,
+  renderChildren: (childrenProps: Object, deployButtonProps: Object, cancelButtonProps: Object) => React.Node
 };
 
 export function createWithMiniApp(Com: React.ComponentType<*>) {
@@ -73,7 +74,13 @@ export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
     }
 
     render() {
-      return <Com {...this.props} />;
+      const {renderChildren} = this.props;
+      const newRenderChildren = (childrenProps = {}, deployProps = {}, cancelProps = {}) => {
+        deployProps.onClick = this.deploy;
+        cancelProps.onClick = this.app.reset;
+        return renderChildren(childrenProps, deployProps, cancelProps);
+      };
+      return <Com {...this.props} renderChildren={newRenderChildren}/>;
     }
   };
 }
