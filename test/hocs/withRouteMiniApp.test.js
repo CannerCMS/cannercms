@@ -39,7 +39,6 @@ describe('with route mini app', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['posts']}
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(2);
   });
 
@@ -47,7 +46,6 @@ describe('with route mini app', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['posts', '<postId>']}
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(0);
   });
 
@@ -56,7 +54,6 @@ describe('with route mini app', () => {
       routes={[]}
       id="posts/<postId>/title"
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(0);
   });
 
@@ -67,8 +64,7 @@ describe('with route mini app', () => {
       ui="tab"
       type="array"
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-    expect(wrapper.find('Button').length).toBe(0);
+    expect(wrapper.find('Button').length).toBe(2);
   });
 
   it('should not renderButton when nested tab, when route end at parent', () => {
@@ -78,7 +74,6 @@ describe('with route mini app', () => {
       ui="tab"
       type="array"
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(0);
   });
 
@@ -89,7 +84,6 @@ describe('with route mini app', () => {
       ui="tags"
       type="array"
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(2);
   });
 
@@ -98,14 +92,12 @@ describe('with route mini app', () => {
       routes={['route']}
       id="route"
       ui="popup"
-      type="array"      
+      type="array"
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(0);
     wrapper.setProps({
       ui: "breadcrumb"
     })
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(0);
   });
 
@@ -116,12 +108,10 @@ describe('with route mini app', () => {
       ui="popup"
       type="array"
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(0);
     wrapper.setProps({
       ui: "breadcrumb"
     })
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(0);
   });
 
@@ -132,12 +122,10 @@ describe('with route mini app', () => {
       ui="popup"
       type="array"
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(0);
     wrapper.setProps({
       ui: "breadcrumb"
     })
-    expect(toJson(wrapper)).toMatchSnapshot();
     expect(wrapper.find('Button').length).toBe(0);
   });
 

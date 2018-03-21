@@ -26,7 +26,6 @@ type State = {
   app: ?MiniApp,
   routesEndAtMe: boolean,
   isCreateOp: boolean,
-  buttonType: string,
   changed: boolean
 };
 
@@ -37,6 +36,7 @@ type Context = {
 }
 
 const CREATE = 'create';
+// eslint-disable-next-line
 const UPDATE = 'update';
 
 export default function routeMiniApp(Com: React.ComponentType<*>) {
@@ -79,7 +79,6 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
         routesEndAtMe,
         isCreateOp,
         canBeRendered: !routesEndAtMe || !isCreateOp,
-        buttonType: isCreateOp ? CREATE : UPDATE,
         changed: false
       };
       if (routesEndAtMe && isCreateOp) {
@@ -99,7 +98,6 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
           routesEndAtMe,
           isCreateOp,
           canBeRendered: !routesEndAtMe || !isCreateOp,
-          buttonType: isCreateOp ? CREATE : UPDATE
         }, () => {
           if (routesEndAtMe && isCreateOp) {
             this.reset().then(() => this.create(nextProps));
@@ -109,7 +107,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
     }
 
     request = (action: any) => {
-      this.didChanged(action.type);
+      this.didChanged();
       const {app} = this.state;
       if (app) {
         return app.request(action);
@@ -117,18 +115,10 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       return this.context.request(action);
     }
 
-    didChanged = (updateType: string) => {
-      if (updateType === 'CREATE_ARRAY_ITEM') {
-        this.setState({
-          changed: true,
-          buttonType: CREATE
-        });
-      } else {
-        this.setState(preState => ({
-          changed: true,
-          buttonType: preState.buttonType === CREATE ? CREATE : UPDATE
-        }));
-      }
+    didChanged = () => {
+      this.setState({
+        changed: true
+      });
     }
 
     init = (props: Props = this.props, context: Context = this.context) => {
@@ -164,7 +154,6 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
           .then(() => {
             this.setState({
               changed: true,
-              buttonType: CREATE,
               canBeRendered: true
             });
           });
@@ -199,17 +188,16 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
     resetButton = () => {
       this.setState({
         changed: false,
-        buttonType: UPDATE
       });
     }
 
     render() {
-      const {canBeRendered, routesEndAtMe, isCreateOp, buttonType, changed} = this.state;
+      const {canBeRendered, routesEndAtMe, isCreateOp, changed} = this.state;
       const {ui, routes, params, renderChildren} = this.props;
-      const buttonControlledByArray = (ui === 'popup' || ui === 'tab' || ui === 'panel' || ui === 'breadcrumb') && routesEndAtMe && routes.length === 1 && !isCreateOp;
-      const buttonStyle = {
-        left: '100%',
-        transform: 'translateX(-100%)'
+      const buttonControlledByArray = (ui === 'popup' || ui === 'breadcrumb') && routesEndAtMe && routes.length === 1 && !isCreateOp;
+      const buttonContainer = {
+        textAlign: 'right',
+        marginTop: 60
       };
       const renderDepolyButton = genDeployButton(this.deploy);
       const renderCancelButton = genCancelButton(this.reset);
@@ -222,29 +210,33 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
             }} deploy={this.deploy} renderButton={renderDepolyButton}
             renderChildren={(childrenProps, deployButtonProps, cancelButtonProps) => <React.Fragment>
               {renderChildren(childrenProps)}
-              {renderCancelButton(cancelButtonProps)}
-              {renderDepolyButton(deployButtonProps)}
+              {
+                routesEndAtMe && !buttonControlledByArray ?
+                  null :
+                  <div style={buttonContainer}>
+                    {renderDepolyButton(deployButtonProps)}
+                    {renderCancelButton(cancelButtonProps)}
+                  </div>
+              }
             </React.Fragment>}
           />
           {
             routesEndAtMe && !buttonControlledByArray ?
               // $FlowFixMe
-              <React.Fragment>
+              <div style={buttonContainer}>
                 {renderDepolyButton({
                   disabled: !changed,
-                  style: buttonStyle,
-                  buttonType,
+                  text: isCreateOp ? '新增' : undefined,
                   callback: () => {
                     location.href = params.backUrl || location.href.split('?')[0];
                   }
                 })}
                 {renderCancelButton({
                   disabled: !changed,
-                  style: buttonStyle,
-                  buttonType,
-                  callback: this.resetButton
+                  callback: this.resetButton,
+                  hidden: isCreateOp
                 })}
-              </React.Fragment>:
+              </div>:
               null
           }
         </div>;
@@ -258,32 +250,27 @@ function genDeployButton(deploy) {
   return function DeployButton({
     disabled = false,
     style = {},
-    buttonType = UPDATE,
     key,
     id,
     onClick = deploy,
     callback = () => {},
     // $FlowFixMe
-    updateText = '新增',
-    // $FlowFixMe
-    createText = '更新',
+    text = '確定',
     hidden = false
   }: {
     disabled?: boolean,
     style?: Object,
-    buttonType?: typeof UPDATE | typeof CREATE,
     key?: string,
     id?: string,
     onClick?: (key?: string, id?: string, callback?: Function) => Promise<*>,
     callback?: Function,
-    updateText?: React.Node | string,
-    createText?: React.Node,
+    text?: React.Node | string,
     hidden?: boolean
   } = {}) {
     if (hidden)
       return null;
     return <Button disabled={disabled} style={style} type="primary" onClick={() => onClick(key, id, callback)}>
-      {buttonType === CREATE ? createText : updateText}
+      {text}
     </Button>;
   };
 }
@@ -311,7 +298,7 @@ function genCancelButton(reset) {
   } = {}) {
     if (hidden)
       return null;
-    return <Button disabled={disabled} style={style} onClick={() => onClick(key, id, callback)}>
+    return <Button disabled={disabled} style={{marginLeft: 16, ...style}} onClick={() => onClick(key, id, callback)}>
       {text}
     </Button>;
   };
