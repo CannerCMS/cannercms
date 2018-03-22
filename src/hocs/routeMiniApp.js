@@ -193,7 +193,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
 
     render() {
       const {canBeRendered, routesEndAtMe, isCreateOp, changed} = this.state;
-      const {ui, routes, params, renderChildren, id} = this.props;
+      const {ui, routes, params, renderChildren} = this.props;
       const buttonControlledByArray = (ui === 'popup' || ui === 'breadcrumb') && routesEndAtMe && routes.length === 1 && !isCreateOp;
       const buttonContainer = {
         textAlign: 'right',
