@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {generateAction} from '../app';
 import isArray from 'lodash/isArray';
 import type {RelationDef} from "./relationFactory";
@@ -12,7 +11,8 @@ type Props = {
   value: any,
   rootValue: any,
   relation?: RelationDef,
-  fetchRelation: () => Promise<*>
+  fetchRelation: () => Promise<*>,
+  request: RequestDef
 };
 
 type changeQueue = Array<{id: string | {firstId: string, secondId: string}, type: any, value: any}>;
@@ -21,10 +21,6 @@ export default function withRequest(Com: React.ComponentType<*>) {
   // this hoc will update data;
   // it's the onChange end
   return class ComponentWithRequest extends React.Component<Props> {
-    static contextTypes = {
-      request: PropTypes.func
-    };
-
     onChange = (id: string | {firstId: string, secondId: string} | changeQueue, type: any, delta: any) => {
       if (isArray(id)) {
         const changeQueue = id;
@@ -34,8 +30,7 @@ export default function withRequest(Com: React.ComponentType<*>) {
           return this.onChange(id, type, value);
         }));
       }
-      const {request} = this.context;
-      const {rootValue, relation, value} = this.props;
+      const {rootValue, relation, value, request} = this.props;
       // generate action
       // $FlowFixMe: id sould string here
       const action = createAction(relation, id, type, delta, rootValue, value);

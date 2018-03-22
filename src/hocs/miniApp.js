@@ -1,14 +1,19 @@
 // @flow
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {MiniApp} from '../app';
 import type {Map} from 'immutable';
 
 type Props = {
   id: string,
   value: Map<string, *>,
-  renderChildren: (childrenProps: Object, deployButtonProps: Object, cancelButtonProps: Object) => React.Node
+  renderChildren: (childrenProps: Object, deployButtonProps: Object, cancelButtonProps: Object) => React.Node,
+  request: RequestDef,
+  fetch: FetchDef,
+  subscribe: SubscribeDef,
+  componentId: string,
+  deploy: DeployDef,
+  query: QueryDef
 };
 
 export default function createWithMiniApp(Com: React.ComponentType<*>) {
@@ -18,20 +23,8 @@ export default function createWithMiniApp(Com: React.ComponentType<*>) {
 export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
   return class ComponentWithMiniApp extends React.Component<Props> {
     app: MiniApp;
-    static childContextTypes = {
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func,
-      request: PropTypes.func,
-      deploy: PropTypes.func,
-      reset: PropTypes.func,
-      query: PropTypes.shape({
-        filter: PropTypes.any,
-        sort: PropTypes.any,
-        pagination: PropTypes.any
-      }),
-    };
 
-    getChildContext() {
+    getProps() {
       return {
         fetch: this.app.fetch,
         subscribe: this.app.subscribe,
@@ -41,20 +34,13 @@ export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
       };
     }
 
-    static contextTypes = {
-      request: PropTypes.func,
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func,
-      deploy: PropTypes.func,
-      componentId: PropTypes.string
-    }
-
-    constructor(props: Props, context: {request: Function, fetch: Function, subscribe: Function}) {
+    constructor(props: Props) {
       super(props);
+      const {request, fetch, subscribe} = props;
       this.app = new MiniApp({
-        request: context.request,
-        fetch: context.fetch,
-        subscribe: context.subscribe
+        request,
+        fetch,
+        subscribe
       });
     }
 
@@ -69,19 +55,20 @@ export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
     }
 
     fetchData = () => {
-      const {query, componentId} = this.context;
-      const {id} = this.props;
+      const {query, componentId, id} = this.props;
       this.app.fetch(id.split('/')[0], componentId, query);
     }
 
     deploy = (key?: string, id?: string, callback?: Function): Promise<*> => {
+      const {deploy} = this.props;
       return this.app.deploy(key, id).then(() => {
-        return this.context.deploy(key, id).then(callback);
+        return deploy(key, id).then(callback);
       });
     }
 
     reset = (key?: string, id?: string, callback?: Function): Promise<*> => {
-      return this.app.reset(key, id, this.context.query).then(callback)
+      const {query} = this.props;
+      return this.app.reset(key, id, query).then(callback)
     }
 
     render() {
@@ -97,7 +84,7 @@ export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
         cancelProps.onClick = this.reset;
         return renderChildren(childrenProps, deployProps, cancelProps);
       };
-      return <Com {...this.props} renderChildren={newRenderChildren}/>;
+      return <Com {...this.props} {...this.getProps()} renderChildren={newRenderChildren}/>;
     }
   };
 }

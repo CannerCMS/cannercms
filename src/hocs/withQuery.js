@@ -1,59 +1,30 @@
 // @flow
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {Spin, Icon} from 'antd';
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type Props = {
   id: string,
+  componentId: string,
+  query?: QueryDef,
+  fetch: FetchDef,
+  subscribe: SubscribeDef,
 };
 
 type State = {
   value: any,
   rootValue: any,
-  isFetching: boolean
-}
-
-type Context = {
-  fetch: (key: string, componentId: string, query: any) => Promise<any>,
-  subscribe: (key: string, componentId: string, type: string, callback: Function) => Promise<any>,
-  query: {
-    filter?: any,
-    sort?: any,
-    pagination?: any
-  },
-  componentId: string
+  isFetching: boolean,
 }
 
 export default function withQuery(Com: React.ComponentType<*>) {
   // this hoc will fetch data;
   return class ComponentWithQuery extends React.PureComponent<Props, State> {
-    componentId: string;
     key: string;
     subscription: any;
-    static contextTypes = {
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func,
-      query: PropTypes.shape({
-        filter: PropTypes.any,
-        sort: PropTypes.any,
-        pagination: PropTypes.any
-      }),
-      componentId: PropTypes.string
-    };
 
-    static childContextTypes = {
-      componentId: PropTypes.string
-    }
-
-    getChildContext() {
-      return {
-        componentId: this.componentId
-      };
-    }
-
-    constructor(props: Props, context: Context) {
+    constructor(props: Props) {
       super(props);
       // now use is to be a subjectId
       this.state = {
@@ -61,7 +32,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
         rootValue: null,
         isFetching: true
       };
-      this.componentId = context.componentId || props.id;
       this.key = props.id.split('/')[0];
     }
 
@@ -74,12 +44,12 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     queryData = () => {
-      const {fetch, query} = this.context;
+      const {fetch, query, componentId, id} = this.props;
       // second key: use key as a subjectID
-      fetch(this.key, this.componentId, query).then(ctx => {
+      return fetch(this.key, componentId, query).then(ctx => {
         this.setState({
           rootValue: ctx.response.body,
-          value: getValue(ctx.response.body, this.props.id),
+          value: getValue(ctx.response.body, id),
           isFetching: false
         });
         this.subscribe();
@@ -93,11 +63,11 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     subscribe = (): Promise<any> => {
-      const {subscribe} = this.context;
-      return subscribe(this.key, this.componentId, 'value', value => {
+      const {subscribe, componentId, id} = this.props;
+      return subscribe(this.key, componentId, 'value', value => {
         this.setState({
           rootValue: value,
-          value: getValue(value, this.props.id)
+          value: getValue(value, id)
         });
       }).then(subscription => {
         this.subscription = subscription;

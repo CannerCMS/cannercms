@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import type {List} from 'immutable';
 type Props = {
   type: string,
@@ -10,7 +9,10 @@ type Props = {
   name: string,
   id: string,
   params: any,
-  renderChildren: ({[string]: any}) => React.Node
+  renderChildren: ({[string]: any}) => React.Node,
+  fetch: FetchDef,
+  query: QueryDef,
+  componentId: string
 };
 
 type State = {
@@ -24,31 +26,6 @@ type State = {
 // $FlowFixMe
 export default function withRoute(Com: React$Component<*>) {
   return class ComponentWithRoute extends React.Component<Props, State> {
-    static contextTypes = {
-      deploy: PropTypes.func,
-      fetch: PropTypes.func,
-      query: PropTypes.shape({
-        filter: PropTypes.any,
-        sort: PropTypes.any,
-        pagination: PropTypes.any
-      }),
-      componentId: PropTypes.string
-    }
-
-    static childContextTypes = {
-      query: PropTypes.shape({
-        filter: PropTypes.any,
-        sort: PropTypes.any,
-        pagination: PropTypes.any
-      })
-    }
-
-    getChildContext() {
-      return {
-        query: {...this.context.query, ...this.state.query}
-      };
-    }
-
     constructor(props: Props) {
       super(props);
       this.state = {
@@ -75,8 +52,8 @@ export default function withRoute(Com: React$Component<*>) {
       }
     }
 
-    updateState = (props: Props) => {
-      const {type, rootValue, name, id, params, routes} = props || this.props;
+    updateState = (props: Props): Promise<*> => {
+      const {type, rootValue, name, id, params, routes, fetch, componentId} = props || this.props;
       const restRoutes = routes ? routes.slice() : [];
       let {index, renderType} = this.state;
       let query = {};
@@ -117,7 +94,7 @@ export default function withRoute(Com: React$Component<*>) {
         query,
         canRender: false
       });
-      return this.context.fetch(key, this.context.componentId, {...this.context.query, ...query})
+      return fetch(key, componentId, {...this.props.query, ...query})
         .then(() => {
           this.setState({canRender: true});
         });

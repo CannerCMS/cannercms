@@ -5,10 +5,14 @@ exports[`with route mini app should render 1`] = `
   <MockComponent
     createEmptyData={[Function]}
     deploy={[Function]}
+    fetch={[MockFunction]}
     id="posts"
     params={Object {}}
     renderButton={[Function]}
     renderChildren={[Function]}
+    request={[Function]}
+    reset={[Function]}
+    subscribe={[MockFunction]}
   />
 </div>
 `;

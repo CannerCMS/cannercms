@@ -5,6 +5,7 @@ exports[`hocTemplate should render 1`] = `
   fetchRelation={[Function]}
   id="POSTS"
   onChange={[Function]}
+  request={[MockFunction]}
   rootValue={
     Immutable.List [
       Immutable.Map {

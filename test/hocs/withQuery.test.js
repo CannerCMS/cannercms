@@ -15,27 +15,40 @@ import {fromJS} from 'immutable';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('with Query', () => {
-  let WrapperComponent, props, MockComponent;
+  let WrapperComponent, props, MockComponent,
+  mockFetch, mockSubscribe;
 
   beforeEach(() => {
     MockComponent = function MockComponent() {
       return (<div>Component</div>);
     }
+    mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
+      response: {
+        body: fromJS([])
+      }
+    }));
+    mockSubscribe = jest.fn().mockImplementation(() => Promise.resolve());
     props = {
       id: 'info',
+      componentId: 'info',
+      query: {},
+      fetch: mockFetch,
+      subscribe: mockSubscribe
     }
     WrapperComponent = withQuery(MockComponent);
   });
 
   it('should render', () => {
-    const wrapper = shallow(<WrapperComponent {...props} />, {
-      context: {
-        fetch: () => Promise.resolve({response: {body: fromJS({
-          name: 'Name'
-        })}}),
-        subscribe: () => Promise.resolve()
-      }
-    });
+    const wrapper = shallow(<WrapperComponent {...props}/>);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
+
+  it('should query and scribe', () => {
+    const wrapper = shallow(<WrapperComponent {...props}/>);
+    mockFetch.mockClear();
+    mockSubscribe.mockClear();
+    return wrapper.instance().queryData().then(() => {
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+  })
 });

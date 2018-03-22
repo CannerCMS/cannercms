@@ -7,7 +7,7 @@
 [include]
 
 [libs]
-types/
+src/types/
 flow-typed/
 
 [lints]

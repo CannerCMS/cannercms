@@ -15,17 +15,24 @@ import {fromJS} from 'immutable';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('with route mini app', () => {
-  let WrapperComponent, props, MockComponent;
+  let WrapperComponent, props, MockComponent,
+    mockRequest, mockFetch, mockSubscribe;
 
   beforeEach(() => {
     MockComponent = function MockComponent() {
       return (<div>Component</div>);
     }
+    mockRequest = jest.fn().mockImplementation(() => Promise.resolve());
+    mockFetch = jest.fn().mockImplementation(() => Promise.resolve(fromJS([])));
+    mockSubscribe = jest.fn().mockImplementation(() => Promise.resolve())
     props = {
       id: 'posts',
       params: {},
       createEmptyData: () => fromJS({}),
-      renderChildren: function renderChildren() {return <div></div>;}
+      renderChildren: function renderChildren() {return <div></div>;},
+      request: mockRequest,
+      fetch: mockFetch,
+      subscribe: mockSubscribe,
     }
     WrapperComponent = withRouteMiniApp(MockComponent);
   });
@@ -133,13 +140,7 @@ describe('with route mini app', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['route']}
       id="route"
-    />, {
-      context: {
-          request: () => {},
-        fetch: () => Promise.resolve({response: {body: []}}),
-        subscribe: () => {},
-      }
-    });
+    />);
     expect(wrapper.state()).toMatchObject({
       routesEndAtMe: true,
       isCreateOp: false,

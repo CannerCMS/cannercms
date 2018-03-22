@@ -38,11 +38,8 @@ describe('withRoute', () => {
       id="info/name"
       params={{}}
       renderChildren={mockRenderChildren}
-    />, {
-      context: {
-        fetch: mockFetch
-      }
-    });
+      fetch={mockFetch}
+    />);
     expect(toJson(wrapper)).toMatchSnapshot();
     expect(mockFetch).toHaveBeenCalledTimes(1);
   });
@@ -59,11 +56,8 @@ describe('withRoute', () => {
       id="info/name"
       params={{}}
       renderChildren={mockRenderChildren}
-    />, {
-      context: {
-        fetch: mockFetch
-      }
-    });
+      fetch={mockFetch}
+    />);
     return wrapper.instance().updateState().then(() => {
       expect(wrapper.instance().state).toMatchObject({
         renderType: 0,
@@ -85,11 +79,8 @@ describe('withRoute', () => {
       id="info/name"
       params={{}}
       renderChildren={mockRenderChildren}
-    />, {
-      context: {
-        fetch: mockFetch
-      }
-    });
+      fetch={mockFetch}
+    />);
     return wrapper.instance().updateState().then(() => {
       expect(wrapper.instance().state).toMatchObject({
         renderType: 0,
@@ -111,12 +102,9 @@ describe('withRoute', () => {
       name="posts"
       id="posts"
       params={{}}
+      fetch={mockFetch}
       renderChildren={mockRenderChildren}
-    />, {
-      context: {
-        fetch: mockFetch
-      }
-    });
+    />);
     return wrapper.instance().updateState().then(() => {
       expect(wrapper.instance().state).toMatchObject({
         renderType: 1,
@@ -138,12 +126,9 @@ describe('withRoute', () => {
       name="posts"
       id="posts"
       params={{op: 'create'}}
+      fetch={mockFetch}
       renderChildren={mockRenderChildren}
-    />, {
-      context: {
-        fetch: mockFetch
-      }
-    });
+    />);
     return wrapper.instance().updateState().then(() => {
       expect(wrapper.instance().state).toMatchObject({
         renderType: 1,

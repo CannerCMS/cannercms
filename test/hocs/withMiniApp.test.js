@@ -37,7 +37,12 @@ describe('hocTemplate', () => {
     }
 
     props = {
-      id: 'posts'
+      id: 'posts',
+      request: () => Promise.resolve(),
+      fetch: () => Promise.resolve(),
+      subscribe: () => Promise.resolve(),
+      deploy: () => Promise.resolve(),
+      componentId: 'posts'
     }
     WrapperComponent = withMiniApp(MockComponent, MiniApp);
   });
@@ -49,30 +54,28 @@ describe('hocTemplate', () => {
     expect(appFetchMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should pass context to children', () => {
+  it('should pass methods to children', () => {
     const mockDeploy = jest.fn().mockImplementation(() => Promise.resolve());
-    const wrapper = shallow(<WrapperComponent {...props} />
-    , {
-      context: {
-        request: () => Promise.resolve(),
-        fetch: () => Promise.resolve(),
-        subscribe: () => Promise.resolve(),
-        deploy: mockDeploy,
-        componentId: props.id
-      }
-    });
-    const context = wrapper.instance().getChildContext();
+    const methods = {
+      request: () => Promise.resolve(),
+      fetch: () => Promise.resolve(),
+      subscribe: () => Promise.resolve(),
+      deploy: mockDeploy,
+      componentId: props.id
+    };
+    const wrapper = shallow(<WrapperComponent {...props} {...methods}/>);
+    const methProps = wrapper.instance().getProps();
     appFetchMock.mockClear();
     appSubscribeMock.mockClear();
     appRequestMock.mockClear();
     appDeployMock.mockClear();
     appResetMock.mockClear();
     return Promise.all([
-      context.fetch(),
-      context.subscribe(),
-      context.request(),
-      context.deploy(),
-      context.reset()
+      methProps.fetch(),
+      methProps.subscribe(),
+      methProps.request(),
+      methProps.deploy(),
+      methProps.reset()
     ]).then(() => {
       expect(appFetchMock).toHaveBeenCalledTimes(1);
       expect(appSubscribeMock).toHaveBeenCalledTimes(1);
@@ -87,15 +90,7 @@ describe('hocTemplate', () => {
     const mockRenderChildren = jest.fn().mockImplementation(() => <div></div>);
     const wrapper = shallow(<WrapperComponent {...props}
       renderChildren={mockRenderChildren}
-    />, {
-      context: {
-        request: () => Promise.resolve(),
-        fetch: () => Promise.resolve(),
-        subscribe: () => Promise.resolve(),
-        deploy: () => Promise.resolve(),
-        componentId: props.id
-      }
-    });
+    />);
     wrapper.render();
     expect(mockRenderChildren).toHaveBeenCalledWith({}, {
       onClick: wrapper.instance().deploy,

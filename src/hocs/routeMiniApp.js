@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {List, fromJS} from 'immutable';
 import {isEqual} from 'lodash';
 import {Button} from 'antd';
@@ -18,7 +17,11 @@ type Props = {
   },
   createEmptyData: Function,
   items: {[string]: any},
-  renderChildren: Function
+  renderChildren: Function,
+  request: RequestDef,
+  fetch: FetchDef,
+  deploy: DeployDef,
+  subscribe: SubscribeDef
 };
 
 type State = {
@@ -28,12 +31,6 @@ type State = {
   isCreateOp: boolean,
   changed: boolean
 };
-
-type Context = {
-  fetch: PropTypes.func,
-  subscribe: PropTypes.func,
-  request: PropTypes.func
-}
 
 const CREATE = 'create';
 // eslint-disable-next-line
@@ -45,35 +42,21 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
     routesEndAtMe: boolean;
     isCreateOp: boolean;
     queryCom: React.Ref<typeof Com>;
-    static childContextTypes = {
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func,
-      request: PropTypes.func,
-      deploy: PropTypes.func,
-      reset: PropTypes.func
-    };
 
-    getChildContext() {
+    getProps() {
       const {app} = this.state;
       return {
-        fetch: app ? app.fetch : this.context.fetch,
-        subscribe: app ? app.subscribe : this.context.subscribe,
+        fetch: app ? app.fetch : this.props.fetch,
+        subscribe: app ? app.subscribe : this.props.subscribe,
         request: this.request,
         deploy: this.deploy,
         reset: this.reset
       };
     }
 
-    static contextTypes = {
-      request: PropTypes.func,
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func,
-      deploy: PropTypes.func
-    }
-
-    constructor(props: Props, context: Context) {
+    constructor(props: Props) {
       super(props);
-      const {app, routesEndAtMe, isCreateOp} = this.init(props, context);
+      const {app, routesEndAtMe, isCreateOp} = this.init(props);
       this.state = {
         app,
         routesEndAtMe,
@@ -86,9 +69,9 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       }
     }
 
-    componentWillReceiveProps(nextProps: Props, nextContext: Context) {
+    componentWillReceiveProps(nextProps: Props) {
       if (this.props.params.op !== nextProps.params.op || !isEqual(this.props.routes, nextProps.routes)) {
-        const {app, routesEndAtMe, isCreateOp} = this.init(nextProps, nextContext);
+        const {app, routesEndAtMe, isCreateOp} = this.init(nextProps);
         // everytime change the route, should reset the miniApp !
         if (this.state.changed) {
           this.reset();
@@ -107,12 +90,13 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
     }
 
     request = (action: any) => {
+      const {request} = this.props;
       this.didChanged();
       const {app} = this.state;
       if (app) {
         return app.request(action);
       }
-      return this.context.request(action);
+      return request(action);
     }
 
     didChanged = () => {
@@ -121,9 +105,9 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       });
     }
 
-    init = (props: Props = this.props, context: Context = this.context) => {
+    init = (props: Props = this.props) => {
       // when route or params change, upgrade the state, and re-new a miniapp instance if have to
-      let {routes, params, type} = props;
+      let {routes, params, type, request, fetch, subscribe} = props;
       routes = routes || [];
       const routesEndAtMe = routes.length === 1 || (routes.length === 2 && type === 'array');
       const isCreateOp = params.op === CREATE;
@@ -131,9 +115,9 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       if (routesEndAtMe) {
         // to cache the data of this page
         app = new MiniApp({
-          request: context.request,
-          fetch: context.fetch,
-          subscribe: context.subscribe
+          request,
+          fetch,
+          subscribe
         });
       }
       return {
@@ -160,10 +144,12 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       }
     }
 
-    reset = (key?: string, id?: string, callback?: Function): Promise<*> => {
-      key = key || this.props.id.split('/')[0];
-      if (this.state.app) {
-        return this.state.app.reset(key, id) // reset the store and cache in miniapp
+    reset = (key?: string, recordId?: string, callback?: Function): Promise<*> => {
+      const {app} = this.state;
+      const {id} = this.props;
+      key = key || id.split('/')[0];
+      if (app) {
+        return app.reset(key, recordId) // reset the store and cache in miniapp
           // $FlowFixMe
           .then(() => this.queryCom && this.queryCom.queryData()) // ask component to fetch new data
           .then(callback);
@@ -171,14 +157,16 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       return Promise.resolve();
     }
 
-    deploy = (key?: string, id?: string, callback?: Function = () => {}): Promise<*> => {
-      if (this.state.app) {
-        return this.state.app.deploy(key, id).then(() => {
-          return this.context.deploy(key, id)
+    deploy = (key?: string, recordId?: string, callback?: Function = () => {}): Promise<*> => {
+      const {deploy} = this.props;
+      const {app} = this.state;
+      if (app) {
+        return app.deploy(key, recordId).then(() => {
+          return deploy(key, recordId)
             .then(callback)
             // reset should be placed after callback,
             // or component will display the new-fetched data
-            .then(() => this.reset(key, id));
+            .then(() => this.reset(key, recordId));
         });
       }
       return Promise.resolve()
@@ -205,9 +193,12 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
         // $FlowFixMe
         return <div>
           {/* $FlowFixMe */}
-          <Com {...this.props} ref={(queryCom: React$Ref<typeof Com>) => {
+          <Com {...this.props}
+            {...this.getProps()}
+            ref={(queryCom: React$Ref<typeof Com>) => {
               this.queryCom = queryCom;
-            }} deploy={this.deploy} renderButton={renderDepolyButton}
+            }}
+            renderButton={renderDepolyButton}
             renderChildren={(childrenProps, deployButtonProps, cancelButtonProps) => <React.Fragment>
               {renderChildren(childrenProps)}
               {
@@ -295,6 +286,7 @@ function genCancelButton(reset) {
     text?: React.Node,
     hidden?: boolean
   } = {}) {
+    console.log(disabled);
     if (hidden)
       return null;
     return <Button disabled={disabled} style={{marginLeft: 16, ...style}} onClick={() => onClick(key, id, callback)}>

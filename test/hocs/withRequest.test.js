@@ -16,12 +16,13 @@ import {UNIQUE_ID} from '../../src/app/config';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('hocTemplate', () => {
-  let WrapperComponent, props, MockComponent;
+  let WrapperComponent, props, MockComponent, mockRequest;
 
   beforeEach(() => {
     MockComponent = function MockComponent() {
       return (<div>Component</div>);
     }
+    mockRequest = jest.fn().mockImplementation(() => Promise.resolve());
     const rootValue = fromJS([{
       [UNIQUE_ID]: 'id1',
       title: 'post1'
@@ -32,7 +33,8 @@ describe('hocTemplate', () => {
       rootValue,
       relation: undefined,
       fetchRelation: () => {
-      }
+      },
+    request: mockRequest
     }
     WrapperComponent = withRequest(MockComponent);
   });
@@ -43,16 +45,8 @@ describe('hocTemplate', () => {
   });
 
   describe('onChang function', () => {
-    it('should call context.request with arguments action', () => {
-      const request = jest.fn();
-      const wrapper = shallow(<WrapperComponent {...props} />, {
-        context: {
-          request: action => {
-            request(action);
-            return Promise.resolve();
-          }
-        }
-      });
+    it('should call props.request with arguments action', () => {
+      const wrapper = shallow(<WrapperComponent {...props} />);
       const id = props.id;
       const type = 'create';
       const delta = fromJS({
@@ -60,20 +54,12 @@ describe('hocTemplate', () => {
         title: 'post2'
       });
       wrapper.instance().onChange(id, type, delta).then(() => {
-        expect(request.mock.calls[0][0]).toBeTruthy();
+        expect(mockRequest.mock.calls[0][0]).toBeTruthy();
       });
     });
 
     it('should accept changeQueue', () => {
-      const request = jest.fn();
-      const wrapper = shallow(<WrapperComponent {...props} />, {
-        context: {
-          request: action => {
-            request(action);
-            return Promise.resolve();
-          }
-        }
-      });
+      const wrapper = shallow(<WrapperComponent {...props} />);
       const id = props.id;
       const type = 'create';
       const delta = i => fromJS({
@@ -82,26 +68,18 @@ describe('hocTemplate', () => {
       const changeQueue = [2,3,4,5].map(i => ({id, type, value: delta(i)}));
       return wrapper.instance().onChange(changeQueue)
         .then(() => {
-          expect(request.mock.calls.length).toBe(4);
+          expect(mockRequest.mock.calls.length).toBe(4);
         });
     });
 
     it('should fetch relation if relationship is foreignKey', () => {
-      const request = jest.fn();
       const fetchRelation = jest.fn();
       const wrapper = shallow(<WrapperComponent {...props}
           fetchRelation={fetchRelation}
           relation={{
             relationship: 'oneToMany.foreignKey'
           }}
-        />, {
-        context: {
-          request: action => {
-            request(action);
-            return Promise.resolve();
-          }
-        }
-      });
+        />);
       const id = props.id;
       const type = 'create';
       const delta = fromJS({
@@ -109,7 +87,7 @@ describe('hocTemplate', () => {
       });
       return wrapper.instance().onChange(id, type, delta)
         .then(() => {
-          expect(request.mock.calls.length).toBe(1);
+          expect(mockRequest.mock.calls.length).toBe(1);
           expect(fetchRelation.mock.calls.length).toBe(1);
         });
     });

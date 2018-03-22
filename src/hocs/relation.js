@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {Map, List} from 'immutable';
 import isEqual from 'lodash/isEqual';
 import {fetchFromRelation} from "./relationFactory";
@@ -17,7 +16,8 @@ type Props = {
   ui: string,
   pattern: string,
   value: any,
-  items?: any
+  items?: any,
+  fetch: FetchDef
 };
 
 type State = {
@@ -35,10 +35,6 @@ export function withRelation(Com: React.ComponentType<*>, fetchFromRelation: Fet
       __key__: string,
       relation: RelationDef
     }>
-    static contextTypes = {
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func
-    };
 
     constructor(props: Props) {
       super(props);
@@ -73,8 +69,7 @@ export function withRelation(Com: React.ComponentType<*>, fetchFromRelation: Fet
     }
 
     fetchRelationValue = (props?: Props, pagination?: {start: number, limit: number}): Promise<*> => {
-      const {fetch} = this.context;
-      const {items, name, id, rootValue, relation, value, ui, pattern} = props || this.props;
+      const {fetch, items, name, id, rootValue, relation, value, ui, pattern} = props || this.props;
       if (relation) {
         return fetchFromRelation(id, relation, {
           entityId: getParentId(rootValue, id),

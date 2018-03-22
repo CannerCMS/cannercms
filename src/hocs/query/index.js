@@ -1,5 +1,4 @@
 import React, {PureComponent} from 'react';
-import PropTypes from 'prop-types';
 import Sort from './sort';
 import Pagination from './pagination';
 import Filter from './filter';
@@ -7,27 +6,7 @@ import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 
 export default (Plugin) => {
-  // 因為 decorator 會造成 context 沒辦法正確的傳下去
-  // 必須在這裡給予 contextTypes 才行。
-  // https://github.com/Canner/react-qa-core-plugins/issues/43
   return class PluginWithQuery extends PureComponent {
-    static contextTypes = {
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func,
-    };
-
-    static childContextTypes = {
-      rootValue: PropTypes.any,
-      componentId: PropTypes.string
-    }
-
-    getChildContext() {
-      return {
-        rootValue: this.state.value,
-        componentId: this.componentId
-      };
-    }
-
     constructor(props) {
       super(props);
       this.state = {
@@ -43,15 +22,13 @@ export default (Plugin) => {
       this.changeFilter = this.changeFilter.bind(this);
       this.changeSort = this.changeSort.bind(this);
       this.changePagination = this.changePagination.bind(this);
-      this.componentId = props.id;
     }
 
     componentWillMount() {
-      const {subscribe} = this.context;
-      const {id} = this.props;
+      const {id, subscribe, componentId} = this.props;
       this.queryData()
         .then(() => {
-          subscribe(id, this.componentId, 'value', (value) => {
+          subscribe(id, componentId, 'value', (value) => {
             this.setState({
               value,
             });
@@ -60,10 +37,9 @@ export default (Plugin) => {
     }
 
     queryData() {
-      const {fetch} = this.context;
-      const {id} = this.props;
+      const {id, fetch, componentId} = this.props;
       const {filter, sort, pagination} = this.state;
-      return fetch(id, this.componentId, {filter, sort, pagination}).then((ctx) => {
+      return fetch(id, componentId, {filter, sort, pagination}).then((ctx) => {
         this.setState({
           paginationRes: ctx.response.pagination,
           value: ctx.response.body,
