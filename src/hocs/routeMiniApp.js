@@ -43,17 +43,6 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
     isCreateOp: boolean;
     queryCom: React.Ref<typeof Com>;
 
-    getProps() {
-      const {app} = this.state;
-      return {
-        fetch: app ? app.fetch : this.props.fetch,
-        subscribe: app ? app.subscribe : this.props.subscribe,
-        request: this.request,
-        deploy: this.deploy,
-        reset: this.reset
-      };
-    }
-
     constructor(props: Props) {
       super(props);
       const {app, routesEndAtMe, isCreateOp} = this.init(props);
@@ -180,13 +169,13 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
     }
 
     render() {
-      const {canBeRendered, routesEndAtMe, isCreateOp, changed} = this.state;
-      const {ui, routes, params, renderChildren} = this.props;
+      const {canBeRendered, routesEndAtMe, isCreateOp, changed, app} = this.state;
+      const {ui, routes, params, renderChildren, fetch, subscribe} = this.props;
       const buttonControlledByArray = (ui === 'popup' || ui === 'breadcrumb') && routesEndAtMe && routes.length === 1 && !isCreateOp;
       const buttonContainer = {
         textAlign: 'right',
         marginTop: 60
-      };
+      }
       const renderDepolyButton = genDeployButton(this.deploy);
       const renderCancelButton = genCancelButton(this.reset);
       if (canBeRendered) {
@@ -194,11 +183,14 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
         return <div>
           {/* $FlowFixMe */}
           <Com {...this.props}
-            {...this.getProps()}
+            fetch={app ? app.fetch : fetch}
+            subscribe={app ? app.subscribe : subscribe}
+            request={this.request}
+            deploy={this.deploy}
+            reset={this.reset}
             ref={(queryCom: React$Ref<typeof Com>) => {
               this.queryCom = queryCom;
             }}
-            renderButton={renderDepolyButton}
             renderChildren={(childrenProps, deployButtonProps, cancelButtonProps) => <React.Fragment>
               {renderChildren(childrenProps)}
               {
@@ -286,7 +278,6 @@ function genCancelButton(reset) {
     text?: React.Node,
     hidden?: boolean
   } = {}) {
-    console.log(disabled);
     if (hidden)
       return null;
     return <Button disabled={disabled} style={{marginLeft: 16, ...style}} onClick={() => onClick(key, id, callback)}>

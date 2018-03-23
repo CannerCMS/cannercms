@@ -2,13 +2,16 @@
  * @flow
  */
 import type {Middlware} from './middleware';
+let CANNER_APP_COUNT = 0;
 export default class App {
   middleware: Array<Middlware.handleChange>
   handleChange: any => any
+  appNumber: number;
 
   constructor() {
     this.handleChange = this.handleChange.bind(this);
     this.middleware = [];
+    this.appNumber = CANNER_APP_COUNT ++;
   }
 
   use(middlware: Middlware) {
@@ -45,18 +48,19 @@ export default class App {
   handleChange(context: ContextType): Promise<any> {
     let requestId = '';
     const type = context.request.type;
+    const num = this.appNumber;
     const style = consoleStyle(type);
     if (process.env.NODE_ENV === 'development' && type !== 'subscribe') {
       requestId = Math.random().toString(36).substr(-3);
       // eslint-disable-next-line
-      console.log(`%c -----------request-${requestId}-start------------`, style);
+      console.log(`%c ${num} -----------request-${requestId}-start------------`, style);
     }
     return this.fn(context).then(() => {
       if (process.env.NODE_ENV === 'development' && type !== 'subscribe') {
         // eslint-disable-next-line
-        console.log(`%c type: ${type}, key: ${context.request.key},`, style, 'contenxt:', context);
+        console.log(`%c ${num} type: ${type}, key: ${context.request.key},`, style, 'contenxt:', context);
         // eslint-disable-next-line
-        console.log(`%c -----------request-${requestId}-finished------------`, style);
+        console.log(`%c ${num} -----------request-${requestId}-finished------------`, style);
       }
       return context;
     }).catch((e) => {

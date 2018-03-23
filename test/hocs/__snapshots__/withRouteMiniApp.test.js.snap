@@ -8,7 +8,6 @@ exports[`with route mini app should render 1`] = `
     fetch={[MockFunction]}
     id="posts"
     params={Object {}}
-    renderButton={[Function]}
     renderChildren={[Function]}
     request={[Function]}
     reset={[Function]}

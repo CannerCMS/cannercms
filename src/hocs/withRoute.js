@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import type {List} from 'immutable';
 type Props = {
   type: string,
@@ -12,7 +13,12 @@ type Props = {
   renderChildren: ({[string]: any}) => React.Node,
   fetch: FetchDef,
   query: QueryDef,
-  componentId: string
+  componentId: string,
+
+  subscribe: SubscribeDef,
+  request: RequestDef,
+  deploy: DeployDef,
+  reset: ResetDef
 };
 
 type State = {
@@ -34,6 +40,28 @@ export default function withRoute(Com: React$Component<*>) {
         index: 0,
         query: {},
         canRender: false
+      };
+    }
+
+    static childContextTypes = {
+      componentId: PropTypes.string,
+      query: PropTypes.shape({
+        filter: PropTypes.object,
+        sort: PropTypes.object,
+        order: PropTypes.object,
+      }),
+
+      fetch: PropTypes.func,
+      subscribe: PropTypes.func,
+      request: PropTypes.func,
+      deploy: PropTypes.func,
+      reset: PropTypes.func,
+    }
+
+    getChildContext() {
+      const {componentId, query, fetch, subscribe, request, deploy, reset} = this.props;
+      return {
+        componentId, query, fetch, subscribe, request, deploy, reset
       };
     }
 

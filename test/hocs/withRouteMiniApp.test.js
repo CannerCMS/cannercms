@@ -64,7 +64,7 @@ describe('with route mini app', () => {
     expect(wrapper.find('Button').length).toBe(0);
   });
 
-  it('should not renderButton when first tab', () => {
+  it('should renderButton when first tab', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['tab']}
       id="tab"
@@ -174,5 +174,20 @@ describe('with route mini app', () => {
       routesEndAtMe: true,
       isCreateOp: true
     });
+  });
+
+  it('should pass new method', () => {
+    const wrapper = shallow(<WrapperComponent {...props}
+      routes={['route']}
+      id="route"
+    />);
+
+    const childrenProps = wrapper.find(MockComponent).props();
+
+    expect(childrenProps).toHaveProperty('fetch', wrapper.state().app.fetch)
+    expect(childrenProps).toHaveProperty('subscribe', wrapper.state().app.subscribe)
+    expect(childrenProps).toHaveProperty('request', wrapper.instance().request)
+    expect(childrenProps).toHaveProperty('deploy', wrapper.instance().deploy)
+    expect(childrenProps).toHaveProperty('reset', wrapper.instance().reset)
   })
 });

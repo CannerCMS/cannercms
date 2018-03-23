@@ -6,10 +6,6 @@ import PropTypes from 'prop-types';
 type Props = {
   id: string,
   name: string,
-  title: string, // only used in withTitleAndDesription hoc
-  description: string, // only used in withTitleAndDesription hoc
-  layout?: 'horizontal' | 'vertical', // only used in withTitleAndDesription hoc
-  [string]: any
 };
 
 type Context = {
@@ -36,7 +32,6 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
         sort: PropTypes.object,
         order: PropTypes.object,
       }),
-      rootValue: PropTypes.ant,
 
       fetch: PropTypes.func,
       subscribe: PropTypes.func,
@@ -45,27 +40,14 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
       reset: PropTypes.func,
     }
 
-    /**
-    |--------------------------------------------------
-    | because componentId is public in a entity
-    |--------------------------------------------------
-    */
-    static childContextTypes = {
-      componentId: PropTypes.string
-    }
-
-    getChildContext() {
-      return {
-        componentId: this.componentId
-      };
-    }
-
     constructor(props: Props, context: Context) {
       super(props);
       const {id, name} = props;
       const {componentId, query, reset} = context;
+      // these four values are pass by HOCs,
+      // so give them a default value
       this.id = `${id ? id + '/' : ''}${name}`;
-      this.componentId = componentId || id;
+      this.componentId = componentId || this.id;
       // $FlowFixMe
       this.query = query || {};
       this.reset = reset || (() => Promise.resolve());

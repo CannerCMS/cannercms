@@ -7,7 +7,15 @@ type Props = {
   title: string, // only used in withTitleAndDesription hoc
   description: string, // only used in withTitleAndDesription hoc
   layout?: 'horizontal' | 'vertical', // only used in withTitleAndDesription hoc
-  hideTitle?: boolean
+  hideTitle?: boolean,
+
+  componentId?: string,
+  query: QueryDef,
+  fetch: FetchDef,
+  subscribe: SubscribeDef,
+  request: RequestDef,
+  deploy: DeployDef,
+  reset: ResetDef
 };
 
 // $FlowFixMe
@@ -16,6 +24,33 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
     static contextTypes = {
       hideId: PropTypes.arrayOf(PropTypes.string)
     };
+
+        /**
+    |--------------------------------------------------
+    | because componentId is public in a entity
+    |--------------------------------------------------
+    */
+   static childContextTypes = {
+      componentId: PropTypes.string,
+      query: PropTypes.shape({
+        filter: PropTypes.object,
+        sort: PropTypes.object,
+        order: PropTypes.object,
+      }),
+
+      fetch: PropTypes.func,
+      subscribe: PropTypes.func,
+      request: PropTypes.func,
+      deploy: PropTypes.func,
+      reset: PropTypes.func,
+    }
+
+    getChildContext() {
+      const {componentId, query, fetch, subscribe, request, deploy, reset} = this.props;
+      return {
+        componentId, query, fetch, subscribe, request, deploy, reset
+      };
+    }
 
     render() {
       const {id, title, layout, description, hideTitle} = this.props;
