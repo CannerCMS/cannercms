@@ -17,7 +17,7 @@ type BasicAction = CreateArrayItemAction |
  * @param  {string}  action       action
  * @return {Pattern} pattern
  */
-export default function createPattern(action: BasicAction): Pattern {
+export default function createPattern(action: BasicAction): Pattern<any> {
   let pattern;
   // 目前只有 4 種有效 action type
   // CREATE_ARRAY
