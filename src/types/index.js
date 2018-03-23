@@ -1,6 +1,6 @@
 // @flow
 import type {Map, List} from 'immutable';
-import type Pattern from 'src/provider/middleware/bucket/pattern';
+import type Pattern from '../app/middleware/bucket/pattern/pattern';
 import type Rx from 'rxjs/Rx';
 
 declare type BucketType = {
@@ -174,6 +174,14 @@ declare type MutateAction = CreateArrayItemAction |
   SwapArrayNestedItemAction |
   SwapObjectNestedItemAction |
   NoopAction;
+
+declare type ArrayAction = CreateArrayItemAction |
+CreateArrayNestedItemAction |
+UpdateArrayAction |
+DeleteArrayItemAction |
+DeleteArrayNestedItemAction |
+SwapArrayItemAction |
+SwapArrayNestedItemAction
 
 type transformedAction = CreateArrayItemAction |
   UpdateArrayAction |

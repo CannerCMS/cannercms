@@ -53,14 +53,14 @@ export default class App {
     if (process.env.NODE_ENV === 'development' && type !== 'subscribe') {
       requestId = Math.random().toString(36).substr(-3);
       // eslint-disable-next-line
-      console.log(`%c ${num} -----------request-${requestId}-start------------`, style);
+      // console.log(`%c ${num} -----------request-${requestId}-start------------`, style);
     }
     return this.fn(context).then(() => {
       if (process.env.NODE_ENV === 'development' && type !== 'subscribe') {
         // eslint-disable-next-line
         console.log(`%c ${num} type: ${type}, key: ${context.request.key},`, style, 'contenxt:', context);
         // eslint-disable-next-line
-        console.log(`%c ${num} -----------request-${requestId}-finished------------`, style);
+        // console.log(`%c ${num} -----------request-${requestId}-finished------------`, style);
       }
       return context;
     }).catch((e) => {

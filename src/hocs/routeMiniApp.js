@@ -170,7 +170,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
 
     render() {
       const {canBeRendered, routesEndAtMe, isCreateOp, changed, app} = this.state;
-      const {ui, routes, params, renderChildren, fetch, subscribe} = this.props;
+      const {ui, routes, renderChildren, fetch, subscribe} = this.props;
       const buttonControlledByArray = (ui === 'popup' || ui === 'breadcrumb') && routesEndAtMe && routes.length === 1 && !isCreateOp;
       const buttonContainer = {
         textAlign: 'right',
@@ -210,7 +210,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
                 {renderDepolyButton({
                   disabled: !changed,
                   callback: () => {
-                    location.href = params.backUrl || location.href.split('?')[0];
+                    // location.href = params.backUrl || location.href.split('?')[0];
                   }
                 })}
                 {renderCancelButton({

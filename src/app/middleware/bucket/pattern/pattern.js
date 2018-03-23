@@ -2,8 +2,8 @@
  * @flow
  */
 
-export default class Pattern {
-  actions: Array<MutateAction>
+export default class Pattern<T> {
+  actions: Array<T>
   name: string
 
   constructor(actionName: string) {
@@ -11,11 +11,11 @@ export default class Pattern {
     this.name = actionName;
   }
 
-  addAction(action: MutateAction) {
+  addAction(action: T) {
     this.actions.push(action);
   }
 
-  mergeAction(): Array<MutateAction> {
+  mergeAction(): Array<T> {
     return this.actions;
   }
 }
