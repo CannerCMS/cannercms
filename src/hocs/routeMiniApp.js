@@ -191,10 +191,10 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
             ref={(queryCom: React$Ref<typeof Com>) => {
               this.queryCom = queryCom;
             }}
-            renderChildren={(childrenProps, deployButtonProps, cancelButtonProps) => <React.Fragment>
+            renderChildren={(childrenProps, deployButtonProps = {}, cancelButtonProps = {}) => <React.Fragment>
               {renderChildren(childrenProps)}
               {
-                routesEndAtMe && !buttonControlledByArray ?
+                (routesEndAtMe && !buttonControlledByArray) || (!deployButtonProps.hidden && !cancelButtonProps.hidden) ?
                   null :
                   <div style={buttonContainer}>
                     {renderDepolyButton(deployButtonProps)}

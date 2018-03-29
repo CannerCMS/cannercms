@@ -98,9 +98,8 @@ export default class Generator extends React.PureComponent<Props, State> {
         {renderChildren({id})}
       </div>;
     };
-    if (node.nodeType.startsWith('container')) {
-      const uselessStringLength = 'container.'.length;
-      component = get(containers, node.nodeType.slice(uselessStringLength), component);
+    if (node.nodeType === 'layout') {
+      component = get(containers, node.component);
     } else if (node.nodeType.startsWith('plugins')) { // TODO: need to fix, turn plugins to components in compiler
       component = Loadable({
         loader: () => node.loader,

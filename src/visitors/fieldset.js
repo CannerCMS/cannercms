@@ -14,7 +14,8 @@ const collapse = {
     exit: (path) => {
       if (path.node.collapse) {
         const childrenWithContainers = {
-          nodeType: 'container.collapse',
+          nodeType: 'layout',
+          component: 'collapse',
           children: path.node.children,
           title: path.node.title,
         };
@@ -36,13 +37,15 @@ const block = {
           const blockChildren = [];
           if (leftChildren.length > 0) {
             blockChildren.push({
-              nodeType: 'container.default',
+              nodeType: 'layout',
+              component: 'default',
               children: leftChildren,
             });
           }
           if (rightChildren.length > 0) {
             blockChildren.push({
-              nodeType: 'container.default',
+              nodeType: 'layout',
+              component: 'default',
               children: rightChildren,
               style: {
                 marginLeft: 30,
@@ -50,7 +53,8 @@ const block = {
             });
           }
           return {
-            nodeType: 'container.block',
+            nodeType: 'container',
+            component: 'block',
             children: blockChildren,
           };
         });

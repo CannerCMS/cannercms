@@ -4,7 +4,8 @@ const block = {
       // third layer fieldset
       if (!path.node.blocks && path.route.split('.').length >= 4) {
         const nodeInInnerBlockContainer = {
-          nodeType: 'container.default',
+          nodeType: 'layout',
+          component: 'default',
           style: {background: '#fff', padding: 16},
           name: path.node.name,
           children: [path.node],

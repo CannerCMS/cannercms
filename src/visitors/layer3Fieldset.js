@@ -5,7 +5,8 @@ const block = {
       if (!path.node.blocks && path.route.split('.').length === 3) {
         const childrenWithRowContainer = path.node.children.map((child) => {
           return {
-            nodeType: 'container.row',
+            nodeType: 'layout',
+            component: 'row',
             name: child.name,
             children: [child],
             title: child.title,
@@ -16,7 +17,8 @@ const block = {
           };
         });
         const nodeInInnerBlockContainer = {
-          nodeType: 'container.innerBlock',
+          nodeType: 'layout',
+          component: 'innerBlock',
           name: path.node.name,
           children: [{
             ...path.node,

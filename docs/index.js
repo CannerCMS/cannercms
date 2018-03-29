@@ -12,6 +12,8 @@ const {cannerSchema} = schema;
 class CMSExample extends React.Component {
   render() {
     const baseUrl = "/docs";
+    // eslint-disable-next-line
+    console.log(schema);
     return (
       <Router>
         <Route path="/docs/**" render={({location, history, match}) => {

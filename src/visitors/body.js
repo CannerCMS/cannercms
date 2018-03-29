@@ -11,9 +11,11 @@ const arrayBody = {
       if (path.node.pattern === 'array') {
         const routeMap = genRouteMap('', path.node);
         const componentInBody = {
-          nodeType: 'container.body',
+          nodeType: 'layout',
+          component: 'body',
           children: [{
-            nodeType: 'container.block',
+            nodeType: 'layout',
+            component: 'block',
             children: [path.node],
           }],
           childrenName: [path.node.name],
@@ -33,7 +35,8 @@ const objectBody = {
       if (path.node.pattern === 'object') {
         const routeMap = genRouteMap('', path.node);
         const componentInBody = {
-          nodeType: 'container.body',
+          nodeType: 'layout',
+          component: 'body',
           children: [path.node],
           routeMap,
         };
@@ -55,7 +58,7 @@ type RouteMap = {
 function genRouteMap(currentRoute: string, node: NodeType): RouteMap {
   let routeMap = {};
 
-  if (node.nodeType.indexOf('container') === -1) {
+  if (node.nodeType.indexOf('layout') === -1) {
     currentRoute = `${currentRoute ? currentRoute + '/' : ''}${node.name || ''}`;
     routeMap[currentRoute] = {
       title: node.title,

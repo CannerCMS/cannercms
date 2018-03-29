@@ -24,7 +24,7 @@ type Props = {
 type State = {
   restRoutes: Array<string>,
   index: number | string,
-  renderType: 0 | 1,
+  renderType: 0 | 1 | 2,
   query: any,
   canRender: boolean,
 }
@@ -114,6 +114,8 @@ export default function withRoute(Com: React$Component<*>) {
             renderType = 1;
           }
         }
+      } else {
+        renderType = 2;
       }
       this.setState({
         restRoutes,

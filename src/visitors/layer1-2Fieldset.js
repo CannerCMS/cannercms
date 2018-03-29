@@ -49,21 +49,24 @@ const block = {
           }
         });
         const inputChildrenWithContainer = inputChildren.length ? [{
-          nodeType: 'container.block',
+          nodeType: 'layout',
+          component: 'block',
           name: `[block-${getRandomString()}]`,
           children: inputChildren,
           childrenName: inputChildren.map((child) => child.name),
           hocs: ['containerRouter'],
         }] : [];
         const imageChildrenWithContainer = imageChildren.length ? [{
-          nodeType: 'container.block',
+          nodeType: 'layout',
+          component: 'block',
           name: `[block-${getRandomString()}]`,
           children: imageChildren,
           childrenName: imageChildren.map((child) => child.name),
           hocs: ['containerRouter'],
         }] : [];
         const editorChildrenWithContainer = editorChildren.map((child) => ({
-          nodeType: 'container.block',
+          nodeType: 'layout',
+          component: 'block',
           title: child.title,
           description: child.description,
           name: `[block-${getRandomString()}]`,
@@ -72,21 +75,24 @@ const block = {
           hocs: ['containerRouter'],
         }));
         const galleryChildrenWithContainer = galleryChildren.map((child) => ({
-          nodeType: 'container.block',
+          nodeType: 'layout',
+          component: 'block',
           name: `[block-${getRandomString()}]`,
           children: [child],
           childrenName: [child.name],
           hocs: ['containerRouter'],
         }));
         const arrayChildrenWithContainer = arrayChildren.map((child) => ({
-          nodeType: 'container.block',
+          nodeType: 'layout',
+          component: 'block',
           name: `[block-${getRandomString()}]`,
           children: [child],
           childrenName: [child.name],
           hocs: ['containerRouter'],
         }));
         const objectChildrenWithContainer = objectChildren.map((child) => ({
-          nodeType: 'container.block',
+          nodeType: 'layout',
+          component: 'block',
           title: child.title,
           description: child.description,
           name: `[block-${getRandomString()}]`,
