@@ -7,9 +7,10 @@ import {fetchFromRelation} from "./relationFactory";
 import type {RelationDef, FetchFromRelationDef} from "./relationFactory";
 import isObject from 'lodash/isObject';
 import pick from 'lodash/pick';
+import type RefId from 'canner-ref-id';
 
 type Props = {
-  id: string,
+  refId: RefId,
   rootValue: any,
   name: string,
   relation: RelationDef,
@@ -69,10 +70,10 @@ export function withRelation(Com: React.ComponentType<*>, fetchFromRelation: Fet
     }
 
     fetchRelationValue = (props?: Props, pagination?: {start: number, limit: number}): Promise<*> => {
-      const {fetch, items, name, id, rootValue, relation, value, ui, pattern} = props || this.props;
+      const {fetch, items, name, refId, rootValue, relation, value, ui, pattern} = props || this.props;
       if (relation) {
-        return fetchFromRelation(id, relation, {
-          entityId: getParentId(rootValue, id),
+        return fetchFromRelation(refId.toString(), relation, {
+          entityId: getParentId(rootValue, refId.toString()),
           fieldValue: (value && value.toJS) ? value.toJS() : value
         }, fetch, pagination || {start: 0, limit: 10}).then(data => {
           this.setState({
@@ -94,10 +95,10 @@ export function withRelation(Com: React.ComponentType<*>, fetchFromRelation: Fet
               idList = idList.concat((v.get(__key__) || []));
             }
             const data = {
-              entityId: getParentId(rootValue, id),
+              entityId: getParentId(rootValue, refId.toString()),
               fieldValue: isOneToOne || isManyToOne ? idList[0] : idList
             }
-            return fetchFromRelation(`${id}/__RELATION__`, relation, data, fetch, pagination || {start: 0, limit: 10})
+            return fetchFromRelation(`${refId.toString()}/__RELATION__`, relation, data, fetch, pagination || {start: 0, limit: 10})
               .then(data => ({
                 __key__,
                 data

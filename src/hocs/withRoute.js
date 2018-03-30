@@ -3,12 +3,14 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import type {List} from 'immutable';
+import type RefId from 'canner-ref-id';
+
 type Props = {
   type: string,
   routes: Array<string>,
   rootValue: List<any>,
   name: string,
-  id: string,
+  refId: RefId,
   params: any,
   renderChildren: ({[string]: any}) => React.Node,
   fetch: FetchDef,
@@ -81,12 +83,12 @@ export default function withRoute(Com: React$Component<*>) {
     }
 
     updateState = (props: Props): Promise<*> => {
-      const {type, rootValue, name, id, params, routes, fetch, componentId} = props || this.props;
+      const {type, rootValue, name, refId, params, routes, fetch, componentId} = props || this.props;
       const restRoutes = routes ? routes.slice() : [];
       let {index, renderType} = this.state;
       let query = {};
-      const key = id.split('/')[0];
-      const paths = id.split('/').slice(1);
+      const key = refId.getPathArr()[0];
+      const paths = refId.getPathArr().slice(1);
       renderType = 0;
       if (restRoutes.length === 0) {
         // block encounters the id with plugins will render!
@@ -131,7 +133,7 @@ export default function withRoute(Com: React$Component<*>) {
     }
 
     render() {
-      const {id, renderChildren} = this.props;
+      const {refId, renderChildren} = this.props;
       const {renderType, canRender, index, restRoutes} = this.state;
       // const {op} = params;
       // id: arr/0/arr1
@@ -143,7 +145,7 @@ export default function withRoute(Com: React$Component<*>) {
         return <Com {...this.props} routes={restRoutes} />;
       } else if (renderType === 1) {
         return <div>
-          {renderChildren({id: `${id}/${index}`, routes: restRoutes})}
+          {renderChildren({refId: refId.child(String(index)), routes: restRoutes})}
         </div>;
       }
       

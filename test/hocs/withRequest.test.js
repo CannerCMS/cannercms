@@ -12,10 +12,11 @@ import Adapter from 'enzyme-adapter-react-16';
 import withRequest, {createAction} from '../../src/hocs/withRequest';
 import {fromJS} from 'immutable';
 import {UNIQUE_ID} from '../../src/app/config';
+import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('hocTemplate', () => {
+describe('with request', () => {
   let WrapperComponent, props, MockComponent, mockRequest;
 
   beforeEach(() => {
@@ -28,13 +29,18 @@ describe('hocTemplate', () => {
       title: 'post1'
     }]);
     props = {
-      id: 'POSTS',
+      refId: new RefId('POSTS'),
       value: rootValue,
       rootValue,
       relation: undefined,
       fetchRelation: () => {
       },
-    request: mockRequest
+      items: {
+        title: {
+          tyep: 'string'
+        }
+      },
+      request: mockRequest
     }
     WrapperComponent = withRequest(MockComponent);
   });
@@ -47,25 +53,24 @@ describe('hocTemplate', () => {
   describe('onChang function', () => {
     it('should call props.request with arguments action', () => {
       const wrapper = shallow(<WrapperComponent {...props} />);
-      const id = props.id;
       const type = 'create';
       const delta = fromJS({
         [UNIQUE_ID]: 'id2',
         title: 'post2'
       });
-      wrapper.instance().onChange(id, type, delta).then(() => {
+      wrapper.instance().onChange(props.refId, type, delta).then(() => {
         expect(mockRequest.mock.calls[0][0]).toBeTruthy();
       });
     });
 
     it('should accept changeQueue', () => {
       const wrapper = shallow(<WrapperComponent {...props} />);
-      const id = props.id;
+      const refId = props.refId;
       const type = 'create';
       const delta = i => fromJS({
         title: `post${i}`
       });
-      const changeQueue = [2,3,4,5].map(i => ({id, type, value: delta(i)}));
+      const changeQueue = [2,3,4,5].map(i => ({refId, type, value: delta(i)}));
       return wrapper.instance().onChange(changeQueue)
         .then(() => {
           expect(mockRequest.mock.calls.length).toBe(4);
@@ -80,12 +85,11 @@ describe('hocTemplate', () => {
             relationship: 'oneToMany.foreignKey'
           }}
         />);
-      const id = props.id;
       const type = 'create';
       const delta = fromJS({
         title: `post2`
       });
-      return wrapper.instance().onChange(id, type, delta)
+      return wrapper.instance().onChange(props.refId, type, delta)
         .then(() => {
           expect(mockRequest.mock.calls.length).toBe(1);
           expect(fetchRelation.mock.calls.length).toBe(1);

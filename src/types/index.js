@@ -11,7 +11,7 @@ declare class Bucket {
   bucket: BucketType;
 }
 
-type filterType = {
+declare type filterType = {
   filter: {
     [string]: {
       $eq?: string | number | boolean,
@@ -27,13 +27,13 @@ type filterType = {
   }
 }
 
-type sortType = {
+declare type sortType = {
   sort: {
     [string]: 1 | -1
   }
 }
 
-type paginationType = {
+declare type paginationType = {
   pagination: {
     limit: number,
     start: any

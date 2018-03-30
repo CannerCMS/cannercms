@@ -5,9 +5,19 @@ exports[`hocTemplate should render 1`] = `
   componentId="posts"
   deploy={[MockFunction]}
   fetch={[MockFunction]}
-  id="posts"
   name="posts"
   query={Object {}}
+  refId={
+    CannerRefId {
+      "_internalArr": Array [
+        "posts",
+      ],
+      "child": [Function],
+      "getPathArr": [Function],
+      "remove": [Function],
+      "toString": [Function],
+    }
+  }
   request={[MockFunction]}
   reset={[MockFunction]}
   subscribe={[MockFunction]}

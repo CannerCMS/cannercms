@@ -4,11 +4,11 @@ import {List, fromJS} from 'immutable';
 import {isEqual} from 'lodash';
 import {Button} from 'antd';
 import {MiniApp, generateAction} from '../app';
-
+import type RefId from 'canner-ref-id';
 type Props = {
   type: string,
   routes: Array<string>,
-  id: string,
+  refId: RefId,
   ui: string,
   params: {
     op: string,
@@ -118,12 +118,12 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
 
     create = (props: Props = this.props) => {
       // this method is for route op
-      const {createEmptyData, id, items, params} = props;
+      const {createEmptyData, refId, items, params} = props;
       const {app} = this.state;
       if (app) {
         const {payload} = params;
         const data = createEmptyData(items).mergeDeep(fromJS(JSON.parse(payload || "{}")));
-        app.request(generateAction(id, 'create', data, new List()))
+        app.request(generateAction(refId.toString(), 'create', data, new List()))
           .then(() => {
             this.setState({
               changed: true,
@@ -135,8 +135,8 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
 
     reset = (key?: string, recordId?: string, callback?: Function): Promise<*> => {
       const {app} = this.state;
-      const {id} = this.props;
-      key = key || id.split('/')[0];
+      const {refId} = this.props;
+      key = key || refId.getPathArr()[0];
       if (app) {
         return app.reset(key, recordId) // reset the store and cache in miniapp
           // $FlowFixMe

@@ -12,6 +12,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import withRoute from '../../src/hocs/withRoute';
 import {fromJS} from 'immutable';
 import { UNIQUE_ID } from '../../src/app/config';
+import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -35,7 +36,7 @@ describe('withRoute', () => {
         name: 'Name'
       })}
       name="name"
-      id="info/name"
+      refId={new RefId("info/name")}
       params={{}}
       renderChildren={mockRenderChildren}
       fetch={mockFetch}
@@ -53,7 +54,7 @@ describe('withRoute', () => {
         name: 'Name'
       })}
       name="name"
-      id="info/name"
+      refId={new RefId("info/name")}
       params={{}}
       renderChildren={mockRenderChildren}
       fetch={mockFetch}
@@ -76,7 +77,7 @@ describe('withRoute', () => {
         name: 'Name'
       })}
       name="name"
-      id="info/name"
+      refId={new RefId("info/name")}
       params={{}}
       renderChildren={mockRenderChildren}
       fetch={mockFetch}
@@ -100,7 +101,7 @@ describe('withRoute', () => {
         title: 'Title'
       }])}
       name="posts"
-      id="posts"
+      refId={new RefId("posts")}
       params={{}}
       fetch={mockFetch}
       renderChildren={mockRenderChildren}
@@ -124,7 +125,7 @@ describe('withRoute', () => {
         title: 'Title'
       }])}
       name="posts"
-      id="posts"
+      refId={new RefId("posts")}
       params={{op: 'create'}}
       fetch={mockFetch}
       renderChildren={mockRenderChildren}

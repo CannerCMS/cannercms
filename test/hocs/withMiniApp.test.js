@@ -10,10 +10,12 @@ import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import {withMiniApp} from '../../src/hocs/miniApp';
+import RefId from 'canner-ref-id';
+import {fromJS} from 'immutable';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('hocTemplate', () => {
+describe('withRouteMiniApp', () => {
   let WrapperComponent, props, MockComponent, MiniApp,
   appFetchMock, appDeployMock, appRequestMock, appSubscribeMock, appResetMock;
 
@@ -37,12 +39,13 @@ describe('hocTemplate', () => {
     }
 
     props = {
-      id: 'posts',
+      refId: new RefId('posts'),
       request: () => Promise.resolve(),
       fetch: () => Promise.resolve(),
       subscribe: () => Promise.resolve(),
       deploy: () => Promise.resolve(),
-      componentId: 'posts'
+      componentId: 'posts',
+      value: fromJS({_id: 'test'})
     }
     WrapperComponent = withMiniApp(MockComponent, MiniApp);
   });
@@ -61,7 +64,7 @@ describe('hocTemplate', () => {
       fetch: () => Promise.resolve(),
       subscribe: () => Promise.resolve(),
       deploy: mockDeploy,
-      componentId: props.id
+      componentId: props.refId.toString()
     };
     const wrapper = shallow(<WrapperComponent {...props} {...methods}/>);
     const methProps = wrapper.instance().getProps();
@@ -94,12 +97,12 @@ describe('hocTemplate', () => {
     wrapper.render();
     expect(mockRenderChildren).toHaveBeenCalledWith({}, {
       onClick: wrapper.instance().deploy,
-      key: props.id,
-      id: undefined
+      key: props.refId.toString(),
+      refId: expect.any(RefId)
     }, {
       onClick: wrapper.instance().reset,
-      key: props.id,
-      id: undefined
+      key: props.refId.toString(),
+      refId: expect.any(RefId)
     })
   });
 });

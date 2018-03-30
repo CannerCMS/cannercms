@@ -3,6 +3,7 @@
 import Ajv from "ajv";
 import React, {PureComponent} from "react";
 import {fromJS, Map} from "immutable";
+import type RefId from 'canner-ref-id';
 
 const defaultErrorHandle = () => {
   return "預設資料錯誤";
@@ -15,7 +16,7 @@ type Props = {
   value: any,
   type: string,
   onChange: Function,
-  id: string,
+  refId: RefId,
   items: {[string]: any},
   createEmptyData: Function,
   ui: string,
@@ -44,14 +45,14 @@ export default (Plugin: any) => {
     }
 
     componentWillMount() {
-      const {value, onChange, id, type, defaultData} = this.props;
+      const {value, onChange, refId, type, defaultData} = this.props;
       if (this.validate(value)) {
         this.setState({
           safeToRender: true
         });
       } else {
         onChange(
-          id,
+          refId.toString(),
           "update",
           fromJS(defaultData) || this.getDefaultData(type)
         );
@@ -59,14 +60,14 @@ export default (Plugin: any) => {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-      const {onChange, id, defaultData, type} = this.props;
+      const {onChange, refId, defaultData, type} = this.props;
       if (this.validate(nextProps.value)) {
         this.setState({
           safeToRender: true
         });
       } else {
         onChange(
-          id,
+          refId.toString(),
           "update",
           fromJS(defaultData) || this.getDefaultData(type)
         );
@@ -100,7 +101,7 @@ export default (Plugin: any) => {
         type === "swap" ||
         type === "ref" ||
         type === "delete" ||
-        id !== this.props.id
+        id !== this.props.refId.toString()
       ) {
         this.props.onChange(id, type, value);
       } else if (this.validate(value)) {
@@ -109,13 +110,13 @@ export default (Plugin: any) => {
     }
 
     validate = (data: any) => {
-      const {onValid, onInvalid, id, validateSchema} = this.props;
+      const {onValid, onInvalid, refId, validateSchema} = this.props;
       const jsData = data && data.toJS ? data.toJS() : data;
       const valid = ajv.validate(validateSchema, jsData);
       if (valid && onValid) {
-        onValid(id || Plugin.name);
+        onValid(refId.toString() || Plugin.name);
       } else if (onInvalid) {
-        onInvalid(id || Plugin.name);
+        onInvalid(refId.toString() || Plugin.name);
       }
       this.setState({valid});
       return valid;

@@ -6,9 +6,9 @@ import isArray from 'lodash/isArray';
 import type {RelationDef} from "./relationFactory";
 import {create} from "./relationFactory";
 import createEmptyData from '../app/utils/createEmptyData';
+import RefId from 'canner-ref-id';
 
 type Props = {
-  id: string,
   value: any,
   rootValue: any,
   relation?: RelationDef,
@@ -17,24 +17,34 @@ type Props = {
   items: any
 };
 
-type changeQueue = Array<{id: string | {firstId: string, secondId: string}, type: any, value: any}>;
+type changeQueue = Array<{RefId: RefId | {firstRefId: RefId, secondRefId: RefId}, type: any, value: any}>;
 
 export default function withRequest(Com: React.ComponentType<*>) {
   // this hoc will update data;
   // it's the onChange end
   return class ComponentWithRequest extends React.Component<Props> {
-    onChange = (id: string | {firstId: string, secondId: string} | changeQueue, type: any, delta: any, config: any) => {
-      if (isArray(id)) { // changeQueue
-        const changeQueue = id;
+    onChange = (refId: RefId | {firstRefId: RefId, secondRefId: RefId} | changeQueue, type: any, delta: any, config: any) => {
+      let id;
+      if (isArray(refId)) { // changeQueue
+        const changeQueue = refId;
         // $FlowFixMe
         return Promise.all(changeQueue.map(args => {
-          const {id, type, value} = args;
-          return this.onChange(id, type, value);
+          const {refId, type, value} = args;
+          return this.onChange(refId, type, value);
         }));
-      }
+      } else if (refId instanceof RefId) {
+        id = refId.toString();
+      } else {
+        id = {
+          // $FlowFixMe: refId should be object here
+          firstId: refId.firstRefId.toString(),
+          // $FlowFixMe: refId should be object here
+          secondId: refId.secondRefId.toString()
+        };
+      } 
       const {rootValue, relation, value, request, items} = this.props;
       // generate action
-      // $FlowFixMe: id sould string here
+      
       const action = createAction({
         relation,
         id,
@@ -73,7 +83,7 @@ export function createAction({
   items
 }: { 
   relation: any,
-  id: string,
+  id: {firstId: string, secondId: string} | string,
   type: 'create' | 'update' | 'delete' | 'swap',
   delta: any,
   config: any,

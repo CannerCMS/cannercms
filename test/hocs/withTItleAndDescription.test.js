@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import withTitleAndDescription from '../../src/hocs/withTitleAndDescription';
+import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -14,7 +15,7 @@ describe('withTitleAndDescription', () => {
       return (<div>Component</div>);
     }
     props = {
-      id: 'posts',
+      refId: new RefId('posts'),
       title: 'POSTS',
       description: 'many posts',
     }

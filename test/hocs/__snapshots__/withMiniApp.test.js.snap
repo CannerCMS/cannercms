@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`hocTemplate should render and new an app and fetchData 1`] = `
+exports[`withRouteMiniApp should render and new an app and fetchData 1`] = `
 <MockComponent
   componentId="posts"
   deploy={[Function]}
@@ -15,10 +15,25 @@ exports[`hocTemplate should render and new an app and fetchData 1`] = `
       ],
     }
   }
-  id="posts"
+  refId={
+    CannerRefId {
+      "_internalArr": Array [
+        "posts",
+      ],
+      "child": [Function],
+      "getPathArr": [Function],
+      "remove": [Function],
+      "toString": [Function],
+    }
+  }
   renderChildren={[Function]}
   request={[MockFunction]}
   reset={[MockFunction]}
   subscribe={[MockFunction]}
+  value={
+    Immutable.Map {
+      "_id": "test",
+    }
+  }
 />
 `;

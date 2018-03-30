@@ -1,10 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`hocTemplate should render 1`] = `
+exports[`with request should render 1`] = `
 <MockComponent
   fetchRelation={[Function]}
-  id="POSTS"
+  items={
+    Object {
+      "title": Object {
+        "tyep": "string",
+      },
+    }
+  }
   onChange={[Function]}
+  refId={
+    CannerRefId {
+      "_internalArr": Array [
+        "POSTS",
+      ],
+      "child": [Function],
+      "getPathArr": [Function],
+      "remove": [Function],
+      "toString": [Function],
+    }
+  }
   request={[MockFunction]}
   rootValue={
     Immutable.List [

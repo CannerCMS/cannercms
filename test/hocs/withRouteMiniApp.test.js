@@ -11,6 +11,7 @@ import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import withRouteMiniApp from '../../src/hocs/routeMiniApp';
 import {fromJS} from 'immutable';
+import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -26,7 +27,7 @@ describe('with route mini app', () => {
     mockFetch = jest.fn().mockImplementation(() => Promise.resolve(fromJS([])));
     mockSubscribe = jest.fn().mockImplementation(() => Promise.resolve())
     props = {
-      id: 'posts',
+      refId: new RefId('posts'),
       params: {},
       createEmptyData: () => fromJS({}),
       renderChildren: function renderChildren() {return <div></div>;},
@@ -59,7 +60,7 @@ describe('with route mini app', () => {
   it('should not renderButton when routes end at parent', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={[]}
-      id="posts/<postId>/title"
+      refId={new RefId("posts/<postId>/title")}
     />);
     expect(wrapper.find('Button').length).toBe(0);
   });
@@ -67,7 +68,7 @@ describe('with route mini app', () => {
   it('should renderButton when first tab', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['tab']}
-      id="tab"
+      refId={new RefId("tab")}
       ui="tab"
       type="array"
     />);
@@ -77,7 +78,7 @@ describe('with route mini app', () => {
   it('should not renderButton when nested tab, when route end at parent', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={[]}
-      id="info/tab"
+      refId={new RefId("info/tab")}
       ui="tab"
       type="array"
     />);
@@ -87,7 +88,7 @@ describe('with route mini app', () => {
   it('should renderButton when string of array', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['tags']}
-      id="tags"
+      refId={new RefId("tags")}
       ui="tags"
       type="array"
     />);
@@ -97,7 +98,7 @@ describe('with route mini app', () => {
   it('should not renderButton when first opup, breadcrumb', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['route']}
-      id="route"
+      refId={new RefId("route")}
       ui="popup"
       type="array"
     />);
@@ -111,7 +112,7 @@ describe('with route mini app', () => {
   it('should not renderButton when nested popup, breadcrumb', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['route']}
-      id="route"
+      refId={new RefId("route")}
       ui="popup"
       type="array"
     />);
@@ -125,7 +126,7 @@ describe('with route mini app', () => {
   it('should not renderButton when routes end at parent, with nested popup, breadcrumb', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['route2']}
-      id="route/route2"
+      refId={new RefId("route/route2")}
       ui="popup"
       type="array"
     />);
@@ -139,7 +140,7 @@ describe('with route mini app', () => {
   it('should init correct', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['route']}
-      id="route"
+      refId={new RefId("route")}
     />);
     expect(wrapper.state()).toMatchObject({
       routesEndAtMe: true,
@@ -147,7 +148,7 @@ describe('with route mini app', () => {
     });
     wrapper.setProps({
       routes: [],
-      id: "route/route2"
+      refId: new RefId("route/route2")
     });
     expect(wrapper.state()).toMatchObject({
       routesEndAtMe: false,
@@ -156,7 +157,7 @@ describe('with route mini app', () => {
 
     wrapper.setProps({
       routes: ['route2', 'route3'],
-      id: "route/route2"
+      refId: new RefId("route/route2")
     });
     expect(wrapper.state()).toMatchObject({
       routesEndAtMe: false,
@@ -165,7 +166,7 @@ describe('with route mini app', () => {
 
     wrapper.setProps({
       routes: ['post'],
-      id: 'posts',
+      refId: new RefId('posts'),
       params: {
         op: 'create'
       }
@@ -179,7 +180,7 @@ describe('with route mini app', () => {
   it('should pass new method', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['route']}
-      id="route"
+      refId={new RefId("route")}
     />);
 
     const childrenProps = wrapper.find(MockComponent).props();

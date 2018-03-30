@@ -12,6 +12,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import {withRelation} from '../../src/hocs/relation';
 import {fromJS} from 'immutable';
 import { UNIQUE_ID } from '../../src/app/config';
+import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -29,7 +30,7 @@ describe('hocTemplate', () => {
       author: 'authorId'
     }]);
     props = {
-      id: 'posts',
+      refId: new RefId('posts'),
       name: 'posts',
       rootValue,
       value: rootValue,
@@ -65,7 +66,7 @@ describe('hocTemplate', () => {
   it('fetchRelationValue in relation plugin', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       {...props.items.items.author}
-      id="posts/0/author"
+      refId={new RefId("posts/0/author")}
       name="author"
       value="authorId"
       pattern="array.relation"

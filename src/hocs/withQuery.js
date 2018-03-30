@@ -2,10 +2,11 @@
 
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
+import type RefId from 'canner-ref-id';
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type Props = {
-  id: string,
+  refId: RefId,
   componentId: string,
   query?: QueryDef,
   fetch: FetchDef,
@@ -32,7 +33,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         rootValue: null,
         isFetching: true
       };
-      this.key = props.id.split('/')[0];
+      this.key = props.refId.getPathArr()[0];
     }
 
     componentDidMount() {
@@ -44,12 +45,12 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     queryData = () => {
-      const {fetch, query, componentId, id} = this.props;
+      const {fetch, query, componentId, refId} = this.props;
       // second key: use key as a subjectID
       return fetch(this.key, componentId, query).then(ctx => {
         this.setState({
           rootValue: ctx.response.body,
-          value: getValue(ctx.response.body, id),
+          value: getValue(ctx.response.body, refId.getPathArr()),
           isFetching: false
         });
         this.subscribe();
@@ -63,11 +64,11 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     subscribe = (): Promise<any> => {
-      const {subscribe, componentId, id} = this.props;
+      const {subscribe, componentId, refId} = this.props;
       return subscribe(this.key, componentId, 'value', value => {
         this.setState({
           rootValue: value,
-          value: getValue(value, id)
+          value: getValue(value, refId.getPathArr())
         });
       }).then(subscription => {
         this.subscription = subscription;
@@ -84,9 +85,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
   };
 }
 
-function getValue(value, id) {
-  if (value && id) {
-    return value.getIn(id.split('/').slice(1));
+function getValue(value, idPathArr) {
+  if (value && idPathArr) {
+    return value.getIn(idPathArr.slice(1));
   }
   return null;
 }

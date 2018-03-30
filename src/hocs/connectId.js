@@ -2,9 +2,10 @@
 
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import RefId from 'canner-ref-id';
 
 type Props = {
-  id: string,
+  refId: RefId,
   name: string,
 };
 
@@ -20,7 +21,7 @@ type Context = {
 
 export default function connectIdAndContext(Com: React.ComponentType<*>) {
   return class ComponentConnectIdAndContext extends React.Component<Props> {
-    id: string;
+    refId: RefId;
     componentId: string;
     query: QueryDef;
     reset: ResetDef;
@@ -42,12 +43,12 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
 
     constructor(props: Props, context: Context) {
       super(props);
-      const {id, name} = props;
+      const {refId, name} = props;
       const {componentId, query, reset} = context;
       // these four values are pass by HOCs,
       // so give them a default value
-      this.id = `${id ? id + '/' : ''}${name}`;
-      this.componentId = componentId || this.id;
+      this.refId = refId ? refId.child(name) : new RefId(name);
+      this.componentId = componentId || this.refId.toString();
       // $FlowFixMe
       this.query = query || {};
       this.reset = reset || (() => Promise.resolve());
@@ -55,7 +56,7 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
 
     render() {
       return <Com {...this.props}
-        id={this.id}
+        refId={this.refId}
         componentId={this.componentId}
         query={this.query}
         reset={this.reset}

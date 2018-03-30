@@ -11,6 +11,7 @@ import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import withQuery from '../../src/hocs/withQuery';
 import {fromJS} from 'immutable';
+import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -29,7 +30,7 @@ describe('with Query', () => {
     }));
     mockSubscribe = jest.fn().mockImplementation(() => Promise.resolve());
     props = {
-      id: 'info',
+      refId: new RefId('info'),
       componentId: 'info',
       query: {},
       fetch: mockFetch,

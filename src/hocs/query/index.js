@@ -1,12 +1,36 @@
-import React, {PureComponent} from 'react';
+// @flow
+
+import * as React from 'react';
 import Sort from './sort';
 import Pagination from './pagination';
 import Filter from './filter';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
+import type RefId from 'canner-ref-id';
 
-export default (Plugin) => {
-  return class PluginWithQuery extends PureComponent {
+type Props = {
+  filter: filterType,
+  sort: sortType,
+  params: Object,
+  routes: Array<string>,
+  componentId: string,
+  fetch: FetchDef,
+  refId: RefId
+}
+
+type State = {
+  filter: filterType,
+  sort: sortType,
+  pagination: {
+    start: number,
+    limit: number,
+  },
+  paginationRes: any,
+  value: any,
+}
+
+export default (Plugin: React.ComponentType<*>) => {
+  return class PluginWithQuery extends React.PureComponent<Props, State> {
     constructor(props) {
       super(props);
       this.state = {
@@ -25,10 +49,10 @@ export default (Plugin) => {
     }
 
     componentWillMount() {
-      const {id, subscribe, componentId} = this.props;
+      const {refId, subscribe, componentId} = this.props;
       this.queryData()
         .then(() => {
-          subscribe(id, componentId, 'value', (value) => {
+          subscribe(refId.toString(), componentId, 'value', (value) => {
             this.setState({
               value,
             });
@@ -37,9 +61,9 @@ export default (Plugin) => {
     }
 
     queryData() {
-      const {id, fetch, componentId} = this.props;
+      const {refId, fetch, componentId} = this.props;
       const {filter, sort, pagination} = this.state;
-      return fetch(id, componentId, {filter, sort, pagination}).then((ctx) => {
+      return fetch(refId.toString(), componentId, {filter, sort, pagination}).then((ctx) => {
         this.setState({
           paginationRes: ctx.response.pagination,
           value: ctx.response.body,

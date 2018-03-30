@@ -3,10 +3,11 @@
 import * as React from 'react';
 import {MiniApp} from '../app';
 import type {Map} from 'immutable';
+import RefId from 'canner-ref-id';
 
 type Props = {
-  id: string,
-  value: Map<string, *>,
+  refId: RefId,
+  value: Map<string, any>,
   renderChildren: (childrenProps: Object, deployButtonProps: Object, cancelButtonProps: Object) => React.Node,
   request: RequestDef,
   fetch: FetchDef,
@@ -49,38 +50,42 @@ export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-      if (nextProps.id !== this.props.id) {
+      if (nextProps.refId.toString() !== this.props.refId.toString()) {
         this.fetchData();
       }
     }
 
     fetchData = () => {
-      const {query, componentId, id} = this.props;
-      this.app.fetch(id.split('/')[0], componentId, query);
+      const {query, componentId, refId} = this.props;
+      this.app.fetch(refId.getPathArr()[0], componentId, query);
     }
 
-    deploy = (key?: string, id?: string, callback?: Function): Promise<*> => {
+    deploy = (key?: string, refId?: RefId, callback?: Function): Promise<*> => {
       const {deploy} = this.props;
-      return this.app.deploy(key, id).then(() => {
-        return deploy(key, id).then(callback);
+      const idString = refId && refId.toString();
+      return this.app.deploy(key, idString).then(() => {
+        return deploy(key, idString).then(callback);
       });
     }
 
-    reset = (key?: string, id?: string, callback?: Function): Promise<*> => {
+    reset = (key?: string, refId?: RefId, callback?: Function): Promise<*> => {
       const {query} = this.props;
-      return this.app.reset(key, id, query).then(callback)
+      return this.app.reset(key, refId && refId.toString(), query).then(callback)
     }
 
     render() {
-      const {renderChildren, id, value} = this.props;
-      const key = id.split('/')[0];
+      const {renderChildren, refId, value} = this.props;
+      const key = refId.getPathArr()[0];
       const recordId = value && value.get('_id');
+      if (typeof recordId !== 'string') {
+        throw new Error(`recordId is not a string, path: ${refId.toString()}`)
+      }
       const newRenderChildren = (childrenProps = {}, deployProps = {}, cancelProps = {}) => {
         deployProps.key = deployProps.key || key;
-        deployProps.id = deployProps.id || recordId;
+        deployProps.refId = deployProps.refId || new RefId(recordId);
         deployProps.onClick = this.deploy;
         cancelProps.key = cancelProps.key || key;
-        cancelProps.id = cancelProps.id || recordId;
+        cancelProps.refId = cancelProps.refId || new RefId(recordId);
         cancelProps.onClick = this.reset;
         return renderChildren(childrenProps, deployProps, cancelProps);
       };

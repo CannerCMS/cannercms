@@ -51,8 +51,18 @@ exports[`withTitleAndDescription should render horizontal 1`] = `
   >
     <MockComponent
       description="many posts"
-      id="posts"
       layout="horizontal"
+      refId={
+        CannerRefId {
+          "_internalArr": Array [
+            "posts",
+          ],
+          "child": [Function],
+          "getPathArr": [Function],
+          "remove": [Function],
+          "toString": [Function],
+        }
+      }
       title="POSTS"
     />
   </div>
@@ -110,8 +120,18 @@ exports[`withTitleAndDescription should render horizontal 2`] = `
   >
     <MockComponent
       description="many posts"
-      id="posts"
       layout="horizontal"
+      refId={
+        CannerRefId {
+          "_internalArr": Array [
+            "posts",
+          ],
+          "child": [Function],
+          "getPathArr": [Function],
+          "remove": [Function],
+          "toString": [Function],
+        }
+      }
       title="POSTS"
     />
   </div>
@@ -165,7 +185,17 @@ exports[`withTitleAndDescription should render vertical by default 1`] = `
   >
     <MockComponent
       description="many posts"
-      id="posts"
+      refId={
+        CannerRefId {
+          "_internalArr": Array [
+            "posts",
+          ],
+          "child": [Function],
+          "getPathArr": [Function],
+          "remove": [Function],
+          "toString": [Function],
+        }
+      }
       title="POSTS"
     />
   </div>

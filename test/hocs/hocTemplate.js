@@ -11,6 +11,7 @@ import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
+import RefId from 'canner-ref-id';
 
 const withHOC = () => function HOC() {
   return <div>test</div>;
@@ -25,7 +26,7 @@ describe('hocTemplate', () => {
       return (<div>Component</div>);
     }
     props = {
-      id: 'posts',
+      refId: new RefId('posts'),
       title: 'POSTS',
       description: 'many posts',
     }

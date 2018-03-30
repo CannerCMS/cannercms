@@ -6,8 +6,18 @@ exports[`with route mini app should render 1`] = `
     createEmptyData={[Function]}
     deploy={[Function]}
     fetch={[MockFunction]}
-    id="posts"
     params={Object {}}
+    refId={
+      CannerRefId {
+        "_internalArr": Array [
+          "posts",
+        ],
+        "child": [Function],
+        "getPathArr": [Function],
+        "remove": [Function],
+        "toString": [Function],
+      }
+    }
     renderChildren={[Function]}
     request={[Function]}
     reset={[Function]}

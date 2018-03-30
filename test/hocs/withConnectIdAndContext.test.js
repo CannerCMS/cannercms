@@ -10,6 +10,7 @@ import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import withConnectId from '../../src/hocs/connectId';
+import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -59,7 +60,7 @@ describe('hocTemplate', () => {
     expect(wrapper.find(MockComponent).props()).toMatchObject({
       ...props,
       ...context,
-      id: props.name,
+      refId: expect.any(RefId),
       componentId: props.name,
       query: {}
     });
