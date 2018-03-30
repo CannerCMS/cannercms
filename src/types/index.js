@@ -2,6 +2,7 @@
 import type {Map, List} from 'immutable';
 import type Pattern from '../app/middleware/bucket/pattern/pattern';
 import type Rx from 'rxjs/Rx';
+import type RefId from 'canner-ref-id';
 
 declare type BucketType = {
   [namespace: string]: Pattern
@@ -46,8 +47,8 @@ declare type FetchDef = (key: string, componentId: string, query: any) => Promis
 declare type SubscribeDef = (key: string, componentId: string, type: string, callback: Function) => Promise<*>;
 declare type QueryDef = queryType;
 declare type RequestDef = (MutateAction) => Promise<*>;
-declare type DeployDef = (key?: string, id?: string) => Promise<*>;
-declare type ResetDef = (key?: string, id?: string) => Promise<*>;
+declare type DeployDef = (refId?: RefId, callback?: Function) => Promise<*>;
+declare type ResetDef = (refId?: RefId, callback?: Function) => Promise<*>;
 
 declare type CreateArrayItemAction = {
   type: 'CREATE_ARRAY_ITEM',

@@ -90,7 +90,7 @@
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@canner/canner-config/-/canner-config-0.1.2.tgz#5de7223ffe8df1cad9b71634cf211a9af0ac07dd"
 
-"@canner/canner-schema-loader@^1.0.6":
+"@canner/canner-schema-loader@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@canner/canner-schema-loader/-/canner-schema-loader-1.0.7.tgz#5396fb083d5b6fe7b12318f052a7cfe79dc410f4"
   dependencies:

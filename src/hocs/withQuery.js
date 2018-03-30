@@ -44,6 +44,10 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.unsubscribe();
     }
 
+    getRootValue = () => {
+      return this.state.rootValue;
+    }
+
     queryData = () => {
       const {fetch, query, componentId, refId} = this.props;
       // second key: use key as a subjectID

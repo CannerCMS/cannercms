@@ -4,11 +4,14 @@ import * as React from 'react';
 import {MiniApp} from '../app';
 import type {Map} from 'immutable';
 import RefId from 'canner-ref-id';
+import {UNIQUE_ID} from '../app/config';
 
 type Props = {
   refId: RefId,
   value: Map<string, any>,
-  renderChildren: (childrenProps: Object, deployButtonProps: Object, cancelButtonProps: Object) => React.Node,
+  rootValue: any,
+  renderConfirmButton: (deployButtonProps: Object) => React.Node,
+  renderCancelButton: (cancelButtonProps: Object) => React.Node,
   request: RequestDef,
   fetch: FetchDef,
   subscribe: SubscribeDef,
@@ -60,36 +63,44 @@ export function withMiniApp(Com: React.ComponentType<*>, MiniApp: MiniApp) {
       this.app.fetch(refId.getPathArr()[0], componentId, query);
     }
 
-    deploy = (key?: string, refId?: RefId, callback?: Function): Promise<*> => {
-      const {deploy} = this.props;
-      const idString = refId && refId.toString();
-      return this.app.deploy(key, idString).then(() => {
-        return deploy(key, idString).then(callback);
+    deploy = (refId?: RefId, callback?: Function): Promise<*> => {
+      const {deploy, rootValue} = this.props;
+      let entryKey, recordId;
+      if (refId) {
+        entryKey = refId.getPathArr()[0];
+        const recordIndex = refId.getPathArr()[1];
+        recordId = rootValue && rootValue.getIn([recordIndex, UNIQUE_ID]);
+      }
+      return this.app.deploy(entryKey, recordId).then(() => {
+        return deploy(refId).then(callback);
       });
     }
 
-    reset = (key?: string, refId?: RefId, callback?: Function): Promise<*> => {
-      const {query} = this.props;
-      return this.app.reset(key, refId && refId.toString(), query).then(callback)
+    reset = (refId?: RefId, callback?: Function): Promise<*> => {
+      const {query, rootValue} = this.props;
+      let entryKey, recordId;
+      if (refId) {
+        entryKey = refId.getPathArr()[0];
+        const recordIndex = refId.getPathArr()[1];
+        recordId = rootValue && rootValue.getIn([recordIndex, UNIQUE_ID]);
+      }
+      return this.app.reset(entryKey, recordId, query).then(callback)
     }
 
     render() {
-      const {renderChildren, refId, value} = this.props;
-      const key = refId.getPathArr()[0];
-      const recordId = value && value.get('_id');
-      if (typeof recordId !== 'string') {
-        throw new Error(`recordId is not a string, path: ${refId.toString()}`)
-      }
-      const newRenderChildren = (childrenProps = {}, deployProps = {}, cancelProps = {}) => {
-        deployProps.key = deployProps.key || key;
-        deployProps.refId = deployProps.refId || new RefId(recordId);
+      const {renderConfirmButton, renderCancelButton} = this.props;
+      const newRenderConfirmButton = (deployProps = {}) => {
         deployProps.onClick = this.deploy;
-        cancelProps.key = cancelProps.key || key;
-        cancelProps.refId = cancelProps.refId || new RefId(recordId);
-        cancelProps.onClick = this.reset;
-        return renderChildren(childrenProps, deployProps, cancelProps);
+        return renderConfirmButton(deployProps);
       };
-      return <Com {...this.props} {...this.getProps()} renderChildren={newRenderChildren}/>;
+      const newRenderCancelButton = (cancelProps = {}) => {
+        cancelProps.onClick = this.reset;
+        return renderCancelButton(cancelProps);
+      };
+      return <Com {...this.props} {...this.getProps()}
+        renderConfirmButton={newRenderConfirmButton}
+        renderCancelButton={newRenderCancelButton}
+      />;
     }
   };
 }

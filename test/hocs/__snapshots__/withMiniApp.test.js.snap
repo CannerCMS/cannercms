@@ -26,7 +26,8 @@ exports[`withRouteMiniApp should render and new an app and fetchData 1`] = `
       "toString": [Function],
     }
   }
-  renderChildren={[Function]}
+  renderCancelButton={[Function]}
+  renderConfirmButton={[Function]}
   request={[MockFunction]}
   reset={[MockFunction]}
   subscribe={[MockFunction]}

@@ -95,14 +95,6 @@ describe('withRouteMiniApp', () => {
       renderChildren={mockRenderChildren}
     />);
     wrapper.render();
-    expect(mockRenderChildren).toHaveBeenCalledWith({}, {
-      onClick: wrapper.instance().deploy,
-      key: props.refId.toString(),
-      refId: expect.any(RefId)
-    }, {
-      onClick: wrapper.instance().reset,
-      key: props.refId.toString(),
-      refId: expect.any(RefId)
-    })
+    expect(mockRenderChildren).toHaveBeenCalled()
   });
 });

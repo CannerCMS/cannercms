@@ -18,7 +18,9 @@ exports[`with route mini app should render 1`] = `
         "toString": [Function],
       }
     }
+    renderCancelButton={[Function]}
     renderChildren={[Function]}
+    renderConfirmButton={[Function]}
     request={[Function]}
     reset={[Function]}
     subscribe={[MockFunction]}

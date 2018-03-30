@@ -23,9 +23,7 @@ module.exports = <root>
     </object>
   </array>
   <object name="info" title="Info">
-    <Block>
-      <string name="name" title="Name" />
-    </Block>
+    <string name="name" title="Name" />
     <string name="description" title="Desc" />
     <object name="info" title="Info">
       <string name="name" title="Name" />

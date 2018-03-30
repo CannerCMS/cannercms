@@ -5,6 +5,7 @@ import {isEqual} from 'lodash';
 import {Button} from 'antd';
 import {MiniApp, generateAction} from '../app';
 import type RefId from 'canner-ref-id';
+import {UNIQUE_ID} from '../app/config';
 type Props = {
   type: string,
   routes: Array<string>,
@@ -133,29 +134,43 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       }
     }
 
-    reset = (key?: string, recordId?: string, callback?: Function): Promise<*> => {
+    reset = (refId?: RefId, callback?: Function): Promise<*> => {
       const {app} = this.state;
-      const {refId} = this.props;
-      key = key || refId.getPathArr()[0];
+      let entryKey, recordId;
+      if (refId) {
+        entryKey = refId.getPathArr()[0];
+        const recordIndex = refId.getPathArr()[1];
+        // $FlowFixMe: queryCom should have this method
+        const rootValue = this.queryCom && this.queryCom.getRootValue();
+        recordId = rootValue && rootValue.getIn([recordIndex, UNIQUE_ID]);
+      }
       if (app) {
-        return app.reset(key, recordId) // reset the store and cache in miniapp
-          // $FlowFixMe
+        return app.reset(entryKey, recordId) // reset the store and cache in miniapp
+          // $FlowFixMe: queryCom should have this method
           .then(() => this.queryCom && this.queryCom.queryData()) // ask component to fetch new data
           .then(callback);
       }
       return Promise.resolve();
     }
 
-    deploy = (key?: string, recordId?: string, callback?: Function = () => {}): Promise<*> => {
+    deploy = (refId?: RefId, callback?: Function = () => {}): Promise<*> => {
       const {deploy} = this.props;
       const {app} = this.state;
+      let entryKey, recordId;
+      if (refId) {
+        entryKey = refId.getPathArr()[0];
+        const recordIndex = refId.getPathArr()[1];
+        // $FlowFixMe: queryCom should have this method
+        const rootValue = this.queryCom && this.queryCom.getRootValue();
+        recordId = rootValue && rootValue.getIn([recordIndex, UNIQUE_ID]);
+      }
       if (app) {
-        return app.deploy(key, recordId).then(() => {
-          return deploy(key, recordId)
+        return app.deploy(entryKey, recordId).then(() => {
+          return deploy(entryKey, recordId)
             .then(callback)
             // reset should be placed after callback,
             // or component will display the new-fetched data
-            .then(() => this.reset(key, recordId));
+            .then(() => this.reset(refId));
         });
       }
       return Promise.resolve()
@@ -170,14 +185,14 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
 
     render() {
       const {canBeRendered, routesEndAtMe, isCreateOp, changed, app} = this.state;
-      const {ui, params, routes, renderChildren, fetch, subscribe} = this.props;
+      const {ui, params, routes, renderChildren, fetch, subscribe, refId} = this.props;
       const buttonControlledByArray = (ui === 'popup' || ui === 'breadcrumb') && routesEndAtMe && routes.length === 1 && !isCreateOp;
       const buttonContainer = {
         textAlign: 'right',
         marginTop: 60
       }
-      const renderDepolyButton = genDeployButton(this.deploy);
-      const renderCancelButton = genCancelButton(this.reset);
+      const renderConfirmButton = genDeployButton(this.deploy, refId);
+      const renderCancelButton = genCancelButton(this.reset, refId);
       if (canBeRendered) {
         // $FlowFixMe
         return <div>
@@ -191,23 +206,15 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
             ref={(queryCom: React$Ref<typeof Com>) => {
               this.queryCom = queryCom;
             }}
-            renderChildren={(childrenProps, deployButtonProps = {}, cancelButtonProps = {}) => <React.Fragment>
-              {renderChildren(childrenProps)}
-              {
-                (routesEndAtMe && !buttonControlledByArray) || (!deployButtonProps.hidden && !cancelButtonProps.hidden) ?
-                  null :
-                  <div style={buttonContainer}>
-                    {renderDepolyButton(deployButtonProps)}
-                    {renderCancelButton(cancelButtonProps)}
-                  </div>
-              }
-            </React.Fragment>}
+            renderChildren={renderChildren}
+            renderConfirmButton={renderConfirmButton}
+            renderCancelButton={renderCancelButton}
           />
           {
             routesEndAtMe && !buttonControlledByArray ?
               // $FlowFixMe
               <div style={buttonContainer}>
-                {renderDepolyButton({
+                {renderConfirmButton({
                   disabled: !changed,
                   callback: () => {
                     location.href = params.backUrl || location.href.split('?')[0];
@@ -228,59 +235,42 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
   };
 }
 
-function genDeployButton(deploy) {
+type buttonProps = {
+  disabled?: boolean,
+  style?: Object,
+  refId?: RefId,
+  onClick?: (refId?: RefId, callback?: Function) => Promise<*>,
+  callback?: Function,
+  text?: React.Node | string,
+  hidden?: boolean
+}
+
+function genDeployButton(deploy: Function, currentRefId: RefId) {
   return function DeployButton({
     disabled = false,
     style = {},
-    key,
-    id,
+    refId = currentRefId,
     onClick = deploy,
     callback = () => {},
     // $FlowFixMe
     text = '確定',
-    hidden = false
-  }: {
-    disabled?: boolean,
-    style?: Object,
-    key?: string,
-    id?: string,
-    onClick?: (key?: string, id?: string, callback?: Function) => Promise<*>,
-    callback?: Function,
-    text?: React.Node | string,
-    hidden?: boolean
-  } = {}) {
-    if (hidden)
-      return null;
-    return <Button disabled={disabled} style={style} type="primary" onClick={() => onClick(key, id, callback)}>
+  }: buttonProps = {}) {
+    return <Button disabled={disabled} style={style} type="primary" onClick={() => onClick(refId, callback)}>
       {text}
     </Button>;
   };
 }
 
-function genCancelButton(reset) {
+function genCancelButton(reset: Function, currentRefId: RefId) {
   return function CancelButton({
     disabled = false,
     style = {},
-    key,
-    id,
+    refId = currentRefId,
     onClick = reset,
     callback = () => {},
     text = '取消',
-    hidden = false
-  }: {
-    disabled?: boolean,
-    style?: Object,
-    key?: string,
-    id?: string,
-    onClick?: (key?: string, id?: string, callback?: Function) => Promise<*>,
-    callback?: Function,
-    // $FlowFixMe
-    text?: React.Node,
-    hidden?: boolean
-  } = {}) {
-    if (hidden)
-      return null;
-    return <Button disabled={disabled} style={{marginLeft: 16, ...style}} onClick={() => onClick(key, id, callback)}>
+  }: buttonProps = {}) {
+    return <Button disabled={disabled} style={{marginLeft: 16, ...style}} onClick={() => onClick(refId, callback)}>
       {text}
     </Button>;
   };
