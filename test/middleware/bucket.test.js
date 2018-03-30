@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import {Bucket} from '../../src/middleware';
+import {Bucket} from '../../src/app/middleware';
 import {fromJS} from 'immutable';
 import {UNIQUE_ID} from '../../src/config';
 import {List} from 'immutable';

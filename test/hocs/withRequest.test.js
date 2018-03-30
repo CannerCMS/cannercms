@@ -9,7 +9,7 @@ import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
-import withRequest from '../../src/hocs/withRequest';
+import withRequest, {createAction} from '../../src/hocs/withRequest';
 import {fromJS} from 'immutable';
 import {UNIQUE_ID} from '../../src/app/config';
 
@@ -93,3 +93,83 @@ describe('hocTemplate', () => {
     });
   });
 });
+
+
+describe('createAction', () => {
+  describe('create onChange', () => {
+    it('create with delta should merge with emptyData', () => {
+      const action = createAction({
+        id: 'posts',
+        type: 'create',
+        delta: fromJS({
+          [UNIQUE_ID]: 'id2',
+          title: 'post2'
+        }),
+        value: fromJS([]),
+        rootValue: fromJS([]),
+        items: {
+          title: {
+            type: 'string'
+          },
+          field: {
+            type: 'number'
+          }
+        }
+      })
+      expect(action.type).toBe('CREATE_ARRAY_ITEM');
+      expect(action.payload.value.toJS()).toMatchObject({
+        title: 'post2',
+        field: 0
+      });
+    });
+
+    it('create with delta should not merge with emptyData', () => {
+      const action = createAction({
+        id: 'posts',
+        type: 'create',
+        delta: fromJS({
+          [UNIQUE_ID]: 'id2',
+          title: 'post2'
+        }),
+        config: true, // this will cause unmerged
+        value: fromJS([]),
+        rootValue: fromJS([]),
+        items: {
+          title: {
+            type: 'string'
+          },
+          field: {
+            type: 'number'
+          }
+        }
+      })
+      expect(action.type).toBe('CREATE_ARRAY_ITEM');
+      expect(action.payload.value.toJS()).toMatchObject({
+        title: 'post2'
+      });
+    });
+
+    it('create without delta should create emptyData', () => {
+      const action = createAction({
+        id: 'posts',
+        type: 'create',
+        config: false, // this will cause unmerged
+        value: fromJS([]),
+        rootValue: fromJS([]),
+        items: {
+          title: {
+            type: 'string'
+          },
+          field: {
+            type: 'number'
+          }
+        }
+      })
+      expect(action.type).toBe('CREATE_ARRAY_ITEM');
+      expect(action.payload.value.toJS()).toMatchObject({
+        title: '',
+        field: 0
+      });
+    });
+  });
+})
