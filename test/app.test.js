@@ -1,5 +1,6 @@
 import App from '../src/app';
 import {Bucket, Cache, Fetcher, Store} from '../src/app/middleware';
+import generateAction from '../src/app/utils/generateAction';
 import Endpoint from '../src/app/endpoint/localstorage';
 import {fromJS} from 'immutable';
 
@@ -93,12 +94,11 @@ describe('app', () => {
       type: 'write',
       key: 'posts',
       dataType: 'array',
-      action: changeAdaptor.createAction({
-        id: 'posts/0',
+      action: generateAction({
+        id: 'posts',
         type: 'create',
-        dataType: 'collection',
         value: fromJS({title: 'new posts', content: 'new content'}),
-        endpoint,
+        rootValue: fromJS([]),
       }),
     };
     const app = new App()

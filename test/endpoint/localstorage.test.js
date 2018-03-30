@@ -1,9 +1,9 @@
 import LocalStorageQuery,
-  {LOCAL_STORAGE_NAME} from '../../src/endpoint/localstorage';
+  {LOCAL_STORAGE_NAME} from '../../src/app/endpoint/localstorage';
 import store from 'store';
-import simple from '../data/simple';
-import {UNIQUE_ID} from '../../src/config';
-const {schema} = simple;
+import data from '../data';
+import {UNIQUE_ID} from '../../src/app/config';
+const {schema} = data;
 
 beforeAll(() => {
   store.clearAll();

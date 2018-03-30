@@ -1,4 +1,4 @@
-import Query from '../../src/utils/query';
+import Query from '../../src/app/utils/query';
 
 const data = [
   {cate: 'cake', tags: ['tiger', 'ant', 'dog'], view: 50, share: 10},

@@ -1,6 +1,6 @@
-import generateAction from '../../src/utils/generateAction';
+import generateAction from '../../src/app/utils/generateAction';
 import {fromJS} from 'immutable';
-import {UNIQUE_ID} from '../../src/config';
+import {UNIQUE_ID} from '../../src/app/config';
 import objectId from 'bson-objectid';
 
 describe('generateAction', () => {

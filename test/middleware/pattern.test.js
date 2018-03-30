@@ -1,6 +1,6 @@
-import createPattern from '../../src/middleware/bucket/pattern';
+import createPattern from '../../src/app/middleware/bucket/pattern';
 import {fromJS} from 'immutable';
-import {UNIQUE_ID} from '../../src/config';
+import {UNIQUE_ID} from '../../src/app/config';
 
 const createArrayAction1 = {
   type: 'CREATE_ARRAY_ITEM',

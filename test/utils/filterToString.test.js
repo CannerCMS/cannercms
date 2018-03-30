@@ -1,4 +1,4 @@
-import filterToString from '../../src/utils/queryToString';
+import filterToString from '../../src/app/utils/queryToString';
 
 const filter = {
   name: {$gt: 3, $lt: 50},

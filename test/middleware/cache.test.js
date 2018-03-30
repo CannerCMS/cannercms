@@ -1,6 +1,6 @@
-import {Cache} from '../../src/middleware';
+import {Cache} from '../../src/app/middleware';
 import {fromJS} from 'immutable';
-import queryToString from '../../src/utils/queryToString';
+import queryToString from '../../src/app/utils/queryToString';
 
 /* eslint-disable camelcase */
 const ID1= '1';

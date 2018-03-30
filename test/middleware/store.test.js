@@ -1,10 +1,10 @@
 import Rx from 'rxjs/Rx';
-import Store from '../../src/middleware/store';
-import Entity from '../../src/middleware/store/entity';
-import Resource from '../../src/middleware/store/resource';
+import Store from '../../src/app/middleware/store';
+import Entity from '../../src/app/middleware/store/entity';
+import Resource from '../../src/app/middleware/store/resource';
 
 import {fromJS, Map, List} from 'immutable';
-import {UNIQUE_ID} from '../../src/config';
+import {UNIQUE_ID} from '../../src/app/config';
 
 const defaultValue = {[UNIQUE_ID]: '0', name: 123, category: []};
 

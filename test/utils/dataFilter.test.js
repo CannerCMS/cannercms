@@ -1,4 +1,4 @@
-import DataFilter from '../../src/utils/dataFilter';
+import DataFilter from '../../src/app/utils/dataFilter';
 import {fromJS} from 'immutable';
 
 const schema = {

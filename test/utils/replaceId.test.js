@@ -1,4 +1,4 @@
-import {findAndReplaceField, replaceField} from '../../src/utils/replaceId';
+import {findAndReplaceField, replaceField} from '../../src/app/utils/replaceId';
 import {fromJS} from 'immutable';
 const ID1 = '1';
 const ID2 = '2';

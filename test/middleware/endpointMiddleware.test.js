@@ -1,4 +1,4 @@
-import EndpointMiddleware from '../../src/middleware/endpointMiddleware';
+import EndpointMiddleware from '../../src/app/middleware/endpointMiddleware';
 
 class Endpoint {
   getArray() {

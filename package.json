@@ -79,6 +79,7 @@
     "@canner/cms-locales": "^0.1.0-rc.35",
     "antd": "^3.2.3",
     "bson-objectid": "^1.2.2",
+    "canner-ref-id": "^0.1.0",
     "immutable": "4.0.0-rc.9",
     "invariant": "^2.2.3",
     "lodash": "^4.17.5",

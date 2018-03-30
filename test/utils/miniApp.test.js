@@ -1,5 +1,5 @@
-import MiniApp from '../../src/utils/miniApp';
-import generateAction from '../../src/utils/generateAction';
+import MiniApp from '../../src/app/utils/miniApp';
+import generateAction from '../../src/app/utils/generateAction';
 import {fromJS} from 'immutable';
 const key = 'posts';
 const componentId = 'posts';
