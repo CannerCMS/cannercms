@@ -166,7 +166,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       }
       if (app) {
         return app.deploy(entryKey, recordId).then(() => {
-          return deploy(entryKey, recordId)
+          return deploy(refId)
             .then(callback)
             // reset should be placed after callback,
             // or component will display the new-fetched data
@@ -268,6 +268,7 @@ function genCancelButton(reset: Function, currentRefId: RefId) {
     refId = currentRefId,
     onClick = reset,
     callback = () => {},
+    // $FlowFixMe
     text = '取消',
   }: buttonProps = {}) {
     return <Button disabled={disabled} style={{marginLeft: 16, ...style}} onClick={() => onClick(refId, callback)}>

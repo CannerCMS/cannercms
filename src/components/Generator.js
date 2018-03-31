@@ -29,7 +29,7 @@ export type Node = {
   children: Array<Node>,
   component: React.ComponentType<*>,
   loader: Promise<*>
-}
+} 
 
 type Props = {
   componentTree: {[string]: Node},

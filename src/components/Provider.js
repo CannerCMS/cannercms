@@ -3,12 +3,12 @@
  */
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {App} from '../app';
 import {Bucket, Cache, EndpointMiddleware, Store} from '../app/middleware';
 import type Endpoint from '../app/endpoint';
 import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
+import {HOCContext} from '../hocs/context';
 
 type Props = {
   schema: {[key: string]: any},
@@ -23,13 +23,6 @@ type State = {
 
 export default class Provider extends React.PureComponent<Props, State> {
   app: App
-
-  static childContextTypes = {
-    subscribe: PropTypes.func,
-    request: PropTypes.func,
-    fetch: PropTypes.func,
-    deploy: PropTypes.func,
-  };
 
   constructor(props: Props) {
     super(props);
@@ -55,16 +48,6 @@ export default class Provider extends React.PureComponent<Props, State> {
         .use(new Cache())
         .use(new EndpointMiddleware({schema: nextProps.schema, endpoint: nextProps.endpoint}));
     }
-  }
-
-  getChildContext() {
-    return {
-      subscribe: this.subscribe,
-      request: this.request,
-      fetch: this.fetch,
-      deploy: this.deploy,
-      // createAction
-    };
   }
 
   fetch(key: string, componentId: string, query: queryType, mutate: Mutate): Promise<*> {
@@ -126,6 +109,13 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   render() {
-    return React.Children.only(this.props.children);
+    return <HOCContext.Provider value={{
+      subscribe: this.subscribe,
+      request: this.request,
+      fetch: this.fetch,
+      deploy: this.deploy,
+    }}>
+      {React.Children.only(this.props.children)}
+    </HOCContext.Provider>;
   }
 }

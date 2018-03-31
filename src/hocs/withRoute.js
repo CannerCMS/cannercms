@@ -1,9 +1,9 @@
 // @flow
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import type {List} from 'immutable';
 import type RefId from 'canner-ref-id';
+import {HOCContext} from './context';
 
 type Props = {
   type: string,
@@ -43,32 +43,6 @@ export default function withRoute(Com: React$Component<*>) {
         query: {},
         canRender: false
       };
-    }
-
-    static childContextTypes = {
-      componentId: PropTypes.string,
-      query: PropTypes.shape({
-        filter: PropTypes.object,
-        sort: PropTypes.object,
-        order: PropTypes.object,
-      }),
-
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func,
-      request: PropTypes.func,
-      deploy: PropTypes.func,
-      reset: PropTypes.func,
-    }
-
-    getChildContext() {
-      const {componentId, query, fetch, subscribe, request, deploy, reset} = this.props;
-      return {
-        componentId, query, fetch, subscribe, request, deploy, reset
-      };
-    }
-
-    save = () => {
-      this.context.deploy();
     }
 
     componentWillMount() {
@@ -133,7 +107,7 @@ export default function withRoute(Com: React$Component<*>) {
     }
 
     render() {
-      const {refId, renderChildren} = this.props;
+      const {refId, renderChildren, componentId, query, fetch, subscribe, request, deploy, reset} = this.props;
       const {renderType, canRender, index, restRoutes} = this.state;
       // const {op} = params;
       // id: arr/0/arr1
@@ -141,15 +115,28 @@ export default function withRoute(Com: React$Component<*>) {
       if (!canRender) {
         return null;
       }
-      if (renderType === 0) {
-        return <Com {...this.props} routes={restRoutes} />;
-      } else if (renderType === 1) {
-        return <div>
-          {renderChildren({refId: refId.child(String(index)), routes: restRoutes})}
-        </div>;
-      }
-      
-      return null;
+
+      return <HOCContext.Provider
+        value={{
+          componentId,
+          query,
+          fetch,
+          subscribe,
+          request,
+          deploy,
+          reset
+        }}
+      >
+        {
+          renderType === 0 && <Com {...this.props} routes={restRoutes} />
+        }
+        {
+          renderType === 1 && renderChildren({refId: refId.child(String(index)), routes: restRoutes})
+        }
+        {
+          renderType === 3 && null
+        }
+      </HOCContext.Provider>;
     }
   };
 }
