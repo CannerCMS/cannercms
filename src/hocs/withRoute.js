@@ -131,7 +131,7 @@ export default function withRoute(Com: React$Component<*>) {
           renderType === 0 && <Com {...this.props}
             routes={restRoutes}
             renderChildren={props => renderChildren({
-              refId: props.refId || refId,
+              refId: (props || {}).refId || refId,
               routes: restRoutes
             })}
           />

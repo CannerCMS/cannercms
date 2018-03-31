@@ -92,12 +92,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
     const {containers} = this.props;
-    let component: React.ComponentType<*> = (props) => {
-      const {renderChildren, id} = props;
-      return <div>
-        {renderChildren({id})}
-      </div>;
-    };
+    let component;
     if (node.nodeType === 'layout') {
       component = get(containers, node.component);
     } else if (node.nodeType.startsWith('plugins')) { // TODO: need to fix, turn plugins to components in compiler
@@ -107,6 +102,11 @@ export default class Generator extends React.PureComponent<Props, State> {
       });
       component = this.wrapByHOC(component, node.hocs.slice() || []);
     }
+
+    if (!component) {
+      throw new Error(`invalid nodem, name: ${node.name}, nodeType: ${node.nodeType}`);
+    }
+
     node.component = component;
     if (node.children) {
       node.children = node.children.map((child) => {
@@ -159,9 +159,9 @@ export default class Generator extends React.PureComponent<Props, State> {
     if (children) {
       return children.map((child, index) => {
         const childrenProps = typeof props === 'function' ? props(child) : props;
-        const {id} = childrenProps;
-        if (isUndefined(id)) {
-          throw new Error(`id is required for renderChildren, please check '${node.name || ''}'`);
+        const {refId} = childrenProps;
+        if (isUndefined(refId)) {
+          throw new Error(`refId is required for renderChildren, please check node '${node.name || ''}'`);
         }
         if (childrenProps.hidden) {
           return null;
