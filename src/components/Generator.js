@@ -17,9 +17,18 @@ import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
 import {createEmptyData, transformData} from '../app/utils';
+import type RefId from 'canner-ref-id';
 
 function defaultHoc(Component) {
   return Component;
+}
+
+function isComponent(node) {
+  return node.nodeType && node.nodeType.startsWith('plugins');
+}
+
+function isLayout(node) {
+  return node.nodeType === 'layout';
 }
 
 export type Node = {
@@ -39,6 +48,7 @@ type Props = {
   baseUrl: string,
   routes: Array<string>,
   params: {[string]: string},
+  refresh?: boolean
 }
 
 type childrenProps = {
@@ -54,6 +64,7 @@ export default class Generator extends React.PureComponent<Props, State> {
   cacheTree: {
     [key: string]: Node
   } // store the prerenders tree
+  idNodeMap = {}
   constructor(props: Props) {
     // prerender the tree in constructor, this action will add a
     // React Component with all hocs it needs in every node
@@ -93,9 +104,9 @@ export default class Generator extends React.PureComponent<Props, State> {
     // it's a React Component with all hocs it needs in every node
     const {containers} = this.props;
     let component;
-    if (node.nodeType === 'layout') {
+    if (isLayout(node)) {
       component = get(containers, node.component);
-    } else if (node.nodeType.startsWith('plugins')) { // TODO: need to fix, turn plugins to components in compiler
+    } else if (isComponent(node)) { // TODO: need to fix, turn plugins to components in compiler
       component = Loadable({
         loader: () => node.loader,
         loading: () => <div>loading</div>,
@@ -139,6 +150,7 @@ export default class Generator extends React.PureComponent<Props, State> {
         {...restNodeData}
         key={index}
         renderChildren={(props) => this.renderChildren(node, props)}
+        renderComponent={this.renderComponent}
         createEmptyData={createEmptyData}
         transformData={transformData}
         params={params}
@@ -149,6 +161,37 @@ export default class Generator extends React.PureComponent<Props, State> {
       />;
     }
     return null;
+  }
+
+  static findNode = (pathArr: Array<string>, node: Node): ?Node => {
+    if (isComponent(node) && node.name === pathArr[0]) {
+      pathArr = pathArr.slice(1);
+      if (!pathArr.length) {
+        return node;
+      }
+    }
+
+    if (node.children) {
+      return node.children
+        .map(child => Generator.findNode(pathArr, child))
+        .find(node => !!node);
+    }
+  }
+
+  renderComponent = (refId: RefId, props: childrenProps): React$Node => {
+    const componentPathArr = refId.getPathArr()
+      .filter(path => isNaN(Number(path)));
+    const componentPath = componentPathArr.join('/');
+    let node = this.idNodeMap[componentPath];
+    const entryKey = componentPathArr[0];
+    if (!node) {
+      const node = Generator.findNode(componentPathArr.slice(), this.cacheTree[entryKey]);
+      this.idNodeMap[componentPath] = node;
+    }
+    if (!node) {
+      throw new Error(`Can't find the node at refId ${refId.toString()}`);
+    }
+    return this.renderNode(node, 0, props);
   }
 
   renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {
