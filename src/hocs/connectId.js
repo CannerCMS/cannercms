@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import RefId from 'canner-ref-id';
 import {HOCContext} from './context';
 
@@ -16,21 +15,6 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
     componentId: string;
     query: QueryDef;
     reset: ResetDef;
-
-    static contextTypes = {
-      componentId: PropTypes.string,
-      query: PropTypes.shape({
-        filter: PropTypes.object,
-        sort: PropTypes.object,
-        order: PropTypes.object,
-      }),
-
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func,
-      request: PropTypes.func,
-      deploy: PropTypes.func,
-      reset: PropTypes.func,
-    }
 
     constructor(props: Props) {
       super(props);
