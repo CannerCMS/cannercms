@@ -16,7 +16,7 @@ import Loadable from 'react-loadable';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
-import {generateId, createEmptyData, transformData} from '../app/utils';
+import {createEmptyData, transformData} from '../app/utils';
 
 function defaultHoc(Component) {
   return Component;
@@ -137,7 +137,6 @@ export default class Generator extends React.PureComponent<Props, State> {
     if (component) {
       return <node.component
         {...restNodeData}
-        generateId={generateId}
         key={index}
         renderChildren={(props) => this.renderChildren(node, props)}
         createEmptyData={createEmptyData}
