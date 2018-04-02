@@ -77,7 +77,7 @@
   },
   "dependencies": {
     "@canner/cms-locales": "^0.1.0-rc.35",
-    "@canner/react-cms-helpers": "^0.1.0",
+    "@canner/react-cms-helpers": "^0.1.1",
     "antd": "^3.2.3",
     "bson-objectid": "^1.2.2",
     "canner-ref-id": "^0.1.1",

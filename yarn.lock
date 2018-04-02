@@ -400,6 +400,12 @@
   dependencies:
     immutable "^4.0.0-rc.9"
 
+"@canner/react-cms-helpers@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@canner/react-cms-helpers/-/react-cms-helpers-0.1.1.tgz#254453deb66849be3409f86d443d35f5257f827c"
+  dependencies:
+    immutable "^4.0.0-rc.9"
+
 "@canner/react-quill@^0.4.6":
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/@canner/react-quill/-/react-quill-0.4.6.tgz#b746fa0e0a94f68bddd7cafb538ae34dab895aef"
