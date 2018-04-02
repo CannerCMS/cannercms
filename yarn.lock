@@ -387,10 +387,11 @@
     react-draggable "^2.2.2"
     react-hammerjs "~0.5.0"
 
-"@canner/react-cms-containers@0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@canner/react-cms-containers/-/react-cms-containers-0.0.5.tgz#2b76cf64681c7a4bfabaee1b527ee31bb660313d"
+"@canner/react-cms-containers@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@canner/react-cms-containers/-/react-cms-containers-0.1.0.tgz#30ec3f1aa2dcf4300e6714ed8f64cdeaff6ed80b"
   dependencies:
+    "@canner/react-cms-helpers" "^0.1.0"
     antd "^3.2.3"
 
 "@canner/react-cms-helpers@^0.1.0":

@@ -4,6 +4,7 @@ import * as React from 'react';
 import type {List} from 'immutable';
 import type RefId from 'canner-ref-id';
 import {HOCContext} from './context';
+import {Context, Children} from '@canner/react-cms-helpers';
 
 type Props = {
   type: string,
@@ -13,6 +14,9 @@ type Props = {
   refId: RefId,
   params: any,
   renderChildren: ({[string]: any}) => React.Node,
+  renderComponent: (refId: RefId, props: Object) => React.Node,
+  renderConfirmButton: Object => React.Node,
+  renderCancelButton: Object => React.Node,
   fetch: FetchDef,
   query: QueryDef,
   componentId: string,
@@ -107,7 +111,10 @@ export default function withRoute(Com: React$Component<*>) {
     }
 
     render() {
-      const {refId, renderChildren, componentId, query, fetch, subscribe, request, deploy, reset} = this.props;
+      const {refId, renderChildren, componentId, query,
+        fetch, subscribe, request, deploy, reset,
+        renderCancelButton, renderConfirmButton, renderComponent
+      } = this.props;
       const {renderType, canRender, index, restRoutes} = this.state;
       // const {op} = params;
       // id: arr/0/arr1
@@ -127,21 +134,27 @@ export default function withRoute(Com: React$Component<*>) {
           reset
         }}
       >
-        {
-          renderType === 0 && <Com {...this.props}
-            routes={restRoutes}
-            renderChildren={props => renderChildren({
-              refId: (props || {}).refId || refId,
-              routes: restRoutes
-            })}
-          />
-        }
-        {
-          renderType === 1 && renderChildren({refId: refId.child(String(index)), routes: restRoutes})
-        }
-        {
-          renderType === 3 && null
-        }
+          {
+            renderType === 0 && <Com {...this.props}
+              routes={restRoutes}
+            />
+          }
+          {
+            renderType === 1 &&
+              <Context.Provider value={{
+                renderChildren,
+                renderComponent,
+                renderConfirmButton,
+                renderCancelButton,
+                refId: refId.child(String(index)),
+                routes: restRoutes
+              }}>
+                <Children />
+              </Context.Provider>
+          }
+          {
+            renderType === 3 && null
+          }
       </HOCContext.Provider>;
     }
   };

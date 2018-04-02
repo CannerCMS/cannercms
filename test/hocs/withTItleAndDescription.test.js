@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '../react163Adapter';
 import withTitleAndDescription from '../../src/hocs/withTitleAndDescription';
 import RefId from 'canner-ref-id';
 
@@ -23,14 +23,14 @@ describe('withTitleAndDescription', () => {
   });
 
   it('should render vertical by default', () => {
-    const wrapper = shallow(<WrapperComponent
+    const wrapper = mount(<WrapperComponent
       {...props}
     />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   it('should render horizontal', () => {
-    const wrapper = shallow(<WrapperComponent
+    const wrapper = mount(<WrapperComponent
       {...props}
       layout="horizontal"
     />);
@@ -38,7 +38,7 @@ describe('withTitleAndDescription', () => {
   });
 
   it('should render horizontal', () => {
-    const wrapper = shallow(<WrapperComponent
+    const wrapper = mount(<WrapperComponent
       {...props}
       layout="horizontal"
     />);
@@ -46,10 +46,10 @@ describe('withTitleAndDescription', () => {
   });
 
   it('should render only Component if hideTitle', () => {
-    const wrapper = shallow(<WrapperComponent
+    const wrapper = mount(<WrapperComponent
       {...props}
       hideTitle
     />);
-    expect(wrapper.equals(<MockComponent {...props} hideTitle />)).toBeTruthy();
+    expect(wrapper.html()).toBe("<div>Component</div>");
   })
 });

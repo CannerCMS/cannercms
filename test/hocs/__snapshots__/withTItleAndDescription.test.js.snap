@@ -1,203 +1,265 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`withTitleAndDescription should render horizontal 1`] = `
-<div
-  style={
-    Object {
-      "alignItems": "center",
-      "display": "flex",
-      "margin": "16px 0",
+<ComponentWithTitleAndDescription
+  description="many posts"
+  layout="horizontal"
+  refId={
+    CannerRefId {
+      "_internalArr": Array [
+        "posts",
+      ],
+      "child": [Function],
+      "getPathArr": [Function],
+      "remove": [Function],
+      "toString": [Function],
     }
   }
->
-  <div
-    style={
-      Object {
-        "display": "flex",
-        "flex": 1,
-        "flexDirection": "column",
-        "marginRight": 8,
-      }
-    }
-  >
-    <div
-      style={
-        Object {
-          "fontSize": 18,
-          "fontWeight": 400,
-        }
-      }
-    >
-      POSTS
-    </div>
-    <div
-      style={
-        Object {
-          "color": "#aaa",
-          "fontSize": 12,
-          "marginTop": 16,
-        }
-      }
-    >
-      many posts
-    </div>
-  </div>
-  <div
-    style={
-      Object {
-        "flex": 2,
-      }
-    }
-  >
-    <MockComponent
-      description="many posts"
-      layout="horizontal"
-      refId={
-        CannerRefId {
-          "_internalArr": Array [
-            "posts",
-          ],
-          "child": [Function],
-          "getPathArr": [Function],
-          "remove": [Function],
-          "toString": [Function],
-        }
-      }
-      title="POSTS"
-    />
-  </div>
-</div>
-`;
-
-exports[`withTitleAndDescription should render horizontal 2`] = `
-<div
-  style={
-    Object {
-      "alignItems": "center",
-      "display": "flex",
-      "margin": "16px 0",
-    }
-  }
->
-  <div
-    style={
-      Object {
-        "display": "flex",
-        "flex": 1,
-        "flexDirection": "column",
-        "marginRight": 8,
-      }
-    }
-  >
-    <div
-      style={
-        Object {
-          "fontSize": 18,
-          "fontWeight": 400,
-        }
-      }
-    >
-      POSTS
-    </div>
-    <div
-      style={
-        Object {
-          "color": "#aaa",
-          "fontSize": 12,
-          "marginTop": 16,
-        }
-      }
-    >
-      many posts
-    </div>
-  </div>
-  <div
-    style={
-      Object {
-        "flex": 2,
-      }
-    }
-  >
-    <MockComponent
-      description="many posts"
-      layout="horizontal"
-      refId={
-        CannerRefId {
-          "_internalArr": Array [
-            "posts",
-          ],
-          "child": [Function],
-          "getPathArr": [Function],
-          "remove": [Function],
-          "toString": [Function],
-        }
-      }
-      title="POSTS"
-    />
-  </div>
-</div>
-`;
-
-exports[`withTitleAndDescription should render vertical by default 1`] = `
-<div
-  style={
-    Object {
-      "margin": "16px 0 0",
-    }
-  }
+  title="POSTS"
 >
   <div
     style={
       Object {
         "alignItems": "center",
         "display": "flex",
+        "margin": "16px 0",
       }
     }
   >
     <div
       style={
         Object {
-          "fontSize": 18,
-          "fontWeight": 400,
+          "display": "flex",
+          "flex": 1,
+          "flexDirection": "column",
+          "marginRight": 8,
         }
       }
     >
-      POSTS
+      <div
+        style={
+          Object {
+            "fontSize": 18,
+            "fontWeight": 400,
+          }
+        }
+      >
+        POSTS
+      </div>
+      <div
+        style={
+          Object {
+            "color": "#aaa",
+            "fontSize": 12,
+            "marginTop": 16,
+          }
+        }
+      >
+        many posts
+      </div>
     </div>
     <div
       style={
         Object {
-          "color": "#aaa",
-          "fontSize": 12,
-          "marginLeft": 16,
+          "flex": 2,
         }
       }
     >
-      many posts
+      <MockComponent
+        description="many posts"
+        layout="horizontal"
+        refId={
+          CannerRefId {
+            "_internalArr": Array [
+              "posts",
+            ],
+            "child": [Function],
+            "getPathArr": [Function],
+            "remove": [Function],
+            "toString": [Function],
+          }
+        }
+        title="POSTS"
+      >
+        <div>
+          Component
+        </div>
+      </MockComponent>
     </div>
   </div>
+</ComponentWithTitleAndDescription>
+`;
+
+exports[`withTitleAndDescription should render horizontal 2`] = `
+<ComponentWithTitleAndDescription
+  description="many posts"
+  layout="horizontal"
+  refId={
+    CannerRefId {
+      "_internalArr": Array [
+        "posts",
+      ],
+      "child": [Function],
+      "getPathArr": [Function],
+      "remove": [Function],
+      "toString": [Function],
+    }
+  }
+  title="POSTS"
+>
   <div
     style={
       Object {
-        "marginBottom": 8,
+        "alignItems": "center",
+        "display": "flex",
+        "margin": "16px 0",
       }
     }
   >
-    <MockComponent
-      description="many posts"
-      refId={
-        CannerRefId {
-          "_internalArr": Array [
-            "posts",
-          ],
-          "child": [Function],
-          "getPathArr": [Function],
-          "remove": [Function],
-          "toString": [Function],
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flex": 1,
+          "flexDirection": "column",
+          "marginRight": 8,
         }
       }
-      title="POSTS"
-    />
+    >
+      <div
+        style={
+          Object {
+            "fontSize": 18,
+            "fontWeight": 400,
+          }
+        }
+      >
+        POSTS
+      </div>
+      <div
+        style={
+          Object {
+            "color": "#aaa",
+            "fontSize": 12,
+            "marginTop": 16,
+          }
+        }
+      >
+        many posts
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "flex": 2,
+        }
+      }
+    >
+      <MockComponent
+        description="many posts"
+        layout="horizontal"
+        refId={
+          CannerRefId {
+            "_internalArr": Array [
+              "posts",
+            ],
+            "child": [Function],
+            "getPathArr": [Function],
+            "remove": [Function],
+            "toString": [Function],
+          }
+        }
+        title="POSTS"
+      >
+        <div>
+          Component
+        </div>
+      </MockComponent>
+    </div>
   </div>
-</div>
+</ComponentWithTitleAndDescription>
+`;
+
+exports[`withTitleAndDescription should render vertical by default 1`] = `
+<ComponentWithTitleAndDescription
+  description="many posts"
+  refId={
+    CannerRefId {
+      "_internalArr": Array [
+        "posts",
+      ],
+      "child": [Function],
+      "getPathArr": [Function],
+      "remove": [Function],
+      "toString": [Function],
+    }
+  }
+  title="POSTS"
+>
+  <div
+    style={
+      Object {
+        "margin": "16px 0 0",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "fontSize": 18,
+            "fontWeight": 400,
+          }
+        }
+      >
+        POSTS
+      </div>
+      <div
+        style={
+          Object {
+            "color": "#aaa",
+            "fontSize": 12,
+            "marginLeft": 16,
+          }
+        }
+      >
+        many posts
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "marginBottom": 8,
+        }
+      }
+    >
+      <MockComponent
+        description="many posts"
+        refId={
+          CannerRefId {
+            "_internalArr": Array [
+              "posts",
+            ],
+            "child": [Function],
+            "getPathArr": [Function],
+            "remove": [Function],
+            "toString": [Function],
+          }
+        }
+        title="POSTS"
+      >
+        <div>
+          Component
+        </div>
+      </MockComponent>
+    </div>
+  </div>
+</ComponentWithTitleAndDescription>
 `;

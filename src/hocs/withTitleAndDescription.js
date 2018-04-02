@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
-import PropTypes from 'prop-types';
+import {HOCContext} from './context';
+import {Context} from '@canner/react-cms-helpers';
 
 type Props = {
   title: string, // only used in withTitleAndDesription hoc
@@ -8,48 +9,35 @@ type Props = {
   layout?: 'horizontal' | 'vertical', // only used in withTitleAndDesription hoc
   hideTitle?: boolean,
 
-  componentId?: string,
+  componentId: string,
   query: QueryDef,
   fetch: FetchDef,
   subscribe: SubscribeDef,
   request: RequestDef,
   deploy: DeployDef,
-  reset: ResetDef
+  reset: ResetDef,
+
+  renderChildren: ({[string]: any}) => React.Node,
+  renderComponent: (refId: RefId, props: Object) => React.Node,
+  renderConfirmButton: Object => React.Node,
+  renderCancelButton: Object => React.Node,
+  refId: RefId,
+  routes: Array<string>,
+
+  items: any,
+  keyName: string,
+  onChange: Function
 };
 
 // $FlowFixMe
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
   return class ComponentWithTitleAndDescription extends React.Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
-
-    /**
-    |--------------------------------------------------
-    | because componentId is public in a entity
-    |--------------------------------------------------
-    */
-    static childContextTypes = {
-      componentId: PropTypes.string,
-      query: PropTypes.shape({
-        filter: PropTypes.object,
-        sort: PropTypes.object,
-        order: PropTypes.object,
-      }),
-
-      fetch: PropTypes.func,
-      subscribe: PropTypes.func,
-      request: PropTypes.func,
-      deploy: PropTypes.func,
-      reset: PropTypes.func,
-    }
-
-    getChildContext() {
-      const {componentId, query, fetch, subscribe, request, deploy, reset} = this.props;
-      return {
-        componentId, query, fetch, subscribe, request, deploy, reset
-      };
-    }
-
     render() {
-      const {title, layout, description, hideTitle} = this.props;
+      const {title, layout, description, hideTitle,
+        componentId, query, fetch, subscribe, request, deploy, reset,
+        renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
+        refId, routes
+      } = this.props;
       if (hideTitle) {
         return <Com {...this.props}/>;
       }
@@ -83,7 +71,28 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
             <div style={{
               flex: 2
             }}>
-              <Com {...this.props}/>
+            <HOCContext.Provider
+              value={{
+                componentId,
+                query,
+                fetch,
+                subscribe,
+                request,
+                deploy,
+                reset
+              }}
+            >
+              <Context.Provider value={{
+                renderChildren,
+                renderComponent,
+                renderConfirmButton,
+                renderCancelButton,
+                refId,
+                routes
+              }}>
+                <Com {...this.props}/>
+              </Context.Provider>
+            </HOCContext.Provider>
             </div>
           </div>;
         case 'vertical':
@@ -112,7 +121,28 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
             <div style={{
               marginBottom: 8
             }}>
-              <Com {...this.props}/>
+              <HOCContext.Provider
+                value={{
+                  componentId,
+                  query,
+                  fetch,
+                  subscribe,
+                  request,
+                  deploy,
+                  reset
+                }}
+              >
+                <Context.Provider value={{
+                  renderChildren,
+                  renderComponent,
+                  renderConfirmButton,
+                  renderCancelButton,
+                  refId,
+                  routes
+                }}>
+                  <Com {...this.props} />
+                </Context.Provider>
+              </HOCContext.Provider>
             </div>
           </div>;
       }
