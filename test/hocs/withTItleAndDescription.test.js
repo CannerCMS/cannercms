@@ -4,7 +4,7 @@ import toJson from 'enzyme-to-json';
 import Adapter from '../react163Adapter';
 import withTitleAndDescription from '../../src/hocs/withTitleAndDescription';
 import RefId from 'canner-ref-id';
-import {Children} from '@canner/react-cms-helpers';
+import {Item} from '@canner/react-cms-helpers';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -55,7 +55,7 @@ describe('withTitleAndDescription', () => {
   });
 
   it('should pass the context to Children', () => {
-    const WrapperComponent = withTitleAndDescription(() => <div><Children /></div>);
+    const WrapperComponent = withTitleAndDescription(() => <div><Item /></div>);
     const mockRenderChildren = jest.fn().mockImplementation(() => <div>children</div>);
     const wrapper = mount(<WrapperComponent
       renderChildren={mockRenderChildren}

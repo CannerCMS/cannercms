@@ -255,7 +255,7 @@ export function genDeployButton(deploy: Function, currentRefId: RefId) {
     onClick = deploy,
     callback = () => {},
     // $FlowFixMe
-    text = '確定',
+    text = 'Confirm',
     // $FlowFixMe
     component = Button
   }: buttonProps = {}) {
@@ -276,7 +276,7 @@ export function genCancelButton(reset: Function, currentRefId: RefId) {
     onClick = reset,
     callback = () => {},
     // $FlowFixMe
-    text = '取消',
+    text = 'Cancel',
     // $FlowFixMe
     component = Button
   }: buttonProps = {}) {
