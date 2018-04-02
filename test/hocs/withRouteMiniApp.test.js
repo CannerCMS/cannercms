@@ -9,7 +9,7 @@ import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
-import withRouteMiniApp from '../../src/hocs/routeMiniApp';
+import withRouteMiniApp, {genDeployButton} from '../../src/hocs/routeMiniApp';
 import {fromJS} from 'immutable';
 import RefId from 'canner-ref-id';
 
@@ -41,6 +41,16 @@ describe('with route mini app', () => {
     const wrapper = shallow(<WrapperComponent {...props}/>);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
+
+  it('should render normal button', () => {
+    const renderButton = genDeployButton(() => {}, new RefId(''));
+    expect(shallow(<div>
+      {renderButton({
+        component: function test({children}) {return <span>{children}</span>;},
+        text: 'yoyo'
+      })}
+    </div>).html()).toBe("<div><span>yoyo</span></div>");
+  })
 
   it('should renderButton when routedEndAtMe', () => {
     const wrapper = shallow(<WrapperComponent {...props}
@@ -189,5 +199,5 @@ describe('with route mini app', () => {
     expect(childrenProps).toHaveProperty('request', wrapper.instance().request)
     expect(childrenProps).toHaveProperty('deploy', wrapper.instance().deploy)
     expect(childrenProps).toHaveProperty('reset', wrapper.instance().reset)
-  })
+  });
 });

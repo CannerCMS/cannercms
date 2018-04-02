@@ -243,10 +243,11 @@ type buttonProps = {
   onClick?: (refId?: RefId, callback?: Function) => Promise<*>,
   callback?: Function,
   text?: React.Node | string,
-  hidden?: boolean
+  hidden?: boolean,
+  component?: React.ComponentType<*>
 }
 
-function genDeployButton(deploy: Function, currentRefId: RefId) {
+export function genDeployButton(deploy: Function, currentRefId: RefId) {
   return function DeployButton({
     disabled = false,
     style = {},
@@ -255,14 +256,19 @@ function genDeployButton(deploy: Function, currentRefId: RefId) {
     callback = () => {},
     // $FlowFixMe
     text = '確定',
+    // $FlowFixMe
+    component = Button
   }: buttonProps = {}) {
-    return <Button disabled={disabled} style={style} type="primary" onClick={() => onClick(refId, callback)}>
-      {text}
-    </Button>;
+    return React.createElement(component, {
+      disabled,
+      style,
+      type: "primary",
+      onClick: () => onClick(refId, callback)
+    }, text);
   };
 }
 
-function genCancelButton(reset: Function, currentRefId: RefId) {
+export function genCancelButton(reset: Function, currentRefId: RefId) {
   return function CancelButton({
     disabled = false,
     style = {},
@@ -271,9 +277,13 @@ function genCancelButton(reset: Function, currentRefId: RefId) {
     callback = () => {},
     // $FlowFixMe
     text = '取消',
+    // $FlowFixMe
+    component = Button
   }: buttonProps = {}) {
-    return <Button disabled={disabled} style={{marginLeft: 16, ...style}} onClick={() => onClick(refId, callback)}>
-      {text}
-    </Button>;
+    return React.createElement(component, {
+      disabled,
+      style,
+      onClick: () => onClick(refId, callback)
+    }, text);
   };
 }
