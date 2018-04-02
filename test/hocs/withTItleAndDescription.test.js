@@ -4,6 +4,7 @@ import toJson from 'enzyme-to-json';
 import Adapter from '../react163Adapter';
 import withTitleAndDescription from '../../src/hocs/withTitleAndDescription';
 import RefId from 'canner-ref-id';
+import {Children} from '@canner/react-cms-helpers';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -51,5 +52,21 @@ describe('withTitleAndDescription', () => {
       hideTitle
     />);
     expect(wrapper.html()).toBe("<div>Component</div>");
-  })
+  });
+
+  it('should pass the context to Children', () => {
+    const WrapperComponent = withTitleAndDescription(() => <div><Children /></div>);
+    const mockRenderChildren = jest.fn().mockImplementation(() => <div>children</div>);
+    const wrapper = mount(<WrapperComponent
+      renderChildren={mockRenderChildren}
+      refId="refId"
+      routes={[]}
+      hideTitle
+    />);
+    expect(wrapper.html()).toBe("<div><div>children</div></div>")
+    expect(mockRenderChildren).toHaveBeenCalledWith({
+      refId: "refId",
+      routes: []
+    });
+  });
 });

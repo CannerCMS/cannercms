@@ -39,7 +39,28 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         refId, routes
       } = this.props;
       if (hideTitle) {
-        return <Com {...this.props}/>;
+        return  <HOCContext.Provider
+          value={{
+            componentId,
+            query,
+            fetch,
+            subscribe,
+            request,
+            deploy,
+            reset
+          }}
+        >
+          <Context.Provider value={{
+            renderChildren,
+            renderComponent,
+            renderConfirmButton,
+            renderCancelButton,
+            refId,
+            routes
+          }}>
+            <Com {...this.props}/>
+          </Context.Provider>
+        </HOCContext.Provider>;
       }
       switch (layout) {
         case 'horizontal':
