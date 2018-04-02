@@ -1,7 +1,7 @@
 /**
  * @flow
  */
-import createEmptyData from '../utils/createEmptyData';
+import {createEmptyData} from '@canner/react-cms-helpers';
 import Endpoint from './index';
 import {UNIQUE_ID} from '../config';
 import store from 'store';

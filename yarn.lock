@@ -393,6 +393,12 @@
   dependencies:
     antd "^3.2.3"
 
+"@canner/react-cms-helpers@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@canner/react-cms-helpers/-/react-cms-helpers-0.1.0.tgz#1fba227abf19381868d441dd490ce05a1cd8f01d"
+  dependencies:
+    immutable "^4.0.0-rc.9"
+
 "@canner/react-quill@^0.4.6":
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/@canner/react-quill/-/react-quill-0.4.6.tgz#b746fa0e0a94f68bddd7cafb538ae34dab895aef"
@@ -4684,7 +4690,7 @@ imagesloaded@^4.1.4:
   dependencies:
     ev-emitter "^1.0.0"
 
-immutable@4.0.0-rc.9:
+immutable@4.0.0-rc.9, immutable@^4.0.0-rc.9:
   version "4.0.0-rc.9"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.9.tgz#1e6e0094e649013ec3742d2b5aeeca5eeda4f0bf"
 

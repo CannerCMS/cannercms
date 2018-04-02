@@ -5,7 +5,7 @@ import {generateAction} from '../app';
 import isArray from 'lodash/isArray';
 import type {RelationDef} from "./relationFactory";
 import {create} from "./relationFactory";
-import createEmptyData from '../app/utils/createEmptyData';
+import {createEmptyData} from '@canner/react-cms-helpers';
 import RefId from 'canner-ref-id';
 
 type Props = {

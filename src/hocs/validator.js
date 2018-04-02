@@ -4,6 +4,7 @@ import Ajv from "ajv";
 import React, {PureComponent} from "react";
 import {fromJS, Map} from "immutable";
 import type RefId from 'canner-ref-id';
+import {createEmptyData} from '@canner/react-cms-helpers';
 
 const defaultErrorHandle = () => {
   return "預設資料錯誤";
@@ -18,7 +19,6 @@ type Props = {
   onChange: Function,
   refId: RefId,
   items: {[string]: any},
-  createEmptyData: Function,
   ui: string,
   uiParams: {[string]: any},
   onValid: Function,
@@ -75,7 +75,7 @@ export default (Plugin: any) => {
     }
 
     getDefaultData(type: string) {
-      const {createEmptyData, items, ui} = this.props;
+      const {items, ui} = this.props;
       switch (type) {
         case 'array':
         case 'string':

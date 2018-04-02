@@ -83,7 +83,8 @@ export default {
   },
   "componentTree": {
     "info": {
-      "nodeType": "container.body",
+      "nodeType": "layout",
+      "component": "body",
       "children": [
         {
           "type": "object",
@@ -104,7 +105,8 @@ export default {
           "nodeType": "plugins.object.fieldset",
           "children": [
             {
-              "nodeType": "container.block",
+              "nodeType": "layout",
+              "component": "block",
               "name": "[block-8wz1e]",
               "children": [
                 {
@@ -164,10 +166,12 @@ export default {
       }
     },
     "popup": {
-      "nodeType": "container.body",
+      "nodeType": "layout",
+      "component": "body",
       "children": [
         {
-          "nodeType": "container.block",
+          "nodeType": "layout",
+          "component": "block",
           "children": [
             {
               "type": "array",
@@ -263,10 +267,12 @@ export default {
       }
     },
     "breadcrumb": {
-      "nodeType": "container.body",
+      "nodeType": "layout",
+      "component": "body",
       "children": [
         {
-          "nodeType": "container.block",
+          "nodeType": "layout",
+          "component": "block",
           "children": [
             {
               "type": "array",

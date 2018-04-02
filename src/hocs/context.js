@@ -11,4 +11,5 @@ export const defaultContext = {
   reset: () => {throw new Error('there is not reset method');}
 }
 
+// $FlowFixMe: waiting for flow updata the libdef
 export const HOCContext = React.createContext(defaultContext);

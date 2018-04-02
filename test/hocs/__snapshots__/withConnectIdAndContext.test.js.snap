@@ -1,25 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`hocTemplate should render 1`] = `
-<MockComponent
-  componentId="posts"
-  deploy={[MockFunction]}
-  fetch={[MockFunction]}
+<ComponentConnectIdAndContext
   name="posts"
-  query={Object {}}
-  refId={
-    CannerRefId {
-      "_internalArr": Array [
-        "posts",
-      ],
-      "child": [Function],
-      "getPathArr": [Function],
-      "remove": [Function],
-      "toString": [Function],
+>
+  <MockComponent
+    componentId="posts"
+    deploy={[MockFunction]}
+    fetch={[MockFunction]}
+    name="posts"
+    refId={
+      CannerRefId {
+        "_internalArr": Array [
+          "posts",
+        ],
+        "child": [Function],
+        "getPathArr": [Function],
+        "remove": [Function],
+        "toString": [Function],
+      }
     }
-  }
-  request={[MockFunction]}
-  reset={[MockFunction]}
-  subscribe={[MockFunction]}
-/>
+    request={[MockFunction]}
+    reset={[MockFunction]}
+    subscribe={[MockFunction]}
+  >
+    <div>
+      Component
+    </div>
+  </MockComponent>
+</ComponentConnectIdAndContext>
 `;

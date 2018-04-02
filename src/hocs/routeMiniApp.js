@@ -6,6 +6,8 @@ import {Button} from 'antd';
 import {MiniApp, generateAction} from '../app';
 import type RefId from 'canner-ref-id';
 import {UNIQUE_ID} from '../app/config';
+import {createEmptyData} from '@canner/react-cms-helpers';
+
 type Props = {
   type: string,
   routes: Array<string>,
@@ -16,7 +18,6 @@ type Props = {
     payload?: string,
     backUrl: string
   },
-  createEmptyData: Function,
   items: {[string]: any},
   renderChildren: Function,
   request: RequestDef,
@@ -119,7 +120,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
 
     create = (props: Props = this.props) => {
       // this method is for route op
-      const {createEmptyData, refId, items, params} = props;
+      const {refId, items, params} = props;
       const {app} = this.state;
       if (app) {
         const {payload} = params;

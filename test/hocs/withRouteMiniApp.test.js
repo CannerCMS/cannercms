@@ -29,7 +29,6 @@ describe('with route mini app', () => {
     props = {
       refId: new RefId('posts'),
       params: {},
-      createEmptyData: () => fromJS({}),
       renderChildren: function renderChildren() {return <div></div>;},
       request: mockRequest,
       fetch: mockFetch,

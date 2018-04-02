@@ -6,10 +6,11 @@
 
 
 import * as React from 'react';
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '../react163Adapter';
 import withConnectId from '../../src/hocs/connectId';
+import {HOCContext as Context} from '../../src/hocs/context';
 import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -47,16 +48,24 @@ describe('hocTemplate', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(<WrapperComponent
-      {...props}
-    />, {context});
+    const wrapper = mount(
+      <Context.Provider value={context}>
+        <WrapperComponent
+          {...props}
+        />
+      </Context.Provider>
+    );
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
   it('should pass props', () => {
-    const wrapper = shallow(<WrapperComponent
-      {...props}
-    />, {context});
+    const wrapper = mount(
+      <Context.Provider value={context}>
+        <WrapperComponent
+          {...props}
+        />
+      </Context.Provider>
+    );
     expect(wrapper.find(MockComponent).props()).toMatchObject({
       ...props,
       ...context,

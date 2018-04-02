@@ -8,18 +8,17 @@ import containers from '@canner/react-cms-containers';
  * not working for now
  */
 
-// test('Generator', () => {
-//   const component = renderer.create(
-//     <Generator
-//       componentTree={schema.componentTree}
-//       containers={containers}
-//       routes={[]}
-//     />,
-//   );
-//   let tree = component.toJSON();
-//   expect(tree).toMatchSnapshot();
-
-// });
+test('Generator', () => {
+  const component = renderer.create(
+    <Generator
+      componentTree={schema.componentTree}
+      containers={containers}
+      routes={[]}
+    />,
+  );
+  let tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+});
 
 describe('renderComponnet', () => {
   it('findNode should work', () => {

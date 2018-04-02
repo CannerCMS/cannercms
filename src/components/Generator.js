@@ -8,7 +8,7 @@
  * React Component with all hocs it needs in every node
  *
  * Second Step, take the node.component to render it, and give the component
- * some props it maybe needs such as renderChildren, generateId
+ * some props it maybe needs such as renderChildren
  */
 
 import * as React from 'react';
@@ -16,7 +16,6 @@ import Loadable from 'react-loadable';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
-import {createEmptyData, transformData} from '../app/utils';
 import type RefId from 'canner-ref-id';
 
 function defaultHoc(Component) {
@@ -115,7 +114,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     if (!component) {
-      throw new Error(`invalid nodem, name: ${node.name}, nodeType: ${node.nodeType}`);
+      throw new Error(`invalid node, name: ${node.name}, nodeType: ${node.nodeType}`);
     }
 
     node.component = component;
@@ -140,7 +139,7 @@ export default class Generator extends React.PureComponent<Props, State> {
 
   renderNode = (node: Node, index: number, props: childrenProps): React$Node => {
     // take the node.component to render it, and give the component
-    // some props it maybe needs such as renderChildren, generateId
+    // some props it maybe needs such as renderChildren
 
     // eslint-disable-next-line no-unused-vars
     const {component, children, ...restNodeData} = node;
@@ -151,8 +150,6 @@ export default class Generator extends React.PureComponent<Props, State> {
         key={index}
         renderChildren={(props) => this.renderChildren(node, props)}
         renderComponent={this.renderComponent}
-        createEmptyData={createEmptyData}
-        transformData={transformData}
         params={params}
         goTo={path => {
           goTo(`${baseUrl}/${path}`)}
@@ -191,7 +188,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     if (!node) {
       throw new Error(`Can't find the node at refId ${refId.toString()}`);
     }
-    return this.renderNode(node, 0, props);
+    return this.renderNode(node, 0, {refId, ...props});
   }
 
   renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {

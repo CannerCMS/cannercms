@@ -3,7 +3,6 @@
 exports[`with route mini app should render 1`] = `
 <div>
   <MockComponent
-    createEmptyData={[Function]}
     deploy={[Function]}
     fetch={[MockFunction]}
     params={Object {}}
