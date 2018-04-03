@@ -56,7 +56,9 @@ type childrenProps = {
 };
 
 type State = {
-  componentTree: {[string]: any}
+  componentTree: {[string]: any},
+  error: any,
+  errorInfo: string
 }
 
 export default class Generator extends React.PureComponent<Props, State> {
@@ -73,6 +75,8 @@ export default class Generator extends React.PureComponent<Props, State> {
     this.cacheTree = this.genCacheTree(componentTree);
     this.state = {
       componentTree: this.cacheTree[activeKey],
+      error: null,
+      errorInfo: ''
     };
   }
 
@@ -83,6 +87,15 @@ export default class Generator extends React.PureComponent<Props, State> {
     this.setState({
       componentTree: this.cacheTree[nextProps.routes[0] || Object.keys(nextProps.componentTree)[0]],
     });
+  }
+
+  componentDidCatch(error: any, errorInfo: string) {
+    // Catch errors in any components below and re-render with error message
+    this.setState({
+      error: error,
+      errorInfo: errorInfo
+    })
+    // You can also log error messages to an error reporting service here
   }
 
   genCacheTree = (tree: {[string]: Node}): {[string]: Node} => {
@@ -212,8 +225,11 @@ export default class Generator extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {componentTree} = this.state;
+    const {componentTree, error, errorInfo} = this.state;
     const {routes, params} = this.props;
+    if (error) {
+      return errorInfo;
+    }
     return (
       <div>
         {this.renderNode(componentTree, 0, {id: '', routes, params})}

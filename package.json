@@ -93,5 +93,9 @@
     "rxjs": "^5.5.6",
     "store": "^2.0.12",
     "styled-components": "^3.2.1"
+  },
+  "peerDependencies": {
+    "react": ">=16.3",
+    "react-dom": ">=16.3"    
   }
 }

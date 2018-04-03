@@ -38,6 +38,7 @@ const objectBody = {
           nodeType: 'layout',
           component: 'body',
           children: [path.node],
+          hocs: ['containerRouter'],
           routeMap,
         };
         // hide first layer title decsription to body container
