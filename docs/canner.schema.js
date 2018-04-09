@@ -3,8 +3,8 @@
 import c, {Block} from '@canner/canner-script';
 
 module.exports = <root>
-  {/* <array name="posts" ui="breadcrumb" title="Posts"> */}
-    {/* <object name="status">
+  <array name="posts" ui="breadcrumb" title="Posts">
+    <object name="status">
       <date name="createAt" />
       <number name="draft" />
     </object>
@@ -21,7 +21,7 @@ module.exports = <root>
       <string name="introduction" />
       <mapPoint name="position" />
     </object>
-  </array> */}
+  </array>
   <object name="info" title="Info">
     <string name="name" title="Name" />
     <string name="description" title="Desc" />
