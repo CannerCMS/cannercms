@@ -17,6 +17,7 @@ const arrayBody = {
             nodeType: 'layout',
             component: 'block',
             children: [path.node],
+            childrenName: [path.node.name],
           }],
           childrenName: [path.node.name],
           hocs: ['containerRouter'],
