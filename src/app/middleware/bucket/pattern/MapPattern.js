@@ -3,11 +3,12 @@
  */
 
 import Pattern from './pattern';
+import {mergeWith} from 'immutable';
 
 export default class MapPattern extends Pattern<UpdateObjectAction> {
   mergeMultiMapUpdate() {
     this.actions = [this.actions.reduce((result, action) => {
-      result.payload.value = result.payload.value.mergeDeep(action.payload.value);
+      result.payload.value = mergeWith(merger, result.payload.value, action.payload.value);
       return result;
     })];
   }
@@ -16,4 +17,8 @@ export default class MapPattern extends Pattern<UpdateObjectAction> {
     this.mergeMultiMapUpdate();
     return this.actions;
   }
+}
+
+function merger(oldVal, newVal) {
+  return newVal;
 }

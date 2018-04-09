@@ -40,6 +40,13 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.queryData();
     }
 
+    componentWillReceiveProps(props: Props) {
+      const {componentId, refId} = this.props;
+      if (componentId !== props.componentId || refId.toString() !== props.refId.toString()) {
+        this.queryData();
+      } 
+    }
+
     componentWillUnmount() {
       this.unsubscribe();
     }

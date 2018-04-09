@@ -4,7 +4,7 @@ import * as React from 'react';
 import type {List} from 'immutable';
 import type RefId from 'canner-ref-id';
 import {HOCContext} from './context';
-import {Context, Children} from '@canner/react-cms-helpers';
+import {Context, Item} from '@canner/react-cms-helpers';
 
 type Props = {
   type: string,
@@ -149,11 +149,8 @@ export default function withRoute(Com: React$Component<*>) {
                 refId: refId.child(String(index)),
                 routes: restRoutes
               }}>
-                <Children />
+                <Item />
               </Context.Provider>
-          }
-          {
-            renderType === 3 && null
           }
       </HOCContext.Provider>;
     }

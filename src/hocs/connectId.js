@@ -16,20 +16,14 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
     query: QueryDef;
     reset: ResetDef;
 
-    constructor(props: Props) {
-      super(props);
-      const {refId, name} = props;
-      // these four values are pass by HOCs,
-      // so give them a default value
-      this.refId = refId ? refId.child(name) : new RefId(name);
-    }
-
     render() {
+      const {refId, name} = this.props;
+      const myRefId = refId ? refId.child(name) : new RefId(name);
       return <HOCContext.Consumer>
         {context => (
           <Com {...this.props}
-            refId={this.refId}
-            componentId={context.componentId || this.refId.toString()}
+            refId={myRefId}
+            componentId={context.componentId || myRefId.toString()}
             query={context.query}
             reset={context.reset}
             fetch={context.fetch}

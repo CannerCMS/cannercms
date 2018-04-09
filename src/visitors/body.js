@@ -38,6 +38,7 @@ const objectBody = {
           nodeType: 'layout',
           component: 'body',
           children: [path.node],
+          childrenName: [path.node.name],
           hocs: ['containerRouter'],
           routeMap,
         };

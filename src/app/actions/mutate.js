@@ -1,5 +1,5 @@
 // @flow
-import {Map, List} from 'immutable';
+import {Map, List, mergeWith} from 'immutable';
 import {UNIQUE_ID} from '../config';
 
 function isNotList(value: any): boolean {
@@ -88,7 +88,7 @@ export default function mutate(originValue: any, action: MutateAction): any {
       if (path) {
         mapData = mapData.setIn(path.split('/'), value);
       } else {
-        mapData = mapData.merge(value);
+        mapData = mergeWith((oldVal, newVal) => newVal, mapData, value);
       }
       return mapData;
     }

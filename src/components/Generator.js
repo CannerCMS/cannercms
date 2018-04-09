@@ -16,7 +16,7 @@ import Loadable from 'react-loadable';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
-import type RefId from 'canner-ref-id';
+import RefId from 'canner-ref-id';
 
 function defaultHoc(Component) {
   return Component;
@@ -51,7 +51,7 @@ type Props = {
 }
 
 type childrenProps = {
-  id: string,
+  refId: RefId,
   [string]: any
 };
 
@@ -118,6 +118,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     let component;
     if (isLayout(node)) {
       component = get(containers, node.component);
+      component = this.wrapByHOC(component, (node.hocs || ['containerRouter']).slice() || []);
     } else if (isComponent(node)) { // TODO: need to fix, turn plugins to components in compiler
       component = Loadable({
         loader: () => node.loader,
@@ -153,7 +154,6 @@ export default class Generator extends React.PureComponent<Props, State> {
   renderNode = (node: Node, index: number, props: childrenProps): React$Node => {
     // take the node.component to render it, and give the component
     // some props it maybe needs such as renderChildren
-
     // eslint-disable-next-line no-unused-vars
     const {component, children, ...restNodeData} = node;
     const {params, goTo, baseUrl} = this.props;
@@ -232,7 +232,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
     return (
       <div>
-        {this.renderNode(componentTree, 0, {id: '', routes, params})}
+        {this.renderNode(componentTree, 0, {refId: new RefId(''), routes, params})}
       </div>
     );
   }
