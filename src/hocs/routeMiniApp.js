@@ -222,7 +222,8 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
                   disabled: !changed,
                   callback: () => {
                     location.href = params.backUrl || location.href.split('?')[0];
-                  }
+                  },
+                  style: {marginRight: 16}
                 })}
                 {renderCancelButton({
                   disabled: !changed,

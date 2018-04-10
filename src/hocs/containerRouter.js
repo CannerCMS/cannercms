@@ -38,7 +38,7 @@ export default function withContainerRouter(Com: React.ComponentType<*>) {
         }
         {
           // in container's children
-          (routes.length && childrenName.length && !(routes.length === 1 && childrenName.length === 1) && childrenName.indexOf(routes[0]) !== -1) && <Com {...this.props}/>
+          Boolean(routes.length && childrenName.length && (routes[0] !== childrenName[0]) && (childrenName.indexOf(routes[0]) !== -1)) && <Com {...this.props}/>
         }
       </Context.Provider>;
     }
