@@ -144,6 +144,9 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
         // $FlowFixMe: queryCom should have this method
         const rootValue = this.queryCom && this.queryCom.getRootValue();
         recordId = rootValue && rootValue.getIn([recordIndex, UNIQUE_ID]);
+      } else {
+        entryKey = this.props.refId.getPathArr()[0];
+        recordId = this.props.refId.getPathArr()[1];
       }
       if (app) {
         return app.reset(entryKey, recordId) // reset the store and cache in miniapp

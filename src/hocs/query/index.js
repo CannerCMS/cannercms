@@ -31,7 +31,7 @@ type State = {
 
 export default (Plugin: React.ComponentType<*>) => {
   return class PluginWithQuery extends React.PureComponent<Props, State> {
-    constructor(props) {
+    constructor(props: Props) {
       super(props);
       this.state = {
         filter: {},
