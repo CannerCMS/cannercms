@@ -37,7 +37,7 @@ module.exports = <root>
         </object> */}
       </object>
     </object>
-    <array name="popup" title="Popup" uiParams={{
+    <array ui="popup" name="popup" title="Popup" uiParams={{
       columns: [{
         title: 'name',
         dataIndex: 'name',
@@ -50,7 +50,7 @@ module.exports = <root>
   <array name="popup" title="Popup">
     <string name="name" title="Name" />
   </array>
-  {/* <array ui="tab" name="tab" title="Tab">
+  <array ui="tab" name="tab" title="Tab">
     <string name="name" title="Name" />
   </array>
   <array
@@ -65,6 +65,6 @@ module.exports = <root>
     }}
   >
     <string name="name" title="Name" />
-  </array> */}
+  </array>
 </root>
 

@@ -22,7 +22,7 @@ type Props = {
   renderChildren: Function,
   request: RequestDef,
   fetch: FetchDef,
-  deploy: DeployDef,
+  deploy: (entryKey?: string, recordId?: string) => Promise<*>,
   subscribe: SubscribeDef
 };
 
@@ -170,7 +170,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       }
       if (app) {
         return app.deploy(entryKey, recordId).then(() => {
-          return deploy(refId)
+          return deploy(entryKey, recordId)
             .then(callback)
             // reset should be placed after callback,
             // or component will display the new-fetched data
@@ -190,7 +190,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
     render() {
       const {canBeRendered, routesEndAtMe, isCreateOp, changed, app} = this.state;
       const {ui, params, routes, renderChildren, fetch, subscribe, refId} = this.props;
-      const buttonControlledByArray = (ui === 'popup' || ui === 'breadcrumb') && routesEndAtMe && routes.length === 1 && !isCreateOp;
+      const buttonControlledByArray = ((ui === 'popup' || ui === 'breadcrumb') || ((ui === 'tab' || ui === 'panel') && routesEndAtMe && routes.length === 1)) && !isCreateOp;
       const buttonContainer = {
         textAlign: 'right',
         marginTop: 60

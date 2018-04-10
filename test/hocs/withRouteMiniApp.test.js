@@ -74,14 +74,14 @@ describe('with route mini app', () => {
     expect(wrapper.find('Button').length).toBe(0);
   });
 
-  it('should renderButton when first tab', () => {
+  it('should not renderButton when first tab', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       routes={['tab']}
       refId={new RefId("tab")}
       ui="tab"
       type="array"
     />);
-    expect(wrapper.find('Button').length).toBe(2);
+    expect(wrapper.find('Button').length).toBe(0);
   });
 
   it('should not renderButton when nested tab, when route end at parent', () => {
