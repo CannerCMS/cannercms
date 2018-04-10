@@ -27,7 +27,7 @@ type Props = {
 
   componentTree: {[string]: Node},
   hocs: {[string]: React.ComponentType<*>},
-  containers: {[string]: React.ComponentType<*>},
+  layouts: {[string]: React.ComponentType<*>},
   goTo: (path: string) => void,
   baseUrl: string,
   routes: Array<string>,
@@ -44,7 +44,7 @@ class CannerCMS extends React.Component<Props> {
     dataDidChange: () => {},
     componentTree: {},
     hocs,
-    containers: {},
+    layouts: {},
     goTo: () => {},
     baseUrl: '',
     routes: [],
@@ -56,7 +56,7 @@ class CannerCMS extends React.Component<Props> {
       schema,
       dataDidChange,
       hocs,
-      containers,
+      layouts,
       goTo,
       baseUrl,
       routes,
@@ -82,7 +82,7 @@ class CannerCMS extends React.Component<Props> {
           <Generator
             componentTree={schema.componentTree}
             hocs={hocs}
-            containers={containers}
+            layouts={layouts}
             goTo={goTo}
             baseUrl={baseUrl}
             routes={routes}

@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import CMS from '../src/components';
 import schema from './canner.schema';
 import endpoint from './endpoint';
-import containers from '@canner/react-cms-containers';
+import layouts from '@canner/react-cms-containers';
 import {Layout, Menu} from 'antd';
 const {cannerSchema} = schema;
 
@@ -35,7 +35,7 @@ class CMSExample extends React.Component {
               <CMS
                 schema={schema}
                 endpoint={endpoint}
-                containers={containers}
+                layouts={layouts}
                 routes={match.params[0].split('/')}
                 params={queryString.parse(location.search)}
                 baseUrl={baseUrl}

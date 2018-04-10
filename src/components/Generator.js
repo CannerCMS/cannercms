@@ -1,7 +1,7 @@
 // @flow
 
 /**
- * Genertaor is a Component that renders the components, containers
+ * Genertaor is a Component that renders the components, layouts
  * with the a given componentTree which is created by qa-compiler
  *
  * First Step, prerender the tree in constructor, this action will add a
@@ -42,7 +42,8 @@ export type Node = {
 type Props = {
   componentTree: {[string]: Node},
   hocs: {[string]: React.ComponentType<*>},
-  containers: {[string]: React.ComponentType<*>},
+  layouts: {[string]: React.ComponentType<*>},
+
   goTo: (path: string) => void,
   baseUrl: string,
   routes: Array<string>,
@@ -106,7 +107,7 @@ export default class Generator extends React.PureComponent<Props, State> {
 
   static defaultProps = {
     componentTree: {},
-    containers: {},
+    layouts: {},
     hocs: {}
   }
 
@@ -114,10 +115,10 @@ export default class Generator extends React.PureComponent<Props, State> {
   prerender = (node: Node): Node => {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
-    const {containers} = this.props;
+    const {layouts} = this.props;
     let component;
     if (isLayout(node)) {
-      component = get(containers, node.component);
+      component = get(layouts, node.component);
       component = this.wrapByHOC(component, (node.hocs || ['containerRouter']).slice() || []);
     } else if (isComponent(node)) { // TODO: need to fix, turn plugins to components in compiler
       component = Loadable({
