@@ -348,6 +348,14 @@
     promise-polyfill "^7.0.0"
     whatwg-fetch "^2.0.3"
 
+"@canner/image-service-config@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@canner/image-service-config/-/image-service-config-0.3.0.tgz#e6a7ba9c783701115c7bd57fb8c4a56eddc03de8"
+  dependencies:
+    axios "^0.17.1"
+    promise-polyfill "^7.0.0"
+    whatwg-fetch "^2.0.3"
+
 "@canner/image-upload@^0.5.5":
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/@canner/image-upload/-/image-upload-0.5.5.tgz#de75ec5f3455c1093b05ce13e4b87954cb9ea204"

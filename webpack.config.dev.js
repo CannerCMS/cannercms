@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   devServer: {
@@ -25,6 +26,11 @@ module.exports = {
   resolveLoader: {
      moduleExtensions: ["-loader"]
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      IMGUR_CLIENT_ID: JSON.stringify(process.env.IMGUR_CLIENT_ID)
+    })
+  ],
   module: {
     rules: [
       {

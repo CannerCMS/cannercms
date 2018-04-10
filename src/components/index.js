@@ -25,6 +25,7 @@ type Props = {
   dataDidChange: void => void,
   children: React.ChildrenArray<React.Node>,
 
+  imageServiceConfigs: Object,
   componentTree: {[string]: Node},
   hocs: {[string]: React.ComponentType<*>},
   layouts: {[string]: React.ComponentType<*>},
@@ -61,7 +62,8 @@ class CannerCMS extends React.Component<Props> {
       baseUrl,
       routes,
       params,
-      endpoint
+      endpoint,
+      imageServiceConfigs
     } = this.props;
     return (
       <IntlProvider
@@ -80,6 +82,7 @@ class CannerCMS extends React.Component<Props> {
         >
         
           <Generator
+            imageServiceConfigs={imageServiceConfigs}
             componentTree={schema.componentTree}
             hocs={hocs}
             layouts={layouts}
