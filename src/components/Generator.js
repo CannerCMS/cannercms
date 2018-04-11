@@ -157,7 +157,11 @@ export default class Generator extends React.PureComponent<Props, State> {
     // take the node.component to render it, and give the component
     // some props it maybe needs such as renderChildren
     // eslint-disable-next-line no-unused-vars
-    const {component, children, ...restNodeData} = node;
+    if (!node) {
+      throw new Error(`Unexpected Error: Want to render a undefined node with refId '${props.refId.toString()}'`);
+    }
+
+    const {component, ...restNodeData} = node;
     const {params, goTo, baseUrl, routes, imageServiceConfigs} = this.props;
     if (component) {
       return <node.component
@@ -210,6 +214,7 @@ export default class Generator extends React.PureComponent<Props, State> {
   renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {
     // just get the props and call renderNode
     // this method is called by components themselves
+
     const {children} = node;
     if (children) {
       return children.map((child, index) => {
