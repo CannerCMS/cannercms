@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
-import queryString from 'query-string';
 import CMS from '../src/components';
 import schema from './canner.schema';
 import endpoint from './endpoint';
@@ -17,7 +16,7 @@ class CMSExample extends React.Component {
     console.log(schema);
     return (
       <Router>
-        <Route path="/docs/**" render={({location, history, match}) => {
+        <Route path="/docs/**" render={({history}) => {
           return <Layout>
             <Layout.Sider>
               <Menu>
@@ -38,8 +37,8 @@ class CMSExample extends React.Component {
                 endpoint={endpoint}
                 imageServiceConfigs={imageServiceConfigs}
                 layouts={layouts}
-                routes={match.params[0].split('/')}
-                params={queryString.parse(location.search)}
+                // routes={match.params[0].split('/')}
+                // params={queryString.parse(location.search)}
                 baseUrl={baseUrl}
                 goTo={history.push}
               />

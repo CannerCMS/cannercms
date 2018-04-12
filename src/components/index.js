@@ -11,6 +11,7 @@ import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 import hocsLocales from '../hocs/query/locale';
 import pluginsLocales from '@canner/cms-locales';
+import queryString from 'query-string';
 
 const lang = 'zh';
 addLocaleData([...en, ...zh]);
@@ -31,8 +32,6 @@ type Props = {
   layouts: {[string]: React.ComponentType<*>},
   goTo: (path: string) => void,
   baseUrl: string,
-  routes: Array<string>,
-  params: {[string]: string},
 }
 
 class CannerCMS extends React.Component<Props> {
@@ -47,9 +46,7 @@ class CannerCMS extends React.Component<Props> {
     hocs,
     layouts: {},
     goTo: () => {},
-    baseUrl: '',
-    routes: [],
-    params: {},
+    baseUrl: '/'
   }
 
   render() {
@@ -60,11 +57,12 @@ class CannerCMS extends React.Component<Props> {
       layouts,
       goTo,
       baseUrl,
-      routes,
-      params,
       endpoint,
       imageServiceConfigs
     } = this.props;
+    const {pathname} = location;
+    const routes = getRoutes(pathname, baseUrl);
+    const params = queryString.parse(location.search)
     return (
       <IntlProvider
         locale={lang}
@@ -95,6 +93,14 @@ class CannerCMS extends React.Component<Props> {
       </IntlProvider>
     );
   }
+}
+
+function getRoutes(pathname, baseUrl = '/') {
+  let pathnameWithoutBaseUrl = pathname.substring(baseUrl.length);
+  if (pathnameWithoutBaseUrl[0] === '/') {
+    pathnameWithoutBaseUrl = pathnameWithoutBaseUrl.substring(1);
+  }
+  return pathnameWithoutBaseUrl.split('/');
 }
 
 export default CannerCMS;
