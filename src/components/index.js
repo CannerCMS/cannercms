@@ -62,7 +62,7 @@ class CannerCMS extends React.Component<Props> {
     } = this.props;
     const {pathname} = location;
     const routes = getRoutes(pathname, baseUrl);
-    const params = queryString.parse(location.search)
+    const params = queryString.parse(location.search);
     return (
       <IntlProvider
         locale={lang}
