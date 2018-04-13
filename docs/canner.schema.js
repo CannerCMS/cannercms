@@ -23,18 +23,26 @@ module.exports = <root>
     </object>
   </array>
   <object name="info" title="Info">
-    <string name="name" title="Name" />
-    <string name="description" title="Desc" />
+    <Block>
+      <string name="name" title="Name" />
+      <string name="description" title="Desc" />
+    </Block>
     <object name="info" title="Info">
+      <object name="info2" title="Info2">
+        <string name="name2" title="Name" />
+      </object>
+    </object>
+    
+    {/* <object name="info" title="Info">
       <string name="name" title="Name" />
       <string name="description" title="Desc" />
       <object name="info" title="Info">
         <string name="name" title="Name" />
         <string name="description" title="Desc" />
-        {/* <object name="info" title="Info">
+        <object name="info" title="Info">
           <string name="name" title="Name" />
           <string name="description" title="Desc" />
-        </object> */}
+        </object>
       </object>
     </object>
     <array ui="popup" name="popup" title="Popup" uiParams={{
@@ -45,7 +53,7 @@ module.exports = <root>
       }]
     }}>
       <string name="name" title="Name" />
-    </array>
+    </array> */}
   </object>
   <array name="popup" title="Popup">
     <string name="name" title="Name" />
