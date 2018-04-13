@@ -60,6 +60,10 @@ export default (Plugin: React.ComponentType<*>) => {
         });
     }
 
+    getRootValue = () => {
+      return this.state.value;
+    }
+
     queryData() {
       const {refId, fetch, componentId} = this.props;
       const {filter, sort, pagination} = this.state;

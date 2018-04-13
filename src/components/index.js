@@ -12,6 +12,7 @@ import zh from 'react-intl/locale-data/zh';
 import hocsLocales from '../hocs/query/locale';
 import pluginsLocales from '@canner/cms-locales';
 import queryString from 'query-string';
+import defaultLayouts from '@canner/react-cms-containers';
 
 const lang = 'zh';
 addLocaleData([...en, ...zh]);
@@ -32,6 +33,11 @@ type Props = {
   layouts: {[string]: React.ComponentType<*>},
   goTo: (path: string) => void,
   baseUrl: string,
+
+  history: {
+    push: (path: string) => void,
+    location: Object
+  }
 }
 
 class CannerCMS extends React.Component<Props> {
@@ -45,7 +51,6 @@ class CannerCMS extends React.Component<Props> {
     componentTree: {},
     hocs,
     layouts: {},
-    goTo: () => {},
     baseUrl: '/'
   }
 
@@ -55,11 +60,12 @@ class CannerCMS extends React.Component<Props> {
       dataDidChange,
       hocs,
       layouts,
-      goTo,
       baseUrl,
       endpoint,
-      imageServiceConfigs
+      imageServiceConfigs,
+      history
     } = this.props;
+    const {location, push} = history;
     const {pathname} = location;
     const routes = getRoutes(pathname, baseUrl);
     const params = queryString.parse(location.search);
@@ -83,8 +89,8 @@ class CannerCMS extends React.Component<Props> {
             imageServiceConfigs={imageServiceConfigs}
             componentTree={schema.componentTree}
             hocs={hocs}
-            layouts={layouts}
-            goTo={goTo}
+            layouts={{...defaultLayouts, ...layouts}}
+            goTo={push}
             baseUrl={baseUrl}
             routes={routes}
             params={params}
