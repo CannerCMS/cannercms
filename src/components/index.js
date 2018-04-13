@@ -13,6 +13,8 @@ import hocsLocales from '../hocs/query/locale';
 import pluginsLocales from '@canner/cms-locales';
 import queryString from 'query-string';
 import defaultLayouts from '@canner/react-cms-containers';
+import LocalStorage from '../app/endpoint/localstorage';
+import {ImgurService} from '@canner/image-service-config';
 
 const lang = 'zh';
 addLocaleData([...en, ...zh]);
@@ -23,7 +25,7 @@ type Props = {
     cannerSchema: {[key: string]: any},
     componentTree: {[key: string]: Node}
   },
-  endpoint: {[key: string]: Endpoint},
+  endpoints: {[key: string]: Endpoint},
   dataDidChange: void => void,
   children: React.ChildrenArray<React.Node>,
 
@@ -41,17 +43,44 @@ type Props = {
 }
 
 class CannerCMS extends React.Component<Props> {
+  endpoints: {
+    [string]: Endpoint
+  };
+
+  imageServiceConfigs: Object
+
   static defaultProps = {
     schema: {
       cannerSchema: {},
       componentTree: {},
     },
-    endpoint: {},
     dataDidChange: () => {},
     componentTree: {},
     hocs,
     layouts: {},
     baseUrl: '/'
+  }
+
+  constructor(props: Props) {
+    super(props);
+      const {cannerSchema} = props.schema;
+      const endpoint = new LocalStorage({
+        schema: cannerSchema
+      });
+      this.endpoints = {...Object.keys(cannerSchema).reduce((result, key) => {
+        result[key] = endpoint;
+        return result;
+      }, {}), ...(props.endpoints || {})};
+
+      const serviceConfig = new ImgurService({
+        // $FlowFixMe
+        clientId: process.env.IMGUR_CLIENT_ID
+      });
+
+      this.imageServiceConfigs = {...Object.keys(cannerSchema).reduce((result, key) => {
+        result[key] = serviceConfig;
+        return result;
+      }, {}), ...(props.imageServiceConfigs || {})};
   }
 
   render() {
@@ -61,8 +90,6 @@ class CannerCMS extends React.Component<Props> {
       hocs,
       layouts,
       baseUrl,
-      endpoint,
-      imageServiceConfigs,
       history
     } = this.props;
     const {location, push} = history;
@@ -81,12 +108,12 @@ class CannerCMS extends React.Component<Props> {
       >
         <Provider
           schema={schema.cannerSchema}
-          endpoint={endpoint}
+          endpoints={this.endpoints}
           dataDidChange={dataDidChange}
         >
         
           <Generator
-            imageServiceConfigs={imageServiceConfigs}
+            imageServiceConfigs={this.imageServiceConfigs}
             componentTree={schema.componentTree}
             hocs={hocs}
             layouts={{...defaultLayouts, ...layouts}}

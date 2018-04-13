@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import CMS from '../src/components';
 import schema from './canner.schema';
-import endpoint from './endpoint';
-import imageServiceConfigs from './imageServiceConfigs';
 import {Layout, Menu} from 'antd';
 const {cannerSchema} = schema;
 
@@ -33,8 +31,6 @@ class CMSExample extends React.Component {
             <Layout.Content>
               <CMS
                 schema={schema}
-                endpoint={endpoint}
-                imageServiceConfigs={imageServiceConfigs}
                 baseUrl={baseUrl}
                 history={history}
               />

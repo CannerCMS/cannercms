@@ -12,7 +12,7 @@ import {HOCContext} from '../hocs/context';
 
 type Props = {
   schema: {[key: string]: any},
-  endpoint: {[key: string]: Endpoint},
+  endpoints: {[key: string]: Endpoint},
   dataDidChange: void => void,
   children: React.ChildrenArray<React.Node>
 }
@@ -29,12 +29,12 @@ export default class Provider extends React.PureComponent<Props, State> {
     (this: any).request = this.request.bind(this);
     (this: any).subscribe = this.subscribe.bind(this);
     (this: any).fetch = this.fetch.bind(this);
-    const {schema, endpoint} = props;
+    const {schema, endpoints} = props;
     this.app = new App()
       .use(new Store())
       .use(new Bucket())
       .use(new Cache())
-      .use(new EndpointMiddleware({schema, endpoint}));
+      .use(new EndpointMiddleware({schema, endpoint: endpoints}));
   }
 
   componentWillReceiveProps(nextProps: Props) {
@@ -46,7 +46,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         .use(new Store())
         .use(new Bucket())
         .use(new Cache())
-        .use(new EndpointMiddleware({schema: nextProps.schema, endpoint: nextProps.endpoint}));
+        .use(new EndpointMiddleware({schema: nextProps.schema, endpoint: nextProps.endpoints}));
     }
   }
 
