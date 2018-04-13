@@ -254,7 +254,7 @@ type buttonProps = {
 export function genDeployButton(deploy: Function, currentRefId: RefId) {
   return function DeployButton({
     disabled = false,
-    style = {},
+    style = {marginRight: 16},
     refId = currentRefId,
     onClick = deploy,
     callback = () => {},
