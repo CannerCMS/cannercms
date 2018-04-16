@@ -1,26 +1,8 @@
 import App from '../src/app';
 import {Bucket, Cache, Fetcher, Store} from '../src/app/middleware';
 import generateAction from '../src/app/utils/generateAction';
-import Endpoint from '../src/app/endpoint/localstorage';
 import {fromJS} from 'immutable';
 
-const schema = {
-  posts: {
-    type: 'array',
-    items: {
-      type: 'object',
-      items: {
-        title: {
-          type: 'string',
-        },
-        content: {
-          type: 'string',
-        },
-      },
-    },
-  },
-};
-const endpoint = new Endpoint({schema});
 const bucket = new Bucket();
 const cache = new Cache();
 const store = new Store();
