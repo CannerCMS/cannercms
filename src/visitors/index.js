@@ -9,8 +9,8 @@ import variants from './variants';
 
 export default [
   ...layer1Fieldset,
-  ...layer3Fieldset,
-  ...layerGTE4Fieldset,
+  // ...layer3Fieldset,
+  // ...layerGTE4Fieldset,
   ...fieldset,
   ...hocs,
   ...validator,
