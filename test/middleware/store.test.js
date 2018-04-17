@@ -139,6 +139,10 @@ describe('store', () => {
   });
 
   it('subscribe subject', () => {
+    store.subscribe('info', 'info', 'value', () => {});
+    store.subscribe('posts', 'posts1', 'childAdded', () => {});
+    store.subscribe('posts', 'posts1', 'childRemoved', () => {});
+    store.subscribe('posts', 'posts1', 'childChanged', () => {});
     expect(store.entity.getSubject('info', 'value')).toBeInstanceOf(Rx.Subject);
     expect(store.entity.getSubject('posts1', 'childAdded')).toBeInstanceOf(Rx.Subject);
     expect(store.entity.getSubject('posts1', 'childRemoved')).toBeInstanceOf(Rx.Subject);
@@ -146,25 +150,30 @@ describe('store', () => {
   });
 
   it('subject push', () => {
-    store.subscribe('info', 'info', 'value', (value) => {
-      expect(value.toJS()).toEqual({name: 321});
-    });
-    store.subscribe('posts', 'posts1', 'value', (value) => {
-      expect(value.toJS()).toEqual({[UNIQUE_ID]: 1, name: 321});
-    });
-    store.subscribe('posts', 'posts1', 'value', (value) => {
-      expect(value.toJS()).toEqual({[UNIQUE_ID]: 0, name: 321});
-    });
-    store.subscribe('posts', 'posts1', 'value', (value) => {
-      expect(value.toJS()).toEqual({[UNIQUE_ID]: 0, name: 321});
-    });
-    store.subscribe('posts', 'posts2', 'value', (value) => {
-      expect(value.toJS()).toEqual({[UNIQUE_ID]: 0, name: 321});
-    });
-    store.pushSubject('info', 'value', fromJS({name: 321}));
-    store.pushSubject('posts1', 'childAdded', fromJS({[UNIQUE_ID]: 1, name: 321}));
-    store.pushSubject('posts1', 'childChanged', fromJS({[UNIQUE_ID]: 0, name: 321}));
-    store.pushSubject('posts1', 'childRemoved', fromJS({[UNIQUE_ID]: 0, name: 321}));
+    const mockCallback1 = jest.fn(); 
+    const mockCallback2 = jest.fn(); 
+    const mockCallback3 = jest.fn(); 
+    const mockCallback4 = jest.fn(); 
+    const mockCallback5 = jest.fn(); 
+    const infoData = {name: 321};
+    const addData = {[UNIQUE_ID]: 1, name: 321};
+    const data = {[UNIQUE_ID]: 0, name: 321};
+    store.subscribe('info', 'info', 'value', mockCallback1);
+    store.subscribe('posts', 'posts1', 'value', mockCallback2);
+    store.subscribe('posts', 'posts1', 'childAdded', mockCallback3);
+    store.subscribe('posts', 'posts1', 'childChanged', mockCallback4);
+    store.subscribe('posts', 'posts1', 'childRemoved', mockCallback5);
+    store.pushSubject('info', 'value', fromJS(infoData));
+    store.pushSubject('posts1', 'value', fromJS([data]));
+    store.pushSubject('posts1', 'childAdded', fromJS(addData));
+    store.pushSubject('posts1', 'childChanged', fromJS(data));
+    store.pushSubject('posts1', 'childRemoved', fromJS(data));
+
+    expect(mockCallback1.mock.calls[1][0].toJS()).toEqual(infoData); 
+    expect(mockCallback2.mock.calls[1][0].toJS()).toEqual([data]); 
+    expect(mockCallback3.mock.calls[0][0].toJS()).toEqual(addData); 
+    expect(mockCallback4.mock.calls[0][0].toJS()).toEqual(data); 
+    expect(mockCallback5.mock.calls[0][0].toJS()).toEqual(data); 
   });
 });
 
@@ -216,17 +225,14 @@ describe('store mutate', () => {
     };
     const changedFunc = jest.fn();
     const valueFunc = jest.fn();
-    store.subscribe('posts', 'posts1', 'childChanged', (value) => {
-      changedFunc();
-      expect(value.toJS()).toEqual(store.resource.getList('posts', store.entity.get('posts1').ids).get(0).toJS());
-    });
-    store.subscribe('posts', 'posts2', 'value', (value) => {
-      valueFunc();
-      expect(value.toJS()).toEqual(store.resource.getList('posts', store.entity.get('posts2').ids).toJS());
-    });
+    store.subscribe('posts', 'posts1', 'childChanged', changedFunc);
+    store.subscribe('posts', 'posts2', 'value', valueFunc);
+    // expect(value.toJS()).toEqual(store.resource.getList('posts', store.entity.get('posts2').ids).toJS());
     const mutatedValue = store.mutate(action);
     expect(changedFunc).toHaveBeenCalledTimes(1);
-    expect(valueFunc).toHaveBeenCalledTimes(1);
+    expect(changedFunc.mock.calls[0][0].getIn(['category', 0]).toJS()).toEqual(action.payload.value.toJS());
+    expect(valueFunc).toHaveBeenCalledTimes(2);
+    expect(valueFunc.mock.calls[1][0].getIn([0, 'category', 0]).toJS()).toEqual(action.payload.value.toJS());
     expect(store.resource.getList('posts').getIn([0, 'category', 0]).toJS()).toEqual({
       name: 123,
     });
@@ -250,7 +256,7 @@ describe('store mutate', () => {
       expect(value.toJS()).toEqual(store.resource.get('info').toJS());
     });
     const mutatedValue = store.mutate(action);
-    expect(fn).toHaveBeenCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(2);
     expect(store.resource.get('info').getIn(['category', 0]).toJS()).toEqual(action.payload.value.toJS());
     expect(mutatedValue.toJS()).toEqual(store.resource.get('info').toJS());
   });
@@ -267,17 +273,13 @@ describe('store mutate', () => {
     };
     const changed = jest.fn();
     const valued = jest.fn();
-    store.subscribe('posts', 'posts1', 'childChanged', (value) => {
-      changed();
-      expect(value.toJS()).toEqual(store.resource.getList('posts', store.entity.get('posts1').ids).get(0).toJS());
-    });
-    store.subscribe('posts', 'posts2', 'value', (value) => {
-      valued();
-      expect(value.toJS()).toEqual(store.resource.getList('posts', store.entity.get('posts2').ids).toJS());
-    });
+    store.subscribe('posts', 'posts1', 'childChanged', changed);
+    store.subscribe('posts', 'posts2', 'value', valued);
     const mutatedValue = store.mutate(action);
     expect(changed).toHaveBeenCalledTimes(1);
-    expect(valued).toHaveBeenCalledTimes(1);
+    expect(changed.mock.calls[0][0].get('name')).toBe(321);
+    expect(valued).toHaveBeenCalledTimes(2);
+    expect(valued.mock.calls[1][0].getIn([0, 'name'])).toBe(321);
     expect(store.resource.getList('posts').getIn([0, 'name'])).toBe(action.payload.value);
     expect(mutatedValue.toJS()).toEqual(store.resource.getList('posts').get(0).toJS());
   });
@@ -288,22 +290,18 @@ describe('store mutate', () => {
       payload: {
         key: 'posts',
         id: '0',
-        value: fromJS({[UNIQUE_ID]: '0', name: 321}),
+        value: fromJS({[UNIQUE_ID]: '0', category: [], name: 321}),
       },
     };
     const changed = jest.fn();
     const valued = jest.fn();
-    store.subscribe('posts', 'posts1', 'childChanged', (value) => {
-      changed();
-      expect(value.toJS()).toEqual(store.resource.getList('posts').get(0).toJS());
-    });
-    store.subscribe('posts', 'posts2', 'value', (value) => {
-      valued();
-      expect(value.toJS()).toEqual(store.resource.getList('posts', store.entity.get('posts2').ids).toJS());
-    });
+    store.subscribe('posts', 'posts1', 'childChanged', changed);
+    store.subscribe('posts', 'posts2', 'value', valued);
     const mutatedValue = store.mutate(action);
     expect(changed).toHaveBeenCalledTimes(1);
-    expect(valued).toHaveBeenCalledTimes(1);
+    expect(changed.mock.calls[0][0].toJS()).toEqual(action.payload.value.toJS());
+    expect(valued).toHaveBeenCalledTimes(2);
+    expect(valued.mock.calls[1][0].getIn([0]).toJS()).toEqual(action.payload.value.toJS());
     expect(store.resource.getList('posts').getIn([0, 'name'])).toBe(321);
     expect(mutatedValue.toJS()).toEqual(store.resource.getList('posts').get(0).toJS());
   });
@@ -320,17 +318,13 @@ describe('store mutate', () => {
     };
     const changed = jest.fn();
     const valued = jest.fn();
-    store.subscribe('posts', 'posts1', 'childChanged', (value) => {
-      changed();
-      expect(value.toJS()).toEqual(store.resource.getList('posts').get(0).toJS());
-    });
-    store.subscribe('posts', 'posts2', 'value', (value) => {
-      valued();
-      expect(value.toJS()).toEqual(store.resource.getList('posts', store.entity.get('posts2').ids).toJS());
-    });
+    store.subscribe('posts', 'posts1', 'childChanged', changed);
+    store.subscribe('posts', 'posts2', 'value', valued);
     const mutatedValue = store.mutate(action);
     expect(changed).toHaveBeenCalledTimes(1);
-    expect(valued).toHaveBeenCalledTimes(1);
+    expect(changed.mock.calls[0][0].getIn(['category', 0]).toJS()).toEqual(action.payload.value.toJS());
+    expect(valued).toHaveBeenCalledTimes(2);
+    expect(valued.mock.calls[1][0].getIn([0, 'category', 0]).toJS()).toEqual(action.payload.value.toJS());
     expect(store.resource.getList('posts').getIn([0, 'category', 0, 'name'])).toBe(321);
     expect(mutatedValue.toJS()).toEqual(store.resource.getList('posts').get(0).toJS());
   });
@@ -347,17 +341,13 @@ describe('store mutate', () => {
     };
     const changed = jest.fn();
     const valued = jest.fn();
-    store.subscribe('posts', 'posts1', 'childChanged', (value) => {
-      changed();
-      expect(value.toJS()).toEqual(store.resource.getList('posts').get(0).toJS());
-    });
-    store.subscribe('posts', 'posts2', 'value', (value) => {
-      valued();
-      expect(value.toJS()).toEqual(store.resource.getList('posts', store.entity.get('posts2').ids).toJS());
-    });
+    store.subscribe('posts', 'posts1', 'childChanged', changed);
+    store.subscribe('posts', 'posts2', 'value', valued);
     const mutatedValue = store.mutate(action);
     expect(changed).toHaveBeenCalledTimes(1);
-    expect(valued).toHaveBeenCalledTimes(1);
+    expect(changed.mock.calls[0][0].getIn(['category', 0, 'name'])).toBe(action.payload.value);
+    expect(valued).toHaveBeenCalledTimes(2);
+    expect(valued.mock.calls[1][0].getIn([0, 'category', 0, 'name'])).toBe(action.payload.value);
     expect(store.resource.getList('posts').getIn([0, 'category', 0, 'name'])).toBe(321);
     expect(mutatedValue.toJS()).toEqual(store.resource.getList('posts').get(0).toJS());
   });
@@ -389,17 +379,13 @@ describe('store mutate', () => {
     };
     const removed = jest.fn();
     const valued = jest.fn();
-    store.subscribe('posts', 'posts1', 'childRemoved', (value) => {
-      removed();
-      expect(value.toJS()).toEqual(defaultValue);
-    });
-    store.subscribe('posts', 'posts2', 'value', (value) => {
-      valued();
-      expect(value.toJS()).toEqual(store.resource.getList('posts', store.entity.get('posts2').ids).toJS());
-    });
+    store.subscribe('posts', 'posts1', 'childRemoved', removed);
+    store.subscribe('posts', 'posts2', 'value', valued);
     const mutatedValue = store.mutate(action);
     expect(removed).toHaveBeenCalledTimes(1);
-    expect(valued).toHaveBeenCalledTimes(1);
+    expect(removed.mock.calls[0][0].getIn([UNIQUE_ID])).toBe(action.payload.id);
+    expect(valued).toHaveBeenCalledTimes(2);
+    expect(valued.mock.calls[1][0].size).toBe(0);
     expect(store.resource.getList('posts').size).toBe(0);
     expect(mutatedValue).toEqual(null);
   });
@@ -422,16 +408,15 @@ describe('store mutate', () => {
       },
     ]};
     store.update('posts', 'posts1', fromJS([newValue]));
-    store.subscribe('posts', 'posts1', 'childChanged', (value) => {
-      expect(value.toJS()).toEqual(store.resource.getList('posts').get('0').toJS());
-    });
-    store.subscribe('posts', 'posts1', 'value', (value) => {
-      expect(value.toJS()).toEqual(store.resource.getList('posts').toJS());
-    });
-    store.subscribe('posts', 'posts2', 'value', (value) => {
-      expect(value.toJS()).toEqual(store.resource.getList('posts').toJS());
-    });
+    const updated = jest.fn();
+    const valued1 = jest.fn();
+    store.subscribe('posts', 'posts1', 'childChanged', updated);
+    store.subscribe('posts', 'posts1', 'value', valued1);
     const mutatedValue = store.mutate(action);
+    expect(updated).toHaveBeenCalledTimes(1);
+    expect(updated.mock.calls[0][0].get('category').toJS()).toEqual([newValue.category[1]]);
+    expect(valued1).toHaveBeenCalledTimes(2);
+    expect(valued1.mock.calls[1][0].getIn([0, 'category']).toJS()).toEqual([newValue.category[1]]);
     expect(store.resource.getList('posts').getIn([0, 'category', 0, 'name'])).toBe(345);
     expect(mutatedValue.toJS()).toEqual(store.resource.getList('posts').get(0).toJS());
   });

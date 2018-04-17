@@ -84,7 +84,12 @@ export default class Entity {
   }
 
   createSubject(id: string, subjectType: SubjectType, value: Map<string, any> | List<any>) {
-    const subject = new Rx.BehaviorSubject(value);
+    let subject;
+    if (getSubjectName(subjectType) === 'valueSubject') {
+      subject = new Rx.BehaviorSubject(value);
+    } else {
+      subject = new Rx.Subject(value);
+    }
     if (List.isList(value)) {
       this.updateCollection(id, getSubjectName(subjectType), subject);
     } else {
