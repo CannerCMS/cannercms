@@ -37,6 +37,10 @@ const updateArrayAction1 = {
       [UNIQUE_ID]: '1',
       name: 123,
     }),
+    mutatedValue: fromJS({
+      [UNIQUE_ID]: '1',
+      name: 123,
+    }),
   },
 };
 
@@ -46,6 +50,10 @@ const updateArrayAction2 = {
     key: 'posts',
     id: '2',
     value: fromJS({
+      [UNIQUE_ID]: '2',
+      name: 123,
+    }),
+    mutatedValue: fromJS({
       [UNIQUE_ID]: '2',
       name: 123,
     }),
@@ -168,10 +176,8 @@ describe('bucket actions optimize', () => {
         payload: {
           key: 'posts',
           id: '0',
-          value: fromJS({
-            [UNIQUE_ID]: '0',
-            name: 123,
-          }),
+          path: 'name',
+          value: 123,
         },
       },
     };
@@ -338,30 +344,4 @@ describe('deploy', () => {
     expect(bucket.bucket.info.actions[0].payload.value.get('category').toJS()).toEqual(['2', 'a', 'b']);
   });
 
-  it('handle deploy', async () => {
-    const bucket = new Bucket();
-    bucket.addAction(createArrayAction1);
-    bucket.addAction(createArrayAction2);
-    bucket.addAction(updateObjectAction1);
-    let ctx = {
-      request: {
-        type: 'deploy',
-      },
-      response: {
-
-      },
-    };
-    await bucket.handleChange(ctx, () => Promise.resolve())
-    .then(() => {
-      expect(ctx.response.actionsNumber).toBe(2);
-    });
-    await bucket.handleChange(ctx, () => Promise.resolve())
-    .then(() => {
-      expect(ctx.response.actionsNumber).toBe(1);
-    });
-    await bucket.handleChange(ctx, () => Promise.resolve())
-    .then(() => {
-      expect(ctx.response.actionsNumber).toBe(0);
-    });
-  });
 });

@@ -6,6 +6,7 @@ const createArrayAction1 = {
   type: 'CREATE_ARRAY_ITEM',
   payload: {
     path: 'posts/1',
+    id: 1,
     value: fromJS({
       [UNIQUE_ID]: 1,
       name: 1,
@@ -17,10 +18,15 @@ const updateArrayAction1 = {
   type: 'UPDATE_ARRAY',
   payload: {
     path: 'posts/1',
+    id: 1,
     value: fromJS({
       [UNIQUE_ID]: 1,
       name: 11,
     }),
+    mutatedValue: fromJS({
+      [UNIQUE_ID]: 1,
+      name: 11,
+    })
   },
 };
 
@@ -28,10 +34,15 @@ const updateArrayAction2 = {
   type: 'UPDATE_ARRAY',
   payload: {
     path: 'posts/1',
+    id: 1,
     value: fromJS({
       [UNIQUE_ID]: 1,
       name: 22,
     }),
+    mutatedValue: fromJS({
+      [UNIQUE_ID]: 1,
+      name: 22,
+    })
   },
 };
 
@@ -39,6 +50,7 @@ const deleteArrayAction1 = {
   type: 'DELETE_ARRAY_ITEM',
   payload: {
     path: 'posts/1',
+    id: 1,
     value: fromJS({
       [UNIQUE_ID]: 1,
       name: 123,
