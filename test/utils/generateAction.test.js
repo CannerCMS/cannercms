@@ -4,9 +4,9 @@ import {UNIQUE_ID} from '../../src/app/config';
 import objectId from 'bson-objectid';
 
 describe('generateAction', () => {
-  it('posts/0 create', () => {
+  it('posts create', () => {
     const collection = fromJS([]);
-    const action = generateAction('posts/0', 'create', fromJS({name: 123}), collection);
+    const action = generateAction('posts', 'create', fromJS({name: 123}), collection);
     expect(action.type).toBe('CREATE_ARRAY_ITEM');
     expect(action.payload.id).toBeDefined();
     expect(action.payload.key).toBe('posts');
@@ -14,30 +14,30 @@ describe('generateAction', () => {
     expect(action.payload.value.toJS()).toEqual(expect.objectContaining({[UNIQUE_ID]: expect.any(String), name: 123}));
   });
 
-  it('posts/0/category/0 create', () => {
+  it('posts/0/category create', () => {
     const id = objectId().toString();
     const collection = fromJS([{
       [UNIQUE_ID]: id,
       category: [],
     }]);
-    const action = generateAction('posts/0/category/0', 'create', fromJS({name: 123}), collection);
+    const action = generateAction('posts/0/category', 'create', fromJS({name: 123}), collection);
     expect(action.type).toBe('CREATE_ARRAY_NESTED_ITEM');
     expect(action.payload.id).toBeDefined();
     expect(action.payload.key).toBe('posts');
-    expect(action.payload.path).toBe('category/0');
+    expect(action.payload.path).toBe('category');
     expect(action.payload.value.toJS()).toEqual(expect.objectContaining({name: 123}));
   });
 
-  it('info/category/0 create', () => {
+  it('info/category create', () => {
     const id = objectId().toString();
     const map = fromJS({
       [UNIQUE_ID]: id,
       category: [],
     });
-    const action = generateAction('info/category/0', 'create', fromJS({name: 123}), map);
+    const action = generateAction('info/category', 'create', fromJS({name: 123}), map);
     expect(action.type).toBe('CREATE_OBJECT_NESTED_ITEM');
     expect(action.payload.key).toBe('info');
-    expect(action.payload.path).toBe('category/0');
+    expect(action.payload.path).toBe('category');
     expect(action.payload.value.toJS()).toEqual(expect.objectContaining({name: 123}));
   });
 

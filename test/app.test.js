@@ -1,12 +1,30 @@
-import App from '../src/app';
-import {Bucket, Cache, Fetcher, Store} from '../src/app/middleware';
+import {App} from '../src/app';
+import {Bucket, Cache, EndpointMiddleware, Store} from '../src/app/middleware';
 import generateAction from '../src/app/utils/generateAction';
 import {fromJS} from 'immutable';
+class Endpoint {
+  getArray() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([]);
+      });
+    });
+  }
+}
 
 const bucket = new Bucket();
 const cache = new Cache();
 const store = new Store();
-const endpointMiddleware = new Fetcher();
+const endpointMiddleware = new EndpointMiddleware({
+  schema: {
+    posts: {
+      type: 'array'
+    }
+  },
+  endpoint: {
+    posts: new Endpoint()
+  }
+});
 
 describe('app', () => {
   it('should be return context finally', () => {
@@ -37,8 +55,12 @@ describe('app', () => {
       ctx.body = newData;
       return next();
     }});
-    app.handleChange({})
-      .then((ctx) => {
+    app.handleChange({
+      request: {
+        type: '',
+        key: ''
+      }
+    }).then((ctx) => {
         expect(ctx.body).toEqual(newData);
       });
   });
@@ -57,50 +79,13 @@ describe('app', () => {
       expect(ctx.body).toEqual(oldData);
       return Promise.resolve(newData);
     }});
-    app.handleChange({})
-      .then((ctx) => {
+    app.handleChange({
+      request: {
+        type: '',
+        key: ''
+      }
+    }).then((ctx) => {
         expect(ctx.body).toEqual(newData);
-      });
-  });
-
-  it('with middleware', () => {
-    const fetchRequest = {
-      type: 'fetch',
-      key: 'posts',
-      dataType: 'array',
-    };
-    const deployRequest = {
-      type: 'deploy',
-    };
-    const writeRequest = {
-      type: 'write',
-      key: 'posts',
-      dataType: 'array',
-      action: generateAction({
-        id: 'posts',
-        type: 'create',
-        value: fromJS({title: 'new posts', content: 'new content'}),
-        rootValue: fromJS([]),
-      }),
-    };
-    const app = new App()
-      .use(store)
-      .use(bucket)
-      .use(cache)
-      .use(endpointMiddleware);
-    return app.handleChange({request: fetchRequest})
-      .then((ctx) => {
-        expect(ctx.body.getValue()).toEqual(0);
-        return app.handleChange({request: writeRequest});
-      })
-      .then(() => {
-        expect(bucket._mergeActions().length).toEqual(1);
-        return app.handleChange({request: deployRequest});
-      })
-      .then((ctx) => {
-        expect(ctx.body.getValue()[0][0]).toMatchObject({
-          title: 'new posts', content: 'new content',
-        });
       });
   });
 });

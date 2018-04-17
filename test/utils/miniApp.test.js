@@ -13,29 +13,22 @@ const context = {
     componentId,
   },
 };
-const fetchFn = jest.fn();
-const fetch = (...args) => {
-  fetchFn(...args);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(context);
-    }, 400);
-  });
-};
-const requestFn = jest.fn();
-const request = (...args) => {
-  requestFn(...args);
-  return Promise.resolve();
-};
+const fetchFn = jest.fn().mockImplementation(() => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(context);
+  }, 400);
+}));
+
+const requestFn = jest.fn().mockImplementation(() => Promise.resolve());
 
 const app = new MiniApp({
-  fetch,
-  request,
+  fetch: fetchFn,
+  request: requestFn,
 });
 
 describe('minapp', () => {
   it('fetch should call fetch', () => {
-    const args = [key, componentId, {}];
+    const args = [key, componentId, {}, ''];
     return app.fetch(...args).then((ctx) => {
       expect(fetchFn).toHaveBeenCalledTimes(1);
       expect(fetchFn).toBeCalledWith(...args);
