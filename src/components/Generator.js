@@ -13,6 +13,7 @@
 
 import * as React from 'react';
 import Loadable from 'react-loadable';
+import {Item} from '@canner/react-cms-helpers';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
@@ -28,6 +29,10 @@ function isComponent(node) {
 
 function isLayout(node) {
   return node.nodeType === 'layout';
+}
+
+function isFieldset(node) {
+  return node.nodeType === 'plugins.object.fieldset';
 }
 
 export type Node = {
@@ -122,10 +127,16 @@ export default class Generator extends React.PureComponent<Props, State> {
       component = get(layouts, node.component);
       component = this.wrapByHOC(component, (node.hocs || ['containerRouter']).slice() || []);
     } else if (isComponent(node)) { // TODO: need to fix, turn plugins to components in compiler
-      component = Loadable({
-        loader: () => node.loader,
-        loading: () => <div>loading</div>,
-      });
+
+      if (isFieldset(node)) {
+        component = Item;
+      } else {
+        component = Loadable({
+          loader: () => node.loader,
+          loading: () => <div>loading</div>,
+        });
+      }
+      
       component = this.wrapByHOC(component, node.hocs.slice() || []);
     }
 

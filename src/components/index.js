@@ -13,7 +13,7 @@ import zh from 'react-intl/locale-data/zh';
 import hocsLocales from '../hocs/query/locale';
 import pluginsLocales from '@canner/cms-locales';
 import queryString from 'query-string';
-import defaultLayouts from '@canner/react-cms-containers';
+import defaultLayouts from '@canner/react-cms-layouts';
 import LocalStorage from '../app/endpoint/localstorage';
 import {ImgurService} from '@canner/image-service-config';
 

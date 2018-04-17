@@ -13,7 +13,8 @@ test('Generator', () => {
     <Generator
       componentTree={schema.componentTree}
       containers={containers}
-      routes={[]}
+      layouts={{}}
+      routes={[Object.keys(schema.cannerSchema)[0]]}
     />,
   );
   let tree = component.toJSON();
