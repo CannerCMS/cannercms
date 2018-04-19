@@ -6,7 +6,7 @@ import {HOCContext} from './context';
 
 type Props = {
   refId: RefId,
-  name: string
+  keyName: string
 };
 
 export default function connectIdAndContext(Com: React.ComponentType<*>) {
@@ -17,8 +17,8 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
     reset: ResetDef;
 
     render() {
-      const {refId, name} = this.props;
-      const myRefId = refId ? refId.child(name) : new RefId(name);
+      const {refId, keyName} = this.props;
+      const myRefId = refId ? refId.child(keyName) : new RefId(keyName);
       return <HOCContext.Consumer>
         {context => (
           <Com {...this.props}

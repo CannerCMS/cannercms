@@ -307,9 +307,9 @@
   version "0.1.2"
   resolved "https://registry.npmjs.org/@canner/canner-config/-/canner-config-0.1.2.tgz#5de7223ffe8df1cad9b71634cf211a9af0ac07dd"
 
-"@canner/canner-schema-loader@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.npmjs.org/@canner/canner-schema-loader/-/canner-schema-loader-1.0.11.tgz#e990501e3b20609b048521081d8f93f69d2aa85d"
+"@canner/canner-schema-loader@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@canner/canner-schema-loader/-/canner-schema-loader-1.0.13.tgz#bdf15f966ccd9f4b85d3e1b4688bce77ed06adf7"
   dependencies:
     "@canner/antd-array-gallery" "^0.1.0"
     "@canner/antd-array-panel" "^0.1.0"
@@ -348,9 +348,9 @@
     "@canner/qa-compiler" "^0.1.0-rc.7"
     schema-utils "^0.4.5"
 
-"@canner/canner-script@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@canner/canner-script/-/canner-script-1.0.0.tgz#becf37bb42cb601f4c6f53a2e8191f4b1212d099"
+"@canner/canner-script@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@canner/canner-script/-/canner-script-1.0.2.tgz#07de2d8dad6409d0b81a16f606e0a7b96801e569"
   dependencies:
     object-path "^0.11.4"
 
@@ -3656,7 +3656,7 @@ enzyme-adapter-utils@^1.3.0:
 
 enzyme-to-json@^3.3.3:
   version "3.3.3"
-  resolved "https://registry.npmjs.org/enzyme-to-json/-/enzyme-to-json-3.3.3.tgz#ede45938fb309cd87ebd4386f60c754525515a07"
+  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.3.3.tgz#ede45938fb309cd87ebd4386f60c754525515a07"
   dependencies:
     lodash "^4.17.4"
 
@@ -6447,9 +6447,9 @@ mem@^1.1.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-memory-fs@^0.4.0, memory-fs@~0.4.1:
+memory-fs@^0.4.0, memory-fs@^0.4.1, memory-fs@~0.4.1:
   version "0.4.1"
-  resolved "https://registry.npmjs.org/memory-fs/-/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
+  resolved "https://registry.yarnpkg.com/memory-fs/-/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
   dependencies:
     errno "^0.1.3"
     readable-stream "^2.0.1"

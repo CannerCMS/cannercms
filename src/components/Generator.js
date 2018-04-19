@@ -36,7 +36,7 @@ function isFieldset(node) {
 }
 
 export type Node = {
-  name: string,
+  keyName: string,
   nodeType: string,
   hocs: Array<string>,
   children: Array<Node>,
@@ -136,12 +136,11 @@ export default class Generator extends React.PureComponent<Props, State> {
           loading: () => <div>loading</div>,
         });
       }
-      
       component = this.wrapByHOC(component, node.hocs.slice() || []);
     }
 
     if (!component) {
-      throw new Error(`invalid node, name: ${node.name}, nodeType: ${node.nodeType}`);
+      throw new Error(`invalid node, name: ${node.keyName}, nodeType: ${node.nodeType}`);
     }
 
     node.component = component;
@@ -178,7 +177,7 @@ export default class Generator extends React.PureComponent<Props, State> {
       return <node.component
         {...restNodeData}
         key={index}
-        imageServiceConfig={imageServiceConfigs[routes[0]]}
+        imageServiceConfig={(imageServiceConfigs || {})[routes[0]]}
         renderChildren={(props) => this.renderChildren(node, props)}
         renderComponent={this.renderComponent}
         params={params}
@@ -192,7 +191,7 @@ export default class Generator extends React.PureComponent<Props, State> {
   }
 
   static findNode = (pathArr: Array<string>, node: Node): ?Node => {
-    if (isComponent(node) && node.name === pathArr[0]) {
+    if (isComponent(node) && node.keyName === pathArr[0]) {
       pathArr = pathArr.slice(1);
       if (!pathArr.length) {
         return node;
@@ -225,14 +224,13 @@ export default class Generator extends React.PureComponent<Props, State> {
   renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {
     // just get the props and call renderNode
     // this method is called by components themselves
-
     const {children} = node;
     if (children) {
       return children.map((child, index) => {
         const childrenProps = typeof props === 'function' ? props(child) : props;
         const {refId} = childrenProps;
         if (isUndefined(refId)) {
-          throw new Error(`refId is required for renderChildren, please check node '${node.name || ''}'`);
+          throw new Error(`refId is required for renderChildren, please check node '${node.keyName || ''}'`);
         }
         if (childrenProps.hidden) {
           return null;

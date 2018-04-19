@@ -15,7 +15,7 @@ import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('hocTemplate', () => {
+describe('withConnectIdAndContext', () => {
   let WrapperComponent, props, MockComponent, context,
   mockFetch, mockSubscribe, mockRequest, mockDeploy, mockReset;
 
@@ -25,7 +25,7 @@ describe('hocTemplate', () => {
     }
     props = {
       id: undefined,
-      name: 'posts'
+      keyName: 'posts'
     }
 
     mockFetch = jest.fn();
@@ -70,7 +70,7 @@ describe('hocTemplate', () => {
       ...props,
       ...context,
       refId: expect.any(RefId),
-      componentId: props.name,
+      componentId: props.keyName,
       query: {}
     });
   });

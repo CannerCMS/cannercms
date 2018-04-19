@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`hocTemplate should render 1`] = `
+exports[`withConnectIdAndContext should render 1`] = `
 <ComponentConnectIdAndContext
-  name="posts"
+  keyName="posts"
 >
   <MockComponent
     componentId="posts"
     deploy={[MockFunction]}
     fetch={[MockFunction]}
-    name="posts"
+    keyName="posts"
     refId={
       CannerRefId {
         "_internalArr": Array [

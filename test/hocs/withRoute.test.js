@@ -35,7 +35,7 @@ describe('withRoute', () => {
       rootValue={fromJS({
         name: 'Name'
       })}
-      name="name"
+      keyName="name"
       refId={new RefId("info/name")}
       params={{}}
       renderChildren={mockRenderChildren}
@@ -53,7 +53,7 @@ describe('withRoute', () => {
       rootValue={fromJS({
         name: 'Name'
       })}
-      name="name"
+      keyName="name"
       refId={new RefId("info/name")}
       params={{}}
       renderChildren={mockRenderChildren}
@@ -76,7 +76,7 @@ describe('withRoute', () => {
       rootValue={fromJS({
         name: 'Name'
       })}
-      name="name"
+      keyName="name"
       refId={new RefId("info/name")}
       params={{}}
       renderChildren={mockRenderChildren}
@@ -100,7 +100,7 @@ describe('withRoute', () => {
         [UNIQUE_ID]: 'post1',
         title: 'Title'
       }])}
-      name="posts"
+      keyName="posts"
       refId={new RefId("posts")}
       params={{}}
       fetch={mockFetch}
@@ -124,7 +124,7 @@ describe('withRoute', () => {
         [UNIQUE_ID]: 'post1',
         title: 'Title'
       }])}
-      name="posts"
+      keyName="posts"
       refId={new RefId("posts")}
       params={{op: 'create'}}
       fetch={mockFetch}

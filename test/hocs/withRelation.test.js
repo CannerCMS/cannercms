@@ -16,7 +16,7 @@ import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('hocTemplate', () => {
+describe('withRelation', () => {
   let WrapperComponent, props, MockComponent, fetchFromRelationMock;
 
   beforeEach(() => {
@@ -31,7 +31,7 @@ describe('hocTemplate', () => {
     }]);
     props = {
       refId: new RefId('posts'),
-      name: 'posts',
+      keyName: 'posts',
       rootValue,
       value: rootValue,
       relation: undefined,
@@ -67,7 +67,7 @@ describe('hocTemplate', () => {
     const wrapper = shallow(<WrapperComponent {...props}
       {...props.items.items.author}
       refId={new RefId("posts/0/author")}
-      name="author"
+      keyName="author"
       value="authorId"
       pattern="array.relation"
       items={undefined}
@@ -85,9 +85,7 @@ describe('hocTemplate', () => {
         expect(wrapper.instance().state.value.toJS()).toEqual([{
           [UNIQUE_ID]: 'id1',
           title: 'POST1',
-          author: {
-            name: 'author'
-          }
+          author: 'authorId'
         }]);
       })
   });

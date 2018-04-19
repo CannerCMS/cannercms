@@ -35,8 +35,8 @@
   },
   "homepage": "https://github.com/Canner/react-cms-core#readme",
   "devDependencies": {
-    "@canner/canner-schema-loader": "^1.0.11",
-    "@canner/canner-script": "^1.0.0",
+    "@canner/canner-schema-loader": "^1.0.13",
+    "@canner/canner-script": "^1.0.2",
     "@canner/cms-plugins-all": "^0.1.0-rc.35",
     "@canner/image-service-config": "^0.3.0",
     "babel-cli": "^6.26.0",
@@ -64,6 +64,7 @@
     "jest": "^23.0.0-alpha.0",
     "less": "2.7",
     "less-loader": "^4.0.6",
+    "memory-fs": "^0.4.1",
     "node-sass": "^4.7.2",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",

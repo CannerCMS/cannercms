@@ -12,7 +12,7 @@ import type RefId from 'canner-ref-id';
 type Props = {
   refId: RefId,
   rootValue: any,
-  name: string,
+  keyName: string,
   relation: RelationDef,
   ui: string,
   pattern: string,
@@ -70,7 +70,7 @@ export function withRelation(Com: React.ComponentType<*>, fetchFromRelation: Fet
     }
 
     fetchRelationValue = (props?: Props, pagination?: {start: number, limit: number}): Promise<*> => {
-      const {fetch, items, name, refId, rootValue, relation, value, ui, pattern} = props || this.props;
+      const {fetch, items, keyName, refId, rootValue, relation, value, ui, pattern} = props || this.props;
       if (relation) {
         return fetchFromRelation(refId.toString(), relation, {
           entityId: getParentId(rootValue, refId.toString()),
@@ -81,8 +81,8 @@ export function withRelation(Com: React.ComponentType<*>, fetchFromRelation: Fet
             canRender: true
           });
         });
-      } else if ((ui === 'breadcrumb' || ui === 'popup') && pattern === 'array' && items) {
-        items.__key__ = name;
+      } else if ((ui === 'table-route' || ui === 'table') && pattern === 'array' && items) {
+        items.__key__ = keyName;
         return Promise.all(value.map(v => {
           return Promise.all(this.relationList.map(item => {
             const {relation, __key__} = item;

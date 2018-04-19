@@ -10,7 +10,7 @@ type Props = {
   type: string,
   routes: Array<string>,
   rootValue: List<any>,
-  name: string,
+  keyName: string,
   refId: RefId,
   params: any,
   renderChildren: ({[string]: any}) => React.Node,
@@ -61,7 +61,7 @@ export default function withRoute(Com: React$Component<*>) {
     }
 
     updateState = (props: Props): Promise<*> => {
-      const {type, rootValue, name, refId, params, routes, fetch, componentId} = props || this.props;
+      const {type, rootValue, keyName, refId, params, routes, fetch, componentId} = props || this.props;
       const restRoutes = routes ? routes.slice() : [];
       let {index, renderType} = this.state;
       let query = {};
@@ -71,7 +71,7 @@ export default function withRoute(Com: React$Component<*>) {
       if (restRoutes.length === 0) {
         // block encounters the id with plugins will render!
         renderType = 0;
-      } else if (restRoutes[0] === name) {
+      } else if (restRoutes[0] === keyName) {
         restRoutes.shift();
         if (type === 'array') {
           if (restRoutes.length > 0) {

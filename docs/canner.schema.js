@@ -23,10 +23,10 @@ export default <root>
     </object>
   </array>
   <object keyName="info" title="Info">
-    <Block>
+    {/* <Block> */}
       <string keyName="name" title="Name" />
       <string keyName="description" title="Desc" />
-    </Block>
+    {/* </Block> */}
     <object keyName="info" title="Info">
       <object keyName="info2" title="Info2">
         <string keyName="name2" title="Name" />
