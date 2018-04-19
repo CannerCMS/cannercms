@@ -2,67 +2,66 @@
 // const CannerTypes = require('@canner/canner-types');
 import c, {Block} from '@canner/canner-script';
 
-module.exports = <root>
-  <array name="posts" ui="breadcrumb" title="Posts">
-    <object name="status">
-      <date name="createAt" />
-      <number name="draft" />
+export default <root>
+  <array keyName="posts" title="Posts">
+    <object keyName="status">
+      <date keyName="createAt" />
+      <number keyName="draft" />
     </object>
-    <string name="featureImage" />
-    <object name="pageProperty">
-      <number name="onTop" />
-      <number name="order" />
+    <string keyName="featureImage" />
+    <object keyName="pageProperty">
+      <number keyName="onTop" />
+      <number keyName="order" />
     </object>
-    <object name="share">
-      <number name="showShareBottom" />
-      <number name="showGoodBottom" />
+    <object keyName="share">
+      <number keyName="showShareBottom" />
+      <number keyName="showGoodBottom" />
     </object>
-    <object name="other">
-      <string name="introduction" />
-      <mapPoint name="position" />
+    <object keyName="other">
+      <string keyName="introduction" />
+      <geoPoint keyName="position" />
     </object>
   </array>
-  <object name="info" title="Info">
+  <object keyName="info" title="Info">
     <Block>
-      <string name="name" title="Name" />
-      <string name="description" title="Desc" />
+      <string keyName="name" title="Name" />
+      <string keyName="description" title="Desc" />
     </Block>
-    <object name="info" title="Info">
-      <object name="info2" title="Info2">
-        <string name="name2" title="Name" />
+    <object keyName="info" title="Info">
+      <object keyName="info2" title="Info2">
+        <string keyName="name2" title="Name" />
       </object>
     </object>
     
-    {/* <object name="info" title="Info">
-      <string name="name" title="Name" />
-      <string name="description" title="Desc" />
-      <object name="info" title="Info">
-        <string name="name" title="Name" />
-        <string name="description" title="Desc" />
-        <object name="info" title="Info">
-          <string name="name" title="Name" />
-          <string name="description" title="Desc" />
+    {/* <object keyName="info" title="Info">
+      <string keyName="name" title="Name" />
+      <string keyName="description" title="Desc" />
+      <object keyName="info" title="Info">
+        <string keyName="name" title="Name" />
+        <string keyName="description" title="Desc" />
+        <object keyName="info" title="Info">
+          <string keyName="name" title="Name" />
+          <string keyName="description" title="Desc" />
         </object>
       </object>
     </object>
-    <array ui="popup" name="popup" title="Popup" uiParams={{
+    <array ui="popup" keyName="popup" title="Popup" uiParams={{
       columns: [{
         title: 'name',
         dataIndex: 'name',
         key: 'name'
       }]
     }}>
-      <string name="name" title="Name" />
+      <string keyName="name" title="Name" />
     </array> */}
   </object>
-  <array name="popup" title="Popup">
-    <string name="name" title="Name" />
+  <array keyName="popup" title="Popup">
+    <string keyName="name" title="Name" />
   </array>
-  <array ui="tab" name="tab" title="Tab">
-    <string name="name" title="Name" />
+  <array ui="tab" keyName="tab" title="Tab">
+    <string keyName="name" title="Name" />
   </array>
   <array
-    ui="breadcrumb"
     title="Title"
     uiParams={{
       columns: [{
@@ -72,7 +71,7 @@ module.exports = <root>
       }]
     }}
   >
-    <string name="name" title="Name" />
+    <string keyName="name" title="Name" />
   </array>
 </root>
 

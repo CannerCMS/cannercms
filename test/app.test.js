@@ -1,30 +1,4 @@
 import {App} from '../src/app';
-import {Bucket, Cache, EndpointMiddleware, Store} from '../src/app/middleware';
-import generateAction from '../src/app/utils/generateAction';
-import {fromJS} from 'immutable';
-class Endpoint {
-  getArray() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([]);
-      });
-    });
-  }
-}
-
-const bucket = new Bucket();
-const cache = new Cache();
-const store = new Store();
-const endpointMiddleware = new EndpointMiddleware({
-  schema: {
-    posts: {
-      type: 'array'
-    }
-  },
-  endpoint: {
-    posts: new Endpoint()
-  }
-});
 
 describe('app', () => {
   it('should be return context finally', () => {

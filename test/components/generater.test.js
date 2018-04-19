@@ -1,8 +1,8 @@
-import React from 'react';
+// import React from 'react';
 import Generator from '../../src/components/Generator';
-import renderer from 'react-test-renderer';
-import schema from './schema';
-import containers from '@canner/react-cms-containers';
+// import renderer from 'react-test-renderer';
+// import schema from './schema';
+// import containers from '@canner/react-cms-containers';
 
 /**
  * not working for now
