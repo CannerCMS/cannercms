@@ -15,9 +15,7 @@ export default (fixture, options = {}) => {
         test: /schema\.js/,
         use: [{
           loader: '@canner/canner-schema-loader',
-          options: {
-            componentName: true
-          }
+          options: options
         }, {
           loader: 'babel-loader'
         }]
