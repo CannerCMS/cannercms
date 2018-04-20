@@ -348,9 +348,9 @@
     "@canner/qa-compiler" "^0.1.0-rc.7"
     schema-utils "^0.4.5"
 
-"@canner/canner-script@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@canner/canner-script/-/canner-script-1.0.2.tgz#07de2d8dad6409d0b81a16f606e0a7b96801e569"
+"@canner/canner-script@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@canner/canner-script/-/canner-script-1.0.3.tgz#95815b007dd5e866fd155a6d6512c3b02fc01237"
   dependencies:
     object-path "^0.11.4"
 

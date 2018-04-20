@@ -129,7 +129,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     } else if (isComponent(node)) { // TODO: need to fix, turn plugins to components in compiler
 
       if (isFieldset(node)) {
-        component = Item;
+        component = () => <Item />;
       } else {
         component = Loadable({
           loader: () => node.loader,
