@@ -8,11 +8,11 @@ import get from 'lodash/get';
 import {chain} from 'lodash';
 import Pattern from './pattern';
 
-function getValueID(action: MutateAction) {
+function getValueID(action: ArrayAction) {
   return get(action, 'payload.id');
 }
 
-export default class CollectionPattern extends Pattern {
+export default class CollectionPattern extends Pattern<ArrayAction> {
   // CollectionPattern 要注意的地方是
   // 在合併或刪除 action 的時候要將 id 考慮進去
 
