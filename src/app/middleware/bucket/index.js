@@ -93,20 +93,20 @@ export default class Bucket implements Middleware {
       case 'DELETE_ARRAY_NESTED_ITEM':
       case 'CREATE_ARRAY_NESTED_ITEM':
       case 'SWAP_ARRAY_NESTED_ITEM': {
-        const {key, mutatedValue, path, id} = action.payload;
+        const {key, mutatedValue, path, id, value} = action.payload;
         const fieldName = typeof path === 'string' ?
           path.split('/')[0] :
           path[0].split('/')[0];
-        const value = fieldName ?
+        const delta = fieldName ?
           new Map().set(fieldName, mutatedValue && mutatedValue.get(fieldName)) :
-          mutatedValue;
+          value;
         return {
           type: 'UPDATE_ARRAY',
           payload: {
             key,
             id,
             path: '',
-            value,
+            value: delta,
             mutatedValue
           },
         };
@@ -116,19 +116,20 @@ export default class Bucket implements Middleware {
       case 'CREATE_OBJECT_NESTED_ITEM':
       case 'SWAP_OBJECT_NESTED_ITEM':
       case 'UPDATE_OBJECT': {
-        const {key, mutatedValue, path} = action.payload;
+        const {key, mutatedValue, path, value} = action.payload;
         const fieldName = typeof path === 'string' ?
           path.split('/')[0] :
           path[0].split('/')[0];
-        const value = fieldName ?
+        const delta = fieldName ?
           new Map().set(fieldName, mutatedValue && mutatedValue.get(fieldName)) :
-          mutatedValue;
+          value;
         return {
           type: 'UPDATE_OBJECT',
           payload: {
             key,
             path: '',
-            value,
+            value: delta,
+            mutatedValue
           },
         };
       }

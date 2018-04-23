@@ -13,6 +13,10 @@
  * not works 
  */
 
+it('this test is emptry', () => {
+  expect(true).toBe(true);
+});
+
 // test('Should render', async () => {
 //   const stats = await compiler(path.resolve(__dirname, 'schema.js'));
 //   const output = stats.toJson().modules[0].source;
