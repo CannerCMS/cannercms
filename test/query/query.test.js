@@ -1,0 +1,45 @@
+import {Query} from '../../src/query';
+import {schemaToQueriesObject} from '../../src/query/utils';
+
+describe('query', () => {
+  let schema, queries, query;
+  beforeEach(() => {
+    schema = {
+      posts: {
+        type: 'array',
+        items: {
+          type: 'object',
+          items: {
+            title: {
+              type: 'string'
+            }
+          }
+        }
+      }
+    };
+    queries = schemaToQueriesObject(schema);
+    query = new Query({
+      schema
+    });
+  });
+  it('should have queries', () => {
+    expect(query.queries).toEqual(queries);
+  });
+
+  it('should get posts queries', () => {
+    expect(query.getQueries(['posts'])).toEqual(queries.posts);
+  });
+
+  it('should get posts/title queries', () => {
+    expect(query.getQueries(['posts', 'title'])).toEqual(queries.posts.fields.title);
+  });
+
+  it('should update posts args', () => {
+    query.updateQueries(['posts'], 'args', {
+      pagination: {first: 2}
+    });
+    expect(query.queries.posts.args).toEqual({
+      pagination: {first: 2}
+    });
+  })
+});

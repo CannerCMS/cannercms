@@ -86,6 +86,7 @@
     "immutable": "4.0.0-rc.9",
     "invariant": "^2.2.3",
     "lodash": "^4.17.5",
+    "pluralize": "^7.0.0",
     "promise-polyfill": "^7.1.0",
     "prop-types": "^15.6.1",
     "react-css-modules": "^4.7.1",
