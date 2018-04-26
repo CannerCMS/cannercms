@@ -111,6 +111,7 @@ class CannerCMS extends React.Component<Props> {
           schema={schema.cannerSchema}
           endpoints={this.endpoints}
           dataDidChange={dataDidChange}
+          rootKey={routes[0]}
         >
         
           <Generator

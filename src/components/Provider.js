@@ -5,16 +5,19 @@
 import * as React from 'react';
 import {App} from '../app';
 import {Bucket, Cache, EndpointMiddleware, Store} from '../app/middleware';
-import type Endpoint from '../app/endpoint';
 import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
 import {HOCContext} from '../hocs/context';
+import {ApolloProvider, Mutation} from 'react-apollo';
+import type ApolloClient from 'apollo-boost';
+import type {graphql} from 'react-apollo';
 
 type Props = {
   schema: {[key: string]: any},
-  endpoints: {[key: string]: Endpoint},
   dataDidChange: void => void,
-  children: React.ChildrenArray<React.Node>
+  children: React.ChildrenArray<React.Node>,
+  client: ApolloClient,
+  rootKey: string
 }
 
 type State = {
@@ -22,82 +25,27 @@ type State = {
 }
 
 export default class Provider extends React.PureComponent<Props, State> {
-  app: App
-
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
-    (this: any).request = this.request.bind(this);
-    (this: any).subscribe = this.subscribe.bind(this);
-    (this: any).fetch = this.fetch.bind(this);
-    const {schema, endpoints} = props;
-    this.app = new App()
-      .use(new Store())
-      .use(new Bucket())
-      .use(new Cache())
-      .use(new EndpointMiddleware({schema, endpoint: endpoints}));
+    this.actionManager = new ActionManager();
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    const {schema} = this.props;
-    const schemaKey = Object.keys(schema);
-    const nextSchemaKey = Object.keys(nextProps.schema);
-    if (!isEqual(schemaKey, nextSchemaKey)) {
-      this.app = new App()
-        .use(new Store())
-        .use(new Bucket())
-        .use(new Cache())
-        .use(new EndpointMiddleware({schema: nextProps.schema, endpoint: nextProps.endpoints}));
-    }
-  }
-
-  fetch(key: string, componentId: string, query: queryType, mutate: Mutate): Promise<*> {
-    return this.app.handleChange({
-      request: {
-        type: 'fetch',
-        key,
-        query,
-        componentId,
-      },
-      response: {
-        mutate,
-      },
+  deploy = (key: string, id?: string) => {
+    const {client} = this.props;
+    const action = this.actionManager.getAction(key, id);
+    const mutation = actionToMutation(action);
+    client.mutate({
+      fetchPolicy: 'cache-and-network',
+      mutation
     });
   }
 
-  subscribe(key: string, componentId: string, subjectType: SubjectType, observer: rxjs$Observer<*>) {
-    return this.app.handleChange({
-      request: {
-        type: 'subscribe',
-        key,
-        observer,
-        componentId,
-        subjectType,
-      },
-    }).then((ctx) => ctx.response.subscription);
-  }
-
-  request(action: MutateAction) {
-    // const {cannerJSON} = this.state;
-    const {dataDidChange} = this.props;
-    if (action.type !== 'NOOP') {
-      const {key} = action.payload;
-      return this.app.handleChange({
-        request: {
-          type: 'write',
-          action,
-          key,
-        },
-      }).then(dataDidChange);
-    }
-  }
-
-  deploy = (key: string, id: string) => {
-    return this.app.handleChange({
-      request: {
-        type: 'deploy',
-        key,
-        id,
-      },
+  request = (action: Action) => {
+    const {client} = this.props;
+    const mutation = actionToMutation(action);
+    client.mutate({
+      fetchPolicy: 'cache-only',
+      mutation
     });
   }
 
@@ -109,13 +57,14 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   render() {
-    return <HOCContext.Provider value={{
-      subscribe: this.subscribe,
-      request: this.request,
-      fetch: this.fetch,
-      deploy: this.deploy,
-    }}>
-      {React.Children.only(this.props.children)}
-    </HOCContext.Provider>;
+    const {client} = this.props;
+    return <ApolloProvider client={client}>
+      <HOCContext.Provider value={{
+        request: this.request,
+        deploy: this.deploy,
+      }}>
+        {React.Children.only(this.props.children)}
+      </HOCContext.Provider>
+    </ApolloProvider>
   }
 }
