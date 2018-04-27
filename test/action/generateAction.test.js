@@ -56,6 +56,7 @@ describe('update action', () => {
         id: 'id1',
         value: rootValue.getIn(['posts', 0])
           .setIn(['comment', 0, 'text'], 'zzz')
+          .filter((v, k) => k === 'comment')
           .toJS()
       }
     });
@@ -76,6 +77,7 @@ describe('update action', () => {
         id: "",
         value: rootValue.getIn(['user'])
           .setIn(['info', 'phone', 0, 'type'], 'C')
+          .filter((v, k) => k === 'info')
           .toJS()
       }
     });
@@ -126,6 +128,7 @@ describe('create action', () => {
         id: 'id1',
         value: rootValue.getIn(['posts', 0])
           .updateIn(['users'], list => list.push(fromJS({name: ''})))
+          .filter((v, k) => k === 'users')
           .toJS()
       }
     });
@@ -149,6 +152,7 @@ describe('create action', () => {
         id: '',
         value: rootValue.get('user')
           .updateIn(['info', 'phone'], list => list.push(fromJS({type: '', value: ''})))
+          .filter((v, k) => k === 'info')
           .toJS()
       }
     });
@@ -212,6 +216,7 @@ describe('delete action', () => {
         id: 'id2',
         value: rootValue.getIn(['posts', 1])
           .updateIn(['users'], list => list.delete(0))
+          .filter((v, k) => k === 'users')
           .toJS()
       }
     });
@@ -231,6 +236,7 @@ describe('delete action', () => {
         id: '',
         value: rootValue.get('user')
           .updateIn(['info', 'phone'], list => list.delete(1))
+          .filter((v, k) => k === 'info')
           .toJS()
       }
     });
@@ -300,6 +306,7 @@ describe('swap action', () => {
           }, {
             name: 'name1'
           }]))
+          .filter((v, k) => k === 'users')
           .toJS()
       }
     });
@@ -328,6 +335,7 @@ describe('swap action', () => {
             type: 'H',
             value: 'xxx'
           }]))
+          .filter((v, k) => k === 'info')
           .toJS()
       }
     });

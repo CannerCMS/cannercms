@@ -55,6 +55,7 @@ export function generateAction(arg: {
         id,
         value: arg.rootValue.getIn([key, index])
           .updateIn(paths, list => list.push(arg.value))
+          .filter((v, k) => k === paths[0])
       }
     }
   }
@@ -69,6 +70,7 @@ export function generateAction(arg: {
         value: arg.rootValue
           .get(key)
           .updateIn(paths, list => list.push(arg.value))
+          .filter((v, k) => k === paths[0])
       }
     }
   }
@@ -107,6 +109,7 @@ export function generateAction(arg: {
         value: arg.rootValue
           .getIn([key, index])
           .updateIn(paths.slice(0, -1), list => list.delete(paths.slice(-1)[0]))
+          .filter((v, k) => k === paths[0])
       }
     }
   }
@@ -121,6 +124,7 @@ export function generateAction(arg: {
         value: arg.rootValue
           .getIn([key])
           .updateIn(paths.slice(0, -1), list => list.delete(paths.slice(-1)[0]))
+          .filter((v, k) => k === paths[0])
       }
     }
   }
@@ -148,6 +152,7 @@ export function generateAction(arg: {
         value: arg.rootValue
           .getIn([key, index])
           .setIn(paths, arg.value)
+          .filter((v, k) => k === paths[0])
       }
     };
   }
@@ -162,6 +167,7 @@ export function generateAction(arg: {
         value: arg.rootValue
           .get(key)
           .setIn(paths, arg.value)
+          .filter((v, k) => k === paths[0])
       }
     };
   }
@@ -190,6 +196,7 @@ export function generateAction(arg: {
             newList = newList.set(secondIndex, list.get(firstIndex));
             return newList;
           })
+          .filter((v, k) => k === paths[0])
       }
     }
   }
@@ -212,6 +219,7 @@ export function generateAction(arg: {
             newList = newList.set(secondIndex, list.get(firstIndex));
             return newList;
           })
+          .filter((v, k) => k === paths[0])
       }
     }
   }
