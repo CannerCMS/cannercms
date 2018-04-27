@@ -1,26 +1,26 @@
-import {Map, List, update} from 'immutable';
-const {isMap} = Map;
-const {isList} = List;
-
+import {Map, List} from 'immutable';
 
 /** create */
 
-export function isCreateArray({id, updateType, rootValue}) {
-  return idLength(id) === 2 &&
+export function isCreateArray({id, updateType, rootValue, relation}) {
+  return idLength(id) === 1 &&
     updateType === 'create' &&
-    isList(rootValue);
+    isList(rootValue, id) &&
+    !relation;
 }
 
-export function isCreateNestedArrayInArray({id, updateType, rootValue}) {
+export function isCreateNestedArrayInArray({id, updateType, rootValue, relation}) {
   return idLength(id) > 2 && 
     updateType === 'create' &&
-    isList(rootValue);
+    isList(rootValue, id) &&
+    !relation;
 }
 
-export function isCreateNestedArrayInObject({id, updateType, rootValue}) {
+export function isCreateNestedArrayInObject({id, updateType, rootValue, relation}) {
   return idLength(id) > 1 &&
-    updateType === 'update' &&
-    isMap(rootValue);
+    updateType === 'create' &&
+    isMap(rootValue, id) &&
+    !relation;
 }
 
 export function isCreateAndConnect({id, updateType, relation}) {
@@ -31,22 +31,25 @@ export function isCreateAndConnect({id, updateType, relation}) {
 
 /** delete */
 
-export function isDeleteArray({id, updateType, rootValue}) {
+export function isDeleteArray({id, updateType, rootValue, relation}) {
   return idLength(id) === 2 &&
     updateType === 'delete' &&
-    isList(rootValue);
+    isList(rootValue, id) &&
+    !relation;
 }
 
-export function isDeleteNestedArrayInArray({id, updateType, rootValue}) {
+export function isDeleteNestedArrayInArray({id, updateType, rootValue, relation}) {
   return idLength(id) > 2 &&
     updateType === 'delete' &&
-    isList(rootValue);
+    isList(rootValue, id) &&
+    !relation;
 }
 
-export function isDeleteNestedArrayInObject({id, updateType, rootValue}) {
+export function isDeleteNestedArrayInObject({id, updateType, rootValue, relation}) {
   return idLength(id) > 1 &&
     updateType === 'delete' &&
-    isMap(rootValue);
+    isMap(rootValue, id) &&
+    !relation;
 }
 
 export function isDisconnectAndDelete({id, updateType, relation}) {
@@ -57,30 +60,44 @@ export function isDisconnectAndDelete({id, updateType, relation}) {
 
 /** update */
 
-export function isUpdateArray({id, updateType, rootValue}) {
+export function isUpdateArray({id, updateType, rootValue, relation}) {
   return idLength(id) >= 2 &&
     updateType === 'update' &&
-    isList(rootValue);
+    isList(rootValue, id) &&
+    !relation;
 }
 
-export function isUpdateObject({id, updateType, rootValue}) {
-  return idLength(id) > 1 &&
+export function isUpdateObject({id, updateType, rootValue, relation}) {
+  return idLength(id) >= 1 &&
     updateType === 'update' &&
-    isMap(rootValue);
+    isMap(rootValue, id) &&
+    !relation;
 }
 
 /** swap */
 
-export function isSwapArrayInArray({id, updateType, rootValue}) {
+export function isSwapRootArray({id, updateType, rootValue, relation}) {
   return updateType === 'swap' &&
     typeof id === 'object' &&
-    isList(rootValue);
+    idLength(id.firstId) === 2 &&
+    isList(rootValue, id.firstId) &&
+    !relation;
 }
 
-export function isSwapArrayInObject({id, updateType, rootValue}) {
+export function isSwapArrayInArray({id, updateType, rootValue, relation}) {
   return updateType === 'swap' &&
     typeof id === 'object' &&
-    isMap(rootValue);
+    idLength(id.firstId) > 2 &&
+    isList(rootValue, id.firstId) &&
+    !relation;
+}
+
+export function isSwapArrayInObject({id, updateType, rootValue, relation}) {
+  return updateType === 'swap' &&
+    typeof id === 'object' &&
+    idLength(id.firstId) > 1 &&
+    isMap(rootValue, id.firstId) &&
+    !relation;
 }
 
 /** connect */
@@ -103,4 +120,12 @@ export function isDisconnect({id, updateType, relation}) {
 function idLength(id) {
   return typeof id === 'string' &&
     id.split('/').length;
+}
+
+function isMap(rootValue, id) {
+  return Map.isMap(rootValue.get(id.split('/')[0]));
+}
+
+export function isList(rootValue, id) {
+  return List.isList(rootValue.get(id.split('/')[0]));
 }

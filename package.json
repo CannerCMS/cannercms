@@ -88,7 +88,7 @@
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.1",
     "immutable": "4.0.0-rc.9",
-    "invariant": "^2.2.3",
+    "invariant": "^2.2.4",
     "lodash": "^4.17.5",
     "pluralize": "^7.0.0",
     "promise-polyfill": "^7.1.0",

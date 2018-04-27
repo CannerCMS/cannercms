@@ -1,6 +1,7 @@
 import {generateAction} from '../../src/action/generateAction';
+import {fromJS} from 'immutable';
 
-const rootValue = {
+const rootValue = fromJS({
   user: {
     name: 'name',
     info: {
@@ -26,7 +27,7 @@ const rootValue = {
     }],
     users: [{}]
   }, {
-    id: 'id1',
+    id: 'id2',
     title: 'title1',
     comment: [{
       text: 'xxx',
@@ -37,7 +38,7 @@ const rootValue = {
     }],
     users: [{name: 'name1'}, {name: 'name2'}]
   }],
-}
+});
 
 describe('update action', () => {
   it('update an array item without path', () => {
@@ -51,9 +52,10 @@ describe('update action', () => {
     });
     expect(action).toEqual({
       type: 'UPDATE_ARRAY',
-      paylaod: {
+      payload: {
         key: 'posts',
-        id: '0',
+        id: 'id1',
+        path: '',
         value: {
           title: 'newTitle'
         }
@@ -70,13 +72,11 @@ describe('update action', () => {
     });
     expect(action).toEqual({
       type: 'UPDATE_ARRAY',
-      paylaod: {
+      payload: {
         key: 'posts',
-        id: '0',
+        id: 'id1',
         path: 'comment/0/text',
-        value: {
-          title: 'zzz'
-        }
+        value: 'zzz'
       }
     });
   });
@@ -90,17 +90,16 @@ describe('update action', () => {
     });
     expect(action).toEqual({
       type: 'UPDATE_OBJECT',
-      paylaod: {
+      payload: {
         key: 'user',
+        id: "",
         path: 'info/phone/0/type',
-        value: {
-          title: 'C'
-        }
+        value: 'C'
       }
     });
   })
 
-  it('update object withour path', () => {
+  it('update object without path', () => {
     const action = generateAction({
       id: 'user',
       updateType: 'update',
@@ -111,8 +110,10 @@ describe('update action', () => {
     });
     expect(action).toEqual({
       type: 'UPDATE_OBJECT',
-      paylaod: {
+      payload: {
         key: 'user',
+        id: '',
+        path: '',
         value: {
           name: 'newName'
         }
@@ -135,8 +136,10 @@ describe('create action', () => {
     });
     expect(action).toEqual({
       type: 'CREATE_ARRAY',
-      paylaod: {
+      payload: {
         key: 'posts',
+        id: undefined,
+        path: '',
         value: {
           title: '',
           comments: [],
@@ -155,13 +158,14 @@ describe('create action', () => {
       },
       rootValue,
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'UPDATE_ARRAY',
-      paylaod: {
+      payload: {
         key: 'posts',
-        id: '0',
+        id: 'id1',
         path: 'users',
-        value: [{
+        value: [{}, {
           name: ''
         }]
       }
@@ -178,11 +182,13 @@ describe('create action', () => {
       },
       rootValue,
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'UPDATE_OBJECT',
-      paylaod: {
+      payload: {
         key: 'user',
         path: 'info/phone',
+        id: '',
         value: [{
           type: 'H',
           value: 'xxx'
@@ -201,20 +207,21 @@ describe('create action', () => {
     const action = generateAction({
       id: 'posts/0/users',
       updateType: 'create',
-      value: {
+      value: fromJS({
         name: ''
-      },
+      }),
       relation: {
         to: 'users',
         type: 'toMany'
       },
       rootValue,
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'CREATE_AND_CONNECT',
-      paylaod: {
+      payload: {
         key: 'posts',
-        id: '0',
+        id: 'id1',
         path: 'users',
         value: {
           name: ''
@@ -233,24 +240,26 @@ describe('delete action', () => {
     });
     expect(action).toEqual({
       type: 'DELETE_ARRAY',
-      paylaod: {
+      payload: {
         key: 'posts',
-        id: '0',
+        id: 'id1',
+        path: ''
       }
     });
   });
 
   it('delete array item in array', () => {
     const action = generateAction({
-      id: 'posts/0/users/0',
+      id: 'posts/1/users/0',
       updateType: 'delete',
       rootValue,
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'UPDATE_ARRAY',
-      paylaod: {
+      payload: {
         key: 'posts',
-        id: '0',
+        id: 'id2',
         path: 'users',
         value: [{
           name: 'name2'
@@ -265,13 +274,15 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'UPDATE_OBJECT',
-      paylaod: {
+      payload: {
         key: 'user',
+        id: '',
         path: 'info/phone',
         value: [{
-          text: 'H',
+          type: 'H',
           value: 'xxx'
         }]
       }
@@ -293,9 +304,9 @@ describe('delete action', () => {
     });
     expect(action).toEqual({
       type: 'DISCONNECT_AND_DELETE',
-      paylaod: {
+      payload: {
         key: 'posts',
-        id: '0',
+        id: 'id1',
         path: 'users',
         value: {
           id: 'user2'
@@ -306,31 +317,35 @@ describe('delete action', () => {
 });
 
 describe('swap action', () => {
-  it('swap root array item should throw', () => {
-    expect(() => generateAction({
+  it('swap root array item', () => {
+    const action = generateAction({
       id: {
         firstId: 'posts/0',
         secondId: 'posts/1'
       },
       updateType: 'swap',
       rootValue
-    })).toThrow();
+    });
+    expect(action).toEqual({
+      type: 'NOOP'
+    });
   });
 
-  it('swap array item in array itme', () => {
+  it('swap array item in array', () => {
     const action = generateAction({
       id: {
-        firstId: 'posts/0/users/0',
-        secondId: 'posts/0/users/1',
+        firstId: 'posts/1/users/0',
+        secondId: 'posts/1/users/1',
       },
       updateType: 'swap',
       rootValue
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
-        id: '0',
+        id: 'id2',
         path: 'users',
         value: [{
           name: 'name2'
@@ -350,11 +365,13 @@ describe('swap action', () => {
       updateType: 'swap',
       rootValue
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
-        path: 'phone',
+        id: '',
+        path: 'info/phone',
         value: [{
           type: 'C',
           value: 'yyy'
@@ -374,15 +391,17 @@ describe('connect action', () => {
       updateType: 'connect',
       value: {
         id: 'id1'
-      }
+      },
+      rootValue,
+      relation: {}
     });
     expect(action).toEqual({
       type: 'CONNECT',
       payload: {
         key: 'posts',
-        id: '0',
+        id: 'id1',
         path: 'users',
-        payload: {
+        value: {
           id: 'id1'
         }
       }
@@ -397,15 +416,17 @@ describe('disconnect action', () => {
       updateType: 'disconnect',
       value: {
         id: 'id1'
-      }
+      },
+      rootValue,
+      relation: {}
     });
     expect(action).toEqual({
       type: 'DISCONNECT',
       payload: {
         key: 'posts',
-        id: '0',
+        id: 'id1',
         path: 'users',
-        payload: {
+        value: {
           id: 'id1'
         }
       }
