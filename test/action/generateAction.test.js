@@ -41,42 +41,22 @@ const rootValue = fromJS({
 });
 
 describe('update action', () => {
-  it('update an array item without path', () => {
-    const action = generateAction({
-      id: 'posts/0',
-      updateType: 'update',
-      value: {
-        title: 'newTitle'
-      },
-      rootValue,
-    });
-    expect(action).toEqual({
-      type: 'UPDATE_ARRAY',
-      payload: {
-        key: 'posts',
-        id: 'id1',
-        path: '',
-        value: {
-          title: 'newTitle'
-        }
-      }
-    });
-  });
-
-  it('update an array item with path', () => {
+  it('update an array item', () => {
     const action = generateAction({
       id: 'posts/0/comment/0/text',
       updateType: 'update',
       value: 'zzz',
       rootValue,
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
         id: 'id1',
-        path: 'comment/0/text',
-        value: 'zzz'
+        value: rootValue.getIn(['posts', 0])
+          .setIn(['comment', 0, 'text'], 'zzz')
+          .toJS()
       }
     });
   });
@@ -88,38 +68,18 @@ describe('update action', () => {
       value: 'C',
       rootValue,
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
         id: "",
-        path: 'info/phone/0/type',
-        value: 'C'
+        value: rootValue.getIn(['user'])
+          .setIn(['info', 'phone', 0, 'type'], 'C')
+          .toJS()
       }
     });
   })
-
-  it('update object without path', () => {
-    const action = generateAction({
-      id: 'user',
-      updateType: 'update',
-      value: {
-        name: 'newName'
-      },
-      rootValue,
-    });
-    expect(action).toEqual({
-      type: 'UPDATE_OBJECT',
-      payload: {
-        key: 'user',
-        id: '',
-        path: '',
-        value: {
-          name: 'newName'
-        }
-      }
-    });
-  });
 });
 
 describe('create action', () => {
@@ -127,19 +87,19 @@ describe('create action', () => {
     const action = generateAction({
       id: 'posts',
       updateType: 'create',
-      value: {
+      value: fromJS({
         title: '',
         comments: [],
         users: []
-      },
+      }),
       rootValue,
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'CREATE_ARRAY',
       payload: {
         key: 'posts',
         id: undefined,
-        path: '',
         value: {
           title: '',
           comments: [],
@@ -164,10 +124,9 @@ describe('create action', () => {
       payload: {
         key: 'posts',
         id: 'id1',
-        path: 'users',
-        value: [{}, {
-          name: ''
-        }]
+        value: rootValue.getIn(['posts', 0])
+          .updateIn(['users'], list => list.push(fromJS({name: ''})))
+          .toJS()
       }
     });
   });
@@ -187,18 +146,10 @@ describe('create action', () => {
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
-        path: 'info/phone',
         id: '',
-        value: [{
-          type: 'H',
-          value: 'xxx'
-        }, {
-          type: 'C',
-          value: 'yyy'
-        }, {
-          type: '',
-          value: ''
-        }]
+        value: rootValue.get('user')
+          .updateIn(['info', 'phone'], list => list.push(fromJS({type: '', value: ''})))
+          .toJS()
       }
     });
   });
@@ -242,8 +193,7 @@ describe('delete action', () => {
       type: 'DELETE_ARRAY',
       payload: {
         key: 'posts',
-        id: 'id1',
-        path: ''
+        id: 'id1'
       }
     });
   });
@@ -260,10 +210,9 @@ describe('delete action', () => {
       payload: {
         key: 'posts',
         id: 'id2',
-        path: 'users',
-        value: [{
-          name: 'name2'
-        }]
+        value: rootValue.getIn(['posts', 1])
+          .updateIn(['users'], list => list.delete(0))
+          .toJS()
       }
     });
   });
@@ -280,11 +229,9 @@ describe('delete action', () => {
       payload: {
         key: 'user',
         id: '',
-        path: 'info/phone',
-        value: [{
-          type: 'H',
-          value: 'xxx'
-        }]
+        value: rootValue.get('user')
+          .updateIn(['info', 'phone'], list => list.delete(1))
+          .toJS()
       }
     });
   });
@@ -327,7 +274,8 @@ describe('swap action', () => {
       rootValue
     });
     expect(action).toEqual({
-      type: 'NOOP'
+      type: 'NOOP',
+      payload: {}
     });
   });
 
@@ -346,12 +294,13 @@ describe('swap action', () => {
       payload: {
         key: 'posts',
         id: 'id2',
-        path: 'users',
-        value: [{
-          name: 'name2'
-        }, {
-          name: 'name1'
-        }]
+        value: rootValue.getIn(['posts', 1])
+          .set('users', fromJS([{
+            name: 'name2'
+          }, {
+            name: 'name1'
+          }]))
+          .toJS()
       }
     });
   });
@@ -371,14 +320,15 @@ describe('swap action', () => {
       payload: {
         key: 'user',
         id: '',
-        path: 'info/phone',
-        value: [{
-          type: 'C',
-          value: 'yyy'
-        }, {
-          type: 'H',
-          value: 'xxx'
-        }]
+        value: rootValue.getIn(['user'])
+          .setIn(['info', 'phone'],fromJS([{
+            type: 'C',
+            value: 'yyy'
+          }, {
+            type: 'H',
+            value: 'xxx'
+          }]))
+          .toJS()
       }
     });
   });

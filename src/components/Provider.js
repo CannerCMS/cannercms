@@ -3,14 +3,12 @@
  */
 
 import * as React from 'react';
-import {App} from '../app';
-import {Bucket, Cache, EndpointMiddleware, Store} from '../app/middleware';
 import isArray from 'lodash/isArray';
-import isEqual from 'lodash/isEqual';
 import {HOCContext} from '../hocs/context';
-import {ApolloProvider, Mutation} from 'react-apollo';
+import {ApolloProvider} from 'react-apollo';
 import type ApolloClient from 'apollo-boost';
-import type {graphql} from 'react-apollo';
+import {ActionManager, actionsToMutation, actionsToVariables} from '../action';
+import type {Action} from '../action/types';
 
 type Props = {
   schema: {[key: string]: any},
@@ -25,27 +23,33 @@ type State = {
 }
 
 export default class Provider extends React.PureComponent<Props, State> {
-  constructor(props) {
+  actionManager: ActionManager;
+
+  constructor(props: Props) {
     super(props);
     this.actionManager = new ActionManager();
   }
 
-  deploy = (key: string, id?: string) => {
+  deploy = (key: string, id?: string): Promise.resolve<*> => {
     const {client} = this.props;
-    const action = this.actionManager.getAction(key, id);
-    const mutation = actionToMutation(action);
-    client.mutate({
+    const actions = this.actionManager.getAction(key, id);
+    const mutation = actionsToMutation(actions);
+    const variables = actionsToVariables(actions);
+    return client.mutate({
       fetchPolicy: 'cache-and-network',
-      mutation
+      mutation,
+      variables,
     });
   }
 
-  request = (action: Action) => {
+  request = (action: Action): Promise.resolve<*> => {
     const {client} = this.props;
-    const mutation = actionToMutation(action);
-    client.mutate({
+    const mutation = actionsToMutation([action]);
+    const variables = actionsToVariables([action]);
+    return client.mutate({
       fetchPolicy: 'cache-only',
-      mutation
+      mutation,
+      variables
     });
   }
 

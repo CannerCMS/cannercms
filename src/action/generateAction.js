@@ -1,6 +1,7 @@
 // @flow
 
-import type {UpdateType} from './types';
+import type {UpdateType, Action, ActionType} from './types';
+import {fromJS} from 'immutable';
 import {
   isCreateArray,
   isCreateNestedArrayInArray,
@@ -31,43 +32,43 @@ export function generateAction(arg: {
   value: *,
   rootValue: any,
   relation: Object
-}) {
+}): Action<ActionType> {
   
   if (isCreateArray(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const {key, id} = splitId(arg.id, arg.rootValue);
     return {
       type: 'CREATE_ARRAY',
       payload: {
         key,
         id,
-        path,
         value: arg.value
       }
     }
   }
 
   if (isCreateNestedArrayInArray(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
     return {
       type: 'UPDATE_ARRAY',
       payload: {
         key,
         id,
-        path,
-        value: arg.rootValue.getIn(arg.id.split('/')).push(arg.value)
+        value: arg.rootValue.getIn([key, index])
+          .updateIn(paths, list => list.push(arg.value))
       }
     }
   }
 
   if (isCreateNestedArrayInObject(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const {key, id, paths} = splitId(arg.id, arg.rootValue);
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        path,
-        value: arg.rootValue.getIn(arg.id.split('/')).push(arg.value)
+        value: arg.rootValue
+          .get(key)
+          .updateIn(paths, list => list.push(arg.value))
       }
     }
   }
@@ -86,41 +87,40 @@ export function generateAction(arg: {
   }
 
   if (isDeleteArray(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const {key, id} = splitId(arg.id, arg.rootValue);
     return {
       type: 'DELETE_ARRAY',
       payload: {
         key,
-        id,
-        path
+        id
       }
     }
   }
 
   if (isDeleteNestedArrayInArray(arg)) {
-    const {key, id} = splitId(arg.id, arg.rootValue);
-    const paths = arg.id.split('/');
+    const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
     return {
       type: 'UPDATE_ARRAY',
       payload: {
         key,
         id,
-        path: paths.slice(2, -1).join('/'),
-        value: arg.rootValue.getIn(paths.slice(0, -1)).delete(paths.slice(-1)[0])
+        value: arg.rootValue
+          .getIn([key, index])
+          .updateIn(paths.slice(0, -1), list => list.delete(paths.slice(-1)[0]))
       }
     }
   }
 
   if (isDeleteNestedArrayInObject(arg)) {
-    const {key, id} = splitId(arg.id, arg.rootValue);
-    const paths = arg.id.split('/');
+    const {key, id, paths} = splitId(arg.id, arg.rootValue);
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        path: paths.slice(1, -1).join('/'),
-        value: arg.rootValue.getIn(paths.slice(0, -1)).delete(paths.slice(-1)[0])
+        value: arg.rootValue
+          .getIn([key])
+          .updateIn(paths.slice(0, -1), list => list.delete(paths.slice(-1)[0]))
       }
     }
   }
@@ -139,27 +139,29 @@ export function generateAction(arg: {
   }
 
   if (isUpdateArray(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const {key, id, paths, index} = splitId(arg.id, arg.rootValue);
     return {
       type: 'UPDATE_ARRAY',
       payload: {
         key,
         id,
-        path,
-        value: arg.value
+        value: arg.rootValue
+          .getIn([key, index])
+          .setIn(paths, arg.value)
       }
     };
   }
 
   if (isUpdateObject(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const {key, id, paths} = splitId(arg.id, arg.rootValue);
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        path,
-        value: arg.value
+        value: arg.rootValue
+          .get(key)
+          .setIn(paths, arg.value)
       }
     };
   }
@@ -171,7 +173,7 @@ export function generateAction(arg: {
   }
 
   if (isSwapArrayInArray(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
     // $FlowFixMe
     const {firstId, secondId} = arg.id;
     const firstIndex = firstId.split('/').slice(-1)[0];
@@ -181,9 +183,9 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        path: path.split('/').slice(0, -1).join('/'),
-        value: arg.rootValue.getIn(firstId.split('/').slice(0, -1))
-          .update(list => {
+        value: arg.rootValue
+          .getIn([key, index])
+          .updateIn(paths.slice(0, -1), list => {
             let newList = list.set(firstIndex, list.get(secondIndex));
             newList = newList.set(secondIndex, list.get(firstIndex));
             return newList;
@@ -193,7 +195,7 @@ export function generateAction(arg: {
   }
 
   if (isSwapArrayInObject(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const {key, id, paths} = splitId(arg.id, arg.rootValue);
     // $FlowFixMe
     const {firstId, secondId} = arg.id;
     const firstIndex = firstId.split('/').slice(-1)[0];
@@ -203,9 +205,9 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        path: path.split('/').slice(0, -1).join('/'),
-        value: arg.rootValue.getIn(firstId.split('/').slice(0, -1))
-          .update(list => {
+        value: arg.rootValue
+          .get(key)
+          .updateIn(paths.slice(0, -1), list => {
             let newList = list.set(firstIndex, list.get(secondIndex));
             newList = newList.set(secondIndex, list.get(firstIndex));
             return newList;
@@ -241,7 +243,8 @@ export function generateAction(arg: {
   }
 
   return {
-    type: 'NOOP'
+    type: 'NOOP',
+    payload: {}
   }
 }
 
@@ -253,6 +256,8 @@ function splitId(id, rootValue) {
       return {
         key,
         id: recordId,
+        index,
+        paths: path,
         path: path.join('/')
       };
     } else {
@@ -260,7 +265,9 @@ function splitId(id, rootValue) {
       return {
         key,
         path: path.join('/'),
-        id: ''
+        paths: path,
+        id: '',
+        index: ''
       };
     }
   }
