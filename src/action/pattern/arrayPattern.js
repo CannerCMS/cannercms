@@ -11,8 +11,9 @@ export default class ArrayPattern implements Pattern<ArrayAction> {
     this.actions = [];
   }
 
-  removeAllActionIfDeleteAfterAction = () => {
-    if (this.actions[0].type === 'CREATE_ARRAY' && 
+  removeAllActionIfDeleteAfterCreate = () => {
+    if (this.actions.length >= 2 &&
+      this.actions[0].type === 'CREATE_ARRAY' && 
       this.actions.slice(-1)[0].type === 'DELETE_ARRAY'
     ) {
       this.actions = [];
@@ -20,7 +21,8 @@ export default class ArrayPattern implements Pattern<ArrayAction> {
   }
 
   removeAllUpdateBeforeDelete = () => {
-    if (this.actions[0].type !== 'CREATE_ARRAY' &&
+    if (this.actions.length >= 2 &&
+      this.actions[0].type !== 'CREATE_ARRAY' &&
       this.actions.slice(-1)[0].type === 'DELETE_ARRAY'
     ) {
       this.actions = this.actions.slice(-1);
@@ -28,7 +30,8 @@ export default class ArrayPattern implements Pattern<ArrayAction> {
   }
 
   mergeAllUpdate = () => {
-    if (this.actions[0].type === 'UPDATE_ARRAY' && 
+    if (this.actions.length >= 2 &&
+      this.actions[0].type === 'UPDATE_ARRAY' && 
       this.actions.slice(-1)[0].type === 'UPDATE_ARRAY'
     ) {
       this.actions = [this.actions.reduce((result, action) => {
@@ -39,7 +42,8 @@ export default class ArrayPattern implements Pattern<ArrayAction> {
   }
 
   mergeUpdateAndCreate = () => {
-    if (this.actions[0].type === 'CREATE_ARRAY' &&
+    if (this.actions.length >= 2 &&
+      this.actions[0].type === 'CREATE_ARRAY' &&
       this.actions.slice(-1)[0].type === 'UPDATE_ARRAY'
     ) {
       this.actions = [this.actions.reduce((result, action) => {
@@ -51,9 +55,18 @@ export default class ArrayPattern implements Pattern<ArrayAction> {
 
   addAction = (action: ArrayAction) => {
     this.actions.push(action);
+    this.mergeAction();
   }
 
   mergeAction = (): Array<ArrayAction> => {
+    this.removeAllActionIfDeleteAfterCreate();
+    this.removeAllUpdateBeforeDelete();
+    this.mergeAllUpdate();
+    this.mergeUpdateAndCreate();
+    return this.actions;
+  }
+
+  getActions = (): Array<ArrayAction> => {
     return this.actions;
   }
 }
