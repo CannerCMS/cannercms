@@ -1,7 +1,6 @@
 // @flow
 
 import type {Pattern, Action, ObjectActionType} from '../types';
-import {mergeWith} from 'immutable';
 
 type ObjectAction = Action<ObjectActionType>;
 

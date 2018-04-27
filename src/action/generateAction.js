@@ -94,7 +94,8 @@ export function generateAction(arg: {
       type: 'DELETE_ARRAY',
       payload: {
         key,
-        id
+        id,
+        value: fromJS({})
       }
     }
   }
@@ -252,7 +253,9 @@ export function generateAction(arg: {
 
   return {
     type: 'NOOP',
-    payload: {}
+    payload: {
+      value: fromJS({})
+    }
   }
 }
 
