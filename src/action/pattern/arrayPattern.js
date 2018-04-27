@@ -1,11 +1,10 @@
 // @flow
 
-import typeimport { List } from "antd";
- {Pattern, Action, ArrayActionType} from '../types';
+import type {Pattern, Action, ArrayActionType} from '../types';
 
 type ArrayAction = Action<ArrayActionType>;
 
-export class ObjectPattern implements Pattern<ArrayAction> {
+export default class ArrayPattern implements Pattern<ArrayAction> {
   actions: Array<ArrayAction>;
 
   constructor() {
@@ -32,15 +31,22 @@ export class ObjectPattern implements Pattern<ArrayAction> {
     if (this.actions[0].type === 'UPDATE_ARRAY' && 
       this.actions.slice(-1)[0].type === 'UPDATE_ARRAY'
     ) {
-      this.actions = this.actions.reduce((result, action) => {
+      this.actions = [this.actions.reduce((result, action) => {
         result.payload.value = result.payload.value.merge(action.payload.value);
         return result;
-      }, new List())
+      })];
     }
   }
 
   mergeUpdateAndCreate = () => {
-
+    if (this.actions[0].type === 'CREATE_ARRAY' &&
+      this.actions.slice(-1)[0].type === 'UPDATE_ARRAY'
+    ) {
+      this.actions = [this.actions.reduce((result, action) => {
+        result.payload.value = result.payload.value.merge(action.payload.value);
+        return result;
+      })];
+    }
   }
 
   addAction = (action: ArrayAction) => {
@@ -50,8 +56,4 @@ export class ObjectPattern implements Pattern<ArrayAction> {
   mergeAction = (): Array<ArrayAction> => {
     return this.actions;
   }
-}
-
-function merger(oldVal, newVal) {
-  return newVal;
 }

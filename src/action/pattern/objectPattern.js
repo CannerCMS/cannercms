@@ -5,7 +5,7 @@ import {mergeWith} from 'immutable';
 
 type ObjectAction = Action<ObjectActionType>;
 
-export class ObjectPattern implements Pattern<ObjectAction> {
+export default class ObjectPattern implements Pattern<ObjectAction> {
   actions: Array<ObjectAction>;
   constructor() {
     this.actions = [];
@@ -13,21 +13,22 @@ export class ObjectPattern implements Pattern<ObjectAction> {
 
   mergeMultiMapUpdate() {
     this.actions = [this.actions.reduce((result, action) => {
-      result.payload.value = mergeWith(merger, result.payload.value, action.payload.value);
+      result.payload.value = result.payload.value.merge(action.payload.value);
       return result;
     })];
   }
 
   addAction = (action: ObjectAction) => {
     this.actions.push(action);
+    this.mergeAction();
   }
 
   mergeAction = (): Array<ObjectAction> => {
     this.mergeMultiMapUpdate();
     return this.actions;
   }
-}
 
-function merger(oldVal, newVal) {
-  return newVal;
+  getActions = (): Array<ObjectAction> => {
+    return this.actions;
+  }
 }
