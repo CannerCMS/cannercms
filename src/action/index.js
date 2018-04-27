@@ -1,3 +1,4 @@
-export {actionsToMutation} from './actionsToMutation';
+export {actionToMutation} from './actionToMutation';
+export {actionsToVariables} from './actionsToVariables';
 export {generateAction} from './generateAction';
-export {ActionManger} from './actionManager';
+export {ActionManager} from './actionManager';

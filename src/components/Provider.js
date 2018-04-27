@@ -7,8 +7,8 @@ import isArray from 'lodash/isArray';
 import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
 import type ApolloClient from 'apollo-boost';
-import {ActionManager, actionsToMutation, actionsToVariables} from '../action';
-import type {Action} from '../action/types';
+import {ActionManager, actionToMutation, actionsToVariables} from '../action';
+import type {Action, ActionType} from '../action/types';
 
 type Props = {
   schema: {[key: string]: any},
@@ -32,8 +32,8 @@ export default class Provider extends React.PureComponent<Props, State> {
 
   deploy = (key: string, id?: string): Promise.resolve<*> => {
     const {client} = this.props;
-    const actions = this.actionManager.getAction(key, id);
-    const mutation = actionsToMutation(actions);
+    const actions = this.actionManager.getActions(key, id);
+    const mutation = actionToMutation(actions);
     const variables = actionsToVariables(actions);
     return client.mutate({
       fetchPolicy: 'cache-and-network',
@@ -42,9 +42,10 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  request = (action: Action): Promise.resolve<*> => {
+  request = (action: Action<ActionType>): Promise.resolve<*> => {
     const {client} = this.props;
-    const mutation = actionsToMutation([action]);
+    this.actionsManager.addAction(action);
+    const mutation = actionToMutation([action]);
     const variables = actionsToVariables([action]);
     return client.mutate({
       fetchPolicy: 'cache-only',

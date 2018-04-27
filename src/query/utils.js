@@ -95,7 +95,7 @@ function genArgs(args) {
     let argValue = args[key];
     if (typeof argValue === 'object') {
       argValue = JSON.stringify(argValue).replace(/"([^(")"]+)":/g, "$1:");
-    } else {
+    } else if (typeof argValue !== 'string') {
       argValue = `"${argValue}"`
     }
     return `${key}: ${argValue}`
