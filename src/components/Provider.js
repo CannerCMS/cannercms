@@ -44,7 +44,7 @@ export default class Provider extends React.PureComponent<Props, State> {
 
   request = (action: Action<ActionType>): Promise.resolve<*> => {
     const {client} = this.props;
-    this.actionsManager.addAction(action);
+    this.actionManager.addAction(action);
     const mutation = actionToMutation([action]);
     const variables = actionsToVariables([action]);
     return client.mutate({
