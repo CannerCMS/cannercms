@@ -25,3 +25,19 @@ export interface Pattern<T> {
   addAction(action: T): void;
   mergeAction(): Array<T>;
 }
+
+export type ActionManagerStore = {
+  [key: string]: Pattern<Action<ObjectActionType>> |
+    Array<{
+      id: string,
+      array: Pattern<Action<ArrayActionType>>,
+      connect: Pattern<Action<ConnectActionType>>
+    }>
+}
+
+export interface ActionManagerDef {
+  store: ActionManagerStore;
+
+  addAction(action: Action<ActionType>): void;
+  getActions(key: string, id?: string): Array<Action<ActionType>>
+}

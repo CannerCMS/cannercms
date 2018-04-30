@@ -1,3 +1,3 @@
-export {ArrayPattern} from './arrayPattern';
-export {ObjectPattern} from './objectPattern';
-export {connectPattern} from './connectPattern';
+export {default as ArrayPattern} from './arrayPattern';
+export {default as ObjectPattern} from './objectPattern';
+export {default as ConnectPattern} from './connectPattern';
