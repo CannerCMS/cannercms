@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Enzyme, {shallow} from 'enzyme';
-import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import RefId from 'canner-ref-id';
 import withHOC, {isCompleteContain, genPaths} from '../../src/hocs/route';
