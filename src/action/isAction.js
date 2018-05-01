@@ -74,6 +74,13 @@ export function isUpdateObject({id, updateType, rootValue, relation}) {
     !relation;
 }
 
+export function isUpdateConnect({id, updateType, rootValue, relation}) {
+  return idLength(id) >= 4 &&
+    updateType === 'update' &&
+    isList(rootValue, id) &&
+    relation;
+}
+
 /** swap */
 
 export function isSwapRootArray({id, updateType, rootValue, relation}) {

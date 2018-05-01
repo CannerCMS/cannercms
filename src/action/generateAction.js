@@ -15,6 +15,7 @@ import {
 
   isUpdateArray,
   isUpdateObject,
+  isUpdateConnect,
 
   isSwapRootArray,
   isSwapArrayInArray,
@@ -158,6 +159,22 @@ export function generateAction(arg: {
     };
   }
 
+  if (isUpdateConnect(arg)) {
+    const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
+    return {
+      type: 'UPDATE_CONNECT',
+      payload: {
+        key,
+        id,
+        path: paths[0],
+        value: arg.rootValue
+          .getIn([key, index].concat(paths.slice(0, 2)))
+          .setIn(paths.slice(2), arg.value)
+          .filter((v, k) => k === paths[2])
+      }
+    };
+  }
+
   if (isUpdateObject(arg)) {
     const {key, id, paths} = splitId(arg.id, arg.rootValue);
     return {
@@ -254,6 +271,7 @@ export function generateAction(arg: {
   return {
     type: 'NOOP',
     payload: {
+      key: '',
       value: fromJS({})
     }
   }

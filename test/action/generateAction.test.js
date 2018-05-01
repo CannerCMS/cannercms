@@ -36,7 +36,7 @@ const rootValue = fromJS({
       text: 'yyy',
       author: 'yyy'
     }],
-    users: [{name: 'name1'}, {name: 'name2'}]
+    users: [{id: 'user1', name: 'name1'}, {id: 'user2', name: 'name2'}]
   }],
 });
 
@@ -79,6 +79,31 @@ describe('update action', () => {
           .setIn(['info', 'phone', 0, 'type'], 'C')
           .filter((v, k) => k === 'info')
           .toJS()
+      }
+    });
+  });
+
+  it('update relation', () => {
+    const action = generateAction({
+      id: 'posts/1/users/0/name',
+      updateType: 'update',
+      value: 'NAME1',
+      rootValue,
+      relation: {
+        type: 'toOne',
+        to: 'users'
+      }
+    });
+    action.payload.value = action.payload.value.toJS();
+    expect(action).toEqual({
+      type: 'UPDATE_CONNECT',
+      payload: {
+        key: 'posts',
+        id: 'id2',
+        path: 'users',
+        value: {
+          name: 'NAME1'
+        }
       }
     });
   })
@@ -193,11 +218,13 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'DELETE_ARRAY',
       payload: {
         key: 'posts',
-        id: 'id1'
+        id: 'id1',
+        value: {}
       }
     });
   });
@@ -279,17 +306,21 @@ describe('swap action', () => {
       updateType: 'swap',
       rootValue
     });
+    action.payload.value = action.payload.value.toJS();
     expect(action).toEqual({
       type: 'NOOP',
-      payload: {}
+      payload: {
+        key: '',
+        value: {}
+      }
     });
   });
 
   it('swap array item in array', () => {
     const action = generateAction({
       id: {
-        firstId: 'posts/1/users/0',
-        secondId: 'posts/1/users/1',
+        firstId: 'posts/1/comment/0',
+        secondId: 'posts/1/comment/1',
       },
       updateType: 'swap',
       rootValue
@@ -301,12 +332,14 @@ describe('swap action', () => {
         key: 'posts',
         id: 'id2',
         value: rootValue.getIn(['posts', 1])
-          .set('users', fromJS([{
-            name: 'name2'
+          .set('comment', fromJS([{
+            text: 'yyy',
+            author: 'yyy'
           }, {
-            name: 'name1'
+            text: 'xxx',
+            author: 'xxx'
           }]))
-          .filter((v, k) => k === 'users')
+          .filter((v, k) => k === 'comment')
           .toJS()
       }
     });

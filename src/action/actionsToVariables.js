@@ -3,7 +3,7 @@ import type {Action, ActionType} from './types';
 import merge from 'lodash/merge';
 import update from 'lodash/update';
 
-export default function actionsToMutation(actions: Array<Action<ActionType>>) {
+export default function actionsToVariables(actions: Array<Action<ActionType>>) {
   const variables = {payload: {}};
   actions.forEach(action => {
     const {path = '', value} = action.payload;

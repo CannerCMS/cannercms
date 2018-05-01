@@ -1,12 +1,14 @@
 import ArrayPattern from '../../../src/action/pattern/arrayPattern';
 import {fromJS} from 'immutable';
 
+/*
 const value = [{
   title: 'title',
   info: {
     author: ['author1']
   }
 }];
+*/
 
 const createAction = {
   type: 'CREATE_ARRAY',

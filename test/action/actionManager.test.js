@@ -38,14 +38,6 @@ const createArrayAction = {
   }
 }
 
-const deleteArrayAction = {
-  type: 'DELETE_ARRAY',
-  payload: {
-    key: 'posts',
-    id: 'id1'
-  }
-}
-
 const connectAction = {
   type: 'CONNECT',
   payload: {
