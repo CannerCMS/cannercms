@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`schema to queries object should works 1`] = `
+Object {
+  "posts": Object {
+    "args": Object {
+      "pagination": Object {
+        "first": 10,
+      },
+    },
+    "fields": Object {
+      "bestAuthor": Object {
+        "args": Object {
+          "pagination": Object {
+            "first": 10,
+          },
+        },
+        "fields": Object {
+          "email": null,
+          "id": null,
+          "images": null,
+          "name": null,
+          "posts": null,
+        },
+      },
+      "id": null,
+      "staredPosts": Object {
+        "args": Object {
+          "pagination": Object {
+            "first": 10,
+          },
+        },
+        "fields": Object {
+          "bestAuthor": null,
+          "id": null,
+          "staredPosts": null,
+          "title": null,
+        },
+        "isPlural": true,
+      },
+      "title": null,
+    },
+    "isPlural": true,
+  },
+  "users": Object {
+    "args": Object {
+      "pagination": Object {
+        "first": 10,
+      },
+    },
+    "fields": Object {
+      "email": null,
+      "id": null,
+      "images": null,
+      "name": null,
+      "posts": Object {
+        "args": Object {
+          "pagination": Object {
+            "first": 10,
+          },
+        },
+        "fields": Object {
+          "bestAuthor": null,
+          "id": null,
+          "staredPosts": null,
+          "title": null,
+        },
+        "isPlural": true,
+      },
+    },
+    "isPlural": true,
+  },
+}
+`;

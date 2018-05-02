@@ -1,6 +1,8 @@
 import actionToMutation from '../../src/action/actionToMutation';
+import {objectToQueries} from '../../src/query/utils';
 import {fromJS} from 'immutable';
 import {get} from 'lodash';
+import gql from 'graphql-tag';
 
 describe('actions to variables', () => {
   it('update array', () => {
@@ -80,5 +82,23 @@ describe('actions to variables', () => {
         where: '$where'
       }
     });
+  });
+});
+
+describe('integration', () => {
+  test('should works', () => {
+    const updateAction = {
+      type: 'UPDATE_OBJECT',
+      payload: {
+        key: 'user',
+        value: fromJS({
+          "title": "123"
+        })
+      }
+    };
+    const mutation = objectToQueries(actionToMutation(updateAction), false);
+    expect(() => {
+      gql`${mutation}`;
+    }).not.toThrow();
   });
 });

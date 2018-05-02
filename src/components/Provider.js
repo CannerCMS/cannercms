@@ -7,8 +7,12 @@ import isArray from 'lodash/isArray';
 import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
 import type ApolloClient from 'apollo-boost';
-import {ActionManager, actionToMutation, actionsToVariables} from '../action';
+import {ActionManager, actionToMutation, actionsToVariables, mutate} from '../action';
+import {Query} from '../query';
 import type {Action, ActionType} from '../action/types';
+import gql from 'graphql-tag';
+import {fromJS} from 'immutable';
+import {objectToQueries} from '../query/utils';
 
 type Props = {
   schema: {[key: string]: any},
@@ -24,34 +28,68 @@ type State = {
 
 export default class Provider extends React.PureComponent<Props, State> {
   actionManager: ActionManager;
+  query: Query;
 
   constructor(props: Props) {
     super(props);
     this.actionManager = new ActionManager();
+    this.query = new Query({schema: props.schema});
+  }
+
+  updateQuery = (path: string, args: Object) => {
+    this.query.updateQueries(path.split('/'), 'args', args);
+  }
+
+  // path: posts/name args: {where, pagination, sort}
+  fetch = (key: string): Promise.resolve<*> => {
+    const {client} = this.props;
+    const query = this.query.toGQL(key);
+    return client.query({
+      query: gql`${query}`
+    });
+  }
+
+  subscribe = (key: string, callback: (data: any) => void) => {
+    const {client} = this.props;
+    const query = this.query.toGQL(key);
+    const observableQuery = client.watchQuery({
+      query: gql`${query}`
+    });
+
+    return observableQuery.subscribe({
+      next: () => {
+        const {loading, errors, data} = observableQuery.currentResult();
+        if (!loading && !errors) {
+          callback(data);
+        }
+      } 
+    });
   }
 
   deploy = (key: string, id?: string): Promise.resolve<*> => {
     const {client} = this.props;
     const actions = this.actionManager.getActions(key, id);
-    const mutation = actionToMutation(actions);
+    const mutation = actionToMutation(actions[0]);
     const variables = actionsToVariables(actions);
+
     return client.mutate({
-      fetchPolicy: 'cache-and-network',
-      mutation,
+      mutation: gql`${objectToQueries(mutation, false)}`,
       variables,
-    });
+    }).then(result => result.data);
   }
 
-  request = (action: Action<ActionType>): Promise.resolve<*> => {
+  request = (action: Action<ActionType>, options: {write: Boolean} = {}) => {
     const {client} = this.props;
+    const {write = true} = options;
     this.actionManager.addAction(action);
-    const mutation = actionToMutation([action]);
-    const variables = actionsToVariables([action]);
-    return client.mutate({
-      fetchPolicy: 'cache-only',
-      mutation,
-      variables
-    });
+    const query = gql`${this.query.toGQL(action.payload.key)}`;
+    const data = client.readQuery({query});
+    if (write) {
+      client.writeQuery({
+        query: query,
+        data: mutate(fromJS(data), action).toJS()
+      });
+    }
   }
 
   _splitKey(path: string | [string, string]) {
@@ -67,6 +105,9 @@ export default class Provider extends React.PureComponent<Props, State> {
       <HOCContext.Provider value={{
         request: this.request,
         deploy: this.deploy,
+        fetch: this.fetch,
+        updateQuery: this.updateQuery,
+        subscribe: this.subscribe
       }}>
         {React.Children.only(this.props.children)}
       </HOCContext.Provider>

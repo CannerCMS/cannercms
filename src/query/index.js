@@ -1,7 +1,7 @@
 // @flow
 
 import {schemaToQueriesObject, objectToQueries} from './utils';
-import {get, set} from 'lodash';
+import {pick, get, set} from 'lodash';
 
 export class Query {
   schema: Object
@@ -22,8 +22,8 @@ export class Query {
     return get(this.queries, path);
   }
 
-  toGQL = (pathArr: Array<string>): string => {
-    const obj = this.getQueries(pathArr);
-    return objectToQueries(obj);
+  toGQL = (key: string): string => {
+    const obj = this.getQueries([key]);
+    return objectToQueries({[key]: obj});
   }
 }

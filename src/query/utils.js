@@ -1,36 +1,37 @@
 import pluralize from 'pluralize';
+import lowerFirst from 'lodash/lowerFirst';
 
 const defaultPagination = {
   first: 10
 };
 
-export function schemaToQueriesObject (schema) {
+export function schemaToQueriesObject (schema, rootSchema, inRelation) {
   const queriesObj = {};
-
+  rootSchema = rootSchema || {...schema};
   Object.keys(schema).map(key => {
     let rtn = {};
     const value = schema[key];
     if (isObjectType(value)) {
-      rtn.fields = schemaToQueriesObject(value.items || {});
+      rtn.fields = schemaToQueriesObject(value.items || {}, rootSchema);
     } else if (isObjectOfArray(value)) {
       rtn.fields = {
         id: null,
-        ...schemaToQueriesObject(value.items.items)
+        ...schemaToQueriesObject(value.items.items, rootSchema)
       }
       rtn.isPlural = true;
       rtn.args = {pagination: defaultPagination};
-    } else if (isRelationToOneType(value)) {
+    } else if (isRelationToOneType(value) && !inRelation) {
       const relationTo = value.relation.to;
       rtn.fields = {
         id: null,
-        ...schemaToQueriesObject(schema[relationTo].items.items)
+        ...schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, true)
       }
       rtn.args = {pagination: defaultPagination};
-    } else if (isRelationToManyType(value)) {
+    } else if (isRelationToManyType(value) && !inRelation) {
       const relationTo = value.relation.to;
       rtn.fields = {
         id: null,
-        ...schemaToQueriesObject(schema[relationTo].items.items)
+        ...schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, true)
       }
       rtn.isPlural = true;
       rtn.args = {pagination: defaultPagination};
@@ -65,15 +66,16 @@ function isRelationToManyType(value) {
     value.relation.type === 'toMany';
 }
 
-export function objectToQueries(o) {
+export function objectToQueries(o, close = true) {
   const result = Object.keys(o).map(key => {
     let query = `${key}`;
     const element = o[key];
     if (!element) {
       return `${query}`;
     }
+
     if (element.isPlural) {
-      query = pluralize.plural(query.toLowerCase());
+      query = pluralize.plural(lowerFirst(query));
     }
 
     if (element.args) {
@@ -86,8 +88,8 @@ export function objectToQueries(o) {
       query = `${query}${fields}`;
     }
     return `${query}`;
-  }).join('');
-  return `{${result}}`;
+  }).join(' ');
+  return close ? `{${result}}` : result;
 }
 
 function genArgs(args) {

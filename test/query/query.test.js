@@ -41,5 +41,9 @@ describe('query', () => {
     expect(query.queries.posts.args).toEqual({
       pagination: {first: 2}
     });
-  })
+  });
+
+  it('should get posts gql', () => {
+    expect(query.toGQL('posts')).toEqual(`{posts(pagination: {first:10}){id title}}`);
+  });
 });
