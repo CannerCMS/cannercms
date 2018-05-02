@@ -69,7 +69,6 @@ describe('integration', () => {
       }
     }
     const query = objectToQueries(obj);
-    console.log(query);
     expect(() => {
       gql`${query}`
     }).not.toThrow();

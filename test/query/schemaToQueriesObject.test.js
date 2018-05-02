@@ -1,7 +1,7 @@
 import {schemaToQueriesObject} from '../../src/query/utils';
 
 describe('schema to queries object', () => {
-  let schema, queriesObject;
+  let schema;
   beforeEach(() => {
     schema = {
       posts: {

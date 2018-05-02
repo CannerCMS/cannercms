@@ -78,7 +78,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     }).then(result => result.data);
   }
 
-  request = (action: Action<ActionType>, options: {write: Boolean} = {}) => {
+  request = (action: Action<ActionType>, options: {write: boolean} = {write: true}) => {
     const {client} = this.props;
     const {write = true} = options;
     this.actionManager.addAction(action);

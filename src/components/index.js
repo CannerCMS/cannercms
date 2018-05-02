@@ -16,7 +16,7 @@ import queryString from 'query-string';
 import defaultLayouts from '@canner/react-cms-layouts';
 import LocalStorage from '../app/endpoint/localstorage';
 import {ImgurService} from '@canner/image-service-config';
-
+import type ApolloClient from 'apollo-client';
 const lang = 'zh';
 addLocaleData([...en, ...zh]);
 
@@ -29,7 +29,7 @@ type Props = {
   endpoints: {[key: string]: Endpoint},
   dataDidChange: void => void,
   children: React.ChildrenArray<React.Node>,
-
+  client: ApolloClient,
   imageServiceConfigs: Object,
   componentTree: {[string]: Node},
   hocs: {[string]: React.ComponentType<*>},
@@ -91,7 +91,8 @@ class CannerCMS extends React.Component<Props> {
       hocs,
       layouts,
       baseUrl,
-      history
+      history,
+      client
     } = this.props;
     const {location, push} = history;
     const {pathname} = location;
@@ -108,6 +109,7 @@ class CannerCMS extends React.Component<Props> {
         }}
       >
         <Provider
+          client={client}
           schema={schema.cannerSchema}
           endpoints={this.endpoints}
           dataDidChange={dataDidChange}

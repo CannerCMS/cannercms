@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+// import toJson from 'enzyme-to-json';
 import Adapter from '../react163Adapter';
 import {schema, defaultData} from './data';
 import Provider from '../../src/components/Provider';
-import {HOCContext as Context} from '../../src/hocs/context';
-import {Query} from 'react-apollo';
+// import {HOCContext as Context} from '../../src/hocs/context';
 import {createClient} from '@canner/graphql-resolver';
 import {schemaToQueriesObject, objectToQueries} from '../../src/query/utils';
 import {fromJS} from 'immutable';
@@ -14,10 +13,6 @@ import mapValues from 'lodash/mapValues';
 import pick from 'lodash/pick';
 Enzyme.configure({ adapter: new Adapter() });
 
-
-/**
- * have no idea how to test this component, so skip it first
- */
 
 function toGQL(schema, key) {
   return gql`${objectToQueries(pick(schemaToQueriesObject(schema), key))}`
