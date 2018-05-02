@@ -55,7 +55,7 @@ describe('is routes end at me', () => {
 
 describe('with cache', () => {
   let WrapperComponent, props, MockComponent,
-    mockFetch, mockRequest, mockDeploy, mockReset;
+    mockFetch, mockRequest, mockDeploy, mockReset, mockSubscribe;
 
   beforeEach(() => {
     MockComponent = function MockComponent() {
@@ -69,6 +69,7 @@ describe('with cache', () => {
     mockRequest = jest.fn();
     mockDeploy = jest.fn();
     mockReset = jest.fn();
+    mockSubscribe = jest.fn();
     props = {
       params: {
         op: 'create'
@@ -77,7 +78,8 @@ describe('with cache', () => {
       fetch: mockFetch,
       request: mockRequest,
       deploy: mockDeploy,
-      reset: mockReset
+      reset: mockReset,
+      subscribe: mockSubscribe
     }
     WrapperComponent = withHOC(MockComponent);
   });
@@ -95,6 +97,11 @@ describe('with cache', () => {
     const wrapper = shallow(<WrapperComponent
       {...props}
     />);
+    wrapper.setState({data: fromJS({
+      info: {
+        name: '123'
+      }
+    })});
     wrapper.find(MockComponent).prop('request')({
       type: 'UPDATE_OBJECT',
       payload: {
@@ -114,6 +121,11 @@ describe('with cache', () => {
     const wrapper = shallow(<WrapperComponent
       {...props}
     />);
+    wrapper.setState({data: fromJS({
+      info: {
+        name: '123'
+      }
+    })});
     wrapper.find(MockComponent).prop('request')({
       type: 'UPDATE_OBJECT',
       payload: {
@@ -125,5 +137,34 @@ describe('with cache', () => {
     });
     wrapper.find(MockComponent).prop('deploy')('info');
     expect(mockRequest).toHaveBeenCalledTimes(1);
+  });
+
+  test('request should trigger subscribe', () => {
+    const wrapper = shallow(<WrapperComponent
+      {...props}
+    />);
+    wrapper.setState({data: fromJS({
+      info: {
+        name: '123'
+      }
+    })});
+    const subscription = wrapper.find(MockComponent).prop('subscribe')('info', mockSubscribe);
+    wrapper.find(MockComponent).prop('request')({
+      type: 'UPDATE_OBJECT',
+      payload: {
+        key: 'info',
+        value: fromJS({
+          name: '321'
+        })
+      }
+    });
+    expect(mockSubscribe).toHaveBeenCalledTimes(1);
+    expect(mockSubscribe.mock.calls[0][0].toJS()).toEqual({
+      info: {
+        name: '321'
+      }
+    });
+    subscription.unsubscribe();
+    expect(wrapper.instance().subscribers).toEqual({info: []});
   });
 });

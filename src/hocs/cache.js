@@ -2,13 +2,15 @@
 import * as React from 'react';
 import {mutate as defaultMutate, ActionManager as DefaultAciontManager} from '../action';
 import type {Action, ActionType} from '../action/types';
-import { isCompleteContain, genPaths } from './route';
+import {isCompleteContain, genPaths} from './route';
+import {fromJS} from 'immutable';
 
 type Props = {
   request: Function,
   fetch: Function,
   reset: Function,
   deploy: Function,
+  subscribe: Function,
   routes: Array<string>,
   params: Object,
   cacheActions: boolean,
@@ -17,6 +19,7 @@ type Props = {
 }
 
 type State = {
+  data: *
 }
 
 export default function withCache(Com: React.ComponentType<*>, options: {
@@ -26,7 +29,10 @@ export default function withCache(Com: React.ComponentType<*>, options: {
   const {mutate = defaultMutate, ActionManager = DefaultAciontManager} = options || {};
   return class ComWithCache extends React.Component<Props, State> {
     actionManager: ?ActionManager;
-    
+    subscribers: {
+      [key: string]: Array<{id: string, callback: Function}>
+    }
+    subscribers = {};
     constructor(props: Props) {
       super(props);
       const {routes, params, cacheActions, pattern, path} = this.props;
@@ -36,6 +42,33 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       ) {
         this.actionManager = new ActionManager();
       }
+      this.state = {
+        data: fromJS({})
+      };
+    }
+
+    addSubscriber = (key: string, id: string, callback: Function) => {
+      const subscriber = {
+        id,
+        callback
+      };
+      if (this.subscribers[key]) {
+        this.subscribers[key].push(subscriber);
+      } else {
+        this.subscribers[key] = [subscriber];
+      }
+    }
+
+    unsubscribe = (key: string, subscriberId: string) => {
+      this.subscribers[key] = this.subscribers[key].filter(subscriber => {
+        return subscriber.id !== subscriberId;
+      });
+    }
+
+    publish = (key: string, data: *) => {
+      (this.subscribers[key] || []).forEach(subscribe => {
+        subscribe.callback(data);
+      });
     }
 
     fetch = (key: string) => {
@@ -46,8 +79,9 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       }
       const actions = this.actionManager.getActions(key);
       return fetch(key).then(data => {
+        this.setState({data});
         return actions.reduce((result, action) => {
-          return mutate(data, action);
+          return mutate(result, action);
         }, data);
       });
     }
@@ -56,10 +90,18 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       // use action manager cache the actions
       // update state.actions
       const {request} = this.props;
+      const {data} = this.state;
       if (!this.actionManager) {
         return request(action);
       }
+      const {key} = action.payload;
       this.actionManager.addAction(action);
+      // $FlowFixMe
+      const actions = this.actionManager.getActions(key);
+      const mutatedData = actions.reduce((result, action) => {
+        return mutate(result, action);
+      }, data);
+      this.publish(key, mutatedData);
     }
 
     deploy = (key: string, id?: string) => {
@@ -83,6 +125,20 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       this.actionManager.removeActions(key, id);
     }
 
+    subscribe = (key: string, callback: Function) => {
+      const {subscribe} = this.props;
+      if (!this.actionManager) {
+        return subscribe(key, callback);
+      }
+      const id = genSubscriberId();
+      this.addSubscriber(key, id, callback);
+      return {
+        unsubscribe: () => {
+          this.unsubscribe(key, id);
+        }
+      }
+    }
+    
     render() {
       return (
         <Com
@@ -91,6 +147,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
           request={this.request}
           deploy={this.deploy}
           reset={this.reset}
+          subscribe={this.subscribe}
         />
       );
     }
@@ -108,4 +165,8 @@ export function isRoutesEndAtMe({
 }): boolean {
   const paths = genPaths(path, pattern);
   return (paths.length === routes.length && isCompleteContain(paths, routes));
+}
+
+export function genSubscriberId() {
+  return Math.random().toString(36).substr(2, 7);
 }
