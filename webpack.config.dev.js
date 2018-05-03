@@ -45,7 +45,7 @@ module.exports = {
         },
       },
       {
-        test: /canner\.schema\.js$/,
+        test: /\.schema\.js$/,
         use: [{
           loader: '@canner/canner-schema-loader',
           options: {

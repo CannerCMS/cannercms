@@ -67,24 +67,35 @@ class CannerCMS extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-      const {cannerSchema} = props.schema;
-      const endpoint = new LocalStorage({
-        schema: cannerSchema
-      });
-      this.endpoints = {...Object.keys(cannerSchema).reduce((result, key) => {
-        result[key] = endpoint;
-        return result;
-      }, {}), ...(props.endpoints || {})};
+    this.init(props);
+  }
 
-      const serviceConfig = new ImgurService({
-        // $FlowFixMe: global
-        clientId: IMGUR_CLIENT_ID
-      });
+  componentWillReceiveProps(nextProps: Props) {
+    if (!nextProps.cache && nextProps.schema.cannerSchema !== this.props.schema.cannerSchema) {
+      this.init(nextProps);
+      this.forceUpdate();
+    }
+  }
 
-      this.imageServiceConfigs = {...Object.keys(cannerSchema).reduce((result, key) => {
-        result[key] = serviceConfig;
-        return result;
-      }, {}), ...(props.imageServiceConfigs || {})};
+  init = (props: Props) => {
+    const {cannerSchema} = props.schema;
+    const endpoint = new LocalStorage({
+      schema: cannerSchema
+    });
+    this.endpoints = {...Object.keys(cannerSchema).reduce((result, key) => {
+      result[key] = endpoint;
+      return result;
+    }, {}), ...(props.endpoints || {})};
+
+    const serviceConfig = new ImgurService({
+      // $FlowFixMe: global
+      clientId: IMGUR_CLIENT_ID
+    });
+
+    this.imageServiceConfigs = {...Object.keys(cannerSchema).reduce((result, key) => {
+      result[key] = serviceConfig;
+      return result;
+    }, {}), ...(props.imageServiceConfigs || {})};
   }
 
   render() {
