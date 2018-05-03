@@ -22,6 +22,7 @@ describe('query', () => {
       schema
     });
   });
+
   it('should have queries', () => {
     expect(query.queries).toEqual(queries);
   });

@@ -9,7 +9,7 @@ import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
-import withQuery from '../../src/hocs/withQuery';
+import withQuery from '../../src/hocs/query';
 import {fromJS} from 'immutable';
 import RefId from 'canner-ref-id';
 
@@ -23,11 +23,11 @@ describe('with Query', () => {
     MockComponent = function MockComponent() {
       return (<div>Component</div>);
     }
-    mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
-      response: {
-        body: fromJS([])
+    mockFetch = jest.fn().mockImplementation(() => Promise.resolve(fromJS({
+      info: {
+        name: 12
       }
-    }));
+    })));
     mockSubscribe = jest.fn().mockImplementation(() => Promise.resolve());
     props = {
       refId: new RefId('info'),
