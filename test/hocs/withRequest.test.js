@@ -1,10 +1,3 @@
-/**
-|--------------------------------------------------
-| this test is just for copy and past
-|--------------------------------------------------
-*/
-
-
 import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
