@@ -1,7 +1,7 @@
 // @flow
 
 import {schemaToQueriesObject, objectToQueries} from './utils';
-import {pick, get, set} from 'lodash';
+import {get, set} from 'lodash';
 
 export class Query {
   schema: Object

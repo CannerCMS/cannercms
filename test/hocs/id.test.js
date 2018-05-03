@@ -9,9 +9,8 @@ import * as React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from '../react163Adapter';
-import withConnectId from '../../src/hocs/connectId';
+import withConnectId from '../../src/hocs/id';
 import {HOCContext as Context} from '../../src/hocs/context';
-import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -66,12 +65,13 @@ describe('withConnectIdAndContext', () => {
         />
       </Context.Provider>
     );
-    expect(wrapper.find(MockComponent).props()).toMatchObject({
-      ...props,
-      ...context,
-      refId: expect.any(RefId),
-      componentId: props.keyName,
-      query: {}
-    });
+    expect(wrapper.find(MockComponent).props()).toHaveProperty('deploy');
+    expect(wrapper.find(MockComponent).props()).toHaveProperty('fetch');
+    expect(wrapper.find(MockComponent).props()).toHaveProperty('keyName');
+    expect(wrapper.find(MockComponent).props()).toHaveProperty('query');
+    expect(wrapper.find(MockComponent).props()).toHaveProperty('refId');
+    expect(wrapper.find(MockComponent).props()).toHaveProperty('request');
+    expect(wrapper.find(MockComponent).props()).toHaveProperty('reset');
+    expect(wrapper.find(MockComponent).props()).toHaveProperty('subscribe');
   });
 });

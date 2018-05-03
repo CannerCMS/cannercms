@@ -14,7 +14,7 @@ import hocsLocales from '../hocs/query/locale';
 import pluginsLocales from '@canner/cms-locales';
 import queryString from 'query-string';
 import defaultLayouts from '@canner/react-cms-layouts';
-import LocalStorage from '../app/endpoint/localstorage';
+import LocalStorage from '../endpoints/localstorage';
 import {ImgurService} from '@canner/image-service-config';
 import type ApolloClient from 'apollo-client';
 const lang = 'zh';

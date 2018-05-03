@@ -5,6 +5,7 @@ import type Rx from 'rxjs/Rx';
 import type RefId from 'canner-ref-id';
 
 declare type BucketType = {
+   // $FlowFixMe
   [namespace: string]: Pattern
 }
 
@@ -43,8 +44,8 @@ declare type paginationType = {
 
 declare type queryType = filterType | sortType | paginationType;
 
-declare type FetchDef = (key: string, componentId: string, query: any) => Promise<any>;
-declare type SubscribeDef = (key: string, componentId: string, type: string, callback: Function) => Promise<*>;
+declare type FetchDef = (key: string) => Promise<any>;
+declare type SubscribeDef = (key: string, callback: Function) => Promise<*>;
 declare type QueryDef = queryType;
 declare type RequestDef = (MutateAction) => Promise<*>;
 declare type DeployDef = (refId?: RefId, callback?: Function) => Promise<*>;

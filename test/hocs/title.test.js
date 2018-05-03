@@ -2,7 +2,7 @@ import * as React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from '../react163Adapter';
-import withTitleAndDescription from '../../src/hocs/withTitleAndDescription';
+import withTitleAndDescription from '../../src/hocs/title';
 import RefId from 'canner-ref-id';
 import {Item} from '@canner/react-cms-helpers';
 

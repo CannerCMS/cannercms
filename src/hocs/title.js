@@ -9,8 +9,7 @@ type Props = {
   layout?: 'horizontal' | 'vertical', // only used in withTitleAndDesription hoc
   hideTitle?: boolean,
 
-  componentId: string,
-  query: QueryDef,
+  updateQuery: Function,
   fetch: FetchDef,
   subscribe: SubscribeDef,
   request: RequestDef,
@@ -34,15 +33,13 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
   return class ComponentWithTitleAndDescription extends React.Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
     render() {
       const {title, layout, description, hideTitle,
-        componentId, query, fetch, subscribe, request, deploy, reset,
+        fetch, subscribe, request, deploy, reset,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
         refId, routes
       } = this.props;
       if (hideTitle) {
         return  <HOCContext.Provider
           value={{
-            componentId,
-            query,
             fetch,
             subscribe,
             request,
@@ -94,8 +91,6 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
             }}>
             <HOCContext.Provider
               value={{
-                componentId,
-                query,
                 fetch,
                 subscribe,
                 request,
@@ -144,8 +139,6 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
             }}>
               <HOCContext.Provider
                 value={{
-                  componentId,
-                  query,
                   fetch,
                   subscribe,
                   request,

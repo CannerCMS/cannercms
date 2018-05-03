@@ -2,9 +2,8 @@ import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
-import withRequest, {createAction} from '../../src/hocs/withRequest';
+import withRequest, {createAction} from '../../src/hocs/request';
 import {fromJS} from 'immutable';
-import {UNIQUE_ID} from '../../src/app/config';
 import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -17,10 +16,12 @@ describe('with request', () => {
       return (<div>Component</div>);
     }
     mockRequest = jest.fn().mockImplementation(() => Promise.resolve());
-    const rootValue = fromJS([{
-      [UNIQUE_ID]: 'id1',
-      title: 'post1'
-    }]);
+    const rootValue = fromJS({
+      posts: [{
+        id: 'id1',
+        title: 'post1'
+      }]
+    });
     props = {
       refId: new RefId('POSTS'),
       value: rootValue,
@@ -48,7 +49,7 @@ describe('with request', () => {
       const wrapper = shallow(<WrapperComponent {...props} />);
       const type = 'create';
       const delta = fromJS({
-        [UNIQUE_ID]: 'id2',
+        id: 'id2',
         title: 'post2'
       });
       wrapper.instance().onChange(props.refId, type, delta).then(() => {
@@ -69,25 +70,6 @@ describe('with request', () => {
           expect(mockRequest.mock.calls.length).toBe(4);
         });
     });
-
-    it('should fetch relation if relationship is foreignKey', () => {
-      const fetchRelation = jest.fn();
-      const wrapper = shallow(<WrapperComponent {...props}
-          fetchRelation={fetchRelation}
-          relation={{
-            relationship: 'oneToMany.foreignKey'
-          }}
-        />);
-      const type = 'create';
-      const delta = fromJS({
-        title: `post2`
-      });
-      return wrapper.instance().onChange(props.refId, type, delta)
-        .then(() => {
-          expect(mockRequest.mock.calls.length).toBe(1);
-          expect(fetchRelation.mock.calls.length).toBe(1);
-        });
-    });
   });
 });
 
@@ -98,12 +80,11 @@ describe('createAction', () => {
       const action = createAction({
         id: 'posts',
         type: 'create',
-        delta: fromJS({
-          [UNIQUE_ID]: 'id2',
+        value: fromJS({
+          id: 'id2',
           title: 'post2'
         }),
-        value: fromJS([]),
-        rootValue: fromJS([]),
+        rootValue: fromJS({posts: []}),
         items: {
           title: {
             type: 'string'
@@ -113,7 +94,7 @@ describe('createAction', () => {
           }
         }
       })
-      expect(action.type).toBe('CREATE_ARRAY_ITEM');
+      expect(action.type).toBe('CREATE_ARRAY');
       expect(action.payload.value.toJS()).toMatchObject({
         title: 'post2',
         field: 0
@@ -124,13 +105,12 @@ describe('createAction', () => {
       const action = createAction({
         id: 'posts',
         type: 'create',
-        delta: fromJS({
-          [UNIQUE_ID]: 'id2',
+        value: fromJS({
+          id: 'id2',
           title: 'post2'
         }),
         config: true, // this will cause unmerged
-        value: fromJS([]),
-        rootValue: fromJS([]),
+        rootValue: fromJS({posts: []}),
         items: {
           title: {
             type: 'string'
@@ -140,7 +120,7 @@ describe('createAction', () => {
           }
         }
       })
-      expect(action.type).toBe('CREATE_ARRAY_ITEM');
+      expect(action.type).toBe('CREATE_ARRAY');
       expect(action.payload.value.toJS()).toMatchObject({
         title: 'post2'
       });
@@ -151,8 +131,7 @@ describe('createAction', () => {
         id: 'posts',
         type: 'create',
         config: false, // this will cause unmerged
-        value: fromJS([]),
-        rootValue: fromJS([]),
+        rootValue: fromJS({posts: []}),
         items: {
           title: {
             type: 'string'
@@ -162,7 +141,7 @@ describe('createAction', () => {
           }
         }
       })
-      expect(action.type).toBe('CREATE_ARRAY_ITEM');
+      expect(action.type).toBe('CREATE_ARRAY');
       expect(action.payload.value.toJS()).toMatchObject({
         title: '',
         field: 0

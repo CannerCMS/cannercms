@@ -10,7 +10,6 @@ import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import withHOC, {genDeployButton} from '../../src/hocs/deploy';
-import {fromJS} from 'immutable';
 import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });

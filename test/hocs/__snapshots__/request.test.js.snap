@@ -24,20 +24,24 @@ exports[`with request should render 1`] = `
   }
   request={[MockFunction]}
   rootValue={
-    Immutable.List [
-      Immutable.Map {
-        "_id": "id1",
-        "title": "post1",
-      },
-    ]
+    Immutable.Map {
+      "posts": Immutable.List [
+        Immutable.Map {
+          "id": "id1",
+          "title": "post1",
+        },
+      ],
+    }
   }
   value={
-    Immutable.List [
-      Immutable.Map {
-        "_id": "id1",
-        "title": "post1",
-      },
-    ]
+    Immutable.Map {
+      "posts": Immutable.List [
+        Immutable.Map {
+          "id": "id1",
+          "title": "post1",
+        },
+      ],
+    }
   }
 />
 `;

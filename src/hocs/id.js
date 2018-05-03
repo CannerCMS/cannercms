@@ -12,7 +12,6 @@ type Props = {
 export default function connectIdAndContext(Com: React.ComponentType<*>) {
   return class ComponentConnectIdAndContext extends React.Component<Props> {
     refId: RefId;
-    componentId: string;
     query: QueryDef;
     reset: ResetDef;
 
@@ -23,7 +22,6 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
         {context => (
           <Com {...this.props}
             refId={myRefId}
-            componentId={context.componentId || myRefId.toString()}
             query={context.query}
             reset={context.reset}
             fetch={context.fetch}
