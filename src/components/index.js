@@ -10,7 +10,7 @@ import { IntlProvider, addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 import hocsLocales from '../hocs/query/locale';
-import pluginsLocales from '@canner/cms-locales';
+import pluginsLocales from '@canner/antd-locales';
 import queryString from 'query-string';
 import defaultLayouts from '@canner/react-cms-layouts';
 import {ImgurService} from '@canner/image-service-config';
