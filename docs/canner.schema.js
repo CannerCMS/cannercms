@@ -3,8 +3,11 @@
 import c from '@canner/canner-script';
 
 export default <root>
-  <object keyName="info" title="All Components">
-    <string keyName="input" title="Input" />
+  <object keyName="home" title="All Components">
+    <object keyName="header" >
+      <string keyName="title" title="title"/>
+      <string keyName="subTitle" title="subtitle"/>
+    </object>
   </object>
 </root>
 

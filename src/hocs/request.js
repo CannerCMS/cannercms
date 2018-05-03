@@ -42,7 +42,6 @@ export default function withRequest(Com: React.ComponentType<*>) {
         };
       } 
       const {rootValue, relation, request, items} = this.props;
-      // generate action
       const action = createAction({
         relation,
         id,

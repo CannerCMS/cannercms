@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import type RefId from 'canner-ref-id';
-import {is} from 'immutable';
+import {is, List} from 'immutable';
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type Props = {
@@ -12,6 +12,7 @@ type Props = {
   query?: QueryDef,
   fetch: FetchDef,
   subscribe: SubscribeDef,
+  ui: string
 };
 
 type State = {
@@ -57,7 +58,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     queryData = () => {
       const {refId, fetch} = this.props;
-      // second key: use key as a subjectID
       return fetch(this.key).then(data => {
         this.setState({
           rootValue: data,
@@ -75,11 +75,11 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     subscribe = () => {
-      const {subscribe, refId} = this.props;
-      const {value} = this.state
-      const subscription = subscribe(this.key, newRootValue => {
+      const {subscribe, refId, ui} = this.props;
+      const subscription = subscribe(this.key, (newRootValue) => {
         const newValue = getValue(newRootValue, refId.getPathArr());
-        if (!is(value, newValue)) {
+        const {value} = this.state
+        if (shouldUpdate(value, newValue, ui)) {
           this.setState({
             rootValue: newRootValue,
             value: newValue
@@ -104,4 +104,14 @@ function getValue(value, idPathArr) {
     return value.getIn(idPathArr);
   }
   return null;
+}
+
+function shouldUpdate(value: any, newValue: any, ui: string) {
+  if (List.isList(value)) {
+    return value.size !== newValue.size;
+  } else if (ui === 'fieldset') {
+    return false;
+  } else {
+    return !is(value, newValue);
+  }
 }

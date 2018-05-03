@@ -47,7 +47,6 @@ Object {
             "title": "123",
           },
         ],
-        Symbol(id): "User:1",
       },
       "id": "1",
       "notes": Array [
@@ -55,17 +54,14 @@ Object {
           "__typename": null,
           "id": "0",
           "text": "note1",
-          Symbol(id): "Post:1.notes({\\"pagination\\":{\\"first\\":10}}).0",
         },
         Object {
           "__typename": null,
           "id": "1",
           "text": "note2",
-          Symbol(id): "Post:1.notes({\\"pagination\\":{\\"first\\":10}}).1",
         },
       ],
       "title": "123",
-      Symbol(id): "Post:1",
     },
     Object {
       "__typename": "Post",
@@ -111,7 +107,6 @@ Object {
             "title": "123",
           },
         ],
-        Symbol(id): "User:2",
       },
       "id": "2",
       "notes": Array [
@@ -119,20 +114,16 @@ Object {
           "__typename": null,
           "id": "0",
           "text": "note3",
-          Symbol(id): "Post:2.notes({\\"pagination\\":{\\"first\\":10}}).0",
         },
         Object {
           "__typename": null,
           "id": "1",
           "text": "note4",
-          Symbol(id): "Post:2.notes({\\"pagination\\":{\\"first\\":10}}).1",
         },
       ],
       "title": "123",
-      Symbol(id): "Post:2",
     },
   ],
-  Symbol(id): "ROOT_QUERY",
 }
 `;
 
@@ -182,27 +173,23 @@ Object {
           "title": "123",
         },
       ],
-      Symbol(id): "User:1",
     },
     "count": 10,
     "header": Object {
       "__typename": null,
       "subTitle": "subTitle",
       "title": "largeTitle",
-      Symbol(id): "$ROOT_QUERY.home.header",
     },
     "navs": Array [
       Object {
         "__typename": null,
         "id": "0",
         "text": "nav1",
-        Symbol(id): "$ROOT_QUERY.home.navs({\\"pagination\\":{\\"first\\":10}}).0",
       },
       Object {
         "__typename": null,
         "id": "1",
         "text": "nav2",
-        Symbol(id): "$ROOT_QUERY.home.navs({\\"pagination\\":{\\"first\\":10}}).1",
       },
     ],
     "staredPosts": Array [
@@ -230,17 +217,14 @@ Object {
             "__typename": null,
             "id": "0",
             "text": "note1",
-            Symbol(id): "Post:1.notes({\\"pagination\\":{\\"first\\":10}}).0",
           },
           Object {
             "__typename": null,
             "id": "1",
             "text": "note2",
-            Symbol(id): "Post:1.notes({\\"pagination\\":{\\"first\\":10}}).1",
           },
         ],
         "title": "123",
-        Symbol(id): "Post:1",
       },
       Object {
         "__typename": "Post",
@@ -266,21 +250,16 @@ Object {
             "__typename": null,
             "id": "0",
             "text": "note3",
-            Symbol(id): "Post:2.notes({\\"pagination\\":{\\"first\\":10}}).0",
           },
           Object {
             "__typename": null,
             "id": "1",
             "text": "note4",
-            Symbol(id): "Post:2.notes({\\"pagination\\":{\\"first\\":10}}).1",
           },
         ],
         "title": "123",
-        Symbol(id): "Post:2",
       },
     ],
-    Symbol(id): "$ROOT_QUERY.home",
   },
-  Symbol(id): "ROOT_QUERY",
 }
 `;

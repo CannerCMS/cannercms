@@ -73,7 +73,8 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
       const {reset, rootValue} = this.props;
       const key = refId.getPathArr()[0];
       const recordId = getRecordId(rootValue, refId);
-      return reset(key, recordId).then(callback);
+      reset(key, recordId);
+      callback();
     }
 
     render() {

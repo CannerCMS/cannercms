@@ -3,7 +3,6 @@
  */
 
 import * as React from 'react';
-import isArray from 'lodash/isArray';
 import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
 import type ApolloClient from 'apollo-boost';
@@ -63,7 +62,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       next: () => {
         const {loading, errors, data} = observableQuery.currentResult();
         if (!loading && !errors) {
-          this.log('subscribe', key, data);
+          // this.log('subscribe', key, data);
           callback(fromJS(data));
         }
       } 
@@ -89,6 +88,12 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
+  reset = (key: string, id?: string) => {
+    const {client} = this.props;
+    this.actionManager.removeActions(key, id);
+    return client.resetStore();
+  }
+
   request = (action: Action<ActionType>, options: {write: boolean} = {write: true}) => {
     const {client} = this.props;
     const {write = true} = options;
@@ -104,12 +109,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.log('request', action);
   }
 
-  _splitKey(path: string | [string, string]) {
-    return isArray(path) ?
-      path[0].split('/')[0] :
-      // $FlowFixMe
-      path.split('/')[0];
-  }
+
 
   log(type: string, ...payload: any) {
     if (process.env.NODE_ENV !== 'development') {
@@ -144,6 +144,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         request: this.request,
         deploy: this.deploy,
         fetch: this.fetch,
+        reset: this.reset,
         updateQuery: this.updateQuery,
         subscribe: this.subscribe
       }}>

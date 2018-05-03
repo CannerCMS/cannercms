@@ -43,7 +43,7 @@ describe('provider methods', () => {
       <div>children</div>
     </Provider>);
     return wrapper.instance().fetch('home').then(d => {
-      expect(d.data).toMatchSnapshot();
+      expect(d.toJS()).toMatchSnapshot();
     })
   });
 
@@ -55,7 +55,7 @@ describe('provider methods', () => {
       <div>children</div>
     </Provider>)
     return wrapper.instance().fetch('posts').then(d => {
-      expect(d.data).toMatchSnapshot();
+      expect(d.toJS()).toMatchSnapshot();
     })
   });
 
@@ -69,7 +69,7 @@ describe('provider methods', () => {
     const originData = await wrapper.instance().fetch('posts');
     wrapper.instance().updateQuery('posts', {where: {author: {name: "user2"}}});
     const newData = await wrapper.instance().fetch('posts');
-    expect(originData).not.toEqual(newData);
+    expect(originData.toJS()).not.toEqual(newData.toJS());
   });
 
   test('request', async () => {
@@ -147,7 +147,7 @@ describe('provider methods', () => {
     return new Promise((resolver) => {
       setTimeout(resolver, 100);
     }).then(() => {
-      expect(mockCallback.mock.calls[0][0]).toHaveProperty('home', expect.anything(Object));
+      expect(mockCallback.mock.calls[0][0].toJS()).toHaveProperty('home', expect.anything(Object));
     });
   });
 
@@ -170,7 +170,9 @@ describe('provider methods', () => {
     };
     await instance.fetch('home');
     instance.request(action, {write: false});
-    await expect(instance.deploy('home')).resolves.toMatchObject({updateHome: {count: 11}});
+    return instance.deploy('home').then(data => {
+      expect(data.toJS()).toMatchObject({updateHome: {count: 11}});
+    });
     // const newData = client.readQuery({
     //   query: toGQL(schema, 'home')
     // });

@@ -99,4 +99,29 @@ describe('add action', () => {
     expect(actionManager.getActions(key).length).toBe(1);
   });
 
+  it('remove object actions', () => {
+    expect(actionManager.getActions('haha')).toEqual([]);
+    actionManager.addAction(objectAction);
+    actionManager.addAction(createArrayAction);
+    actionManager.removeActions(objectAction.payload.key);
+    expect(actionManager.store.user).toBeUndefined();
+  });
+
+  it('remove array actions', () => {
+    expect(actionManager.getActions('haha')).toEqual([]);
+    actionManager.addAction(objectAction);
+    actionManager.addAction(createArrayAction);
+    actionManager.removeActions(createArrayAction.payload.key);
+    expect(actionManager.store.posts).toBeUndefined();
+  });
+
+  it('remove array actions with id', () => {
+    expect(actionManager.getActions('haha')).toEqual([]);
+    actionManager.addAction(objectAction);
+    actionManager.addAction(createArrayAction);
+    const {key, id} = createArrayAction.payload;
+    actionManager.removeActions(key, id);
+    expect(actionManager.store.posts.length).toBe(0);
+  });
+
 })
