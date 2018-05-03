@@ -5,7 +5,6 @@ import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
 import type {Node} from './Generator';
-import type Endpoint from '../app/endpoint';
 import hocs from '../hocs';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
@@ -14,19 +13,18 @@ import hocsLocales from '../hocs/query/locale';
 import pluginsLocales from '@canner/cms-locales';
 import queryString from 'query-string';
 import defaultLayouts from '@canner/react-cms-layouts';
-import LocalStorage from '../endpoints/localstorage';
 import {ImgurService} from '@canner/image-service-config';
 import type ApolloClient from 'apollo-client';
+import {createClient} from '@canner/graphql-resolver';
+import {createEmptyData} from '@canner/react-cms-helpers';
 const lang = 'zh';
 addLocaleData([...en, ...zh]);
-
 
 type Props = {
   schema: {
     cannerSchema: {[key: string]: any},
     componentTree: {[key: string]: Node}
   },
-  endpoints: {[key: string]: Endpoint},
   dataDidChange: void => void,
   children: React.ChildrenArray<React.Node>,
   client: ApolloClient,
@@ -44,11 +42,8 @@ type Props = {
 }
 
 class CannerCMS extends React.Component<Props> {
-  endpoints: {
-    [string]: Endpoint
-  };
-
   imageServiceConfigs: Object
+  client: Client;
 
   static defaultProps = {
     schema: {
@@ -59,20 +54,16 @@ class CannerCMS extends React.Component<Props> {
     componentTree: {},
     hocs,
     layouts: {},
-    baseUrl: '/'
+    baseUrl: '/',
   }
 
   constructor(props: Props) {
     super(props);
       const {cannerSchema} = props.schema;
-      const endpoint = new LocalStorage({
-        schema: cannerSchema
-      });
-      this.endpoints = {...Object.keys(cannerSchema).reduce((result, key) => {
-        result[key] = endpoint;
-        return result;
-      }, {}), ...(props.endpoints || {})};
-
+      this.client = props.client || createClient({
+        schema: cannerSchema,
+        defaultData: createEmptyData(cannerSchema).toJS()
+      })
       const serviceConfig = new ImgurService({
         // $FlowFixMe: global
         clientId: IMGUR_CLIENT_ID
@@ -92,7 +83,6 @@ class CannerCMS extends React.Component<Props> {
       layouts,
       baseUrl,
       history,
-      client
     } = this.props;
     const {location, push} = history;
     const {pathname} = location;
@@ -109,13 +99,11 @@ class CannerCMS extends React.Component<Props> {
         }}
       >
         <Provider
-          client={client}
+          client={this.client}
           schema={schema.cannerSchema}
-          endpoints={this.endpoints}
           dataDidChange={dataDidChange}
           rootKey={routes[0]}
         >
-        
           <Generator
             imageServiceConfigs={this.imageServiceConfigs}
             componentTree={schema.componentTree}

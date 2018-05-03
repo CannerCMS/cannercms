@@ -136,7 +136,7 @@ export default class Generator extends React.PureComponent<Props, State> {
           loading: () => <div>loading</div>,
         });
       }
-      component = this.wrapByHOC(component, node.hocs.slice() || []);
+      component = this.wrapByHOC(component, ['title', 'deploy', 'request', 'query', 'cache', 'route', 'id'] || []);
     }
 
     if (!component) {
@@ -176,6 +176,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     if (component) {
       return <node.component
         {...restNodeData}
+        routes={routes}
         key={index}
         imageServiceConfig={(imageServiceConfigs || {})[routes[0]]}
         renderChildren={(props) => this.renderChildren(node, props)}

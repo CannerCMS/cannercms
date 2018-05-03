@@ -3,9 +3,10 @@
 import * as React from 'react';
 import {generateAction} from '../action';
 import isArray from 'lodash/isArray';
-import type {RelationDef} from "./relationFactory";
 import {createEmptyData} from '@canner/react-cms-helpers';
 import RefId from 'canner-ref-id';
+
+type RelationDef = any;
 
 type Props = {
   value: any,
@@ -40,14 +41,13 @@ export default function withRequest(Com: React.ComponentType<*>) {
           secondId: refId.secondRefId.toString()
         };
       } 
-      const {rootValue, relation, value, request, items} = this.props;
+      const {rootValue, relation, request, items} = this.props;
       // generate action
-
       const action = createAction({
         relation,
         id,
         type,
-        value,
+        value: delta,
         config,
         rootValue,
         items

@@ -3,8 +3,8 @@ import route from './route';
 import cache from './cache';
 import request from './request';
 import deploy from './deploy';
-import connectId from './connectId';
-import withTitleAndDescription from './withTitleAndDescription';
+import id from './id';
+import title from './title';
 import containerRouter from './containerRouter';
 
 export default {
@@ -14,7 +14,7 @@ export default {
   request,
   deploy,
   // validator,
-  connectId,
-  withTitleAndDescription,
+  id,
+  title,
   containerRouter
 };

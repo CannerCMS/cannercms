@@ -46,6 +46,9 @@ export default class Provider extends React.PureComponent<Props, State> {
     const query = this.query.toGQL(key);
     return client.query({
       query: gql`${query}`
+    }).then(result => {
+      this.log('fetch', key, result);
+      return fromJS(result.data);
     });
   }
 
@@ -60,7 +63,8 @@ export default class Provider extends React.PureComponent<Props, State> {
       next: () => {
         const {loading, errors, data} = observableQuery.currentResult();
         if (!loading && !errors) {
-          callback(data);
+          this.log('subscribe', key, data);
+          callback(fromJS(data));
         }
       } 
     });
@@ -71,11 +75,18 @@ export default class Provider extends React.PureComponent<Props, State> {
     const actions = this.actionManager.getActions(key, id);
     const mutation = actionToMutation(actions[0]);
     const variables = actionsToVariables(actions);
-
+    
     return client.mutate({
       mutation: gql`${objectToQueries(mutation, false)}`,
       variables,
-    }).then(result => result.data);
+    }).then(result => {
+      this.log('deploy', key, {
+        id,
+        variables,
+        result
+      });
+      return fromJS(result.data)
+    });
   }
 
   request = (action: Action<ActionType>, options: {write: boolean} = {write: true}) => {
@@ -90,6 +101,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         data: mutate(fromJS(data), action).toJS()
       });
     }
+    this.log('request', action);
   }
 
   _splitKey(path: string | [string, string]) {
@@ -98,6 +110,32 @@ export default class Provider extends React.PureComponent<Props, State> {
       // $FlowFixMe
       path.split('/')[0];
   }
+
+  log(type: string, ...payload: any) {
+    if (process.env.NODE_ENV !== 'development') {
+      return;
+    }
+    let color = "black";
+
+    switch (type) {
+      case "request":  
+        color = "Green"; 
+        break;
+      case "fetch":     
+        color = "DodgerBlue";  
+        break;
+      case "deploy":   
+        color = "Red";
+        break;
+      case "subscribe":
+        color = "Orange";
+        break;
+      default: 
+        break;
+    }
+    // eslint-disable-next-line
+    console.log("%c" + type, "color:" + color, ...payload);
+}
 
   render() {
     const {client} = this.props;

@@ -5,7 +5,6 @@ import CMS from '../src/components';
 import schema from './canner.schema';
 import {Layout, Menu} from 'antd';
 const {cannerSchema} = schema;
-
 class CMSExample extends React.Component {
   render() {
     const baseUrl = "/docs";

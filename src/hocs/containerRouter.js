@@ -24,6 +24,7 @@ export default function withContainerRouter(Com: React.ComponentType<*>) {
           refId
         }}
       >
+        <Com {...this.props}/>
         {
           // no need to filter any container so just render
           (routes.length === 0) && <Com {...this.props}/>
