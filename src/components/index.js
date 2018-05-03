@@ -40,7 +40,7 @@ type Props = {
   history: {
     push: (path: string) => void,
     location: Object
-  }
+  },
 
   cache: boolean
 }
