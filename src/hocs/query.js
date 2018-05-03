@@ -78,8 +78,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const {subscribe, refId, ui} = this.props;
       const subscription = subscribe(this.key, (newRootValue) => {
         const newValue = getValue(newRootValue, refId.getPathArr());
-        const {value} = this.state
-        if (shouldUpdate(value, newValue, ui)) {
+        const {rootValue} = this.state
+        if (shouldUpdate(rootValue, newRootValue)) {
           this.setState({
             rootValue: newRootValue,
             value: newValue
@@ -106,12 +106,6 @@ function getValue(value, idPathArr) {
   return null;
 }
 
-function shouldUpdate(value: any, newValue: any, ui: string) {
-  if (List.isList(value)) {
-    return value.size !== newValue.size;
-  } else if (ui === 'fieldset') {
-    return false;
-  } else {
-    return !is(value, newValue);
-  }
+function shouldUpdate(value: any, newValue: any) {
+  return !is(value, newValue);
 }
