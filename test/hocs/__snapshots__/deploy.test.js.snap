@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`with route mini app should render 1`] = `
+<div>
+  <MockComponent
+    deploy={[MockFunction]}
+    params={Object {}}
+    path="posts"
+    pattern="array"
+    refId={
+      CannerRefId {
+        "_internalArr": Array [
+          "posts",
+        ],
+        "child": [Function],
+        "getPathArr": [Function],
+        "remove": [Function],
+        "toString": [Function],
+      }
+    }
+    renderCancelButton={[Function]}
+    renderChildren={[Function]}
+    renderConfirmButton={[Function]}
+    reset={[MockFunction]}
+    routes={
+      Array [
+        "posts",
+      ]
+    }
+  />
+  <div
+    style={
+      Object {
+        "marginTop": 60,
+        "textAlign": "right",
+      }
+    }
+  >
+    <Button
+      disabled={false}
+      ghost={false}
+      loading={false}
+      onClick={[Function]}
+      prefixCls="ant-btn"
+      style={
+        Object {
+          "marginRight": 16,
+        }
+      }
+      type="primary"
+    >
+      Confirm
+    </Button>
+    <Button
+      disabled={false}
+      ghost={false}
+      loading={false}
+      onClick={[Function]}
+      prefixCls="ant-btn"
+      style={Object {}}
+    >
+      Cancel
+    </Button>
+  </div>
+</div>
+`;
