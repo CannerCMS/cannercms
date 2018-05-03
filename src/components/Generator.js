@@ -54,7 +54,7 @@ type Props = {
   baseUrl: string,
   routes: Array<string>,
   params: {[string]: string},
-  refresh?: boolean
+  cache: boolean
 }
 
 type childrenProps = {
@@ -88,7 +88,7 @@ export default class Generator extends React.PureComponent<Props, State> {
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    if (nextProps.refresh) {
+    if (!nextProps.cache) {
       this.cacheTree = this.genCacheTree(nextProps.componentTree);
     }
     this.setState({

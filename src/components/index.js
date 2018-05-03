@@ -41,6 +41,8 @@ type Props = {
     push: (path: string) => void,
     location: Object
   }
+
+  cache: boolean
 }
 
 class CannerCMS extends React.Component<Props> {
@@ -59,7 +61,8 @@ class CannerCMS extends React.Component<Props> {
     componentTree: {},
     hocs,
     layouts: {},
-    baseUrl: '/'
+    baseUrl: '/',
+    cache: true
   }
 
   constructor(props: Props) {
@@ -91,7 +94,8 @@ class CannerCMS extends React.Component<Props> {
       hocs,
       layouts,
       baseUrl,
-      history
+      history,
+      cache
     } = this.props;
     const {location, push} = history;
     const {pathname} = location;
@@ -122,6 +126,7 @@ class CannerCMS extends React.Component<Props> {
             baseUrl={baseUrl}
             routes={routes}
             params={params}
+            cache={cache}
           />
         </Provider>
       </IntlProvider>
