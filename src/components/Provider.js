@@ -117,19 +117,19 @@ export default class Provider extends React.PureComponent<Props, State> {
     let color = "black";
 
     switch (type) {
-      case "request":  
-        color = "Green"; 
+      case "request":
+        color = "Green";
         break;
-      case "fetch":     
-        color = "DodgerBlue";  
+      case "fetch":
+        color = "DodgerBlue";
         break;
-      case "deploy":   
+      case "deploy":
         color = "Red";
         break;
       case "subscribe":
         color = "Orange";
         break;
-      default: 
+      default:
         break;
     }
     // eslint-disable-next-line
