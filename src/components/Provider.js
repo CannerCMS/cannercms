@@ -101,7 +101,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.actionManager.addAction(action);
     const query = gql`${this.query.toGQL(action.payload.key)}`;
     const data = client.readQuery({query});
-    this.log('request', action, data, mutate(fromJS(data), action).toJS());
+    this.log('request', action, mutate(fromJS(data), action));
     if (write) {
       client.writeQuery({
         query: query,
@@ -109,8 +109,6 @@ export default class Provider extends React.PureComponent<Props, State> {
       });
     }
   }
-
-
 
   log(type: string, ...payload: any) {
     if (process.env.NODE_ENV !== 'development') {
