@@ -20,8 +20,8 @@ type Props = {
 type State = {
 };
 
-export default function routeMiniApp(Com: React.ComponentType<*>) {
-  return class ComponentWithRouteMiniApp extends React.Component<Props, State> {
+export default function deploy(Com: React.ComponentType<*>) {
+  return class ComponentWithDeploy extends React.Component<Props, State> {
     // componentWillReceiveProps(nextProps: Props) {
     //   if (this.props.params.op !== nextProps.params.op || !isEqual(this.props.routes, nextProps.routes)) {
     //     // everytime change the route, should reset the miniApp !
@@ -100,7 +100,7 @@ export default function routeMiniApp(Com: React.ComponentType<*>) {
             <div style={buttonContainer}>
               {renderConfirmButton({
                 callback: () => {
-                  location.href = params.backUrl || location.href.split('?')[0];
+                  // location.href = params.backUrl || location.href.split('?')[0];
                 },
                 style: {marginRight: 16}
               })}

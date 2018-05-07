@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import type RefId from 'canner-ref-id';
-import {is, List} from 'immutable';
+import {is} from 'immutable';
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type Props = {
@@ -43,8 +43,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     componentWillReceiveProps(props: Props) {
       const {refId} = this.props;
+      
       if (refId.toString() !== props.refId.toString()) {
-        this.queryData();
+        this.queryData(props);
       } 
     }
 
@@ -56,8 +57,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
       return this.state.rootValue;
     }
 
-    queryData = () => {
-      const {refId, fetch} = this.props;
+    queryData = (props: Props): Promise<*> => {
+      const {refId, fetch} = props || this.props;
       return fetch(this.key).then(data => {
         this.setState({
           rootValue: data,
@@ -75,7 +76,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     subscribe = () => {
-      const {subscribe, refId, ui} = this.props;
+      const {subscribe, refId} = this.props;
       const subscription = subscribe(this.key, (newRootValue) => {
         const newValue = getValue(newRootValue, refId.getPathArr());
         const {rootValue} = this.state

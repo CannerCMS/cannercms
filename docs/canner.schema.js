@@ -9,7 +9,7 @@ export default <root>
       <string keyName="subTitle" title="subtitle"/>
     </object>
     <number keyName="count" title="count" />
-    <array keyName="navs" title="navs">
+    <array keyName="navs" title="navs" ui="table">
       <string keyName="text" />
     </array>
   </object>

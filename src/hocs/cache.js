@@ -104,7 +104,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       this.publish(key, mutatedData);
     }
 
-    deploy = (key: string, id?: string) => {
+    deploy = (key: string, id?: string): Promise<*> => {
       // request cached actions
       const {request, deploy} = this.props;
       if (!this.actionManager) {
@@ -113,6 +113,9 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       const actions = this.actionManager.getActions(key, id);
       actions.forEach(action => {
         request(action);
+      });
+      return new Promise((resolve) => {
+        resolve();
       });
     }
 

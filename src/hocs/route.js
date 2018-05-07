@@ -56,13 +56,16 @@ function getRenderType({
   }
   const entryType = pattern.split('.')[0];
   if (entryType === 'object') {
+    if (routesLength < pathsLength && isCompleteContain(paths, routes)) {
+      return RENDER_CHILDREN;
+    }
     if (routesLength >= pathsLength && !isCompleteContain(paths, routes)) {
       return RENDER_NULL;
     }
     return RENDER_COMPONENT;
   } else {
     // array
-    if ((routesLength === 1 && op === 'create') || routesLength === 2) {
+    if (routesLength < pathsLength && isCompleteContain(paths, routes)) {
       return RENDER_CHILDREN;
     } else if (routesLength >= pathsLength && !isCompleteContain(paths, routes)) {
       return RENDER_NULL;

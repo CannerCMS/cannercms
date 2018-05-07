@@ -6,6 +6,7 @@ import * as React from 'react';
 import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
 import type ApolloClient from 'apollo-boost';
+import isEmpty from 'lodash/isEmpty';
 import {ActionManager, actionToMutation, actionsToVariables, mutate} from '../action';
 import {Query} from '../query';
 import type {Action, ActionType} from '../action/types';
@@ -61,7 +62,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     return observableQuery.subscribe({
       next: () => {
         const {loading, errors, data} = observableQuery.currentResult();
-        if (!loading && !errors) {
+        if (!loading && !errors && data && !isEmpty(data)) {
           // this.log('subscribe', key, data);
           callback(fromJS(data));
         }
@@ -100,13 +101,13 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.actionManager.addAction(action);
     const query = gql`${this.query.toGQL(action.payload.key)}`;
     const data = client.readQuery({query});
+    this.log('request', action, data, mutate(fromJS(data), action).toJS());
     if (write) {
       client.writeQuery({
         query: query,
         data: mutate(fromJS(data), action).toJS()
       });
     }
-    this.log('request', action);
   }
 
 

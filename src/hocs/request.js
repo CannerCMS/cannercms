@@ -93,6 +93,9 @@ export function createAction({
         value = emptyData;
       }
     }
+    // quick fix
+    value = value.update('id', id => id || randomId());
+    value = value.update('__typename', typename => typename || null);
   }
   return generateAction({
     id,
@@ -101,4 +104,8 @@ export function createAction({
     rootValue,
     relation
   });
+}
+
+function randomId() {
+  return Math.random().toString(36).substr(2, 12);
 }
