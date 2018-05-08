@@ -65,9 +65,18 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       });
     }
 
-    publish = (key: string, data: *) => {
+    publish = (key: string, id?: string) => {
+      // $FlowFixMe
+      if (!this.actionManager) {
+        return;
+      }
+      const {data} = this.state;
+      const actions = this.actionManager.getActions(key, id);
+      const mutatedData = actions.reduce((result, action) => {
+        return mutate(result, action);
+      }, data);
       (this.subscribers[key] || []).forEach(subscribe => {
-        subscribe.callback(data);
+        subscribe.callback(mutatedData);
       });
     }
 
@@ -86,22 +95,17 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       });
     }
 
-    request = (action: Action<ActionType>) => {
+    request = (action: Action<ActionType>): Promise<*> => {
       // use action manager cache the actions
       // update state.actions
       const {request} = this.props;
-      const {data} = this.state;
       if (!this.actionManager) {
         return request(action);
       }
-      const {key} = action.payload;
       this.actionManager.addAction(action);
-      // $FlowFixMe
-      const actions = this.actionManager.getActions(key);
-      const mutatedData = actions.reduce((result, action) => {
-        return mutate(result, action);
-      }, data);
-      this.publish(key, mutatedData);
+      const {key, id} = action.payload;
+      this.publish(key, id);
+      return Promise.resolve();
     }
 
     deploy = (key: string, id?: string): Promise<*> => {
@@ -114,18 +118,18 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       actions.forEach(action => {
         request(action);
       });
-      return new Promise((resolve) => {
-        resolve();
-      });
+      return Promise.resolve();
     }
 
-    reset = (key: string, id?: string) => {
+    reset = (key: string, id?: string): Promise<*> => {
       // remove sepicfic cached actions in actionManager
       const {reset} = this.props;
       if (!this.actionManager) {
         return reset(key, id);
       }
       this.actionManager.removeActions(key, id);
+      this.publish(key, id);
+      return Promise.resolve();
     }
 
     subscribe = (key: string, callback: Function) => {

@@ -1,0 +1,6 @@
+{
+  "canner": {
+    "cannerDataType": "array",
+    "controlDeployAndResetButtons": true
+  }
+}

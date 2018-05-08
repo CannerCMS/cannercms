@@ -1,6 +1,7 @@
 /** @jsx c */
 
 import c from '@canner/canner-script';
+import path from 'path';
 
 export default <root>
   <object keyName="home" title="All Components">
@@ -9,7 +10,7 @@ export default <root>
       <string keyName="subTitle" title="subtitle"/>
     </object>
     <number keyName="count" title="count" />
-    <array keyName="navs" title="navs" ui="table">
+    <array keyName="navs" title="navs" cacheActions={true} >
       <string keyName="text" />
     </array>
   </object>

@@ -95,7 +95,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     return client.resetStore();
   }
 
-  request = (action: Action<ActionType>, options: {write: boolean} = {write: true}) => {
+  request = (action: Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {
     const {client} = this.props;
     const {write = true} = options;
     this.actionManager.addAction(action);
@@ -108,6 +108,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         data: mutate(fromJS(data), action).toJS()
       });
     }
+    return Promise.resolve();
   }
 
   log(type: string, ...payload: any) {
