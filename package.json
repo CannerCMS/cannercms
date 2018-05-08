@@ -1,6 +1,6 @@
 {
   "name": "@canner/react-cms-core",
-  "version": "1.0.0-rc.6",
+  "version": "1.0.0-rc.7",
   "description": "the core-part of canner cms",
   "main": "lib/index.js",
   "scripts": {
