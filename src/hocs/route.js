@@ -44,10 +44,8 @@ export default function withRoute(Com: React.ComponentType<*>) {
 function getRenderType({
   routes,
   path,
-  params,
   pattern
 }) {
-  const {op} = params;
   const paths = genPaths(path, pattern);
   const pathsLength = paths.length;
   const routesLength = routes.length;

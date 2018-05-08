@@ -57,7 +57,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       return this.state.rootValue;
     }
 
-    queryData = (props: Props): Promise<*> => {
+    queryData = (props?: Props): Promise<*> => {
       const {refId, fetch} = props || this.props;
       return fetch(this.key).then(data => {
         this.setState({
