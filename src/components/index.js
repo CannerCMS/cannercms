@@ -17,7 +17,6 @@ import {ImgurService} from '@canner/image-service-config';
 import type ApolloClient from 'apollo-client';
 import {createClient} from '@canner/graphql-resolver';
 import {createEmptyData} from '@canner/react-cms-helpers';
-import store from 'store';
 const lang = 'zh';
 addLocaleData([...en, ...zh]);
 
