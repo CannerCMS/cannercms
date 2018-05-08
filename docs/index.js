@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import CMS from '../src/components';
 import schema from './canner.schema';
+import Tabs from './layouts/tabs';
 import {Layout, Menu} from 'antd';
 const {cannerSchema} = schema;
 class CMSExample extends React.Component {
@@ -32,6 +33,9 @@ class CMSExample extends React.Component {
                 schema={schema}
                 baseUrl={baseUrl}
                 history={history}
+                layouts={{
+                  Tabs
+                }}
               />
             </Layout.Content>
           </Layout>;

@@ -1,0 +1,34 @@
+/** @jsx builder */
+
+import builder from '@canner/canner-script';
+const Arrays = ({attributes}) => <object {...attributes}>
+  <array keyName="tabs" ui="tabs" title="Tabs">
+    <string keyName="children" title="Children" />
+  </array>
+  <array keyName="panel" ui="panel" title="Panel">
+    <string keyName="children" title="Children" />
+  </array>
+  <array keyName="table-route" ui="table-route" title="Table-route" uiParams={{
+    columns: [{
+      title: 'Children',
+      dataIndex: 'children'
+    }]
+  }}>
+    <string keyName="children" title="Children" />
+  </array>
+  <array keyName="table" ui="table" title="Table" uiParams={{
+    columns: [{
+      title: 'Children',
+      dataIndex: 'children'
+    }]
+  }}>
+    <string keyName="children" title="Children" />
+  </array>
+  {/* <array keyName="slider" ui="slider" title="Slider">
+    <string keyName="children" title="Children" />
+  </array>
+  <array keyName="tag" ui="tag" title="Tag" />
+  <array keyName="gallery" ui="gallery" title="Gallery" /> */}
+</object>
+
+export default Arrays
