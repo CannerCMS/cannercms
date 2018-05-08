@@ -17,6 +17,7 @@ import {ImgurService} from '@canner/image-service-config';
 import type ApolloClient from 'apollo-client';
 import {createClient} from '@canner/graphql-resolver';
 import {createEmptyData} from '@canner/react-cms-helpers';
+import store from 'store';
 const lang = 'zh';
 addLocaleData([...en, ...zh]);
 
@@ -41,9 +42,14 @@ type Props = {
   }
 }
 
-class CannerCMS extends React.Component<Props> {
+type State = {
+  connecting: boolean
+}
+
+class CannerCMS extends React.Component<Props, State> {
   imageServiceConfigs: Object
   client: Client;
+  endpoints: {[key: string]: any};
 
   static defaultProps = {
     schema: {
@@ -73,6 +79,22 @@ class CannerCMS extends React.Component<Props> {
         result[key] = serviceConfig;
         return result;
       }, {}), ...(props.imageServiceConfigs || {})};
+      this.endpoints = Object.keys(cannerSchema).reduce((result, key) => {
+        result[key] = cannerSchema[key].endpoint;
+        return result;
+      }, {});
+      this.state = {
+        connecting: true
+      };
+  }
+
+  componentDidMount() {
+    // this.connect();
+  }
+
+  connect() {
+    Promise.all(this.endpoints.map(endpoint => endpoint.connector()))
+      .then(() => this.setState({connecting: false}));
   }
 
   render() {
@@ -84,10 +106,14 @@ class CannerCMS extends React.Component<Props> {
       baseUrl,
       history,
     } = this.props;
+    // const {connecting} = this.state;
     const {location, push} = history;
     const {pathname} = location;
     const routes = getRoutes(pathname, baseUrl);
     const params = queryString.parse(location.search);
+    // if (connecting) {
+    //   return <div>LOADING</div>;
+    // }
     return (
       <IntlProvider
         locale={lang}
