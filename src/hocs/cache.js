@@ -33,6 +33,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       [key: string]: Array<{id: string, callback: Function}>
     }
     subscribers = {};
+    subscription: any
     constructor(props: Props) {
       super(props);
       const {routes, params, cacheActions, pattern, path} = this.props;
@@ -89,10 +90,26 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       const actions = this.actionManager.getActions(key);
       return fetch(key).then(data => {
         this.setState({data});
+        this._subscribe(key);
         return actions.reduce((result, action) => {
           return mutate(result, action);
         }, data);
       });
+    }
+
+    _subscribe = (key: string) => {
+      const {subscribe} = this.props;
+      this.subscription = subscribe(key, (data) => {
+        this.setState({
+          data
+        }, () => this.publish(key));
+      });
+    }
+
+    _unsubscribe = () => {
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+      }
     }
 
     request = (action: Action<ActionType>): Promise<*> => {
@@ -115,6 +132,8 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         return deploy(key, id);
       }
       const actions = this.actionManager.getActions(key, id);
+      // $FlowFixMe
+      this.actionManager.removeActions(key, id);
       actions.forEach(action => {
         request(action);
       });

@@ -73,6 +73,9 @@ export default class Provider extends React.PureComponent<Props, State> {
   deploy = (key: string, id?: string): Promise.resolve<*> => {
     const {client} = this.props;
     const actions = this.actionManager.getActions(key, id);
+    if (!actions || !actions.length) {
+      return Promise.resolve();
+    }
     const mutation = actionToMutation(actions[0]);
     const variables = actionsToVariables(actions);
     
