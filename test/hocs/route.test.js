@@ -43,7 +43,7 @@ describe('withRoute', () => {
     WrapperComponent = withHOC(MockComponent);
   });
 
-  it('should not render', () => {
+  it('should not render 1', () => {
     const routes = ['info'];
     const path = 'posts';
     const wrapper = shallow(<WrapperComponent
@@ -56,7 +56,7 @@ describe('withRoute', () => {
     expect(wrapper.find(MockComponent).length).toBe(0);
   });
 
-  it('should not render', () => {
+  it('should not render 2', () => {
     const routes = ['info', 'name'];
     const path = 'info/nickname';
     const wrapper = shallow(<WrapperComponent
@@ -69,7 +69,7 @@ describe('withRoute', () => {
     expect(wrapper.find(MockComponent).length).toBe(0);
   });
 
-  it('should not render', () => {
+  it('should not render 3', () => {
     const routes = ['posts', 'id1', 'name'];
     const path = 'posts/nickname';
     const wrapper = shallow(<WrapperComponent
@@ -82,7 +82,7 @@ describe('withRoute', () => {
     expect(wrapper.find(MockComponent).length).toBe(0);
   });
 
-  it('should render', () => {
+  it('should render 1', () => {
     const routes = ['info'];
     const path = 'info';
     const wrapper = shallow(<WrapperComponent
@@ -95,7 +95,7 @@ describe('withRoute', () => {
     expect(wrapper.find(MockComponent).length).toBe(1);
   });
 
-  it('should render', () => {
+  it('should render 2', () => {
     const routes = ['posts'];
     const path = 'posts';
     const wrapper = shallow(<WrapperComponent
@@ -108,7 +108,7 @@ describe('withRoute', () => {
     expect(wrapper.find(MockComponent).length).toBe(1);
   });
 
-  it('should render children', () => {
+  it('should render children 1', () => {
     const routes = ['posts', 'id1'];
     const path = 'posts';
     const wrapper = shallow(<WrapperComponent
@@ -117,20 +117,6 @@ describe('withRoute', () => {
       path={path}
       pattern="array"
       params={{}}
-    />);
-    expect(wrapper.find(MockComponent).length).toBe(0);
-    expect(mockRenderChildren).toHaveBeenCalledTimes(1);
-  });
-
-  it('should render children', () => {
-    const routes = ['posts'];
-    const path = 'posts';
-    const wrapper = shallow(<WrapperComponent
-      {...props}
-      routes={routes}
-      path={path}
-      pattern="array"
-      params={{op: 'create'}}
     />);
     expect(wrapper.find(MockComponent).length).toBe(0);
     expect(mockRenderChildren).toHaveBeenCalledTimes(1);

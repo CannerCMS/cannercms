@@ -52,23 +52,41 @@ function getRenderType({
   if (routes[0] !== paths[0]) {
     return RENDER_NULL;
   }
-  const entryType = pattern.split('.')[0];
-  if (entryType === 'object') {
-    if (routesLength < pathsLength && isCompleteContain(paths, routes)) {
+  const type = pattern.split('.').slice(-1)[0];
+  
+  if (type === 'object') {
+    if (routesLength === pathsLength && isCompleteContain(paths, routes)) {
+      return RENDER_COMPONENT;
+    }
+    if (routesLength < pathsLength) {
+      return RENDER_COMPONENT;
+    }
+    if (routesLength > pathsLength) {
       return RENDER_CHILDREN;
     }
-    if (routesLength >= pathsLength && !isCompleteContain(paths, routes)) {
-      return RENDER_NULL;
+    return RENDER_NULL;
+  } else if (type === 'array') {
+    if (routesLength === pathsLength && isCompleteContain(paths, routes)) {
+      return RENDER_CHILDREN;
     }
-    return RENDER_COMPONENT;
+    if (routesLength < pathsLength) {
+      return RENDER_COMPONENT;
+    }
+    if (routesLength > pathsLength) {
+      return RENDER_COMPONENT;
+    }
+    return RENDER_NULL;
   } else {
-    // array
-    if (routesLength < pathsLength && isCompleteContain(paths, routes)) {
-      return RENDER_CHILDREN;
-    } else if (routesLength >= pathsLength && !isCompleteContain(paths, routes)) {
+    if (routesLength === pathsLength && isCompleteContain(paths, routes)) {
       return RENDER_NULL;
     }
-    return RENDER_COMPONENT;
+    if (routesLength < pathsLength) {
+      return RENDER_COMPONENT;
+    }
+    if (routesLength > pathsLength) {
+      return RENDER_COMPONENT;
+    }
+    return RENDER_NULL;
   }
 }
 
