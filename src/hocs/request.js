@@ -93,7 +93,7 @@ export function createAction({
         value = emptyData;
       }
     }
-    // quick fix
+    // // quick fix
     value = value.update('id', id => id || randomId());
     value = value.update('__typename', typename => typename || null);
   }

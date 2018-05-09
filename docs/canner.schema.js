@@ -10,6 +10,11 @@ import Arrays from './schema/array.schema';
 
 const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>
 export default <root>
+    <object keyName="info">
+      <array keyName="navs">
+        <string keyName="title" />
+      </array>
+    </object>
     <object keyName="overview" title="Components Overview">
     <Block title="All Types">
       <Tabs>

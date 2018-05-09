@@ -2,8 +2,19 @@
 import {Map, List} from 'immutable';
 import type {Action, ActionType} from './types';
 
+export function withTypename(value: Map<string, *>): any {
+  return value.map(v => {
+    if (Map.isMap(v)) {
+      v = v.update('__typename', typename => typename || null);
+      return withTypename(v);
+    }
+    return v;
+  });
+}
+
 export default function mutate(originValue: Map<string, *>, action: Action<ActionType>): any {
-  const {key, id, value, path} = action.payload;
+  let {key, id, value, path} = action.payload;
+  value = withTypename(value);
   switch (action.type) {
     case 'CREATE_ARRAY': {
       return originValue.update(key, list => list.push(value));

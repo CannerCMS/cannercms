@@ -5,7 +5,7 @@ const Arrays = ({attributes}) => <object {...attributes}>
   <array keyName="tabs" ui="tabs" title="Tabs">
     <string keyName="children" title="Children" />
   </array>
-  <array keyName="panel" ui="panel" title="Panel">
+  {/* <array keyName="panel" ui="panel" title="Panel">
     <string keyName="children" title="Children" />
   </array>
   <array keyName="table-route" ui="table-route" title="Table-route" uiParams={{
@@ -23,7 +23,7 @@ const Arrays = ({attributes}) => <object {...attributes}>
     }]
   }}>
     <string keyName="children" title="Children" />
-  </array>
+  </array> */}
   {/* <array keyName="slider" ui="slider" title="Slider">
     <string keyName="children" title="Children" />
   </array>
