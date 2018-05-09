@@ -7,15 +7,16 @@ import Numbers from './schema/number.schema';
 import Booleans from './schema/boolean.schema';
 import Objects from './schema/object.schema';
 import Arrays from './schema/array.schema';
-
+import Posts from './schema/realWorld/posts.schema';
+import Users from './schema/realWorld/users.schema';
 const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>
 export default <root>
-    <object keyName="info">
-      <array keyName="navs">
-        <string keyName="title" />
-      </array>
-    </object>
-    <object keyName="overview" title="Components Overview">
+  <object keyName="info">
+    <array keyName="navs">
+      <string keyName="title" />
+    </array>
+  </object>
+  <object keyName="overview" title="Components Overview">
     <Block title="All Types">
       <Tabs>
         <Strings keyName="string" title="String Type" />
@@ -26,4 +27,6 @@ export default <root>
       </Tabs>
     </Block>
   </object>
+  <Posts />
+  <Users />
 </root>

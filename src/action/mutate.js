@@ -2,27 +2,26 @@
 import {Map, List} from 'immutable';
 import type {Action, ActionType} from './types';
 
-export function withTypename(value: Map<string, *>): any {
-  if (!Map.isMap(value)) {
-    return value;
+export function withTypename(value: any): any {
+  if (Map.isMap(value)) {
+    value = value.update('__typename', typename => typename || null);
+    return value.map(withTypename);
   }
-  return value.map(v => {
-    if (Map.isMap(v)) {
-      v = v.update('__typename', typename => typename || null);
-      return withTypename(v);
-    }
-    return v;
-  });
+  if (List.isList(value)) {
+    return value.map(withTypename);
+  }
+
+  return value;
 }
 
 export default function mutate(originValue: Map<string, *>, action: Action<ActionType>): any {
   let {key, id, value, path} = action.payload;
-  value = withTypename(value);
   switch (action.type) {
     case 'CREATE_ARRAY': {
       return originValue.update(key, list => list.push(value));
     }
     case 'UPDATE_ARRAY': {
+      value = withTypename(value);
       return originValue.update(key, list => list.map(item => item.get('id') === id ? item.merge(value): item));
     }
     
@@ -31,6 +30,9 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
     }
 
     case 'UPDATE_OBJECT': {
+      console.log(value);
+      value = withTypename(value);
+      console.log(value);
       return originValue.update(key, map => map.merge(value));
     }
 

@@ -34,6 +34,15 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.schema\.js$/,
+        use: [{
+          loader: '@canner/canner-schema-loader',
+          options: {
+            visitors: path.resolve('lib', 'visitors')
+          }
+        }],
+      },
+      {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'docs'),
@@ -43,17 +52,6 @@ module.exports = {
         use: {
           loader: 'babel-loader',
         },
-      },
-      {
-        test: /canner\.schema\.js$/,
-        use: [{
-          loader: '@canner/canner-schema-loader',
-          options: {
-            visitors: path.resolve('lib', 'visitors')
-          }
-        }, {
-          loader: 'babel-loader',
-        }],
       },
       {
         test: /\.scss$/,

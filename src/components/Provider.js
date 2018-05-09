@@ -78,7 +78,6 @@ export default class Provider extends React.PureComponent<Props, State> {
     }
     const mutation = actionToMutation(actions[0]);
     const variables = actionsToVariables(actions);
-    
     return client.mutate({
       mutation: gql`${objectToQueries(mutation, false)}`,
       variables,
@@ -104,7 +103,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.actionManager.addAction(action);
     const query = gql`${this.query.toGQL(action.payload.key)}`;
     const data = client.readQuery({query});
-    this.log('request', action, data, mutate(fromJS(data), action));
+    this.log('request', action, data, mutate(fromJS(data), action).toJS());
     if (write) {
       client.writeQuery({
         query: query,

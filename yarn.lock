@@ -348,9 +348,9 @@
     "@canner/qa-compiler" "^0.1.4"
     schema-utils "^0.4.5"
 
-"@canner/canner-script@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@canner/canner-script/-/canner-script-1.0.11.tgz#dd8269def99247c0415aace3110611a5a6b37b15"
+"@canner/canner-script@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@canner/canner-script/-/canner-script-1.0.12.tgz#af2a0f8ac5385e17b9e8d10d635ab330e3f1c35f"
   dependencies:
     babel-core "^6.26.3"
     babel-plugin-transform-es2015-modules-commonjs "^6.26.2"
@@ -2223,21 +2223,9 @@ babel-preset-stage-3@^6.24.1:
     babel-plugin-transform-exponentiation-operator "^6.24.1"
     babel-plugin-transform-object-rest-spread "^6.22.0"
 
-babel-register@^6.26.0:
+babel-register@^6.26.0, babel-register@^6.9.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-register/-/babel-register-6.26.0.tgz#6ed021173e2fcb486d7acb45c6009a856f647071"
-  dependencies:
-    babel-core "^6.26.0"
-    babel-runtime "^6.26.0"
-    core-js "^2.5.0"
-    home-or-tmp "^2.0.0"
-    lodash "^4.17.4"
-    mkdirp "^0.5.1"
-    source-map-support "^0.4.15"
-
-babel-register@^6.9.0:
-  version "6.26.0"
-  resolved "https://registry.npmjs.org/babel-register/-/babel-register-6.26.0.tgz#6ed021173e2fcb486d7acb45c6009a856f647071"
   dependencies:
     babel-core "^6.26.0"
     babel-runtime "^6.26.0"
