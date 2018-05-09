@@ -21,7 +21,7 @@ export default <root>
         <Strings keyName="string" title="String Type" />
         <Booleans keyName="boolean" title="Boolean Type"/>
         <Numbers keyName="number" title="Number Types" />
-        {/* <Arrays keyName="array" title="Array Type" /> */}
+        <Arrays keyName="array" title="Array Type" />
         <Objects keyName="object" title="Object type" />
       </Tabs>
     </Block>

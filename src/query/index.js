@@ -9,7 +9,9 @@ export class Query {
 
   constructor({schema}: {schema: Object}) {
     this.schema = schema;
-    this.queries = schemaToQueriesObject(schema);
+    this.queries = schemaToQueriesObject(schema, schema, {
+      firstLayer: true
+    });
   }
 
   updateQueries = (pathArr: Array<string>, field: string, value: any) => {

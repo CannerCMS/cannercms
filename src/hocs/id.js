@@ -6,7 +6,7 @@ import {HOCContext} from './context';
 
 type Props = {
   refId: RefId,
-  keyName: string
+  keyName: string,
 };
 
 export default function connectIdAndContext(Com: React.ComponentType<*>) {

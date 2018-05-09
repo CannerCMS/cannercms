@@ -3,6 +3,9 @@ import {Map, List} from 'immutable';
 import type {Action, ActionType} from './types';
 
 export function withTypename(value: Map<string, *>): any {
+  if (!Map.isMap(value)) {
+    return value;
+  }
   return value.map(v => {
     if (Map.isMap(v)) {
       v = v.update('__typename', typename => typename || null);

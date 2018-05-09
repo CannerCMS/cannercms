@@ -5,7 +5,7 @@ const defaultPagination = {
   first: 10
 };
 
-export function schemaToQueriesObject (schema, rootSchema, inRelation) {
+export function schemaToQueriesObject (schema, rootSchema, state = {}) {
   const queriesObj = {};
   rootSchema = rootSchema || {...schema};
   Object.keys(schema).map(key => {
@@ -18,22 +18,23 @@ export function schemaToQueriesObject (schema, rootSchema, inRelation) {
         id: null,
         ...schemaToQueriesObject(value.items.items, rootSchema)
       }
-      rtn.isPlural = true;
+      if (state.firstLayer){
+        rtn.isPlural = true;
+      }
       rtn.args = {pagination: defaultPagination};
-    } else if (isRelationToOneType(value) && !inRelation) {
+    } else if (isRelationToOneType(value) && !state.inRelation) {
       const relationTo = value.relation.to;
       rtn.fields = {
         id: null,
-        ...schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, true)
+        ...schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true})
       }
       rtn.args = {pagination: defaultPagination};
-    } else if (isRelationToManyType(value) && !inRelation) {
+    } else if (isRelationToManyType(value) && !state.inRelation) {
       const relationTo = value.relation.to;
       rtn.fields = {
         id: null,
-        ...schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, true)
+        ...schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true})
       }
-      rtn.isPlural = true;
       rtn.args = {pagination: defaultPagination};
     } else {
       rtn = null;

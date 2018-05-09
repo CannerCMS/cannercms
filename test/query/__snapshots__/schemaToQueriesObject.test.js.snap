@@ -36,11 +36,9 @@ Object {
           "staredPosts": null,
           "title": null,
         },
-        "isPlural": true,
       },
       "title": null,
     },
-    "isPlural": true,
   },
   "users": Object {
     "args": Object {
@@ -65,10 +63,8 @@ Object {
           "staredPosts": null,
           "title": null,
         },
-        "isPlural": true,
       },
     },
-    "isPlural": true,
   },
 }
 `;

@@ -2,13 +2,13 @@
 
 import builder from '@canner/canner-script';
 const Arrays = ({attributes}) => <object {...attributes}>
-  <array keyName="tabs" ui="tabs" title="Tabs">
+  <array keyName="tabs" title="Tabs">
     <string keyName="children" title="Children" />
   </array>
-  {/* <array keyName="panel" ui="panel" title="Panel">
+  <array keyName="panel" ui="panel" title="Panel">
     <string keyName="children" title="Children" />
   </array>
-  <array keyName="table-route" ui="table-route" title="Table-route" uiParams={{
+  {/* <array keyName="table-route" ui="table-route" title="Table-route" uiParams={{
     columns: [{
       title: 'Children',
       dataIndex: 'children'

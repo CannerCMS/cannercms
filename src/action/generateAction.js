@@ -1,7 +1,7 @@
 // @flow
 
 import type {UpdateType, Action, ActionType} from './types';
-import {fromJS} from 'immutable';
+import {fromJS, List} from 'immutable';
 import {
   isCreateArray,
   isCreateNestedArrayInArray,
@@ -55,7 +55,7 @@ export function generateAction(arg: {
         key,
         id,
         value: arg.rootValue.getIn([key, index])
-          .updateIn(paths, list => list.push(arg.value))
+          .updateIn(paths, list => (list || new List()).push(arg.value))
           .filter((v, k) => k === paths[0])
       }
     }
@@ -70,7 +70,7 @@ export function generateAction(arg: {
         id,
         value: arg.rootValue
           .get(key)
-          .updateIn(paths, list => list.push(arg.value))
+          .updateIn(paths, list => (list || new List()).push(arg.value))
           .filter((v, k) => k === paths[0])
       }
     }

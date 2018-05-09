@@ -17,7 +17,7 @@ describe('query', () => {
         }
       }
     };
-    queries = schemaToQueriesObject(schema);
+    queries = schemaToQueriesObject(schema, schema, {firstLayer: true});
     query = new Query({
       schema
     });
