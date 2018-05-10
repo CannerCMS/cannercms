@@ -3,6 +3,7 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import {HOCContext} from './context';
+import type {Query} from '../query';
 
 type Props = {
   refId: RefId,
@@ -12,7 +13,7 @@ type Props = {
 export default function connectIdAndContext(Com: React.ComponentType<*>) {
   return class ComponentConnectIdAndContext extends React.Component<Props> {
     refId: RefId;
-    query: QueryDef;
+    query: Query;
     reset: ResetDef;
 
     render() {

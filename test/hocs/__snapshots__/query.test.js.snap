@@ -21,39 +21,71 @@ exports[`with  query should render 1`] = `
 `;
 
 exports[`with  query should render 2`] = `
-<Toolbar>
-  <MockComponent
-    fetch={
-      [MockFunction] {
-        "calls": Array [
-          Array [
-            "posts",
-          ],
-        ],
-      }
-    }
-    items={
-      Object {
-        "title": Object {
-          "tyep": "string",
-        },
-      }
-    }
-    refId={
-      CannerRefId {
-        "_internalArr": Array [
+<MockComponent
+  fetch={
+    [MockFunction] {
+      "calls": Array [
+        Array [
           "posts",
         ],
-        "child": [Function],
-        "getPathArr": [Function],
-        "remove": [Function],
-        "toString": [Function],
-      }
+      ],
     }
-    rootValue={null}
-    subscribe={[MockFunction]}
-    unsubscribe={[MockFunction]}
-    value={null}
-  />
-</Toolbar>
+  }
+  items={
+    Object {
+      "title": Object {
+        "tyep": "string",
+      },
+    }
+  }
+  query={
+    Query {
+      "getQueries": [Function],
+      "queries": Object {
+        "posts": Object {
+          "args": Object {
+            "pagination": Object {
+              "first": 10,
+            },
+          },
+          "fields": Object {
+            "id": null,
+            "title": null,
+          },
+          "isPlural": true,
+        },
+      },
+      "schema": Object {
+        "posts": Object {
+          "items": Object {
+            "items": Object {
+              "title": Object {
+                "type": "string",
+              },
+            },
+            "type": "object",
+          },
+          "type": "array",
+        },
+      },
+      "toGQL": [Function],
+      "updateQueries": [Function],
+    }
+  }
+  refId={
+    CannerRefId {
+      "_internalArr": Array [
+        "posts",
+      ],
+      "child": [Function],
+      "getPathArr": [Function],
+      "remove": [Function],
+      "toString": [Function],
+    }
+  }
+  rootValue={null}
+  subscribe={[MockFunction]}
+  unsubscribe={[MockFunction]}
+  value={null}
+/>
 `;

@@ -33,7 +33,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
   return class ComponentWithTitleAndDescription extends React.Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
     render() {
       const {title, layout, description, hideTitle,
-        fetch, subscribe, request, deploy, reset,
+        fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
         refId, routes
       } = this.props;
@@ -44,7 +44,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
             subscribe,
             request,
             deploy,
-            reset
+            reset,
+            query,
           }}
         >
           <Context.Provider value={{
@@ -95,6 +96,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 subscribe,
                 request,
                 deploy,
+                query,
                 reset
               }}
             >
@@ -143,6 +145,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                   subscribe,
                   request,
                   deploy,
+                  query,
                   reset
                 }}
               >

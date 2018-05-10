@@ -11,8 +11,8 @@ import type RefId from 'canner-ref-id';
 
 type Args = {
   pagination: {
-    first?: string,
-    after?: number
+    first?: number,
+    after?: string
   },
   where?: Object,
   orderBy?: string
@@ -154,7 +154,7 @@ export function parseOrder(orderBy: string): {orderField: string | null, orderTy
 }
 
 export function parsePagination(pagination: Object) {
-  return pagination;
+  return pagination || {};
 }
 
 export function parseWhere(where: Object) {

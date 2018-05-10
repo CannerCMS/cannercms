@@ -10,6 +10,7 @@ import type {Query} from '../query';
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type Props = {
+  type: string,
   items: Object,
   refId: RefId,
   query: Query,
@@ -113,15 +114,17 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching, rootValue} = this.state;
-      const {toolbar, query, refId, items} = this.props;
-      const args = query.getQueries(refId.getPathArr());
+      const {toolbar, query, refId, items, type} = this.props;
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
-
-      return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value}>
-        <Com {...this.props} rootValue={rootValue} value={value} />
-      </Toolbar>;
+      if (type === 'array') {
+        const args = query.getQueries(refId.getPathArr()).args || {pagination: {first: 10}};
+        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value}>
+          <Com {...this.props} rootValue={rootValue} value={value} />
+        </Toolbar>;
+      }
+      return <Com {...this.props} rootValue={rootValue} value={value} />;
     }
   };
 }

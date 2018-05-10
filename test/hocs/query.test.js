@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import withQuery from '../../src/hocs/query';
 import {fromJS} from 'immutable';
 import RefId from 'canner-ref-id';
+import { Query } from '../../src/query';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -42,6 +43,19 @@ describe('with  query', () => {
           tyep: 'string'
         }
       },
+      query: new Query({schema: {
+        posts: {
+          type: 'array',
+          items: {
+            type: 'object',
+            items: {
+              title: {
+                type: 'string'
+              }
+            }
+          }
+        }
+      }}),
       fetch: mockFetch,
       subscribe: mockSubscribe,
       unsubscribe: mockUnsubscribe

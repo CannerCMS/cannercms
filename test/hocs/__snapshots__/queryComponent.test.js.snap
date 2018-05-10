@@ -46,6 +46,7 @@ exports[`toolbar method should render 1`] = `
           },
         }
       }
+      options={undefined}
       orderField="string"
       orderType="ASC"
     />

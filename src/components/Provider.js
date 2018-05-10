@@ -148,7 +148,8 @@ export default class Provider extends React.PureComponent<Props, State> {
         fetch: this.fetch,
         reset: this.reset,
         updateQuery: this.updateQuery,
-        subscribe: this.subscribe
+        subscribe: this.subscribe,
+        query: this.query
       }}>
         {React.Children.only(this.props.children)}
       </HOCContext.Provider>
