@@ -89,7 +89,7 @@ describe('with cache', () => {
       {...props}
     />);
     return wrapper.find(MockComponent).prop('fetch')().then(data => {
-      expect(data.toJS()).toEqual({info: {name: '123'}});
+      expect(data.toJS()).toMatchObject({info: {name: '123'}});
     })
   });
 
@@ -113,7 +113,7 @@ describe('with cache', () => {
     });
     expect(mockRequest).toHaveBeenCalledTimes(0);
     return wrapper.find(MockComponent).prop('fetch')('info').then(data => {
-      expect(data.toJS()).toEqual({info: {name: '321'}});
+      expect(data.toJS()).toMatchObject({info: {name: '321'}});
     })
   });
 
@@ -159,12 +159,12 @@ describe('with cache', () => {
       }
     });
     expect(mockSubscribe).toHaveBeenCalledTimes(1);
-    expect(mockSubscribe.mock.calls[0][0].toJS()).toEqual({
+    expect(mockSubscribe.mock.calls[0][0].toJS()).toMatchObject({
       info: {
         name: '321'
       }
     });
     subscription.unsubscribe();
-    expect(wrapper.instance().subscribers).toEqual({info: []});
+    expect(wrapper.instance().subscribers).toMatchObject({info: []});
   });
 });

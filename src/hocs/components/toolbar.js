@@ -1,0 +1,203 @@
+// @flow
+
+import * as React from 'react';
+import DefaultToolbarLayout from './toolbarlayout';
+import Pagination from './pagination';
+import Sort from './sort';
+import Filter from './filter';
+import isObject from 'lodash/isObject';
+import type {Query} from '../../query';
+import type RefId from 'canner-ref-id';
+
+type Args = {
+  pagination: {
+    first?: string,
+    after?: number
+  },
+  where?: Object,
+  orderBy?: string
+}
+
+type Props = {
+  children: React.Node,
+  toolbar: {
+    sort?: {
+      component?: React.ComponentType<*>
+    },
+    pagination?: {
+      component?: React.ComponentType<*>
+    },
+    filter?: {
+      component?: React.ComponentType<*>
+    },
+    toolbarLayout?: {
+      component?: React.ComponentType<*>
+    }
+  },
+  query: Query,
+  refId: RefId,
+  args: Args,
+  items: Object,
+  value: Object
+}
+
+export default class Toolbar extends React.PureComponent<Props> {
+
+  constructor(props: Props) {
+    super(props);
+  }
+
+  changeOrder = ({orderField, orderType}: {orderField: string, orderType: string}) => {
+    const {query, refId, args} = this.props;
+    query.updateQueries(refId.getPathArr(), 'args', {...args, orderBy: `${orderField}_${orderType}`});
+  }
+
+  changeFilter = (where: Object) => {
+    const {query, refId, args} = this.props;
+    const validWhere = processWhere(where);
+    query.updateQueries(refId.getPathArr(), 'args', {...args, where: validWhere});
+  }
+
+  nextPage = () => {
+    const {query, args, value, refId} = this.props;
+    if (value.pageInfo.hasNextPage) {
+      const {first = 10} = parsePagination(args);
+      const after = value.edges[value.edges.length - 1].cursor;
+      query.updateQueries(refId.getPathArr(), 'args', {...args, pagination: {
+        first,
+        after
+      }});
+    }
+  }
+
+  prevPage = () => {
+    const {query, args, value, refId} = this.props;
+    const {last = 10} = parsePagination(args);
+    const before = value.edges[0].cursor;
+    query.updateQueries(refId.getPathArr(), 'args', {...args, pagination: {
+      last,
+      before
+    }});
+  }
+
+  changeSize = (size: number) => {
+    const {value, query, args, refId} = this.props;
+    const pagination = parsePagination(args.pagination);
+    if (pagination.first) {
+      query.updateQueries(refId.getPathArr(), 'args', {...args, pagination: {
+        first: size,
+        after: pagination.after || value.edges[value.edges.length - 1].cursor
+      }});
+    } else {
+      query.updateQueries(refId.getPathArr(), 'args', {...args, pagination: {
+        last: size,
+        before: pagination.before || value.edges[0].cursor
+      }});
+    }
+  }
+
+  render() {
+    const {children, toolbar = {}, args, items, value} = this.props;
+    const {sort, pagination, filter, toolbarLayout} = toolbar;
+    const ToolbarLayout = toolbarLayout && toolbarLayout.component ? toolbarLayout.component : DefaultToolbarLayout;
+    const SortComponent = sort && sort.component ? sort.component : Sort;
+    const FilterComponent = filter && filter.component ? filter.component : Filter;
+    const PaginationComponent = pagination && pagination.component ? pagination.component : Pagination;
+    const {orderField, orderType} = parseOrder(args.orderBy || 'string');
+    const {where} = parseWhere(args.where || {});
+    const {first, last} = parsePagination(args.pagination);
+    return <ToolbarLayout
+      Sort={sort ? <SortComponent
+        changeOrder={this.changeOrder}
+        orderField={orderField}
+        orderType={orderType}
+        items={items}
+      /> : null}
+      Pagination={pagination ? <PaginationComponent
+        hasNextPage={value.pageInfo.hasNextPage}
+        nextPage={this.nextPage}
+        prevPage={this.prevPage}
+        changeSize={this.changeSize}
+        size={first || last}
+      /> : null}
+      Filter={filter ? <FilterComponent
+        items={items}
+        where={where}
+        changeFilter={this.changeFilter}
+      /> : null}
+    >
+      {React.Children.only(children)}
+    </ToolbarLayout>
+  }
+}
+
+export function parseOrder(orderBy: string) {
+  if (typeof orderBy === 'string') {
+    const [orderField, orderType] = orderBy.split('_');
+    return {orderField, orderType};
+  }
+  return {
+    orderField: null,
+    orderType: 'ASC'
+  };
+}
+
+export function parsePagination(pagination: Object) {
+  return pagination;
+}
+
+export function parseWhere(where: Object) {
+  return Object.keys(where).reduce((result, key) => {
+    const v = where[key];
+    const type = typeof v;
+    const [field, op] = key.split('_');
+    if (type === 'string') {
+      result[field] = {eq: v};
+    }
+
+    if (type === 'number') {
+      result[field] = {[op || 'eq']: v};
+    }
+
+    if (type === 'object') {
+      result[field] = parseWhere(v);
+    }
+
+    return result;
+  }, {});
+}
+
+export function processWhere(where: Object)  {
+  return Object.keys(where).reduce((result, key) => {
+    const v = where[key];
+    if (isEnd(v)) {
+      const {op, value} = parseOpAndValue(v);
+      result[`${key}_${op}`] = value;
+    }
+
+    return result;
+  }, {});
+}
+
+function isEnd(v: Object) {
+  if (!isObject(v)) {
+    return false;
+  }
+
+  const keys = Object.keys(v);
+  const value = v[keys[0]];
+  return keys.length === 1 &&
+    ['lt', 'lte', 'gt', 'gte', 'eq'].indexOf(keys[0]) !== -1 &&
+    (typeof value === 'string' ||
+    typeof value === 'boolean' ||
+    typeof value === 'number');
+}
+
+function parseOpAndValue(v: Object) {
+  const op = Object.keys(v)[0];
+  const value = v[op];
+  return {
+    op,
+    value
+  }
+}

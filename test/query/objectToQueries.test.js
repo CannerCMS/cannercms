@@ -7,7 +7,7 @@ describe('object to quries', () => {
       posts: {
         args: {
           pagination: {
-            first: 10
+            after: 10
           }
         },
         fields: {
@@ -18,7 +18,7 @@ describe('object to quries', () => {
     }
     expect(objectToQueries(obj).replace(/\n+|\s+/g, '')).toBe(`
       {
-        posts(pagination: {first: 10}) {
+        posts(pagination: {after: 10}) {
           id
           title
         }

@@ -91,6 +91,7 @@ describe('provider methods', () => {
     };
     await instance.fetch('home');
     instance.request(action);
+    console.log(objectToQueries(pick(schemaToQueriesObject(schema), 'home')));
     const newData = client.readQuery({
       query: toGQL(schema, 'home')
     });

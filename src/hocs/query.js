@@ -4,6 +4,8 @@ import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import type RefId from 'canner-ref-id';
 import {is} from 'immutable';
+import Toolbar from './components/toolbar';
+
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type Props = {
@@ -12,7 +14,21 @@ type Props = {
   query?: QueryDef,
   fetch: FetchDef,
   subscribe: SubscribeDef,
-  ui: string
+  ui: string,
+  toolbar: {
+    sort?: {
+      component?: React.ComponentType<*>
+    },
+    pagination?: {
+      component?: React.ComponentType<*>
+    },
+    filter?: {
+      component?: React.ComponentType<*>
+    },
+    toolbarLayout?: {
+      component?: React.ComponentType<*>
+    }
+  }
 };
 
 type State = {
@@ -92,10 +108,15 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching, rootValue} = this.state;
+      const {toolbar} = this.props;
+
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
-      return <Com {...this.props} rootValue={rootValue} value={value} />;
+
+      return <Toolbar toolbar={toolbar}>
+        <Com {...this.props} rootValue={rootValue} value={value} />
+      </Toolbar>;
     }
   };
 }

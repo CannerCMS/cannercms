@@ -44,7 +44,7 @@ describe('mutate', () => {
         })
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 0]).toJS()).toEqual({
+    expect(mutate(originValue, action).getIn(['posts', 0]).toJS()).toMatchObject({
       id: 'post1',
       title: 'post2',
       author: [{
@@ -103,7 +103,7 @@ describe('mutate', () => {
         })
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 0, 'author', 1]).toJS()).toEqual({
+    expect(mutate(originValue, action).getIn(['posts', 0, 'author', 1]).toJS()).toMatchObject({
       id: 'author2',
       name: 'author2'
     });
@@ -122,7 +122,7 @@ describe('mutate', () => {
         })
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 0, 'author', 1]).toJS()).toEqual({
+    expect(mutate(originValue, action).getIn(['posts', 0, 'author', 1]).toJS()).toMatchObject({
       id: 'author2',
       name: 'author2'
     });

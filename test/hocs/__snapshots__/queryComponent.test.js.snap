@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`toolbar method should render 1`] = `
+<ToolbarLayout
+  Filter={
+    <Filter
+      changeFilter={[Function]}
+      items={
+        Object {
+          "like": Object {
+            "type": "number",
+          },
+          "share": Object {
+            "type": "number",
+          },
+          "title": Object {
+            "type": "string",
+          },
+        }
+      }
+      where={undefined}
+    />
+  }
+  Pagination={
+    <Pagination
+      changeSize={[Function]}
+      hasNextPage={true}
+      nextPage={[Function]}
+      prevPage={[Function]}
+      size={10}
+    />
+  }
+  Sort={
+    <Sort
+      changeOrder={[Function]}
+      items={
+        Object {
+          "like": Object {
+            "type": "number",
+          },
+          "share": Object {
+            "type": "number",
+          },
+          "title": Object {
+            "type": "string",
+          },
+        }
+      }
+      orderField="string"
+      orderType={undefined}
+    />
+  }
+>
+  <div />
+</ToolbarLayout>
+`;

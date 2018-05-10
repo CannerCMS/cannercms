@@ -36,7 +36,7 @@
   "homepage": "https://github.com/Canner/react-cms-core#readme",
   "devDependencies": {
     "@canner/canner-schema-loader": "^1.0.17",
-    "@canner/canner-script": "^1.0.12",
+    "@canner/canner-script": "^1.0.14",
     "@canner/cms-plugins-all": "^0.1.0-rc.35",
     "@canner/image-service-config": "^0.3.0",
     "babel-cli": "^6.26.0",

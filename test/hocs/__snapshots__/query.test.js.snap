@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`with  query should render 1`] = `
+<Spin
+  indicator={
+    <Icon
+      spin={true}
+      style={
+        Object {
+          "fontSize": 24,
+        }
+      }
+      type="loading"
+    />
+  }
+  prefixCls="ant-spin"
+  size="default"
+  spinning={true}
+  wrapperClassName=""
+/>
+`;
+
+exports[`with  query should render 2`] = `
+<Toolbar>
+  <MockComponent
+    fetch={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            "posts",
+          ],
+        ],
+      }
+    }
+    items={
+      Object {
+        "title": Object {
+          "tyep": "string",
+        },
+      }
+    }
+    refId={
+      CannerRefId {
+        "_internalArr": Array [
+          "posts",
+        ],
+        "child": [Function],
+        "getPathArr": [Function],
+        "remove": [Function],
+        "toString": [Function],
+      }
+    }
+    rootValue={null}
+    subscribe={[MockFunction]}
+    unsubscribe={[MockFunction]}
+    value={null}
+  />
+</Toolbar>
+`;
