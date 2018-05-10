@@ -23,19 +23,19 @@ type Props = {
   toolbar: {
     sort?: {
       component?: React.ComponentType<*>,
-      options: Array<{
-        title: string,
-        key: string
-      }>
+      [string]: *
     },
     pagination?: {
-      component?: React.ComponentType<*>
+      component?: React.ComponentType<*>,
+      [string]: *
     },
     filter?: {
-      component?: React.ComponentType<*>
+      component?: React.ComponentType<*>,
+      [string]: *
     },
     toolbarLayout?: {
-      component?: React.ComponentType<*>
+      component?: React.ComponentType<*>,
+      [string]: *
     }
   },
   query: Query,
@@ -113,6 +113,7 @@ export default class Toolbar extends React.PureComponent<Props> {
     return <ToolbarLayout
       Sort={sort ? <SortComponent
         {...sort}
+        options={sort.options}
         changeOrder={this.changeOrder}
         orderField={orderField}
         orderType={orderType}

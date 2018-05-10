@@ -5,28 +5,33 @@ import {Spin, Icon} from 'antd';
 import type RefId from 'canner-ref-id';
 import {is} from 'immutable';
 import Toolbar from './components/toolbar';
+import type {Query} from '../query';
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type Props = {
+  items: Object,
   refId: RefId,
-  componentId: string,
-  query?: QueryDef,
+  query: Query,
   fetch: FetchDef,
   subscribe: SubscribeDef,
   ui: string,
   toolbar: {
     sort?: {
-      component?: React.ComponentType<*>
+      component?: React.ComponentType<*>,
+      [string]: *
     },
     pagination?: {
-      component?: React.ComponentType<*>
+      component?: React.ComponentType<*>,
+      [string]: *
     },
     filter?: {
-      component?: React.ComponentType<*>
+      component?: React.ComponentType<*>,
+      [string]: *
     },
     toolbarLayout?: {
-      component?: React.ComponentType<*>
+      component?: React.ComponentType<*>,
+      [string]: *
     }
   }
 };
@@ -108,13 +113,13 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching, rootValue} = this.state;
-      const {toolbar} = this.props;
-
+      const {toolbar, query, refId, items} = this.props;
+      const args = query.getQueries(refId.getPathArr());
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
 
-      return <Toolbar toolbar={toolbar}>
+      return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value}>
         <Com {...this.props} rootValue={rootValue} value={value} />
       </Toolbar>;
     }
