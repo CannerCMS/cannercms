@@ -8,12 +8,11 @@ import {FilterPlugin, Label} from './share';
 const Option = Select.Option;
 const InputGroup = Input.Group;
 const operators = [
-  {symbol: '>', value: '$gt'},
-  {symbol: '<', value: '$lt'},
-  {symbol: '=', value: '$eq'},
-  {symbol: '≥', value: '$gte'},
-  {symbol: '≤', value: '$lte'},
-  {symbol: '~', value: '$between'},
+  {symbol: '>', value: 'gt'},
+  {symbol: '<', value: 'lt'},
+  {symbol: '=', value: 'eq'},
+  {symbol: '≥', value: 'gte'},
+  {symbol: '≤', value: 'lte'},
 ];
 
 @injectIntl
@@ -30,7 +29,7 @@ export default class NumberRangeFilter extends Component {
     this.state = {
       input: '',
       lowInput: '',
-      operator: '$gt',
+      operator: 'gt',
     };
     this.onInputLow = this.onInputLow.bind(this);
     this.onInput = this.onInput.bind(this);

@@ -22,6 +22,10 @@ export default class Filter extends Component {
     this.onSelect = this.onSelect.bind(this);
   }
 
+  static defaultProps = {
+    options: []
+  }
+
   onSelect(val) {
     const {onChange, name, options} = this.props;
     if (isUndefined(val)) {

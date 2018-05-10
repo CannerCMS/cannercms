@@ -3,8 +3,6 @@ import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
-import withQuery from '../../src/hocs/query';
-import {fromJS} from 'immutable';
 import RefId from 'canner-ref-id';
 import {Query} from '../../src/query';
 

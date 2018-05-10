@@ -22,7 +22,11 @@ type Props = {
   children: React.Node,
   toolbar: {
     sort?: {
-      component?: React.ComponentType<*>
+      component?: React.ComponentType<*>,
+      options: Array<{
+        title: string,
+        key: string
+      }>
     },
     pagination?: {
       component?: React.ComponentType<*>
@@ -108,12 +112,14 @@ export default class Toolbar extends React.PureComponent<Props> {
     const {first, last} = parsePagination(args.pagination);
     return <ToolbarLayout
       Sort={sort ? <SortComponent
+        {...sort}
         changeOrder={this.changeOrder}
         orderField={orderField}
         orderType={orderType}
         items={items}
       /> : null}
       Pagination={pagination ? <PaginationComponent
+        {...pagination}
         hasNextPage={value.pageInfo.hasNextPage}
         nextPage={this.nextPage}
         prevPage={this.prevPage}
@@ -121,6 +127,7 @@ export default class Toolbar extends React.PureComponent<Props> {
         size={first || last}
       /> : null}
       Filter={filter ? <FilterComponent
+        {...filter}
         items={items}
         where={where}
         changeFilter={this.changeFilter}
@@ -131,9 +138,12 @@ export default class Toolbar extends React.PureComponent<Props> {
   }
 }
 
-export function parseOrder(orderBy: string) {
+export function parseOrder(orderBy: string): {orderField: string | null, orderType: 'ASC' | 'DESC'} {
   if (typeof orderBy === 'string') {
     const [orderField, orderType] = orderBy.split('_');
+    if (orderType !== 'ASC' && orderType !== 'DESC') {
+      return {orderField, orderType: 'ASC'};
+    }
     return {orderField, orderType};
   }
   return {

@@ -3,7 +3,7 @@
 exports[`toolbar method should render 1`] = `
 <ToolbarLayout
   Filter={
-    <Filter
+    <Styled(FilterGroup)
       changeFilter={[Function]}
       items={
         Object {
@@ -22,7 +22,7 @@ exports[`toolbar method should render 1`] = `
     />
   }
   Pagination={
-    <Pagination
+    <PaginationPlugin
       changeSize={[Function]}
       hasNextPage={true}
       nextPage={[Function]}
@@ -47,7 +47,7 @@ exports[`toolbar method should render 1`] = `
         }
       }
       orderField="string"
-      orderType={undefined}
+      orderType="ASC"
     />
   }
 >
