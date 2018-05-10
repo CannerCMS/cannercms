@@ -30,9 +30,7 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
     }
 
     case 'UPDATE_OBJECT': {
-      console.log(value);
       value = withTypename(value);
-      console.log(value);
       return originValue.update(key, map => map.merge(value));
     }
 
