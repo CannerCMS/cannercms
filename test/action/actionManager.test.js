@@ -76,7 +76,8 @@ describe('add action', () => {
   it('add array action', () => {
     actionManager.addAction(createArrayAction);
     actionManager.addAction(updateArrayAction);
-    expect(actionManager.store.posts[0].id).toEqual('id1');
+    expect(actionManager.getActions(createArrayAction.payload.key)[0].type).toBe('CREATE_ARRAY');
+    expect(actionManager.store.posts[0].id).toBe('id1');
     expect(actionManager.store.posts[0].array).toBeInstanceOf(ArrayPattern);
     expect(actionManager.store.posts[0].connect).toBeInstanceOf(ConnectPattern);
   });

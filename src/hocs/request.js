@@ -14,7 +14,8 @@ type Props = {
   relation?: RelationDef,
   fetchRelation: () => Promise<*>,
   request: RequestDef,
-  items: any
+  items: any,
+  pattern: string
 };
 
 type changeQueue = Array<{RefId: RefId | {firstRefId: RefId, secondRefId: RefId}, type: any, value: any}>;
@@ -41,7 +42,7 @@ export default function withRequest(Com: React.ComponentType<*>) {
           secondId: refId.secondRefId.toString()
         };
       } 
-      const {rootValue, relation, request, items} = this.props;
+      const {rootValue, relation, request, items, pattern} = this.props;
       const action = createAction({
         relation,
         id,
@@ -49,7 +50,8 @@ export default function withRequest(Com: React.ComponentType<*>) {
         value: delta,
         config,
         rootValue,
-        items
+        items,
+        pattern
       });
       if (!action) {
         throw new Error('invalid change');
@@ -71,7 +73,8 @@ export function createAction({
   value,
   config,
   rootValue,
-  items
+  items,
+  pattern
 }: { 
   relation: any,
   id: {firstId: string, secondId: string} | string,
@@ -80,7 +83,8 @@ export function createAction({
   config: any,
   rootValue: any,
   value: any,
-  items: any
+  items: any,
+  pattern: string
 }) {
   if (type === 'create') {
     if (!config) {
@@ -93,7 +97,8 @@ export function createAction({
         value = emptyData;
       }
     }
-    // // quick fix
+    // first layer array will gen id and typename by client, so we don;t have to do that
+    // quick fix
     value = value.update('id', id => id || randomId());
     value = value.update('__typename', typename => typename || null);
   }

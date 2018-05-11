@@ -127,7 +127,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
 
     deploy = (key: string, id?: string): Promise<*> => {
       // request cached actions
-      const {request, deploy} = this.props;
+      const {request, deploy, pattern} = this.props;
       if (!this.actionManager) {
         return deploy(key, id);
       }
@@ -137,6 +137,11 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       actions.forEach(action => {
         request(action);
       });
+      // if this cache is on the first layer,
+      // it should call the deploy after request
+      if (pattern.split('.').length === 1) {
+        return deploy(key, id);
+      }
       return Promise.resolve();
     }
 

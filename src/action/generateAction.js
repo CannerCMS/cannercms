@@ -36,12 +36,12 @@ export function generateAction(arg: {
 }): Action<ActionType> {
   
   if (isCreateArray(arg)) {
-    const {key, id} = splitId(arg.id, arg.rootValue);
+    const {key} = splitId(arg.id, arg.rootValue);
     return {
       type: 'CREATE_ARRAY',
       payload: {
         key,
-        id,
+        id: arg.value.get('id'),
         value: arg.value
       }
     }

@@ -115,6 +115,7 @@ describe('create action', () => {
       id: 'posts',
       updateType: 'create',
       value: fromJS({
+        id: 'id1',
         title: '',
         comments: [],
         users: []
@@ -126,8 +127,9 @@ describe('create action', () => {
       type: 'CREATE_ARRAY',
       payload: {
         key: 'posts',
-        id: undefined,
+        id: 'id1',
         value: {
+          id: 'id1',
           title: '',
           comments: [],
           users: []

@@ -7,7 +7,7 @@ import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
 import type ApolloClient from 'apollo-boost';
 import isEmpty from 'lodash/isEmpty';
-import {ActionManager, actionToMutation, actionsToVariables, mutate, mutatePure} from '../action';
+import {ActionManager, actionToMutation, actionsToVariables, mutatePure} from '../action';
 import {Query} from '../query';
 import type {Action, ActionType} from '../action/types';
 import gql from 'graphql-tag';
@@ -72,10 +72,12 @@ export default class Provider extends React.PureComponent<Props, State> {
 
   deploy = (key: string, id?: string): Promise.resolve<*> => {
     const {client} = this.props;
-    const actions = this.actionManager.getActions(key, id);
+    let actions = this.actionManager.getActions(key, id);
     if (!actions || !actions.length) {
       return Promise.resolve();
     }
+    
+    actions = removeIdInCreateArray(actions);
     const mutation = actionToMutation(actions[0]);
     const variables = actionsToVariables(actions);
     return client.mutate({
@@ -87,7 +89,9 @@ export default class Provider extends React.PureComponent<Props, State> {
         variables,
         result
       });
-      return fromJS(result.data)
+      this.actionManager.removeActions(key, id);
+      client.resetStore();
+      return fromJS(result.data);
     });
   }
 
@@ -103,7 +107,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.actionManager.addAction(action);
     const query = gql`${this.query.toGQL(action.payload.key)}`;
     const data = client.readQuery({query});
-    this.log('request', action, mutatePure(data, action));
+    this.log('request', action, mutatePure(data, action), data);
     if (write) {
       client.writeQuery({
         query: query,
@@ -155,4 +159,17 @@ export default class Provider extends React.PureComponent<Props, State> {
       </HOCContext.Provider>
     </ApolloProvider>
   }
+}
+
+function removeIdInCreateArray(actions: Array<Action<ActionType>>) {
+  return actions.map(action => {
+    if (action.type === 'CREATE_ARRAY') {
+      action.payload.value = action.payload.value.update(v => {
+        v = v.delete('id');
+        v = v.delete('__typename');
+        return v;
+      });
+    }
+    return action;
+  });
 }

@@ -54,13 +54,14 @@ describe('is routes end at me', () => {
 });
 
 describe('with cache', () => {
-  let WrapperComponent, props, MockComponent,
+  let WrapperComponent, props, MockComponent, pattern,
     mockFetch, mockRequest, mockDeploy, mockReset, mockSubscribe;
 
   beforeEach(() => {
     MockComponent = function MockComponent() {
       return (<div>Component</div>);
     }
+    pattern = 'object';
     mockFetch = jest.fn().mockImplementation(() => Promise.resolve(fromJS({
       info: {
         name: '123'
@@ -78,6 +79,7 @@ describe('with cache', () => {
       fetch: mockFetch,
       request: mockRequest,
       deploy: mockDeploy,
+      pattern,
       reset: mockReset,
       subscribe: mockSubscribe
     }

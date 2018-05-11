@@ -28,5 +28,10 @@ export default <root>
     </Block>
   </object>
   <Posts />
-  <Users />
+  <Users cacheActions={true} uiParams={{
+    columns: [{
+      title: 'name',
+      dataIndex: 'name'
+    }]
+  }} controlDeployAndResetButtons/>
 </root>

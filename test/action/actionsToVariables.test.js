@@ -6,6 +6,7 @@ describe('actions to variables', () => {
     const updateAction = {
       type: 'UPDATE_ARRAY',
       payload: {
+        id: 'post1',
         value: fromJS({
           "title": "123"
         })
@@ -14,6 +15,7 @@ describe('actions to variables', () => {
     const createAndConnectAction = {
       type: 'CREATE_AND_CONNECT',
       payload: {
+        id: 'post1',
         path: 'author',
         value: fromJS({
           name: 'newAuthor'
@@ -24,6 +26,7 @@ describe('actions to variables', () => {
     const disconnectAction = {
       type: 'DISCONNECT',
       payload: {
+        id: 'post1',
         path: 'author',
         value: fromJS({
           id: '67428a37-107a-4a59-811d-15810c7c49a9'
@@ -46,6 +49,9 @@ describe('actions to variables', () => {
               "id": "67428a37-107a-4a59-811d-15810c7c49a9"
             }]
           }
+      },
+      "where": {
+        'id': 'post1'
       }
     })
   });

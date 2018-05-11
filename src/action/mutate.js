@@ -4,30 +4,18 @@ import type {Action, ActionType} from './types';
 import produce from 'immer';
 import {merge, findIndex, remove} from 'lodash';
 
-export function withTypename(value: any): any {
-  if (Map.isMap(value)) {
-    value = value.update('__typename', typename => typename || null);
-    return value.map(withTypename);
-  }
-  if (List.isList(value)) {
-    return value.map(withTypename);
-  }
-
-  return value;
-}
-
 export function mutatePure(originValue: Object, action: Action<ActionType>): any {
   let {key, id, value, path} = action.payload;
+  value = value.toJS();
   // $FlowFixMe
   return produce(originValue, draft => {
     switch (action.type) {
       case 'CREATE_ARRAY': {
-        value = value.toJS();
         draft[key].push(value);
         break;
       }
       case 'UPDATE_ARRAY': {
-        value = withTypename(value).toJS;
+        
         draft[key] = draft[key].map(item => {
           return item.id === id ?
             merge(item, value) :
@@ -42,13 +30,11 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
       }
 
       case 'UPDATE_OBJECT': {
-        value = withTypename(value).toJS();
         merge(draft[key], value);
         break;
       }
 
       case 'CONNECT': {
-        value = value.toJS();
         const index = findIndex(draft[key] || [], item => item.id === id);
         draft[key][index][path].push(value);
         break;
@@ -86,7 +72,6 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
       return originValue.update(key, list => list.push(value));
     }
     case 'UPDATE_ARRAY': {
-      value = withTypename(value);
       return originValue.update(key, list => list.map(item => item.get('id') === id ? item.merge(value): item));
     }
     
@@ -95,7 +80,6 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
     }
 
     case 'UPDATE_OBJECT': {
-      value = withTypename(value);
       return originValue.update(key, map => map.merge(value));
     }
 
