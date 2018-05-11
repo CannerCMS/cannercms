@@ -44,9 +44,10 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   updateQuery = (path: string, args: Object) => {
-    this.query.updateQueries(path.split('/'), 'args', args);
-    this.observableQueryMap[path[0]].setOptions({
-      query: gql`${this.query.toGQL(path[0])}`
+    const paths = path.split('/');
+    this.query.updateQueries(paths, 'args', args);
+    this.observableQueryMap[paths[0]].setOptions({
+      query: gql`${this.query.toGQL(paths[0])}`
     });
   }
 

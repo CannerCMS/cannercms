@@ -22,6 +22,8 @@ export function schemaToQueriesObject (schema, rootSchema, state = {}) {
         rtn.isPlural = true;
       }
       rtn.args = {pagination: defaultPagination};
+      rtn.connection = true;
+      rtn.alias = key;
     } else if (isRelationToOneType(value) && !state.inRelation) {
       const relationTo = value.relation.to;
       rtn.fields = {
@@ -79,13 +81,40 @@ export function objectToQueries(o, close = true) {
       query = pluralize.plural(lowerFirst(query));
     }
 
+    if (element.connection) {
+      query = `${query}Connection`;
+    }
+
+    if (element.alias) {
+      query = `${element.alias}: ${query}`;
+    }
+
     if (element.args) {
       const args = genArgs(element.args);
       query = `${query}(${args})`;
     }
 
     if (element.fields) {
-      const fields = objectToQueries(element.fields);
+      let {fields} = element;
+      if (element.connection) {
+        fields = {
+          edges: {
+            fields: {
+              cursor: null,
+              node: {
+                fields
+              }
+            }
+          },
+          pageInfo: {
+            fields: {
+              hasNextPage: null
+            }
+          }
+        }
+      }
+      fields = objectToQueries(fields);
+      
       query = `${query}${fields}`;
     }
     return `${query}`;

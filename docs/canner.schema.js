@@ -33,5 +33,9 @@ export default <root>
       title: 'name',
       dataIndex: 'name'
     }]
-  }} controlDeployAndResetButtons/>
+  }} controlDeployAndResetButtons>
+    <toolbar>
+      <pagination />
+    </toolbar>
+  </Users>
 </root>

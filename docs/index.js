@@ -8,9 +8,9 @@ import {Layout, Menu} from 'antd';
 class CMSExample extends React.Component {
   render() {
     const baseUrl = "/docs";
-    // eslint-disable-next-line
     const {cannerSchema} = schema;
-    
+    // eslint-disable-next-line
+    console.log(schema);
     return (
       <Router>
         <Route path="/docs/**" render={({history}) => {

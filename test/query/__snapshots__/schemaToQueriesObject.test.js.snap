@@ -3,11 +3,13 @@
 exports[`schema to queries object should works 1`] = `
 Object {
   "posts": Object {
+    "alias": "posts",
     "args": Object {
       "pagination": Object {
         "first": 10,
       },
     },
+    "connection": true,
     "fields": Object {
       "bestAuthor": Object {
         "args": Object {
@@ -41,11 +43,13 @@ Object {
     },
   },
   "users": Object {
+    "alias": "users",
     "args": Object {
       "pagination": Object {
         "first": 10,
       },
     },
+    "connection": true,
     "fields": Object {
       "email": null,
       "id": null,

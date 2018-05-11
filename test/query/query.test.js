@@ -49,10 +49,10 @@ describe('query', () => {
   });
 
   it('should get root gql', () => {
-    expect(query.toGQL()).toEqual(`{posts(pagination: {first:10}){id title}}`);
+    expect(query.toGQL()).toEqual(`{posts: postsConnection(pagination: {first:10}){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
   });
 
   it('should get posts gql', () => {
-    expect(query.toGQL('posts')).toEqual(`{posts(pagination: {first:10}){id title}}`);
+    expect(query.toGQL('posts')).toEqual(`{posts: postsConnection(pagination: {first:10}){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
   });
 });

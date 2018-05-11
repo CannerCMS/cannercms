@@ -43,11 +43,13 @@ exports[`with  query should render 2`] = `
       "getQueries": [Function],
       "queries": Object {
         "posts": Object {
+          "alias": "posts",
           "args": Object {
             "pagination": Object {
               "first": 10,
             },
           },
+          "connection": true,
           "fields": Object {
             "id": null,
             "title": null,

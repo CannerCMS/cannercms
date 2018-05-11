@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import type RefId from 'canner-ref-id';
-import {is} from 'immutable';
+import {Map, List, is} from 'immutable';
 import Toolbar from './components/toolbar';
 import type {Query} from '../query';
 
@@ -130,9 +130,19 @@ export default function withQuery(Com: React.ComponentType<*>) {
 }
 
 function getValue(value, idPathArr) {
-  if (value && idPathArr) {
-    return value.getIn(idPathArr);
-  }
+  idPathArr.reduce((result: any, key: string) => {
+    if (Map.isMap(result)) {
+      if (result.has('edges') && result.has('pageInfo')) {
+        return result.getIn(['edges', 'node']);
+      }
+      return result.get(key);
+
+    } else if (List.isList(result)) {
+      return result.get(key);
+    } else {
+      return value;
+    }
+  }, value);
   return null;
 }
 

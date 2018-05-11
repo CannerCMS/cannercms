@@ -2,7 +2,8 @@
 
 import builder from '@canner/canner-script';
 
-const Users = ({attributes}) => <array keyName="users" title="users" {...attributes}>
+const Users = ({attributes, children}) => <array keyName="users" title="users" {...attributes}>
+  {children}
   <string keyName="name" title="name"/>
 </array>
 
