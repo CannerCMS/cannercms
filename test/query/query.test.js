@@ -2,7 +2,7 @@ import {Query} from '../../src/query';
 import {schemaToQueriesObject} from '../../src/query/utils';
 
 describe('query', () => {
-  let schema, queries, query;
+  let schema, queries, query, variables;
   beforeEach(() => {
     schema = {
       posts: {
@@ -17,10 +17,15 @@ describe('query', () => {
         }
       }
     };
-    queries = schemaToQueriesObject(schema, schema, {firstLayer: true});
+    queries = schemaToQueriesObject(schema, schema, {firstLayer: true}).queriesObj;
+    variables = schemaToQueriesObject(schema, schema, {firstLayer: true}).variables;
     query = new Query({
       schema
     });
+  });
+
+  it('should have variables', () => {
+    expect(query.variables).toEqual(variables);
   });
 
   it('should have queries', () => {
@@ -43,16 +48,14 @@ describe('query', () => {
     query.updateQueries(['posts'], 'args', {
       pagination: {first: 2}
     });
-    expect(query.queries.posts.args).toEqual({
-      pagination: {first: 2}
-    });
+    expect(query.variables.RANDOM_KEY).toEqual({first: 2});
   });
 
   it('should get root gql', () => {
-    expect(query.toGQL()).toEqual(`{posts: postsConnection(pagination: {first:10}){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
+    expect(query.toGQL()).toEqual(`{posts: postsConnection(pagination: RANDOM_KEY,where: RANDOM_KEY,orderBy: RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
   });
 
   it('should get posts gql', () => {
-    expect(query.toGQL('posts')).toEqual(`{posts: postsConnection(pagination: {first:10}){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
+    expect(query.toGQL('posts')).toEqual(`{posts: postsConnection(pagination: RANDOM_KEY,where: RANDOM_KEY,orderBy: RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
   });
 });

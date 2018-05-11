@@ -1,5 +1,6 @@
 import pluralize from 'pluralize';
 import lowerFirst from 'lodash/lowerFirst';
+import {merge} from 'lodash';
 
 const defaultPagination = {
   first: 10
@@ -7,44 +8,74 @@ const defaultPagination = {
 
 export function schemaToQueriesObject (schema, rootSchema, state = {}) {
   const queriesObj = {};
+  const variables = {};
   rootSchema = rootSchema || {...schema};
   Object.keys(schema).map(key => {
     let rtn = {};
     const value = schema[key];
     if (isObjectType(value)) {
-      rtn.fields = schemaToQueriesObject(value.items || {}, rootSchema);
+      const qlo = schemaToQueriesObject(value.items || {}, rootSchema);
+      rtn.fields = qlo.queriesObj;
+      merge(variables, qlo.variables);
     } else if (isObjectOfArray(value)) {
+      const qlo = schemaToQueriesObject(value.items.items || {}, rootSchema);
+      merge(variables, qlo.variables);
       rtn.fields = {
         id: null,
-        ...schemaToQueriesObject(value.items.items, rootSchema)
+        ...qlo.queriesObj
       }
       if (state.firstLayer){
         rtn.isPlural = true;
       }
-      rtn.args = {pagination: defaultPagination};
+      const paginationKey = randomKey();
+      variables[paginationKey] = defaultPagination;
+      rtn.args = {
+        pagination: paginationKey,
+        where: randomKey(),
+        orderBy: randomKey()
+      };
       rtn.connection = true;
       rtn.alias = key;
     } else if (isRelationToOneType(value) && !state.inRelation) {
       const relationTo = value.relation.to;
+      const qlo = schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true});
+      merge(variables, qlo.variables);
       rtn.fields = {
         id: null,
-        ...schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true})
+        ...qlo.queriesObj
       }
-      rtn.args = {pagination: defaultPagination};
+      const paginationKey = randomKey();
+      variables[paginationKey] = defaultPagination;
+      rtn.args = {
+        pagination: paginationKey,
+        where: randomKey(),
+        orderBy: randomKey()
+      };
     } else if (isRelationToManyType(value) && !state.inRelation) {
       const relationTo = value.relation.to;
+      const qlo = schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true});
+      merge(variables, qlo.variables);
       rtn.fields = {
         id: null,
-        ...schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true})
+        ...qlo.queriesObj
       }
-      rtn.args = {pagination: defaultPagination};
+      const paginationKey = randomKey();
+      variables[paginationKey] = defaultPagination;
+      rtn.args = {
+        pagination: paginationKey,
+        where: randomKey(),
+        orderBy: randomKey()
+      };
     } else {
       rtn = null;
     }
     queriesObj[key] = rtn;
   });
 
-  return queriesObj;
+  return {
+    queriesObj,
+    variables
+  };
 }
 
 function isObjectOfArray(value) {
@@ -132,4 +163,11 @@ function genArgs(args) {
     }
     return `${key}: ${argValue}`
   }).join(',');
+}
+
+function randomKey () {
+  if (process.env.NODE_ENV === 'test') {
+    return `RANDOM_KEY`;
+  }
+  return `$${Math.random().toString(36).substr(2, 7)}`
 }

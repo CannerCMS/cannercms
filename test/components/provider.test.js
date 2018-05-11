@@ -15,7 +15,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 
 function toGQL(schema, key) {
-  return gql`${objectToQueries(pick(schemaToQueriesObject(schema), key))}`
+  return gql`${objectToQueries(pick(schemaToQueriesObject(schema).queriesObj, key))}`
 }
 
 describe('provider methods', () => {

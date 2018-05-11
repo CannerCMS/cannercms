@@ -171,7 +171,7 @@ describe('toolbar method', () => {
       orderType: 'DESC'
     });
     const {orderBy} = query.getQueries(refId.getPathArr()).args;
-    expect(orderBy).toBe('like_DESC');
+    expect(orderBy).toBe('RANDOM_KEY');
   });
 
   it('should change filter', () => {
@@ -184,9 +184,7 @@ describe('toolbar method', () => {
       }
     });
     const {where} = query.getQueries(refId.getPathArr()).args;
-    expect(where).toEqual({
-      share_gt: 1
-    });
+    expect(where).toEqual("RANDOM_KEY");
   });
 
   it('should nextPage', () => {
@@ -195,10 +193,7 @@ describe('toolbar method', () => {
     </Toolbar>);
     wrapper.instance().nextPage();
     const {pagination} = query.getQueries(refId.getPathArr()).args;
-    expect(pagination).toEqual({
-      first: 10,
-      after: "0"
-    });
+    expect(pagination).toEqual("RANDOM_KEY");
   });
 
   it('should prevPage', () => {
@@ -207,10 +202,7 @@ describe('toolbar method', () => {
     </Toolbar>);
     wrapper.instance().prevPage();
     const {pagination} = query.getQueries(refId.getPathArr()).args;
-    expect(pagination).toEqual({
-      before: "0",
-      last: 10
-    });
+    expect(pagination).toEqual("RANDOM_KEY");
   });
 
   it('should changeSize', () => {
@@ -219,9 +211,6 @@ describe('toolbar method', () => {
     </Toolbar>);
     wrapper.instance().changeSize(20);
     const {pagination} = query.getQueries(refId.getPathArr()).args;
-    expect(pagination).toEqual({
-      first: 20,
-      after: "0"
-    });
+    expect(pagination).toEqual("RANDOM_KEY");
   });
 });

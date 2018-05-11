@@ -41,13 +41,14 @@ exports[`with  query should render 2`] = `
   query={
     Query {
       "getQueries": [Function],
+      "getVairables": [Function],
       "queries": Object {
         "posts": Object {
           "alias": "posts",
           "args": Object {
-            "pagination": Object {
-              "first": 10,
-            },
+            "orderBy": "RANDOM_KEY",
+            "pagination": "RANDOM_KEY",
+            "where": "RANDOM_KEY",
           },
           "connection": true,
           "fields": Object {
@@ -72,6 +73,11 @@ exports[`with  query should render 2`] = `
       },
       "toGQL": [Function],
       "updateQueries": [Function],
+      "variables": Object {
+        "RANDOM_KEY": Object {
+          "first": 10,
+        },
+      },
     }
   }
   refId={

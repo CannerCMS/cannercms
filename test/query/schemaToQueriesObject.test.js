@@ -74,6 +74,7 @@ describe('schema to queries object', () => {
   })
 
   it('should works', () => {
-    expect(schemaToQueriesObject(schema)).toMatchSnapshot();
+    expect(schemaToQueriesObject(schema).queriesObj).toMatchSnapshot();
+    expect(schemaToQueriesObject(schema).variables).toMatchSnapshot();
   });
 });

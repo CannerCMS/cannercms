@@ -1,22 +1,33 @@
 // @flow
 
 import {schemaToQueriesObject, objectToQueries} from './utils';
-import {get, set} from 'lodash';
+import {merge, get, set} from 'lodash';
 
 export class Query {
   schema: Object
   queries: Object
+  variables: Object
 
   constructor({schema}: {schema: Object}) {
     this.schema = schema;
-    this.queries = schemaToQueriesObject(schema, schema, {
+    const {queriesObj, variables} = schemaToQueriesObject(schema, schema, {
       firstLayer: true
     });
+    this.variables = variables;
+    this.queries = queriesObj;
   }
 
   updateQueries = (pathArr: Array<string>, field: string, value: any) => {
     const path = `${pathArr.join('.fields.')}.${field}`;
-    set(this.queries, path, value);
+    if (field === 'args') {
+      const args = get(this.queries, path);
+      merge(this.variables, Object.keys(args).reduce((result, key) => {
+        result[args[key]] = value[key];
+        return result;
+      }, {}));
+    } else {
+      set(this.queries, path, value);
+    }
   }
 
   getQueries = (pathArr: Array<string>): Object => {
@@ -34,5 +45,9 @@ export class Query {
     } else {
       return objectToQueries(this.queries);
     }
+  }
+
+  getVairables = () => {
+    return this.variables;
   }
 }

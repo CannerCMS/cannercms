@@ -27,7 +27,7 @@ exports[`toolbar method should render 1`] = `
       hasNextPage={true}
       nextPage={[Function]}
       prevPage={[Function]}
-      size={10}
+      size={undefined}
     />
   }
   Sort={
@@ -47,7 +47,7 @@ exports[`toolbar method should render 1`] = `
         }
       }
       options={undefined}
-      orderField="string"
+      orderField="RANDOM"
       orderType="ASC"
     />
   }

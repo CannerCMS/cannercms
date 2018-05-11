@@ -5,17 +5,17 @@ Object {
   "posts": Object {
     "alias": "posts",
     "args": Object {
-      "pagination": Object {
-        "first": 10,
-      },
+      "orderBy": "RANDOM_KEY",
+      "pagination": "RANDOM_KEY",
+      "where": "RANDOM_KEY",
     },
     "connection": true,
     "fields": Object {
       "bestAuthor": Object {
         "args": Object {
-          "pagination": Object {
-            "first": 10,
-          },
+          "orderBy": "RANDOM_KEY",
+          "pagination": "RANDOM_KEY",
+          "where": "RANDOM_KEY",
         },
         "fields": Object {
           "email": null,
@@ -28,9 +28,9 @@ Object {
       "id": null,
       "staredPosts": Object {
         "args": Object {
-          "pagination": Object {
-            "first": 10,
-          },
+          "orderBy": "RANDOM_KEY",
+          "pagination": "RANDOM_KEY",
+          "where": "RANDOM_KEY",
         },
         "fields": Object {
           "bestAuthor": null,
@@ -45,9 +45,9 @@ Object {
   "users": Object {
     "alias": "users",
     "args": Object {
-      "pagination": Object {
-        "first": 10,
-      },
+      "orderBy": "RANDOM_KEY",
+      "pagination": "RANDOM_KEY",
+      "where": "RANDOM_KEY",
     },
     "connection": true,
     "fields": Object {
@@ -57,9 +57,9 @@ Object {
       "name": null,
       "posts": Object {
         "args": Object {
-          "pagination": Object {
-            "first": 10,
-          },
+          "orderBy": "RANDOM_KEY",
+          "pagination": "RANDOM_KEY",
+          "where": "RANDOM_KEY",
         },
         "fields": Object {
           "bestAuthor": null,
@@ -69,6 +69,14 @@ Object {
         },
       },
     },
+  },
+}
+`;
+
+exports[`schema to queries object should works 2`] = `
+Object {
+  "RANDOM_KEY": Object {
+    "first": 10,
   },
 }
 `;
