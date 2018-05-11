@@ -20,12 +20,19 @@ export class Query {
   }
 
   getQueries = (pathArr: Array<string>): Object => {
+    if (!pathArr || pathArr.length === 0) {
+      return this.queries;
+    }
     const path = pathArr.join('.fields.');
     return get(this.queries, path);
   }
 
-  toGQL = (key: string): string => {
-    const obj = this.getQueries([key]);
-    return objectToQueries({[key]: obj});
+  toGQL = (key?: string): string => {
+    if (key) {
+      const obj = this.getQueries([key]);
+      return objectToQueries({[key]: obj});  
+    } else {
+      return objectToQueries(this.queries);
+    }
   }
 }

@@ -27,6 +27,10 @@ describe('query', () => {
     expect(query.queries).toEqual(queries);
   });
 
+  it('should get queries', () => {
+    expect(query.getQueries([])).toEqual(queries);
+  });
+
   it('should get posts queries', () => {
     expect(query.getQueries(['posts'])).toEqual(queries.posts);
   });
@@ -42,6 +46,10 @@ describe('query', () => {
     expect(query.queries.posts.args).toEqual({
       pagination: {first: 2}
     });
+  });
+
+  it('should get root gql', () => {
+    expect(query.toGQL()).toEqual(`{posts(pagination: {first:10}){id title}}`);
   });
 
   it('should get posts gql', () => {

@@ -74,7 +74,6 @@ export function createAction({
   config,
   rootValue,
   items,
-  pattern
 }: { 
   relation: any,
   id: {firstId: string, secondId: string} | string,
@@ -83,8 +82,7 @@ export function createAction({
   config: any,
   rootValue: any,
   value: any,
-  items: any,
-  pattern: string
+  items: any
 }) {
   if (type === 'create') {
     if (!config) {

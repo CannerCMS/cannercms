@@ -2,6 +2,7 @@
 import * as React from 'react';
 import {HOCContext} from './context';
 import {Context} from '@canner/react-cms-helpers';
+import type {Query} from '../query';
 
 type Props = {
   title: string, // only used in withTitleAndDesription hoc
@@ -15,6 +16,7 @@ type Props = {
   request: RequestDef,
   deploy: DeployDef,
   reset: ResetDef,
+  query: Query,
 
   renderChildren: ({[string]: any}) => React.Node,
   renderComponent: (refId: RefId, props: Object) => React.Node,
