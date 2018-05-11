@@ -103,11 +103,11 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.actionManager.addAction(action);
     const query = gql`${this.query.toGQL(action.payload.key)}`;
     const data = client.readQuery({query});
-    this.log('request', action, this.query.toGQL(action.payload.key), data, mutatePure(data, action));
+    this.log('request', action, mutatePure(data, action));
     if (write) {
       client.writeQuery({
         query: query,
-        data: mutate(fromJS(data), action).toJS()
+        data: mutatePure(data, action)
       });
     }
     return Promise.resolve();
