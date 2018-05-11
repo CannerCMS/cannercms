@@ -13,6 +13,7 @@ import type {Action, ActionType} from '../action/types';
 import gql from 'graphql-tag';
 import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
+import mapValues from 'lodash/mapValues';
 
 type Props = {
   schema: {[key: string]: any},
@@ -29,36 +30,46 @@ type State = {
 export default class Provider extends React.PureComponent<Props, State> {
   actionManager: ActionManager;
   query: Query;
+  observableQueryMap: {[string]: any}
 
   constructor(props: Props) {
     super(props);
     this.actionManager = new ActionManager();
     this.query = new Query({schema: props.schema});
+    this.observableQueryMap = mapValues(props.schema, (v, key) => {
+      return props.client.watchQuery({
+        query: gql`${this.query.toGQL(key)}`
+      });
+    });
   }
 
   updateQuery = (path: string, args: Object) => {
     this.query.updateQueries(path.split('/'), 'args', args);
+    this.observableQueryMap[path[0]].setOptions({
+      query: gql`${this.query.toGQL(path[0])}`
+    });
   }
 
   // path: posts/name args: {where, pagination, sort}
   fetch = (key: string): Promise.resolve<*> => {
-    const {client} = this.props;
-    const query = this.query.toGQL(key);
-    return client.query({
-      query: gql`${query}`
-    }).then(result => {
-      this.log('fetch', key, result);
-      return fromJS(result.data);
-    });
+    const observabale = this.observableQueryMap[key];
+    const result = observabale.currentResult();
+
+    return result.loading ?
+      observabale.result()
+        .then(result => {
+          this.log('fetch', key, result);
+          return fromJS(result.data);
+        }) :
+      Promise.resolve(result.data)
+        .then(data => {
+          this.log('fetch', key, result);
+          return fromJS(data);
+        });
   }
 
   subscribe = (key: string, callback: (data: any) => void) => {
-    const {client} = this.props;
-    const query = this.query.toGQL(key);
-    const observableQuery = client.watchQuery({
-      query: gql`${query}`
-    });
-
+    const observableQuery = this.observableQueryMap[key];
     return observableQuery.subscribe({
       next: () => {
         const {loading, errors, data} = observableQuery.currentResult();
