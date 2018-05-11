@@ -67,7 +67,7 @@ class CannerCMS extends React.Component<Props, State> {
       const {cannerSchema} = props.schema;
       // eslint-disable-next-line
       const fixSchema = Object.keys(cannerSchema).reduce((result, key) => {
-        let v = cannerSchema[key];
+        let v = {...cannerSchema[key]};
         if (v.type === 'array') {
           v.items = v.items.items;
           v.items.id = {

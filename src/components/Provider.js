@@ -7,7 +7,7 @@ import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
 import type ApolloClient from 'apollo-boost';
 import isEmpty from 'lodash/isEmpty';
-import {ActionManager, actionToMutation, actionsToVariables, mutate} from '../action';
+import {ActionManager, actionToMutation, actionsToVariables, mutate, mutatePure} from '../action';
 import {Query} from '../query';
 import type {Action, ActionType} from '../action/types';
 import gql from 'graphql-tag';
@@ -103,7 +103,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.actionManager.addAction(action);
     const query = gql`${this.query.toGQL(action.payload.key)}`;
     const data = client.readQuery({query});
-    this.log('request', action, data, mutate(fromJS(data), action).toJS());
+    this.log('request', action, this.query.toGQL(action.payload.key), data, mutatePure(data, action));
     if (write) {
       client.writeQuery({
         query: query,
