@@ -14,7 +14,6 @@ import gql from 'graphql-tag';
 import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
-import {isObject, isArray} from 'lodash';
 type Props = {
   schema: {[key: string]: any},
   dataDidChange: void => void,
@@ -45,14 +44,11 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  updateQuery = (path: string, args: Object) => {
-    const paths = path.split('/');
+  updateQuery = (paths: Array<string>, args: Object) => {
     this.query.updateQueries(paths, 'args', args);
     const variables = this.query.getVairables();
     this.log('updateQuery', variables);
-    this.observableQueryMap[paths[0]].setOptions({
-      variables
-    });
+    this.observableQueryMap[paths[0]].refetch(variables);
   }
 
   // path: posts/name args: {where, pagination, sort}
@@ -79,7 +75,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       next: () => {
         const {loading, errors, data} = observableQuery.currentResult();
         if (!loading && !errors && data && !isEmpty(data)) {
-          // this.log('subscribe', key, data);
+          this.log('subscribe', key, data);
           callback(fromJS(data));
         }
       } 
@@ -122,7 +118,8 @@ export default class Provider extends React.PureComponent<Props, State> {
     const {write = true} = options;
     this.actionManager.addAction(action);
     const query = gql`${this.query.toGQL(action.payload.key)}`;
-    const data = client.readQuery({query});
+    const variables = this.query.getVairables();
+    const data = client.readQuery({query, variables});
     const mutatedData = mutatePure(data, action)
     this.log('request', action, mutatedData, data);
     if (write) {
@@ -193,17 +190,4 @@ function removeIdInCreateArray(actions: Array<Action<ActionType>>) {
     }
     return action;
   });
-}
-
-function parseConnectionToNormal(value: Object | Array<*>) {
-  if (isObject(value)) {
-    if (value.hasOwnProperty('edges') && value.hasOwnProperty('pageInfo')) {
-      return (value: any).edges.map(edge => parseConnectionToNormal(edge.node));
-    }
-    return mapValues(value, item => parseConnectionToNormal(item));
-  } else if (isArray(value)) {
-    return value.map(item => parseConnectionToNormal(item))
-  } else {
-    return value;
-  }
 }

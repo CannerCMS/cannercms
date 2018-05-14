@@ -36,6 +36,15 @@ export default <root>
   }} controlDeployAndResetButtons>
     <toolbar>
       <pagination />
+      <sort options={[{
+        key: 'star',
+        title: 'Star'
+      }]}/>
+      <filter fields={[{
+        key: 'star',
+        type: 'number',
+        label: 'Star'
+      }]}/>
     </toolbar>
   </Users>
 </root>

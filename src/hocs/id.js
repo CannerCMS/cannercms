@@ -29,6 +29,7 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
             subscribe={context.subscribe}
             request={context.request}
             deploy={context.deploy}
+            updateQuery={context.updateQuery}
           />
         )}
       </HOCContext.Consumer>

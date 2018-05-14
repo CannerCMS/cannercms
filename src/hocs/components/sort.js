@@ -55,7 +55,7 @@ type Props = {
 }
 
 type State = {
-  order: number,
+  order: boolean,
   key: string
 }
 
@@ -63,8 +63,8 @@ export default class Sort extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      order: 1,
-      key: '',
+      order: order(props.orderType || 'ASC'),
+      key: props.orderField || '',
     };
   }
 
@@ -76,7 +76,7 @@ export default class Sort extends Component<Props, State> {
 
   changeOrder = () => {
     this.setState({
-      order: -this.state.order,
+      order: !this.state.order,
     }, this.onChange);
   }
 
@@ -85,12 +85,13 @@ export default class Sort extends Component<Props, State> {
     const {key, order} = this.state;
     changeOrder({
       orderField: key,
-      orderType: order === 1 ? 'ASC' : 'DESC'
+      orderType: order ? 'ASC' : 'DESC'
     });
   }
 
   render() {
-    const {options, orderType, orderField} = this.props;
+    const {options} = this.props;
+    const {key, order} = this.state;
     return <Row type="flex" justify="end">
       <SortCol>
         <Label>
@@ -99,12 +100,12 @@ export default class Sort extends Component<Props, State> {
             defaultMessage={defaultMessage.en['query.sort.label']}
           />
         </Label>
-        <Selector onSelect={this.onSelect} value={orderField}>
+        <Selector onSelect={this.onSelect} value={key}>
           {options.map((cond, i) => <Option key={i} value={cond.key}>{cond.title}</Option>)}
         </Selector>
         <OrderSwitch onClick={this.changeOrder}>
-          <UpIcon order={order(orderType)} type="caret-up" />
-          <DownIcon order={order(orderType)} type="caret-down" />
+          <UpIcon order={order} type="caret-up" />
+          <DownIcon order={order} type="caret-down" />
         </OrderSwitch>
       </SortCol>
     </Row>;

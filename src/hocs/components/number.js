@@ -80,7 +80,7 @@ export default class NumberRangeFilter extends Component {
 
   render() {
     const {label, intl} = this.props;
-    const {operator, input, lowInput} = this.state;
+    const {operator, input} = this.state;
     const placeholder = intl.formatMessage({
       id: 'query.numberRange.placeholder',
     });
@@ -88,13 +88,6 @@ export default class NumberRangeFilter extends Component {
       <FilterPlugin>
         <Label>{label}</Label>
         <InputGroup compact>
-          <Input
-            style={{width: '40%'}}
-            value={lowInput}
-            placeholder={placeholder}
-            onChange={this.onInputLow}
-            disabled={operator !== '$between'}
-          />
           <Select style={{width: '20%'}}
             value={operator}
             onChange={this.changeOperator}

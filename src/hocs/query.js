@@ -6,6 +6,7 @@ import type RefId from 'canner-ref-id';
 import {Map, List, is} from 'immutable';
 import Toolbar from './components/toolbar';
 import type {Query} from '../query';
+import {mapValues} from 'lodash';
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
@@ -16,6 +17,7 @@ type Props = {
   query: Query,
   fetch: FetchDef,
   subscribe: SubscribeDef,
+  updateQuery: Function,
   ui: string,
   toolbar: {
     sort?: {
@@ -117,13 +119,15 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching, rootValue} = this.state;
-      const {toolbar, query, refId, items, type} = this.props;
+      const {toolbar, query, refId, items, type, updateQuery} = this.props;
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
       if (type === 'array') {
-        const args = query.getQueries(refId.getPathArr()).args || {pagination: {first: 10}};
-        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value}>
+        const queries = query.getQueries(refId.getPathArr()).args || {pagination: {first: 10}};
+        const variables = query.getVairables();
+        const args = mapValues(queries, v => variables[v]);
+        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value} updateQuery={updateQuery}>
           <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges']).map(item => item.get('node'))} />
         </Toolbar>;
       }

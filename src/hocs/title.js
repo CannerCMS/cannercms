@@ -37,7 +37,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
       const {title, layout, description, hideTitle,
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
-        refId, routes
+        refId, routes, updateQuery
       } = this.props;
       if (hideTitle) {
         return  <HOCContext.Provider
@@ -48,6 +48,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
             deploy,
             reset,
             query,
+            updateQuery,
           }}
         >
           <Context.Provider value={{
@@ -99,7 +100,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 request,
                 deploy,
                 query,
-                reset
+                reset,
+                updateQuery
               }}
             >
               <Context.Provider value={{
@@ -148,7 +150,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                   request,
                   deploy,
                   query,
-                  reset
+                  reset,
+                  updateQuery
                 }}
               >
                 <Context.Provider value={{

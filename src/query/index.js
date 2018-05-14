@@ -1,7 +1,7 @@
 // @flow
 
 import {schemaToQueriesObject, objectToQueries} from './utils';
-import {merge, get, set} from 'lodash';
+import {merge, get, set, mapKeys} from 'lodash';
 
 export class Query {
   schema: Object
@@ -48,6 +48,6 @@ export class Query {
   }
 
   getVairables = () => {
-    return this.variables;
+    return mapKeys(this.variables, (value, key) => key.substr(1));
   }
 }
