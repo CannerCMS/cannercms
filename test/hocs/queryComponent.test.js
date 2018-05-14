@@ -5,6 +5,7 @@ import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import RefId from 'canner-ref-id';
 import {Query} from '../../src/query';
+import {fromJS} from 'immutable';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -127,7 +128,7 @@ describe('toolbar method', () => {
     query = new Query({
       schema
     });
-    value = {
+    value = fromJS({
       edges: [{
         cursor: "0",
         node: {
@@ -138,7 +139,7 @@ describe('toolbar method', () => {
       pageInfo: {
         hasNextPage: true
       }
-    }
+    });
     items = schema.posts.items.items;
     toolbar = {
       sort: {},

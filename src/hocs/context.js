@@ -2,7 +2,6 @@
 import * as React from 'react';
 
 export const defaultContext = {
-  componentId: '',
   query: {},
   fetch: () => {throw new Error('there is no fetch method');},
   subscribe: () => {throw new Error('there is no subscribe method');},

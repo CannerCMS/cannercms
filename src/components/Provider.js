@@ -14,7 +14,7 @@ import gql from 'graphql-tag';
 import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
-
+import {isObject, isArray} from 'lodash';
 type Props = {
   schema: {[key: string]: any},
   dataDidChange: void => void,
@@ -36,9 +36,11 @@ export default class Provider extends React.PureComponent<Props, State> {
     super(props);
     this.actionManager = new ActionManager();
     this.query = new Query({schema: props.schema});
+    const variables = this.query.getVairables();
     this.observableQueryMap = mapValues(props.schema, (v, key) => {
       return props.client.watchQuery({
-        query: gql`${this.query.toGQL(key)}`
+        query: gql`${this.query.toGQL(key)}`,
+        variables
       });
     });
   }
@@ -46,8 +48,10 @@ export default class Provider extends React.PureComponent<Props, State> {
   updateQuery = (path: string, args: Object) => {
     const paths = path.split('/');
     this.query.updateQueries(paths, 'args', args);
+    const variables = this.query.getVairables();
+    this.log('updateQuery', variables);
     this.observableQueryMap[paths[0]].setOptions({
-      query: gql`${this.query.toGQL(paths[0])}`
+      variables
     });
   }
 
@@ -119,11 +123,12 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.actionManager.addAction(action);
     const query = gql`${this.query.toGQL(action.payload.key)}`;
     const data = client.readQuery({query});
-    this.log('request', action, mutatePure(data, action), data);
+    const mutatedData = mutatePure(data, action)
+    this.log('request', action, mutatedData, data);
     if (write) {
       client.writeQuery({
         query: query,
-        data: mutatePure(data, action)
+        data: mutatedData
       });
     }
     return Promise.resolve();
@@ -148,6 +153,9 @@ export default class Provider extends React.PureComponent<Props, State> {
       case "subscribe":
         color = "Orange";
         break;
+      case 'updateQuery':
+        color = 'Brown';
+        break;
       default:
         break;
     }
@@ -158,6 +166,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   render() {
     const {client} = this.props;
     return <ApolloProvider client={client}>
+      {/* $FlowFixMe */}
       <HOCContext.Provider value={{
         request: this.request,
         deploy: this.deploy,
@@ -184,4 +193,17 @@ function removeIdInCreateArray(actions: Array<Action<ActionType>>) {
     }
     return action;
   });
+}
+
+function parseConnectionToNormal(value: Object | Array<*>) {
+  if (isObject(value)) {
+    if (value.hasOwnProperty('edges') && value.hasOwnProperty('pageInfo')) {
+      return (value: any).edges.map(edge => parseConnectionToNormal(edge.node));
+    }
+    return mapValues(value, item => parseConnectionToNormal(item));
+  } else if (isArray(value)) {
+    return value.map(item => parseConnectionToNormal(item))
+  } else {
+    return value;
+  }
 }

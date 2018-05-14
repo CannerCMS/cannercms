@@ -1,5 +1,5 @@
 // @flow
-import {Map, List} from 'immutable';
+import {Map, List, fromJS} from 'immutable';
 import type {Action, ActionType} from './types';
 import produce from 'immer';
 import {merge, findIndex, remove} from 'lodash';
@@ -11,21 +11,43 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
   return produce(originValue, draft => {
     switch (action.type) {
       case 'CREATE_ARRAY': {
-        draft[key].push(value);
+        if (draft[key].edges) {
+          draft[key].edges.push({
+            __typename: null,
+            cursor: value.id,
+            node: value
+          });
+        } else {
+          draft[key].push(value);
+        }
         break;
       }
       case 'UPDATE_ARRAY': {
-        
-        draft[key] = draft[key].map(item => {
-          return item.id === id ?
-            merge(item, value) :
-            item
-        });
+        if (draft[key].edges) {
+          draft[key].deges = draft[key].edges.map(item => {
+            return item.cursor === id ?
+              {
+                cursor: id,
+                node: merge(item.node, value)
+              }:
+              item
+          });
+        } else {
+          draft[key] = draft[key].map(item => {
+            return item.id === id ?
+              merge(item, value) :
+              item
+          });
+        }      
         break;
       }
       
       case 'DELETE_ARRAY': {
-        draft[key] = draft[key].filter(item => item.id !== id);
+        if (draft[key].edges) {
+          draft[key] = draft[key].filter(item => item.cursor !== id);
+        } else {
+          draft[key] = draft[key].filter(item => item.id !== id);
+        }
         break;
       }
 
@@ -69,13 +91,26 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
   let {key, id, value, path} = action.payload;
   switch (action.type) {
     case 'CREATE_ARRAY': {
+      if (originValue.hasIn([key, 'edges'])) {
+        return originValue.updateIn([key, 'edges'], list => list.push(fromJS({
+          cursor: value.get('id'),
+          node: value
+        })));
+      }
       return originValue.update(key, list => list.push(value));
     }
     case 'UPDATE_ARRAY': {
+      if (originValue.hasIn([key, 'edges'])) {
+        return originValue.updateIn([key, 'edges'], list => list.map(item => item.getIn(['node', 'id']) === id ? item.mergeIn(['node'], value): item));
+      }
       return originValue.update(key, list => list.map(item => item.get('id') === id ? item.merge(value): item));
     }
     
     case 'DELETE_ARRAY': {
+      if (originValue.hasIn([key, 'edges'])) {
+        return originValue.updateIn([key, 'edges'], list =>
+          list.filter(item => item.getIn(['node', 'id']) !== id));
+      }
       return originValue.update(key, list => list.filter(item => item.get('id') !== id));
     }
 

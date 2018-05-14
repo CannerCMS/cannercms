@@ -2,7 +2,7 @@ import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
-import withQuery from '../../src/hocs/query';
+import withQuery, {getValue, parseConnectionToNormal} from '../../src/hocs/query';
 import {fromJS} from 'immutable';
 import RefId from 'canner-ref-id';
 import { Query } from '../../src/query';
@@ -18,25 +18,26 @@ describe('with  query', () => {
       return (<div>Component</div>);
     }
     mockFetch = jest.fn().mockImplementation(() => Promise.resolve(fromJS({
-      posts: [{
-        id: 'post1',
-        title: 'POST1'
-      }]
+      posts: {
+        edges: [{
+          cursor: 'id1',
+          node: {
+            id: 'id1',
+            title: 'post1'
+          }
+        }],
+        pageInfo: {
+          hasNextPage: false
+        }
+      }
     })));
     mockUnsubscribe = jest.fn();
     mockSubscribe = jest.fn().mockImplementation(() => ({
       unsubscribe: mockUnsubscribe
     }))
-    const rootValue = fromJS({
-      posts: [{
-        id: 'id1',
-        title: 'post1'
-      }]
-    });
     props = {
       refId: new RefId('posts'),
-      value: rootValue,
-      rootValue,
+
       relation: undefined,
       items: {
         title: {
@@ -89,5 +90,129 @@ describe('with  query', () => {
     wrapper.instance().subscribe();
     wrapper.instance().unsubscribe();
     expect(mockUnsubscribe).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('getValue', () => {
+  it('should get connection map', () => {
+    const value = fromJS({
+      posts: {
+        edges: [],
+        pageInfo: {
+          hasNextInfo: false
+        }
+      }
+    });
+    expect(getValue(value, ['posts']).toJS()).toEqual({
+      edges: [],
+      pageInfo: {
+        hasNextInfo: false
+      }
+    });
+  });
+
+  it('should get item of list', () => {
+    const value = fromJS({
+      posts: {
+        edges: [{
+          cursor: 'dsa',
+          node: {
+            id: 'dsa',
+            title: 'test'
+          }
+        }],
+        pageInfo: {
+          hasNextInfo: false
+        }
+      }
+    });
+    expect(getValue(value, ['posts', 0]).toJS()).toEqual({
+      id: 'dsa',
+      title: 'test'
+    });
+  });
+
+  test('should get the field of item of list', () => {
+    const value = fromJS({
+      posts: {
+        edges: [{
+          cursor: 'dsa',
+          node: {
+            id: 'dsa',
+            title: 'test'
+          }
+        }],
+        pageInfo: {
+          hasNextInfo: false
+        }
+      }
+    });
+    expect(getValue(value, ['posts', 0, 'title'])).toEqual('test');
+  });
+});
+
+
+describe('parseConnectionToNormal', () => {
+  it('should work', () => {
+    const value = fromJS({
+      post: {
+        edges: [{
+          cursor: 'id1',
+          node: {
+            id: 'id1',
+            title: 'test',
+            users: {
+              edges: [{
+                cursor: 'id1',
+                node: {
+                  id: 'id1',
+                  name: 'user1'
+                }
+              }],
+              pageInfo: {
+                hasNextPage: false
+              }
+            }
+          }
+        }],
+        pageInfo: {
+          hasNextPage: true
+        }
+      },
+      info: {
+        name: 'info',
+        address: ['address1', 'address2'],
+        family: {
+          edges: [{
+            cursor: 'id1',
+            node: {
+              id: 'id1',
+              name: 'user1'
+            }
+          }],
+          pageInfo: {
+            hasNextPage: true
+          }
+        }
+      }
+    });
+    expect(parseConnectionToNormal(value).toJS()).toEqual({
+      post: [{
+        id: 'id1',
+        title: 'test',
+        users: [{
+          id: 'id1',
+          name: 'user1'
+        }]
+      }],
+      info: {
+        name: 'info',
+        address: ['address1', 'address2'],
+        family: [{
+          id: 'id1',
+          name: 'user1'
+        }]
+      }
+    });
   });
 });

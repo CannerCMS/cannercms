@@ -4,7 +4,6 @@ import {mutate as defaultMutate, ActionManager as DefaultAciontManager} from '..
 import type {Action, ActionType} from '../action/types';
 import {isCompleteContain, genPaths} from './route';
 import {fromJS} from 'immutable';
-
 type Props = {
   request: Function,
   fetch: Function,

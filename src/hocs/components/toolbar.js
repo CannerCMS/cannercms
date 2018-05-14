@@ -64,9 +64,9 @@ export default class Toolbar extends React.PureComponent<Props> {
 
   nextPage = () => {
     const {query, args, value, refId} = this.props;
-    if (value.pageInfo.hasNextPage) {
+    if (value.getIn(['pageInfo', 'hasNextPage'])) {
       const {first = 10} = parsePagination(args);
-      const after = value.edges[value.edges.length - 1].cursor;
+      const after = value.get('edges').last().get('cursor');
       query.updateQueries(refId.getPathArr(), 'args', {...args, pagination: {
         first,
         after
@@ -77,7 +77,7 @@ export default class Toolbar extends React.PureComponent<Props> {
   prevPage = () => {
     const {query, args, value, refId} = this.props;
     const {last = 10} = parsePagination(args);
-    const before = value.edges[0].cursor;
+    const before = value.getIn(['edges', 0, 'cursor']);
     query.updateQueries(refId.getPathArr(), 'args', {...args, pagination: {
       last,
       before
@@ -90,12 +90,12 @@ export default class Toolbar extends React.PureComponent<Props> {
     if (pagination.first) {
       query.updateQueries(refId.getPathArr(), 'args', {...args, pagination: {
         first: size,
-        after: pagination.after || value.edges[value.edges.length - 1].cursor
+        after: pagination.after || value.get('edges').last().get('cursor')
       }});
     } else {
       query.updateQueries(refId.getPathArr(), 'args', {...args, pagination: {
         last: size,
-        before: pagination.before || value.edges[0].cursor
+        before: pagination.before || value.getIn(['edges', 0, 'cursor'])
       }});
     }
   }
@@ -121,7 +121,7 @@ export default class Toolbar extends React.PureComponent<Props> {
       /> : null}
       Pagination={pagination ? <PaginationComponent
         {...pagination}
-        hasNextPage={value.pageInfo.hasNextPage}
+        hasNextPage={value.getIn(['pageInfo', 'hasNextPage'])}
         nextPage={this.nextPage}
         prevPage={this.prevPage}
         changeSize={this.changeSize}

@@ -40,6 +40,7 @@ type Props = {
 type State = {
   value: any,
   rootValue: any,
+  originRootValue: any,
   isFetching: boolean,
 }
 
@@ -54,6 +55,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.state = {
         value: null,
         rootValue: null,
+        originRootValue: null,
         isFetching: true
       };
       this.key = props.refId.getPathArr()[0];
@@ -83,7 +85,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const {refId, fetch} = props || this.props;
       return fetch(this.key).then(data => {
         this.setState({
-          rootValue: data,
+          originRootValue: data,
+          rootValue: parseConnectionToNormal(data),
           value: getValue(data, refId.getPathArr()),
           isFetching: false
         });
@@ -99,13 +102,13 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     subscribe = () => {
       const {subscribe, refId} = this.props;
-      const subscription = subscribe(this.key, (newRootValue) => {
-        const newValue = getValue(newRootValue, refId.getPathArr());
-        const {rootValue} = this.state
-        if (shouldUpdate(rootValue, newRootValue)) {
+      const subscription = subscribe(this.key, (newOriginRootValue) => {
+        const {originRootValue} = this.state
+        if (shouldUpdate(originRootValue, newOriginRootValue)) {
           this.setState({
-            rootValue: newRootValue,
-            value: newValue
+            originRootValue: newOriginRootValue,
+            rootValue: parseConnectionToNormal(newOriginRootValue),
+            value: getValue(newOriginRootValue, refId.getPathArr()),
           });
         }
       });
@@ -121,7 +124,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (type === 'array') {
         const args = query.getQueries(refId.getPathArr()).args || {pagination: {first: 10}};
         return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value}>
-          <Com {...this.props} rootValue={rootValue} value={value} />
+          <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges']).map(item => item.get('node'))} />
         </Toolbar>;
       }
       return <Com {...this.props} rootValue={rootValue} value={value} />;
@@ -129,11 +132,11 @@ export default function withQuery(Com: React.ComponentType<*>) {
   };
 }
 
-function getValue(value, idPathArr) {
-  idPathArr.reduce((result: any, key: string) => {
+export function getValue(value: Map<string, *>, idPathArr: Array<string>) {
+  return idPathArr.reduce((result: any, key: string) => {
     if (Map.isMap(result)) {
       if (result.has('edges') && result.has('pageInfo')) {
-        return result.getIn(['edges', 'node']);
+        return result.getIn(['edges', key, 'node']);
       }
       return result.get(key);
 
@@ -143,7 +146,20 @@ function getValue(value, idPathArr) {
       return value;
     }
   }, value);
-  return null;
+}
+
+export function parseConnectionToNormal(value: Map<string, *> | List<*>) {
+  if (Map.isMap(value)) {
+    value = ((value: any): Map<string, any>);
+    if (value.has('edges') && value.has('pageInfo')) {
+      return (value.get('edges'): any).map(edge => parseConnectionToNormal(edge.get('node')));
+    }
+    return value.map(item => parseConnectionToNormal(item));
+  } else if (List.isList(value)) {
+    return value.map(item => parseConnectionToNormal(item))
+  } else {
+    return value;
+  }
 }
 
 function shouldUpdate(value: any, newValue: any) {

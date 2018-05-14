@@ -169,5 +169,5 @@ function randomKey () {
   if (process.env.NODE_ENV === 'test') {
     return `RANDOM_KEY`;
   }
-  return `$${Math.random().toString(36).substr(2, 7)}`
+  return `$KEY${Math.random().toString(36).substr(2, 7)}`
 }

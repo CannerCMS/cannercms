@@ -46,9 +46,9 @@ describe('query', () => {
 
   it('should update posts args', () => {
     query.updateQueries(['posts'], 'args', {
-      pagination: {first: 2}
+      orderBy: 'title_DESC'
     });
-    expect(query.variables.RANDOM_KEY).toEqual({first: 2});
+    expect(query.variables.RANDOM_KEY).toEqual('title_DESC');
   });
 
   it('should get root gql', () => {
