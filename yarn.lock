@@ -682,9 +682,9 @@
     rc-util "^4.0.4"
     warning "^3.0.0"
 
-"@canner/react-cms-helpers@^0.1.3":
-  version "0.1.6"
-  resolved "https://registry.npmjs.org/@canner/react-cms-helpers/-/react-cms-helpers-0.1.6.tgz#987efc028ef1b4e42f93ed501b347b605ed61cd8"
+"@canner/react-cms-helpers@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@canner/react-cms-helpers/-/react-cms-helpers-0.1.7.tgz#9f7d7f0122e283b5cbc15fedef5ca1273c56054a"
   dependencies:
     immutable "^4.0.0-rc.9"
     lodash "^4.17.5"

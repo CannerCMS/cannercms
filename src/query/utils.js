@@ -39,20 +39,10 @@ export function schemaToQueriesObject (schema, rootSchema, state = {}) {
     } else if (isRelationToOneType(value) && !state.inRelation) {
       const relationTo = value.relation.to;
       const qlo = schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true});
-      merge(variables, qlo.variables);
       rtn.fields = {
         id: null,
         ...qlo.queriesObj
       }
-      const paginationKey = randomKey();
-      variables[paginationKey] = defaultPagination;
-      rtn.args = {
-        pagination: paginationKey,
-        where: randomKey(),
-        orderBy: randomKey()
-      };
-      rtn.connection = true;
-      rtn.alias = key;
     } else if (isRelationToManyType(value) && !state.inRelation) {
       const relationTo = value.relation.to;
       const qlo = schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true});

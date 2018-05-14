@@ -81,7 +81,7 @@
   "dependencies": {
     "@canner/cms-locales": "^0.1.0-rc.35",
     "@canner/graphql-resolver": "^1.1.2",
-    "@canner/react-cms-helpers": "^0.1.3",
+    "@canner/react-cms-helpers": "^0.1.7",
     "@canner/react-cms-layouts": "^1.0.1",
     "antd": "^3.2.3",
     "apollo-boost": "^0.1.4",
