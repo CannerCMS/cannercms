@@ -47,7 +47,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   updateQuery = (paths: Array<string>, args: Object) => {
     this.query.updateQueries(paths, 'args', args);
     const variables = this.query.getVairables();
-    this.log('updateQuery', variables);
+    this.log('updateQuery', variables, args);
     this.observableQueryMap[paths[0]].refetch(variables);
   }
 

@@ -1,7 +1,7 @@
 // @flow
 
 import {schemaToQueriesObject, objectToQueries} from './utils';
-import {merge, get, set, mapKeys} from 'lodash';
+import {get, set, mapKeys} from 'lodash';
 
 export class Query {
   schema: Object
@@ -21,10 +21,11 @@ export class Query {
     const path = `${pathArr.join('.fields.')}.${field}`;
     if (field === 'args') {
       const args = get(this.queries, path);
-      merge(this.variables, Object.keys(args).reduce((result, key) => {
+      this.variables = {...this.variables, ...Object.keys(args).reduce((result, key) => {
         result[args[key]] = value[key];
+
         return result;
-      }, {}));
+      }, {})};
     } else {
       set(this.queries, path, value);
     }
