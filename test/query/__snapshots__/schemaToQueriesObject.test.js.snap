@@ -12,11 +12,13 @@ Object {
     "connection": true,
     "fields": Object {
       "bestAuthor": Object {
+        "alias": "bestAuthor",
         "args": Object {
           "orderBy": "$RANDOM_KEY",
           "pagination": "$RANDOM_KEY",
           "where": "$RANDOM_KEY",
         },
+        "connection": true,
         "fields": Object {
           "email": null,
           "id": null,
@@ -27,11 +29,13 @@ Object {
       },
       "id": null,
       "staredPosts": Object {
+        "alias": "staredPosts",
         "args": Object {
           "orderBy": "$RANDOM_KEY",
           "pagination": "$RANDOM_KEY",
           "where": "$RANDOM_KEY",
         },
+        "connection": true,
         "fields": Object {
           "bestAuthor": null,
           "id": null,
@@ -56,11 +60,13 @@ Object {
       "images": null,
       "name": null,
       "posts": Object {
+        "alias": "posts",
         "args": Object {
           "orderBy": "$RANDOM_KEY",
           "pagination": "$RANDOM_KEY",
           "where": "$RANDOM_KEY",
         },
+        "connection": true,
         "fields": Object {
           "bestAuthor": null,
           "id": null,

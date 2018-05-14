@@ -1,64 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`provider methods fetch array 1`] = `
-Object {
-  "posts": Object {
-    "__typename": null,
-    "edges": Array [],
-    "pageInfo": Object {
-      "__typename": null,
-      "hasNextPage": false,
-    },
-  },
-}
-`;
-
 exports[`provider methods fetch object 1`] = `
 Object {
   "home": Object {
     "__typename": "HomePayload",
     "bestAuthor": Object {
-      "__typename": "User",
-      "age": 10,
-      "email": "wwwy3y3@gmail.com",
-      "id": "1",
-      "images": Array [
-        Object {
-          "id": "0",
-          "url": "url",
-        },
-      ],
-      "name": "user1",
-      "posts": Array [
-        Object {
-          "__typename": "Post",
-          "author": "1",
-          "id": "1",
-          "notes": Array [
-            Object {
-              "text": "note1",
-            },
-            Object {
-              "text": "note2",
-            },
-          ],
-          "title": "123",
-        },
-        Object {
-          "__typename": "Post",
-          "author": "2",
-          "id": "2",
-          "notes": Array [
-            Object {
-              "text": "note3",
-            },
-            Object {
-              "text": "note4",
-            },
-          ],
-          "title": "123",
-        },
-      ],
+      "__typename": null,
+      "edges": null,
+      "pageInfo": null,
     },
     "count": 10,
     "header": Object {
@@ -93,104 +42,119 @@ Object {
         "hasNextPage": false,
       },
     },
-    "staredPosts": Array [
-      Object {
-        "__typename": "Post",
-        "author": Object {
-          "__typename": "User",
-          "age": 10,
-          "email": "wwwy3y3@gmail.com",
-          "id": "1",
-          "images": Array [
-            Object {
-              "url": "url",
-            },
-          ],
-          "name": "user1",
-          "posts": Array [
-            "1",
-            "2",
-          ],
-        },
-        "id": "1",
-        "notes": Object {
+    "staredPosts": Object {
+      "__typename": null,
+      "edges": Array [
+        Object {
           "__typename": null,
-          "edges": Array [
-            Object {
+          "cursor": "1",
+          "node": Object {
+            "__typename": "Post",
+            "author": Object {
+              "__typename": "User",
+              "age": 10,
+              "email": "wwwy3y3@gmail.com",
+              "id": "1",
+              "images": Array [
+                Object {
+                  "url": "url",
+                },
+              ],
+              "name": "user1",
+              "posts": Array [
+                "1",
+                "2",
+              ],
+            },
+            "id": "1",
+            "notes": Object {
               "__typename": null,
-              "cursor": "0",
-              "node": Object {
+              "edges": Array [
+                Object {
+                  "__typename": null,
+                  "cursor": "0",
+                  "node": Object {
+                    "__typename": null,
+                    "id": "0",
+                    "text": "note1",
+                  },
+                },
+                Object {
+                  "__typename": null,
+                  "cursor": "1",
+                  "node": Object {
+                    "__typename": null,
+                    "id": "1",
+                    "text": "note2",
+                  },
+                },
+              ],
+              "pageInfo": Object {
                 "__typename": null,
-                "id": "0",
-                "text": "note1",
+                "hasNextPage": false,
               },
             },
-            Object {
-              "__typename": null,
-              "cursor": "1",
-              "node": Object {
-                "__typename": null,
-                "id": "1",
-                "text": "note2",
-              },
-            },
-          ],
-          "pageInfo": Object {
-            "__typename": null,
-            "hasNextPage": false,
+            "title": "123",
           },
         },
-        "title": "123",
-      },
-      Object {
-        "__typename": "Post",
-        "author": Object {
-          "__typename": "User",
-          "age": 20,
-          "email": "wwwy3y3@gmail.com",
-          "id": "2",
-          "images": Array [
-            Object {
-              "url": "url",
-            },
-          ],
-          "name": "user2",
-          "posts": Array [
-            "1",
-            "2",
-          ],
-        },
-        "id": "2",
-        "notes": Object {
+        Object {
           "__typename": null,
-          "edges": Array [
-            Object {
+          "cursor": "2",
+          "node": Object {
+            "__typename": "Post",
+            "author": Object {
+              "__typename": "User",
+              "age": 20,
+              "email": "wwwy3y3@gmail.com",
+              "id": "2",
+              "images": Array [
+                Object {
+                  "url": "url",
+                },
+              ],
+              "name": "user2",
+              "posts": Array [
+                "1",
+                "2",
+              ],
+            },
+            "id": "2",
+            "notes": Object {
               "__typename": null,
-              "cursor": "0",
-              "node": Object {
+              "edges": Array [
+                Object {
+                  "__typename": null,
+                  "cursor": "0",
+                  "node": Object {
+                    "__typename": null,
+                    "id": "0",
+                    "text": "note3",
+                  },
+                },
+                Object {
+                  "__typename": null,
+                  "cursor": "1",
+                  "node": Object {
+                    "__typename": null,
+                    "id": "1",
+                    "text": "note4",
+                  },
+                },
+              ],
+              "pageInfo": Object {
                 "__typename": null,
-                "id": "0",
-                "text": "note3",
+                "hasNextPage": false,
               },
             },
-            Object {
-              "__typename": null,
-              "cursor": "1",
-              "node": Object {
-                "__typename": null,
-                "id": "1",
-                "text": "note4",
-              },
-            },
-          ],
-          "pageInfo": Object {
-            "__typename": null,
-            "hasNextPage": false,
+            "title": "123",
           },
         },
-        "title": "123",
+      ],
+      "pageInfo": Object {
+        "__typename": null,
+        "hasNextPage": false,
       },
-    ],
+    },
   },
 }
 `;

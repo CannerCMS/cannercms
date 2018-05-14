@@ -51,6 +51,8 @@ export function schemaToQueriesObject (schema, rootSchema, state = {}) {
         where: randomKey(),
         orderBy: randomKey()
       };
+      rtn.connection = true;
+      rtn.alias = key;
     } else if (isRelationToManyType(value) && !state.inRelation) {
       const relationTo = value.relation.to;
       const qlo = schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true});
@@ -66,6 +68,8 @@ export function schemaToQueriesObject (schema, rootSchema, state = {}) {
         where: randomKey(),
         orderBy: randomKey()
       };
+      rtn.connection = true;
+      rtn.alias = key;
     } else {
       rtn = null;
     }
