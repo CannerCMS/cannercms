@@ -48,14 +48,14 @@ describe('query', () => {
     query.updateQueries(['posts'], 'args', {
       orderBy: 'title_DESC'
     });
-    expect(query.variables.RANDOM_KEY).toEqual('title_DESC');
+    expect(query.variables.$RANDOM_KEY).toEqual('title_DESC');
   });
 
   it('should get root gql', () => {
-    expect(query.toGQL()).toEqual(`{posts: postsConnection(pagination: RANDOM_KEY,where: RANDOM_KEY,orderBy: RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
+    expect(query.toGQL()).toEqual(`{posts: postsConnection(pagination: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
   });
 
   it('should get posts gql', () => {
-    expect(query.toGQL('posts')).toEqual(`{posts: postsConnection(pagination: RANDOM_KEY,where: RANDOM_KEY,orderBy: RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
+    expect(query.toGQL('posts')).toEqual(`{posts: postsConnection(pagination: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
   });
 });

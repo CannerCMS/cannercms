@@ -167,7 +167,7 @@ function genArgs(args) {
 
 function randomKey () {
   if (process.env.NODE_ENV === 'test') {
-    return `RANDOM_KEY`;
+    return `$RANDOM_KEY`;
   }
   return `$KEY${Math.random().toString(36).substr(2, 7)}`
 }

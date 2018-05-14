@@ -89,15 +89,15 @@ export default class Toolbar extends React.PureComponent<Props> {
   changeSize = (size: number) => {
     const {value, updateQuery, args, refId} = this.props;
     const pagination = parsePagination(args.pagination);
-    if (pagination.first) {
-      updateQuery(refId.getPathArr(), {...args, pagination: {
-        first: size,
-        after: pagination.after || value.get('edges').last().get('cursor')
-      }});
-    } else {
+    if ('last' in pagination) {
       updateQuery(refId.getPathArr(), {...args, pagination: {
         last: size,
         before: pagination.before || value.getIn(['edges', 0, 'cursor'])
+      }});
+    } else {
+      updateQuery(refId.getPathArr(), {...args, pagination: {
+        first: size,
+        after: pagination.after || value.get('edges').last().get('cursor')
       }});
     }
   }

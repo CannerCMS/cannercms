@@ -6,6 +6,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import RefId from 'canner-ref-id';
 import {Query} from '../../src/query';
 import {fromJS} from 'immutable';
+import {mapValues} from 'lodash';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -102,7 +103,7 @@ describe('parse where', () => {
 });
 
 describe('toolbar method', () => {
-  let props, query, refId, items, value, toolbar;
+  let props, query, refId, items, value, toolbar, updateQuery;
 
   beforeEach(() => {
     const schema = {
@@ -124,10 +125,11 @@ describe('toolbar method', () => {
         }
       }
     };
-    refId = new RefId('posts');
     query = new Query({
       schema
     });
+    updateQuery = jest.fn();
+    refId = new RefId('posts');
     value = fromJS({
       edges: [{
         cursor: "0",
@@ -152,7 +154,8 @@ describe('toolbar method', () => {
       query,
       value,
       toolbar,
-      args: query.getQueries(refId.getPathArr()).args,
+      updateQuery,
+      args: mapValues(query.getQueries(refId.getPathArr()).args, v => query.getVairables()[v]),
     };
   });
 
@@ -163,7 +166,7 @@ describe('toolbar method', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should change order', () => {
+  it('should call updateQuery', () => {
     const wrapper = shallow(<Toolbar {...props}>
       <div></div>
     </Toolbar>);
@@ -171,11 +174,15 @@ describe('toolbar method', () => {
       orderField: 'like',
       orderType: 'DESC'
     });
-    const {orderBy} = query.getQueries(refId.getPathArr()).args;
-    expect(orderBy).toBe('RANDOM_KEY');
+    expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
+    expect(updateQuery.mock.calls[0][1]).toEqual({
+      orderBy: 'like_DESC',
+      pagination: undefined,
+      where: undefined
+    });
   });
 
-  it('should change filter', () => {
+  it('should call updateQuery', () => {
     const wrapper = shallow(<Toolbar {...props}>
       <div></div>
     </Toolbar>);
@@ -184,17 +191,28 @@ describe('toolbar method', () => {
         gt: 1
       }
     });
-    const {where} = query.getQueries(refId.getPathArr()).args;
-    expect(where).toEqual("RANDOM_KEY");
+    expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
+    expect(updateQuery.mock.calls[0][1]).toEqual({
+      orderBy: undefined,
+      pagination: undefined,
+      where: {share_gt: 1}
+    });
   });
 
-  it('should nextPage', () => {
+  it('should call updateQuery', () => {
     const wrapper = shallow(<Toolbar {...props}>
       <div></div>
     </Toolbar>);
     wrapper.instance().nextPage();
-    const {pagination} = query.getQueries(refId.getPathArr()).args;
-    expect(pagination).toEqual("RANDOM_KEY");
+    expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
+    expect(updateQuery.mock.calls[0][1]).toEqual({
+      orderBy: undefined,
+      pagination: {
+        after: "0",
+        first: 10
+      },
+      where: undefined
+    });
   });
 
   it('should prevPage', () => {
@@ -202,8 +220,15 @@ describe('toolbar method', () => {
       <div></div>
     </Toolbar>);
     wrapper.instance().prevPage();
-    const {pagination} = query.getQueries(refId.getPathArr()).args;
-    expect(pagination).toEqual("RANDOM_KEY");
+    expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
+    expect(updateQuery.mock.calls[0][1]).toEqual({
+      orderBy: undefined,
+      pagination: {
+        before: "0",
+        last: 10
+      },
+      where: undefined
+    });
   });
 
   it('should changeSize', () => {
@@ -211,7 +236,14 @@ describe('toolbar method', () => {
       <div></div>
     </Toolbar>);
     wrapper.instance().changeSize(20);
-    const {pagination} = query.getQueries(refId.getPathArr()).args;
-    expect(pagination).toEqual("RANDOM_KEY");
+    expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
+    expect(updateQuery.mock.calls[0][1]).toEqual({
+      orderBy: undefined,
+      pagination: {
+        first: 20,
+        after: "0"
+      },
+      where: undefined
+    });
   });
 });

@@ -47,7 +47,7 @@ exports[`toolbar method should render 1`] = `
         }
       }
       options={undefined}
-      orderField="RANDOM"
+      orderField={null}
       orderType="ASC"
     />
   }
