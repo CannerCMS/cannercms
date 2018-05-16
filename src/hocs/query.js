@@ -20,6 +20,10 @@ type Props = {
   updateQuery: Function,
   ui: string,
   path: string,
+  relation: {
+    type: string,
+    to: string
+  },
   toolbar: {
     sort?: {
       component?: React.ComponentType<*>,
@@ -120,16 +124,16 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching, rootValue} = this.state;
-      const {toolbar, query, refId, items, type, updateQuery, path} = this.props;
+      const {toolbar, query, refId, items, type, updateQuery, path, relation} = this.props;
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
-      if (type === 'array' || type === 'relation') {
+      if (type === 'array' || (type === 'relation' && relation.type === 'toMany')) {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v]);
         return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value} updateQuery={updateQuery}>
-          <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges']).map(item => item.get('node'))} />
+          <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges'], []).map(item => item.get('node'))} />
         </Toolbar>;
       }
       return <Com {...this.props} rootValue={rootValue} value={value} />;

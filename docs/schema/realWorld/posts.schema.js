@@ -8,6 +8,7 @@ const Posts = ({attributes}) => <array keyName="posts" title="posts" {...attribu
     uiParams={{
       textCol: 'name'
     }}
+    ui="multipleSelect"
   />
 </array>
 

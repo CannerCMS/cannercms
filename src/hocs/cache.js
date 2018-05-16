@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import {mutate as defaultMutate, ActionManager as DefaultAciontManager} from '../action';
-import type {Action, ActionType} from '../action/types';
 import {isCompleteContain, genPaths} from './route';
-import {fromJS} from 'immutable';
+import type {Action, ActionType} from '../action/types';
+
 type Props = {
   request: Function,
   fetch: Function,
@@ -18,7 +18,7 @@ type Props = {
 }
 
 type State = {
-  data: *
+  [string]: *
 }
 
 export default function withCache(Com: React.ComponentType<*>, options: {
@@ -32,7 +32,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       [key: string]: Array<{id: string, callback: Function}>
     }
     subscribers = {};
-    subscription: any
+    subscription: any;
     constructor(props: Props) {
       super(props);
       const {routes, params, cacheActions, pattern, path} = this.props;
@@ -43,7 +43,6 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         this.actionManager = new ActionManager();
       }
       this.state = {
-        data: fromJS({})
       };
     }
 
@@ -70,7 +69,10 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       if (!this.actionManager) {
         return;
       }
-      const {data} = this.state;
+      const data = this.state[key];
+      if (!data) {
+        return;
+      }
       const actions = this.actionManager.getActions(key, id);
       const mutatedData = actions.reduce((result, action) => {
         return mutate(result, action);
@@ -88,7 +90,9 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       }
       const actions = this.actionManager.getActions(key);
       return fetch(key).then(data => {
-        this.setState({data});
+        this.setState({
+          [key]: data
+        });
         this._subscribe(key);
         return actions.reduce((result, action) => {
           return mutate(result, action);
@@ -100,7 +104,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       const {subscribe} = this.props;
       this.subscription = subscribe(key, (data) => {
         this.setState({
-          data
+          [key]: data
         }, () => this.publish(key));
       });
     }

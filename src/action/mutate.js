@@ -57,12 +57,34 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
       }
 
       case 'CONNECT': {
+        if (draft[key].edges) {
+          const index = findIndex(draft[key].edges || [], item => item.cursor === id);
+          const relationField = draft[key].edges[index].node[path];
+          if (relationField.edges) {
+            draft[key].edges[index].node[path].edges.push({
+              cursor: value.id,
+              node: value
+            });
+          } else {
+            draft[key].edges[index].node[path] = value;
+          }
+          break;
+        }
         const index = findIndex(draft[key] || [], item => item.id === id);
         draft[key][index][path].push(value);
         break;
       }
 
       case 'DISCONNECT': {
+        if (draft[key].edges) {
+          const index = findIndex(draft[key].edges || [], item => item.cursor === id);
+          const relationField = draft[key].edges[index].node[path];
+          if (relationField.edges) {
+            draft[key].edges[index].node[path].edges = draft[key].edges[index].node[path].edges.filter(item => item.cursor !== value.id);
+          } else {
+            draft[key].edges[index].node[path] = null;
+          }
+        }
         const index = findIndex(draft[key] || [], item => item.id === id);
         remove(draft[key][index][path], item => item.id === id);
         break;
@@ -101,7 +123,7 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
     }
     case 'UPDATE_ARRAY': {
       if (originValue.hasIn([key, 'edges'])) {
-        return originValue.updateIn([key, 'edges'], list => list.map(item => item.getIn(['node', 'id']) === id ? item.mergeIn(['node'], value): item));
+        return originValue.updateIn([key, 'edges'], list => list.map(item => item.get('cursor') === id ? item.mergeIn(['node'], value): item));
       }
       return originValue.update(key, list => list.map(item => item.get('id') === id ? item.merge(value): item));
     }
@@ -109,7 +131,7 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
     case 'DELETE_ARRAY': {
       if (originValue.hasIn([key, 'edges'])) {
         return originValue.updateIn([key, 'edges'], list =>
-          list.filter(item => item.getIn(['node', 'id']) !== id));
+          list.filter(item => item.get('cursor') !== id));
       }
       return originValue.update(key, list => list.filter(item => item.get('id') !== id));
     }
@@ -119,12 +141,39 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
     }
 
     case 'CONNECT': {
+      if (originValue.hasIn([key, 'edges'])) {
+        const index = (originValue.getIn([key, 'edges']) || new List()).findIndex(item => item.get('cursor') === id);
+        if (index === -1) return;
+        return originValue.updateIn([key, 'edges', index, 'node', path], relationField => {
+          if (Map.isMap(relationField) && relationField.has('edges')) {
+            return relationField.update('edges', list => list.push(fromJS({
+              cursor: value.get('id'),
+              node: value
+            })));
+          } else {
+            return value;
+          }
+        });
+      }      
       const index = (originValue.get(key) || new List()).findIndex(item => item.get('id') === id);
+      if (index === -1) return;
       return originValue.updateIn([key, index, path], list => list.push(value));
     }
 
     case 'DISCONNECT': {
+      if (originValue.hasIn([key, 'edges'])) {
+        const index = (originValue.getIn([key, 'edges']) || new List()).findIndex(item => item.get('cursor') === id);
+        if (index === -1) return;
+        return originValue.updateIn([key, 'edges', index, 'node', path], relationField => {
+          if (Map.isMap(relationField) && relationField.has('edges')) {
+            return relationField.update('edges', list => list.filter(item => item.get('cursor') !== value.get('id')));
+          } else {
+            return null;
+          }
+        });
+      }
       const index = (originValue.get(key) || new List()).findIndex(item => item.get('id') === id);
+      if (index === -1) return;
       return originValue.updateIn([key, index, path], list => list.filter(item => item.get('id') !== value.get('id')));
     }
 

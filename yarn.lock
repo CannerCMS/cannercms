@@ -348,9 +348,9 @@
     "@canner/qa-compiler" "^0.1.4"
     schema-utils "^0.4.5"
 
-"@canner/canner-script@^1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@canner/canner-script/-/canner-script-1.0.15.tgz#17554a6a7c69ca6e231b4ac4992e8404b67dadda"
+"@canner/canner-script@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@canner/canner-script/-/canner-script-1.0.17.tgz#f907e218dfd1ba4cadb86eda54a7fb5bb17e48a3"
   dependencies:
     babel-core "^6.26.3"
     babel-plugin-transform-es2015-modules-commonjs "^6.26.2"

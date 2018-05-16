@@ -12,13 +12,6 @@ Object {
     "connection": true,
     "fields": Object {
       "bestAuthor": Object {
-        "alias": "bestAuthor",
-        "args": Object {
-          "orderBy": "$RANDOM_KEY",
-          "pagination": "$RANDOM_KEY",
-          "where": "$RANDOM_KEY",
-        },
-        "connection": true,
         "fields": Object {
           "email": null,
           "id": null,

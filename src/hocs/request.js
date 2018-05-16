@@ -56,7 +56,6 @@ export default function withRequest(Com: React.ComponentType<*>) {
       if (!action) {
         throw new Error('invalid change');
       }
-
       return request(action);
     }
 
