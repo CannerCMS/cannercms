@@ -17,21 +17,7 @@ export default class ConnectPattern implements Pattern<ConnectAction> {
   }
 
   mergeConnectAndDisconnectAndDelete = () => {
-    let ids = [];
-    this.actions = this.actions.reverse()
-      .filter(action => {
-        if (action.type === 'CREATE_AND_CONNECT') {
-          return true;
-        }
-        const id = action.payload.value.id;
-        if (ids.indexOf(id) === -1) {
-          ids.push(id);
-          return true;
-        } else {
-          return false;
-        }
-      })
-      .reverse();
+    
   }
 
   mergeAction = (): Array<ConnectAction> => {
