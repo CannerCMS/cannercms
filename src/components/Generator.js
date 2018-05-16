@@ -121,35 +121,36 @@ export default class Generator extends React.PureComponent<Props, State> {
   prerender = (node: Node): Node => {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
+    const copyNode = {...node};
     const {layouts} = this.props;
     let component;
-    if (isLayout(node)) {
-      component = get(layouts, node.component);
-      component = this.wrapByHOC(component, (node.hocs || ['containerRouter']).slice() || []);
-    } else if (isComponent(node)) { // TODO: need to fix, turn plugins to components in compiler
+    if (isLayout(copyNode)) {
+      component = get(layouts, copyNode.component);
+      component = this.wrapByHOC(component, (copyNode.hocs || ['containerRouter']).slice() || []);
+    } else if (isComponent(copyNode)) { // TODO: need to fix, turn plugins to components in compiler
 
-      if (isFieldset(node)) {
+      if (isFieldset(copyNode)) {
         component = () => <Item />;
       } else {
         component = Loadable({
-          loader: () => node.loader,
+          loader: () => copyNode.loader,
           loading: () => <div>loading</div>,
         });
       }
-      component = this.wrapByHOC(component, node.hocs.slice() || []);
+      component = this.wrapByHOC(component, copyNode.hocs.slice() || []);
     }
 
     if (!component) {
-      throw new Error(`invalid node, name: ${node.keyName}, nodeType: ${node.nodeType}`);
+      throw new Error(`invalid node, name: ${copyNode.keyName}, nodeType: ${copyNode.nodeType}`);
     }
 
-    node.component = component;
-    if (node.children) {
-      node.children = node.children.map((child) => {
+    copyNode.component = component;
+    if (copyNode.children) {
+      copyNode.children = copyNode.children.map((child) => {
         return this.prerender(child);
       });
     }
-    return node;
+    return copyNode;
   }
 
   wrapByHOC = (component: React.ComponentType<*>, hocNames: Array<string>): React.ComponentType<*> => {
