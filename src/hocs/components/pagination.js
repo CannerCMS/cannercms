@@ -1,9 +1,8 @@
 // @flow
 import React, {Component, Fragment} from 'react';
-import {Button, Icon, Select} from 'antd';
+import {Button, Icon} from 'antd';
 import styled from 'styled-components';
 const ButtonGroup = Button.Group;
-const Option = Select.Option;
 const Wrapper = styled.div`
   text-align: right;
   margin-top: ${props => props.marginTop}px;

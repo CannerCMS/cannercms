@@ -125,7 +125,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
     render() {
       const {value, isFetching, rootValue} = this.state;
       const {toolbar, query, refId, items, type, path, relation, updateQuery} = this.props;
-      console.log(query.getQueries(path.split('/').args));
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
@@ -134,7 +133,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v]);
         return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value} updateQuery={updateQuery}>
-          <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges'], []).map(item => item.get('node'))} />
+          <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges'], new List()).map(item => item.get('node'))} />
         </Toolbar>;
       }
       return <Com {...this.props} rootValue={rootValue} value={value} />;
