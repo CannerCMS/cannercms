@@ -3,6 +3,7 @@ import * as React from 'react';
 import {mutate as defaultMutate, ActionManager as DefaultAciontManager} from '../action';
 import {isCompleteContain, genPaths} from './route';
 import type {Action, ActionType} from '../action/types';
+import { isArray } from 'lodash';
 
 type Props = {
   request: Function,
@@ -115,15 +116,25 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       }
     }
 
-    request = (action: Action<ActionType>): Promise<*> => {
+    request = (action: Array<Action<ActionType>> | Action<ActionType>): Promise<*> => {
       // use action manager cache the actions
       // update state.actions
       const {request} = this.props;
       if (!this.actionManager) {
         return request(action);
       }
-      this.actionManager.addAction(action);
-      const {key, id} = action.payload;
+      let key, id;
+      if (isArray(action)) {
+        action.forEach(ac => {
+          this.actionManager.addAction(ac);
+        });
+        key = action[0].payload.key;
+        id = action[0].payload.id;
+      } else {
+        this.actionManager.addAction(action);
+        key = action.payload.key;
+        id = action.payload.id;
+      }
       this.publish(key, id);
       return Promise.resolve();
     }
@@ -137,9 +148,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       const actions = this.actionManager.getActions(key, id);
       // $FlowFixMe
       this.actionManager.removeActions(key, id);
-      actions.forEach(action => {
-        request(action);
-      });
+      request(actions);
       // if this cache is on the first layer,
       // it should call the deploy after request
       if (pattern.split('.').length === 1) {

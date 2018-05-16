@@ -14,6 +14,7 @@ import gql from 'graphql-tag';
 import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
+import { isArray } from 'lodash';
 type Props = {
   schema: {[key: string]: any},
   dataDidChange: void => void,
@@ -113,15 +114,28 @@ export default class Provider extends React.PureComponent<Props, State> {
     return client.resetStore();
   }
 
-  request = (action: Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {
+  request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {
     const {client} = this.props;
     const {write = true} = options;
-    this.actionManager.addAction(action);
-    const query = gql`${this.query.toGQL(action.payload.key)}`;
-    const variables = this.query.getVairables();
-    const data = client.readQuery({query, variables});
-    const mutatedData = mutatePure(data, action)
-    this.log('request', action, mutatedData, data);
+    let query, mutatedData, data;
+    const variables = this.query.getVairables();  
+    if (isArray(action)) {
+      // $FlowFixMe
+      action.forEach(ac => this.actionManager.addAction(ac));
+      query = gql`${this.query.toGQL(action[0].payload.key)}`;
+      data = client.readQuery({query, variables});
+      // $FlowFixMe
+      mutatedData = action.reduce((result, ac) => mutatePure(result, ac), data);
+    } else {
+      this.actionManager.addAction(action);
+      // $FlowFixMe
+      query = gql`${this.query.toGQL(action.payload.key)}`;
+      // $FlowFixMe
+      data = client.readQuery({query, variables});
+      mutatedData = mutatePure(data, action)
+    }
+    this.log('request', action, data);
+    this.log('mutatedData', mutatedData);
     if (write) {
       client.writeQuery({
         query: query,
