@@ -60,10 +60,12 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
         if (draft[key].edges) {
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
           const relationField = draft[key].edges[index].node[path];
+          value.__typename = null;
           if (relationField.edges) {
             draft[key].edges[index].node[path].edges.push({
               cursor: value.id,
-              node: value
+              node: value,
+              __typename: null,
             });
           } else {
             draft[key].edges[index].node[path] = value;
@@ -145,10 +147,12 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
         const index = (originValue.getIn([key, 'edges']) || new List()).findIndex(item => item.get('cursor') === id);
         if (index === -1) return;
         return originValue.updateIn([key, 'edges', index, 'node', path], relationField => {
+          value.update('__typename', typename => typename || null);
           if (Map.isMap(relationField) && relationField.has('edges')) {
             return relationField.update('edges', list => list.push(fromJS({
               cursor: value.get('id'),
-              node: value
+              node: value,
+              __typename: null
             })));
           } else {
             return value;
