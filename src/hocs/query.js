@@ -124,7 +124,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching, rootValue} = this.state;
-      const {toolbar, query, refId, items, type, updateQuery, path, relation} = this.props;
+      const {toolbar, query, refId, items, type, path, relation, updateQuery} = this.props;
+      console.log(query.getQueries(path.split('/').args));
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }

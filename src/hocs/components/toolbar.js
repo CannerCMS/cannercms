@@ -6,6 +6,7 @@ import Pagination from './pagination';
 import Sort from './sort';
 import Filter from './filter';
 import isObject from 'lodash/isObject';
+import {Map} from 'immutable';
 import type {Query} from '../../query';
 import type RefId from 'canner-ref-id';
 
@@ -97,7 +98,7 @@ export default class Toolbar extends React.PureComponent<Props> {
     } else {
       updateQuery(refId.getPathArr(), {...args, pagination: {
         first: size,
-        after: pagination.after || value.get('edges').last().get('cursor')
+        after: pagination.after || (value.get('edges').last() || new Map()).get('cursor')
       }});
     }
   }
