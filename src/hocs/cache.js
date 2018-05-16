@@ -125,14 +125,19 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       }
       let key, id;
       if (isArray(action)) {
+        // $FlowFixMe
         action.forEach(ac => {
+          // $FlowFixMe
           this.actionManager.addAction(ac);
         });
         key = action[0].payload.key;
         id = action[0].payload.id;
       } else {
+        // $FlowFixMe
         this.actionManager.addAction(action);
+        // $FlowFixMe
         key = action.payload.key;
+        // $FlowFixMe
         id = action.payload.id;
       }
       this.publish(key, id);
