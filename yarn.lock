@@ -2662,6 +2662,13 @@ caniuse-lite@^1.0.30000792:
   version "1.0.30000830"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000830.tgz#cb96b8a2dd3cbfe04acea2af3c4e894249095328"
 
+canner-helpers@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-0.0.1.tgz#e25ce16f6831e99dbc159e55ff9c457362b58ba1"
+  dependencies:
+    immutable "^4.0.0-rc.9"
+    lodash "^4.17.5"
+
 canner-image-gallery@^0.1.1:
   version "0.1.2"
   resolved "https://registry.npmjs.org/canner-image-gallery/-/canner-image-gallery-0.1.2.tgz#65e8a122e4e3d6b4e808e9bf6092e0c0d0cf3a25"
@@ -2673,9 +2680,63 @@ canner-image-gallery@^0.1.1:
     react-loading-image "^0.3.0"
     styled-components "^3.2.3"
 
+canner-layouts@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/canner-layouts/-/canner-layouts-1.0.2.tgz#22960a7dfed12a363cfe3d3898a1c6ce4852f5fb"
+
 canner-ref-id@^0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/canner-ref-id/-/canner-ref-id-0.1.2.tgz#9c534d517818e915cef1004116012458bd165d83"
+
+canner-schema-loader@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/canner-schema-loader/-/canner-schema-loader-1.0.20.tgz#a412934f97cb9bac3326f91ba642f561bf90718b"
+  dependencies:
+    "@canner/antd-array-gallery" "^0.1.0"
+    "@canner/antd-array-panel" "^0.1.0"
+    "@canner/antd-array-slider" "^0.1.0"
+    "@canner/antd-array-tab_bottom" "^0.1.0"
+    "@canner/antd-array-tab_left" "^0.1.0"
+    "@canner/antd-array-tab_right" "^0.1.0"
+    "@canner/antd-array-tab_top" "^0.1.0"
+    "@canner/antd-array-table" "^0.1.0"
+    "@canner/antd-array-table_route" "^0.1.0"
+    "@canner/antd-array-tabs" "^0.1.0"
+    "@canner/antd-array-tag" "^0.1.0"
+    "@canner/antd-boolean-card" "^0.1.0"
+    "@canner/antd-boolean-switch" "^0.1.0"
+    "@canner/antd-locales" "^0.1.0"
+    "@canner/antd-number-input" "^0.1.0"
+    "@canner/antd-number-rate" "^0.1.0"
+    "@canner/antd-number-slider" "^0.1.0"
+    "@canner/antd-object-map" "^0.1.0"
+    "@canner/antd-object-options" "^0.1.0"
+    "@canner/antd-object-variants" "^0.1.0"
+    "@canner/antd-relation-multiple_select" "^0.1.0"
+    "@canner/antd-relation-single_select" "^0.1.0"
+    "@canner/antd-share-card" "^0.1.0"
+    "@canner/antd-share-relation" "^0.1.0"
+    "@canner/antd-string-card" "^0.1.0"
+    "@canner/antd-string-date_time_picker" "^0.1.0"
+    "@canner/antd-string-editor" "^0.1.0"
+    "@canner/antd-string-image" "^0.1.0"
+    "@canner/antd-string-input" "^0.1.0"
+    "@canner/antd-string-link" "^0.1.0"
+    "@canner/antd-string-radio" "^0.1.0"
+    "@canner/antd-string-select" "^0.1.0"
+    "@canner/antd-string-textarea" "^0.1.0"
+    "@canner/antd-string-time_picker" "^0.1.0"
+    "@canner/qa-compiler" "^0.1.4"
+    schema-utils "^0.4.5"
+
+canner-script@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/canner-script/-/canner-script-1.0.19.tgz#e1a4e5ace84bdf59182e58f308f78e42ed54dd1d"
+  dependencies:
+    babel-core "^6.26.3"
+    babel-plugin-transform-es2015-modules-commonjs "^6.26.2"
+    eval "^0.1.2"
+    object-path "^0.11.4"
 
 caseless@~0.11.0:
   version "0.11.0"
