@@ -11,7 +11,7 @@ module.exports = {
       {
         test: /canner\.schema\.js$/,
         use: [{
-          loader: '@canner/canner-schema-loader',
+          loader: 'canner-schema-loader',
         }, {
           loader: 'babel-loader',
         }],

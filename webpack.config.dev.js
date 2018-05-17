@@ -36,7 +36,7 @@ module.exports = {
       {
         test: /\.schema\.js$/,
         use: [{
-          loader: '@canner/canner-schema-loader',
+          loader: 'canner-schema-loader',
           options: {
             visitors: path.resolve('lib', 'visitors')
           }
