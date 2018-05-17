@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import {HOCContext} from './context';
-import {Context} from '@canner/react-cms-helpers';
+import {Context} from 'canner-helpers';
 import type {Query} from '../query';
 
 type Props = {

@@ -12,11 +12,11 @@ import zh from 'react-intl/locale-data/zh';
 import hocsLocales from '../hocs/components/locale';
 import pluginsLocales from '@canner/antd-locales';
 import queryString from 'query-string';
-import defaultLayouts from '@canner/react-cms-layouts';
+import defaultLayouts from 'canner-layouts';
 import {ImgurService} from '@canner/image-service-config';
 import type ApolloClient from 'apollo-client';
 import {createClient} from '@canner/graphql-resolver';
-import {createEmptyData} from '@canner/react-cms-helpers';
+import {createEmptyData} from 'canner-helpers';
 const lang = 'zh';
 addLocaleData([...en, ...zh]);
 

@@ -4,7 +4,7 @@ import Ajv from "ajv";
 import React, {PureComponent} from "react";
 import {fromJS, Map} from "immutable";
 import type RefId from 'canner-ref-id';
-import {createEmptyData} from '@canner/react-cms-helpers';
+import {createEmptyData} from 'canner-helpers';
 
 const defaultErrorHandle = () => {
   return "預設資料錯誤";

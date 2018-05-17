@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Tabs} from 'antd';
-import {Item} from '@canner/react-cms-helpers';
+import {Item} from 'canner-helpers';
 const TabPane = Tabs.TabPane;
 
 export default class Tab extends React.Component {

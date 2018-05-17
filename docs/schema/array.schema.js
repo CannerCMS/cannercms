@@ -1,6 +1,6 @@
 /** @jsx builder */
 
-import builder from '@canner/canner-script';
+import builder from 'canner-script';
 const Arrays = ({attributes}) => <object {...attributes}>
   <array keyName="tabs" title="Tabs">
     <string keyName="children" title="Children" />
