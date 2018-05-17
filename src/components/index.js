@@ -2,28 +2,36 @@
 /* global IMGUR_CLIENT_ID */
 
 import * as React from 'react';
-import Provider from './Provider';
-import Generator from './Generator';
-import type {Node} from './Generator';
-import hocs from '../hocs';
-import { IntlProvider, addLocaleData } from 'react-intl';
-import en from 'react-intl/locale-data/en';
-import zh from 'react-intl/locale-data/zh';
-import hocsLocales from '../hocs/components/locale';
-import pluginsLocales from '@canner/antd-locales';
 import queryString from 'query-string';
 import defaultLayouts from '@canner/react-cms-layouts';
 import {ImgurService} from '@canner/image-service-config';
-import type ApolloClient from 'apollo-client';
-import {createClient} from '@canner/graphql-resolver';
+import {MemoryConnector, createClient} from '@canner/graphql-resolver';
 import {createEmptyData} from '@canner/react-cms-helpers';
+import {isEmpty} from 'lodash';
+import Provider from './Provider';
+import Generator from './Generator';
+import hocs from '../hocs';
+
+// i18n
+import en from 'react-intl/locale-data/en';
+import zh from 'react-intl/locale-data/zh';
+import {IntlProvider, addLocaleData} from 'react-intl';
+import hocsLocales from '../hocs/components/locale';
+import pluginsLocales from '@canner/antd-locales';
 const lang = 'zh';
 addLocaleData([...en, ...zh]);
+
+// type
+import type ApolloClient from 'apollo-client';
+import type {Node} from './Generator';
 
 type Props = {
   schema: {
     cannerSchema: {[key: string]: any},
-    componentTree: {[key: string]: Node}
+    componentTree: {[key: string]: Node},
+    connector: any,
+    connectors: ?Object,
+    resolvers: ?Object
   },
   dataDidChange: void => void,
   children: React.ChildrenArray<React.Node>,
@@ -64,7 +72,8 @@ class CannerCMS extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-      const {cannerSchema} = props.schema;
+      let {cannerSchema, connector, connectors, resolvers} = props.schema;
+      // this a quick fix function because createClient use incorrect schema
       // eslint-disable-next-line
       const fixSchema = Object.keys(cannerSchema).reduce((result, key) => {
         let v = {...cannerSchema[key]};
@@ -77,9 +86,17 @@ class CannerCMS extends React.Component<Props, State> {
         result[key] = v;
         return result;
       }, {});
-      this.client = props.client || createClient({
+
+      if (!connector && isEmpty(connectors)) {
+        connector = new MemoryConnector({
+          defaultData: createEmptyData(cannerSchema).toJS()
+        });
+      }
+      this.client = createClient({
         schema: fixSchema,
-        defaultData: createEmptyData(cannerSchema).toJS()
+        connector,
+        connectors,
+        resolvers
       });
       const serviceConfig = new ImgurService({
         // $FlowFixMe: global
@@ -90,22 +107,9 @@ class CannerCMS extends React.Component<Props, State> {
         result[key] = serviceConfig;
         return result;
       }, {}), ...(props.imageServiceConfigs || {})};
-      this.endpoints = Object.keys(cannerSchema).reduce((result, key) => {
-        result[key] = cannerSchema[key].endpoint;
-        return result;
-      }, {});
       this.state = {
         connecting: true
       };
-  }
-
-  componentDidMount() {
-    // this.connect();
-  }
-
-  connect() {
-    Promise.all(this.endpoints.map(endpoint => endpoint.connector()))
-      .then(() => this.setState({connecting: false}));
   }
 
   render() {
