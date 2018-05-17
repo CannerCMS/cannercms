@@ -307,9 +307,9 @@
   version "0.1.2"
   resolved "https://registry.npmjs.org/@canner/canner-config/-/canner-config-0.1.2.tgz#5de7223ffe8df1cad9b71634cf211a9af0ac07dd"
 
-"@canner/canner-schema-loader@^1.0.17":
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@canner/canner-schema-loader/-/canner-schema-loader-1.0.17.tgz#5dbfdb36801db51b3c655dd31de72cbd0a4c43ec"
+"@canner/canner-schema-loader@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@canner/canner-schema-loader/-/canner-schema-loader-1.0.18.tgz#ea961db876f6a97130c0466c02a70de35b5608a6"
   dependencies:
     "@canner/antd-array-gallery" "^0.1.0"
     "@canner/antd-array-panel" "^0.1.0"

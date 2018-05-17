@@ -5,11 +5,10 @@ import Adapter from '../react163Adapter';
 import {schema, defaultData} from './data';
 import Provider from '../../src/components/Provider';
 // import {HOCContext as Context} from '../../src/hocs/context';
-import {createClient} from '@canner/graphql-resolver';
+import {createClient, MemoryConnector} from '@canner/graphql-resolver';
 import {schemaToQueriesObject, objectToQueries} from '../../src/query/utils';
 import {fromJS} from 'immutable';
 import gql from "graphql-tag";
-import mapValues from 'lodash/mapValues';
 import pick from 'lodash/pick';
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -22,16 +21,10 @@ describe('provider methods', () => {
   let client;
   beforeEach(() => {
     client = createClient({
-      schema: mapValues(schema, v => {
-        if (v.type === 'array') {
-          return {
-            type: 'array',
-            items: v.items.items
-          };
-        }
-        return v;
-      }),
-      defaultData
+      schema,
+      connector: new MemoryConnector({
+        defaultData
+      })
     })
   });
 
