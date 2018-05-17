@@ -73,7 +73,6 @@ class CannerCMS extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     let {cannerSchema, connector, connectors, resolvers} = props.schema;
-
     if (!connector && isEmpty(connectors)) {
       // use memory connector by default if no any connector given
       connector = new MemoryConnector({
