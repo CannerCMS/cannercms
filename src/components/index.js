@@ -3,10 +3,10 @@
 
 import * as React from 'react';
 import queryString from 'query-string';
-import defaultLayouts from '@canner/react-cms-layouts';
+import defaultLayouts from 'cms-layouts';
 import {ImgurService} from '@canner/image-service-config';
 import {MemoryConnector, createClient} from '@canner/graphql-resolver';
-import {createEmptyData} from '@canner/react-cms-helpers';
+import {createEmptyData} from 'cms-helpers';
 import {isEmpty} from 'lodash';
 import Provider from './Provider';
 import Generator from './Generator';
@@ -29,10 +29,10 @@ type Props = {
   schema: {
     cannerSchema: {[key: string]: any},
     componentTree: {[key: string]: Node},
-    connector: any,
-    connectors: ?Object,
-    resolvers: ?Object
   },
+  connector: any,
+  connectors: ?Object,
+  resolvers: ?Object,
   dataDidChange: void => void,
   children: React.ChildrenArray<React.Node>,
   client: ApolloClient,
@@ -68,11 +68,14 @@ class CannerCMS extends React.Component<Props, State> {
     hocs,
     layouts: {},
     baseUrl: '/',
+    connectors: {},
+    resolvers: {}
   }
 
   constructor(props: Props) {
     super(props);
-    let {cannerSchema, connector, connectors, resolvers} = props.schema;
+    const {cannerSchema} = props.schema;
+    let {connector, connectors, resolvers} = props;
     if (!connector && isEmpty(connectors)) {
       // use memory connector by default if no any connector given
       connector = new MemoryConnector({
