@@ -18,6 +18,7 @@ import { isArray } from 'lodash';
 type Props = {
   schema: {[key: string]: any},
   dataDidChange: void => void,
+  afterDeploy: void => void,
   children: React.ChildrenArray<React.Node>,
   client: ApolloClient,
   rootKey: string
@@ -84,7 +85,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   deploy = (key: string, id?: string): Promise.resolve<*> => {
-    const {client} = this.props;
+    const {client, afterDeploy} = this.props;
     let actions = this.actionManager.getActions(key, id);
     if (!actions || !actions.length) {
       return Promise.resolve();
@@ -105,6 +106,9 @@ export default class Provider extends React.PureComponent<Props, State> {
       this.actionManager.removeActions(key, id);
       client.resetStore();
       return fromJS(result.data);
+    }).then(result => {
+      afterDeploy && afterDeploy(result);
+      return result;
     });
   }
 

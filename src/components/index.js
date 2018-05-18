@@ -10,7 +10,6 @@ import hocs from '../hocs';
 
 import defaultLayouts from 'canner-layouts';
 import {ImgurService} from '@canner/image-service-config';
-import type ApolloClient from 'apollo-client';
 import {createClient, MemoryConnector} from '@canner/graphql-resolver';
 import {createEmptyData} from 'canner-helpers';
 
@@ -36,6 +35,7 @@ type Props = {
   connectors: ?Object,
   resolvers: ?Object,
   dataDidChange: void => void,
+  afterDeploy: void => void,
   children: React.ChildrenArray<React.Node>,
   client: ApolloClient,
   imageServiceConfigs: Object,
@@ -66,6 +66,7 @@ class CannerCMS extends React.Component<Props, State> {
       componentTree: {},
     },
     dataDidChange: () => {},
+    afterDeploy: () => {},
     componentTree: {},
     hocs,
     layouts: {},
@@ -84,13 +85,26 @@ class CannerCMS extends React.Component<Props, State> {
         defaultData: createEmptyData(cannerSchema).toJS()
       });
     }
+    const fixSchema = Object.keys(cannerSchema).reduce((result, key) => {
+      let v = {...cannerSchema[key]};
+      if (v.type === 'array') {
+        // v.items = v.items.items;
+        v.items.id = {
+          type: 'id'
+        }
+      }
+      result[key] = v;
+      return result;
+    }, {});
 
-    this.client = createClient({
-      schema: cannerSchema,
-      connector,
-      connectors,
-      resolvers
-    });
+    const options = {schema: fixSchema, resolvers};
+    if (connector) {
+      options.connector = connector;
+    }
+    if (!isEmpty(connectors)) {
+      options.connectors = connectors;
+    }
+    this.client = createClient(options);
     const serviceConfig = new ImgurService({
       // $FlowFixMe: global
       clientId: IMGUR_CLIENT_ID
@@ -113,6 +127,7 @@ class CannerCMS extends React.Component<Props, State> {
       layouts,
       baseUrl,
       history,
+      afterDeploy
     } = this.props;
     // const {connecting} = this.state;
     const {location, push} = history;
@@ -136,6 +151,7 @@ class CannerCMS extends React.Component<Props, State> {
           client={this.client}
           schema={schema.cannerSchema}
           dataDidChange={dataDidChange}
+          afterDeploy={afterDeploy}
           rootKey={routes[0]}
         >
           <Generator

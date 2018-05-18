@@ -10,7 +10,6 @@ import Arrays from './schema/array.schema';
 import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
 const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>;
-import {MemoryConnector} from '@canner/graphql-resolver';
 
 // import firebase from 'firebase';
 // firebase.initializeApp({
@@ -22,15 +21,7 @@ import {MemoryConnector} from '@canner/graphql-resolver';
 //   messagingSenderId: "983887338585"
 // });
 // const defaultApp = firebase.app();
-export default <root connector={new MemoryConnector({
-  defaultData: {
-    overview: {
-      string: {
-        input: 'test123'
-      }
-    }
-  }
-})}>
+export default <root>
   <object keyName="info">
     <array keyName="navs">
       <string keyName="title" />

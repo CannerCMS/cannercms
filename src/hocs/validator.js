@@ -44,7 +44,7 @@ export default (Plugin: any) => {
       };
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
       const {value, onChange, refId, type, defaultData} = this.props;
       if (this.validate(value)) {
         this.setState({
@@ -59,7 +59,7 @@ export default (Plugin: any) => {
       }
     }
 
-    componentWillReceiveProps(nextProps: Props) {
+    UNSAFE_componentWillReceiveProps(nextProps: Props) {
       const {onChange, refId, defaultData, type} = this.props;
       if (this.validate(nextProps.value)) {
         this.setState({

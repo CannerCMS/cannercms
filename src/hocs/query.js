@@ -73,7 +73,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.queryData();
     }
 
-    componentWillReceiveProps(props: Props) {
+    UNSAFE_componentWillReceiveProps(props: Props) {
       const {refId} = this.props;
       
       if (refId.toString() !== props.refId.toString()) {

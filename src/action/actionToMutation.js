@@ -32,6 +32,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       name = `delete${upperFirst(pluralize.singular(key.toLowerCase()))}`;
       break;
     default:
+      name = `update${upperFirst(pluralize.singular(key.toLowerCase()))}`;
       break;
   }
   set(mutation, `mutation.fields.${name}`, {
