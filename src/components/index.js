@@ -66,8 +66,19 @@ class CannerCMS extends React.Component<Props, State> {
     super(props);
       const {cannerSchema} = props.schema;
       // eslint-disable-next-line
+      const fixSchema = Object.keys(cannerSchema).reduce((result, key) => {
+        let v = {...cannerSchema[key]};
+        if (v.type === 'array') {
+          v.items = v.items.items;
+          v.items.id = {
+            type: 'id'
+          }
+        }
+        result[key] = v;
+        return result;
+      }, {});
       this.client = props.client || createClient({
-        schema: cannerSchema,
+        schema: fixSchema,
         defaultData: createEmptyData(cannerSchema).toJS()
       });
       const serviceConfig = new ImgurService({
