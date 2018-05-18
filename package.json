@@ -84,7 +84,6 @@
     "antd": "^3.2.3",
     "apollo-boost": "^0.1.4",
     "bson-objectid": "^1.2.2",
-    "canner-helpers": "^0.0.1",
     "canner-layouts": "^1.0.2",
     "canner-ref-id": "^0.1.2",
     "graphql": "^0.13.2",
@@ -107,6 +106,7 @@
     "styled-components": "^3.2.1"
   },
   "peerDependencies": {
+    "canner-helpers": "^0.1.8",
     "react": ">=16.3",
     "react-dom": ">=16.3"
   }

@@ -2601,9 +2601,9 @@ canner-compiler@^0.1.4:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/canner-compiler/-/canner-compiler-0.1.5.tgz#f8661991e6b72dbffcf2005c1f26f92dce472f18"
 
-canner-helpers@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-0.0.1.tgz#e25ce16f6831e99dbc159e55ff9c457362b58ba1"
+canner-helpers@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-0.1.8.tgz#d0e8e731f7cdad95e1d79c584b94f828907ad39e"
   dependencies:
     immutable "^4.0.0-rc.9"
     lodash "^4.17.5"
