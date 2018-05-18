@@ -53,33 +53,16 @@ Object {
       "subTitle": "subTitle",
       "title": "largeTitle",
     },
-    "navs": Object {
-      "__typename": null,
-      "edges": Array [
-        Object {
-          "__typename": null,
-          "cursor": "0",
-          "node": Object {
-            "__typename": null,
-            "id": "0",
-            "text": "nav1",
-          },
-        },
-        Object {
-          "__typename": null,
-          "cursor": "1",
-          "node": Object {
-            "__typename": null,
-            "id": "1",
-            "text": "nav2",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "__typename": null,
-        "hasNextPage": false,
+    "navs": Array [
+      Object {
+        "id": "0",
+        "text": "nav1",
       },
-    },
+      Object {
+        "id": "1",
+        "text": "nav2",
+      },
+    ],
     "staredPosts": Object {
       "__typename": null,
       "edges": Array [
@@ -105,33 +88,16 @@ Object {
               ],
             },
             "id": "1",
-            "notes": Object {
-              "__typename": null,
-              "edges": Array [
-                Object {
-                  "__typename": null,
-                  "cursor": "0",
-                  "node": Object {
-                    "__typename": null,
-                    "id": "0",
-                    "text": "note1",
-                  },
-                },
-                Object {
-                  "__typename": null,
-                  "cursor": "1",
-                  "node": Object {
-                    "__typename": null,
-                    "id": "1",
-                    "text": "note2",
-                  },
-                },
-              ],
-              "pageInfo": Object {
-                "__typename": null,
-                "hasNextPage": false,
+            "notes": Array [
+              Object {
+                "id": "0",
+                "text": "note1",
               },
-            },
+              Object {
+                "id": "1",
+                "text": "note2",
+              },
+            ],
             "title": "123",
           },
         },
@@ -157,33 +123,16 @@ Object {
               ],
             },
             "id": "2",
-            "notes": Object {
-              "__typename": null,
-              "edges": Array [
-                Object {
-                  "__typename": null,
-                  "cursor": "0",
-                  "node": Object {
-                    "__typename": null,
-                    "id": "0",
-                    "text": "note3",
-                  },
-                },
-                Object {
-                  "__typename": null,
-                  "cursor": "1",
-                  "node": Object {
-                    "__typename": null,
-                    "id": "1",
-                    "text": "note4",
-                  },
-                },
-              ],
-              "pageInfo": Object {
-                "__typename": null,
-                "hasNextPage": false,
+            "notes": Array [
+              Object {
+                "id": "0",
+                "text": "note3",
               },
-            },
+              Object {
+                "id": "1",
+                "text": "note4",
+              },
+            ],
             "title": "123",
           },
         },

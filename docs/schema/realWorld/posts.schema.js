@@ -1,6 +1,6 @@
 /** @jsx builder */
 
-import builder from '@canner/canner-script';
+import builder from 'canner-script';
 
 const Posts = ({attributes}) => <array keyName="posts" title="posts" {...attributes}>
   <string keyName="title" title="title" />

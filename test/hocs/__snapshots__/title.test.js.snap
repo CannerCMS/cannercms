@@ -36,27 +36,20 @@ exports[`withTitleAndDescription should render horizontal 1`] = `
         }
       }
     >
-      <div
-        style={
-          Object {
-            "fontSize": 18,
-            "fontWeight": 400,
-          }
-        }
-      >
-        POSTS
-      </div>
-      <div
-        style={
-          Object {
-            "color": "#aaa",
-            "fontSize": 12,
-            "marginTop": 16,
-          }
-        }
-      >
-        many posts
-      </div>
+      <styled.div>
+        <div
+          className="sc-bdVaJa hWxSEo"
+        >
+          POSTS
+        </div>
+      </styled.div>
+      <styled.div>
+        <div
+          className="sc-bwzfXH iNcgiw"
+        >
+          many posts
+        </div>
+      </styled.div>
     </div>
     <div
       style={
@@ -126,27 +119,20 @@ exports[`withTitleAndDescription should render horizontal 2`] = `
         }
       }
     >
-      <div
-        style={
-          Object {
-            "fontSize": 18,
-            "fontWeight": 400,
-          }
-        }
-      >
-        POSTS
-      </div>
-      <div
-        style={
-          Object {
-            "color": "#aaa",
-            "fontSize": 12,
-            "marginTop": 16,
-          }
-        }
-      >
-        many posts
-      </div>
+      <styled.div>
+        <div
+          className="sc-bdVaJa hWxSEo"
+        >
+          POSTS
+        </div>
+      </styled.div>
+      <styled.div>
+        <div
+          className="sc-bwzfXH iNcgiw"
+        >
+          many posts
+        </div>
+      </styled.div>
     </div>
     <div
       style={
@@ -211,27 +197,20 @@ exports[`withTitleAndDescription should render vertical by default 1`] = `
         }
       }
     >
-      <div
-        style={
-          Object {
-            "fontSize": 18,
-            "fontWeight": 400,
-          }
-        }
-      >
-        POSTS
-      </div>
-      <div
-        style={
-          Object {
-            "color": "#aaa",
-            "fontSize": 12,
-            "marginLeft": 16,
-          }
-        }
-      >
-        many posts
-      </div>
+      <styled.div>
+        <div
+          className="sc-bdVaJa hWxSEo"
+        >
+          POSTS
+        </div>
+      </styled.div>
+      <styled.div>
+        <div
+          className="sc-htpNat hwpPlb"
+        >
+          many posts
+        </div>
+      </styled.div>
     </div>
     <div
       style={

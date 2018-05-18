@@ -17,16 +17,14 @@ export function schemaToQueriesObject (schema, rootSchema, state = {}) {
       const qlo = schemaToQueriesObject(value.items || {}, rootSchema);
       rtn.fields = qlo.queriesObj;
       merge(variables, qlo.variables);
-    } else if (isObjectOfArray(value)) {
+    } else if (isObjectOfArray(value) && state.firstLayer) {
       const qlo = schemaToQueriesObject(value.items.items || {}, rootSchema);
       merge(variables, qlo.variables);
       rtn.fields = {
         id: null,
         ...qlo.queriesObj
       }
-      if (state.firstLayer){
-        rtn.isPlural = true;
-      }
+      rtn.isPlural = true;
       const paginationKey = randomKey();
       variables[paginationKey] = defaultPagination;
       rtn.args = {

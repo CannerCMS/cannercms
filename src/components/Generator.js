@@ -13,7 +13,7 @@
 
 import * as React from 'react';
 import Loadable from 'react-loadable';
-import {Item} from '@canner/react-cms-helpers';
+import {Item} from 'canner-helpers';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';

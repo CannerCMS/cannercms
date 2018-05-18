@@ -3,14 +3,16 @@
 
 import * as React from 'react';
 import queryString from 'query-string';
-import defaultLayouts from 'cms-layouts';
-import {ImgurService} from '@canner/image-service-config';
-import {MemoryConnector, createClient} from '@canner/graphql-resolver';
-import {createEmptyData} from 'cms-helpers';
 import {isEmpty} from 'lodash';
 import Provider from './Provider';
 import Generator from './Generator';
 import hocs from '../hocs';
+
+import defaultLayouts from 'canner-layouts';
+import {ImgurService} from '@canner/image-service-config';
+import type ApolloClient from 'apollo-client';
+import {createClient, MemoryConnector} from '@canner/graphql-resolver';
+import {createEmptyData} from 'canner-helpers';
 
 // i18n
 import en from 'react-intl/locale-data/en';

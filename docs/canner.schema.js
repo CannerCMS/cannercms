@@ -1,7 +1,7 @@
 /** @jsx builder */
 
 import 'babel-register';
-import builder, {Block, Layout} from '@canner/canner-script';
+import builder, {Block, Layout} from 'canner-script';
 import Strings from './schema/string.schema';
 import Numbers from './schema/number.schema';
 import Booleans from './schema/boolean.schema';

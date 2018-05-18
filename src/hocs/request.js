@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {generateAction} from '../action';
 import isArray from 'lodash/isArray';
-import {createEmptyData} from '@canner/react-cms-helpers';
+import {createEmptyData} from 'canner-helpers';
 import RefId from 'canner-ref-id';
 
 type RelationDef = any;

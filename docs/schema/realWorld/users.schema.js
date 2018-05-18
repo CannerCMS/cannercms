@@ -1,6 +1,6 @@
 /** @jsx builder */
 
-import builder from '@canner/canner-script';
+import builder from 'canner-script';
 
 const Users = ({attributes, children}) => <array keyName="users" title="users" {...attributes}>
   {children}

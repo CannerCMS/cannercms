@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import {HOCContext} from './context';
-import {Context} from '@canner/react-cms-helpers';
+import {Context} from 'canner-helpers';
 import type {Query} from '../query';
-
+import styled from 'styled-components';
 type Props = {
   title: string, // only used in withTitleAndDesription hoc
   description: string, // only used in withTitleAndDesription hoc
@@ -30,6 +30,23 @@ type Props = {
   onChange: Function
 };
 
+const Title = styled.div`
+  font-size: 18px;
+  font-weight: 400;
+`;
+
+const Description = styled.div`
+  font-size: 12px;
+  margin-top: 16px;
+  color: #aaa;
+`;
+
+const Description2 = styled.div`
+  font-size: 12px;
+  margin-left: 16px;
+  color: #aaa;
+`;
+
 // $FlowFixMe
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
   return class ComponentWithTitleAndDescription extends React.Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
@@ -39,135 +56,78 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
         refId, routes, updateQuery
       } = this.props;
-      if (hideTitle) {
-        return  <HOCContext.Provider
-          value={{
-            fetch,
-            subscribe,
-            request,
-            deploy,
-            reset,
-            query,
-            updateQuery,
-          }}
-        >
-          <Context.Provider value={{
-            renderChildren,
-            renderComponent,
-            renderConfirmButton,
-            renderCancelButton,
-            refId,
-            routes
-          }}>
-            <Com {...this.props}/>
-          </Context.Provider>
-        </HOCContext.Provider>;
-      }
-      switch (layout) {
-        case 'horizontal':
-          return <div style={{
-            display: 'flex',
-            margin: '16px 0',
-            alignItems: 'center'
-          }}>
-            <div style={{
-              marginRight: 8,
+      return <HOCContext.Provider
+        value={{
+          fetch,
+          subscribe,
+          request,
+          deploy,
+          reset,
+          query,
+          updateQuery,
+        }}
+      >
+        <Context.Provider value={{
+          renderChildren,
+          renderComponent,
+          renderConfirmButton,
+          renderCancelButton,
+          refId,
+          routes
+        }}>
+          {
+            hideTitle && <Com {...this.props}/>
+          }
+          {
+            (!hideTitle && layout === 'horizontal') && <div style={{
               display: 'flex',
-              flex: 1,
-              flexDirection: 'column'
-            }}>
-              <div style={{
-                fontSize: 18,
-                fontWeight: 400
-              }}>
-                {title}
-              </div>
-              <div style={{
-                fontSize: 12,
-                marginTop: 16,
-                color: "#aaa"
-              }}>
-                {description}
-              </div>
-            </div>
-            <div style={{
-              flex: 2
-            }}>
-            <HOCContext.Provider
-              value={{
-                fetch,
-                subscribe,
-                request,
-                deploy,
-                query,
-                reset,
-                updateQuery
-              }}
-            >
-              <Context.Provider value={{
-                renderChildren,
-                renderComponent,
-                renderConfirmButton,
-                renderCancelButton,
-                refId,
-                routes
-              }}>
-                <Com {...this.props}/>
-              </Context.Provider>
-            </HOCContext.Provider>
-            </div>
-          </div>;
-        case 'vertical':
-        default:
-          return <div style={{
-            margin: '16px 0 0'
-          }}>
-            <div style={{
-              display: 'flex',
+              margin: '16px 0',
               alignItems: 'center'
             }}>
               <div style={{
-                fontSize: 18,
-                fontWeight: 400
+                marginRight: 8,
+                display: 'flex',
+                flex: 1,
+                flexDirection: 'column'
               }}>
-                {title}
+                <Title>
+                  {title}
+                </Title>
+                <Description>
+                  {description}
+                </Description>
               </div>
               <div style={{
-                fontSize: 12,
-                color: "#aaa",
-                marginLeft: 16
+                flex: 2
               }}>
-                {description}
+                <Com {...this.props}/>
               </div>
             </div>
-            <div style={{
-              marginBottom: 8
+          }
+          {
+            (!hideTitle && layout !== 'horizontal') && <div style={{
+              margin: '16px 0 0'
             }}>
-              <HOCContext.Provider
-                value={{
-                  fetch,
-                  subscribe,
-                  request,
-                  deploy,
-                  query,
-                  reset,
-                  updateQuery
-                }}
-              >
-                <Context.Provider value={{
-                  renderChildren,
-                  renderComponent,
-                  renderConfirmButton,
-                  renderCancelButton,
-                  refId,
-                  routes
-                }}>
-                  <Com {...this.props} />
-                </Context.Provider>
-              </HOCContext.Provider>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center'
+              }}>
+                <Title>
+                  {title}
+                </Title>
+                <Description2>
+                  {description}
+                </Description2>
+              </div>
+              <div style={{
+                marginBottom: 8
+              }}>
+                <Com {...this.props}/>
+              </div>
             </div>
-          </div>;
-      }
+          }
+        </Context.Provider>
+      </HOCContext.Provider>
     }
   };
 }

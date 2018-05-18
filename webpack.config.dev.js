@@ -20,7 +20,7 @@ module.exports = {
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
-      '@canner/react-cms-helpers': path.resolve(__dirname, 'node_modules', '@canner/react-cms-helpers')
+      'cms-helpers': path.resolve(__dirname, 'node_modules', 'cms-helpers')
     }
   },
   resolveLoader: {
@@ -36,7 +36,7 @@ module.exports = {
       {
         test: /\.schema\.js$/,
         use: [{
-          loader: '@canner/canner-schema-loader',
+          loader: 'canner-schema-loader',
           options: {
             visitors: path.resolve('lib', 'visitors')
           }

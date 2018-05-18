@@ -1,6 +1,6 @@
 /** @jsx builder */
 
-import builder from '@canner/canner-script';
+import builder from 'canner-script';
 const Objects = ({attributes}) => <object {...attributes}>
   {/* <geoPoint keyName="geoPoint" title="GeoPoint" /> */}
   {/* <object keyName="variants" title="Variants" ui="variants" /> */}

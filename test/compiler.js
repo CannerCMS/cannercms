@@ -14,7 +14,7 @@ export default (fixture, options = {}) => {
       rules: [{
         test: /schema\.js/,
         use: [{
-          loader: '@canner/canner-schema-loader',
+          loader: 'canner-schema-loader',
           options: options
         }, {
           loader: 'babel-loader'

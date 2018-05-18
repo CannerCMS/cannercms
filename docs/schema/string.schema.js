@@ -1,6 +1,6 @@
 /** @jsx builder */
 
-import builder from '@canner/canner-script';
+import builder from 'canner-script';
 const Strings = ({attributes}) => <object {...attributes}>
   <string keyName="input" title="Input" description="Input is the default ui of string type"/>
   <string keyName="card" title="Card" ui="card" uiParams={{

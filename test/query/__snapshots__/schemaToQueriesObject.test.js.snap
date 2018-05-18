@@ -2,80 +2,9 @@
 
 exports[`schema to queries object should works 1`] = `
 Object {
-  "posts": Object {
-    "alias": "posts",
-    "args": Object {
-      "orderBy": "$RANDOM_KEY",
-      "pagination": "$RANDOM_KEY",
-      "where": "$RANDOM_KEY",
-    },
-    "connection": true,
-    "fields": Object {
-      "bestAuthor": Object {
-        "fields": Object {
-          "email": null,
-          "id": null,
-          "images": null,
-          "name": null,
-          "posts": null,
-        },
-      },
-      "id": null,
-      "staredPosts": Object {
-        "alias": "staredPosts",
-        "args": Object {
-          "orderBy": "$RANDOM_KEY",
-          "pagination": "$RANDOM_KEY",
-          "where": "$RANDOM_KEY",
-        },
-        "connection": true,
-        "fields": Object {
-          "bestAuthor": null,
-          "id": null,
-          "staredPosts": null,
-          "title": null,
-        },
-      },
-      "title": null,
-    },
-  },
-  "users": Object {
-    "alias": "users",
-    "args": Object {
-      "orderBy": "$RANDOM_KEY",
-      "pagination": "$RANDOM_KEY",
-      "where": "$RANDOM_KEY",
-    },
-    "connection": true,
-    "fields": Object {
-      "email": null,
-      "id": null,
-      "images": null,
-      "name": null,
-      "posts": Object {
-        "alias": "posts",
-        "args": Object {
-          "orderBy": "$RANDOM_KEY",
-          "pagination": "$RANDOM_KEY",
-          "where": "$RANDOM_KEY",
-        },
-        "connection": true,
-        "fields": Object {
-          "bestAuthor": null,
-          "id": null,
-          "staredPosts": null,
-          "title": null,
-        },
-      },
-    },
-  },
+  "posts": null,
+  "users": null,
 }
 `;
 
-exports[`schema to queries object should works 2`] = `
-Object {
-  "$RANDOM_KEY": Object {
-    "first": 10,
-  },
-}
-`;
+exports[`schema to queries object should works 2`] = `Object {}`;
