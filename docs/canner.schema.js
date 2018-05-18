@@ -11,22 +11,7 @@ import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
 const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>;
 
-// import firebase from 'firebase';
-// firebase.initializeApp({
-//   apiKey: "AIzaSyDXsFofZTaEk6SIhDj0Ot4YuPidKAfY750",
-//   authDomain: "test-new-qa.firebaseapp.com",
-//   databaseURL: "https://test-new-qa.firebaseio.com",
-//   projectId: "test-new-qa",
-//   storageBucket: "test-new-qa.appspot.com",
-//   messagingSenderId: "983887338585"
-// });
-// const defaultApp = firebase.app();
 export default <root>
-  <object keyName="info">
-    <array keyName="navs">
-      <string keyName="title" />
-    </array>
-  </object>
   <object keyName="overview" title="Components Overview">
     <Block title="All Types">
       <Tabs>
@@ -37,6 +22,18 @@ export default <root>
         <Objects keyName="object" title="Object type" />
       </Tabs>
     </Block>
+  </object>
+  <object keyName="home">
+    <object keyName="header">
+      <string keyName="title" title="Title"/>
+      <string keyName="subTitle" title="Title"/>
+    </object>
+    <number keyName="count" />
+    <array keyName="navs">
+      <string keyName="text" />
+    </array>
+    <relation keyName="staredPosts" relation={{to: 'posts', type: 'toMany'}} ui="multipleSelect" uiParams={{textCol: 'title'}}/>
+    <relation keyName="bestAuthor" relation={{to: 'users', type: 'toOne'}} uiParams={{textCol: 'title'}}/>
   </object>
   <Posts />
   <Users cacheActions={true} uiParams={{
