@@ -3,26 +3,26 @@
 import builder from 'canner-script';
 const Arrays = ({attributes}) => <object {...attributes}>
   <array keyName="tabs" title="Tabs">
-    <string keyName="children" title="Children" />
+    <string keyName="info" title="info" />
   </array>
   <array keyName="panel" ui="panel" title="Panel">
-    <string keyName="children" title="Children" />
+    <string keyName="info" title="info" />
   </array>
   <array keyName="tableroute" ui="table-route" title="Table-route" uiParams={{
     columns: [{
-      title: 'Children',
-      dataIndex: 'children'
+      title: 'info',
+      dataIndex: 'info'
     }]
   }}>
-    <string keyName="children" title="Children" />
+    <string keyName="info" title="info" />
   </array>
   <array keyName="table" ui="table" title="Table" uiParams={{
     columns: [{
-      title: 'Children',
-      dataIndex: 'children'
+      title: 'info',
+      dataIndex: 'info'
     }]
   }}>
-    <string keyName="children" title="Children" />
+    <string keyName="info" title="info" />
   </array>
   {/* <array keyName="slider" ui="slider" title="Slider">
     <string keyName="children" title="Children" />
