@@ -57,13 +57,12 @@ export default class Provider extends React.PureComponent<Props, State> {
   fetch = (key: string): Promise.resolve<*> => {
     const observabale = this.observableQueryMap[key];
     const result = observabale.currentResult();
-
     return result.loading ?
       observabale.result()
         .then(result => {
           this.log('fetch', key, result);
           return fromJS(result.data);
-        }) :
+        }):
       Promise.resolve(result.data)
         .then(data => {
           this.log('fetch', key, result);

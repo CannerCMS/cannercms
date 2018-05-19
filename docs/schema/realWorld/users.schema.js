@@ -10,7 +10,9 @@ const Users = ({attributes, children}) => <array keyName="users" title="users" {
   <array keyName="images" title="Images">
     <string keyName="url" title="Url" />
   </array>
-  <relation keyName="posts" relation={{to: 'posts', type: 'toMany'}} title="Posts" />
+  <relation keyName="posts" relation={{to: 'posts', type: 'toMany'}} title="Posts" uiParams={{
+    textCol: 'title'
+  }}/>
 </array>
 
 export default Users

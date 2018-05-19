@@ -7,7 +7,7 @@ const Posts = ({attributes}) => <array keyName="posts" title="posts" {...attribu
   <array keyName="notes" title="Notes">
     <string keyName="text" title="Text" />
   </array>
-  <relation keyName="author" title="author" relation={{type: 'toMany', to: 'users'}}
+  <relation keyName="author" title="author" relation={{type: 'toOne', to: 'users'}}
     uiParams={{
       textCol: 'name'
     }}
