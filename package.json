@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "the core-part of canner cms",
   "main": "lib/index.js",
   "scripts": {
