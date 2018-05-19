@@ -32,7 +32,7 @@ function isLayout(node) {
 }
 
 function isFieldset(node) {
-  return node.nodeType === 'plugins.object.fieldset';
+  return node.packageName === '@canner/antd-object-fieldset';
 }
 
 export type Node = {
