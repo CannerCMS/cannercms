@@ -1,6 +1,5 @@
 /** @jsx builder */
 
-import 'babel-register';
 import builder, {Block, Layout} from 'canner-script';
 import Strings from './schema/string.schema';
 import Numbers from './schema/number.schema';
@@ -10,6 +9,9 @@ import Arrays from './schema/array.schema';
 import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
 const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>;
+require('babel-register')({
+  ignore: /node_modules/
+});
 
 export default <root>
   <object keyName="overview" title="Components Overview">
@@ -23,7 +25,7 @@ export default <root>
       </Tabs>
     </Block>
   </object>
-  <object keyName="home">
+  <object keyName="home" title="Home">
     <object keyName="header">
       <string keyName="title" title="Title"/>
       <string keyName="subTitle" title="Title"/>
