@@ -87,7 +87,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     };
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
     if (nextProps.refresh) {
       this.cacheTree = this.genCacheTree(nextProps.componentTree);
     }
