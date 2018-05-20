@@ -11,10 +11,11 @@ import {ActionManager, actionToMutation, actionsToVariables, mutatePure} from '.
 import {Query} from '../query';
 import type {Action, ActionType} from '../action/types';
 import gql from 'graphql-tag';
-import {fromJS} from 'immutable';
+import {fromJS, Map} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
-import { isArray } from 'lodash';
+import { isArray, isObject } from 'lodash';
+import createEmptyData from 'canner-helpers/lib/createEmptyData';
 type Props = {
   schema: {[key: string]: any},
   dataDidChange: void => void,
@@ -46,6 +47,17 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
+  writeEmptyMap = (key: string, value: any, typename: string) => {
+    const action = {
+      type: 'UPDATE_OBJECT',
+      payload: {
+        key: key,
+        value: insertTypename(value).set('__typename', typename)
+      }
+    }
+    this.request(action);
+  }
+
   updateQuery = (paths: Array<string>, args: Object) => {
     this.query.updateQueries(paths, 'args', args);
     const variables = this.query.getVairables();
@@ -55,17 +67,28 @@ export default class Provider extends React.PureComponent<Props, State> {
 
   // path: posts/name args: {where, pagination, sort}
   fetch = (key: string): Promise.resolve<*> => {
+    const {schema} = this.props;
     const observabale = this.observableQueryMap[key];
     const result = observabale.currentResult();
     return result.loading ?
       observabale.result()
         .then(result => {
-          this.log('fetch', key, result);
+          this.log('fetch', 'loading', key, result);
+          if (isInvalidObject(result.data[key], schema[key])) {
+            const emptyData = createEmptyData(schema[key]);
+            this.writeEmptyMap(key, emptyData, result.data[key].__typename);
+            return fromJS(emptyData);
+          }
           return fromJS(result.data);
         }):
       Promise.resolve(result.data)
         .then(data => {
-          this.log('fetch', key, result);
+          if (isInvalidObject(result.data[key], schema[key])) {
+            const emptyData = createEmptyData(schema[key]);
+            this.writeEmptyMap(key, emptyData, result.data[key].__typename);
+            return fromJS(emptyData);
+          }
+          this.log('fetch', 'loaded', key, result);
           return fromJS(data);
         });
   }
@@ -176,7 +199,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     }
     // eslint-disable-next-line
     console.log("%c" + type, "color:" + color, ...payload);
-}
+  }
 
   render() {
     const {client} = this.props;
@@ -193,7 +216,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       }}>
         {React.Children.only(this.props.children)}
       </HOCContext.Provider>
-    </ApolloProvider>
+    </ApolloProvider>;
   }
 }
 
@@ -208,4 +231,16 @@ function removeIdInCreateArray(actions: Array<Action<ActionType>>) {
     }
     return action;
   });
+}
+
+function isInvalidObject(data: any, schema: Object) {
+  return isObject(data) && !Object.keys(schema.items).find(key => data[key] !== null);
+}
+
+function insertTypename(value: any) {
+  if (Map.isMap(value)) {
+    value = value.set('__typename', value.get('__typename') || null);
+    value = value.map(insertTypename);
+  }
+  return value;
 }
