@@ -10,6 +10,8 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>) {
     let {path = '', value, id, relation} = action.payload;
     switch(action.type) {
       case 'CREATE_ARRAY':
+        merge(variables.payload, (value && value.toJS) ? value.toJS() : value);
+        break;
       case 'UPDATE_ARRAY':
       case 'UPDATE_OBJECT':
         merge(variables.payload, (value && value.toJS) ? value.toJS() : value);
