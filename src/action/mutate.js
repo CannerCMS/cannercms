@@ -61,7 +61,7 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
           const relationField = draft[key].edges[index].node[path];
           value.__typename = null;
-          if (relationField.edges) {
+          if (relationField && relationField.edges) {
             draft[key].edges[index].node[path].edges.push({
               cursor: value.id,
               node: value,

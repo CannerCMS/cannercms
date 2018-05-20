@@ -127,7 +127,8 @@ export default class Provider extends React.PureComponent<Props, State> {
       action.forEach(ac => this.actionManager.addAction(ac));
       query = gql`${this.query.toGQL(action[0].payload.key)}`;
       data = client.readQuery({query, variables});
-      // $FlowFixMe
+      this.log('request', action, data);
+    // $FlowFixMe
       mutatedData = action.reduce((result, ac) => mutatePure(result, ac), data);
     } else {
       this.actionManager.addAction(action);
@@ -135,9 +136,10 @@ export default class Provider extends React.PureComponent<Props, State> {
       query = gql`${this.query.toGQL(action.payload.key)}`;
       // $FlowFixMe
       data = client.readQuery({query, variables});
+      this.log('request', action, data);
       mutatedData = mutatePure(data, action)
     }
-    this.log('request', action, data, mutatedData);
+    this.log('request', 'mutatedData', mutatedData);
     if (write) {
       client.writeQuery({
         query: query,
