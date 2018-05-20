@@ -86,7 +86,7 @@ export default function deploy(Com: React.ComponentType<*>) {
       const renderConfirmButton = genDeployButton(this.deploy, refId);
       const renderCancelButton = genCancelButton(this.reset, refId);
       const isCreateOp = params.op === 'create';
-      const shouldRenderButtons = (routes.length === 1 || isRoutesEndAtMe({routes, path, pattern}) ||
+      const shouldRenderButtons = (routes.length === 1 || isRoutesEndAtMe({routes, path, pattern}) &&
       isCreateOp) && !controlDeployAndResetButtons && refId.getPathArr().length <= routes.length;
       return <div>
         {/* $FlowFixMe */}
