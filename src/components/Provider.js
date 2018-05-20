@@ -137,7 +137,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       data = client.readQuery({query, variables});
       mutatedData = mutatePure(data, action)
     }
-    this.log('request', action, data);
+    this.log('request', action, data, mutatedData);
     if (write) {
       client.writeQuery({
         query: query,

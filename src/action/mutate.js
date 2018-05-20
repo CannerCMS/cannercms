@@ -52,7 +52,7 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
       }
 
       case 'UPDATE_OBJECT': {
-        merge(draft[key], value);
+        draft[key] = {...draft[key], ...value};
         break;
       }
 

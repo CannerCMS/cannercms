@@ -153,7 +153,7 @@ export function getValue(value: Map<string, *>, idPathArr: Array<string>) {
     } else if (List.isList(result)) {
       return result.get(key);
     } else {
-      return value;
+      return result;
     }
   }, value);
 }

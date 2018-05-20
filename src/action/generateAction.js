@@ -118,6 +118,7 @@ export function generateAction(arg: {
 
   if (isDeleteNestedArrayInObject(arg)) {
     const {key, id, paths} = splitId(arg.id, arg.rootValue);
+    console.log(arg, splitId(arg.id, arg.rootValue));
     return {
       type: 'UPDATE_OBJECT',
       payload: {

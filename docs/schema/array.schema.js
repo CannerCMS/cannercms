@@ -2,7 +2,7 @@
 
 import builder from 'canner-script';
 const Arrays = ({attributes}) => <object {...attributes}>
-  <array keyName="tabs" title="Tabs">
+  <array keyName="tabs" title="Tabs" ui="tab">
     <string keyName="info" title="info" />
   </array>
   <array keyName="panel" ui="panel" title="Panel">
