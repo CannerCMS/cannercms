@@ -96,16 +96,17 @@ export default class Provider extends React.PureComponent<Props, State> {
     }
     
     actions = removeIdInCreateArray(actions);
-    const mutation = actionToMutation(actions[0]);
+    const mutation = objectToQueries(actionToMutation(actions[0]), false);
     const variables = actionsToVariables(actions);
     return client.mutate({
-      mutation: gql`${objectToQueries(mutation, false)}`,
+      mutation: gql`${mutation}`,
       variables,
     }).then(result => {
       this.log('deploy', key, {
         id,
-        variables,
-        result
+        result,
+        mutation,
+        variables
       });
       this.actionManager.removeActions(key, id);
       client.resetStore();
@@ -113,6 +114,12 @@ export default class Provider extends React.PureComponent<Props, State> {
     }).then(result => {
       afterDeploy && afterDeploy(result);
       return result;
+    }).catch(() => {
+      this.log('deploy', 'error', key, {
+        id,
+        mutation,
+        variables
+      });
     });
   }
 

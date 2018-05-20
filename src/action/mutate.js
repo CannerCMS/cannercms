@@ -6,7 +6,7 @@ import {merge, findIndex, remove} from 'lodash';
 
 export function mutatePure(originValue: Object, action: Action<ActionType>): any {
   let {key, id, value, path} = action.payload;
-  value = value.toJS ? value.toJS() : value;
+  value = (value && value.toJS) ? value.toJS() : value;
   // $FlowFixMe
   return produce(originValue, draft => {
     switch (action.type) {

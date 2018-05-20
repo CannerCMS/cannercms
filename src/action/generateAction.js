@@ -84,7 +84,8 @@ export function generateAction(arg: {
         key,
         id,
         path,
-        value: arg.value
+        value: arg.value,
+        relation: arg.relation
       }
     }
   }
@@ -139,7 +140,8 @@ export function generateAction(arg: {
         key,
         id,
         path,
-        value: arg.value
+        value: arg.value,
+        relation: arg.relation
       }
     };
   }
@@ -170,7 +172,8 @@ export function generateAction(arg: {
         value: arg.rootValue
           .getIn([key, index].concat(paths.slice(0, 2)))
           .setIn(paths.slice(2), arg.value)
-          .filter((v, k) => k === paths[2])
+          .filter((v, k) => k === paths[2]),
+        relation: arg.relation
       }
     };
   }
@@ -247,10 +250,11 @@ export function generateAction(arg: {
     return {
       type: 'CONNECT',
       payload: {
-       key,
-       id,
-       path,
-       value: arg.value 
+        key,
+        id,
+        path,
+        value: arg.value,
+        relation: arg.relation
       }
     };
   }
@@ -263,7 +267,8 @@ export function generateAction(arg: {
        key,
        id,
        path,
-       value: arg.value 
+       value: arg.value,
+       relation: arg.relation
       }
     };
   }
