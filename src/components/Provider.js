@@ -11,10 +11,10 @@ import {ActionManager, actionToMutation, actionsToVariables, mutatePure} from '.
 import {Query} from '../query';
 import type {Action, ActionType} from '../action/types';
 import gql from 'graphql-tag';
-import {fromJS, Map} from 'immutable';
+import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
-import { isArray, isObject } from 'lodash';
+import { isArray } from 'lodash';
 type Props = {
   schema: {[key: string]: any},
   dataDidChange: void => void,
