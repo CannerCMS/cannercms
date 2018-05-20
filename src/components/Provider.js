@@ -135,6 +135,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     let query, mutatedData, data;
     const variables = this.query.getVairables();  
     if (isArray(action)) {
+      if (!action.length) return Promise.resolve();
       // $FlowFixMe
       action.forEach(ac => this.actionManager.addAction(ac));
       query = gql`${this.query.toGQL(action[0].payload.key)}`;
