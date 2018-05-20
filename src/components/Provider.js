@@ -73,15 +73,15 @@ export default class Provider extends React.PureComponent<Props, State> {
     const {loading, error} = currentResult;
     if (loading) {
       return observabale.result()
-      .then(result => {
-        this.log('fetch', 'loading', key, result);
-        if (isInvalidObject(result.data[key], schema[key])) {
-          const emptyData = createEmptyData(schema[key]);
-          this.writeEmptyMap(key, emptyData, result.data[key].__typename);
-          return fromJS(emptyData);
-        }
-        return fromJS(result.data);
-      })
+        .then(result => {
+          this.log('fetch', 'loading', key, result);
+          if (isInvalidObject(result.data[key], schema[key])) {
+            const emptyData = createEmptyData(schema[key]);
+            this.writeEmptyMap(key, emptyData, result.data[key].__typename);
+            return fromJS(emptyData);
+          }
+          return fromJS(result.data);
+        })
     } else if (error) {
       const lastResult = observabale.getLastResult();
       this.log('fetch', 'error', key, lastResult);

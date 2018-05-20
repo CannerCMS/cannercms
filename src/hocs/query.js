@@ -136,6 +136,13 @@ export default function withQuery(Com: React.ComponentType<*>) {
         return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value} updateQuery={updateQuery}>
           <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges'], new List()).map(item => item.get('node'))} />
         </Toolbar>;
+      } else if (type === 'relation' && relation.type === 'toOne') {
+        const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
+        const variables = query.getVairables();
+        const args = mapValues(queries, v => variables[v]);
+        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value} updateQuery={updateQuery}>
+          <Com {...this.props} rootValue={rootValue} value={value || new Map()} />
+        </Toolbar>;
       }
       return <Com {...this.props} rootValue={rootValue} value={value} />;
     }

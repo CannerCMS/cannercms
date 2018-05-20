@@ -6,7 +6,7 @@ import {merge, findIndex, remove} from 'lodash';
 
 export function mutatePure(originValue: Object, action: Action<ActionType>): any {
   let {key, id, value, path} = action.payload;
-  value = value.toJS();
+  value = value.toJS ? value.toJS() : value;
   // $FlowFixMe
   return produce(originValue, draft => {
     switch (action.type) {
@@ -86,6 +86,7 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
           } else {
             draft[key].edges[index].node[path] = null;
           }
+          break;
         }
         const index = findIndex(draft[key] || [], item => item.id === id);
         remove(draft[key][index][path], item => item.id === id);

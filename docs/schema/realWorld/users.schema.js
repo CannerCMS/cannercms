@@ -12,7 +12,7 @@ const Users = ({attributes, children}) => <array keyName="users" title="users" {
   </array>
   <relation keyName="posts" relation={{to: 'posts', type: 'toMany'}} title="Posts" uiParams={{
     textCol: 'title'
-  }}/>
+  }} ui="multipleSelect"/>
 </array>
 
 export default Users
