@@ -69,28 +69,28 @@ export default class Provider extends React.PureComponent<Props, State> {
   fetch = (key: string): Promise.resolve<*> => {
     const {schema} = this.props;
     const observabale = this.observableQueryMap[key];
-    const result = observabale.currentResult();
-    return result.loading ?
-      observabale.result()
-        .then(result => {
-          this.log('fetch', 'loading', key, result);
-          if (isInvalidObject(result.data[key], schema[key])) {
-            const emptyData = createEmptyData(schema[key]);
-            this.writeEmptyMap(key, emptyData, result.data[key].__typename);
-            return fromJS(emptyData);
-          }
-          return fromJS(result.data);
-        }):
-      Promise.resolve(result.data)
-        .then(data => {
-          if (isInvalidObject(result.data[key], schema[key])) {
-            const emptyData = createEmptyData(schema[key]);
-            this.writeEmptyMap(key, emptyData, result.data[key].__typename);
-            return fromJS(emptyData);
-          }
-          this.log('fetch', 'loaded', key, result);
-          return fromJS(data);
-        });
+    const currentResult = observabale.currentResult();
+    const {loading, error} = currentResult;
+    if (loading) {
+      return observabale.result()
+      .then(result => {
+        this.log('fetch', 'loading', key, result);
+        if (isInvalidObject(result.data[key], schema[key])) {
+          const emptyData = createEmptyData(schema[key]);
+          this.writeEmptyMap(key, emptyData, result.data[key].__typename);
+          return fromJS(emptyData);
+        }
+        return fromJS(result.data);
+      })
+    } else if (error) {
+      const lastResult = observabale.getLastResult();
+      this.log('fetch', 'error', key, lastResult);
+      return Promise.resolve(fromJS(lastResult.data));
+    } else {
+      this.log('fetch', 'loaded', key, currentResult);
+      return Promise.resolve(fromJS(currentResult.data));
+    }
+   
   }
 
   subscribe = (key: string, callback: (data: any) => void) => {
