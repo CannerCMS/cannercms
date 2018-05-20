@@ -97,7 +97,7 @@ class CannerCMS extends React.Component<Props, State> {
       return result;
     }, {});
 
-    const options = {schema: fixSchema, resolvers};
+    const options: any = {schema: fixSchema, resolvers};
     if (connector) {
       options.connector = connector;
     }

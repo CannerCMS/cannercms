@@ -9,9 +9,6 @@ import Arrays from './schema/array.schema';
 import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
 const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>;
-require('babel-register')({
-  ignore: /node_modules/
-});
 
 export default <root>
   <object keyName="overview" title="Components Overview">
