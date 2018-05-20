@@ -144,7 +144,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
           <Com {...this.props} rootValue={rootValue} value={value || new Map()} />
         </Toolbar>;
       }
-      return <Com {...this.props} rootValue={rootValue} value={value} />;
+      return <Com {...this.props} rootValue={rootValue} value={value || defaultValue(type)} />;
     }
   };
 }
@@ -181,4 +181,27 @@ export function parseConnectionToNormal(value: Map<string, *> | List<*>) {
 
 function shouldUpdate(value: any, newValue: any) {
   return !is(value, newValue);
+}
+
+function defaultValue(type: string) {
+  switch (type) {
+    case 'array': {
+      return new List();
+    }
+    case 'object': {
+      return new Map();
+    }
+    case 'boolean': {
+      return false;
+    }
+    case 'number': {
+      return 0;
+    }
+    case 'string': {
+      return '';
+    }
+    default: {
+      return null;
+    }
+  }
 }

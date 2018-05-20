@@ -537,9 +537,9 @@
     "@canner/cms-plugin-string-time-picker" "^0.1.0-rc.35"
     react-loadable "^5.3.1"
 
-"@canner/graphql-resolver@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@canner/graphql-resolver/-/graphql-resolver-1.3.2.tgz#122fb4e66376d29cafc91d6529e0b75253ca40ec"
+"@canner/graphql-resolver@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@canner/graphql-resolver/-/graphql-resolver-1.3.3.tgz#c2110614880736a21a63a2d3cd04bcef654a4258"
 
 "@canner/grid-breakpoint@^1.0.0":
   version "1.0.0"
