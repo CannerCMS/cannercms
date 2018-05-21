@@ -11,41 +11,11 @@ Object {
       "id": "1",
       "images": Array [
         Object {
+          "__typename": null,
           "id": "0",
-          "url": "url",
         },
       ],
       "name": "user1",
-      "posts": Array [
-        Object {
-          "__typename": "Post",
-          "author": "1",
-          "id": "1",
-          "notes": Array [
-            Object {
-              "text": "note1",
-            },
-            Object {
-              "text": "note2",
-            },
-          ],
-          "title": "123",
-        },
-        Object {
-          "__typename": "Post",
-          "author": "2",
-          "id": "2",
-          "notes": Array [
-            Object {
-              "text": "note3",
-            },
-            Object {
-              "text": "note4",
-            },
-          ],
-          "title": "123",
-        },
-      ],
     },
     "count": 10,
     "header": Object {
@@ -55,10 +25,12 @@ Object {
     },
     "navs": Array [
       Object {
+        "__typename": null,
         "id": "0",
         "text": "nav1",
       },
       Object {
+        "__typename": null,
         "id": "1",
         "text": "nav2",
       },
@@ -71,29 +43,15 @@ Object {
           "cursor": "1",
           "node": Object {
             "__typename": "Post",
-            "author": Object {
-              "__typename": "User",
-              "age": 10,
-              "email": "wwwy3y3@gmail.com",
-              "id": "1",
-              "images": Array [
-                Object {
-                  "url": "url",
-                },
-              ],
-              "name": "user1",
-              "posts": Array [
-                "1",
-                "2",
-              ],
-            },
             "id": "1",
             "notes": Array [
               Object {
+                "__typename": null,
                 "id": "0",
                 "text": "note1",
               },
               Object {
+                "__typename": null,
                 "id": "1",
                 "text": "note2",
               },
@@ -106,29 +64,15 @@ Object {
           "cursor": "2",
           "node": Object {
             "__typename": "Post",
-            "author": Object {
-              "__typename": "User",
-              "age": 20,
-              "email": "wwwy3y3@gmail.com",
-              "id": "2",
-              "images": Array [
-                Object {
-                  "url": "url",
-                },
-              ],
-              "name": "user2",
-              "posts": Array [
-                "1",
-                "2",
-              ],
-            },
             "id": "2",
             "notes": Array [
               Object {
+                "__typename": null,
                 "id": "0",
                 "text": "note3",
               },
               Object {
+                "__typename": null,
                 "id": "1",
                 "text": "note4",
               },

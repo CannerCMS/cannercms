@@ -49,7 +49,7 @@ describe('update action', () => {
       rootValue,
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
@@ -70,7 +70,7 @@ describe('update action', () => {
       rootValue,
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
@@ -95,7 +95,7 @@ describe('update action', () => {
       }
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'UPDATE_CONNECT',
       payload: {
         key: 'posts',
@@ -123,7 +123,7 @@ describe('create action', () => {
       rootValue,
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'CREATE_ARRAY',
       payload: {
         key: 'posts',
@@ -148,7 +148,7 @@ describe('create action', () => {
       rootValue,
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
@@ -172,7 +172,7 @@ describe('create action', () => {
       rootValue,
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
@@ -199,7 +199,7 @@ describe('create action', () => {
       rootValue,
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'CREATE_AND_CONNECT',
       payload: {
         key: 'posts',
@@ -221,7 +221,7 @@ describe('delete action', () => {
       rootValue,
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'DELETE_ARRAY',
       payload: {
         key: 'posts',
@@ -238,7 +238,7 @@ describe('delete action', () => {
       rootValue,
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
@@ -258,7 +258,7 @@ describe('delete action', () => {
       rootValue,
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
@@ -284,7 +284,7 @@ describe('delete action', () => {
       },
       rootValue,
     });
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'DISCONNECT_AND_DELETE',
       payload: {
         key: 'posts',
@@ -309,7 +309,7 @@ describe('swap action', () => {
       rootValue
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'NOOP',
       payload: {
         key: '',
@@ -328,7 +328,7 @@ describe('swap action', () => {
       rootValue
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
@@ -357,7 +357,7 @@ describe('swap action', () => {
       rootValue
     });
     action.payload.value = action.payload.value.toJS();
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
@@ -388,7 +388,7 @@ describe('connect action', () => {
       rootValue,
       relation: {}
     });
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'CONNECT',
       payload: {
         key: 'posts',
@@ -413,7 +413,7 @@ describe('disconnect action', () => {
       rootValue,
       relation: {}
     });
-    expect(action).toEqual({
+    expect(action).toMatchObject({
       type: 'DISCONNECT',
       payload: {
         key: 'posts',

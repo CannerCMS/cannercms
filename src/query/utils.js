@@ -1,98 +1,116 @@
+// @flow
+
 import pluralize from 'pluralize';
 import lowerFirst from 'lodash/lowerFirst';
-import {merge} from 'lodash';
+import {merge, mapValues, set} from 'lodash';
+import {createSchema} from './schema/utils';
+import {types} from './schema/types';
 
 const defaultPagination = {
   first: 10
 };
 
-export function schemaToQueriesObject (schema, rootSchema, state = {}) {
-  const queriesObj = {};
+export function fieldToQueriesObject(field: any): any {
+  let queriesObj = {};
   const variables = {};
-  rootSchema = rootSchema || {...schema};
-  Object.keys(schema).map(key => {
-    let rtn = {};
-    const value = schema[key];
-    if (isObjectType(value)) {
-      const qlo = schemaToQueriesObject(value.items || {}, rootSchema);
-      rtn.fields = qlo.queriesObj;
-      merge(variables, qlo.variables);
-    } else if (isObjectOfArray(value) && state.firstLayer) {
-      const qlo = schemaToQueriesObject(value.items.items || {}, rootSchema);
-      merge(variables, qlo.variables);
-      rtn.fields = {
-        id: null,
-        ...qlo.queriesObj
-      }
-      rtn.isPlural = true;
-      const paginationKey = randomKey();
-      variables[paginationKey] = defaultPagination;
-      rtn.args = {
-        pagination: paginationKey,
-        where: randomKey(),
-        orderBy: randomKey()
-      };
-      rtn.connection = true;
-      rtn.alias = key;
-    } else if (isRelationToOneType(value) && !state.inRelation) {
-      const relationTo = value.relation.to;
-      const qlo = schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true});
-      rtn.fields = {
-        id: null,
-        // ...qlo.queriesObj
-      }
-    } else if (isRelationToManyType(value) && !state.inRelation) {
-      const relationTo = value.relation.to;
-      const qlo = schemaToQueriesObject(rootSchema[relationTo].items.items, rootSchema, {inRelation: true});
-      merge(variables, qlo.variables);
-      rtn.fields = {
-        id: null,
-        // ...qlo.queriesObj
-      }
-      const paginationKey = randomKey();
-      variables[paginationKey] = defaultPagination;
-      rtn.args = {
-        pagination: paginationKey,
-        where: randomKey(),
-        orderBy: randomKey()
-      };
-      rtn.connection = true;
-      rtn.alias = key;
-    } else {
-      rtn = null;
+  const type = field.getType();
+  switch (type) {
+    case types.OBJECT: {
+      field.forEach(childField => {
+        const qlo = fieldToQueriesObject(childField);
+        set(queriesObj, ['fields', childField.getKey()], qlo.queriesObj);
+      });
+      break;
     }
-    queriesObj[key] = rtn;
-  });
+    case types.ARRAY: {
+      set(queriesObj, ['fields', 'id'], null);
+      field.forEach(childField => {
+        const qlo = fieldToQueriesObject(childField);
+        set(queriesObj, ['fields', childField.getKey()], qlo.queriesObj);
+        merge(variables, qlo.variables);
+      });
+      if (field.isEntity) {
+        const {args, paginationKey} = genQuery();
+        queriesObj.args = args;
+        queriesObj.isPlural = true;
+        queriesObj.connection = true;
+        queriesObj.alias = field.getKey();
+        variables[paginationKey] = defaultPagination;
+      }
+      break;
+    }
 
+    case types.RELATION: {
+      set(queriesObj, ['fields', 'id'], null);
+      field.forEach(childField => {
+        if (childField.getType() !== types.RELATION) {
+          const qlo = fieldToQueriesObject(childField);
+          set(queriesObj, ['fields', childField.getKey()], qlo.queriesObj);
+          merge(variables, qlo.variables);
+        }
+      });
+      if (field.isToMany()) {
+        const {args, paginationKey} = genQuery();
+        queriesObj.args = args;
+        queriesObj.isPlural = true;
+        queriesObj.connection = true;
+        queriesObj.alias = field.getKey();
+        variables[paginationKey] = defaultPagination;
+      }
+      break;
+    }
+
+    case types.DATETIME:
+    case types.FILE:
+    case types.GEOPOINT:
+    case types.IMAGE: {
+      field.forEach(childField => {
+        const qlo = fieldToQueriesObject(childField);
+        set(queriesObj, ['fields', childField.getKey()], qlo.queriesObj);
+      });
+      break;
+    }
+    case types.BOOLEAN:
+    case types.NUMBER:
+    case types.INT:
+    case types.ID:
+    case types.STRING:
+    default:
+      queriesObj = null;
+      break;
+  }
   return {
     queriesObj,
     variables
   };
 }
 
-function isObjectOfArray(value) {
-  return value.type === 'array' &&
-    value.items &&
-    value.items.type === 'object' &&
-    value.items.items;
+export function genQuery() {
+  const paginationKey = randomKey();
+  const args = {
+    pagination: paginationKey,
+    where: randomKey(),
+    orderBy: randomKey()
+  };
+  return {args, paginationKey};
 }
 
-function isObjectType(value) {
-  return value.type === 'object' &&
-    value.items;
+export function schemaToQueriesObject(schema: any) {
+  const rootFields = createSchema(schema);
+  const rootVariables = {};
+  const queriesObj = mapValues(rootFields, v => {
+    const {variables, queriesObj} = fieldToQueriesObject(v);
+    merge(rootVariables, variables);
+    return queriesObj;
+  });
+
+  return {
+    queriesObj,
+    variables: rootVariables
+  }
 }
 
-function isRelationToOneType(value) {
-  return value.type === 'relation' &&
-    value.relation.type === 'toOne';
-}
-
-function isRelationToManyType(value) {
-  return value.type === 'relation' &&
-    value.relation.type === 'toMany';
-}
-
-export function objectToQueries(o, close = true) {
+export function objectToQueries(o: Object, close: boolean = true) {
   const result = Object.keys(o).map(key => {
     let query = `${key}`;
     const element = o[key];
