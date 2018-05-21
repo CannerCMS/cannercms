@@ -124,29 +124,29 @@
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@canner/antd-array-slider/-/antd-array-slider-0.1.3.tgz#c08cbb7ae5864c94f8322f31844c56ec2022bc25"
 
-"@canner/antd-array-tab_bottom@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_bottom/-/antd-array-tab_bottom-0.1.4.tgz#066fd91c954c64d69035a13a1bdce2229c5a48ea"
+"@canner/antd-array-tab_bottom@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_bottom/-/antd-array-tab_bottom-0.1.6.tgz#34538a7bef0dc5da9b8f3773d99cda81fb9ecf97"
   dependencies:
-    "@canner/antd-array-tabs" "^0.1.4"
+    "@canner/antd-array-tabs" "^0.1.6"
 
-"@canner/antd-array-tab_left@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_left/-/antd-array-tab_left-0.1.4.tgz#09feb60d665930864b5e8b8f63ca38e0d845aded"
+"@canner/antd-array-tab_left@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_left/-/antd-array-tab_left-0.1.6.tgz#4f9d3ffea0b439bfcbffc260f77916141f3c202c"
   dependencies:
-    "@canner/antd-array-tabs" "^0.1.4"
+    "@canner/antd-array-tabs" "^0.1.6"
 
-"@canner/antd-array-tab_right@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_right/-/antd-array-tab_right-0.1.4.tgz#27a3e004f4b6c514541284a8e3e8f16c5f1b0910"
+"@canner/antd-array-tab_right@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_right/-/antd-array-tab_right-0.1.6.tgz#ab6b6c3f4c47bcb4aa42d1d4f5735a8df2c5dd38"
   dependencies:
-    "@canner/antd-array-tabs" "^0.1.4"
+    "@canner/antd-array-tabs" "^0.1.6"
 
-"@canner/antd-array-tab_top@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_top/-/antd-array-tab_top-0.1.4.tgz#b9c83ea0b22c22f2142de4be1f000075c977bc78"
+"@canner/antd-array-tab_top@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_top/-/antd-array-tab_top-0.1.6.tgz#ad7ff045bbe9b2a08506ebe31040a4f85d1e626d"
   dependencies:
-    "@canner/antd-array-tabs" "^0.1.4"
+    "@canner/antd-array-tabs" "^0.1.6"
 
 "@canner/antd-array-table@^0.1.3":
   version "0.1.3"
@@ -161,9 +161,9 @@
   dependencies:
     "@canner/antd-locales" "^0.1.3"
 
-"@canner/antd-array-tabs@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tabs/-/antd-array-tabs-0.1.4.tgz#97a83dda970bf9606d6f9b1361ecde6c32cfa980"
+"@canner/antd-array-tabs@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tabs/-/antd-array-tabs-0.1.6.tgz#dddd77e8da0601cc6368b181aea660e67ac3f336"
   dependencies:
     "@canner/rc-tabs" "^9.2.5"
     antd "^3.2.0"
@@ -232,9 +232,9 @@
     lodash.template "^4.4.0"
     styled-components "^3.2.6"
 
-"@canner/antd-relation-single_select@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select/-/antd-relation-single_select-0.1.5.tgz#83bd45b572e1e637ee50ea428136697979ce3b89"
+"@canner/antd-relation-single_select@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select/-/antd-relation-single_select-0.1.6.tgz#3a5d8e85a4481ecef15494d9fa8207f74e0492c3"
   dependencies:
     "@canner/antd-share-relation" "^0.1.3"
     lodash.template "^4.4.0"
@@ -2743,20 +2743,20 @@ canner-ref-id@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/canner-ref-id/-/canner-ref-id-0.1.2.tgz#9c534d517818e915cef1004116012458bd165d83"
 
-canner-schema-loader@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/canner-schema-loader/-/canner-schema-loader-1.1.4.tgz#98c900f05ccaf9f9ce34604bf77a6a210f58589c"
+canner-schema-loader@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/canner-schema-loader/-/canner-schema-loader-1.1.6.tgz#ab805ed9ddee271e863f14779aaa019fb8b1fdbb"
   dependencies:
     "@canner/antd-array-gallery" "^0.1.3"
     "@canner/antd-array-panel" "^0.1.4"
     "@canner/antd-array-slider" "^0.1.3"
-    "@canner/antd-array-tab_bottom" "^0.1.4"
-    "@canner/antd-array-tab_left" "^0.1.4"
-    "@canner/antd-array-tab_right" "^0.1.4"
-    "@canner/antd-array-tab_top" "^0.1.4"
+    "@canner/antd-array-tab_bottom" "^0.1.6"
+    "@canner/antd-array-tab_left" "^0.1.6"
+    "@canner/antd-array-tab_right" "^0.1.6"
+    "@canner/antd-array-tab_top" "^0.1.6"
     "@canner/antd-array-table" "^0.1.3"
     "@canner/antd-array-table_route" "^0.1.3"
-    "@canner/antd-array-tabs" "^0.1.4"
+    "@canner/antd-array-tabs" "^0.1.6"
     "@canner/antd-array-tag" "^0.1.3"
     "@canner/antd-boolean-card" "^0.1.3"
     "@canner/antd-boolean-switch" "^0.1.3"
@@ -2768,7 +2768,7 @@ canner-schema-loader@^1.1.4:
     "@canner/antd-object-options" "^0.1.3"
     "@canner/antd-object-variants" "^0.1.3"
     "@canner/antd-relation-multiple_select" "^0.1.3"
-    "@canner/antd-relation-single_select" "^0.1.5"
+    "@canner/antd-relation-single_select" "^0.1.6"
     "@canner/antd-share-card" "^0.1.3"
     "@canner/antd-share-relation" "^0.1.3"
     "@canner/antd-string-card" "^0.1.3"
