@@ -8,6 +8,8 @@ import type {Query} from '../query';
 type Props = {
   refId: RefId,
   keyName: string,
+  routes: Array<string>,
+  pattern: string
 };
 
 export default function connectIdAndContext(Com: React.ComponentType<*>) {
@@ -17,8 +19,13 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
     reset: ResetDef;
 
     render() {
-      const {refId, keyName} = this.props;
-      const myRefId = refId ? refId.child(keyName) : new RefId(keyName);
+      const {refId, keyName, routes, pattern} = this.props;
+      let myRefId = refId;
+      // route to children
+      if (isChildrenOfArray(pattern) && routes.length > 1 && refId.getPathArr().length === 1) {
+        myRefId = refId.child(routes[1]);
+      }
+      myRefId = myRefId ? myRefId.child(keyName) : new RefId(keyName);
       return <HOCContext.Consumer>
         {context => (
           <Com {...this.props}
@@ -35,4 +42,9 @@ export default function connectIdAndContext(Com: React.ComponentType<*>) {
       </HOCContext.Consumer>
     }
   };
+}
+
+function isChildrenOfArray(pattern: string) {
+  const patternArray = pattern.split('.');
+  return patternArray.length === 2 && patternArray[0] === 'array';
 }

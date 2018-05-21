@@ -54,7 +54,10 @@ type Props = {
   baseUrl: string,
   routes: Array<string>,
   params: {[string]: string},
-  refresh?: boolean
+  refresh?: boolean,
+
+  deploy?: Function,
+  reset?: Function,
 }
 
 type childrenProps = {
@@ -246,6 +249,7 @@ export default class Generator extends React.PureComponent<Props, State> {
   render() {
     const {componentTree, error, errorInfo} = this.state;
     const {routes, params} = this.props;
+   
     if (error) {
       return errorInfo;
     }

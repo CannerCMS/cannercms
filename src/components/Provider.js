@@ -19,7 +19,7 @@ type Props = {
   schema: {[key: string]: any},
   dataDidChange: void => void,
   afterDeploy: void => void,
-  children: React.ChildrenArray<React.Node>,
+  children: React.Node,
   client: ApolloClient,
   rootKey: string
 }
@@ -204,7 +204,16 @@ export default class Provider extends React.PureComponent<Props, State> {
         subscribe: this.subscribe,
         query: this.query
       }}>
-        {React.Children.only(this.props.children)}
+        {/* $FlowFixMe */}
+        {React.cloneElement(this.props.children, {
+          request: this.request,
+          deploy: this.deploy,
+          fetch: this.fetch,
+          reset: this.reset,
+          updateQuery: this.updateQuery,
+          subscribe: this.subscribe,
+          query: this.query
+        })}
       </HOCContext.Provider>
     </ApolloProvider>;
   }
