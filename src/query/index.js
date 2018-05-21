@@ -10,9 +10,7 @@ export class Query {
 
   constructor({schema}: {schema: Object}) {
     this.schema = schema;
-    const {queriesObj, variables} = schemaToQueriesObject(schema, schema, {
-      firstLayer: true
-    });
+    const {queriesObj, variables} = schemaToQueriesObject(schema);
     this.variables = variables;
     this.queries = queriesObj;
   }
