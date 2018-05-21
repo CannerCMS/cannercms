@@ -133,7 +133,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v]);
-        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value || defaultValue('connection')} updateQuery={updateQuery}>
+        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value || (defaultValue('connection'): any)} updateQuery={updateQuery}>
           <Com {...this.props} showPagination={false} rootValue={rootValue} value={value ? value.getIn(['edges'], new List()).map(item => item.get('node')) : defaultValue('array')} />
         </Toolbar>;
       } else if (type === 'relation' && relation.type === 'toOne') {
