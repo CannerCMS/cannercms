@@ -24,7 +24,7 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
       }
       case 'UPDATE_ARRAY': {
         if (draft[key].edges) {
-          draft[key].deges = draft[key].edges.map(item => {
+          draft[key].edges = draft[key].edges.map(item => {
             return item.cursor === id ?
               {
                 cursor: id,

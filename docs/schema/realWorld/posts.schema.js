@@ -9,7 +9,11 @@ const Posts = ({attributes}) => <array keyName="posts" title="posts" {...attribu
   </array>
   <relation keyName="author" title="author" relation={{type: 'toOne', to: 'users'}}
     uiParams={{
-      textCol: 'name'
+      textCol: 'name',
+      columns: [{
+        title: 'Name',
+        dataIndex: 'name'
+      }]
     }}
     ui="singleSelect"
   />

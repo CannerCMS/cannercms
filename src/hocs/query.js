@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import type RefId from 'canner-ref-id';
-import {Map, List, is} from 'immutable';
+import {Map, List, is, fromJS} from 'immutable';
 import Toolbar from './components/toolbar';
 import type {Query} from '../query';
 import {mapValues} from 'lodash';
@@ -133,8 +133,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v]);
-        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value} updateQuery={updateQuery}>
-          <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges'], new List()).map(item => item.get('node'))} />
+        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value || defaultValue('connection')} updateQuery={updateQuery}>
+          <Com {...this.props} showPagination={false} rootValue={rootValue} value={value ? value.getIn(['edges'], new List()).map(item => item.get('node')) : defaultValue('array')} />
         </Toolbar>;
       } else if (type === 'relation' && relation.type === 'toOne') {
         return <Com {...this.props} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
@@ -180,6 +180,14 @@ function shouldUpdate(value: any, newValue: any) {
 
 function defaultValue(type: string, relation: any) {
   switch (type) {
+    case 'connection': {
+      return fromJS({
+        edges: [],
+        pageInfo: {
+          hasNextPage: false
+        }
+      })
+    }
     case 'array': {
       return new List();
     }
@@ -197,12 +205,12 @@ function defaultValue(type: string, relation: any) {
     }
     case 'relation': {
       if (relation.type === 'toMany') {
-        return {
+        return fromJS({
           edges: [],
           pageInfo: {
             hasNextPage: false
           }
-        };
+        });
       } else {
         return null;
       }

@@ -11,7 +11,11 @@ const Users = ({attributes, children}) => <array keyName="users" title="users" {
     <string keyName="url" title="Url" />
   </array>
   <relation keyName="posts" relation={{to: 'posts', type: 'toMany'}} title="Posts" uiParams={{
-    textCol: 'title'
+    textCol: 'title',
+    columns: [{
+      title: 'Title',
+      dataIndex: 'title'
+    }]
   }} ui="multipleSelect"/>
 </array>
 

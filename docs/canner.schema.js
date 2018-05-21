@@ -9,6 +9,21 @@ import Arrays from './schema/array.schema';
 import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
 const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>;
+const userColumns = [{
+  title: 'Name',
+  dataIndex: 'name'
+}, {
+  title: 'Email',
+  dataIndex: 'email'
+}, {
+  title: 'Age',
+  dataIndex: 'age'
+}];
+
+const postColumns = [{
+  title: 'Title',
+  dataIndex: 'title'
+}];
 
 export default <root>
   <object keyName="overview" title="Components Overview">
@@ -22,35 +37,49 @@ export default <root>
       </Tabs>
     </Block>
   </object>
-  <object keyName="home" title="Home">
-    <object keyName="header">
-      <string keyName="title" title="Title"/>
-      <string keyName="subTitle" title="Title"/>
-    </object>
-    <number keyName="count" />
-    <array keyName="navs">
-      <string keyName="text" />
-    </array>
-    <relation keyName="staredPosts" relation={{to: 'posts', type: 'toMany'}} ui="multipleSelect" uiParams={{textCol: 'title'}}/>
-    <relation keyName="bestAuthor" relation={{to: 'users', type: 'toOne'}} uiParams={{textCol: 'title'}}/>
+  <object keyName="home" title="Home" description="t to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of L ">
+    <Block title="Basic">
+      <number keyName="count" title="Count"/>
+      <relation title="StaredPosts" description="Ref to Posts" keyName="staredPosts" relation={{to: 'posts', type: 'toMany'}} ui="multipleSelect" uiParams={{textCol: 'title', columns: postColumns}}/>
+      <relation title="BestAuthor" description="Ref to Users" keyName="bestAuthor" relation={{to: 'users', type: 'toOne'}} uiParams={{textCol: 'name', columns: userColumns}}/>
+    </Block>
+    <Block title="Header">
+      <object keyName="header">
+        <string keyName="title" title="Title"/>
+        <string keyName="subTitle" title="Subtitle"/>
+      </object>
+    </Block>
+    <Block title="Navs">
+      <array keyName="navs">
+        <string keyName="text" />
+      </array>
+    </Block>
   </object>
-  <Posts />
-  <Users cacheActions={true} uiParams={{
-    columns: [{
-      title: 'name',
-      dataIndex: 'name'
-    }]
-  }} controlDeployAndResetButtons>
+  <Posts uiParams={{
+    columns: postColumns
+  }}>
+    <toolbar>
+      <pagination />
+      <filter fields={[{
+        key: 'title',
+        type: 'text',
+        label: 'Title'
+      }]}/>
+    </toolbar>
+  </Posts>
+  <Users uiParams={{
+    columns: userColumns
+  }}>
     <toolbar>
       <pagination />
       <sort options={[{
-        key: 'star',
-        title: 'Star'
+        key: 'age',
+        title: 'Age'
       }]}/>
       <filter fields={[{
-        key: 'star',
+        key: 'age',
         type: 'number',
-        label: 'Star'
+        label: 'Age'
       }]}/>
     </toolbar>
   </Users>
