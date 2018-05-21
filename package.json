@@ -1,7 +1,7 @@
 {
   "name": "canner",
   "version": "1.0.12",
-  "description": "the core-part of canner cms",
+  "description": "Open source declarative CMS framework build with React and GraphQL",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest --coverage",
