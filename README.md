@@ -1,6 +1,6 @@
 # Canner
 
-Open source declarative CMS framework build with React and GraphQL
+> Open source declarative CMS framework build with React and GraphQL
 
 ## Features
 
