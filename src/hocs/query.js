@@ -129,7 +129,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
-      if (pattern === 'array' || (type === 'relation' && relation.type === 'toMany')) {
+      if (pattern === 'array' || type === 'relation' && relation.type === 'toMany') {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v]);
@@ -137,14 +137,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
           <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges'], new List()).map(item => item.get('node'))} />
         </Toolbar>;
       } else if (type === 'relation' && relation.type === 'toOne') {
-        const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
-        const variables = query.getVairables();
-        const args = mapValues(queries, v => variables[v]);
-        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value} updateQuery={updateQuery}>
-          <Com {...this.props} rootValue={rootValue} value={value || new Map()} />
-        </Toolbar>;
+        return <Com {...this.props} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
       }
-      return <Com {...this.props} rootValue={rootValue} value={value || defaultValue(type)} />;
+      return <Com {...this.props} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
     }
   };
 }
@@ -183,7 +178,7 @@ function shouldUpdate(value: any, newValue: any) {
   return !is(value, newValue);
 }
 
-function defaultValue(type: string) {
+function defaultValue(type: string, relation: any) {
   switch (type) {
     case 'array': {
       return new List();
@@ -199,6 +194,18 @@ function defaultValue(type: string) {
     }
     case 'string': {
       return '';
+    }
+    case 'relation': {
+      if (relation.type === 'toMany') {
+        return {
+          edges: [],
+          pageInfo: {
+            hasNextPage: false
+          }
+        };
+      } else {
+        return null;
+      }
     }
     default: {
       return null;

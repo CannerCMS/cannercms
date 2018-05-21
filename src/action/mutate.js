@@ -5,7 +5,7 @@ import produce from 'immer';
 import {merge, findIndex, remove} from 'lodash';
 
 export function mutatePure(originValue: Object, action: Action<ActionType>): any {
-  let {key, id, value, path} = action.payload;
+  let {key, id, value, path, relation} = action.payload;
   value = (value && value.toJS) ? value.toJS() : value;
   // $FlowFixMe
   return produce(originValue, draft => {
@@ -57,39 +57,47 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
       }
 
       case 'CONNECT': {
-        if (draft[key].edges) {
+        if (id) {
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
-          const relationField = draft[key].edges[index].node[path];
           value.__typename = null;
-          if (relationField && relationField.edges) {
+          if (relation && relation.type === 'toOne') {
+            draft[key].edges[index].node[path] = value;
+          } else {
             draft[key].edges[index].node[path].edges.push({
               cursor: value.id,
               node: value,
               __typename: null,
             });
-          } else {
-            draft[key].edges[index].node[path] = value;
           }
-          break;
+        } else {
+          if (relation && relation.type === 'toOne') {
+            draft[key][path] = value;
+          } else {
+            draft[key][path].edges.push({
+              cursor: value.id,
+              node:value,
+              __typename: null
+            });
+          }
         }
-        const index = findIndex(draft[key] || [], item => item.id === id);
-        draft[key][index][path].push(value);
         break;
       }
 
       case 'DISCONNECT': {
-        if (draft[key].edges) {
+        if (id) {
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
-          const relationField = draft[key].edges[index].node[path];
-          if (relationField.edges) {
-            draft[key].edges[index].node[path].edges = draft[key].edges[index].node[path].edges.filter(item => item.cursor !== value.id);
-          } else {
+          if (relation && relation.type === 'toOne') {
             draft[key].edges[index].node[path] = null;
+          } else {
+            draft[key].edges[index].node[path].edges = draft[key].edges[index].node[path].edges.filter(item => item.cursor !== value.id);
           }
-          break;
+        } else {
+          if (relation && relation.type === 'toOne') {
+            draft[key][path] = null;
+          } else {
+            draft[key][path].edges = draft[key][path].edges.filter(item => item.cursor !== value.id);
+          }
         }
-        const index = findIndex(draft[key] || [], item => item.id === id);
-        remove(draft[key][index][path], item => item.id === id);
         break;
       }
 

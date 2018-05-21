@@ -31,8 +31,8 @@ export default <root>
     <array keyName="navs">
       <string keyName="text" />
     </array>
-    {/* <relation keyName="staredPosts" relation={{to: 'posts', type: 'toMany'}} ui="multipleSelect" uiParams={{textCol: 'title'}}/>
-    <relation keyName="bestAuthor" relation={{to: 'users', type: 'toOne'}} uiParams={{textCol: 'title'}}/> */}
+    <relation keyName="staredPosts" relation={{to: 'posts', type: 'toMany'}} ui="multipleSelect" uiParams={{textCol: 'title'}}/>
+    <relation keyName="bestAuthor" relation={{to: 'users', type: 'toOne'}} uiParams={{textCol: 'title'}}/>
   </object>
   <Posts />
   <Users cacheActions={true} uiParams={{

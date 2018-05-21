@@ -114,8 +114,8 @@ export default class Provider extends React.PureComponent<Props, State> {
     }).then(result => {
       afterDeploy && afterDeploy(result);
       return result;
-    }).catch(() => {
-      this.log('deploy', 'error', key, {
+    }).catch(e => {
+      this.log('deploy', e, key, {
         id,
         mutation,
         variables

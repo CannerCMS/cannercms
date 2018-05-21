@@ -23,7 +23,9 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>) {
         } else {
           set(variables.payload, path.split('/').concat('connect'), {id: value.get('id')});
         }
-        merge(variables.where, {id});
+        if (id) {
+          merge(variables.where, {id});
+        }
         break;
       }
       case 'CREATE_AND_CONNECT': {
@@ -41,7 +43,9 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>) {
         } else {
           set(variables.payload, path.split('/').concat('disconnect'), {id: value.get('id')});
         }
-        merge(variables.where, {id});
+        if (id) {
+          merge(variables.where, {id});
+        }
         break;
       case 'DISCONNECT_AND_DELETE':
         if (relation && relation.type === 'toMany') {
