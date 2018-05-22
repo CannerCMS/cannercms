@@ -40,10 +40,16 @@ export default function withOndeploy(Com: React.ComponentType<*>) {
       }
     }
 
-    onDeploy(callback: Function) {
+    onDeploy = (callback: Function) => {
       const {onDeploy, refId} = this.props;
       onDeploy(this.key, this.id, v => {
-        const {paths, value} = getValueAndPaths(v, refId.getPathArr());
+        let restPathArr = refId.getPathArr();
+        if (this.id) {
+          restPathArr = restPathArr.slice(2);
+        } else {
+          restPathArr = restPathArr.slice(1);
+        }
+        const {paths, value} = getValueAndPaths(v, restPathArr);
         return v.setIn(paths, callback(value));
       });
       this.hasRegistered = true;

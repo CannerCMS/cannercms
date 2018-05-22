@@ -8,6 +8,8 @@ import Objects from './schema/object.schema';
 import Arrays from './schema/array.schema';
 import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
+import OnDeploy from './schema/onDeploy.schema';
+
 const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>;
 const userColumns = [{
   title: 'Name',
@@ -83,4 +85,8 @@ export default <root>
       }]}/>
     </toolbar>
   </Users>
+  <OnDeploy
+    keyName="test1"
+    title="OnDeploy Demo"
+  />
 </root>

@@ -35,9 +35,9 @@ describe('getValueAndPaths', () => {
     });
 
     const idPathArr = ['posts', '0', 'images', '0', 'url'];
-    expect(getValueAndPaths(rootValue, idPathArr)).toEqual({
+    expect(getValueAndPaths(rootValue.getIn(['posts', 'edges', '0', 'node']), idPathArr.slice(2))).toEqual({
       value: 'url1',
-      paths: ['posts', 'edges', '0', 'node', 'images', '0', 'url']
+      paths: ['images', '0', 'url']
     });
   });
 });
@@ -103,7 +103,7 @@ describe('withOnDeploy', () => {
     expect(mockOnDeploy.mock.calls[0][0]).toBe('posts');
     expect(mockOnDeploy.mock.calls[0][1]).toBe('id1');
     expect(typeof mockOnDeploy.mock.calls[0][2]).toBe('function');
-    expect(mockOnDeploy.mock.calls[0][2](props.rootValue)).toMatchSnapshot();
+    expect(mockOnDeploy.mock.calls[0][2](props.rootValue.getIn(['posts', 'edges', '0', 'node']))).toMatchSnapshot();
     expect(callback).toHaveBeenCalledTimes(1);
   });
 });

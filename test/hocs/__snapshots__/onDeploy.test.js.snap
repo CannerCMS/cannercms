@@ -2,24 +2,12 @@
 
 exports[`withOnDeploy should onDeploy works 1`] = `
 Immutable.Map {
-  "posts": Immutable.Map {
-    "edges": Immutable.List [
-      Immutable.Map {
-        "cursor": "id1",
-        "node": Immutable.Map {
-          "id": "id1",
-          "images": Immutable.List [
-            Immutable.Map {
-              "url": "new url",
-            },
-          ],
-        },
-      },
-    ],
-    "pageInfo": Immutable.Map {
-      "hasNextInfo": false,
+  "id": "id1",
+  "images": Immutable.List [
+    Immutable.Map {
+      "url": "new url",
     },
-  },
+  ],
 }
 `;
 
