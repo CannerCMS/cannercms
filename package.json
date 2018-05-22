@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Open source declarative CMS framework build with React and GraphQL",
   "main": "lib/index.js",
   "scripts": {
@@ -51,7 +51,7 @@
     "babel-register": "^6.26.0",
     "canner-helpers": "^0.1.8",
     "canner-schema-loader": "^1.1.6",
-    "canner-script": "^1.0.26",
+    "canner-script": "^1.0.27",
     "cross-env": "^5.1.3",
     "css-loader": "^0.28.10",
     "enzyme": "^3.3.0",
