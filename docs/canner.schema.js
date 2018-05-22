@@ -55,7 +55,7 @@ export default <root>
       </array>
     </Block>
   </object>
-  <Posts uiParams={{
+  <Posts ui="table-route" uiParams={{
     columns: postColumns
   }}>
     <toolbar>
@@ -67,7 +67,7 @@ export default <root>
       }]}/>
     </toolbar>
   </Posts>
-  <Users uiParams={{
+  <Users ui="table-route" uiParams={{
     columns: userColumns
   }}>
     <toolbar>

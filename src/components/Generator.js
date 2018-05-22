@@ -217,13 +217,18 @@ export default class Generator extends React.PureComponent<Props, State> {
     let node = this.idNodeMap[componentPath];
     const entryKey = componentPathArr[0];
     if (!node) {
-      const node = Generator.findNode(componentPathArr.slice(), this.cacheTree[entryKey]);
+      const lastPath = componentPathArr.slice(1);
+      if (lastPath.length === 0) {
+        node = this.cacheTree[entryKey];
+      } else {
+        node = Generator.findNode(componentPathArr.slice(), this.cacheTree[entryKey]);
+      }
       this.idNodeMap[componentPath] = node;
     }
     if (!node) {
       throw new Error(`Can't find the node at refId ${refId.toString()}`);
     }
-    return this.renderNode(node, 0, {refId, ...props});
+    return this.renderNode(node, 0, {...props});
   }
 
   renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {
@@ -255,6 +260,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
     return (
       <div>
+        {/* {this.renderComponent(new RefId(routes.join('/')), {refId: new RefId(routes.slice(1).join('/')), routes, params})} */}
         {this.renderNode(componentTree, 0, {refId: new RefId(''), routes, params})}
       </div>
     );
