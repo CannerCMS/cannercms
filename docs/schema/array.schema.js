@@ -8,7 +8,7 @@ const Arrays = ({attributes}) => <object {...attributes}>
   <array keyName="panel" ui="panel" title="Panel">
     <string keyName="info" title="info" />
   </array>
-  <array keyName="tableroute" ui="table-route" title="Table-route" uiParams={{
+  <array keyName="tableroute" ui="tableRoute" title="Table-route" uiParams={{
     columns: [{
       title: 'info',
       dataIndex: 'info'
