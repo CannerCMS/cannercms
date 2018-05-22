@@ -9,6 +9,7 @@ import type ApolloClient from 'apollo-boost';
 import isEmpty from 'lodash/isEmpty';
 import {ActionManager, actionToMutation, actionsToVariables, mutatePure} from '../action';
 import {Query} from '../query';
+import {OnDeployManager} from '../onDeployManager';
 import type {Action, ActionType} from '../action/types';
 import gql from 'graphql-tag';
 import {fromJS} from 'immutable';
@@ -32,6 +33,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   actionManager: ActionManager;
   query: Query;
   observableQueryMap: {[string]: any}
+  onDeployManager: OnDeployManager;
 
   constructor(props: Props) {
     super(props);
@@ -44,6 +46,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         variables
       });
     });
+    this.onDeployManager = new OnDeployManager();
   }
 
   updateQuery = (paths: Array<string>, args: Object) => {
@@ -88,6 +91,18 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
+  onDeploy = (actions: Array<Action<ActionType>>) => {
+    return actions.map(action => {
+      const {key, id, value} = action.payload;
+      action.payload.value = this.onDeployManager.execute({
+        key,
+        id,
+        value
+      });
+      return action;
+    });
+  }
+
   deploy = (key: string, id?: string): Promise.resolve<*> => {
     const {client, afterDeploy} = this.props;
     let actions = this.actionManager.getActions(key, id);
@@ -96,6 +111,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     }
     
     actions = removeIdInCreateArray(actions);
+    actions = this.onDeploy(actions);
     const mutation = objectToQueries(actionToMutation(actions[0]), false);
     const variables = actionsToVariables(actions);
     return client.mutate({
@@ -202,7 +218,9 @@ export default class Provider extends React.PureComponent<Props, State> {
         reset: this.reset,
         updateQuery: this.updateQuery,
         subscribe: this.subscribe,
-        query: this.query
+        query: this.query,
+        onDeploy: this.onDeployManager.registerCallback,
+        removeOnDeploy: this.onDeployManager.unregisterCallback
       }}>
         {/* $FlowFixMe */}
         {React.cloneElement(this.props.children, {
@@ -212,7 +230,9 @@ export default class Provider extends React.PureComponent<Props, State> {
           reset: this.reset,
           updateQuery: this.updateQuery,
           subscribe: this.subscribe,
-          query: this.query
+          query: this.query,
+          onDeploy: this.onDeployManager.registerCallback,
+          removeOnDeploy: this.onDeployManager.unregisterCallback
         })}
       </HOCContext.Provider>
     </ApolloProvider>;

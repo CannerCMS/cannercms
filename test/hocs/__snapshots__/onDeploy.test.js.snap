@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withOnDeploy should onDeploy works 1`] = `
+Immutable.Map {
+  "posts": Immutable.Map {
+    "edges": Immutable.List [
+      Immutable.Map {
+        "cursor": "id1",
+        "node": Immutable.Map {
+          "id": "id1",
+          "images": Immutable.List [
+            Immutable.Map {
+              "url": "new url",
+            },
+          ],
+        },
+      },
+    ],
+    "pageInfo": Immutable.Map {
+      "hasNextInfo": false,
+    },
+  },
+}
+`;
+
+exports[`withOnDeploy should render 1`] = `
+<ComponentWithOnDeploy
+  onDeploy={[MockFunction]}
+  pattern="array.array.string"
+  refId={
+    CannerRefId {
+      "_internalArr": Array [
+        "posts",
+        "0",
+        "images",
+        "0",
+        "url",
+      ],
+      "child": [Function],
+      "getPathArr": [Function],
+      "remove": [Function],
+      "toString": [Function],
+    }
+  }
+  removeOnDeploy={[MockFunction]}
+  rootValue={
+    Immutable.Map {
+      "posts": Immutable.Map {
+        "edges": Immutable.List [
+          Immutable.Map {
+            "cursor": "id1",
+            "node": Immutable.Map {
+              "id": "id1",
+              "images": Immutable.List [
+                Immutable.Map {
+                  "url": "url1",
+                },
+              ],
+            },
+          },
+        ],
+        "pageInfo": Immutable.Map {
+          "hasNextInfo": false,
+        },
+      },
+    }
+  }
+>
+  <MockComponent
+    onDeploy={[Function]}
+    pattern="array.array.string"
+    refId={
+      CannerRefId {
+        "_internalArr": Array [
+          "posts",
+          "0",
+          "images",
+          "0",
+          "url",
+        ],
+        "child": [Function],
+        "getPathArr": [Function],
+        "remove": [Function],
+        "toString": [Function],
+      }
+    }
+    removeOnDeploy={[MockFunction]}
+    rootValue={
+      Immutable.Map {
+        "posts": Immutable.Map {
+          "edges": Immutable.List [
+            Immutable.Map {
+              "cursor": "id1",
+              "node": Immutable.Map {
+                "id": "id1",
+                "images": Immutable.List [
+                  Immutable.Map {
+                    "url": "url1",
+                  },
+                ],
+              },
+            },
+          ],
+          "pageInfo": Immutable.Map {
+            "hasNextInfo": false,
+          },
+        },
+      }
+    }
+  >
+    <div>
+      Component
+    </div>
+  </MockComponent>
+</ComponentWithOnDeploy>
+`;
