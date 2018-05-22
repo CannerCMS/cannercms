@@ -1,4 +1,4 @@
-import {schemaToQueriesObject, fieldToQueriesObject} from '../../src/query/utils';
+import {schemaToQueriesObject} from '../../src/query/utils';
 
 describe('schema to queries object', () => {
   it('should works', () => {
