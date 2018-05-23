@@ -19,7 +19,6 @@ import zh from 'react-intl/locale-data/zh';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import hocsLocales from '../hocs/components/locale';
 import pluginsLocales from '@canner/antd-locales';
-const lang = 'zh';
 addLocaleData([...en, ...zh]);
 
 // type
@@ -48,6 +47,11 @@ type Props = {
   history: {
     push: (path: string) => void,
     location: Object
+  },
+  intl: {
+    locale: string,
+    defaultLocale: string,
+    message: Object
   }
 }
 
@@ -72,7 +76,12 @@ class CannerCMS extends React.Component<Props, State> {
     layouts: {},
     baseUrl: '/',
     connectors: {},
-    resolver: {}
+    resolver: {},
+    intl: {
+      locale: 'en',
+      defaultLocale: 'en',
+      messages: {}
+    }
   }
 
   constructor(props: Props) {
@@ -127,7 +136,8 @@ class CannerCMS extends React.Component<Props, State> {
       layouts,
       baseUrl,
       history,
-      afterDeploy
+      afterDeploy,
+      intl = {}
     } = this.props;
     // const {connecting} = this.state;
     const {location, push} = history;
@@ -139,12 +149,11 @@ class CannerCMS extends React.Component<Props, State> {
     // }
     return (
       <IntlProvider
-        locale={lang}
-        defaultLocale={lang}
-        key={lang}
+        locale={intl.lang || 'en'}
+        defaultLocale={intl.lang || 'en'}
         messages={{
-          ...pluginsLocales[lang],
-          ...hocsLocales[lang],
+          ...pluginsLocales[intl.lang || 'en'],
+          ...hocsLocales[intl.lang || 'en'],
         }}
       >
         <Provider

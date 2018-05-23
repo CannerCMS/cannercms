@@ -92,8 +92,11 @@ export default <root>
       }]}/>
     </toolbar>
   </Users>
-  <OnDeploy
-    keyName="test1"
-    title="OnDeploy Demo"
-  />
+  <array keyName="test" title="array" uiParams={{columns: [{title: 'title', dataIndex: 'title'}]}}>
+    <string keyName="title" />
+    <OnDeploy
+      keyName="test1"
+      title="OnDeploy Demo"
+    />
+  </array>
 </root>

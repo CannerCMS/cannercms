@@ -66,7 +66,7 @@ export function splitRefId({
   const [key, index] = refId.getPathArr();
   let id;
   if (pattern.startsWith('array')) {
-    id = rootValue.getIn([key, 'edges', index, 'cursor']);
+    id = rootValue.getIn([key, index, 'id']);
   }
   return {
     key,
