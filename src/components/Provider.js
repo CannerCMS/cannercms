@@ -41,8 +41,10 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.query = new Query({schema: props.schema});
     const variables = this.query.getVairables();
     this.observableQueryMap = mapValues(props.schema, (v, key) => {
+      const gqlStr = this.query.toGQL(key);
+      this.log('gqlstr', gqlStr);
       return props.client.watchQuery({
-        query: gql`${this.query.toGQL(key)}`,
+        query: gql`${gqlStr}`,
         variables
       });
     });

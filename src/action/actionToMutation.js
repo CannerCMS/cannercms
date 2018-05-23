@@ -20,19 +20,19 @@ export default function actionToMutation(action: Action<ActionType>) {
   let name = '';
   switch(type) {
     case 'UPDATE_OBJECT':
-      name = `update${upperFirst(key.toLowerCase())}`;
+      name = `update${upperFirst(key)}`;
       break;
     case 'UPDATE_ARRAY':
-      name = `update${upperFirst(pluralize.singular(key.toLowerCase()))}`;
+      name = `update${upperFirst(pluralize.singular(key))}`;
       break;
     case 'CREATE_ARRAY':
-      name = `create${upperFirst(pluralize.singular(key.toLowerCase()))}`;
+      name = `create${upperFirst(pluralize.singular(key))}`;
       break;
     case 'DELETE_ARRAY':
-      name = `delete${upperFirst(pluralize.singular(key.toLowerCase()))}`;
+      name = `delete${upperFirst(pluralize.singular(key))}`;
       break;
     default:
-      name = `update${upperFirst(pluralize.singular(key.toLowerCase()))}`;
+      name = `update${upperFirst(pluralize.singular(key))}`;
       break;
   }
   set(mutation, `mutation.fields.${name}`, {

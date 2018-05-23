@@ -34,7 +34,7 @@ const Strings = ({attributes}) => <object {...attributes}>
   }}/>
   <string keyName="textarea" title="Textarea" ui="textarea" />
   <file keyName="image" title="Image" />
-  <date keyName="date" title="Date" />
+  <dateTime keyName="date" title="Date" />
 </object>;
 
 export default Strings;

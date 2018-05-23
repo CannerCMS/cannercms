@@ -38,6 +38,12 @@ export default <root>
         <Objects keyName="object" title="Object type" />
       </Tabs>
     </Block>
+    <Block title="test">
+      <array keyName="tag" ui="tag" uiParams={{defaultOptions: []}}/>
+      <array keyName="slider" ui="slider"/>
+      <array keyName="gallery" ui="gallery" title="Gallery" />
+      <image keyName="image" ui="image" title="Image" />
+    </Block>
   </object>
   <object keyName="home" title="Home" description="t to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of L ">
     <Block title="Basic">
@@ -49,6 +55,7 @@ export default <root>
       <object keyName="header">
         <string keyName="title" title="Title"/>
         <string keyName="subTitle" title="Subtitle"/>
+        <object keyName="desc" title="Description" ui="editor"/>
       </object>
     </Block>
     <Block title="Navs">

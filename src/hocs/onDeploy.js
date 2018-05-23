@@ -16,14 +16,12 @@ type Props = {
 
 export default function withOndeploy(Com: React.ComponentType<*>) {
   return class ComponentWithOnDeploy extends React.Component<Props> {
-    hasRegistered = false;
     key: string;
     id: ?string;
 
     constructor(props: Props) {
       super(props);
       const {pattern, refId, rootValue} = props;
-      this.hasRegistered = false;
       const {key, id} = splitRefId({
         refId,
         rootValue,
@@ -31,13 +29,6 @@ export default function withOndeploy(Com: React.ComponentType<*>) {
       });
       this.key = key;
       this.id = id;
-    }
-
-    componentWillUnmount() {
-      const {removeOnDeploy} = this.props;
-      if (this.hasRegistered) {
-        removeOnDeploy(this.key, this.id);
-      }
     }
 
     onDeploy = (callback: Function) => {
@@ -52,7 +43,6 @@ export default function withOndeploy(Com: React.ComponentType<*>) {
         const {paths, value} = getValueAndPaths(v, restPathArr);
         return v.setIn(paths, callback(value));
       });
-      this.hasRegistered = true;
     }
 
     render() {

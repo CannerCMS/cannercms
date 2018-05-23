@@ -58,8 +58,8 @@ type Props = {
 
   deploy?: Function,
   reset?: Function,
-  onDeploy: Function,
-  removeOnDeploy: Function
+  onDeploy?: Function,
+  removeOnDeploy?: Function
 }
 
 type childrenProps = {

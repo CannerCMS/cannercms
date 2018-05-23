@@ -215,6 +215,16 @@ function defaultValue(type: string, relation: any) {
         return null;
       }
     }
+    case 'image':
+    case 'file': {
+      return fromJS({
+        url: '',
+        contentType: '',
+        name: '',
+        size: 0,
+        __typename: null
+      })
+    }
     default: {
       return null;
     }

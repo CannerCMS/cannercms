@@ -24,11 +24,9 @@ const Arrays = ({attributes}) => <object {...attributes}>
   }}>
     <string keyName="info" title="info" />
   </array>
-  {/* <array keyName="slider" ui="slider" title="Slider">
-    <string keyName="children" title="Children" />
-  </array>
-  <array keyName="tag" ui="tag" title="Tag" />
-  <array keyName="gallery" ui="gallery" title="Gallery" /> */}
+  {/* <array keyName="slider" ui="slider" title="Slider" />
+  <array keyName="tag" ui="tag" title="Tag" /> */}
+{/*<array keyName="gallery" ui="gallery" title="Gallery" /> */}
 </object>
 
 export default Arrays
