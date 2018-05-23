@@ -111,7 +111,7 @@ class CannerCMS extends React.Component<Props, State> {
     });
 
     this.imageServiceConfigs = {...Object.keys(cannerSchema).reduce((result, key) => {
-      result[key] = serviceConfig;
+      result[key] = serviceConfig.getServiceConfig();
       return result;
     }, {}), ...(props.imageServiceConfigs || {})};
     this.state = {
