@@ -10,7 +10,7 @@ import hocs from '../hocs';
 
 import defaultLayouts from 'canner-layouts';
 import {ImgurService} from '@canner/image-service-config';
-import {createClient, MemoryConnector} from '@canner/graphql-resolver';
+import {createClient, MemoryConnector} from 'canner-graphql-interface';
 import {createEmptyData} from 'canner-helpers';
 
 // i18n

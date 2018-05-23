@@ -6,7 +6,7 @@ import schema from './canner.schema';
 import Tabs from './layouts/tabs';
 import {Layout, Menu} from 'antd';
 import firebase from 'firebase';
-import {FirebaseRtdbClientConnector} from '@canner/graphql-resolver';
+import {FirebaseRtdbClientConnector} from 'canner-graphql-interface';
 
 class CMSExample extends React.Component {
   constructor(props) {
