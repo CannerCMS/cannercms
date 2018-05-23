@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Open source declarative CMS framework build with React and GraphQL",
   "main": "lib/index.js",
   "scripts": {
