@@ -33,7 +33,7 @@ type Props = {
   },
   connector: any,
   connectors: ?Object,
-  resolvers: ?Object,
+  resolver: ?Object,
   dataDidChange: void => void,
   afterDeploy: void => void,
   children: React.ChildrenArray<React.Node>,
@@ -72,13 +72,13 @@ class CannerCMS extends React.Component<Props, State> {
     layouts: {},
     baseUrl: '/',
     connectors: {},
-    resolvers: {}
+    resolver: {}
   }
 
   constructor(props: Props) {
     super(props);
     const {cannerSchema} = props.schema;
-    let {connector, connectors, resolvers} = props;
+    let {connector, connectors, resolver} = props;
     if (!connector && isEmpty(connectors)) {
       // use memory connector by default if no any connector given
       connector = new MemoryConnector({
@@ -97,7 +97,7 @@ class CannerCMS extends React.Component<Props, State> {
       return result;
     }, {});
 
-    const options: any = {schema: fixSchema, resolvers};
+    const options: any = {schema: fixSchema, resolvers: resolver};
     if (connector) {
       options.connector = connector;
     }
