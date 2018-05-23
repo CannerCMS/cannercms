@@ -15,7 +15,6 @@
     "prepublish": "npm run clean && npm run check:src && npm run build",
     "check:src": "npm run lint",
     "start": "./node_modules/.bin/webpack-dev-server --mode development --config webpack.config.dev.js",
-    "postpublish": "npm run build:docs",
     "build:docs": "./node_modules/.bin/webpack ./docs/index.js --output ./docs/static/bundle.js --mode production --config webpack.config.prod.js",
     "validate": "npm ls"
   },
