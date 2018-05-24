@@ -31,7 +31,6 @@ type Props = {
     componentTree: {[key: string]: Node},
   },
   connector: any,
-  connectors: ?Object,
   resolver: ?Object,
   dataDidChange: void => void,
   afterDeploy: void => void,
@@ -56,7 +55,6 @@ type Props = {
 }
 
 type State = {
-  connecting: boolean
 }
 
 class CannerCMS extends React.Component<Props, State> {
@@ -75,7 +73,7 @@ class CannerCMS extends React.Component<Props, State> {
     hocs,
     layouts: {},
     baseUrl: '/',
-    connectors: {},
+    connector: {},
     resolver: {},
     intl: {
       locale: 'en',
@@ -87,10 +85,13 @@ class CannerCMS extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     const {cannerSchema} = props.schema;
-    let {connector, connectors, resolver} = props;
-    if (!connector && isEmpty(connectors)) {
+    const {connector = {}, resolver} = props;
+    let defaultConnector = connector.__default;
+    let connectors = {...connector};
+    delete connectors.__default;
+    if (!defaultConnector && isEmpty(connectors)) {
       // use memory connector by default if no any connector given
-      connector = new MemoryConnector({
+      defaultConnector = new MemoryConnector({
         defaultData: createEmptyData(cannerSchema).toJS()
       });
     }
@@ -107,8 +108,8 @@ class CannerCMS extends React.Component<Props, State> {
     }, {});
 
     const options: any = {schema: fixSchema, resolvers: resolver};
-    if (connector) {
-      options.connector = connector;
+    if (defaultConnector) {
+      options.connector = defaultConnector;
     }
     if (!isEmpty(connectors)) {
       options.connectors = connectors;
@@ -123,9 +124,7 @@ class CannerCMS extends React.Component<Props, State> {
       result[key] = serviceConfig.getServiceConfig();
       return result;
     }, {}), ...(props.imageServiceConfigs || {})};
-    this.state = {
-      connecting: true
-    };
+    
   }
 
   render() {
@@ -139,14 +138,11 @@ class CannerCMS extends React.Component<Props, State> {
       afterDeploy,
       intl = {}
     } = this.props;
-    // const {connecting} = this.state;
     const {location, push} = history;
     const {pathname} = location;
     const routes = getRoutes(pathname, baseUrl);
     const params = queryString.parse(location.search);
-    // if (connecting) {
-    //   return <div>LOADING</div>;
-    // }
+
     return (
       <IntlProvider
         locale={intl.lang || 'en'}

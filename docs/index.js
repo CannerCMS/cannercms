@@ -81,7 +81,9 @@ class CMSExample extends React.Component {
                     schema={schema}
                     baseUrl={baseUrl}
                     history={history}
-                    connector={this.connector}
+                    connector={{
+                      __default: this.connector
+                    }}
                     layouts={{
                       Tabs
                     }}
