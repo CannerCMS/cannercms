@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import queryString from 'query-string';
-import {isEmpty} from 'lodash';
+import {isEmpty, isPlainObject} from 'lodash';
 import Provider from './Provider';
 import Generator from './Generator';
 import hocs from '../hocs';
@@ -86,8 +86,7 @@ class CannerCMS extends React.Component<Props, State> {
     super(props);
     const {cannerSchema} = props.schema;
     const {connector = {}, resolver} = props;
-    let defaultConnector = connector.__default;
-    let connectors = {...connector};
+    let {defaultConnector, connectors} = parseConnector(connector);
     delete connectors.__default;
     if (!defaultConnector && isEmpty(connectors)) {
       // use memory connector by default if no any connector given
@@ -181,6 +180,28 @@ function getRoutes(pathname, baseUrl = '/') {
     pathnameWithoutBaseUrl = pathnameWithoutBaseUrl.substring(1);
   }
   return pathnameWithoutBaseUrl.split('/');
+}
+
+function parseConnector(connector: any) {
+  if (isEmpty(connector)) {
+    return {
+      defaultConnector: undefined,
+      connectors: {}
+    };
+  }
+  if (isPlainObject(connector)) {
+    const defaultConnector = connector.__default;
+    delete connector.__default;
+    return {
+      defaultConnector,
+      connectors: connector
+    }
+  } else {
+    return {
+      defaultConnector: connector,
+      connectors: {}
+    }
+  }
 }
 
 export default CannerCMS;
