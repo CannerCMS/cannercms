@@ -51,6 +51,14 @@ class CMSExample extends React.Component {
     });
   }
 
+  dataDidChange = (dataChanged) => {
+    console.log(dataChanged);
+  }
+
+  afterDeploy = () => {
+    console.log('deployed');
+  }
+
   render() {
     const baseUrl = "/docs";
     const {cannerSchema} = schema;
@@ -82,6 +90,8 @@ class CMSExample extends React.Component {
                     baseUrl={baseUrl}
                     history={history}
                     connector={this.connector}
+                    afterDeploy={this.afterDeploy}
+                    dataDidChange={this.dataDidChange}
                     layouts={{
                       Tabs
                     }}

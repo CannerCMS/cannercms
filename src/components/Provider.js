@@ -53,7 +53,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   updateDataChanged = () => {
     const actions = this.actionManager.getActions();
     let dataChanged = groupBy(actions, (action => action.payload.key));
-    mapValues(dataChanged, value => {
+    dataChanged = mapValues(dataChanged, value => {
       if (value[0].type === 'UPDATE_OBJECT') {
         return true;
       }

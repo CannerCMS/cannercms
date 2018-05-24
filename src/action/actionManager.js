@@ -50,7 +50,12 @@ export class ActionManager implements ActionManagerDef {
     }
   }
 
-  getActions = (key: string, id?: string) => {
+  getActions = (key?: string, id?: string) => {
+    if (!key) {
+      return Object.keys(this.store).reduce((result, key) => {
+        return result.concat(this.getActions(key));
+      }, []);
+    }
     const item = get(this.store, key);
     if (item instanceof ObjectPattern) {
       return item.getActions();
