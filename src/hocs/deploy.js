@@ -154,7 +154,7 @@ export function genCancelButton(reset: Function, currentRefId: RefId) {
     onClick = reset,
     callback = () => {},
     // $FlowFixMe
-    text = 'Cancel',
+    text = 'Reset',
     // $FlowFixMe
     component = Button
   }: buttonProps = {}) {
