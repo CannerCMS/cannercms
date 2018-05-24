@@ -28,7 +28,8 @@ class CMSExample extends React.Component {
       database: defaultApp.database()
     });
     this.state = {
-      login: false
+      login: false,
+      dataChanged: {}
     };
   }
 
@@ -95,6 +96,7 @@ class CMSExample extends React.Component {
                     layouts={{
                       Tabs
                     }}
+                    hideButtons={true}
                   /> :
                   null
               }

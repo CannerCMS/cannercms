@@ -59,7 +59,8 @@ type Props = {
   deploy?: Function,
   reset?: Function,
   onDeploy?: Function,
-  removeOnDeploy?: Function
+  removeOnDeploy?: Function,
+  hideButtons: boolean
 }
 
 type childrenProps = {
@@ -178,7 +179,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {params, goTo, baseUrl, routes, imageServiceConfigs, onDeploy, removeOnDeploy} = this.props;
+    const {params, goTo, baseUrl, routes, imageServiceConfigs, onDeploy, removeOnDeploy, hideButtons} = this.props;
     if (component) {
       return <node.component
         {...restNodeData}
@@ -190,6 +191,7 @@ export default class Generator extends React.PureComponent<Props, State> {
         params={params}
         onDeploy={onDeploy}
         removeOnDeploy={removeOnDeploy}
+        hideButtons={hideButtons}
         goTo={path => {
           goTo(`${baseUrl}/${path}`)}
         }

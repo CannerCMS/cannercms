@@ -51,7 +51,8 @@ type Props = {
     locale: string,
     defaultLocale: string,
     message: Object
-  }
+  },
+  hideButtons: boolean
 }
 
 type State = {
@@ -150,7 +151,8 @@ class CannerCMS extends React.Component<Props, State> {
       baseUrl,
       history,
       afterDeploy,
-      intl = {}
+      intl = {},
+      hideButtons
     } = this.props;
     const {location, push} = history;
     const {pathname} = location;
@@ -183,6 +185,7 @@ class CannerCMS extends React.Component<Props, State> {
             baseUrl={baseUrl}
             routes={routes}
             params={params}
+            hideButtons={hideButtons}
           />
         </Provider>
       </IntlProvider>
