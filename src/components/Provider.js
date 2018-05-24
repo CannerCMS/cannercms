@@ -15,18 +15,17 @@ import gql from 'graphql-tag';
 import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
-import { isArray } from 'lodash';
+import {isArray, groupBy} from 'lodash';
 type Props = {
   schema: {[key: string]: any},
-  dataDidChange: void => void,
-  afterDeploy: void => void,
+  dataDidChange: Object => void,
+  afterDeploy: Object => void,
   children: React.Node,
   client: ApolloClient,
   rootKey: string
 }
 
 type State = {
-
 }
 
 export default class Provider extends React.PureComponent<Props, State> {
@@ -49,6 +48,18 @@ export default class Provider extends React.PureComponent<Props, State> {
       });
     });
     this.onDeployManager = new OnDeployManager();
+  }
+
+  updateDataChanged = () => {
+    const actions = this.actionManager.getActions();
+    let dataChanged = groupBy(actions, (action => action.payload.key));
+    mapValues(dataChanged, value => {
+      if (value[0].type === 'UPDATE_OBJECT') {
+        return true;
+      }
+      return value.map(v => v.payload.id);
+    });
+    this.props.dataDidChange(dataChanged);
   }
 
   updateQuery = (paths: Array<string>, args: Object) => {
@@ -105,7 +116,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  deploy = (key: string, id?: string): Promise.resolve<*> => {
+  deploy = (key: string, id?: string): Promise<*> => {
     const {client, afterDeploy} = this.props;
     let actions = this.actionManager.getActions(key, id);
     if (!actions || !actions.length) {
@@ -130,7 +141,12 @@ export default class Provider extends React.PureComponent<Props, State> {
       client.resetStore();
       return fromJS(result.data);
     }).then(result => {
-      afterDeploy && afterDeploy(result);
+      this.updateDataChanged();
+      afterDeploy && afterDeploy({
+        key,
+        id,
+        result
+      });
       return result;
     }).catch(e => {
       this.log('deploy', e, key, {
@@ -141,9 +157,10 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  reset = (key: string, id?: string) => {
+  reset = (key: string, id?: string): Promise<*> => {
     const {client} = this.props;
     this.actionManager.removeActions(key, id);
+    this.updateDataChanged();
     return client.resetStore();
   }
 
@@ -171,6 +188,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       mutatedData = mutatePure(data, action)
     }
     this.log('request', 'mutatedData', mutatedData);
+    this.updateDataChanged();
     if (write) {
       client.writeQuery({
         query: query,

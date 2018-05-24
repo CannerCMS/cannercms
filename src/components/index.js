@@ -61,6 +61,7 @@ class CannerCMS extends React.Component<Props, State> {
   imageServiceConfigs: Object
   client: Client;
   endpoints: {[key: string]: any};
+  provider: ?Provider;
 
   static defaultProps = {
     schema: {
@@ -126,6 +127,20 @@ class CannerCMS extends React.Component<Props, State> {
     
   }
 
+  deploy = (key: string, id?: string): Promise<*> => {
+    if (this.provider) {
+      return this.provider.deploy(key, id);
+    }
+    return Promise.resolve();
+  }
+
+  reset = (key: string, id?: string): Promise<*> => {
+    if (this.provider) {
+      return this.provider.reset(key, id);
+    }
+    return Promise.resolve();
+  }
+
   render() {
     const {
       schema,
@@ -152,6 +167,7 @@ class CannerCMS extends React.Component<Props, State> {
         }}
       >
         <Provider
+          ref={provider => this.provider = provider}
           client={this.client}
           schema={schema.cannerSchema}
           dataDidChange={dataDidChange}

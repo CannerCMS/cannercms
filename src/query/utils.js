@@ -23,8 +23,8 @@ export function fieldToQueriesObject(field: any): any {
       break;
     }
     case types.ARRAY: {
-      set(queriesObj, ['fields', 'id'], null);
       field.forEach(childField => {
+        set(queriesObj, ['fields', 'id'], null);
         const qlo = fieldToQueriesObject(childField);
         set(queriesObj, ['fields', childField.getKey()], qlo.queriesObj);
         merge(variables, qlo.variables);

@@ -39,11 +39,17 @@ export default <root>
       </Tabs>
     </Block>
     <Block title="test">
-      <array keyName="tag" ui="tag" uiParams={{defaultOptions: []}}/>
-      <array keyName="slider" ui="slider"/>
-      <array keyName="gallery" ui="gallery" title="Gallery" />
+      <array keyName="tag" ui="tag" uiParams={{defaultOptions: []}}>
+        <string />
+      </array>
+      <array keyName="slider" ui="slider">
+        <string />
+      </array>
+      <array keyName="gallery" ui="gallery" title="Gallery">
+        <image />
+      </array>
       <image keyName="image" ui="image" title="Image" />
-      <geoPoint keyName="map" title="Map" />
+      {/* <geoPoint keyName="map" title="Map" /> */}
     </Block>
   </object>
   <object keyName="home" title="Home" description="t to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of L ">
