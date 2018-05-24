@@ -225,6 +225,14 @@ function defaultValue(type: string, relation: any) {
         __typename: null
       })
     }
+    case 'geoPoint': {
+      return fromJS({
+        placeId: '',
+        address: '',
+        lat: 122,
+        lng: 23
+      });
+    }
     default: {
       return null;
     }
