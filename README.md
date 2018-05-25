@@ -60,13 +60,18 @@ Canner CMS provides flexible CMS infrastructure, allowing developers to assemble
 
 Adaptive CMS is a novel CMS structure that differs from traditional CMS and headless CMS. The biggest difference is that Adaptive CMS decouples the view and data layers and builds data interfaces to connect to single or multiple data sources.
 
+![overview](http://framework.canner.io/docs/assets/revolution.png)
 
-## Learn more
+> Learn more [Why Adaptive CMS?](http://framework.canner.io/docs/why-adaptive-cms.html)
 
-Visit our [Canner official website](https://framework.canner.io/)
+## Links
+
+Visit our [Open source Canner official website](https://framework.canner.io/)
 
 And also visit our [CannerIO platform](https://www.canner.io)
 
 ## License
 
 Apache-2.0
+
+![footer banner](https://user-images.githubusercontent.com/26116324/37811196-a437d930-2e93-11e8-97d8-0653ace2a46d.png)
