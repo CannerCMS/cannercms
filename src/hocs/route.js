@@ -2,7 +2,6 @@
 import * as React from 'react';
 import {Button, Icon} from 'antd';
 import styled from 'styled-components';
-
 import type RefId from 'canner-ref-id';
 
 const RENDER_CHILDREN = 0;
@@ -25,7 +24,10 @@ type Props = {
   deploy: Function,
   reset: Function,
   hideButtons: boolean,
-  renderChildren: (Object) => React.Node
+  renderChildren: (Object) => React.Node,
+  request: Function,
+  keyName: string,
+  items: Object
 }
 
 export default function withRoute(Com: React.ComponentType<*>) {
@@ -52,7 +54,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     render() {
-      const {routes, pattern,  path, params, refId, renderChildren, hideButtons} = this.props;
+      let {routes, pattern,  path, params, refId, renderChildren, hideButtons} = this.props;
       const renderType = getRenderType({
         pattern,
         routes,

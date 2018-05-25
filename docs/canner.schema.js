@@ -49,6 +49,7 @@ export default <root>
         <image />
       </array>
       <image keyName="image" ui="image" title="Image" />
+      <object keyName="editor" ui="editor" />
       {/* <geoPoint keyName="map" title="Map" /> */}
     </Block>
   </object>
