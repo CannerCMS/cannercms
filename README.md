@@ -1,4 +1,4 @@
-# Canner
+![logo](./docs/logo-word-alpha.svg)
 
 > Build CMS in few lines of code for different data sources
 
