@@ -60,7 +60,7 @@ type Props = {
   reset?: Function,
   onDeploy?: Function,
   removeOnDeploy?: Function,
-  hideButtons: boolean
+  hideButtons: boolean,
 }
 
 type childrenProps = {

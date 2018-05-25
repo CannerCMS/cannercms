@@ -96,6 +96,7 @@ class CMSExample extends React.Component {
                     layouts={{
                       Tabs
                     }}
+                    hideButtons={true}
                   /> :
                   null
               }
