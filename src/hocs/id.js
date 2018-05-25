@@ -3,7 +3,7 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import type {Query} from '../query';
-import {createEmptyData} from 'canner-helpers';
+// import {createEmptyData} from 'canner-helpers';
 
 type Props = {
   refId: RefId,
@@ -98,6 +98,6 @@ function isChildrenOfArray(pattern: string) {
   return patternArray.length === 2 && patternArray[0] === 'array';
 }
 
-function randomId() {
-  return Math.random().toString(36).substr(2, 12);
-}
+// function randomId() {
+//   return Math.random().toString(36).substr(2, 12);
+// }
