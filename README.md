@@ -28,7 +28,7 @@ Of course not every CMS exhibits all these issues, but if you tried using anothe
 
 If that sounds familiar, you might like ***Canner***. Which motivates us to solve these problems.
 
-> If you are interested in how we solve these problems see [Our mission](why-mission)
+> If you are interested in how we solve these problems see [Our mission](https://framework.canner.io/docs/why-mission.html)
 
 ## Features
 
