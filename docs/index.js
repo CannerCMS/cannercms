@@ -5,10 +5,65 @@ import CMS from '../src/components';
 import schema from './canner.schema';
 import Tabs from './layouts/tabs';
 import {Layout, Menu} from 'antd';
+import firebase from 'firebase';
+import {FirebaseRtdbClientConnector} from 'canner-graphql-interface';
+
 class CMSExample extends React.Component {
+  constructor(props) {
+    super(props);
+    try {
+      firebase.app();
+    } catch (e) {
+      firebase.initializeApp({
+        apiKey: "AIzaSyDXsFofZTaEk6SIhDj0Ot4YuPidKAfY750",
+        authDomain: "test-new-qa.firebaseapp.com",
+        databaseURL: "https://test-new-qa.firebaseio.com",
+        projectId: "test-new-qa",
+        storageBucket: "test-new-qa.appspot.com",
+        messagingSenderId: "983887338585"
+      });
+    }
+    const defaultApp = firebase.app()
+    this.connector = new FirebaseRtdbClientConnector({
+      database: defaultApp.database()
+    });
+    this.state = {
+      login: false,
+      dataChanged: {}
+    };
+  }
+
+  auth = () => new Promise((resolve, reject) => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        resolve(user);
+      }
+    });
+    firebase.auth().signInAnonymously().catch(error => {
+      reject(error);
+    });
+  });
+
+  componentDidMount() {
+    this.auth().then(() => {
+      this.setState({
+        login: true
+      });
+    });
+  }
+
+  dataDidChange = (dataChanged) => {
+    console.log(dataChanged);
+  }
+
+  afterDeploy = () => {
+    console.log('deployed');
+  }
+
   render() {
     const baseUrl = "/docs";
     const {cannerSchema} = schema;
+    const {login} = this.state;
     // eslint-disable-next-line
     console.log(schema);
     return (
@@ -29,14 +84,22 @@ class CMSExample extends React.Component {
               </Menu>
             </Layout.Sider>
             <Layout.Content>
-              <CMS
-                schema={schema}
-                baseUrl={baseUrl}
-                history={history}
-                layouts={{
-                  Tabs
-                }}
-              />
+              {
+                login ?
+                  <CMS
+                    schema={schema}
+                    baseUrl={baseUrl}
+                    history={history}
+                    connector={this.connector}
+                    afterDeploy={this.afterDeploy}
+                    dataDidChange={this.dataDidChange}
+                    layouts={{
+                      Tabs
+                    }}
+                    hideButtons={true}
+                  /> :
+                  null
+              }
             </Layout.Content>
           </Layout>;
         }}/>

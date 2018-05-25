@@ -38,16 +38,16 @@ describe('actions to variables', () => {
       updateAction,
       createAndConnectAction,
       disconnectAction
-    ])).toEqual({
+    ])).toMatchObject({
       "payload": {
         "title": "123",
         "author": {
-            "create": [{
+            "create": {
               "name": "newAuthor"
-            }],
-            "disconnect": [{
+            },
+            "disconnect": {
               "id": "67428a37-107a-4a59-811d-15810c7c49a9"
-            }]
+            }
           }
       },
       "where": {

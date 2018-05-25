@@ -54,7 +54,13 @@ type Props = {
   baseUrl: string,
   routes: Array<string>,
   params: {[string]: string},
-  refresh?: boolean
+  refresh?: boolean,
+
+  deploy?: Function,
+  reset?: Function,
+  onDeploy?: Function,
+  removeOnDeploy?: Function,
+  hideButtons: boolean
 }
 
 type childrenProps = {
@@ -137,7 +143,7 @@ export default class Generator extends React.PureComponent<Props, State> {
           loading: () => <div>loading</div>,
         });
       }
-      component = this.wrapByHOC(component, ['title', 'deploy', 'request', 'query', 'cache', 'route', 'id'] || []);
+      component = this.wrapByHOC(component, ['title', 'onDeploy', 'deploy', 'request', 'query', 'cache', 'route', 'id'] || []);
     }
 
     if (!component) {
@@ -173,7 +179,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {params, goTo, baseUrl, routes, imageServiceConfigs} = this.props;
+    const {params, goTo, baseUrl, routes, imageServiceConfigs, onDeploy, removeOnDeploy, hideButtons} = this.props;
     if (component) {
       return <node.component
         {...restNodeData}
@@ -183,6 +189,9 @@ export default class Generator extends React.PureComponent<Props, State> {
         renderChildren={(props) => this.renderChildren(node, props)}
         renderComponent={this.renderComponent}
         params={params}
+        onDeploy={onDeploy}
+        removeOnDeploy={removeOnDeploy}
+        hideButtons={hideButtons}
         goTo={path => {
           goTo(`${baseUrl}/${path}`)}
         }
@@ -214,13 +223,18 @@ export default class Generator extends React.PureComponent<Props, State> {
     let node = this.idNodeMap[componentPath];
     const entryKey = componentPathArr[0];
     if (!node) {
-      const node = Generator.findNode(componentPathArr.slice(), this.cacheTree[entryKey]);
+      const lastPath = componentPathArr.slice(1);
+      if (lastPath.length === 0) {
+        node = this.cacheTree[entryKey];
+      } else {
+        node = Generator.findNode(componentPathArr.slice(), this.cacheTree[entryKey]);
+      }
       this.idNodeMap[componentPath] = node;
     }
     if (!node) {
       throw new Error(`Can't find the node at refId ${refId.toString()}`);
     }
-    return this.renderNode(node, 0, {refId, ...props});
+    return this.renderNode(node, 0, {...props});
   }
 
   renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {
@@ -246,11 +260,13 @@ export default class Generator extends React.PureComponent<Props, State> {
   render() {
     const {componentTree, error, errorInfo} = this.state;
     const {routes, params} = this.props;
+   
     if (error) {
       return errorInfo;
     }
     return (
       <div>
+        {/* {this.renderComponent(new RefId(routes.join('/')), {refId: new RefId(routes.slice(1).join('/')), routes, params})} */}
         {this.renderNode(componentTree, 0, {refId: new RefId(''), routes, params})}
       </div>
     );

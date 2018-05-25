@@ -14,7 +14,8 @@ type Props = {
   path: string,
   pattern: string,
   controlDeployAndResetButtons: boolean,
-  rootValue: any
+  rootValue: any,
+  hideButtons: boolean
 };
 
 type State = {
@@ -78,7 +79,7 @@ export default function deploy(Com: React.ComponentType<*>) {
     }
 
     render() {
-      const {params, routes, refId, path, pattern, controlDeployAndResetButtons} = this.props;
+      const {params, routes, refId, path, pattern, controlDeployAndResetButtons, hideButtons} = this.props;
       const buttonContainer = {
         textAlign: 'right',
         marginTop: 60
@@ -86,8 +87,8 @@ export default function deploy(Com: React.ComponentType<*>) {
       const renderConfirmButton = genDeployButton(this.deploy, refId);
       const renderCancelButton = genCancelButton(this.reset, refId);
       const isCreateOp = params.op === 'create';
-      const shouldRenderButtons = (routes.length === 1 || isRoutesEndAtMe({routes, path, pattern}) ||
-      isCreateOp) && !controlDeployAndResetButtons && refId.getPathArr().length <= routes.length;
+      const shouldRenderButtons = (routes.length === 1 || isRoutesEndAtMe({routes, path, pattern}) &&
+      isCreateOp) && !controlDeployAndResetButtons && !hideButtons && refId.getPathArr().length <= routes.length;
       return <div>
         {/* $FlowFixMe */}
         <Com {...this.props}
@@ -154,7 +155,7 @@ export function genCancelButton(reset: Function, currentRefId: RefId) {
     onClick = reset,
     callback = () => {},
     // $FlowFixMe
-    text = 'Cancel',
+    text = 'Reset',
     // $FlowFixMe
     component = Button
   }: buttonProps = {}) {

@@ -3,11 +3,18 @@
 exports[`withConnectIdAndContext should render 1`] = `
 <ComponentConnectIdAndContext
   keyName="posts"
+  pattern="array"
+  routes={
+    Array [
+      "posts",
+    ]
+  }
 >
   <MockComponent
     deploy={[MockFunction]}
     fetch={[MockFunction]}
     keyName="posts"
+    pattern="array"
     refId={
       CannerRefId {
         "_internalArr": Array [
@@ -21,6 +28,11 @@ exports[`withConnectIdAndContext should render 1`] = `
     }
     request={[MockFunction]}
     reset={[MockFunction]}
+    routes={
+      Array [
+        "posts",
+      ]
+    }
     subscribe={[MockFunction]}
   >
     <div>

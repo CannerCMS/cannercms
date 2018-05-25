@@ -1,10 +1,17 @@
 // @flow
 import * as React from 'react';
+import {Button} from 'antd';
+import styled from 'styled-components';
+
 import type RefId from 'canner-ref-id';
 
 const RENDER_CHILDREN = 0;
 const RENDER_COMPONENT = 1;
 const RENDER_NULL = 2;
+
+const ButtonWrapper = styled.div`
+  text-align: right;
+`
 
 type Props = {
   pattern: string,
@@ -13,12 +20,27 @@ type Props = {
   params: {
     op: string
   },
+  goTo: Function,
   refId: RefId,
+  deploy: Function,
+  reset: Function,
   renderChildren: (Object) => React.Node
 }
 
 export default function withRoute(Com: React.ComponentType<*>) {
   return class ComWithRoute extends React.Component<Props> {
+    deploy = () => {
+      const {refId, deploy, goTo, routes} = this.props;
+      deploy(refId.getPathArr()[0])
+        .then(() => goTo(routes[0]));
+    }
+
+    reset = () => {
+      const {refId, reset, goTo, routes} = this.props;
+      reset(refId.getPathArr()[0])
+        .then(() => goTo(routes[0]));
+    }
+
     render() {
       const {routes, pattern,  path, params, refId, renderChildren} = this.props;
       const renderType = getRenderType({
@@ -32,6 +54,15 @@ export default function withRoute(Com: React.ComponentType<*>) {
           renderType === RENDER_CHILDREN && renderChildren({
             refId
           })
+        }
+        {
+          // quick fix for route array's children
+          // need to find a stable way to control route
+          (renderType === RENDER_CHILDREN && routes.length > refId.getPathArr().length) &&
+            <ButtonWrapper>
+              <Button style={{marginRight: 16}} type="primary" onClick={this.deploy}>Confirm</Button>
+              <Button onClick={this.reset}>Cancel</Button>
+            </ButtonWrapper>
         }
         {
           renderType === RENDER_COMPONENT && <Com {...this.props} />

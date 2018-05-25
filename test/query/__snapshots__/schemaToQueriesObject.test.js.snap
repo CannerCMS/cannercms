@@ -2,9 +2,86 @@
 
 exports[`schema to queries object should works 1`] = `
 Object {
-  "posts": null,
-  "users": null,
+  "queriesObj": Object {
+    "posts": Object {
+      "alias": "posts",
+      "args": Object {
+        "orderBy": "$RANDOM_KEY",
+        "pagination": "$RANDOM_KEY",
+        "where": "$RANDOM_KEY",
+      },
+      "connection": true,
+      "fields": Object {
+        "bestAuthor": Object {
+          "fields": Object {
+            "email": null,
+            "id": null,
+            "images": Object {
+              "fields": Object {
+                "id": null,
+              },
+            },
+            "name": null,
+          },
+        },
+        "id": null,
+        "staredPosts": Object {
+          "alias": "staredPosts",
+          "args": Object {
+            "orderBy": "$RANDOM_KEY",
+            "pagination": "$RANDOM_KEY",
+            "where": "$RANDOM_KEY",
+          },
+          "connection": true,
+          "fields": Object {
+            "id": null,
+            "title": null,
+          },
+          "isPlural": true,
+        },
+        "title": null,
+      },
+      "isPlural": true,
+    },
+    "users": Object {
+      "alias": "users",
+      "args": Object {
+        "orderBy": "$RANDOM_KEY",
+        "pagination": "$RANDOM_KEY",
+        "where": "$RANDOM_KEY",
+      },
+      "connection": true,
+      "fields": Object {
+        "email": null,
+        "id": null,
+        "images": Object {
+          "fields": Object {
+            "id": null,
+          },
+        },
+        "name": null,
+        "posts": Object {
+          "alias": "posts",
+          "args": Object {
+            "orderBy": "$RANDOM_KEY",
+            "pagination": "$RANDOM_KEY",
+            "where": "$RANDOM_KEY",
+          },
+          "connection": true,
+          "fields": Object {
+            "id": null,
+            "title": null,
+          },
+          "isPlural": true,
+        },
+      },
+      "isPlural": true,
+    },
+  },
+  "variables": Object {
+    "$RANDOM_KEY": Object {
+      "first": 10,
+    },
+  },
 }
 `;
-
-exports[`schema to queries object should works 2`] = `Object {}`;

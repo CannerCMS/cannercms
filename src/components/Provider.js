@@ -9,28 +9,30 @@ import type ApolloClient from 'apollo-boost';
 import isEmpty from 'lodash/isEmpty';
 import {ActionManager, actionToMutation, actionsToVariables, mutatePure} from '../action';
 import {Query} from '../query';
+import {OnDeployManager} from '../onDeployManager';
 import type {Action, ActionType} from '../action/types';
 import gql from 'graphql-tag';
 import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
-import { isArray } from 'lodash';
+import {isArray, groupBy} from 'lodash';
 type Props = {
   schema: {[key: string]: any},
-  dataDidChange: void => void,
-  children: React.ChildrenArray<React.Node>,
+  dataDidChange: Object => void,
+  afterDeploy: Object => void,
+  children: React.Node,
   client: ApolloClient,
   rootKey: string
 }
 
 type State = {
-
 }
 
 export default class Provider extends React.PureComponent<Props, State> {
   actionManager: ActionManager;
   query: Query;
   observableQueryMap: {[string]: any}
+  onDeployManager: OnDeployManager;
 
   constructor(props: Props) {
     super(props);
@@ -38,11 +40,26 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.query = new Query({schema: props.schema});
     const variables = this.query.getVairables();
     this.observableQueryMap = mapValues(props.schema, (v, key) => {
+      const gqlStr = this.query.toGQL(key);
+      this.log('gqlstr', gqlStr);
       return props.client.watchQuery({
-        query: gql`${this.query.toGQL(key)}`,
+        query: gql`${gqlStr}`,
         variables
       });
     });
+    this.onDeployManager = new OnDeployManager();
+  }
+
+  updateDataChanged = () => {
+    const actions = this.actionManager.getActions();
+    let dataChanged = groupBy(actions, (action => action.payload.key));
+    dataChanged = mapValues(dataChanged, value => {
+      if (value[0].type === 'UPDATE_OBJECT') {
+        return true;
+      }
+      return value.map(v => v.payload.id);
+    });
+    this.props.dataDidChange(dataChanged);
   }
 
   updateQuery = (paths: Array<string>, args: Object) => {
@@ -55,19 +72,23 @@ export default class Provider extends React.PureComponent<Props, State> {
   // path: posts/name args: {where, pagination, sort}
   fetch = (key: string): Promise.resolve<*> => {
     const observabale = this.observableQueryMap[key];
-    const result = observabale.currentResult();
-
-    return result.loading ?
-      observabale.result()
+    const currentResult = observabale.currentResult();
+    const {loading, error} = currentResult;
+    if (loading) {
+      return observabale.result()
         .then(result => {
-          this.log('fetch', key, result);
+          this.log('fetch', 'loading', key, result);
           return fromJS(result.data);
-        }) :
-      Promise.resolve(result.data)
-        .then(data => {
-          this.log('fetch', key, result);
-          return fromJS(data);
-        });
+        })
+    } else if (error) {
+      const lastResult = observabale.getLastResult();
+      this.log('fetch', 'error', key, lastResult);
+      return Promise.resolve(fromJS(lastResult.data));
+    } else {
+      this.log('fetch', 'loaded', key, currentResult);
+      return Promise.resolve(fromJS(currentResult.data));
+    }
+   
   }
 
   subscribe = (key: string, callback: (data: any) => void) => {
@@ -83,34 +104,63 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  deploy = (key: string, id?: string): Promise.resolve<*> => {
-    const {client} = this.props;
+  onDeploy = (actions: Array<Action<ActionType>>) => {
+    return actions.map(action => {
+      const {key, id, value} = action.payload;
+      action.payload.value = this.onDeployManager.execute({
+        key,
+        id,
+        value
+      });
+      return action;
+    });
+  }
+
+  deploy = (key: string, id?: string): Promise<*> => {
+    const {client, afterDeploy} = this.props;
     let actions = this.actionManager.getActions(key, id);
     if (!actions || !actions.length) {
       return Promise.resolve();
     }
     
     actions = removeIdInCreateArray(actions);
-    const mutation = actionToMutation(actions[0]);
+    actions = this.onDeploy(actions);
+    const mutation = objectToQueries(actionToMutation(actions[0]), false);
     const variables = actionsToVariables(actions);
     return client.mutate({
-      mutation: gql`${objectToQueries(mutation, false)}`,
+      mutation: gql`${mutation}`,
       variables,
     }).then(result => {
       this.log('deploy', key, {
         id,
-        variables,
-        result
+        result,
+        mutation,
+        variables
       });
       this.actionManager.removeActions(key, id);
       client.resetStore();
       return fromJS(result.data);
+    }).then(result => {
+      this.updateDataChanged();
+      afterDeploy && afterDeploy({
+        key,
+        id,
+        result
+      });
+      return result;
+    }).catch(e => {
+      this.log('deploy', e, key, {
+        id,
+        mutation,
+        variables
+      });
     });
   }
 
-  reset = (key: string, id?: string) => {
+  reset = (key: string, id?: string): Promise<*> => {
     const {client} = this.props;
     this.actionManager.removeActions(key, id);
+    this.updateDataChanged();
     return client.resetStore();
   }
 
@@ -120,11 +170,13 @@ export default class Provider extends React.PureComponent<Props, State> {
     let query, mutatedData, data;
     const variables = this.query.getVairables();  
     if (isArray(action)) {
+      if (!action.length) return Promise.resolve();
       // $FlowFixMe
       action.forEach(ac => this.actionManager.addAction(ac));
       query = gql`${this.query.toGQL(action[0].payload.key)}`;
       data = client.readQuery({query, variables});
-      // $FlowFixMe
+      this.log('request', action, data);
+    // $FlowFixMe
       mutatedData = action.reduce((result, ac) => mutatePure(result, ac), data);
     } else {
       this.actionManager.addAction(action);
@@ -132,9 +184,11 @@ export default class Provider extends React.PureComponent<Props, State> {
       query = gql`${this.query.toGQL(action.payload.key)}`;
       // $FlowFixMe
       data = client.readQuery({query, variables});
+      this.log('request', action, data);
       mutatedData = mutatePure(data, action)
     }
-    this.log('request', action, data);
+    this.log('request', 'mutatedData', mutatedData);
+    this.updateDataChanged();
     if (write) {
       client.writeQuery({
         query: query,
@@ -171,7 +225,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     }
     // eslint-disable-next-line
     console.log("%c" + type, "color:" + color, ...payload);
-}
+  }
 
   render() {
     const {client} = this.props;
@@ -184,11 +238,24 @@ export default class Provider extends React.PureComponent<Props, State> {
         reset: this.reset,
         updateQuery: this.updateQuery,
         subscribe: this.subscribe,
-        query: this.query
+        query: this.query,
+        onDeploy: this.onDeployManager.registerCallback,
+        removeOnDeploy: this.onDeployManager.unregisterCallback
       }}>
-        {React.Children.only(this.props.children)}
+        {/* $FlowFixMe */}
+        {React.cloneElement(this.props.children, {
+          request: this.request,
+          deploy: this.deploy,
+          fetch: this.fetch,
+          reset: this.reset,
+          updateQuery: this.updateQuery,
+          subscribe: this.subscribe,
+          query: this.query,
+          onDeploy: this.onDeployManager.registerCallback,
+          removeOnDeploy: this.onDeployManager.unregisterCallback
+        })}
       </HOCContext.Provider>
-    </ApolloProvider>
+    </ApolloProvider>;
   }
 }
 

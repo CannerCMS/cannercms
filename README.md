@@ -66,3 +66,7 @@ Adaptive CMS is a novel CMS structure that differs from traditional CMS and head
 Visit our [Canner official website](https://framework.canner.io/)
 
 And also visit our [CannerIO platform](https://www.canner.io)
+
+## License
+
+Apache-2.0

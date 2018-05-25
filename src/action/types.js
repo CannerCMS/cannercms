@@ -14,7 +14,8 @@ export type Action<T> = {
     key: string,
     id?: string,
     path?: string,
-    value: any
+    value: any,
+    relation?: Object
   }
 }
 

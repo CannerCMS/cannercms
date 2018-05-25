@@ -1,9 +1,8 @@
 import {schemaToQueriesObject} from '../../src/query/utils';
 
 describe('schema to queries object', () => {
-  let schema;
-  beforeEach(() => {
-    schema = {
+  it('should works', () => {
+    const schema = {
       posts: {
         keyName: 'posts',
         type: 'array',
@@ -71,10 +70,6 @@ describe('schema to queries object', () => {
         }
       },
     };
-  })
-
-  it('should works', () => {
-    expect(schemaToQueriesObject(schema).queriesObj).toMatchSnapshot();
-    expect(schemaToQueriesObject(schema).variables).toMatchSnapshot();
+    expect(schemaToQueriesObject(schema)).toMatchSnapshot();
   });
 });

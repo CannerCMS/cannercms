@@ -4,11 +4,18 @@ import builder from 'canner-script';
 
 const Posts = ({attributes}) => <array keyName="posts" title="posts" {...attributes}>
   <string keyName="title" title="title" />
-  <relation keyName="author" title="author" relation={{type: 'toMany', to: 'users'}}
+  <array keyName="notes" title="Notes">
+    <string keyName="text" title="Text" />
+  </array>
+  <relation keyName="author" title="author" relation={{type: 'toOne', to: 'users'}}
     uiParams={{
-      textCol: 'name'
+      textCol: 'name',
+      columns: [{
+        title: 'Name',
+        dataIndex: 'name'
+      }]
     }}
-    ui="multipleSelect"
+    ui="singleSelect"
   />
 </array>
 

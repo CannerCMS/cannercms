@@ -2,30 +2,38 @@
 /* global IMGUR_CLIENT_ID */
 
 import * as React from 'react';
+import queryString from 'query-string';
+import {isEmpty, isPlainObject} from 'lodash';
 import Provider from './Provider';
 import Generator from './Generator';
-import type {Node} from './Generator';
 import hocs from '../hocs';
-import { IntlProvider, addLocaleData } from 'react-intl';
-import en from 'react-intl/locale-data/en';
-import zh from 'react-intl/locale-data/zh';
-import hocsLocales from '../hocs/components/locale';
-import pluginsLocales from '@canner/antd-locales';
-import queryString from 'query-string';
+
 import defaultLayouts from 'canner-layouts';
 import {ImgurService} from '@canner/image-service-config';
-import type ApolloClient from 'apollo-client';
-import {createClient} from '@canner/graphql-resolver';
+import {createClient, MemoryConnector} from 'canner-graphql-interface';
 import {createEmptyData} from 'canner-helpers';
-const lang = 'zh';
+
+// i18n
+import en from 'react-intl/locale-data/en';
+import zh from 'react-intl/locale-data/zh';
+import {IntlProvider, addLocaleData} from 'react-intl';
+import hocsLocales from '../hocs/components/locale';
+import pluginsLocales from '@canner/antd-locales';
 addLocaleData([...en, ...zh]);
+
+// type
+import type ApolloClient from 'apollo-client';
+import type {Node} from './Generator';
 
 type Props = {
   schema: {
     cannerSchema: {[key: string]: any},
-    componentTree: {[key: string]: Node}
+    componentTree: {[key: string]: Node},
   },
-  dataDidChange: void => void,
+  connector: any,
+  resolver: ?Object,
+  dataDidChange: Object => void,
+  afterDeploy: Object => void,
   children: React.ChildrenArray<React.Node>,
   client: ApolloClient,
   imageServiceConfigs: Object,
@@ -38,17 +46,23 @@ type Props = {
   history: {
     push: (path: string) => void,
     location: Object
-  }
+  },
+  intl: {
+    locale: string,
+    defaultLocale: string,
+    message: Object
+  },
+  hideButtons: boolean
 }
 
 type State = {
-  connecting: boolean
 }
 
 class CannerCMS extends React.Component<Props, State> {
   imageServiceConfigs: Object
   client: Client;
   endpoints: {[key: string]: any};
+  provider: ?Provider;
 
   static defaultProps = {
     schema: {
@@ -56,56 +70,76 @@ class CannerCMS extends React.Component<Props, State> {
       componentTree: {},
     },
     dataDidChange: () => {},
+    afterDeploy: () => {},
     componentTree: {},
     hocs,
     layouts: {},
     baseUrl: '/',
+    connector: {},
+    resolver: {},
+    intl: {
+      locale: 'en',
+      defaultLocale: 'en',
+      messages: {}
+    }
   }
 
   constructor(props: Props) {
     super(props);
-      const {cannerSchema} = props.schema;
-      // eslint-disable-next-line
-      const fixSchema = Object.keys(cannerSchema).reduce((result, key) => {
-        let v = {...cannerSchema[key]};
-        if (v.type === 'array') {
-          v.items = v.items.items;
-          v.items.id = {
-            type: 'id'
-          }
-        }
-        result[key] = v;
-        return result;
-      }, {});
-      this.client = props.client || createClient({
-        schema: fixSchema,
+    const {cannerSchema} = props.schema;
+    const {connector = {}, resolver} = props;
+    let {defaultConnector, connectors} = parseConnector(connector);
+    delete connectors.__default;
+    if (!defaultConnector && isEmpty(connectors)) {
+      // use memory connector by default if no any connector given
+      defaultConnector = new MemoryConnector({
         defaultData: createEmptyData(cannerSchema).toJS()
       });
-      const serviceConfig = new ImgurService({
-        // $FlowFixMe: global
-        clientId: IMGUR_CLIENT_ID
-      });
+    }
+    const fixSchema = Object.keys(cannerSchema).reduce((result, key) => {
+      let v = {...cannerSchema[key]};
+      if (v.type === 'array') {
+        // v.items = v.items.items;
+        v.items.id = {
+          type: 'id'
+        }
+      }
+      result[key] = v;
+      return result;
+    }, {});
 
-      this.imageServiceConfigs = {...Object.keys(cannerSchema).reduce((result, key) => {
-        result[key] = serviceConfig;
-        return result;
-      }, {}), ...(props.imageServiceConfigs || {})};
-      this.endpoints = Object.keys(cannerSchema).reduce((result, key) => {
-        result[key] = cannerSchema[key].endpoint;
-        return result;
-      }, {});
-      this.state = {
-        connecting: true
-      };
+    const options: any = {schema: fixSchema, resolvers: resolver};
+    if (defaultConnector) {
+      options.connector = defaultConnector;
+    }
+    if (!isEmpty(connectors)) {
+      options.connectors = connectors;
+    }
+    this.client = createClient(options);
+    const serviceConfig = new ImgurService({
+      // $FlowFixMe: global
+      clientId: IMGUR_CLIENT_ID
+    });
+
+    this.imageServiceConfigs = {...Object.keys(cannerSchema).reduce((result, key) => {
+      result[key] = serviceConfig.getServiceConfig();
+      return result;
+    }, {}), ...(props.imageServiceConfigs || {})};
+    
   }
 
-  componentDidMount() {
-    // this.connect();
+  deploy = (key: string, id?: string): Promise<*> => {
+    if (this.provider) {
+      return this.provider.deploy(key, id);
+    }
+    return Promise.resolve();
   }
 
-  connect() {
-    Promise.all(this.endpoints.map(endpoint => endpoint.connector()))
-      .then(() => this.setState({connecting: false}));
+  reset = (key: string, id?: string): Promise<*> => {
+    if (this.provider) {
+      return this.provider.reset(key, id);
+    }
+    return Promise.resolve();
   }
 
   render() {
@@ -116,29 +150,30 @@ class CannerCMS extends React.Component<Props, State> {
       layouts,
       baseUrl,
       history,
+      afterDeploy,
+      intl = {},
+      hideButtons
     } = this.props;
-    // const {connecting} = this.state;
     const {location, push} = history;
     const {pathname} = location;
     const routes = getRoutes(pathname, baseUrl);
     const params = queryString.parse(location.search);
-    // if (connecting) {
-    //   return <div>LOADING</div>;
-    // }
+
     return (
       <IntlProvider
-        locale={lang}
-        defaultLocale={lang}
-        key={lang}
+        locale={intl.lang || 'en'}
+        defaultLocale={intl.lang || 'en'}
         messages={{
-          ...pluginsLocales[lang],
-          ...hocsLocales[lang],
+          ...pluginsLocales[intl.lang || 'en'],
+          ...hocsLocales[intl.lang || 'en'],
         }}
       >
         <Provider
+          ref={provider => this.provider = provider}
           client={this.client}
           schema={schema.cannerSchema}
           dataDidChange={dataDidChange}
+          afterDeploy={afterDeploy}
           rootKey={routes[0]}
         >
           <Generator
@@ -150,6 +185,7 @@ class CannerCMS extends React.Component<Props, State> {
             baseUrl={baseUrl}
             routes={routes}
             params={params}
+            hideButtons={hideButtons}
           />
         </Provider>
       </IntlProvider>
@@ -163,6 +199,28 @@ function getRoutes(pathname, baseUrl = '/') {
     pathnameWithoutBaseUrl = pathnameWithoutBaseUrl.substring(1);
   }
   return pathnameWithoutBaseUrl.split('/');
+}
+
+function parseConnector(connector: any) {
+  if (isEmpty(connector)) {
+    return {
+      defaultConnector: undefined,
+      connectors: {}
+    };
+  }
+  if (isPlainObject(connector)) {
+    const defaultConnector = connector.__default;
+    delete connector.__default;
+    return {
+      defaultConnector,
+      connectors: connector
+    }
+  } else {
+    return {
+      defaultConnector: connector,
+      connectors: {}
+    }
+  }
 }
 
 export default CannerCMS;

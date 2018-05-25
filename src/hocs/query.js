@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import type RefId from 'canner-ref-id';
-import {Map, List, is} from 'immutable';
+import {Map, List, is, fromJS} from 'immutable';
 import Toolbar from './components/toolbar';
 import type {Query} from '../query';
 import {mapValues} from 'lodash';
@@ -129,15 +129,17 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
-      if (pattern === 'array' || (type === 'relation' && relation.type === 'toMany')) {
+      if (pattern === 'array' || type === 'relation' && relation.type === 'toMany') {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
-        const args = mapValues(queries, v => variables[v]);
-        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value} updateQuery={updateQuery}>
-          <Com {...this.props} rootValue={rootValue} value={value.getIn(['edges'], new List()).map(item => item.get('node'))} />
+        const args = mapValues(queries, v => variables[v.substr(1)]);
+        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value || (defaultValue('connection'): any)} updateQuery={updateQuery}>
+          <Com {...this.props} showPagination={false} rootValue={rootValue} value={value ? value.getIn(['edges'], new List()).map(item => item.get('node')) : defaultValue('array')} />
         </Toolbar>;
+      } else if (type === 'relation' && relation.type === 'toOne') {
+        return <Com {...this.props} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
       }
-      return <Com {...this.props} rootValue={rootValue} value={value} />;
+      return <Com {...this.props} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
     }
   };
 }
@@ -153,7 +155,7 @@ export function getValue(value: Map<string, *>, idPathArr: Array<string>) {
     } else if (List.isList(result)) {
       return result.get(key);
     } else {
-      return value;
+      return result;
     }
   }, value);
 }
@@ -174,4 +176,65 @@ export function parseConnectionToNormal(value: Map<string, *> | List<*>) {
 
 function shouldUpdate(value: any, newValue: any) {
   return !is(value, newValue);
+}
+
+function defaultValue(type: string, relation: any) {
+  switch (type) {
+    case 'connection': {
+      return fromJS({
+        edges: [],
+        pageInfo: {
+          hasNextPage: false
+        }
+      })
+    }
+    case 'array': {
+      return new List();
+    }
+    case 'object': {
+      return new Map();
+    }
+    case 'boolean': {
+      return false;
+    }
+    case 'number': {
+      return 0;
+    }
+    case 'string': {
+      return '';
+    }
+    case 'relation': {
+      if (relation.type === 'toMany') {
+        return fromJS({
+          edges: [],
+          pageInfo: {
+            hasNextPage: false
+          }
+        });
+      } else {
+        return null;
+      }
+    }
+    case 'image':
+    case 'file': {
+      return fromJS({
+        url: '',
+        contentType: '',
+        name: '',
+        size: 0,
+        __typename: null
+      })
+    }
+    case 'geoPoint': {
+      return fromJS({
+        placeId: '',
+        address: '',
+        lat: 122,
+        lng: 23
+      });
+    }
+    default: {
+      return null;
+    }
+  }
 }

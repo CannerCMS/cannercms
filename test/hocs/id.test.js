@@ -24,7 +24,9 @@ describe('withConnectIdAndContext', () => {
     }
     props = {
       id: undefined,
-      keyName: 'posts'
+      keyName: 'posts',
+      pattern: 'array',
+      routes: ['posts']
     }
 
     mockFetch = jest.fn();

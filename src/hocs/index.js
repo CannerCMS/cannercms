@@ -6,6 +6,7 @@ import deploy from './deploy';
 import id from './id';
 import title from './title';
 import containerRouter from './containerRouter';
+import onDeploy from './onDeploy';
 
 export default {
   query,
@@ -16,5 +17,6 @@ export default {
   // validator,
   id,
   title,
-  containerRouter
+  containerRouter,
+  onDeploy
 };

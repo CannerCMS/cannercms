@@ -1,6 +1,5 @@
 /** @jsx builder */
 
-import 'babel-register';
 import builder, {Block, Layout} from 'canner-script';
 import Strings from './schema/string.schema';
 import Numbers from './schema/number.schema';
@@ -9,13 +8,26 @@ import Objects from './schema/object.schema';
 import Arrays from './schema/array.schema';
 import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
-const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>
+import OnDeploy from './schema/onDeploy.schema';
+
+const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>;
+const userColumns = [{
+  title: 'Name',
+  dataIndex: 'name'
+}, {
+  title: 'Email',
+  dataIndex: 'email'
+}, {
+  title: 'Age',
+  dataIndex: 'age'
+}];
+
+const postColumns = [{
+  title: 'Title',
+  dataIndex: 'title'
+}];
+
 export default <root>
-  <object keyName="info">
-    <array keyName="navs">
-      <string keyName="title" />
-    </array>
-  </object>
   <object keyName="overview" title="Components Overview">
     <Block title="All Types">
       <Tabs>
@@ -26,25 +38,72 @@ export default <root>
         <Objects keyName="object" title="Object type" />
       </Tabs>
     </Block>
+    <Block title="test">
+      <array keyName="tag" ui="tag" uiParams={{defaultOptions: []}}>
+        <string />
+      </array>
+      <array keyName="slider" ui="slider">
+        <string />
+      </array>
+      <array keyName="gallery" ui="gallery" title="Gallery">
+        <image />
+      </array>
+      <image keyName="image" ui="image" title="Image" />
+      {/* <geoPoint keyName="map" title="Map" /> */}
+    </Block>
   </object>
-  <Posts />
-  <Users cacheActions={true} uiParams={{
-    columns: [{
-      title: 'name',
-      dataIndex: 'name'
-    }]
-  }} controlDeployAndResetButtons>
+  <object keyName="home" title="Home" description="t to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of L ">
+    <Block title="Basic">
+      <number keyName="count" title="Count"/>
+      <relation title="StaredPosts" description="Ref to Posts" keyName="staredPosts" relation={{to: 'posts', type: 'toMany'}} ui="multipleSelect" uiParams={{textCol: 'title', columns: postColumns}}/>
+      <relation title="BestAuthor" description="Ref to Users" keyName="bestAuthor" relation={{to: 'users', type: 'toOne'}} uiParams={{textCol: 'name', columns: userColumns}}/>
+    </Block>
+    <Block title="Header">
+      <object keyName="header">
+        <string keyName="title" title="Title"/>
+        <string keyName="subTitle" title="Subtitle"/>
+        <object keyName="desc" title="Description" ui="editor"/>
+      </object>
+    </Block>
+    <Block title="Navs">
+      <array keyName="navs">
+        <string keyName="text" />
+      </array>
+    </Block>
+  </object>
+  <Posts ui="tableRoute" uiParams={{
+    columns: postColumns
+  }}>
+    <toolbar>
+      <pagination />
+      <filter fields={[{
+        key: 'title',
+        type: 'text',
+        label: 'Title'
+      }]}/>
+    </toolbar>
+  </Posts>
+  <Users ui="tableRoute" uiParams={{
+    columns: userColumns
+  }}>
     <toolbar>
       <pagination />
       <sort options={[{
-        key: 'star',
-        title: 'Star'
+        key: 'age',
+        title: 'Age'
       }]}/>
       <filter fields={[{
-        key: 'star',
+        key: 'age',
         type: 'number',
-        label: 'Star'
+        label: 'Age'
       }]}/>
     </toolbar>
   </Users>
+  <array keyName="test" title="array" uiParams={{columns: [{title: 'title', dataIndex: 'title'}]}}>
+    <string keyName="title" />
+    <OnDeploy
+      keyName="test1"
+      title="OnDeploy Demo"
+    />
+  </array>
 </root>

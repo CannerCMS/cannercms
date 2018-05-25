@@ -86,9 +86,8 @@ export function createAction({
   if (type === 'create') {
     if (!config) {
       const emptyData = createEmptyData(items);
-      // $FlowFixMe: createEMprtData return should more precise
+      
       if (emptyData.toJS) {
-      // $FlowFixMe: createEMprtData return should more precise
         value = emptyData.mergeDeep(value);
       } else {
         value = emptyData;
