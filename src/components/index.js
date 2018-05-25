@@ -1,5 +1,5 @@
 // @flow
-/* global IMGUR_CLIENT_ID */
+/* global IMGUR_CLIENT_ID, IMGUR_MASHAPE_KEY */
 
 import * as React from 'react';
 import queryString from 'query-string';
@@ -118,7 +118,9 @@ class CannerCMS extends React.Component<Props, State> {
     this.client = createClient(options);
     const serviceConfig = new ImgurService({
       // $FlowFixMe: global
-      clientId: IMGUR_CLIENT_ID
+      clientId: IMGUR_CLIENT_ID,
+      // $FlowFixMe: global
+      mashapeKey: IMGUR_MASHAPE_KEY
     });
 
     this.imageServiceConfigs = {...Object.keys(cannerSchema).reduce((result, key) => {
