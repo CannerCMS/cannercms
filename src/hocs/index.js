@@ -7,6 +7,7 @@ import id from './id';
 import title from './title';
 import containerRouter from './containerRouter';
 import onDeploy from './onDeploy';
+import context from './connectContext';
 
 export default {
   query,
@@ -18,5 +19,6 @@ export default {
   id,
   title,
   containerRouter,
-  onDeploy
+  onDeploy,
+  context
 };

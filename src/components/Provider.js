@@ -138,7 +138,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         variables
       });
       this.actionManager.removeActions(key, id);
-      client.resetStore();
+      // client.resetStore();
       return fromJS(result.data);
     }).then(result => {
       this.updateDataChanged();
@@ -191,7 +191,8 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.updateDataChanged();
     if (write) {
       client.writeQuery({
-        query: query,
+        query,
+        variables,
         data: mutatedData
       });
     }

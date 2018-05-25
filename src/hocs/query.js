@@ -25,6 +25,7 @@ type Props = {
     type: string,
     to: string
   },
+  params: Object,
   toolbar: {
     sort?: {
       component?: React.ComponentType<*>,
@@ -184,7 +185,8 @@ function defaultValue(type: string, relation: any) {
       return fromJS({
         edges: [],
         pageInfo: {
-          hasNextPage: false
+          hasNextPage: false,
+          hasPreviousPage: false
         }
       })
     }
@@ -208,7 +210,8 @@ function defaultValue(type: string, relation: any) {
         return fromJS({
           edges: [],
           pageInfo: {
-            hasNextPage: false
+            hasNextPage: false,
+            hasPreviousPage: false
           }
         });
       } else {

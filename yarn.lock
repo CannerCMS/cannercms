@@ -3018,15 +3018,16 @@ canner-compiler@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/canner-compiler/-/canner-compiler-0.1.6.tgz#516b5b2ded2029cf94fe4ef65ce024adad79fdd0"
 
-canner-graphql-interface@^1.4.7:
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.4.7.tgz#2aaf6f91ec7621c151330ec820fd17197a701721"
+canner-graphql-interface@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.6.0.tgz#9feadb4d96a94a8f13b857dbcf2e858a52fe2c5a"
   dependencies:
     apollo-cache "^1.1.7"
     apollo-cache-inmemory "^1.1.12"
     apollo-client "^2.2.8"
     apollo-link "^1.2.2"
     apollo-utilities "^1.0.11"
+    canner-graphql-utils "^1.3.0"
     firebase "^4.13.1"
     graphql "0.13.0"
     graphql-anywhere "^4.1.6"
@@ -3037,6 +3038,14 @@ canner-graphql-interface@^1.4.7:
     lowdb "^1.0.0"
     pluralize "^7.0.0"
     uuid "^3.2.1"
+
+canner-graphql-utils@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/canner-graphql-utils/-/canner-graphql-utils-1.3.0.tgz#4b9354aa50fd523e99ab061765f3434a26b5909a"
+  dependencies:
+    lodash "^4.17.5"
+    lowdb "^1.0.0"
+    pluralize "^7.0.0"
 
 canner-helpers@^0.1.9:
   version "0.1.9"
@@ -3107,9 +3116,9 @@ canner-schema-loader@^1.1.11:
     canner-compiler "^0.1.6"
     schema-utils "^0.4.5"
 
-canner-script@^1.0.32:
-  version "1.0.32"
-  resolved "https://registry.yarnpkg.com/canner-script/-/canner-script-1.0.32.tgz#cba74e38fa271e014f9cbe6fe1b637fca118ed91"
+canner-script@^1.0.33:
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/canner-script/-/canner-script-1.0.33.tgz#91c24f160c1d995c5a99f213a8ef6ccf2b97cb00"
   dependencies:
     babel-core "^6.26.3"
     babel-plugin-transform-es2015-modules-commonjs "^6.26.2"

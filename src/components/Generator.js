@@ -60,7 +60,7 @@ type Props = {
   reset?: Function,
   onDeploy?: Function,
   removeOnDeploy?: Function,
-  hideButtons: boolean
+  hideButtons: boolean,
 }
 
 type childrenProps = {
@@ -143,7 +143,7 @@ export default class Generator extends React.PureComponent<Props, State> {
           loading: () => <div>loading</div>,
         });
       }
-      component = this.wrapByHOC(component, ['title', 'onDeploy', 'deploy', 'request', 'query', 'cache', 'route', 'id'] || []);
+      component = this.wrapByHOC(component, ['title', 'onDeploy', 'deploy', 'request', 'query', 'cache', 'route', 'id', 'context'] || []);
     }
 
     if (!component) {

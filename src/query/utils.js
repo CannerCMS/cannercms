@@ -149,7 +149,8 @@ export function objectToQueries(o: Object, close: boolean = true) {
           },
           pageInfo: {
             fields: {
-              hasNextPage: null
+              hasNextPage: null,
+              hasPreviousPage: null
             }
           }
         }

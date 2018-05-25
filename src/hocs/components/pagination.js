@@ -12,17 +12,18 @@ type Props = {
   nextPage: () => void,
   prevPage: () => void,
   hasNextPage: boolean,
+  hasPreviousPage: boolean,
   changeSize: (size: number) => void,
   size: number
 }
 
 export default class PaginationPlugin extends Component<Props> {
   render() {
-    const {nextPage, prevPage, hasNextPage} = this.props;
+    const {nextPage, prevPage, hasNextPage, hasPreviousPage} = this.props;
     return <Fragment>
       <Wrapper>
         <ButtonGroup>
-          <Button onClick={prevPage}>
+          <Button disabled={!hasPreviousPage} onClick={prevPage}>
             <Icon type="left" />
             Previous
           </Button>
