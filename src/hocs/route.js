@@ -68,7 +68,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
         {
           // quick fix for route array's children
           // need to find a stable way to control route
-          (renderType === RENDER_CHILDREN && (routesLength > pathArrLength || routesLength === pathArrLength && op === 'create')) &&
+          (renderType === RENDER_CHILDREN && (routesLength > pathArrLength || (routesLength === pathArrLength && op === 'create'))) &&
             <Button onClick={this.back} style={{marginBottom: 16}}>
               <Icon type="arrow-left" /> Back
             </Button>
@@ -81,7 +81,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
         {
           // quick fix for route array's children
           // need to find a stable way to control route
-          (renderType === RENDER_CHILDREN && !hideButtons && (routesLength > pathArrLength || routesLength === pathArrLength && op === 'create')) &&
+          (renderType === RENDER_CHILDREN && !hideButtons && (routesLength > pathArrLength || (routesLength === pathArrLength && op === 'create'))) &&
             <ButtonWrapper>
               <Button style={{marginRight: 16}} type="primary" onClick={this.deploy}>Confirm</Button>
               <Button onClick={this.reset}>Reset</Button>
