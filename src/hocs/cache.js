@@ -36,9 +36,8 @@ export default function withCache(Com: React.ComponentType<*>, options: {
     subscription: any;
     constructor(props: Props) {
       super(props);
-      const {routes, params, cacheActions, pattern, path} = this.props;
+      const {routes, cacheActions, pattern, path} = this.props;
       if ((routes.length > 1 && isRoutesEndAtMe({routes, pattern, path})) ||
-        params.op === 'create' ||
         cacheActions
       ) {
         this.actionManager = new ActionManager();

@@ -25,6 +25,7 @@ type Props = {
     type: string,
     to: string
   },
+  params: Object,
   toolbar: {
     sort?: {
       component?: React.ComponentType<*>,

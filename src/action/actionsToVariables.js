@@ -9,9 +9,12 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>) {
   actions.forEach(action => {
     let {path = '', value, id, relation} = action.payload;
     switch(action.type) {
-      case 'CREATE_ARRAY':
-        merge(variables.payload, (value && value.toJS) ? value.toJS() : value);
+      case 'CREATE_ARRAY': {
+        // quick fix, remove null relation, it will cause apollo break
+        const ensureValue = value.filter((v, k) => v !== null && k !== '__typename');
+        merge(variables.payload, (ensureValue && ensureValue.toJS) ? ensureValue.toJS() : ensureValue);
         break;
+      }
       case 'UPDATE_ARRAY':
       case 'UPDATE_OBJECT':
         merge(variables.payload, (value && value.toJS) ? value.toJS() : value);

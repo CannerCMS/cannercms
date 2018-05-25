@@ -27,6 +27,7 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
           draft[key].edges = draft[key].edges.map(item => {
             return item.cursor === id ?
               {
+                __typename: null,
                 cursor: id,
                 node: merge(item.node, value)
               }:
@@ -44,7 +45,7 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
       
       case 'DELETE_ARRAY': {
         if (draft[key].edges) {
-          draft[key] = draft[key].filter(item => item.cursor !== id);
+          draft[key].edges = draft[key].edges.filter(item => item.cursor !== id);
         } else {
           draft[key] = draft[key].filter(item => item.id !== id);
         }

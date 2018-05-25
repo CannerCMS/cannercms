@@ -50,6 +50,43 @@ export default function connectId(Com: React.ComponentType<*>) {
       }
     }
 
+    UNSAFE_componentWillReceiveProps(props: Props) {
+      const {params, pattern, items, keyName, request, fetch} = props;
+      if (params.op === 'create' && !this.props.params.op && pattern ==='array') {
+        let value = createEmptyData(items);
+        value = value.update('id', id => id || randomId());
+        value = value.update('__typename', typename => typename || null);
+        this.setState({
+          canRender: false
+        });
+        fetch(keyName)
+          .then(result => {
+            return result.getIn([keyName, 'edges']).size;
+          })
+          .then(size => {
+            request({
+              type: 'CREATE_ARRAY',
+              payload: {
+                id: value.get('id'),
+                value,
+                key: keyName
+              }
+            }).then(() => {
+              this.setState({
+                canRender: true,
+                refId: new RefId(`${keyName}/${size}`)
+              });
+            });
+          });
+      }
+
+      if (!params.op && this.props.params.op === 'create' && pattern === 'array') {
+        this.setState({
+          refId: new RefId(keyName)
+        });
+      }
+    }
+
     componentDidMount() {
       const {params, pattern, request, keyName, items, fetch} = this.props;
       if (params.op === 'create' && pattern === 'array') {
@@ -74,8 +111,7 @@ export default function connectId(Com: React.ComponentType<*>) {
                 refId: new RefId(`${keyName}/${size}`)
               });
             });
-          })
-        
+          });
       } else {
         this.setState({
           canRender: true
@@ -84,7 +120,7 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     render() {
-      const {canRender, refId} = this.state;
+      let {canRender, refId} = this.state;
       if (!canRender) return null;
       return <Com {...this.props}
         refId={refId}
