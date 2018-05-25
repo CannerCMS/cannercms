@@ -3107,9 +3107,9 @@ canner-schema-loader@^1.1.11:
     canner-compiler "^0.1.6"
     schema-utils "^0.4.5"
 
-canner-script@^1.0.32:
-  version "1.0.32"
-  resolved "https://registry.yarnpkg.com/canner-script/-/canner-script-1.0.32.tgz#cba74e38fa271e014f9cbe6fe1b637fca118ed91"
+canner-script@^1.0.33:
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/canner-script/-/canner-script-1.0.33.tgz#91c24f160c1d995c5a99f213a8ef6ccf2b97cb00"
   dependencies:
     babel-core "^6.26.3"
     babel-plugin-transform-es2015-modules-commonjs "^6.26.2"

@@ -50,7 +50,7 @@
     "babel-register": "^6.26.0",
     "canner-helpers": "^0.1.9",
     "canner-schema-loader": "^1.1.11",
-    "canner-script": "^1.0.32",
+    "canner-script": "^1.0.33",
     "cross-env": "^5.1.3",
     "css-loader": "^0.28.10",
     "enzyme": "^3.3.0",
