@@ -24,7 +24,6 @@ addLocaleData([...en, ...zh]);
 // type
 import type ApolloClient from 'apollo-client';
 import type {Node} from './Generator';
-
 type Props = {
   schema: {
     cannerSchema: {[key: string]: any},

@@ -184,7 +184,8 @@ function defaultValue(type: string, relation: any) {
       return fromJS({
         edges: [],
         pageInfo: {
-          hasNextPage: false
+          hasNextPage: false,
+          hasPreviousPage: false
         }
       })
     }
@@ -208,7 +209,8 @@ function defaultValue(type: string, relation: any) {
         return fromJS({
           edges: [],
           pageInfo: {
-            hasNextPage: false
+            hasNextPage: false,
+            hasPreviousPage: false
           }
         });
       } else {
