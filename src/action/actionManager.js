@@ -79,6 +79,11 @@ export class ActionManager implements ActionManagerDef {
   }
 
   removeActions = (key: string, id?: string) => {
+    if (!key) {
+      return Object.keys(this.store).forEach(key => {
+        this.removeActions(key);
+      });
+    }
     const item = get(this.store, key);
     if (item instanceof ObjectPattern) {
       delete this.store[key];
