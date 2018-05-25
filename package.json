@@ -1,7 +1,7 @@
 {
   "name": "canner",
   "version": "1.0.10",
-  "description": "Open source declarative CMS framework build with React and GraphQL",
+  "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest --coverage",
