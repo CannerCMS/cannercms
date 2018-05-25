@@ -3,7 +3,7 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import type {Query} from '../query';
-// import {createEmptyData} from 'canner-helpers';
+import {createEmptyData} from 'canner-helpers';
 
 type Props = {
   refId: RefId,
@@ -50,38 +50,38 @@ export default function connectId(Com: React.ComponentType<*>) {
       }
     }
 
-    // componentDidMount() {
-    //   const {params, pattern, request, keyName, items, fetch} = this.props;
-    //   if (params.op === 'create' && pattern === 'array') {
-    //     let value = createEmptyData(items);
-    //     value = value.update('id', id => id || randomId());
-    //     value = value.update('__typename', typename => typename || null);
-    //     fetch(keyName)
-    //       .then(result => {
-    //         return result.getIn([keyName, 'edges']).size;
-    //       })
-    //       .then(size => {
-    //         request({
-    //           type: 'CREATE_ARRAY',
-    //           payload: {
-    //             id: value.get('id'),
-    //             value,
-    //             key: keyName
-    //           }
-    //         }).then(() => {
-    //           this.setState({
-    //             canRender: true,
-    //             refId: new RefId(`${keyName}/${size}`)
-    //           });
-    //         });
-    //       })
+    componentDidMount() {
+      const {params, pattern, request, keyName, items, fetch} = this.props;
+      if (params.op === 'create' && pattern === 'array') {
+        let value = createEmptyData(items);
+        value = value.update('id', id => id || randomId());
+        value = value.update('__typename', typename => typename || null);
+        fetch(keyName)
+          .then(result => {
+            return result.getIn([keyName, 'edges']).size;
+          })
+          .then(size => {
+            request({
+              type: 'CREATE_ARRAY',
+              payload: {
+                id: value.get('id'),
+                value,
+                key: keyName
+              }
+            }).then(() => {
+              this.setState({
+                canRender: true,
+                refId: new RefId(`${keyName}/${size}`)
+              });
+            });
+          })
         
-    //   } else {
-    //     this.setState({
-    //       canRender: true
-    //     });
-    //   }
-    // }
+      } else {
+        this.setState({
+          canRender: true
+        });
+      }
+    }
 
     render() {
       const {canRender, refId} = this.state;
@@ -98,6 +98,6 @@ function isChildrenOfArray(pattern: string) {
   return patternArray.length === 2 && patternArray[0] === 'array';
 }
 
-// function randomId() {
-//   return Math.random().toString(36).substr(2, 12);
-// }
+function randomId() {
+  return Math.random().toString(36).substr(2, 12);
+}
