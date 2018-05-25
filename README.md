@@ -64,6 +64,13 @@ Adaptive CMS is a novel CMS structure that differs from traditional CMS and head
 
 > Learn more [Why Adaptive CMS?](http://framework.canner.io/docs/why-adaptive-cms.html)
 
+## Demo
+
+### Canner connect to firebase
+
+- live demo: https://fir-cms-15f83.firebaseapp.com/login
+- repo: https://github.com/Canner/canner-firebase-cms
+
 ## Links
 
 Visit our [Open source Canner official website](https://framework.canner.io/)
