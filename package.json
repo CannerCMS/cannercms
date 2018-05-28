@@ -48,7 +48,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
-    "canner-helpers": "^0.1.9",
+    "canner-helpers": "0.1.13",
     "canner-schema-loader": "^1.1.11",
     "canner-script": "^1.0.33",
     "cross-env": "^5.1.3",
