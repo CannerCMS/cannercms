@@ -24,6 +24,7 @@ exports[`toolbar method should render 1`] = `
     <PaginationPlugin
       changeSize={[Function]}
       hasNextPage={true}
+      hasPreviousPage={true}
       nextPage={[Function]}
       prevPage={[Function]}
     />

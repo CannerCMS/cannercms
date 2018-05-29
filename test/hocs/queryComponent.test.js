@@ -139,7 +139,8 @@ describe('toolbar method', () => {
         }
       }],
       pageInfo: {
-        hasNextPage: true
+        hasNextPage: true,
+        hasPreviousPage: true,
       }
     });
     items = schema.posts.items.items;

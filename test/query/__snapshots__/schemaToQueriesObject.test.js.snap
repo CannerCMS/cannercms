@@ -16,11 +16,7 @@ Object {
           "fields": Object {
             "email": null,
             "id": null,
-            "images": Object {
-              "fields": Object {
-                "id": null,
-              },
-            },
+            "images": Object {},
             "name": null,
           },
         },
@@ -54,11 +50,7 @@ Object {
       "fields": Object {
         "email": null,
         "id": null,
-        "images": Object {
-          "fields": Object {
-            "id": null,
-          },
-        },
+        "images": Object {},
         "name": null,
         "posts": Object {
           "alias": "posts",

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`withConnectIdAndContext should render 1`] = `
-<ComponentConnectIdAndContext
+exports[`withConnectContext should render 1`] = `
+<ComponentConnectContext
   keyName="posts"
   pattern="array"
   routes={
@@ -15,17 +15,6 @@ exports[`withConnectIdAndContext should render 1`] = `
     fetch={[MockFunction]}
     keyName="posts"
     pattern="array"
-    refId={
-      CannerRefId {
-        "_internalArr": Array [
-          "posts",
-        ],
-        "child": [Function],
-        "getPathArr": [Function],
-        "remove": [Function],
-        "toString": [Function],
-      }
-    }
     request={[MockFunction]}
     reset={[MockFunction]}
     routes={
@@ -39,5 +28,5 @@ exports[`withConnectIdAndContext should render 1`] = `
       Component
     </div>
   </MockComponent>
-</ComponentConnectIdAndContext>
+</ComponentConnectContext>
 `;

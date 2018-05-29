@@ -5,7 +5,7 @@ import Adapter from '../react163Adapter';
 import {schema, defaultData} from './data';
 import Provider from '../../src/components/Provider';
 // import {HOCContext as Context} from '../../src/hocs/context';
-import {createClient, MemoryConnector} from '@canner/graphql-resolver';
+import {createClient, MemoryConnector} from 'canner-graphql-interface';
 import {schemaToQueriesObject, objectToQueries} from '../../src/query/utils';
 import {fromJS} from 'immutable';
 import gql from "graphql-tag";

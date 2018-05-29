@@ -11,8 +11,8 @@ Object {
       "id": "1",
       "images": Array [
         Object {
-          "__typename": null,
           "id": "0",
+          "url": "url",
         },
       ],
       "name": "user1",
@@ -84,6 +84,7 @@ Object {
       "pageInfo": Object {
         "__typename": null,
         "hasNextPage": false,
+        "hasPreviousPage": false,
       },
     },
   },

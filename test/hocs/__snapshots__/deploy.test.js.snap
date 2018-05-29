@@ -59,7 +59,7 @@ exports[`with route mini app should render 1`] = `
       prefixCls="ant-btn"
       style={Object {}}
     >
-      Cancel
+      Reset
     </Button>
   </div>
 </div>

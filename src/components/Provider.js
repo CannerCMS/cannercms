@@ -51,6 +51,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   updateDataChanged = () => {
+    const {dataDidChange} = this.props;
     const actions = this.actionManager.getActions();
     let dataChanged = groupBy(actions, (action => action.payload.key));
     dataChanged = mapValues(dataChanged, value => {
@@ -59,7 +60,9 @@ export default class Provider extends React.PureComponent<Props, State> {
       }
       return value.map(v => v.payload.id);
     });
-    this.props.dataDidChange(dataChanged);
+    if (dataDidChange) {
+      dataDidChange(dataChanged);
+    }
   }
 
   updateQuery = (paths: Array<string>, args: Object) => {

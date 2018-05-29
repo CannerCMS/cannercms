@@ -14,7 +14,7 @@ exports[`with request should render 1`] = `
   refId={
     CannerRefId {
       "_internalArr": Array [
-        "POSTS",
+        "posts",
       ],
       "child": [Function],
       "getPathArr": [Function],
