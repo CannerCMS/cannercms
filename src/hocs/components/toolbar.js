@@ -70,10 +70,13 @@ export default class Toolbar extends React.PureComponent<Props> {
     if (value.getIn(['pageInfo', 'hasNextPage'])) {
       const {first = 10} = parsePagination(args);
       const after = value.get('edges').last().get('cursor');
-      updateQuery(refId.getPathArr(), {...args, pagination: {
+      updateQuery(refId.getPathArr(), {
+        ...args, 
         first,
-        after
-      }});
+        after,
+        last: undefined,
+        before: undefined
+      });
     }
   }
 
@@ -82,26 +85,35 @@ export default class Toolbar extends React.PureComponent<Props> {
     if (value.getIn(['pageInfo', 'hasPreviousPage'])) {
       const {last = 10} = parsePagination(args);
       const before = value.getIn(['edges', 0, 'cursor']);
-      updateQuery(refId.getPathArr(), {...args, pagination: {
+      updateQuery(refId.getPathArr(), {
+        ...args,
         last,
-        before
-      }});
+        before,
+        after: undefined,
+        first: undefined
+      });
     }
   }
 
   changeSize = (size: number) => {
     const {value, updateQuery, args, refId} = this.props;
-    const pagination = parsePagination(args.pagination);
+    const pagination = parsePagination(args);
     if ('last' in pagination) {
-      updateQuery(refId.getPathArr(), {...args, pagination: {
+      updateQuery(refId.getPathArr(), {
+        ...args,
         last: size,
-        before: pagination.before || value.getIn(['edges', 0, 'cursor'])
-      }});
+        before: pagination.before || value.getIn(['edges', 0, 'cursor']),
+        after: undefined,
+        first: undefined
+      });
     } else {
-      updateQuery(refId.getPathArr(), {...args, pagination: {
+      updateQuery(refId.getPathArr(), {
+        ...args,
         first: size,
-        after: pagination.after || (value.get('edges').last() || new Map()).get('cursor')
-      }});
+        after: pagination.after || (value.get('edges').last() || new Map()).get('cursor'),
+        last: undefined,
+        before: undefined
+      });
     }
   }
 
@@ -114,7 +126,7 @@ export default class Toolbar extends React.PureComponent<Props> {
     const PaginationComponent = pagination && pagination.component ? pagination.component : Pagination;
     const {orderField, orderType} = parseOrder(args.orderBy);
     const {where} = parseWhere(args.where || {});
-    const {first, last} = parsePagination(args.pagination);
+    const {first, last} = parsePagination(args);
     return <ToolbarLayout
       Sort={sort ? <SortComponent
         {...sort}
@@ -159,8 +171,13 @@ export function parseOrder(orderBy: ?string): {orderField: string | null, orderT
   };
 }
 
-export function parsePagination(pagination: Object) {
-  return pagination || {};
+export function parsePagination(args: Object = {}) {
+  return {
+    first: args.first,
+    after: args.after,
+    last: args.last,
+    before: args.before
+  }
 }
 
 export function parseWhere(where: Object) {

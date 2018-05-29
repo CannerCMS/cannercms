@@ -3018,9 +3018,9 @@ canner-compiler@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/canner-compiler/-/canner-compiler-0.1.6.tgz#516b5b2ded2029cf94fe4ef65ce024adad79fdd0"
 
-canner-graphql-interface@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.6.0.tgz#9feadb4d96a94a8f13b857dbcf2e858a52fe2c5a"
+canner-graphql-interface@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.7.0.tgz#7598f2e708c647d38463b94396d4c5ae8d7d1d8d"
   dependencies:
     apollo-cache "^1.1.7"
     apollo-cache-inmemory "^1.1.12"

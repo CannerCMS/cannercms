@@ -85,7 +85,7 @@
     "antd-geosuggest": "^0.2.4",
     "apollo-boost": "^0.1.4",
     "bson-objectid": "^1.2.2",
-    "canner-graphql-interface": "^1.6.0",
+    "canner-graphql-interface": "^1.7.0",
     "canner-layouts": "^1.0.5",
     "canner-ref-id": "^0.1.2",
     "graphql": "^0.13.2",

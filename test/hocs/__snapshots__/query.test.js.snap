@@ -46,8 +46,11 @@ exports[`with  query should render 2`] = `
         "posts": Object {
           "alias": "posts",
           "args": Object {
+            "after": "$RANDOM_KEY",
+            "before": "$RANDOM_KEY",
+            "first": "$RANDOM_KEY",
+            "last": "$RANDOM_KEY",
             "orderBy": "$RANDOM_KEY",
-            "pagination": "$RANDOM_KEY",
             "where": "$RANDOM_KEY",
           },
           "connection": true,
@@ -74,9 +77,7 @@ exports[`with  query should render 2`] = `
       "toGQL": [Function],
       "updateQueries": [Function],
       "variables": Object {
-        "$RANDOM_KEY": Object {
-          "first": 10,
-        },
+        "$RANDOM_KEY": 10,
       },
     }
   }

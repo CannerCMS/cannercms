@@ -6,8 +6,11 @@ Object {
     "posts": Object {
       "alias": "posts",
       "args": Object {
+        "after": "$RANDOM_KEY",
+        "before": "$RANDOM_KEY",
+        "first": "$RANDOM_KEY",
+        "last": "$RANDOM_KEY",
         "orderBy": "$RANDOM_KEY",
-        "pagination": "$RANDOM_KEY",
         "where": "$RANDOM_KEY",
       },
       "connection": true,
@@ -23,8 +26,11 @@ Object {
         "id": null,
         "staredPosts": Object {
           "args": Object {
+            "after": "$RANDOM_KEY",
+            "before": "$RANDOM_KEY",
+            "first": "$RANDOM_KEY",
+            "last": "$RANDOM_KEY",
             "orderBy": "$RANDOM_KEY",
-            "pagination": "$RANDOM_KEY",
             "where": "$RANDOM_KEY",
           },
           "fields": Object {
@@ -40,8 +46,11 @@ Object {
     "users": Object {
       "alias": "users",
       "args": Object {
+        "after": "$RANDOM_KEY",
+        "before": "$RANDOM_KEY",
+        "first": "$RANDOM_KEY",
+        "last": "$RANDOM_KEY",
         "orderBy": "$RANDOM_KEY",
-        "pagination": "$RANDOM_KEY",
         "where": "$RANDOM_KEY",
       },
       "connection": true,
@@ -52,8 +61,11 @@ Object {
         "name": null,
         "posts": Object {
           "args": Object {
+            "after": "$RANDOM_KEY",
+            "before": "$RANDOM_KEY",
+            "first": "$RANDOM_KEY",
+            "last": "$RANDOM_KEY",
             "orderBy": "$RANDOM_KEY",
-            "pagination": "$RANDOM_KEY",
             "where": "$RANDOM_KEY",
           },
           "fields": Object {
@@ -67,9 +79,7 @@ Object {
     },
   },
   "variables": Object {
-    "$RANDOM_KEY": Object {
-      "first": 10,
-    },
+    "$RANDOM_KEY": 10,
   },
 }
 `;

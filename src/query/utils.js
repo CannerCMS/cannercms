@@ -6,9 +6,7 @@ import {merge, mapValues, set} from 'lodash';
 import {createSchema} from './schema/utils';
 import {types} from './schema/types';
 
-const defaultPagination = {
-  first: 10
-};
+const defaultFirst = 10;
 
 export function fieldToQueriesObject(field: any): any {
   let queriesObj = {};
@@ -30,12 +28,12 @@ export function fieldToQueriesObject(field: any): any {
         merge(variables, qlo.variables);
       });
       if (field.isEntity) {
-        const {args, paginationKey} = genQuery();
+        const {args, firstKey} = genQuery();
         queriesObj.args = args;
         queriesObj.isPlural = true;
         queriesObj.connection = true;
         queriesObj.alias = field.getKey();
-        variables[paginationKey] = defaultPagination;
+        variables[firstKey] = defaultFirst;
       }
       break;
     }
@@ -50,10 +48,10 @@ export function fieldToQueriesObject(field: any): any {
         }
       });
       if (field.isToMany()) {
-        const {args, paginationKey} = genQuery();
+        const {args, firstKey} = genQuery();
         queriesObj.args = args;
         queriesObj.isPlural = true;
-        variables[paginationKey] = defaultPagination;
+        variables[firstKey] = defaultFirst;
       }
       break;
     }
@@ -84,13 +82,16 @@ export function fieldToQueriesObject(field: any): any {
 }
 
 export function genQuery() {
-  const paginationKey = randomKey();
+  const firstKey = randomKey();
   const args = {
-    pagination: paginationKey,
+    first: firstKey,
+    after: randomKey(),
+    last: randomKey(),
+    before: randomKey(),
     where: randomKey(),
     orderBy: randomKey()
   };
-  return {args, paginationKey};
+  return {args, firstKey};
 }
 
 export function schemaToQueriesObject(schema: any) {
