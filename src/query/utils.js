@@ -53,8 +53,6 @@ export function fieldToQueriesObject(field: any): any {
         const {args, paginationKey} = genQuery();
         queriesObj.args = args;
         queriesObj.isPlural = true;
-        queriesObj.connection = true;
-        queriesObj.alias = field.getKey();
         variables[paginationKey] = defaultPagination;
       }
       break;

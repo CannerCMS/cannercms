@@ -22,13 +22,11 @@ Object {
         },
         "id": null,
         "staredPosts": Object {
-          "alias": "staredPosts",
           "args": Object {
             "orderBy": "$RANDOM_KEY",
             "pagination": "$RANDOM_KEY",
             "where": "$RANDOM_KEY",
           },
-          "connection": true,
           "fields": Object {
             "id": null,
             "title": null,
@@ -53,13 +51,11 @@ Object {
         "images": Object {},
         "name": null,
         "posts": Object {
-          "alias": "posts",
           "args": Object {
             "orderBy": "$RANDOM_KEY",
             "pagination": "$RANDOM_KEY",
             "where": "$RANDOM_KEY",
           },
-          "connection": true,
           "fields": Object {
             "id": null,
             "title": null,
