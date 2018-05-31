@@ -34,8 +34,6 @@
   },
   "homepage": "https://github.com/Canner/canner#readme",
   "devDependencies": {
-    "@canner/cms-plugins-all": "^0.1.0-rc.35",
-    "@canner/image-service-config": "^0.3.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
@@ -79,8 +77,8 @@
     "webpack-dev-server": "^3.1.0"
   },
   "dependencies": {
-    "@canner/antd-object-map": "^0.1.16",
-    "@canner/cms-locales": "^0.1.0-rc.35",
+    "@canner/image-service-config": "^0.3.0",
+    "@canner/antd-locales": "^0.1.18",
     "antd": "^3.2.3",
     "antd-geosuggest": "^0.2.4",
     "apollo-boost": "^0.1.4",
