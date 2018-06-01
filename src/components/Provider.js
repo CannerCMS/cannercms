@@ -167,7 +167,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   reset = (key?: string, id?: string): Promise<*> => {
-    const {client, rootKey} = this.props;
+    const {rootKey} = this.props;
     this.actionManager.removeActions(key, id);
     this.updateDataChanged();
     const variables = this.query.getVairables();
