@@ -160,11 +160,12 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  reset = (key: string, id?: string): Promise<*> => {
-    const {client} = this.props;
+  reset = (key?: string, id?: string): Promise<*> => {
+    const {client, rootKey} = this.props;
     this.actionManager.removeActions(key, id);
     this.updateDataChanged();
-    return client.resetStore();
+    const variables = this.query.getVairables();
+    return this.observableQueryMap[key || rootKey].refetch(variables);
   }
 
   request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {
