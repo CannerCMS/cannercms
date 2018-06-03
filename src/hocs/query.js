@@ -138,9 +138,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
           <Com {...this.props} showPagination={false} rootValue={rootValue} value={value ? value.getIn(['edges'], new List()).map(item => item.get('node')) : defaultValue('array')} />
         </Toolbar>;
       } else if (type === 'relation' && relation.type === 'toOne') {
-        return <Com {...this.props} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
+        return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
       }
-      return <Com {...this.props} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
+      return <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
     }
   };
 }
