@@ -45,11 +45,11 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     back = () => {
-      const {goTo, routes, params} = this.props;
+      const {goTo, routes, params, reset, refId} = this.props;
       if (params.op === 'create') {
-        goTo(routes.join('/'));
+        reset(refId.getPathArr()[0]).then(() => goTo(routes.join('/')));
       } else {
-        goTo(routes.slice(0, -1).join('/'));
+        reset(refId.getPathArr()[0]).then(() => goTo(routes.slice(0, -1).join('/')));
       }
     }
 
