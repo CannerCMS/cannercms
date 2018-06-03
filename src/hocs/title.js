@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import {Tooltip, Icon} from 'antd';
 import {HOCContext} from './context';
 import {Context} from 'canner-helpers';
 import type {Query} from '../query';
@@ -95,6 +96,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 </Title>
                 <Description>
                   {description}
+                  
                 </Description>
               </div>
               <div style={{
@@ -116,7 +118,13 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                   {title}
                 </Title>
                 <Description2>
-                  {description}
+                  {
+                    description && (
+                      <Tooltip placement="right" title={description}>
+                        <Icon type="info-circle" style={{marginLeft: '10px', color: '#666'}}/>
+                      </Tooltip>
+                    )
+                  }
                 </Description2>
               </div>
               <div style={{
