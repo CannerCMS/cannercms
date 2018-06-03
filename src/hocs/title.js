@@ -42,12 +42,6 @@ const Description = styled.div`
   color: #aaa;
 `;
 
-const Description2 = styled.div`
-  font-size: 12px;
-  margin-left: 16px;
-  color: #aaa;
-`;
-
 // $FlowFixMe
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
   return class ComponentWithTitleAndDescription extends React.Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
@@ -117,15 +111,13 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 <Title>
                   {title}
                 </Title>
-                <Description2>
-                  {
-                    description && (
-                      <Tooltip placement="right" title={description}>
-                        <Icon type="info-circle" style={{marginLeft: '10px', color: '#666'}}/>
-                      </Tooltip>
-                    )
-                  }
-                </Description2>
+                {
+                  description && (
+                    <Tooltip placement="top" title={description}>
+                      <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
+                    </Tooltip>
+                  )
+                }
               </div>
               <div style={{
                 marginBottom: 8
