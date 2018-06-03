@@ -1,5 +1,7 @@
 ![logo](./docs/logo-word-alpha.svg)
 
+[![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+
 > Build CMS in few lines of code for different data sources
 
 Why create Canner?

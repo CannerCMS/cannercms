@@ -125,7 +125,7 @@ function getRenderType({
       return RENDER_CHILDREN;
     }
     if (routesLength < pathsLength) {
-      if (op === 'create') {
+      if (routesLength === pathsLength - 1 && op === 'create') {
         return RENDER_CHILDREN;
       }
       return RENDER_COMPONENT;
