@@ -97,6 +97,16 @@ export default <root>
         key: 'age',
         type: 'number',
         label: 'Age'
+      }, {
+        key: 'draft',
+        type: 'select',
+        label: 'Type',
+        options: [{
+          text: 'isDraft',
+          condition: {
+            eq: true
+          }
+        }]
       }]}/>
     </toolbar>
   </Users>
