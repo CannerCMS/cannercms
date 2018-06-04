@@ -78,6 +78,14 @@ Object {
       "isPlural": true,
     },
   },
+  "variableTypes": Object {
+    "posts": Object {
+      "$RANDOM_KEY": "PostWhereUniqueInput",
+    },
+    "users": Object {
+      "$RANDOM_KEY": "UserWhereUniqueInput",
+    },
+  },
   "variables": Object {
     "$RANDOM_KEY": 10,
   },

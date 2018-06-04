@@ -17,6 +17,11 @@ describe('actions to variables', () => {
       }
     }
 
+    expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
+      $payload: 'PostUpdateInput!',
+      $where: 'PostWhereUniqueInput!'
+    });
+
     expect(get(actionToMutation(updateAction), 'mutation.fields.updatePost')).toEqual({
       args: {
         data: '$payload',
@@ -37,10 +42,13 @@ describe('actions to variables', () => {
       }
     }
 
+    expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
+      $payload: 'PostCreateInput!',
+    });
+
     expect(get(actionToMutation(updateAction), 'mutation.fields.createPost')).toEqual({
       args: {
-        data: '$payload',
-        where: '$where'
+        data: '$payload'
       }
     });
   });
@@ -57,9 +65,12 @@ describe('actions to variables', () => {
       }
     }
 
+    expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
+      $where: 'PostWhereUniqueInput!'
+    });
+
     expect(get(actionToMutation(updateAction), 'mutation.fields.deletePost')).toEqual({
       args: {
-        data: '$payload',
         where: '$where'
       }
     });
@@ -76,10 +87,13 @@ describe('actions to variables', () => {
       }
     }
 
+    expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
+      $payload: 'any'
+    });
+
     expect(get(actionToMutation(updateAction), 'mutation.fields.updateUser')).toEqual({
       args: {
-        data: '$payload',
-        where: '$where'
+        data: '$payload'
       }
     });
   });

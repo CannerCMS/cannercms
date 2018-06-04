@@ -18,6 +18,7 @@ exports[`toolbar method should render 1`] = `
           },
         }
       }
+      where={Object {}}
     />
   }
   Pagination={

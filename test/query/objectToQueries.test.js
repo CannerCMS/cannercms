@@ -4,23 +4,49 @@ import gql from 'graphql-tag';
 describe('object to quries', () => {
   it('query should works', () => {
     const obj = {
-      posts: {
+      query: {
         args: {
-          pagination: {
-            after: 10
-          }
+          $randomKey1: 'PostWhereInput',
+          $randomKey2: 'PostOrderByInput',
+          $randomKey3: 'String',
+          $randomKey4: 'String',
+          $randomKey5: 'Int',
+          $randomKey6: 'Int'
         },
         fields: {
-          id: null,
-          title: null
+          posts: {
+            args: {
+              where: '$randomKey1',
+              orderBy: '$randomKey2',
+              after: '$randomKey3',
+              before: '$randomKey4',
+              first: '$randomKey5',
+              last: '$randomKey6'
+            },
+            fields: {
+              id: null,
+              title: null
+            }
+          }
         }
       }
     }
-    expect(objectToQueries(obj).replace(/\n+|\s+/g, '')).toBe(`
+    const variables = {
+      $randomKey1: {},
+      $randomKey2: {},
+      $randomKey3: undefined,
+      $randomKey4: undefined,
+      $randomKey5: 10,
+      $randomKey6: undefined,
+      $randomKey7: undefined
+    }
+    expect(objectToQueries(obj, true, variables).replace(/\n+|\s+/g, '')).toBe(`
       {
-        posts(pagination: {after: 10}) {
-          id
-          title
+        query($randomKey1: PostWhereInput, $randomKey2: PostOrderByInput, $randomKey5: Int) {
+          posts(where: $randomKey1, orderBy: $randomKey2, first: $randomKey5) {
+            id
+            title
+          }
         }
       }
     `.replace(/\n+|\s+/g, ''));
@@ -43,7 +69,7 @@ describe('object to quries', () => {
         }
       }
     }
-    expect(objectToQueries(obj).replace(/\n+|\s+/g, '')).toBe(`
+    expect(objectToQueries(obj, true).replace(/\n+|\s+/g, '')).toBe(`
       {
         mutation($payload: any, $where: any) {
           createPost(data: $payload, where: $where)

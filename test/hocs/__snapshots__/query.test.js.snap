@@ -93,6 +93,7 @@ exports[`with  query should render 2`] = `
     }
   }
   rootValue={null}
+  showPagination={true}
   subscribe={[MockFunction]}
   unsubscribe={[MockFunction]}
   value={null}
