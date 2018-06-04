@@ -39,6 +39,7 @@ type Props = {
   componentTree: {[string]: Node},
   hocs: {[string]: React.ComponentType<*>},
   layouts: {[string]: React.ComponentType<*>},
+  toolbars: {[string]: React.ComponentType<*>},
   goTo: (path: string) => void,
   baseUrl: string,
 
@@ -73,6 +74,7 @@ class CannerCMS extends React.Component<Props, State> {
     componentTree: {},
     hocs,
     layouts: {},
+    toolbars: {},
     baseUrl: '/',
     connector: {},
     resolver: {},
@@ -153,7 +155,8 @@ class CannerCMS extends React.Component<Props, State> {
       history,
       afterDeploy,
       intl = {},
-      hideButtons
+      hideButtons,
+      toolbars
     } = this.props;
     const {location, push} = history;
     const {pathname} = location;
@@ -182,6 +185,7 @@ class CannerCMS extends React.Component<Props, State> {
             componentTree={schema.componentTree}
             hocs={hocs}
             layouts={{...defaultLayouts, ...layouts}}
+            toolbars={toolbars}
             goTo={push}
             baseUrl={baseUrl}
             routes={routes}

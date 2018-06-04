@@ -125,7 +125,7 @@ export default class Toolbar extends React.PureComponent<Props> {
     const FilterComponent = filter && filter.component ? filter.component : Filter;
     const PaginationComponent = pagination && pagination.component ? pagination.component : Pagination;
     const {orderField, orderType} = parseOrder(args.orderBy);
-    const {where} = parseWhere(args.where || {});
+    const where = parseWhere(args.where || {});
     const {first, last} = parsePagination(args);
     return <ToolbarLayout
       Sort={sort ? <SortComponent
@@ -189,6 +189,10 @@ export function parseWhere(where: Object) {
       result[field] = {eq: v};
     }
 
+    if (type === 'boolean') {
+      result[field] = {eq: v};
+    }
+
     if (type === 'number') {
       result[field] = {[op || 'eq']: v};
     }
@@ -196,7 +200,6 @@ export function parseWhere(where: Object) {
     if (type === 'object') {
       result[field] = parseWhere(v);
     }
-
     return result;
   }, {});
 }
@@ -207,6 +210,8 @@ export function processWhere(where: Object)  {
     if (isEnd(v)) {
       const {op, value} = parseOpAndValue(v);
       result[`${key}_${op}`] = value;
+    } else {
+      result[key] = processWhere(v);
     }
 
     return result;
