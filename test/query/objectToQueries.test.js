@@ -4,8 +4,8 @@ import gql from 'graphql-tag';
 describe('object to quries', () => {
   it('query should works', () => {
     const obj = {
-      query: {
-        args: {
+      posts: {
+        declareArgs: {
           $randomKey1: 'PostWhereInput',
           $randomKey2: 'PostOrderByInput',
           $randomKey3: 'String',
@@ -13,32 +13,28 @@ describe('object to quries', () => {
           $randomKey5: 'Int',
           $randomKey6: 'Int'
         },
+        args: {
+          where: '$randomKey1',
+          orderBy: '$randomKey2',
+          after: '$randomKey3',
+          before: '$randomKey4',
+          first: '$randomKey5',
+          last: '$randomKey6'
+        },
         fields: {
-          posts: {
-            args: {
-              where: '$randomKey1',
-              orderBy: '$randomKey2',
-              after: '$randomKey3',
-              before: '$randomKey4',
-              first: '$randomKey5',
-              last: '$randomKey6'
-            },
-            fields: {
-              id: null,
-              title: null
-            }
-          }
+          id: null,
+          title: null
         }
       }
     }
     const variables = {
-      $randomKey1: {},
-      $randomKey2: {},
-      $randomKey3: undefined,
-      $randomKey4: undefined,
-      $randomKey5: 10,
-      $randomKey6: undefined,
-      $randomKey7: undefined
+      randomKey1: {},
+      randomKey2: {},
+      randomKey3: undefined,
+      randomKey4: undefined,
+      randomKey5: 10,
+      randomKey6: undefined,
+      randomKey7: undefined
     }
     expect(objectToQueries(obj, true, variables).replace(/\n+|\s+/g, '')).toBe(`
       {

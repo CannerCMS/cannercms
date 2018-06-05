@@ -152,14 +152,14 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
       const originElement = {...element};
       const args = originElement.declareArgs;
       delete originElement.declareArgs;
-      query = 'query',
-      key = 'query',
+      query = 'query';
       element = {
         args,
         fields: {
           [key]: originElement
         }
-      }
+      };
+      key = 'query';
     }
 
     if (element.isPlural) {
@@ -216,7 +216,7 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
 function genArgs(args, variables) {
   return Object.keys(args)
     .filter(key => {
-      if (variables && variables[args[key]] === undefined) {
+      if (variables && variables[args[key].substr(1)] === undefined) {
         return false;
       }
       return true;
@@ -230,7 +230,7 @@ function genArgs(args, variables) {
 function genDeclareArgs(args, variables) {
   return Object.keys(args)
     .filter(key => {
-      if (variables && variables[key] === undefined) {
+      if (variables && variables[key.substr(1)] === undefined) {
         return false;
       }
       return true;
