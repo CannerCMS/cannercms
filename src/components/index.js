@@ -165,11 +165,12 @@ class CannerCMS extends React.Component<Props, State> {
 
     return (
       <IntlProvider
-        locale={intl.lang || 'en'}
-        defaultLocale={intl.lang || 'en'}
+        locale={intl.locale || 'en'}
+        defaultLocale={intl.defaultLocale || intl.locale || 'en'}
         messages={{
-          ...pluginsLocales[intl.lang || 'en'],
+          ...pluginsLocales[intl.locale || 'en'],
           ...hocsLocales[intl.lang || 'en'],
+          ...(intl.messages || {})
         }}
       >
         <Provider

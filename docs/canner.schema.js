@@ -84,7 +84,7 @@ export default <root>
       }]}/>
     </toolbar>
   </Posts>
-  <Users ui="tableRoute" uiParams={{
+  <Users ui="table" uiParams={{
     columns: userColumns
   }}>
     <toolbar>

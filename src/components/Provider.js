@@ -44,10 +44,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       this.log('gqlstr', gqlStr, variables);
       return props.client.watchQuery({
         query: gql`${gqlStr}`,
-        variables,
-        context: {
-          keyName: key
-        }
+        variables
       });
     });
     this.onDeployManager = new OnDeployManager();
@@ -123,7 +120,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
-    const {client, afterDeploy} = this.props;
+    const {client, afterDeploy, schema} = this.props;
     let actions = this.actionManager.getActions(key, id);
     if (!actions || !actions.length) {
       return Promise.resolve();
@@ -132,13 +129,10 @@ export default class Provider extends React.PureComponent<Props, State> {
     actions = removeIdInCreateArray(actions);
     actions = this.onDeploy(actions);
     const mutation = objectToQueries(actionToMutation(actions[0]), false);
-    const variables = actionsToVariables(actions);
+    const variables = actionsToVariables(actions, schema);
     return client.mutate({
       mutation: gql`${mutation}`,
-      variables,
-      context: {
-        keyName: key
-      }
+      variables
     }).then(result => {
       this.log('deploy', key, {
         id,

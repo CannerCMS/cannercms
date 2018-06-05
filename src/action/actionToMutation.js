@@ -8,16 +8,22 @@ export default function actionToMutation(action: Action<ActionType>) {
   const mutation = {
     mutation: {
       args: {
+
       },
       fields: {
-        
       }
     }
   }
   const {type, payload: {key = ''}} = action;
   let name = '';
-  let args = {};
-  let actionArgs = {};
+  let args = {
+    $payload: 'any',
+    $where: 'any'
+  };
+  let actionArgs = {
+    data: '$payload',
+    where: '$where'
+  };
   switch(type) {
     case 'UPDATE_OBJECT':
       args = {
