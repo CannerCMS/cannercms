@@ -9,8 +9,9 @@ import Arrays from './schema/array.schema';
 import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
 import OnDeploy from './schema/onDeploy.schema';
+import tabs from './layouts/tabs';
 
-const Tabs = ({attributes, children}) => <Layout name="Tabs" {...attributes}>{children}</Layout>;
+const Tabs = ({attributes, children}) => <Layout component={tabs} {...attributes}>{children}</Layout>;
 const userColumns = [{
   title: 'Name',
   dataIndex: 'name'
@@ -27,6 +28,14 @@ const postColumns = [{
   dataIndex: 'title'
 }];
 
+// export default <root>
+//   <object keyName="info">
+//     <array keyName="tag" ui="tag" uiParams={{defaultOptions: []}}>
+//       <string/>
+//     </array>
+//   </object>
+// </root>
+
 export default <root>
   <object keyName="overview" title="Components Overview">
     <Block title="All Types">
@@ -42,6 +51,7 @@ export default <root>
       <array keyName="tag" ui="tag" uiParams={{defaultOptions: []}}>
         <string />
       </array>
+      
       <array keyName="slider" ui="slider">
         <string />
       </array>

@@ -17,10 +17,12 @@ module.exports = {
   },
   resolve: {
     alias: {
+      'canner-graphql-interface': path.resolve(__dirname, 'node_modules/canner-graphql-interface'),
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
-      'cms-helpers': path.resolve(__dirname, 'node_modules', 'cms-helpers')
+      'cms-helpers': path.resolve(__dirname, 'node_modules', 'cms-helpers'),
+      '@canner': path.resolve(__dirname, 'node_modules', '@canner')
     }
   },
   resolveLoader: {
@@ -35,12 +37,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.schema\.js$/,
+        test: /(\.schema\.js|canner\.def\.js)$/,
         use: [{
           loader: 'canner-schema-loader',
-          options: {
-            visitors: path.resolve('lib', 'visitors')
-          }
         }],
       },
       {

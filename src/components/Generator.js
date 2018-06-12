@@ -35,6 +35,14 @@ function isFieldset(node) {
   return node.packageName === '@canner/antd-object-fieldset';
 }
 
+function Loading(props) {
+  if (props.error) {
+    return <div>Error! <button onClick={ props.retry }>Retry</button></div>;
+  } else {
+    return <div>Loading...</div>;
+  }
+}
+
 export type Node = {
   keyName: string,
   nodeType: string,
@@ -55,7 +63,6 @@ type Props = {
   routes: Array<string>,
   params: {[string]: string},
   refresh?: boolean,
-  toolbars: Object,
   deploy?: Function,
   reset?: Function,
   onDeploy?: Function,
@@ -128,11 +135,9 @@ export default class Generator extends React.PureComponent<Props, State> {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
     const copyNode = {...node};
-    const {layouts, toolbars} = this.props;
     let component;
     if (isLayout(copyNode)) {
-      component = get(layouts, copyNode.component);
-      component = this.wrapByHOC(component, (copyNode.hocs || ['containerRouter']).slice() || []);
+      component = this.wrapByHOC(copyNode.component, (copyNode.hocs || ['containerRouter']).slice() || []);
     } else if (isComponent(copyNode)) { // TODO: need to fix, turn plugins to components in compiler
 
       if (isFieldset(copyNode)) {
@@ -140,7 +145,7 @@ export default class Generator extends React.PureComponent<Props, State> {
       } else {
         component = Loadable({
           loader: () => copyNode.loader,
-          loading: () => <div>loading</div>,
+          loading: Loading,
         });
       }
       component = this.wrapByHOC(component, ['title', 'onDeploy', 'deploy', 'request', 'query', 'cache', 'route', 'id', 'context'] || []);
@@ -156,14 +161,7 @@ export default class Generator extends React.PureComponent<Props, State> {
         return this.prerender(child);
       });
     }
-    if (copyNode.pattern === 'array' && copyNode.toolbar) {
-      Object.keys(copyNode.toolbar).forEach(key => {
-        const componentName = copyNode.toolbar[key].componentName;
-        if (componentName) {
-          copyNode.toolbar[key].component = toolbars[componentName];
-        }
-      });
-    }
+    
     return copyNode;
   }
 
