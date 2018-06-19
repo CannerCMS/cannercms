@@ -139,7 +139,7 @@ export function schemaToQueriesObject(schema: any) {
   }
 }
 
-export function objectToQueries(o: Object, close: boolean = true, variables?: Object) {
+export function objectToQueries(o: Object, close: boolean = true/*, variables?: Object*/) {
 
   const result = Object.keys(o).map(key => {
     let query = `${key}`;
@@ -213,7 +213,7 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
   return close ? `{${result}}` : result;
 }
 
-function genArgs(args, variables) {
+function genArgs(args/*, variables*/) {
   return Object.keys(args)
     // .filter(key => {
       // if (variables && variables[args[key].substr(1)] === undefined) {
@@ -227,7 +227,7 @@ function genArgs(args, variables) {
     }).join(',');
 }
 
-function genDeclareArgs(args, variables) {
+function genDeclareArgs(args/*, variables*/) {
   return Object.keys(args)
     // .filter(key => {
     //   if (variables && variables[key.substr(1)] === undefined) {

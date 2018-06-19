@@ -41,10 +41,10 @@ export default <root>
     <Block title="All Types">
       <Tabs>
         <Strings keyName="string" title="String Type" />
-        <Booleans keyName="boolean" title="Boolean Type"/>
+        {/* <Booleans keyName="boolean" title="Boolean Type"/>
         <Numbers keyName="number" title="Number Types" />
         <Arrays keyName="array" title="Array Type" />
-        <Objects keyName="object" title="Object type" />
+        <Objects keyName="object" title="Object type" /> */}
       </Tabs>
     </Block>
     <Block title="test">
@@ -63,7 +63,7 @@ export default <root>
       {/* <geoPoint keyName="map" title="Map" /> */}
     </Block>
   </object>
-  <object keyName="home" title="Home" description="t to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of L ">
+  {/* <object keyName="home" title="Home" description="t to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of L ">
     <Block title="Basic">
       <number keyName="count" title="Count"/>
       <relation title="StaredPosts" description="Ref to Posts" keyName="staredPosts" relation={{to: 'posts', type: 'toMany'}} ui="multipleSelect" uiParams={{textCol: 'title', columns: postColumns}}/>
@@ -137,5 +137,5 @@ export default <root>
       keyName="test1"
       title="OnDeploy Demo"
     />
-  </array>
+  </array> */}
 </root>

@@ -144,7 +144,7 @@ export default class Generator extends React.PureComponent<Props, State> {
         component = () => <Item />;
       } else {
         component = Loadable({
-          loader: () => copyNode.loader,
+          loader: () => copyNode.loader || Promise.reject(`There is no loader in ${copyNode.path}`),
           loading: Loading,
         });
       }

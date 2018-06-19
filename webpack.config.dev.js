@@ -22,7 +22,8 @@ module.exports = {
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
       'cms-helpers': path.resolve(__dirname, 'node_modules', 'cms-helpers'),
-      '@canner': path.resolve(__dirname, 'node_modules', '@canner')
+      '@canner': path.resolve(__dirname, 'node_modules', '@canner'),
+      'antd': path.resolve(__dirname, 'node_modules/antd')
     }
   },
   resolveLoader: {
