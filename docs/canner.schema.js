@@ -11,6 +11,8 @@ import Users from './schema/realWorld/users.schema';
 import Home from './schema/realWorld/home.schema';
 import OnDeploy from './schema/onDeploy.schema';
 import TabsFilter from './toolbar/filter';
+import utils from './utils';
+const {connector, storage} = utils;
 const userColumns = [{
   title: 'Name',
   dataIndex: 'name'
@@ -28,7 +30,11 @@ const postColumns = [{
 }];
 
 export default <root>
-  <object keyName="overview" title="Components Overview">
+  <endpoint connector={connector} />
+  <object keyName="overview"
+    title="Components Overview"
+    storage={storage}
+  >
     <Block title="All Types">
       <Tabs>
         <Strings keyName="string" title="String Type" />

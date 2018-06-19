@@ -31,8 +31,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      IMGUR_CLIENT_ID: JSON.stringify(process.env.IMGUR_CLIENT_ID),
-      IMGUR_MASHAPE_KEY: JSON.stringify(process.env.IMGUR_MASHAPE_KEY),
+      FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
     })
   ],
   module: {

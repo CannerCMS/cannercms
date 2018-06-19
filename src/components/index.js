@@ -85,19 +85,6 @@ class CannerCMS extends React.Component<Props, State> {
       result[key] = v;
       return result;
     }, {});
-
-    const serviceConfig = new ImgurService({
-      // $FlowFixMe: global
-      clientId: IMGUR_CLIENT_ID,
-      // $FlowFixMe: global
-      mashapeKey: IMGUR_MASHAPE_KEY
-    });
-
-    this.imageServiceConfigs = {...Object.keys(schema).reduce((result, key) => {
-      result[key] = serviceConfig.getServiceConfig();
-      return result;
-    }, {}), ...(props.imageServiceConfigs || {})};
-    
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
@@ -123,7 +110,7 @@ class CannerCMS extends React.Component<Props, State> {
       afterDeploy,
       intl = {},
       hideButtons,
-      schema: {client}
+      schema: {client, storages}
     } = this.props;
     const {location, push} = history;
     const {pathname} = location;
@@ -148,7 +135,7 @@ class CannerCMS extends React.Component<Props, State> {
           rootKey={routes[0]}
         >
           <Generator
-            imageServiceConfigs={this.imageServiceConfigs}
+            storages={storages}
             componentTree={this.componentTree || {}}
             hocs={hocs}
             goTo={push}

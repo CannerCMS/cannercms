@@ -56,7 +56,7 @@ type Props = {
   componentTree: {[string]: Node},
   hocs: {[string]: React.ComponentType<*>},
   layouts: {[string]: React.ComponentType<*>},
-  imageServiceConfigs: Object,
+  storages: Object,
 
   goTo: (path: string) => void,
   baseUrl: string,
@@ -185,13 +185,13 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {params, goTo, baseUrl, routes, imageServiceConfigs, onDeploy, removeOnDeploy, hideButtons} = this.props;
+    const {params, goTo, baseUrl, routes, storages, onDeploy, removeOnDeploy, hideButtons} = this.props;
     if (component) {
       return <node.component
         {...restNodeData}
         routes={routes}
         key={index}
-        imageServiceConfig={(imageServiceConfigs || {})[routes[0]]}
+        imageServiceConfig={(storages || {})[routes[0]]}
         renderChildren={(props) => this.renderChildren(node, props)}
         renderComponent={this.renderComponent}
         params={params}
