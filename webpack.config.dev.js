@@ -41,6 +41,8 @@ module.exports = {
         test: /(\.schema\.js|canner\.def\.js)$/,
         use: [{
           loader: 'canner-schema-loader',
+        }, {
+          loader: 'babel-loader',
         }],
       },
       {

@@ -2,7 +2,17 @@
 
 import builder from 'canner-script';
 
-const Posts = ({attributes}) => <array keyName="posts" title="posts" {...attributes}>
+const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="posts" uiParams={{
+  columns: attributes.postColumns
+}}>
+  <toolbar>
+    <pagination />
+    <filter fields={[{
+      key: 'title',
+      type: 'text',
+      label: 'Title'
+    }]}/>
+  </toolbar>
   <string keyName="title" title="title" />
   <array keyName="notes" title="Notes">
     <string keyName="text" title="Text" />
