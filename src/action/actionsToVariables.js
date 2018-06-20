@@ -38,6 +38,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
             relationField.connect.push({
               id: value.get('id')
             });
+            return relationField;
           });
         } else {
           set(variables.payload, path.split('/').concat('connect'), {id: value.get('id')});

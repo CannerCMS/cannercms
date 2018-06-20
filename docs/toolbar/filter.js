@@ -2,7 +2,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
 // import DateRangeFilter from './dateRange';
-import isUndefined from 'lodash/isUndefined';
 import {Tabs} from 'antd';
 const TabPane = Tabs.TabPane;
 

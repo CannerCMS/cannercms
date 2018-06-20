@@ -54,6 +54,9 @@ exports[`with  query should render 2`] = `
             "where": "$RANDOM_KEY",
           },
           "connection": true,
+          "declareArgs": Object {
+            "$RANDOM_KEY": "PostWhereUniqueInput",
+          },
           "fields": Object {
             "id": null,
             "title": null,

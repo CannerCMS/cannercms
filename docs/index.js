@@ -2,12 +2,11 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import CMS from '../src/components';
-import TabsFilter from './toolbar/filter';
 import schema from './canner.schema';
-import Tabs from './layouts/tabs';
 import {Layout, Menu} from 'antd';
 import firebase from 'firebase';
 import {FirebaseRtdbClientConnector} from 'canner-graphql-interface';
+console.log(schema);
 
 class CMSExample extends React.Component {
   constructor(props) {
@@ -54,19 +53,19 @@ class CMSExample extends React.Component {
   }
 
   dataDidChange = (dataChanged) => {
+    // eslint-disable-next-line
     console.log(dataChanged);
   }
 
   afterDeploy = () => {
+    // eslint-disable-next-line
     console.log('deployed');
   }
 
   render() {
     const baseUrl = "/docs";
-    const {cannerSchema} = schema;
     const {login} = this.state;
     // eslint-disable-next-line
-    console.log(schema);
     return (
       <Router>
         <Route path="/docs/**" render={({history}) => {
@@ -74,10 +73,10 @@ class CMSExample extends React.Component {
             <Layout.Sider>
               <Menu>
                 {
-                  Object.keys(cannerSchema).map(key => (
+                  Object.keys(schema.schema).map(key => (
                     <Menu.Item key={key}>
                       <Link to={`${baseUrl}/${key}`}>
-                        {cannerSchema[key].title}
+                        {schema.schema[key].title}
                       </Link>
                     </Menu.Item>
                   ))
@@ -91,15 +90,8 @@ class CMSExample extends React.Component {
                     schema={schema}
                     baseUrl={baseUrl}
                     history={history}
-                    connector={this.connector}
                     afterDeploy={this.afterDeploy}
                     dataDidChange={this.dataDidChange}
-                    toolbars={{
-                      TabsFilter
-                    }}
-                    layouts={{
-                      Tabs
-                    }}
                   /> :
                   null
               }

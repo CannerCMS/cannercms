@@ -1,10 +1,12 @@
 // @flow
 import * as React from 'react';
-import {Tooltip, Icon} from 'antd';
+import {Tooltip, Icon, Alert} from 'antd';
 import {HOCContext} from './context';
 import {Context} from 'canner-helpers';
 import type {Query} from '../query';
 import styled from 'styled-components';
+import {isEmpty} from 'lodash';
+
 type Props = {
   title: string, // only used in withTitleAndDesription hoc
   description: string, // only used in withTitleAndDesription hoc
@@ -49,7 +51,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
       const {title, layout, description, hideTitle,
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
-        refId, routes, updateQuery
+        refId, routes, updateQuery, type, imageServiceConfig
       } = this.props;
       return <HOCContext.Provider
         value={{
@@ -93,6 +95,11 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                   
                 </Description>
               </div>
+              {
+                (type === 'image' && isEmpty(imageServiceConfig)) && (
+                  <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
+                )
+              }
               <div style={{
                 flex: 2
               }}>
@@ -118,7 +125,13 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                     </Tooltip>
                   )
                 }
+                
               </div>
+              {
+                (type === 'image' && isEmpty(imageServiceConfig)) && (
+                  <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
+                )
+              }
               <div style={{
                 marginBottom: 8
               }}>

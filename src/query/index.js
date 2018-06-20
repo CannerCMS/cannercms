@@ -41,9 +41,9 @@ export class Query {
     const variables = this.getVairables();
     if (key) {
       const obj = this.getQueries([key]);
-      return objectToQueries({[key]: obj}, true, variables);  
+      return objectToQueries({[key]: obj}, !obj.declareArgs, variables);  
     } else {
-      return objectToQueries(this.queries, true, variables);
+      return objectToQueries(this.queries, false, variables);
     }
   }
 

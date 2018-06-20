@@ -36,13 +36,11 @@ describe('object to quries', () => {
       randomKey6: undefined,
       randomKey7: undefined
     }
-    expect(objectToQueries(obj, true, variables).replace(/\n+|\s+/g, '')).toBe(`
-      {
-        query($randomKey1: PostWhereInput, $randomKey2: PostOrderByInput, $randomKey5: Int) {
-          posts(where: $randomKey1, orderBy: $randomKey2, first: $randomKey5) {
-            id
-            title
-          }
+    expect(objectToQueries(obj, false, variables).replace(/\n+|\s+/g, '')).toBe(`
+      query($randomKey1: PostWhereInput, $randomKey2: PostOrderByInput, $randomKey5: Int) {
+        posts(where: $randomKey1, orderBy: $randomKey2, first: $randomKey5) {
+          id
+          title
         }
       }
     `.replace(/\n+|\s+/g, ''));
@@ -65,11 +63,9 @@ describe('object to quries', () => {
         }
       }
     }
-    expect(objectToQueries(obj, true).replace(/\n+|\s+/g, '')).toBe(`
-      {
-        mutation($payload: any, $where: any) {
-          createPost(data: $payload, where: $where)
-        }
+    expect(objectToQueries(obj, false).replace(/\n+|\s+/g, '')).toBe(`
+      mutation($payload: any, $where: any) {
+        createPost(data: $payload, where: $where)
       }
     `.replace(/\n+|\s+/g, ''));
   });

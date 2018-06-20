@@ -14,7 +14,9 @@ Enzyme.configure({ adapter: new Adapter() });
 
 
 function toGQL(schema, key) {
-  return gql`${objectToQueries(pick(schemaToQueriesObject(schema).queriesObj, key))}`
+  const {queriesObj, variables} = schemaToQueriesObject(schema);
+  const obj = pick(queriesObj, key);
+  return gql`${objectToQueries(obj, !obj.declareArgs, variables)}`
 }
 
 describe('provider methods', () => {
@@ -37,7 +39,7 @@ describe('provider methods', () => {
     </Provider>);
     return wrapper.instance().fetch('home').then(d => {
       expect(d.toJS()).toMatchSnapshot();
-    })
+    });
   });
 
   /**

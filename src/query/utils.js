@@ -139,7 +139,7 @@ export function schemaToQueriesObject(schema: any) {
   }
 }
 
-export function objectToQueries(o: Object, close: boolean = true, variables?: Object) {
+export function objectToQueries(o: Object, close: boolean = true) {
 
   const result = Object.keys(o).map(key => {
     let query = `${key}`;
@@ -148,19 +148,19 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
       return `${query}`;
     }
 
-    // if (element.declareArgs) {
-    //   const originElement = {...element};
-    //   const args = originElement.declareArgs;
-    //   delete originElement.declareArgs;
-    //   query = 'query';
-    //   element = {
-    //     args,
-    //     fields: {
-    //       [key]: originElement
-    //     }
-    //   };
-    //   key = 'query';
-    // }
+    if (element.declareArgs) {
+      const originElement = {...element};
+      const args = originElement.declareArgs;
+      delete originElement.declareArgs;
+      query = 'query';
+      element = {
+        args,
+        fields: {
+          [key]: originElement
+        }
+      };
+      key = 'query';
+    }
 
     if (element.isPlural) {
       query = pluralize.plural(lowerFirst(query));
@@ -176,10 +176,10 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
 
     if (element.args) {
       if (key === 'query') {
-        const args = genDeclareArgs(element.args);
+        const args = genDeclareArgs(element.args, variables);
         query = args ? `${query}(${args})` : `${query}`;
       } else {
-        const args = genArgs(element.args);
+        const args = genArgs(element.args, variables);
         query = args ? `${query}(${args})` : `${query}`;
       }
     }
@@ -204,7 +204,7 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
           }
         }
       }
-      fields = objectToQueries(fields, true);
+      fields = objectToQueries(fields, true, variables);
       
       query = `${query}${fields}`;
     }
@@ -213,28 +213,28 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
   return close ? `{${result}}` : result;
 }
 
-function genArgs(args, variables) {
+function genArgs(args) {
   return Object.keys(args)
-    // .filter(key => {
-      // if (variables && variables[args[key].substr(1)] === undefined) {
-      //   return false;
-      // }
-    //   return true;
-    // })
+    .filter(key => {
+      if (variables && variables[args[key].substr(1)] === undefined) {
+        return false;
+      }
+      return true;
+    })
     .map(key => {
       const argValue = args[key];
       return `${key}: ${argValue}`
     }).join(',');
 }
 
-function genDeclareArgs(args, variables) {
+function genDeclareArgs(args) {
   return Object.keys(args)
-    // .filter(key => {
-    //   if (variables && variables[key.substr(1)] === undefined) {
-    //     return false;
-    //   }
-    //   return true;
-    // })
+    .filter(key => {
+      if (variables && variables[key.substr(1)] === undefined) {
+        return false;
+      }
+      return true;
+    })
     .map(key => {
       const argValue = args[key];
       return `${key}: ${argValue}`
