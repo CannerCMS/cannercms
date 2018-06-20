@@ -14,6 +14,9 @@ Object {
         "where": "$RANDOM_KEY",
       },
       "connection": true,
+      "declareArgs": Object {
+        "$RANDOM_KEY": "PostWhereUniqueInput",
+      },
       "fields": Object {
         "bestAuthor": Object {
           "fields": Object {
@@ -54,6 +57,9 @@ Object {
         "where": "$RANDOM_KEY",
       },
       "connection": true,
+      "declareArgs": Object {
+        "$RANDOM_KEY": "UserWhereUniqueInput",
+      },
       "fields": Object {
         "email": null,
         "id": null,
@@ -76,14 +82,6 @@ Object {
         },
       },
       "isPlural": true,
-    },
-  },
-  "variableTypes": Object {
-    "posts": Object {
-      "$RANDOM_KEY": "PostWhereUniqueInput",
-    },
-    "users": Object {
-      "$RANDOM_KEY": "UserWhereUniqueInput",
     },
   },
   "variables": Object {

@@ -148,19 +148,19 @@ export function objectToQueries(o: Object, close: boolean = true) {
       return `${query}`;
     }
 
-    // if (element.declareArgs) {
-    //   const originElement = {...element};
-    //   const args = originElement.declareArgs;
-    //   delete originElement.declareArgs;
-    //   query = 'query';
-    //   element = {
-    //     args,
-    //     fields: {
-    //       [key]: originElement
-    //     }
-    //   };
-    //   key = 'query';
-    // }
+    if (element.declareArgs) {
+      const originElement = {...element};
+      const args = originElement.declareArgs;
+      delete originElement.declareArgs;
+      query = 'query';
+      element = {
+        args,
+        fields: {
+          [key]: originElement
+        }
+      };
+      key = 'query';
+    }
 
     if (element.isPlural) {
       query = pluralize.plural(lowerFirst(query));
@@ -176,10 +176,10 @@ export function objectToQueries(o: Object, close: boolean = true) {
 
     if (element.args) {
       if (key === 'query') {
-        const args = genDeclareArgs(element.args);
+        const args = genDeclareArgs(element.args, variables);
         query = args ? `${query}(${args})` : `${query}`;
       } else {
-        const args = genArgs(element.args);
+        const args = genArgs(element.args, variables);
         query = args ? `${query}(${args})` : `${query}`;
       }
     }
@@ -204,7 +204,7 @@ export function objectToQueries(o: Object, close: boolean = true) {
           }
         }
       }
-      fields = objectToQueries(fields, true);
+      fields = objectToQueries(fields, true, variables);
       
       query = `${query}${fields}`;
     }
@@ -215,12 +215,12 @@ export function objectToQueries(o: Object, close: boolean = true) {
 
 function genArgs(args) {
   return Object.keys(args)
-    // .filter(key => {
-      // if (variables && variables[args[key].substr(1)] === undefined) {
-      //   return false;
-      // }
-    //   return true;
-    // })
+    .filter(key => {
+      if (variables && variables[args[key].substr(1)] === undefined) {
+        return false;
+      }
+      return true;
+    })
     .map(key => {
       const argValue = args[key];
       return `${key}: ${argValue}`
@@ -229,12 +229,12 @@ function genArgs(args) {
 
 function genDeclareArgs(args) {
   return Object.keys(args)
-    // .filter(key => {
-    //   if (variables && variables[key.substr(1)] === undefined) {
-    //     return false;
-    //   }
-    //   return true;
-    // })
+    .filter(key => {
+      if (variables && variables[key.substr(1)] === undefined) {
+        return false;
+      }
+      return true;
+    })
     .map(key => {
       const argValue = args[key];
       return `${key}: ${argValue}`
