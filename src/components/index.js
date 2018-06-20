@@ -1,5 +1,4 @@
 // @flow
-/* global IMGUR_CLIENT_ID, IMGUR_MASHAPE_KEY */
 
 import * as React from 'react';
 import queryString from 'query-string';
@@ -7,7 +6,6 @@ import Provider from './Provider';
 import Generator from './Generator';
 import hocs from '../hocs';
 import {Parser, Traverser} from 'canner-compiler';
-import {ImgurService} from '@canner/image-service-config';
 
 // i18n
 import en from 'react-intl/locale-data/en';
