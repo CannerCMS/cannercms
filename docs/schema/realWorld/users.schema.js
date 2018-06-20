@@ -51,13 +51,13 @@ const Users = ({attributes}) => (
       <boolean keyName="draft" title="Draft"/>
       <boolean keyName="stick" title="Stick"/>
     </object>
-    <relation keyName="posts" relation={{to: 'posts', type: 'toMany'}} title="Posts" uiParams={{
+    <relation ui="multipleSelect" keyName="posts" relation={{to: 'posts', type: 'toMany'}} title="Posts" uiParams={{
       textCol: 'title',
       columns: [{
         title: 'Title',
         dataIndex: 'title'
       }]
-    }} ui="multipleSelect"/>
+    }} />
   </array>
 );
 export default Users
