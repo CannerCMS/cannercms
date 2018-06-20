@@ -30,7 +30,7 @@ Of course not every CMS exhibits all these issues, but if you tried using anothe
 
 If that sounds familiar, you might like ***Canner***. Which motivates us to solve these problems.
 
-> If you are interested in how we solve these problems see [Our mission](https://framework.canner.io/docs/why-mission.html)
+> If you are interested in how we solve these problems see [Our mission](https://www.canner.io/docs/why-mission.html)
 
 ## Features
 
@@ -62,9 +62,9 @@ Canner CMS provides flexible CMS infrastructure, allowing developers to assemble
 
 Adaptive CMS is a novel CMS structure that differs from traditional CMS and headless CMS. The biggest difference is that Adaptive CMS decouples the view and data layers and builds data interfaces to connect to single or multiple data sources.
 
-![overview](http://framework.canner.io/docs/assets/revolution.png)
+![overview](http://www.canner.io/docs/assets/revolution.png)
 
-> Learn more [Why Adaptive CMS?](http://framework.canner.io/docs/why-adaptive-cms.html)
+> Learn more [Why Adaptive CMS?](http://www.canner.io/docs/why-adaptive-cms.html)
 
 ## Demo
 
@@ -75,7 +75,7 @@ Adaptive CMS is a novel CMS structure that differs from traditional CMS and head
 
 ## Links
 
-Visit our [Open source Canner official website](https://framework.canner.io/)
+Visit our [Canner official document](https://www.canner.io/docs) to get started
 
 And also visit our [CannerIO platform](https://www.canner.io)
 
