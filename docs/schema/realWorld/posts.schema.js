@@ -3,7 +3,7 @@
 import builder from 'canner-script';
 
 const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="posts" uiParams={{
-  columns: attributes.postColumns
+  columns: attributes.columns
 }}>
   <toolbar>
     <pagination />

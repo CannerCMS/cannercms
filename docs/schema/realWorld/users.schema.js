@@ -5,7 +5,7 @@ import builder from 'canner-script';
 const Users = ({attributes}) => (
   <array keyName="users" title="users"
     ui="table" uiParams={{
-      columns: attributes.userColumns
+      columns: attributes.columns
     }}
   >
     <toolbar>

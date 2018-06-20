@@ -1,10 +1,31 @@
 import actionsToVariables from '../../src/action/actionsToVariables';
 import {fromJS} from 'immutable';
 
+const schema = {
+  posts: {
+    type: 'array',
+    items: {
+      items: {}
+    }
+  },
+  info: {
+    type: 'object',
+    items: {
+    }
+  },
+  authors: {
+    type: 'array',
+    items: {
+      items: {}
+    }
+  }
+}
+
 const updateArrayAction = {
   type: 'UPDATE_ARRAY',
   payload: {
     id: 'post1',
+    key: 'posts',
     value: fromJS({
       "title": "123"
     })
@@ -15,6 +36,7 @@ const updateArrayWithNestedArrayAction = {
   type: 'UPDATE_ARRAY',
   payload: {
     id: 'post1',
+    key: 'posts',
     value: fromJS({
       name: '321',
       tags: ['1', '2'],
@@ -31,6 +53,7 @@ const createArrayAction = {
   type: 'CREATE_ARRAY',
   payload: {
     id: 'post2',
+    key: 'posts',
     value: fromJS({
       "title": "123"
     })
@@ -41,6 +64,7 @@ const deleteArrayAction = {
   type: 'DELETE_ARRAY',
   payload: {
     id: 'post3',
+    key: 'posts',
     value: fromJS({})
   }
 }
@@ -76,6 +100,7 @@ const connectToOneAction = {
   type: 'CONNECT',
   payload: {
     id: 'post1',
+    key: 'posts',
     path: 'author',
     relation: {
       type: 'toOne'
@@ -91,6 +116,7 @@ const connectToManyAction = {
   type: 'CONNECT',
   payload: {
     id: 'post1',
+    key: 'posts',
     path: 'author',
     relation: {
       type: 'toMany'
@@ -106,6 +132,7 @@ const createAndConnectToOneAction = {
   type: 'CREATE_AND_CONNECT',
   payload: {
     id: 'post1',
+    key: 'posts',
     path: 'author',
     relation: {
       type: 'toOne'
@@ -121,6 +148,7 @@ const createAndConnectToManyAction = {
   type: 'CREATE_AND_CONNECT',
   payload: {
     id: 'post1',
+    key: 'posts',
     path: 'author',
     relation: {
       type: 'toMany'
@@ -136,6 +164,7 @@ const disconnectToOneAction = {
   type: 'DISCONNECT',
   payload: {
     id: 'post1',
+    key: 'posts',
     path: 'author',
     relation: {
       type: 'toOne'
@@ -151,6 +180,7 @@ const disconnectToManyAction = {
   type: 'DISCONNECT',
   payload: {
     id: 'post1',
+    key: 'posts',
     path: 'author',
     relation: {
       type: 'toMany'
@@ -165,6 +195,7 @@ const disconnectAndDeleteToOneAction = {
   type: 'DISCONNECT_AND_DELETE',
   payload: {
     id: 'post1',
+    key: 'posts',
     path: 'author',
     relation: {
       type: 'toOne'
@@ -179,6 +210,7 @@ const disconnectAndDeleteToManyAction = {
   type: 'DISCONNECT_AND_DELETE',
   payload: {
     id: 'post1',
+    key: 'posts',
     path: 'author',
     relation: {
       type: 'toMany'
@@ -191,7 +223,7 @@ const disconnectAndDeleteToManyAction = {
 
 describe('single action to variable', () => {
   test('update array', () => {
-    expect(actionsToVariables([updateArrayAction]))
+    expect(actionsToVariables([updateArrayAction], schema))
       .toMatchObject({
         payload: updateArrayAction.payload.value.toJS(),
         where: {id: updateArrayAction.payload.id}
@@ -200,7 +232,7 @@ describe('single action to variable', () => {
 
   test('update nested array in array', () => {
     const value = updateArrayWithNestedArrayAction.payload.value.toJS();
-    expect(actionsToVariables([updateArrayWithNestedArrayAction]))
+    expect(actionsToVariables([updateArrayWithNestedArrayAction], schema))
       .toMatchObject({
         payload: {
           ...value,
@@ -218,7 +250,7 @@ describe('single action to variable', () => {
   });
 
   test('create array', () => {
-    expect(actionsToVariables([createArrayAction]))
+    expect(actionsToVariables([createArrayAction], schema))
       .toMatchObject({
         payload: createArrayAction.payload.value.toJS()
       });
@@ -226,7 +258,7 @@ describe('single action to variable', () => {
 
   test('update nested array in object', () => {
     const value = updateObjectWithNestedArrayAction.payload.value.toJS();
-    expect(actionsToVariables([updateObjectWithNestedArrayAction]))
+    expect(actionsToVariables([updateObjectWithNestedArrayAction], schema))
       .toMatchObject({
         payload: {
           ...value,
@@ -244,21 +276,21 @@ describe('single action to variable', () => {
   });
 
   test('delete array', () => {
-    expect(actionsToVariables([deleteArrayAction]))
+    expect(actionsToVariables([deleteArrayAction], schema))
       .toMatchObject({
         payload: deleteArrayAction.payload.value.toJS()
       })
   });
 
   test('update object', () => {
-    expect(actionsToVariables([updateObjectAction]))
+    expect(actionsToVariables([updateObjectAction], schema))
       .toMatchObject({
         payload: updateObjectAction.payload.value.toJS()
       });
   })
 
   test('connect to one', () => {
-    expect(actionsToVariables([connectToOneAction]))
+    expect(actionsToVariables([connectToOneAction], schema))
       .toMatchObject({
         payload: {
           [connectToOneAction.payload.path]: {
@@ -272,7 +304,7 @@ describe('single action to variable', () => {
   });
 
   test('connect to many', () => {
-    expect(actionsToVariables([connectToManyAction]))
+    expect(actionsToVariables([connectToManyAction], schema))
       .toMatchObject({
         payload: {
           [connectToManyAction.payload.path]: {
@@ -286,7 +318,7 @@ describe('single action to variable', () => {
   });
 
   test('create and connect to one action', () => {
-    expect(actionsToVariables([createAndConnectToOneAction]))
+    expect(actionsToVariables([createAndConnectToOneAction], schema))
       .toMatchObject({
         payload: {
           [createAndConnectToOneAction.payload.path]: {
@@ -300,7 +332,7 @@ describe('single action to variable', () => {
   });
 
   test('create and connect to many action', () => {
-    expect(actionsToVariables([createAndConnectToManyAction]))
+    expect(actionsToVariables([createAndConnectToManyAction], schema))
       .toMatchObject({
         payload: {
           [createAndConnectToManyAction.payload.path]: {
@@ -314,7 +346,7 @@ describe('single action to variable', () => {
   });
 
   test('disconnect to one', () => {
-    expect(actionsToVariables([disconnectToOneAction]))
+    expect(actionsToVariables([disconnectToOneAction], schema))
       .toMatchObject({
         payload: {
           [disconnectToOneAction.payload.path]: {
@@ -326,7 +358,7 @@ describe('single action to variable', () => {
   });
 
   test('disconnect to many', () => {
-    expect(actionsToVariables([disconnectToManyAction]))
+    expect(actionsToVariables([disconnectToManyAction], schema))
       .toMatchObject({
         payload: {
           [disconnectToManyAction.payload.path]: {
@@ -340,7 +372,7 @@ describe('single action to variable', () => {
   });
 
   test('disconnect and delete to one', () => {
-    expect(actionsToVariables([disconnectAndDeleteToOneAction]))
+    expect(actionsToVariables([disconnectAndDeleteToOneAction], schema))
       .toMatchObject({
         payload: {
           [disconnectAndDeleteToOneAction.payload.path]: {
@@ -352,7 +384,7 @@ describe('single action to variable', () => {
   });
 
   test('disconnect and delete to many', () => {
-    expect(actionsToVariables([disconnectAndDeleteToManyAction]))
+    expect(actionsToVariables([disconnectAndDeleteToManyAction], schema))
       .toMatchObject({
         payload: {
           [disconnectAndDeleteToManyAction.payload.path]: {
@@ -373,7 +405,7 @@ describe('multiple actions to variables', () => {
       updateArrayAction,
       createAndConnectToOneAction,
       disconnectToOneAction
-    ])).toMatchObject({
+    ], schema)).toMatchObject({
       "payload": {
         "title": "123",
         "author": {

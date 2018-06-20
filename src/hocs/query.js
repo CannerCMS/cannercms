@@ -124,9 +124,18 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.subscription = subscription;
     }
 
+    updateQuery = (paths: Array<string>, args: Object) => {
+      const {updateQuery} = this.props;
+      const reWatch = updateQuery(paths, args);
+      if (reWatch) {
+        this.unsubscribe();
+        this.queryData();
+      }
+    }
+
     render() {
       const {value, isFetching, rootValue} = this.state;
-      const {toolbar, query, refId, items, type, path, relation, updateQuery, pattern} = this.props;
+      const {toolbar, query, refId, items, type, path, relation, pattern} = this.props;
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
@@ -134,7 +143,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v.substr(1)]);
-        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value || (defaultValue('connection'): any)} updateQuery={updateQuery}>
+        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value || (defaultValue('connection'): any)} updateQuery={this.updateQuery}>
           <Com {...this.props} showPagination={false} rootValue={rootValue} value={value ? value.getIn(['edges'], new List()).map(item => item.get('node')) : defaultValue('array')} />
         </Toolbar>;
       } else if (type === 'relation' && relation.type === 'toOne') {
