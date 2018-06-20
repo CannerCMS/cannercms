@@ -29,8 +29,7 @@ const postColumns = [{
   dataIndex: 'title'
 }];
 
-export default <root>
-  <endpoint connector={connector} />
+export default <root connector={connector}>
   <object keyName="overview"
     title="Components Overview"
     storage={storage}
