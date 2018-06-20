@@ -12,7 +12,7 @@ const Strings = ({attributes}) => <object {...attributes}>
       value: 'no'
     }]
   }}/>
-  <string keyName="editor" title="Editor" ui="editor" />
+  <object keyName="editor" title="Editor" ui="editor" />
   <string keyName="link" title="Link" ui="link"/>
   <string keyName="radio" title="Radio" ui="radio" uiParams={{
     options: [{

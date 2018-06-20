@@ -59,20 +59,12 @@ describe('withOnDeploy', () => {
       onDeploy: mockOnDeploy,
       removeOnDeploy: mockRemoveOnDeploy,
       rootValue: fromJS({
-        posts: {
-          edges: [{
-            cursor: 'id1',
-            node: {
-              id: 'id1',
-              images: [{
-                url: 'url1'
-              }]
-            }
-          }],
-          pageInfo: {
-            hasNextInfo: false
-          }
-        }
+        posts:[{
+          id: 'id1',
+          images: [{
+            url: 'url1'
+          }]
+        }]
       }),
   
     }
@@ -103,7 +95,7 @@ describe('withOnDeploy', () => {
     expect(mockOnDeploy.mock.calls[0][0]).toBe('posts');
     expect(mockOnDeploy.mock.calls[0][1]).toBe('id1');
     expect(typeof mockOnDeploy.mock.calls[0][2]).toBe('function');
-    expect(mockOnDeploy.mock.calls[0][2](props.rootValue.getIn(['posts', 'edges', '0', 'node']))).toMatchSnapshot();
+    expect(mockOnDeploy.mock.calls[0][2](props.rootValue.getIn(['posts', 0]))).toMatchSnapshot();
     expect(callback).toHaveBeenCalledTimes(1);
   });
 });

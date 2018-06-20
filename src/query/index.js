@@ -38,11 +38,12 @@ export class Query {
   }
 
   toGQL = (key?: string): string => {
+    const variables = this.getVairables();
     if (key) {
       const obj = this.getQueries([key]);
-      return objectToQueries({[key]: obj});  
+      return objectToQueries({[key]: obj}, true, variables);  
     } else {
-      return objectToQueries(this.queries);
+      return objectToQueries(this.queries, true, variables);
     }
   }
 

@@ -41,7 +41,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     const variables = this.query.getVairables();
     this.observableQueryMap = mapValues(props.schema, (v, key) => {
       const gqlStr = this.query.toGQL(key);
-      this.log('gqlstr', gqlStr);
+      this.log('gqlstr', gqlStr, variables);
       return props.client.watchQuery({
         query: gql`${gqlStr}`,
         variables
@@ -51,6 +51,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   updateDataChanged = () => {
+    const {dataDidChange} = this.props;
     const actions = this.actionManager.getActions();
     let dataChanged = groupBy(actions, (action => action.payload.key));
     dataChanged = mapValues(dataChanged, value => {
@@ -59,7 +60,9 @@ export default class Provider extends React.PureComponent<Props, State> {
       }
       return value.map(v => v.payload.id);
     });
-    this.props.dataDidChange(dataChanged);
+    if (dataDidChange) {
+      dataDidChange(dataChanged);
+    }
   }
 
   updateQuery = (paths: Array<string>, args: Object) => {
@@ -117,7 +120,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
-    const {client, afterDeploy} = this.props;
+    const {client, afterDeploy, schema} = this.props;
     let actions = this.actionManager.getActions(key, id);
     if (!actions || !actions.length) {
       return Promise.resolve();
@@ -126,10 +129,10 @@ export default class Provider extends React.PureComponent<Props, State> {
     actions = removeIdInCreateArray(actions);
     actions = this.onDeploy(actions);
     const mutation = objectToQueries(actionToMutation(actions[0]), false);
-    const variables = actionsToVariables(actions);
+    const variables = actionsToVariables(actions, schema);
     return client.mutate({
       mutation: gql`${mutation}`,
-      variables,
+      variables
     }).then(result => {
       this.log('deploy', key, {
         id,
@@ -157,11 +160,12 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  reset = (key: string, id?: string): Promise<*> => {
-    const {client} = this.props;
+  reset = (key?: string, id?: string): Promise<*> => {
+    const {rootKey} = this.props;
     this.actionManager.removeActions(key, id);
     this.updateDataChanged();
-    return client.resetStore();
+    const variables = this.query.getVairables();
+    return this.observableQueryMap[key || rootKey].refetch(variables);
   }
 
   request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {

@@ -2,17 +2,17 @@
 
 import pluralize from 'pluralize';
 import lowerFirst from 'lodash/lowerFirst';
+import upperFirst from 'lodash/upperFirst';
 import {merge, mapValues, set} from 'lodash';
 import {createSchema} from './schema/utils';
 import {types} from './schema/types';
 
-const defaultPagination = {
-  first: 10
-};
+const defaultFirst = 10;
 
 export function fieldToQueriesObject(field: any): any {
   let queriesObj = {};
   const variables = {};
+  let variableTypes = {};
   const type = field.getType();
   switch (type) {
     case types.OBJECT: {
@@ -28,14 +28,24 @@ export function fieldToQueriesObject(field: any): any {
         const qlo = fieldToQueriesObject(childField);
         set(queriesObj, ['fields', childField.getKey()], qlo.queriesObj);
         merge(variables, qlo.variables);
+        merge(variableTypes, qlo.variableTypes);
       });
       if (field.isEntity) {
-        const {args, paginationKey} = genQuery();
+        const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery();
+        queriesObj.declareArgs = {
+          ...variableTypes,
+          [firstKey]: 'Int',
+          [afterKey]: 'String',
+          [lastKey]: 'Int',
+          [beforeKey]: 'String',
+          [whereKey]: `${typeKey(field.getKey())}WhereUniqueInput`,
+          [orderByKey]: `${typeKey(field.getKey())}WhereUniqueInput`
+        };
         queriesObj.args = args;
         queriesObj.isPlural = true;
         queriesObj.connection = true;
         queriesObj.alias = field.getKey();
-        variables[paginationKey] = defaultPagination;
+        variables[firstKey] = defaultFirst;
       }
       break;
     }
@@ -47,15 +57,23 @@ export function fieldToQueriesObject(field: any): any {
           const qlo = fieldToQueriesObject(childField);
           set(queriesObj, ['fields', childField.getKey()], qlo.queriesObj);
           merge(variables, qlo.variables);
+          merge(variableTypes, qlo.variableTypes);
         }
       });
       if (field.isToMany()) {
-        const {args, paginationKey} = genQuery();
+        const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery();
         queriesObj.args = args;
         queriesObj.isPlural = true;
-        queriesObj.connection = true;
-        queriesObj.alias = field.getKey();
-        variables[paginationKey] = defaultPagination;
+        variables[firstKey] = defaultFirst;
+        variableTypes = {
+          ...variableTypes,
+          [firstKey]: 'Int',
+          [afterKey]: 'String',
+          [lastKey]: 'Int',
+          [beforeKey]: 'String',
+          [whereKey]: `${typeKey(field.relationTo())}WhereUniqueInput`,
+          [orderByKey]: `${typeKey(field.relationTo())}WhereUniqueInput`
+        }
       }
       break;
     }
@@ -81,26 +99,37 @@ export function fieldToQueriesObject(field: any): any {
   }
   return {
     queriesObj,
-    variables
+    variables,
+    variableTypes
   };
 }
 
 export function genQuery() {
-  const paginationKey = randomKey();
+  const firstKey = randomKey();
+  const afterKey = randomKey();
+  const lastKey = randomKey();
+  const beforeKey = randomKey();
+  const whereKey = randomKey();
+  const orderByKey = randomKey();
   const args = {
-    pagination: paginationKey,
-    where: randomKey(),
-    orderBy: randomKey()
+    first: firstKey,
+    after: afterKey,
+    last: lastKey,
+    before: beforeKey,
+    where: whereKey,
+    orderBy: orderByKey
   };
-  return {args, paginationKey};
+  return {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey};
 }
 
 export function schemaToQueriesObject(schema: any) {
   const rootFields = createSchema(schema);
   const rootVariables = {};
-  const queriesObj = mapValues(rootFields, v => {
-    const {variables, queriesObj} = fieldToQueriesObject(v);
+  let rootVariableTypes = {};
+  const queriesObj = mapValues(rootFields, (v, key) => {
+    const {variables, queriesObj, variableTypes} = fieldToQueriesObject(v);
     merge(rootVariables, variables);
+    rootVariableTypes[key] = variableTypes;
     return queriesObj;
   });
 
@@ -111,12 +140,27 @@ export function schemaToQueriesObject(schema: any) {
 }
 
 export function objectToQueries(o: Object, close: boolean = true) {
+
   const result = Object.keys(o).map(key => {
     let query = `${key}`;
-    const element = o[key];
+    let element = o[key];
     if (!element) {
       return `${query}`;
     }
+
+    // if (element.declareArgs) {
+    //   const originElement = {...element};
+    //   const args = originElement.declareArgs;
+    //   delete originElement.declareArgs;
+    //   query = 'query';
+    //   element = {
+    //     args,
+    //     fields: {
+    //       [key]: originElement
+    //     }
+    //   };
+    //   key = 'query';
+    // }
 
     if (element.isPlural) {
       query = pluralize.plural(lowerFirst(query));
@@ -131,8 +175,13 @@ export function objectToQueries(o: Object, close: boolean = true) {
     }
 
     if (element.args) {
-      const args = genArgs(element.args);
-      query = `${query}(${args})`;
+      if (key === 'query') {
+        const args = genDeclareArgs(element.args);
+        query = args ? `${query}(${args})` : `${query}`;
+      } else {
+        const args = genArgs(element.args);
+        query = args ? `${query}(${args})` : `${query}`;
+      }
     }
 
     if (element.fields) {
@@ -155,7 +204,7 @@ export function objectToQueries(o: Object, close: boolean = true) {
           }
         }
       }
-      fields = objectToQueries(fields);
+      fields = objectToQueries(fields, true);
       
       query = `${query}${fields}`;
     }
@@ -165,15 +214,31 @@ export function objectToQueries(o: Object, close: boolean = true) {
 }
 
 function genArgs(args) {
-  return Object.keys(args).map(key => {
-    let argValue = args[key];
-    if (typeof argValue === 'object') {
-      argValue = JSON.stringify(argValue).replace(/"([^(")"]+)":/g, "$1:");
-    } else if (typeof argValue !== 'string') {
-      argValue = `"${argValue}"`
-    }
-    return `${key}: ${argValue}`
-  }).join(',');
+  return Object.keys(args)
+    // .filter(key => {
+      // if (variables && variables[args[key].substr(1)] === undefined) {
+      //   return false;
+      // }
+    //   return true;
+    // })
+    .map(key => {
+      const argValue = args[key];
+      return `${key}: ${argValue}`
+    }).join(',');
+}
+
+function genDeclareArgs(args) {
+  return Object.keys(args)
+    // .filter(key => {
+    //   if (variables && variables[key.substr(1)] === undefined) {
+    //     return false;
+    //   }
+    //   return true;
+    // })
+    .map(key => {
+      const argValue = args[key];
+      return `${key}: ${argValue}`
+    }).join(',');
 }
 
 function randomKey () {
@@ -181,4 +246,8 @@ function randomKey () {
     return `$RANDOM_KEY`;
   }
   return `$KEY${Math.random().toString(36).substr(2, 7)}`
+}
+
+function typeKey(key) {
+  return upperFirst(pluralize.singular(key));
 }

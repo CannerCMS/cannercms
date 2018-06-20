@@ -75,6 +75,7 @@ describe('with cache', () => {
       params: {
         op: 'create'
       },
+      cacheActions: true, // to make actionsManager works in cache
       routes: ['info'],
       fetch: mockFetch,
       request: mockRequest,

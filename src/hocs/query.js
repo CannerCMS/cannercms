@@ -130,7 +130,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
-      if (pattern === 'array' || type === 'relation' && relation.type === 'toMany') {
+      if (pattern === 'array') {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v.substr(1)]);
@@ -138,9 +138,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
           <Com {...this.props} showPagination={false} rootValue={rootValue} value={value ? value.getIn(['edges'], new List()).map(item => item.get('node')) : defaultValue('array')} />
         </Toolbar>;
       } else if (type === 'relation' && relation.type === 'toOne') {
-        return <Com {...this.props} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
+        return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
       }
-      return <Com {...this.props} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
+      return <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
     }
   };
 }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import CMS from '../src/components';
+import TabsFilter from './toolbar/filter';
 import schema from './canner.schema';
 import Tabs from './layouts/tabs';
 import {Layout, Menu} from 'antd';
@@ -93,6 +94,9 @@ class CMSExample extends React.Component {
                     connector={this.connector}
                     afterDeploy={this.afterDeploy}
                     dataDidChange={this.dataDidChange}
+                    toolbars={{
+                      TabsFilter
+                    }}
                     layouts={{
                       Tabs
                     }}

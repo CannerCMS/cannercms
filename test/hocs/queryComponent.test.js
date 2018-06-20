@@ -139,7 +139,8 @@ describe('toolbar method', () => {
         }
       }],
       pageInfo: {
-        hasNextPage: true
+        hasNextPage: true,
+        hasPreviousPage: true,
       }
     });
     items = schema.posts.items.items;
@@ -177,7 +178,10 @@ describe('toolbar method', () => {
     expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
     expect(updateQuery.mock.calls[0][1]).toEqual({
       orderBy: 'like_DESC',
-      pagination: undefined,
+      first: undefined,
+      after: undefined,
+      last: undefined,
+      before: undefined,
       where: undefined
     });
   });
@@ -194,7 +198,10 @@ describe('toolbar method', () => {
     expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
     expect(updateQuery.mock.calls[0][1]).toEqual({
       orderBy: undefined,
-      pagination: undefined,
+      first: undefined,
+      after: undefined,
+      last: undefined,
+      before: undefined,
       where: {share_gt: 1}
     });
   });
@@ -207,10 +214,10 @@ describe('toolbar method', () => {
     expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
     expect(updateQuery.mock.calls[0][1]).toEqual({
       orderBy: undefined,
-      pagination: {
-        after: "0",
-        first: 10
-      },
+      after: "0",
+      first: 10,
+      last: undefined,
+      before: undefined,
       where: undefined
     });
   });
@@ -223,10 +230,10 @@ describe('toolbar method', () => {
     expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
     expect(updateQuery.mock.calls[0][1]).toEqual({
       orderBy: undefined,
-      pagination: {
-        before: "0",
-        last: 10
-      },
+      first: undefined,
+      after: undefined,
+      before: "0",
+      last: 10,
       where: undefined
     });
   });
@@ -239,10 +246,10 @@ describe('toolbar method', () => {
     expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
     expect(updateQuery.mock.calls[0][1]).toEqual({
       orderBy: undefined,
-      pagination: {
-        first: 20,
-        after: "0"
-      },
+      first: undefined,
+      after: undefined,
+      before: "0",
+      last: 20,
       where: undefined
     });
   });

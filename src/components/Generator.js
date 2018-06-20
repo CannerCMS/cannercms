@@ -55,7 +55,7 @@ type Props = {
   routes: Array<string>,
   params: {[string]: string},
   refresh?: boolean,
-
+  toolbars: Object,
   deploy?: Function,
   reset?: Function,
   onDeploy?: Function,
@@ -128,7 +128,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
     const copyNode = {...node};
-    const {layouts} = this.props;
+    const {layouts, toolbars} = this.props;
     let component;
     if (isLayout(copyNode)) {
       component = get(layouts, copyNode.component);
@@ -154,6 +154,14 @@ export default class Generator extends React.PureComponent<Props, State> {
     if (copyNode.children) {
       copyNode.children = copyNode.children.map((child) => {
         return this.prerender(child);
+      });
+    }
+    if (copyNode.pattern === 'array' && copyNode.toolbar) {
+      Object.keys(copyNode.toolbar).forEach(key => {
+        const componentName = copyNode.toolbar[key].componentName;
+        if (componentName) {
+          copyNode.toolbar[key].component = toolbars[componentName];
+        }
       });
     }
     return copyNode;

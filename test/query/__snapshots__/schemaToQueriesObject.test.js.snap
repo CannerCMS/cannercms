@@ -6,8 +6,11 @@ Object {
     "posts": Object {
       "alias": "posts",
       "args": Object {
+        "after": "$RANDOM_KEY",
+        "before": "$RANDOM_KEY",
+        "first": "$RANDOM_KEY",
+        "last": "$RANDOM_KEY",
         "orderBy": "$RANDOM_KEY",
-        "pagination": "$RANDOM_KEY",
         "where": "$RANDOM_KEY",
       },
       "connection": true,
@@ -16,23 +19,20 @@ Object {
           "fields": Object {
             "email": null,
             "id": null,
-            "images": Object {
-              "fields": Object {
-                "id": null,
-              },
-            },
+            "images": Object {},
             "name": null,
           },
         },
         "id": null,
         "staredPosts": Object {
-          "alias": "staredPosts",
           "args": Object {
+            "after": "$RANDOM_KEY",
+            "before": "$RANDOM_KEY",
+            "first": "$RANDOM_KEY",
+            "last": "$RANDOM_KEY",
             "orderBy": "$RANDOM_KEY",
-            "pagination": "$RANDOM_KEY",
             "where": "$RANDOM_KEY",
           },
-          "connection": true,
           "fields": Object {
             "id": null,
             "title": null,
@@ -46,28 +46,28 @@ Object {
     "users": Object {
       "alias": "users",
       "args": Object {
+        "after": "$RANDOM_KEY",
+        "before": "$RANDOM_KEY",
+        "first": "$RANDOM_KEY",
+        "last": "$RANDOM_KEY",
         "orderBy": "$RANDOM_KEY",
-        "pagination": "$RANDOM_KEY",
         "where": "$RANDOM_KEY",
       },
       "connection": true,
       "fields": Object {
         "email": null,
         "id": null,
-        "images": Object {
-          "fields": Object {
-            "id": null,
-          },
-        },
+        "images": Object {},
         "name": null,
         "posts": Object {
-          "alias": "posts",
           "args": Object {
+            "after": "$RANDOM_KEY",
+            "before": "$RANDOM_KEY",
+            "first": "$RANDOM_KEY",
+            "last": "$RANDOM_KEY",
             "orderBy": "$RANDOM_KEY",
-            "pagination": "$RANDOM_KEY",
             "where": "$RANDOM_KEY",
           },
-          "connection": true,
           "fields": Object {
             "id": null,
             "title": null,
@@ -78,10 +78,16 @@ Object {
       "isPlural": true,
     },
   },
-  "variables": Object {
-    "$RANDOM_KEY": Object {
-      "first": 10,
+  "variableTypes": Object {
+    "posts": Object {
+      "$RANDOM_KEY": "PostWhereUniqueInput",
     },
+    "users": Object {
+      "$RANDOM_KEY": "UserWhereUniqueInput",
+    },
+  },
+  "variables": Object {
+    "$RANDOM_KEY": 10,
   },
 }
 `;

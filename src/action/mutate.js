@@ -64,21 +64,15 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
           if (relation && relation.type === 'toOne') {
             draft[key].edges[index].node[path] = value;
           } else {
-            draft[key].edges[index].node[path].edges.push({
-              cursor: value.id,
-              node: value,
-              __typename: null,
-            });
+            draft[key].edges[index].node[path] = draft[key].edges[index].node[path] || [];
+            draft[key].edges[index].node[path].push(value);
           }
         } else {
           if (relation && relation.type === 'toOne') {
             draft[key][path] = value;
           } else {
-            draft[key][path].edges.push({
-              cursor: value.id,
-              node:value,
-              __typename: null
-            });
+            draft[key][path] = draft[key][path] || [];
+            draft[key][path].push(value);
           }
         }
         break;
@@ -90,13 +84,15 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
           if (relation && relation.type === 'toOne') {
             draft[key].edges[index].node[path] = null;
           } else {
-            draft[key].edges[index].node[path].edges = draft[key].edges[index].node[path].edges.filter(item => item.cursor !== value.id);
+            draft[key].edges[index].node[path] = draft[key].edges[index].node[path] || [];
+            draft[key].edges[index].node[path] = draft[key].edges[index].node[path].filter(item => item.id !== value.id);
           }
         } else {
           if (relation && relation.type === 'toOne') {
             draft[key][path] = null;
           } else {
-            draft[key][path].edges = draft[key][path].edges.filter(item => item.cursor !== value.id);
+            draft[key][path] = draft[key][path] || [];
+            draft[key][path] = draft[key][path].filter(item => item.id !== value.id);
           }
         }
         break;
@@ -122,7 +118,7 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
 }
 
 export default function mutate(originValue: Map<string, *>, action: Action<ActionType>): any {
-  let {key, id, value, path} = action.payload;
+  let {key, id, value, path, relation} = action.payload;
   switch (action.type) {
     case 'CREATE_ARRAY': {
       if (originValue.hasIn([key, 'edges'])) {
@@ -158,14 +154,10 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
         if (index === -1) return;
         return originValue.updateIn([key, 'edges', index, 'node', path], relationField => {
           value.update('__typename', typename => typename || null);
-          if (Map.isMap(relationField) && relationField.has('edges')) {
-            return relationField.update('edges', list => list.push(fromJS({
-              cursor: value.get('id'),
-              node: value,
-              __typename: null
-            })));
-          } else {
+          if (Map.isMap(relationField)) {
             return value;
+          } else {
+            return relationField.push(value);
           }
         });
       }      
@@ -179,10 +171,10 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
         const index = (originValue.getIn([key, 'edges']) || new List()).findIndex(item => item.get('cursor') === id);
         if (index === -1) return;
         return originValue.updateIn([key, 'edges', index, 'node', path], relationField => {
-          if (Map.isMap(relationField) && relationField.has('edges')) {
-            return relationField.update('edges', list => list.filter(item => item.get('cursor') !== value.get('id')));
-          } else {
+          if (relation && relation.type === 'toOne') {
             return null;
+          } else {
+            return relationField.filter(item => item.get('id') !== value.get('id'));
           }
         });
       }

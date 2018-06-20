@@ -84,7 +84,7 @@ export default <root>
       }]}/>
     </toolbar>
   </Posts>
-  <Users ui="tableRoute" uiParams={{
+  <Users ui="table" uiParams={{
     columns: userColumns
   }}>
     <toolbar>
@@ -94,10 +94,31 @@ export default <root>
         title: 'Age'
       }]}/>
       <filter fields={[{
-        key: 'age',
-        type: 'number',
-        label: 'Age'
-      }]}/>
+        title: 'All',
+        condition: {
+        }
+      }, {
+        title: 'Draft',
+        condition: {
+          status: {
+            draft: {
+              eq: true
+            }
+          }
+        }
+      }, {
+        title: 'Stick',
+        condition: {
+          status: {
+            stick: {
+              eq: true
+            }
+          }
+        }
+      }]} search={{
+        title: 'Search name',
+        key: 'name'
+      }} componentName="TabsFilter"/>
     </toolbar>
   </Users>
   <array keyName="test" title="array" uiParams={{columns: [{title: 'title', dataIndex: 'title'}]}}>

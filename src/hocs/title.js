@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import {Tooltip, Icon} from 'antd';
 import {HOCContext} from './context';
 import {Context} from 'canner-helpers';
 import type {Query} from '../query';
@@ -38,12 +39,6 @@ const Title = styled.div`
 const Description = styled.div`
   font-size: 12px;
   margin-top: 16px;
-  color: #aaa;
-`;
-
-const Description2 = styled.div`
-  font-size: 12px;
-  margin-left: 16px;
   color: #aaa;
 `;
 
@@ -95,6 +90,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 </Title>
                 <Description>
                   {description}
+                  
                 </Description>
               </div>
               <div style={{
@@ -115,9 +111,13 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 <Title>
                   {title}
                 </Title>
-                <Description2>
-                  {description}
-                </Description2>
+                {
+                  description && (
+                    <Tooltip placement="top" title={description}>
+                      <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
+                    </Tooltip>
+                  )
+                }
               </div>
               <div style={{
                 marginBottom: 8

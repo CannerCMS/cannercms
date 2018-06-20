@@ -52,10 +52,10 @@ describe('query', () => {
   });
 
   it('should get root gql', () => {
-    expect(query.toGQL()).toEqual(`{posts: postsConnection(pagination: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
+    expect(query.toGQL()).toEqual(`{posts: postsConnection(first: $RANDOM_KEY,after: $RANDOM_KEY,last: $RANDOM_KEY,before: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage hasPreviousPage}}}`);
   });
 
   it('should get posts gql', () => {
-    expect(query.toGQL('posts')).toEqual(`{posts: postsConnection(pagination: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage}}}`);
+    expect(query.toGQL('posts')).toEqual(`{posts: postsConnection(first: $RANDOM_KEY,after: $RANDOM_KEY,last: $RANDOM_KEY,before: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage hasPreviousPage}}}`);
   });
 });

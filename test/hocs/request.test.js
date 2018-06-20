@@ -23,7 +23,7 @@ describe('with request', () => {
       }]
     });
     props = {
-      refId: new RefId('POSTS'),
+      refId: new RefId('posts'),
       value: rootValue,
       rootValue,
       relation: undefined,
@@ -148,4 +148,4 @@ describe('createAction', () => {
       });
     });
   });
-})
+});

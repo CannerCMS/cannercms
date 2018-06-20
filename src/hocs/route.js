@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
-import {Button, Icon} from 'antd';
+import {Button, Icon, Modal, Spin} from 'antd';
+const confirm = Modal.confirm;
 import styled from 'styled-components';
 import type RefId from 'canner-ref-id';
 
@@ -30,12 +31,28 @@ type Props = {
   items: Object
 }
 
+type State = {
+  deploying: boolean
+}
+
 export default function withRoute(Com: React.ComponentType<*>) {
-  return class ComWithRoute extends React.Component<Props> {
+  return class ComWithRoute extends React.Component<Props, State> {
+    state = {
+      deploying: false
+    };
+
     deploy = () => {
       const {refId, deploy, goTo, routes} = this.props;
+      this.setState({
+        deploying: true
+      })
       deploy(refId.getPathArr()[0])
-        .then(() => goTo(routes[0]));
+        .then(() => {
+          this.setState({
+            deploying: false
+          });
+          goTo(routes[0]);
+        });
     }
 
     reset = () => {
@@ -45,15 +62,29 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     back = () => {
-      const {goTo, routes, params} = this.props;
-      if (params.op === 'create') {
-        goTo(routes.join('/'));
-      } else {
-        goTo(routes.slice(0, -1).join('/'));
-      }
+      this.deploy();
+    }
+
+    discard = () => {
+      const {goTo, routes, params, reset, refId} = this.props;
+      confirm({
+        title: 'Do you Want to discard all changes?',
+        content: 'All unsaved changes will be discard.',
+        onOk() {
+          if (params.op === 'create') {
+            reset(refId.getPathArr()[0]).then(() => goTo(routes.join('/')));
+          } else {
+            reset(refId.getPathArr()[0]).then(() => goTo(routes.slice(0, -1).join('/')));
+          }
+        },
+        onCancel() {
+        },
+      });
+      
     }
 
     render() {
+      const {deploying} = this.state;
       let {routes, pattern,  path, params, refId, renderChildren, hideButtons} = this.props;
       const renderType = getRenderType({
         pattern,
@@ -64,14 +95,19 @@ export default function withRoute(Com: React.ComponentType<*>) {
       const pathArrLength = refId.getPathArr().length;
       const routesLength = routes.length;
       const {op} = params;
-      return <React.Fragment>
+      return <Spin tip="deploying" spinning={deploying}>
         {
           // quick fix for route array's children
           // need to find a stable way to control route
           (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength > pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
-            <Button onClick={this.back} style={{marginBottom: 16}}>
-              <Icon type="arrow-left" /> Back
-            </Button>
+            <React.Fragment>
+              <Button onClick={this.back} style={{marginBottom: 16}}>
+                <Icon type="arrow-left" /> Back and Save
+              </Button>
+              <Button onClick={this.discard} style={{marginLeft: 16, marginBottom: 16}}>
+                Discard
+              </Button>
+            </React.Fragment>
         }
         {
           renderType === RENDER_CHILDREN && renderChildren({
@@ -90,7 +126,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
         {
           renderType === RENDER_COMPONENT && <Com {...this.props} />
         }
-      </React.Fragment>
+      </Spin>
     }
   }
 }
@@ -125,7 +161,7 @@ function getRenderType({
       return RENDER_CHILDREN;
     }
     if (routesLength < pathsLength) {
-      if (op === 'create') {
+      if (routesLength === pathsLength - 1 && op === 'create') {
         return RENDER_CHILDREN;
       }
       return RENDER_COMPONENT;
