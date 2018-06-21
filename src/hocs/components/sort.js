@@ -51,7 +51,8 @@ type Props = {
   changeOrder: ({
     orderField: string,
     orderType: string
-  }) => void
+  }) => void,
+  defaultSort: string
 }
 
 type State = {
@@ -90,7 +91,7 @@ export default class Sort extends Component<Props, State> {
   }
 
   render() {
-    const {options} = this.props;
+    const {options, defaultSort} = this.props;
     const {key, order} = this.state;
     return <Row type="flex" justify="end">
       <SortCol>
@@ -100,7 +101,7 @@ export default class Sort extends Component<Props, State> {
             defaultMessage={defaultMessage.en['query.sort.label']}
           />
         </Label>
-        <Selector onSelect={this.onSelect} value={key}>
+        <Selector onSelect={this.onSelect} value={key} defaultValue={defaultSort}>
           {options.map((cond, i) => <Option key={i} value={cond.key}>{cond.title}</Option>)}
         </Selector>
         <OrderSwitch onClick={this.changeOrder}>

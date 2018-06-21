@@ -139,7 +139,7 @@ export function schemaToQueriesObject(schema: any) {
   }
 }
 
-export function objectToQueries(o: Object, close: boolean = true, variables) {
+export function objectToQueries(o: Object, close: boolean = true, variables?: Object) {
 
   const result = Object.keys(o).map(key => {
     let query = `${key}`;

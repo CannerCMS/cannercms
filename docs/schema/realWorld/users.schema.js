@@ -10,10 +10,13 @@ const Users = ({attributes}) => (
   >
     <toolbar>
       <pagination />
-      <sort options={[{
-        key: 'age',
-        title: 'Age'
-      }]}/>
+      <sort
+        options={[{
+          key: 'age',
+          title: 'Age'
+        }]}
+        defaultSort="age"
+      />
       <filter fields={[{
         title: 'All',
         condition: {

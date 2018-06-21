@@ -71,6 +71,19 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     componentDidMount() {
+      // defaultSort
+      const {toolbar, refId, path, query, updateQuery} = this.props;
+      const defaultSort = toolbar && toolbar.sort && toolbar.sort.defaultSort;
+      if (defaultSort) {
+        const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
+        const variables = query.getVairables();
+        const args = mapValues(queries, v => variables[v.substr(1)]);
+        const paths = refId.getPathArr();
+        updateQuery(paths, {
+          ...args,
+          orderBy: `${defaultSort}_ASC`
+        });
+      }
       this.queryData();
     }
 
