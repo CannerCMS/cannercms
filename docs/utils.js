@@ -2,7 +2,7 @@
 
 import {FirebaseClientService} from '@canner/image-service-config';
 import firebase from 'firebase';
-import {FirebaseRtdbClientConnector} from 'canner-graphql-interface';
+import {FirebaseRtdbClientConnector, PrismaClient} from 'canner-graphql-interface';
 
 
 firebase.initializeApp({
@@ -29,5 +29,6 @@ const storage = new FirebaseClientService({
 
 export default {
   storage,
-  connector
+  connector,
+  graphClient: new PrismaClient()
 }

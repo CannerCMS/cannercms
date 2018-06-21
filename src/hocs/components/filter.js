@@ -5,7 +5,8 @@ import SelectFilter from './select';
 import NumberFilter from './number';
 // import DateRangeFilter from './dateRange';
 import {Button, Row, Col} from 'antd';
-import isUndefined from 'lodash/isUndefined';
+import mergeWith from 'lodash/mergeWith';
+import isEmpty from 'lodash/isEmpty';
 import {FormattedMessage} from 'react-intl';
 import defaultMessage from './locale';
 
@@ -38,7 +39,8 @@ type Props = {
       title: string
     }>,
     label: string
-  }>
+  }>,
+  where: Object
 }
 
 type State = {
@@ -54,16 +56,22 @@ class FilterGroup extends React.Component<Props, State> {
     };
   }
 
-  onChange = (key: string, cond: Object) => {
+  onChange = (cond: Object) => {
     let {condition} = this.state;
-    if (isUndefined(cond)) {
-      delete condition[key];
+    if (isEmpty(cond)) {
+      this.setState({
+        condition: {}
+      });
     } else {
-      condition[key] = cond;
+      Object.keys(cond).forEach(key => {
+        const newCond = cond[key];
+        if (newCond === undefined) {
+          delete condition[key];
+        } else {
+          condition[key] = cond[key]
+        }
+      })
     }
-    this.setState({
-      condition,
-    });
   }
 
   submit = () => {
@@ -72,13 +80,13 @@ class FilterGroup extends React.Component<Props, State> {
   }
 
   render() {
-    const {fields} = this.props;
+    const {fields, where} = this.props;
     const filters = fields.map((val) => {
       switch (val.type) {
         case 'select':
-          return <SelectFilter onChange={this.onChange} name={val.key} options={val.options} label={val.label}/>;
+          return <SelectFilter onChange={this.onChange} options={val.options} where={where} label={val.label}/>;
         case 'number':
-          return <NumberFilter onChange={this.onChange} name={val.key} label={val.label}/>;
+          return <NumberFilter onChange={this.onChange} name={val.key} label={val.label} where={where}/>;
         /*
         case 'dateRange':
           return <DateRangeFilter onChange={this.onChange} schema={{[val.key]: val}}/>

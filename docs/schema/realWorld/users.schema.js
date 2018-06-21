@@ -18,31 +18,32 @@ const Users = ({attributes}) => (
         defaultSort="age"
       />
       <filter fields={[{
-        title: 'All',
-        condition: {
-        }
-      }, {
-        title: 'Draft',
-        condition: {
-          status: {
-            draft: {
-              eq: true
+        label: 'Type',
+        type: 'select',
+        options: [{
+          text: 'All',
+          condition: {
+          }
+        }, {
+          text: 'Draft',
+          condition: {
+            status: {
+              draft: {
+                eq: true
+              }
             }
           }
-        }
-      }, {
-        title: 'Stick',
-        condition: {
-          status: {
-            stick: {
-              eq: true
+        }, {
+          text: 'Stick',
+          condition: {
+            status: {
+              stick: {
+                eq: true
+              }
             }
           }
-        }
-      }]} search={{
-        title: 'Search name',
-        key: 'name'
-      }} component={attributes.searchComponent}/>
+        }]
+      }]} />
     </toolbar>
     <string keyName="name" title="name"/>
     <string keyName="email" title="Email"/>

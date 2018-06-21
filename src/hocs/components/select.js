@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import mapKeys from 'lodash/mapKeys';
+import mapValues from 'lodash/mapValues';
 import {Select} from 'antd';
 import isUndefined from 'lodash/isUndefined';
 const Option = Select.Option;
@@ -8,7 +9,7 @@ import {injectIntl} from 'react-intl';
 import {FilterPlugin, Label} from './share';
 
 @injectIntl
-export default class Filter extends Component {
+export default class SelectFilter extends Component {
   static propTypes = {
     onChange: PropTypes.func,
     name: PropTypes.string,
@@ -19,6 +20,9 @@ export default class Filter extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      condition: {}
+    }
     this.onSelect = this.onSelect.bind(this);
   }
 
@@ -27,13 +31,23 @@ export default class Filter extends Component {
   }
 
   onSelect(val) {
-    const {onChange, name, options} = this.props;
+    const {condition} = this.state;
+    const {onChange, options} = this.props;
     if (isUndefined(val)) {
-      return onChange(name, undefined);
+      this.setState({
+        condition: {}
+      });
+      return onChange(mapValues(condition, () => undefined));
     }
     // {_eq: 1} => {$eq: 1}
-    const selectedCondition = mapKeys(options[val].condition, (val, key) => key.replace('_', '$'));
-    onChange(name, selectedCondition);
+    const selectedCondition = options[val].condition;
+    onChange({
+      ...mapValues(condition, () => undefined),
+      ...selectedCondition
+    });
+    this.setState({
+      condition: selectedCondition
+    });
   }
 
   render() {
