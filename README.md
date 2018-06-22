@@ -4,7 +4,7 @@
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/cannerIO)
 
 
-> Build CMS in few lines of code for different data sources
+> Build CMS in few lines of code for different data sources, such as Firebase, GraphQL, Restful API, Prisma
 
 
 ## Links
