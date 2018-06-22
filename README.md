@@ -13,6 +13,18 @@
 
 - [Canner documentation](https://www.canner.io/docs)
 
+## Preview and demo
+
+![CMS preivew](./docs/cms-preview.png)
+
+### CMS schema
+
+Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind and form of applications. Our CMS has built CMS for websites, mobile apps, and even chatbot applications. Amazingly, you can building a blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner.
+
+![syntax](./docs/syntax.png)
+
+**More demo visit [here](https://www.canner.io/)**
+
 ## Why create Canner?
 
 > ***Most developers struggle with building maintainable and extendable CMS, so we design an CMS framework that you can build CMS with only few lines of code and interact with different data sources.***
@@ -42,18 +54,6 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 > If you are interested in how we solve these problems see [Our mission](https://www.canner.io/docs/why-mission.html)
 
 ***START USING CANNER: https://www.canner.io***
-
-## Preview and demo
-
-![CMS preivew](./docs/cms-preview.png)
-
-### CMS schema
-
-Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind and form of applications. Our CMS has built CMS for websites, mobile apps, and even chatbot applications. Amazingly, you can building a blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner.
-
-![syntax](./docs/syntax.png)
-
-**More demo visit [here](https://www.canner.io/)**
 
 ## Features
 
