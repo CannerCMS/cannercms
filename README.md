@@ -4,7 +4,14 @@
 
 > Build CMS in few lines of code for different data sources
 
-Why create Canner?
+
+## Links
+
+- [Canner Official site](https://www.canner.io)
+
+- [Canner documentation](https://www.canner.io/docs) to get started
+
+## Why create Canner?
 
 > ***Most developers struggle with building maintainable and extendable CMS, so we design an CMS framework that you can build CMS with only few lines of code and interact with different data sources.***
 
@@ -87,11 +94,6 @@ Adaptive CMS is a novel CMS structure that differs from traditional CMS and head
 - live demo: https://fir-cms-15f83.firebaseapp.com/login
 - repo: https://github.com/Canner/canner-firebase-cms
 
-## Links
-
-Visit our [Canner official document](https://www.canner.io/docs) to get started
-
-And also visit our [CannerIO platform](https://www.canner.io)
 
 ## License
 
