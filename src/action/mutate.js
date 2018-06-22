@@ -59,6 +59,7 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
 
       case 'CONNECT': {
         if (id) {
+          // array connect
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
           value.__typename = null;
           if (relation && relation.type === 'toOne') {
@@ -149,38 +150,49 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
     }
 
     case 'CONNECT': {
-      if (originValue.hasIn([key, 'edges'])) {
+      if (id) {
+        // array connect
         const index = (originValue.getIn([key, 'edges']) || new List()).findIndex(item => item.get('cursor') === id);
-        if (index === -1) return;
-        return originValue.updateIn([key, 'edges', index, 'node', path], relationField => {
-          value.update('__typename', typename => typename || null);
-          if (Map.isMap(relationField)) {
-            return value;
-          } else {
-            return relationField.push(value);
-          }
-        });
-      }      
-      const index = (originValue.get(key) || new List()).findIndex(item => item.get('id') === id);
-      if (index === -1) return;
-      return originValue.updateIn([key, index, path], list => list.push(value));
+        if (index === -1) return originValue;
+        if (relation && relation.type === 'toOne') {
+          return originValue.updateIn([key, 'edges', index, 'node', path], () => value)
+        } else {
+          return originValue.updateIn([key, 'edges', index, 'node', path], fieldValue => {
+            return (fieldValue || new List()).push(value);
+          });
+        }
+      } else {
+        if (relation && relation.type === 'toOne') {
+          return originValue.updateIn([key, path], value);
+        } else {
+          return originValue.updateIn([key, path], fieldValue => {
+            return (fieldValue || new List()).push(value);
+          });
+        }
+      }
     }
 
     case 'DISCONNECT': {
-      if (originValue.hasIn([key, 'edges'])) {
+      if (id) {
+        // array disconnect
         const index = (originValue.getIn([key, 'edges']) || new List()).findIndex(item => item.get('cursor') === id);
-        if (index === -1) return;
-        return originValue.updateIn([key, 'edges', index, 'node', path], relationField => {
-          if (relation && relation.type === 'toOne') {
-            return null;
-          } else {
-            return relationField.filter(item => item.get('id') !== value.get('id'));
-          }
-        });
+        if (index === -1) return originValue;
+        if (relation && relation.type === 'toOne') {
+          return originValue.updateIn([key, 'edges', index, 'node', path], () => null);
+        } else {
+          return originValue.updateIn([key, 'edges', index, 'node', path], fieldValue => {
+            return (fieldValue || new List()).filter(item => item.get('id') !== value.get('id'));
+          });
+        }
+      } else {
+        if (relation && relation.type === 'toOne') {
+          return originValue.updateIn([key, path], () => null);
+        } else {
+          return originValue.updateIn([key, path], fieldValue => {
+            return (fieldValue || new List()).filter(item => item.get('id') !== value.get('id'));
+          });
+        }
       }
-      const index = (originValue.get(key) || new List()).findIndex(item => item.get('id') === id);
-      if (index === -1) return;
-      return originValue.updateIn([key, index, path], list => list.filter(item => item.get('id') !== value.get('id')));
     }
 
     case 'CREATE_AND_CONNECT': {

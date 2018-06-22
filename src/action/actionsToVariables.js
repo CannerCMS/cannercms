@@ -13,6 +13,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
     const relationField = genRelationField(schema, key);
    
     value = parseArrayToSet(value, relationField);
+    
     switch(action.type) {
       case 'CREATE_ARRAY': {
         // quick fix, remove null relation, it will cause apollo break
@@ -83,6 +84,21 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
     }
   });
   return variables;
+}
+
+export function addTypename(payload: any): any {
+  if (List.isList(payload)) {
+    return payload.map(item => addTypename(item));
+  } else if (Map.isMap(payload)) {
+    return payload.map((item, key) => {
+      return key === '__typename' ?
+        item :
+        addTypename(item)
+    });
+    
+  } else {
+    return payload;
+  }
 }
 
 export function parseArrayToSet(payload: any, relationField: Array<string>, key?: string): any {

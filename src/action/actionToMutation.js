@@ -3,6 +3,7 @@ import type {Action, ActionType} from './types';
 import pluralize from 'pluralize';
 import upperFirst from 'lodash/upperFirst';
 import set from 'lodash/set';
+import isEmpty from 'lodash/isEmpty';
 
 export default function actionToMutation(action: Action<ActionType>) {
   const mutation = {
@@ -14,7 +15,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       }
     }
   }
-  const {type, payload: {key = ''}} = action;
+  const {type, payload: {key = '', id}} = action;
   let name = '';
   let args = {
     $payload: 'any',
@@ -24,6 +25,7 @@ export default function actionToMutation(action: Action<ActionType>) {
     data: '$payload',
     where: '$where'
   };
+  let fields = {};
   switch(type) {
     case 'UPDATE_OBJECT':
       args = {
@@ -44,6 +46,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         where: '$where'
       }
       name = `update${upperFirst(pluralize.singular(key))}`;
+      fields = {id: null};
       break;
     case 'CREATE_ARRAY':
       args = {
@@ -53,6 +56,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         data: '$payload',
       }
       name = `create${upperFirst(pluralize.singular(key))}`;
+      fields = {id: null};
       break;
     case 'DELETE_ARRAY':
       args = {
@@ -62,6 +66,22 @@ export default function actionToMutation(action: Action<ActionType>) {
         where: '$where',
       }
       name = `delete${upperFirst(pluralize.singular(key))}`;
+      fields = {id: null};
+      break;
+    case 'CONNECT':
+    case 'DISCONNECT':
+      if (id) {
+        args = {
+          $payload: genUpdateInputType(action),
+          $where: genWhereInputType(action)
+        }
+        actionArgs = {
+          data: '$payload',
+          where: '$where'
+        }
+        name = `update${upperFirst(pluralize.singular(key))}`;
+        fields = {id: null};
+      }
       break;
     default:
       name = `update${upperFirst(pluralize.singular(key))}`;
@@ -69,7 +89,8 @@ export default function actionToMutation(action: Action<ActionType>) {
   }
   set(mutation, `mutation.args`, args);
   set(mutation, `mutation.fields.${name}`, {
-    args: actionArgs
+    args: actionArgs,
+    fields: isEmpty(fields) ? null : fields
   });
   return mutation;
 }
