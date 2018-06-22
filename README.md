@@ -7,12 +7,6 @@
 > Build CMS in few lines of code for different data sources, such as Firebase, GraphQL, Restful API, Prisma
 
 
-## Links
-
-- [Canner Official site](https://www.canner.io)
-
-- [Canner documentation](https://www.canner.io/docs)
-
 ## Preview and demo
 
 ![CMS preivew](./docs/cms-preview.png)
@@ -54,6 +48,9 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 > If you are interested in how we solve these problems see [Our mission](https://www.canner.io/docs/why-mission.html)
 
 ***START USING CANNER: https://www.canner.io***
+
+- Canner Official site: https://www.canner.io
+- Canner documentation: https://www.canner.io/docs
 
 ## Get started
 
