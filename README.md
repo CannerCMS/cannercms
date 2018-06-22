@@ -55,6 +55,11 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 
 ***START USING CANNER: https://www.canner.io***
 
+## Get started
+
+- Firebase - realtime database: https://www.canner.io/docs/start-quick-firebase.html
+- Prisma: https://www.canner.io/docs/start-quick-prisma.html
+
 
 ## Demo
 
@@ -67,6 +72,11 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 
 - live demo:  https://www.canner.io/demo
 - repo: https://github.com/Canner/canner-html5up-demo
+
+**Posts**
+
+- Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up.html
+- Why Firebase CMS: https://www.canner.io/docs/why-firebase-cms.html
 
 ## Features
 
