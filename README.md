@@ -55,6 +55,19 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 
 ***START USING CANNER: https://www.canner.io***
 
+
+## Demo
+
+### Canner connect to firebase
+
+- live demo: https://fir-cms-15f83.firebaseapp.com/login
+- repo: https://github.com/Canner/canner-firebase-cms
+
+### HTML5UP templates using Canner
+
+- live demo:  https://www.canner.io/demo
+- repo: https://github.com/Canner/canner-html5up-demo
+
 ## Features
 
 ### 1. Declare in JSX
@@ -89,12 +102,6 @@ Adaptive CMS is a novel CMS structure that differs from traditional CMS and head
 
 > Learn more [Why Adaptive CMS?](http://www.canner.io/docs/why-adaptive-cms.html)
 
-## Demo
-
-### Canner connect to firebase
-
-- live demo: https://fir-cms-15f83.firebaseapp.com/login
-- repo: https://github.com/Canner/canner-firebase-cms
 
 
 ## License
