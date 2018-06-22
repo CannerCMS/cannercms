@@ -129,7 +129,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
               </div>
               {
                 (type === 'image' && isEmpty(imageServiceConfig)) && (
-                  <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
+                  <Alert style={{margin: '16px 0'}} message={<p>There is no storage config so you can not upload image. Checkout the <a href="https://www.canner.io/docs/guides-image-upload.html" target="_blank" rel="noreferrer noopener" >storage section</a> to know more</p>} type="warning" />
                 )
               }
               <div style={{
