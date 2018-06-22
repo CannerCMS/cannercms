@@ -1,7 +1,6 @@
 // @flow
 import type {Map, List} from 'immutable';
 import type Pattern from '../app/middleware/bucket/pattern/pattern';
-import type Rx from 'rxjs/Rx';
 import type RefId from 'canner-ref-id';
 
 declare type BucketType = {
@@ -219,7 +218,6 @@ declare type SubjectType = 'value' | 'childAdded' | 'childRemoved' | 'childChang
 declare type subscribeRequest = {
   key: string,
   type: 'subscribe',
-  observer: Rx.Observer,
   componentId: string,
   subjectType: SubjectType
 }

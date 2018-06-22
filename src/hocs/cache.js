@@ -11,6 +11,7 @@ type Props = {
   reset: Function,
   deploy: Function,
   subscribe: Function,
+  updateQuery: Function,
   routes: Array<string>,
   params: Object,
   cacheActions: boolean,
@@ -185,7 +186,16 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         }
       }
     }
-    
+
+    updateQuery = (paths: Array<string>, args: Object) => {
+      const {updateQuery} = this.props;
+      const reWatch = updateQuery(paths, args);
+      if (reWatch) {
+        this._unsubscribe();
+        this.fetch(paths[0]);
+      }
+    }
+
     render() {
       return (
         <Com
@@ -195,6 +205,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
           deploy={this.deploy}
           reset={this.reset}
           subscribe={this.subscribe}
+          updateQuery={this.updateQuery}
         />
       );
     }

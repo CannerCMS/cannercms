@@ -35,6 +35,14 @@ function isFieldset(node) {
   return node.packageName === '@canner/antd-object-fieldset';
 }
 
+function Loading(props) {
+  if (props.error) {
+    return <div>Error! <button onClick={ props.retry }>Retry</button></div>;
+  } else {
+    return <div>Loading...</div>;
+  }
+}
+
 export type Node = {
   keyName: string,
   nodeType: string,
@@ -48,14 +56,13 @@ type Props = {
   componentTree: {[string]: Node},
   hocs: {[string]: React.ComponentType<*>},
   layouts: {[string]: React.ComponentType<*>},
-  imageServiceConfigs: Object,
+  storages: Object,
 
   goTo: (path: string) => void,
   baseUrl: string,
   routes: Array<string>,
   params: {[string]: string},
   refresh?: boolean,
-  toolbars: Object,
   deploy?: Function,
   reset?: Function,
   onDeploy?: Function,
@@ -83,8 +90,9 @@ export default class Generator extends React.PureComponent<Props, State> {
     // prerender the tree in constructor, this action will add a
     // React Component with all hocs it needs in every node
     super(props);
-    const {componentTree, routes} = props;
+    const {componentTree, routes, baseUrl, goTo} = props;
     const activeKey = routes[0] || Object.keys(componentTree)[0];
+    goTo(`${baseUrl}/${activeKey}`);
     this.cacheTree = this.genCacheTree(componentTree);
     this.state = {
       componentTree: this.cacheTree[activeKey],
@@ -128,19 +136,17 @@ export default class Generator extends React.PureComponent<Props, State> {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
     const copyNode = {...node};
-    const {layouts, toolbars} = this.props;
     let component;
     if (isLayout(copyNode)) {
-      component = get(layouts, copyNode.component);
-      component = this.wrapByHOC(component, (copyNode.hocs || ['containerRouter']).slice() || []);
+      component = this.wrapByHOC(copyNode.component, (copyNode.hocs || ['containerRouter']).slice() || []);
     } else if (isComponent(copyNode)) { // TODO: need to fix, turn plugins to components in compiler
 
       if (isFieldset(copyNode)) {
         component = () => <Item />;
       } else {
         component = Loadable({
-          loader: () => copyNode.loader,
-          loading: () => <div>loading</div>,
+          loader: () => copyNode.loader || Promise.reject(`There is no loader in ${copyNode.path}`),
+          loading: Loading,
         });
       }
       component = this.wrapByHOC(component, ['title', 'onDeploy', 'deploy', 'request', 'query', 'cache', 'route', 'id', 'context'] || []);
@@ -156,14 +162,7 @@ export default class Generator extends React.PureComponent<Props, State> {
         return this.prerender(child);
       });
     }
-    if (copyNode.pattern === 'array' && copyNode.toolbar) {
-      Object.keys(copyNode.toolbar).forEach(key => {
-        const componentName = copyNode.toolbar[key].componentName;
-        if (componentName) {
-          copyNode.toolbar[key].component = toolbars[componentName];
-        }
-      });
-    }
+    
     return copyNode;
   }
 
@@ -187,13 +186,13 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {params, goTo, baseUrl, routes, imageServiceConfigs, onDeploy, removeOnDeploy, hideButtons} = this.props;
+    const {params, goTo, baseUrl, routes, storages, onDeploy, removeOnDeploy, hideButtons} = this.props;
     if (component) {
       return <node.component
         {...restNodeData}
         routes={routes}
         key={index}
-        imageServiceConfig={(imageServiceConfigs || {})[routes[0]]}
+        imageServiceConfig={(storages || {})[routes[0]]}
         renderChildren={(props) => this.renderChildren(node, props)}
         renderComponent={this.renderComponent}
         params={params}
