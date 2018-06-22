@@ -34,6 +34,18 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 
 ***START USING CANNER: https://www.canner.io***
 
+## Preview and demo
+
+![CMS preivew](./docs/cms-preview.png)
+
+### CMS schema
+
+Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind and form of applications. Our CMS has built CMS for websites, mobile apps, and even chatbot applications. Amazingly, you can building a blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner.
+
+![syntax](./docs/syntax.png)
+
+**More demo visit [here](https://www.canner.io/)**
+
 ## Features
 
 ### 1. Declare in JSX
