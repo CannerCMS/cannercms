@@ -136,7 +136,7 @@ class CannerCMS extends React.Component<Props, State> {
             storages={storages}
             componentTree={this.componentTree || {}}
             hocs={hocs}
-            goTo={push}
+            goTo={push || function() {}}
             baseUrl={baseUrl}
             routes={routes}
             params={params}
