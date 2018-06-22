@@ -5,7 +5,6 @@ import SelectFilter from './select';
 import NumberFilter from './number';
 // import DateRangeFilter from './dateRange';
 import {Button, Row, Col} from 'antd';
-import mergeWith from 'lodash/mergeWith';
 import isEmpty from 'lodash/isEmpty';
 import {FormattedMessage} from 'react-intl';
 import defaultMessage from './locale';

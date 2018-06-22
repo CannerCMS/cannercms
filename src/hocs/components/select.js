@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import mapKeys from 'lodash/mapKeys';
 import mapValues from 'lodash/mapValues';
 import {Select} from 'antd';
 import isUndefined from 'lodash/isUndefined';
