@@ -1,10 +1,25 @@
 ![logo](./docs/logo-word-alpha.svg)
 
-[![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+[![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link) 
+[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/cannerIO)
 
-> Build CMS in few lines of code for different data sources
 
-Why create Canner?
+> Build CMS in few lines of code for different data sources, such as Firebase, GraphQL, Restful API, Prisma
+
+
+## Preview and demo
+
+![CMS preivew](./docs/cms-preview.png)
+
+### CMS schema
+
+Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind and form of applications. Our CMS has built CMS for websites, mobile apps, and even chatbot applications. Amazingly, you can building a blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner and select connector to connect to data sources, such as Firebase, GraphQL, Restful API, Prisma.
+
+![syntax](./docs/syntax.png)
+
+**More demo visit [here](https://www.canner.io/)**
+
+## Why create Canner?
 
 > ***Most developers struggle with building maintainable and extendable CMS, so we design an CMS framework that you can build CMS with only few lines of code and interact with different data sources.***
 
@@ -31,6 +46,34 @@ Of course not every CMS exhibits all these issues, but if you tried using anothe
 If that sounds familiar, you might like ***Canner***. Which motivates us to solve these problems.
 
 > If you are interested in how we solve these problems see [Our mission](https://www.canner.io/docs/why-mission.html)
+
+***START USING CANNER: https://www.canner.io***
+
+- Canner Official site: https://www.canner.io
+- Canner documentation: https://www.canner.io/docs
+
+## Get started
+
+- Firebase - realtime database: https://www.canner.io/docs/start-quick-firebase.html
+- Prisma: https://www.canner.io/docs/start-quick-prisma.html
+
+
+## Demo
+
+### Canner connect to firebase
+
+- live demo: https://fir-cms-15f83.firebaseapp.com/login
+- repo: https://github.com/Canner/canner-firebase-cms
+
+### HTML5UP templates using Canner
+
+- live demo:  https://www.canner.io/demo
+- repo: https://github.com/Canner/canner-html5up-demo
+
+**Posts**
+
+- Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up.html
+- Why Firebase CMS: https://www.canner.io/docs/why-firebase-cms.html
 
 ## Features
 
@@ -66,18 +109,7 @@ Adaptive CMS is a novel CMS structure that differs from traditional CMS and head
 
 > Learn more [Why Adaptive CMS?](http://www.canner.io/docs/why-adaptive-cms.html)
 
-## Demo
 
-### Canner connect to firebase
-
-- live demo: https://fir-cms-15f83.firebaseapp.com/login
-- repo: https://github.com/Canner/canner-firebase-cms
-
-## Links
-
-Visit our [Canner official document](https://www.canner.io/docs) to get started
-
-And also visit our [CannerIO platform](https://www.canner.io)
 
 ## License
 
