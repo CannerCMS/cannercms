@@ -9,7 +9,7 @@
 
 - [Canner Official site](https://www.canner.io)
 
-- [Canner documentation](https://www.canner.io/docs) to get started
+- [Canner documentation](https://www.canner.io/docs)
 
 ## Why create Canner?
 
