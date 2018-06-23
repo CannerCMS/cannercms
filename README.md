@@ -22,7 +22,7 @@ Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind
 
 ## Introduction Canner in 1 minute
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HOqlKTxdGyQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+https://youtu.be/HOqlKTxdGyQ
 
 ## Why create Canner?
 
