@@ -20,10 +20,6 @@ Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind
 
 **More demo visit [here](https://www.canner.io/)**
 
-## Introduction Canner in 1 minute
-
-https://youtu.be/HOqlKTxdGyQ
-
 ## Why create Canner?
 
 
