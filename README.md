@@ -1,7 +1,7 @@
 ![logo](./docs/logo-word-alpha.svg)
 
 [![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link) 
-[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Build%20CMS%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
+[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Universal%20CMS%20framework%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
 
 > Universal CMS framework in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma, in other words, an agnostic CMS framework for any applications and data sources. 
 
@@ -9,7 +9,7 @@
 
 ### Universal CMS framework
 
-Canner is extremely flexible and adaptive, that you can ***learn once and create any form of CMS for many databases.***
+Canner is extremely flexible and agnostic, that you can ***learn once and create any form of CMS for many databases.***
 
 ### Create data model and UI design at the same time.
 
@@ -21,7 +21,7 @@ With different connectors, you are able to create a CMS to interact with ***Fire
 
 ### Easy to maintain and extend
 
-Since Canner schema is only a JSX (XML-like) language without any logistic code, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
+Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
 ## Preview and demo
 
@@ -36,7 +36,6 @@ Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind
 **More demo visit [here](https://www.canner.io/)**
 
 ## Why create Canner?
-
 
 Before we built Canner CMS framework, we've tried most of CMS framework such as Wordpress, Drupal, etc. What we found was that getting simple functions to work was easy enough, but once you try to build and scale into your product or your service you ran into deeper issues...
 
@@ -62,10 +61,10 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 
 > If you are interested in how we solve these problems see [Our mission](https://www.canner.io/docs/why-mission.html)
 
-***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Build%20CMS%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)***
+***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Universal%20CMS%20framework%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)***
 
 - Canner Official site: https://www.canner.io
-- Canner documentation: https://www.canner.io/docs
+- Canner documentation: https://www.canner.io/docs/guides-community-intro.html
 
 ***START USING CANNER: https://www.canner.io***
 
