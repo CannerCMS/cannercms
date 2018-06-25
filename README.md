@@ -5,7 +5,7 @@
 
 > Universal CMS framework in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma, in other words, an agnostic CMS framework for any applications and data sources. 
 
-## Benefits
+## Benefits and advantages
 
 ### Universal CMS framework
 
