@@ -17,6 +17,8 @@ Canner is extremely flexible and agnostic, that you can ***learn once and create
 
 While you are defining Canner schema in JSX, you are defining how your CMS store your data in your databases, and how your CMS UI/UX should look like.
 
+![schema](./docs/schema.png)
+
 ### 👩‍💻 One schema to any databases
 
 With different connectors, you are able to create a CMS to interact with ***Firebase, MySQL, PostgreSQL, GraphQL with the same schema***.
