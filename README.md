@@ -18,7 +18,7 @@ While you are defining Canner schema in JSX, you are defining how your CMS store
 
 ![schema](./docs/schema.png)
 
-### 👩‍💻 One schema to any databases
+### 👩‍💻 One schema to any database
 
 With different connectors, you are able to create a CMS to interact with ***Firebase, MySQL, PostgreSQL, GraphQL with the same schema***.
 
