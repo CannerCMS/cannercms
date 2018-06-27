@@ -48,7 +48,7 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 # ❯ Prisma
 ✔ Initialized
 
-# 3. Serve your CMS with Livereload in local, while you update your schema the dev server will automatically reload open 
+# 3. Serve your CMS with Livereload in local, while you update your schema the dev server will automatically reload open http://localhost:9090
 ➜ $ canner script:serve
 ```
 
