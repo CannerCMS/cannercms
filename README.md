@@ -28,10 +28,10 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 ## Only 3 commands: To start a CMS for any applications and sources
 
 ```sh
-# download Canner CLI tool
+# 1. download Canner CLI tool
 ➜ $ npm install --global @canner/cli
 
-# Initialize schema
+# 2. Initialize schema
 ➜ $ canner init:schema
 # Answer the questions
 # Initializing schema...
@@ -47,8 +47,7 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 # ❯ Prisma
 ✔ Initialized
 
-# Serve your CMS with Livereload in local, while you update your schema
-# the dev server will automatically reload
+# 3. Serve your CMS with Livereload in local, while you update your schema the dev server will automatically reload
 ➜ $ canner script:serve
 ```
 
