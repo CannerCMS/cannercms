@@ -9,26 +9,26 @@
 
 ## Benefits and advantages
 
-### Universal CMS framework
+### 🌍 Universal CMS framework
 
 Canner is extremely flexible and agnostic, that you can ***learn once and create any form of CMS for many databases.***
 
-### Create data model and UI design at the same time.
+### ⛄ Create data model and UI design at the same time.
 
 While you are defining Canner schema in JSX, you are defining how your CMS store your data in your databases, and how your CMS UI/UX should look like.
 
-### One schema to any databases
+### 👩‍💻 One schema to any databases
 
 With different connectors, you are able to create a CMS to interact with ***Firebase, MySQL, PostgreSQL, GraphQL with the same schema***.
 
-### Easy to maintain and extend
+### 😎 Easy to maintain and extend
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
-## Only 3 commands: To start a CMS for any applications and sources
+## 🔥🔥 Only 3 commands to start 🔥🔥
 
 ```sh
-# 1. download Canner CLI tool
+# 1. Download Canner CLI tool
 ➜ $ npm install --global @canner/cli
 
 # 2. Initialize schema
@@ -47,7 +47,7 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 # ❯ Prisma
 ✔ Initialized
 
-# 3. Serve your CMS with Livereload in local, while you update your schema the dev server will automatically reload
+# 3. Serve your CMS with Livereload in local, while you update your schema the dev server will automatically reload open 
 ➜ $ canner script:serve
 ```
 
@@ -63,7 +63,7 @@ Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind
 
 **More demo visit [here](https://www.canner.io/)**
 
-## Why create Canner?
+## 🙌 Why create Canner?
 
 Before we built Canner CMS framework, we've tried most of CMS framework such as Wordpress, Drupal, etc. What we found was that getting simple functions to work was easy enough, but once you try to build and scale into your product or your service you ran into deeper issues...
 
@@ -94,7 +94,7 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 - Visit Canner official site to learn more: https://www.canner.io
 - Canner documentation: https://www.canner.io/docs/guides-community-intro.html
 
-***START USING CANNER: https://www.canner.io***
+***👉👉 START USING CANNER: https://www.canner.io***
 
 ## Get started
 
