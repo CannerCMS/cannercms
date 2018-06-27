@@ -25,6 +25,33 @@ With different connectors, you are able to create a CMS to interact with ***Fire
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
+## Only 3 commands: To start a CMS for any applications and sources
+
+```sh
+# download Canner CLI tool
+➜ $ npm install --global @canner/cli
+
+# Initialize schema
+➜ $ canner init:schema
+# Answer the questions
+# Initializing schema...
+# ? What template do you want to create? (Use arrow keys)
+#   None
+# ❯ Blog
+#   Company
+#   E-commerce
+# ? What data source do you want to use?
+#   None
+#   Firebase admin
+#   Firebase client
+# ❯ Prisma
+✔ Initialized
+
+# Serve your CMS with Livereload in local, while you update your schema
+# the dev server will automatically reload
+➜ $ canner script:serve
+```
+
 ## Preview and demo
 
 ![CMS preivew](./docs/cms-preview.png)
