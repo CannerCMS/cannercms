@@ -74,7 +74,9 @@
     "style-loader": "^0.20.2",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.10",
-    "webpack-dev-server": "^3.1.0"
+    "webpack-dev-server": "^3.1.0",
+    "graphql": "^0.13.2",
+    "canner-graphql-interface": "^1.12.0"
   },
   "dependencies": {
     "@canner/antd-locales": "^0.1.18",
@@ -82,9 +84,7 @@
     "antd-geosuggest": "^0.2.4",
     "apollo-boost": "^0.1.4",
     "bson-objectid": "^1.2.2",
-    "canner-graphql-interface": "^1.12.0",
     "canner-ref-id": "^0.1.2",
-    "graphql": "^0.13.2",
     "graphql-tag": "^2.9.1",
     "immer": "^1.3.0",
     "immutable": "4.0.0-rc.9",
