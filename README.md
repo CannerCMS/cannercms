@@ -4,7 +4,7 @@
 
 > Universal CMS framework in build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma, in other words, an agnostic CMS framework for any applications and data sources. 
 
-![Canner flow](./docs/structure.png)
+![Canner flow](./docs/structure.gif)
 
 ## Benefits and advantages
 
