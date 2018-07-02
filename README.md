@@ -62,6 +62,8 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 
 Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind and form of applications. Our CMS has built **CMS for websites, mobile apps, and even chatbot applications**. Amazingly, you can building a ***blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner and select connector to connect to data sources, such as Firebase, GraphQL, Restful API, Prisma.***
 
+Wonder why we use JSX? [read here](https://www.canner.io/docs/why-jsx)
+
 ![syntax](./docs/syntax.png)
 
 **More demo visit [here](https://www.canner.io/)**
