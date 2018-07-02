@@ -149,6 +149,7 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
       return originValue.update(key, map => map.merge(value));
     }
 
+    case 'CREATE_AND_CONNECT':
     case 'CONNECT': {
       if (id) {
         // array connect
@@ -172,6 +173,7 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
       }
     }
 
+    case 'DISCONNECT_AND_DELETE':
     case 'DISCONNECT': {
       if (id) {
         // array disconnect
@@ -193,16 +195,6 @@ export default function mutate(originValue: Map<string, *>, action: Action<Actio
           });
         }
       }
-    }
-
-    case 'CREATE_AND_CONNECT': {
-      const index = (originValue.get(key) || new List()).findIndex(item => item.get('id') === id);
-      return originValue.updateIn([key, index, path], list => list.push(value));
-    }
-
-    case 'DISCONNECT_AND_DELETE': {
-      const index = (originValue.get(key) || new List()).findIndex(item => item.get('id') === id);
-      return originValue.updateIn([key, index, path], list => list.filter(item => item.get('id') !== value.get('id')));
     }
 
     case 'NOOP':

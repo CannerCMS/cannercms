@@ -26,6 +26,9 @@ describe('actions to variables', () => {
       args: {
         data: '$payload',
         where: '$where'
+      },
+      fields: {
+        id: null
       }
     });
   });
@@ -49,6 +52,9 @@ describe('actions to variables', () => {
     expect(get(actionToMutation(updateAction), 'mutation.fields.createPost')).toEqual({
       args: {
         data: '$payload'
+      },
+      fields: {
+        id: null
       }
     });
   });
@@ -72,6 +78,9 @@ describe('actions to variables', () => {
     expect(get(actionToMutation(updateAction), 'mutation.fields.deletePost')).toEqual({
       args: {
         where: '$where'
+      },
+      fields: {
+        id: null
       }
     });
   });
@@ -94,7 +103,8 @@ describe('actions to variables', () => {
     expect(get(actionToMutation(updateAction), 'mutation.fields.updateUser')).toEqual({
       args: {
         data: '$payload'
-      }
+      },
+      fields: null
     });
   });
 });

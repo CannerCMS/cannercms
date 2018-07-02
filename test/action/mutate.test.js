@@ -7,14 +7,19 @@ const originValue = fromJS({
       name: 'name'
     }
   },
-  posts: [{
-    id: 'post1',
-    title: 'post1',
-    author: [{
-      id: 'author1',
-      name: 'author1'
+  posts: {
+    edges: [{
+      cursor: 'post1',
+      node: {
+        id: 'post1',
+        title: 'post1',
+        author: [{
+          id: 'author1',
+          name: 'author1'
+        }]
+      }
     }]
-  }]
+  }
 })
 
 describe('mutate', () => {
@@ -44,7 +49,7 @@ describe('mutate', () => {
         })
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 0]).toJS()).toMatchObject({
+    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node']).toJS()).toMatchObject({
       id: 'post1',
       title: 'post2',
       author: [{
@@ -69,7 +74,7 @@ describe('mutate', () => {
         })
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 1]).toJS()).toMatchObject({
+    expect(mutate(originValue, action).getIn(['posts', 'edges', 1, 'node']).toJS()).toMatchObject({
       id: expect.anything(String),
       title: 'post2',
       author: [{
@@ -87,7 +92,7 @@ describe('mutate', () => {
         id: 'post1',
       }
     };
-    expect(mutate(originValue, action).getIn(['posts']).size).toEqual(0);
+    expect(mutate(originValue, action).getIn(['posts', 'edges']).size).toEqual(0);
   });
 
   test('connect', () => {
@@ -103,7 +108,7 @@ describe('mutate', () => {
         })
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 0, 'author', 1]).toJS()).toMatchObject({
+    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node', 'author', 1]).toJS()).toMatchObject({
       id: 'author2',
       name: 'author2'
     });
@@ -122,7 +127,7 @@ describe('mutate', () => {
         })
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 0, 'author', 1]).toJS()).toMatchObject({
+    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node', 'author', 1]).toJS()).toMatchObject({
       id: 'author2',
       name: 'author2'
     });
@@ -140,7 +145,7 @@ describe('mutate', () => {
         })
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 0, 'author']).size).toEqual(0);
+    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node', 'author']).size).toEqual(0);
   });
 
   test('disconnect and delete', () => {
@@ -155,6 +160,6 @@ describe('mutate', () => {
         })
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 0, 'author']).size).toEqual(0);
+    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node', 'author']).size).toEqual(0);
   })
 })

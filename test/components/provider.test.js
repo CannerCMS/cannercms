@@ -6,17 +6,16 @@ import {schema, defaultData} from './data';
 import Provider from '../../src/components/Provider';
 // import {HOCContext as Context} from '../../src/hocs/context';
 import {createClient, MemoryConnector} from 'canner-graphql-interface';
-import {schemaToQueriesObject, objectToQueries} from '../../src/query/utils';
+import {Query} from '../../src/query';
 import {fromJS} from 'immutable';
 import gql from "graphql-tag";
-import pick from 'lodash/pick';
 Enzyme.configure({ adapter: new Adapter() });
 
 
 function toGQL(schema, key) {
-  const {queriesObj, variables} = schemaToQueriesObject(schema);
-  const obj = pick(queriesObj, key);
-  return gql`${objectToQueries(obj, !obj.declareArgs, variables)}`
+  const query = new Query({schema});
+  query.toGQL(key);
+  return gql`${query.toGQL(key)}`
 }
 
 describe('provider methods', () => {
