@@ -1,6 +1,7 @@
 ![logo](./docs/logo-word-alpha.svg)
 
-[![npm version](https://badge.fury.io/js/canner.svg)](https://badge.fury.io/js/canner) [![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link) <a href="https://twitter.com/cannerIO?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @cannerIO</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Universal%20CMS%20framework%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
+[![npm version](https://badge.fury.io/js/canner.svg)](https://badge.fury.io/js/canner) [![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link) [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Universal%20CMS%20framework%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
+<a href="https://twitter.com/cannerIO?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @cannerIO</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 > Canner is a universal CMS framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma, in other words, an agnostic CMS framework for any applications and data sources. 
 
@@ -90,7 +91,8 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 
 > If you are interested in how we solve these problems see [Our mission](https://www.canner.io/docs/why-mission.html)
 
-***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND <a href="https://twitter.com/cannerIO?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @cannerIO</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 ***
+<a href="https://twitter.com/cannerIO?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @cannerIO</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 - Visit Canner official site to learn more: https://www.canner.io
 - Canner documentation: https://www.canner.io/docs/guides-community-intro.html
