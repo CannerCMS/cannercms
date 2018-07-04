@@ -24,7 +24,7 @@ Before we built Canner CMS framework, we've tried most of CMS framework such as 
 
 3. **Re-inventing the view layer seemed inefficient and limiting:**  Most CMS rolled their own views, instead of using existing technologies like `React`, so you have to learn a whole new system, in order to make some changes.
 
-> Canner natively allows you to use `React` components.
+> Canner natively allows you to use `React` components without any side-effect.
 
 4. **CMSes are binded with frontend code:**  Many CMSes bind with frontend code, so there are many needless and complex conventional namings and settings in your codebase, you have to learn all the system before start designing your theme.
 
