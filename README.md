@@ -6,9 +6,30 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)
  [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Universal%20CMS%20framework%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
 
-> Canner is a universal CMS framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma, in other words, an agnostic CMS framework for any application and data source. 
+> Canner is a universal CMS framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma, in other words, an agnostic CMS framework for any applications and data sources. 
 
 ![Canner flow](./docs/structure.gif)
+
+## Benefits and advantages
+
+### 🌍 Universal CMS framework
+
+Canner is extremely flexible and agnostic, that you can ***learn once and create any form of CMS for many databases.***
+
+### ⛄ Create data model and UI design at the same time.
+
+While you are defining Canner schema in JSX, you are defining how your CMS store your data in your databases, and how your CMS UI/UX should look like.
+
+![schema](./docs/schema.png)
+
+### 👩‍💻 One schema to any database
+
+With different connectors, you are able to create a CMS to interact with ***Firebase, MySQL, PostgreSQL, GraphQL with the same schema***.
+
+### 😎 Easy to maintain and extend
+
+Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
+
 
 ## 🙌 Why create Canner?
 
@@ -56,26 +77,6 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 
 - Visit Canner official site to learn more: https://www.canner.io
 - Canner documentation: https://www.canner.io/docs/guides-community-intro.html
-
-## Benefits and advantages
-
-### 🌍 Universal CMS framework
-
-Canner is extremely flexible and agnostic, that you can ***learn once and create any form of CMS for many databases.***
-
-### ⛄ Create data model and UI design at the same time.
-
-While you are defining Canner schema in JSX, you are defining how your CMS store your data in your databases, and how your CMS UI/UX should look like.
-
-![schema](./docs/schema.png)
-
-### 👩‍💻 One schema to any database
-
-With different connectors, you are able to create a CMS to interact with ***Firebase, MySQL, PostgreSQL, GraphQL with the same schema***.
-
-### 😎 Easy to maintain and extend
-
-Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
 ## 🔥🔥 Only 3 commands to start 🔥🔥
 
