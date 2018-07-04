@@ -6,7 +6,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)
  [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Universal%20CMS%20framework%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
 
-> Canner is a universal CMS framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma, in other words, an agnostic CMS framework for any applications and data sources. 
+> Canner is a universal CMS framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma, in other words, an agnostic CMS framework for any application and data source. 
 
 ![Canner flow](./docs/structure.gif)
 
