@@ -20,7 +20,7 @@ Before we built Canner CMS framework, we've tried most of CMS framework such as 
 
 2. **Hardcoded and limited APIs:**  APIs should not predefined and even hard coded into codebase, which is critical for building advanced use cases and impossible to build into your system.
 
-> Canner don't predefine any API and data structure.
+> Canner doesn't predefine any API and data structure.
 
 3. **Re-inventing the view layer seemed inefficient and limiting:**  Most CMS rolled their own views, instead of using existing technologies like `React`, so you have to learn a whole new system, in order to make some changes.
 
@@ -36,7 +36,7 @@ Before we built Canner CMS framework, we've tried most of CMS framework such as 
 
 6. **Building complex, nested CMS was impossible:** Many CMS are design for simple use cases such as blog, ecommerce websites. As your service grow larger and complex, you'll run into several bottlenecks to grow your CMS that fits.
 
-> Canner use schema to define your CMS, it could scale, and could be built in large applications and usages.
+> Canner uses schema to define your CMS, it could scale, and could be built into large applications and usages.
 
 7. **Building CMS fit your APIs was impossible:** Most CMS are **not purely** CMS, they are design for building templates in it's own structure and platform.  So it's nearly impossible to build CMS that fit into your existing infrastructure.
 
