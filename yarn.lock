@@ -2646,6 +2646,10 @@ caniuse-lite@^1.0.30000844:
   version "1.0.30000844"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000844.tgz#de7c84cde0582143cf4f5abdf1b98e5a0539ad4a"
 
+canner-compiler@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/canner-compiler/-/canner-compiler-0.1.6.tgz#516b5b2ded2029cf94fe4ef65ce024adad79fdd0"
+
 canner-graphql-interface@^1.12.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.12.0.tgz#1e216866cfb76fd46fa8469d83ce4052b23bd44f"
