@@ -2672,6 +2672,28 @@ canner-graphql-interface@^1.12.0:
     pluralize "^7.0.0"
     uuid "^3.2.1"
 
+canner-graphql-interface@^1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.14.0.tgz#24d7904f80cbb41583e412e29f95fa8b2051c39f"
+  dependencies:
+    apollo-cache "^1.1.7"
+    apollo-cache-inmemory "^1.1.12"
+    apollo-client "^2.2.8"
+    apollo-link "^1.2.2"
+    apollo-link-http "^1.5.4"
+    apollo-utilities "^1.0.11"
+    canner-graphql-utils "^1.4.0"
+    firebase "^4.13.1"
+    graphql "0.13.0"
+    graphql-anywhere "^4.1.6"
+    graphql-tag "^2.8.0"
+    graphql-tools "^2.21.0"
+    isomorphic-fetch "^2.2.1"
+    lodash "^4.17.5"
+    lowdb "^1.0.0"
+    pluralize "^7.0.0"
+    uuid "^3.2.1"
+
 canner-graphql-utils@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/canner-graphql-utils/-/canner-graphql-utils-1.4.0.tgz#6d704fb8b4483b7730ab13c598670f953f52a1db"
@@ -2683,6 +2705,13 @@ canner-graphql-utils@^1.4.0:
 canner-helpers@^0.1.14:
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-0.1.14.tgz#19e0992a1b0194ba0456b63f12e8effe687a4a79"
+  dependencies:
+    immutable "^4.0.0-rc.9"
+    lodash "^4.17.5"
+
+canner-helpers@^0.1.15:
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-0.1.15.tgz#85afb80f0e317ca66f9ab3c5d5a8fd3027f4d489"
   dependencies:
     immutable "^4.0.0-rc.9"
     lodash "^4.17.5"
