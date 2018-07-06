@@ -150,8 +150,9 @@ export default class Generator extends React.PureComponent<Props, State> {
       } else {
         // if using next.js framework dynamic route should use next.js's dynmic function.
         if (process.env.ENGINE === 'nextjs') {
-          component = dynamic.default(new SameLoopPromise((resolve, reject) => copyNode.loader.then(resolve).catch(reject)),
+          component = dynamic(new SameLoopPromise((resolve, reject) => copyNode.loader.then(resolve).catch(reject)),
             {
+              // Since we don't know whether the components are supporting SSR, so we are not going to SSR components.
               ssr: false,
               loading: Loading
             }
