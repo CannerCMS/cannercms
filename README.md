@@ -143,7 +143,7 @@ Wonder why we use JSX? [read here](https://www.canner.io/docs/why-jsx)
 - Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up.html
 - Why Firebase CMS: https://www.canner.io/docs/why-firebase-cms.html
 
-## Intoduce Adaptive CMS Framework
+## Introducing Adaptive CMS Framework
 
 Canner advocate a new CMS structure called ***Adaptive CMS*** it is a novel CMS structure that differs from traditional CMS and headless CMS. The biggest difference is that Adaptive CMS decouples the view and data layers and builds data interfaces to connect to single or multiple data sources.
 
