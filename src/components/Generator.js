@@ -91,8 +91,11 @@ export default class Generator extends React.PureComponent<Props, State> {
     // React Component with all hocs it needs in every node
     super(props);
     const {componentTree, routes, baseUrl, goTo} = props;
-    const activeKey = routes[0] || Object.keys(componentTree)[0];
-    goTo(`${baseUrl}/${activeKey}`);
+    let activeKey = routes[0];
+    if (!activeKey) {
+      activeKey = Object.keys(componentTree)[0];
+      goTo(`${baseUrl}/${activeKey}`);
+    }
     this.cacheTree = this.genCacheTree(componentTree);
     this.state = {
       componentTree: this.cacheTree[activeKey],
