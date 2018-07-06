@@ -11,8 +11,10 @@ import Users from './schema/realWorld/users.schema';
 import Home from './schema/realWorld/home.schema';
 import OnDeploy from './schema/onDeploy.schema';
 import TabsFilter from './toolbar/filter';
-import utils from './utils';
-const {connector, storage, graphClient} = utils;
+// import utils from './utils';
+// const {connector, storage, graphClient} = utils;
+const connector = undefined;
+const storage = undefined;
 const userColumns = [{
   title: 'Name',
   dataIndex: 'name'

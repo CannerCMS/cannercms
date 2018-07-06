@@ -18,6 +18,7 @@ import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
 import RefId from 'canner-ref-id';
+import dynamic, {SameLoopPromise} from 'next/dynamic';
 
 function defaultHoc(Component) {
   return Component;
@@ -147,10 +148,19 @@ export default class Generator extends React.PureComponent<Props, State> {
       if (isFieldset(copyNode)) {
         component = () => <Item />;
       } else {
-        component = Loadable({
-          loader: () => copyNode.loader || Promise.reject(`There is no loader in ${copyNode.path}`),
-          loading: Loading,
-        });
+        if (typeof window !== undefined && window.ENGINE === 'next') {
+          component = dynamic.default(new SameLoopPromise((resolve, reject) => copyNode.loader.then(resolve).catch(reject)),
+            {
+              ssr: false,
+              loading: Loading
+            }
+          )
+        } else {
+          component = Loadable({
+            loader: () => copyNode.loader || Promise.reject(`There is no loader in ${copyNode.path}`),
+            loading: Loading,
+          });
+        }
       }
       component = this.wrapByHOC(component, ['title', 'onDeploy', 'deploy', 'request', 'query', 'cache', 'route', 'id', 'context'] || []);
     }

@@ -11,46 +11,46 @@ console.log(schema);
 class CMSExample extends React.Component {
   constructor(props) {
     super(props);
-    try {
-      firebase.app();
-    } catch (e) {
-      firebase.initializeApp({
-        apiKey: "AIzaSyDXsFofZTaEk6SIhDj0Ot4YuPidKAfY750",
-        authDomain: "test-new-qa.firebaseapp.com",
-        databaseURL: "https://test-new-qa.firebaseio.com",
-        projectId: "test-new-qa",
-        storageBucket: "test-new-qa.appspot.com",
-        messagingSenderId: "983887338585"
-      });
-    }
-    const defaultApp = firebase.app()
-    this.connector = new FirebaseRtdbClientConnector({
-      database: defaultApp.database()
-    });
+    // try {
+    //   firebase.app();
+    // } catch (e) {
+    //   firebase.initializeApp({
+    //     apiKey: "AIzaSyDXsFofZTaEk6SIhDj0Ot4YuPidKAfY750",
+    //     authDomain: "test-new-qa.firebaseapp.com",
+    //     databaseURL: "https://test-new-qa.firebaseio.com",
+    //     projectId: "test-new-qa",
+    //     storageBucket: "test-new-qa.appspot.com",
+    //     messagingSenderId: "983887338585"
+    //   });
+    // }
+    // const defaultApp = firebase.app()
+    // this.connector = new FirebaseRtdbClientConnector({
+    //   database: defaultApp.database()
+    // });
     this.state = {
-      login: false,
+      login: true,
       dataChanged: {}
     };
   }
 
-  auth = () => new Promise((resolve, reject) => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        resolve(user);
-      }
-    });
-    firebase.auth().signInAnonymously().catch(error => {
-      reject(error);
-    });
-  });
+  // auth = () => new Promise((resolve, reject) => {
+  //   firebase.auth().onAuthStateChanged(user => {
+  //     if (user) {
+  //       resolve(user);
+  //     }
+  //   });
+  //   firebase.auth().signInAnonymously().catch(error => {
+  //     reject(error);
+  //   });
+  // });
 
-  componentDidMount() {
-    this.auth().then(() => {
-      this.setState({
-        login: true
-      });
-    });
-  }
+  // componentDidMount() {
+  //   this.auth().then(() => {
+  //     this.setState({
+  //       login: true
+  //     });
+  //   });
+  // }
 
   dataDidChange = (dataChanged) => {
     // eslint-disable-next-line
