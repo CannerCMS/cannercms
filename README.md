@@ -6,7 +6,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)
  [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Universal%20CMS%20framework%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
 
-> Canner is a universal CMS framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma, in other words, an agnostic CMS framework for any applications and data sources. 
+> Canner is a universal Content Management System (CMS) framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma. In other words, an agnostic CMS framework for any applications and data sources. 
 
 ![Canner flow](./docs/structure.gif)
 
@@ -14,7 +14,7 @@
 
 ### 🌍 Universal CMS framework
 
-Canner is extremely flexible and agnostic, that you can ***learn once and create any form of CMS for many databases.***
+Canner is flexible and agnostic, that you can ***learn once and create any form of CMS for many different databases.***
 
 ### ⛄ Create data model and UI design at the same time.
 
@@ -33,13 +33,13 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 
 ## 🙌 Why create Canner?
 
-Before we built Canner CMS framework, we've tried most of CMS framework such as Wordpress, Drupal, etc. What we found was that getting simple functions to work was easy enough, but once you try to build and scale into your product or your service you ran into deeper issues...
+Before we built Canner CMS framework, we've tried other CMS frameworks such as Wordpress, Drupal, etc. What we found was that getting simple functions to work was easy enough, but once you try to build and scale into your product or your service you ran into deeper issues...
 
 1. **Humongous codebase:**  Each CMS framework is humongous and complex, if you want to use them you have to install a huge codebase into your system, and most of the time it'll affect and mess with all your existing code.
 
 > Canner's CMS is only a React component.
 
-2. **Hardcoded and limited APIs:**  APIs should not predefined and even hard coded into codebase, which is critical for building advanced use cases and impossible to build into your system.
+2. **Hardcoded and limited APIs:**  APIs should not be predefined and even hard coded into the codebase, which is critical for building advanced use cases and impossible to build into your system.
 
 > Canner doesn't predefine any API and data structure.
 
@@ -51,7 +51,7 @@ Before we built Canner CMS framework, we've tried most of CMS framework such as 
 
 > Canner is an agnostic CMS for any application, includes websites, mobile apps, IoTs, and even chatbots.
 
-5. **Vendor lock-in:** Many CMSes are locked into a specific database and service, it's impossible to switching existing cloud services or databases later.
+5. **Vendor lock-in:** Many CMSes are locked into a specific database and service, it's impossible to switch existing cloud services or databases later.
 
 > Canner allows you to connect any database and host anywhere, we even allow you to use Canner in hybrid clouds.
 
@@ -110,7 +110,7 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 
 ### CMS schema
 
-Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind and form of applications. Our CMS has built **CMS for websites, mobile apps, and even chatbot applications**. Amazingly, you can building a ***blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner and select connector to connect to data sources, such as Firebase, GraphQL, Restful API, Prisma.***
+Using Canner, You only need to upload a XML-like(JSX) syntax, to create any kind and form of applications. Our CMS has built **CMS for websites, mobile apps, and even chatbot applications**. Amazingly, you can build a ***blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner and select connector to connect to data sources, such as Firebase, GraphQL, Restful API, Prisma.***
 
 Wonder why we use JSX? [read here](https://www.canner.io/docs/why-jsx)
 
@@ -145,7 +145,7 @@ Wonder why we use JSX? [read here](https://www.canner.io/docs/why-jsx)
 
 ## Intoduce Adaptive CMS Framework
 
-Canner advocate a new CMS structure called ***Adaptive CMS*** it is a novel CMS structure that differs from traditional CMS and headless CMS. The biggest difference is that Adaptive CMS decouples the view and data layers and builds data interfaces to connect to single or multiple data sources.
+Canner advocate a new CMS structure called ***Adaptive CMS*** that is a novel CMS structure that differs from traditional CMS and headless CMS. The biggest difference is that Adaptive CMS decouples the view and data layers and builds data interfaces to connect to single or multiple data sources.
 
 ![overview](http://www.canner.io/docs/assets/revolution.png)
 
