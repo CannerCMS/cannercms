@@ -148,7 +148,8 @@ export default class Generator extends React.PureComponent<Props, State> {
       if (isFieldset(copyNode)) {
         component = () => <Item />;
       } else {
-        if (typeof window !== undefined && window.ENGINE === 'next') {
+        // if using next.js framework dynamic route should use next.js's dynmic function.
+        if (process.env.ENGINE === 'nextjs') {
           component = dynamic.default(new SameLoopPromise((resolve, reject) => copyNode.loader.then(resolve).catch(reject)),
             {
               ssr: false,
