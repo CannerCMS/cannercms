@@ -56,13 +56,13 @@ export default class Toolbar extends React.PureComponent<Props> {
 
   changeOrder = ({orderField, orderType}: {orderField: string, orderType: string}) => {
     const {updateQuery, refId, args} = this.props;
-    updateQuery(refId.getPathArr(), {...args, orderBy: `${orderField}_${orderType}`});
+    updateQuery(refId.getPathArr(), {first: 10, orderBy: `${orderField}_${orderType}`, where: args.where});
   }
 
   changeFilter = (where: Object) => {
     const {updateQuery, refId, args} = this.props;
     const validWhere = processWhere(where);
-    updateQuery(refId.getPathArr(), {...args, where: validWhere});
+    updateQuery(refId.getPathArr(), {first: 10, orderBy: args.orderBy, where: validWhere});
   }
 
   nextPage = () => {
@@ -130,6 +130,7 @@ export default class Toolbar extends React.PureComponent<Props> {
     return <ToolbarLayout
       Sort={sort ? <SortComponent
         {...sort}
+        defaultSort={sort.defaultSort}
         options={sort.options}
         changeOrder={this.changeOrder}
         orderField={orderField}

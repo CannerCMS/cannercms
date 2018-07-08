@@ -178,11 +178,7 @@ describe('toolbar method', () => {
     expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
     expect(updateQuery.mock.calls[0][1]).toEqual({
       orderBy: 'like_DESC',
-      first: undefined,
-      after: undefined,
-      last: undefined,
-      before: undefined,
-      where: undefined
+      first: 10,
     });
   });
 
@@ -197,11 +193,7 @@ describe('toolbar method', () => {
     });
     expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
     expect(updateQuery.mock.calls[0][1]).toEqual({
-      orderBy: undefined,
-      first: undefined,
-      after: undefined,
-      last: undefined,
-      before: undefined,
+      first: 10,
       where: {share_gt: 1}
     });
   });

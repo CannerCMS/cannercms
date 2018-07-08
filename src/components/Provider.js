@@ -15,7 +15,7 @@ import gql from 'graphql-tag';
 import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
-import {isArray, groupBy} from 'lodash';
+import {isArray, groupBy, difference} from 'lodash';
 type Props = {
   schema: {[key: string]: any},
   dataDidChange: Object => void,
@@ -37,17 +37,27 @@ export default class Provider extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.actionManager = new ActionManager();
-    this.query = new Query({schema: props.schema});
-    const variables = this.query.getVairables();
-    this.observableQueryMap = mapValues(props.schema, (v, key) => {
+    this.genQuery();
+    this.genObservableQueryMap();
+    this.onDeployManager = new OnDeployManager();
+  }
+
+  genQuery = () => {
+    const {schema} = this.props;
+    this.query = new Query({schema});
+  }
+
+  genObservableQueryMap = () => {
+    const {schema, client} = this.props;
+    const variables = this.query && this.query.getVairables();
+    this.observableQueryMap = mapValues(schema, (v, key) => {
       const gqlStr = this.query.toGQL(key);
       this.log('gqlstr', gqlStr, variables);
-      return props.client.watchQuery({
+      return client.watchQuery({
         query: gql`${gqlStr}`,
         variables
       });
     });
-    this.onDeployManager = new OnDeployManager();
   }
 
   updateDataChanged = () => {
@@ -66,10 +76,22 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   updateQuery = (paths: Array<string>, args: Object) => {
+    const {client} = this.props;
+    const originVariables = this.query.getVairables();
     this.query.updateQueries(paths, 'args', args);
     const variables = this.query.getVairables();
+    const reWatchQuery = compareVariables(originVariables, variables);
+    if (reWatchQuery) {
+      const gqlStr = this.query.toGQL(paths[0]);
+      this.observableQueryMap[paths[0]] = client.watchQuery({
+        query: gql`${gqlStr}`,
+        variables
+      });
+    } else {
+      this.observableQueryMap[paths[0]].refetch(variables);
+    }
     this.log('updateQuery', variables, args);
-    this.observableQueryMap[paths[0]].refetch(variables);
+    return reWatchQuery;
   }
 
   // path: posts/name args: {where, pagination, sort}
@@ -275,4 +297,15 @@ function removeIdInCreateArray(actions: Array<Action<ActionType>>) {
     }
     return action;
   });
+}
+
+function compareVariables(originVariables: Object, variables: Object) {
+  const originArr = Object.keys(originVariables).filter(key => originVariables[key]);
+  const varArr = Object.keys(variables).filter(key => variables[key]);
+  const less = difference(originArr, varArr);
+  const more = difference(varArr, originArr);
+  if (less.length === 0 && more.length === 0) {
+    return false;
+  }
+  return true
 }

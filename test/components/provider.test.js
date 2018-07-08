@@ -6,15 +6,16 @@ import {schema, defaultData} from './data';
 import Provider from '../../src/components/Provider';
 // import {HOCContext as Context} from '../../src/hocs/context';
 import {createClient, MemoryConnector} from 'canner-graphql-interface';
-import {schemaToQueriesObject, objectToQueries} from '../../src/query/utils';
+import {Query} from '../../src/query';
 import {fromJS} from 'immutable';
 import gql from "graphql-tag";
-import pick from 'lodash/pick';
 Enzyme.configure({ adapter: new Adapter() });
 
 
 function toGQL(schema, key) {
-  return gql`${objectToQueries(pick(schemaToQueriesObject(schema).queriesObj, key))}`
+  const query = new Query({schema});
+  query.toGQL(key);
+  return gql`${query.toGQL(key)}`
 }
 
 describe('provider methods', () => {
@@ -37,7 +38,7 @@ describe('provider methods', () => {
     </Provider>);
     return wrapper.instance().fetch('home').then(d => {
       expect(d.toJS()).toMatchSnapshot();
-    })
+    });
   });
 
   /**

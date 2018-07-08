@@ -20,7 +20,7 @@ export type Action<T> = {
 }
 
 
-export interface Pattern<T> {
+export type Pattern<T> = {
   actions: Array<T>;
 
   addAction(action: T): void;
@@ -36,7 +36,7 @@ export type ActionManagerStore = {
     }>
 }
 
-export interface ActionManagerDef {
+export type ActionManagerDef = {
   store: ActionManagerStore;
 
   addAction(action: Action<ActionType>): void;

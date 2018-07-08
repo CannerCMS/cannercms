@@ -17,10 +17,13 @@ module.exports = {
   },
   resolve: {
     alias: {
+      'canner-graphql-interface': path.resolve(__dirname, 'node_modules/canner-graphql-interface'),
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
-      'cms-helpers': path.resolve(__dirname, 'node_modules', 'cms-helpers')
+      'cms-helpers': path.resolve(__dirname, 'node_modules', 'cms-helpers'),
+      '@canner': path.resolve(__dirname, 'node_modules', '@canner'),
+      'antd': path.resolve(__dirname, 'node_modules/antd')
     }
   },
   resolveLoader: {
@@ -28,19 +31,17 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      IMGUR_CLIENT_ID: JSON.stringify(process.env.IMGUR_CLIENT_ID),
-      IMGUR_MASHAPE_KEY: JSON.stringify(process.env.IMGUR_MASHAPE_KEY),
+      FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
     })
   ],
   module: {
     rules: [
       {
-        test: /\.schema\.js$/,
+        test: /(\.schema\.js|canner\.def\.js)$/,
         use: [{
           loader: 'canner-schema-loader',
-          options: {
-            visitors: path.resolve('lib', 'visitors')
-          }
+        }, {
+          loader: 'babel-loader',
         }],
       },
       {

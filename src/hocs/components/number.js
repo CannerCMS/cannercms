@@ -67,13 +67,17 @@ export default class NumberRangeFilter extends Component {
     const {lowInput, input, operator} = this.state;
     const {name, onChange} = this.props;
     if (operator === '$between') {
-      onChange(name, {
-        $gt: isEmpty(lowInput) ? -Infinity : Number(lowInput),
-        $lt: isEmpty(input) ? Infinity : Number(input),
+      onChange({
+        name: {
+          $gt: isEmpty(lowInput) ? -Infinity : Number(lowInput),
+          $lt: isEmpty(input) ? Infinity : Number(input),
+        }
       });
     } else {
-      onChange(name, isEmpty(input) ? undefined : {
-        [operator]: Number(input),
+      onChange(isEmpty(input) ? undefined : {
+        [name]: {
+          [operator]: Number(input)
+        }
       });
     }
   }
