@@ -2,7 +2,7 @@
 
 export type UpdateType = 'create' | 'update' | 'delete' | 'swap' | 'connect' | 'disconnect';
 
-export type ArrayActionType = 'UPDATE_ARRAY' | 'CREATE_ARRAY' | 'DELETE_ARRAY'
+export type ArrayActionType = 'UPDATE_ARRAY' | 'CREATE_ARRAY' | 'DELETE_ARRAY';
 export type ConnectActionType = 'CONNECT' | 'DISCONNECT' | 'CREATE_AND_CONNECT' | 'DISCONNECT_AND_DELETE' | 'UPDATE_CONNECT';
 export type ObjectActionType = 'UPDATE_OBJECT';
 export type NoopType = 'NOOP';
