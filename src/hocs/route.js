@@ -61,10 +61,6 @@ export default function withRoute(Com: React.ComponentType<*>) {
         .then(() => goTo(routes[0]));
     }
 
-    back = () => {
-      this.deploy();
-    }
-
     discard = () => {
       const {goTo, routes, params, reset, refId} = this.props;
       confirm({
@@ -100,14 +96,9 @@ export default function withRoute(Com: React.ComponentType<*>) {
           // quick fix for route array's children
           // need to find a stable way to control route
           (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength > pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
-            <React.Fragment>
-              <Button onClick={this.back} style={{marginBottom: 16}}>
-                <Icon type="arrow-left" /> Back and Save
-              </Button>
-              <Button onClick={this.discard} style={{marginLeft: 16, marginBottom: 16}}>
-                Discard
-              </Button>
-            </React.Fragment>
+            <Button onClick={this.discard} style={{marginBottom: 16}}>
+              <Icon type="arrow-left" /> Back
+            </Button>
         }
         {
           renderType === RENDER_CHILDREN && renderChildren({
