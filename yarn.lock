@@ -1418,18 +1418,6 @@
     "@babel/plugin-syntax-dynamic-import" "7.0.0-beta.52"
     "@babel/plugin-syntax-import-meta" "7.0.0-beta.52"
 
-"@babel/register@^7.0.0-beta.52":
-  version "7.0.0-beta.52"
-  resolved "https://registry.yarnpkg.com/@babel/register/-/register-7.0.0-beta.52.tgz#011f925e087919ac3a75a3e8b8606d1d224046e5"
-  dependencies:
-    core-js "^2.5.7"
-    find-cache-dir "^1.0.0"
-    home-or-tmp "^3.0.0"
-    lodash "^4.17.5"
-    mkdirp "^0.5.1"
-    pirates "^3.0.1"
-    source-map-support "^0.4.2"
-
 "@babel/runtime@7.0.0-beta.42":
   version "7.0.0-beta.42"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.42.tgz#352e40c92e0460d3e82f49bd7e79f6cda76f919f"
@@ -3946,28 +3934,6 @@ canner-compiler@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/canner-compiler/-/canner-compiler-0.1.6.tgz#516b5b2ded2029cf94fe4ef65ce024adad79fdd0"
 
-canner-graphql-interface@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.12.0.tgz#1e216866cfb76fd46fa8469d83ce4052b23bd44f"
-  dependencies:
-    apollo-cache "^1.1.7"
-    apollo-cache-inmemory "^1.1.12"
-    apollo-client "^2.2.8"
-    apollo-link "^1.2.2"
-    apollo-link-http "^1.5.4"
-    apollo-utilities "^1.0.11"
-    canner-graphql-utils "^1.4.0"
-    firebase "^4.13.1"
-    graphql "0.13.0"
-    graphql-anywhere "^4.1.6"
-    graphql-tag "^2.8.0"
-    graphql-tools "^2.21.0"
-    isomorphic-fetch "^2.2.1"
-    lodash "^4.17.5"
-    lowdb "^1.0.0"
-    pluralize "^7.0.0"
-    uuid "^3.2.1"
-
 canner-graphql-interface@^1.14.0:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.14.0.tgz#24d7904f80cbb41583e412e29f95fa8b2051c39f"
@@ -3998,16 +3964,9 @@ canner-graphql-utils@^1.4.0:
     lowdb "^1.0.0"
     pluralize "^7.0.0"
 
-canner-helpers@^0.1.14:
-  version "0.1.14"
-  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-0.1.14.tgz#19e0992a1b0194ba0456b63f12e8effe687a4a79"
-  dependencies:
-    immutable "^4.0.0-rc.9"
-    lodash "^4.17.5"
-
-canner-helpers@^0.1.15:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-0.1.15.tgz#85afb80f0e317ca66f9ab3c5d5a8fd3027f4d489"
+canner-helpers@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-0.1.16.tgz#3410ae9b5f07555f17b15790adb89c9debd85a4d"
   dependencies:
     immutable "^4.0.0-rc.9"
     lodash "^4.17.5"
@@ -4031,9 +3990,9 @@ canner-ref-id@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/canner-ref-id/-/canner-ref-id-0.1.2.tgz#9c534d517818e915cef1004116012458bd165d83"
 
-canner-schema-loader@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/canner-schema-loader/-/canner-schema-loader-1.2.2.tgz#825246c79d76cd8a87cad28f650a0761ebb9a902"
+canner-schema-loader@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/canner-schema-loader/-/canner-schema-loader-1.2.6.tgz#07a12bbd70c4f6f9ef58ed87cd9f7d9aa8b84582"
   dependencies:
     "@canner/antd-array-gallery" "0.1.35"
     "@canner/antd-array-panel" "0.1.35"
@@ -4072,12 +4031,12 @@ canner-schema-loader@^1.2.2:
     schema-utils "^0.4.5"
     strip-bom "^3.0.0"
 
-canner-script@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/canner-script/-/canner-script-1.1.5.tgz#ee3e3f1cb0c9710e1d48a9e41218aa6fcf5c74ff"
+canner-script@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/canner-script/-/canner-script-1.1.10.tgz#67d1ac0593c1b331cfd753559bbe57e9681adce8"
   dependencies:
-    canner-graphql-interface "^1.12.0"
-    canner-helpers "^0.1.14"
+    canner-graphql-interface "^1.14.0"
+    canner-helpers "^0.1.16"
     canner-layouts "^1.0.6"
     eval "^0.1.2"
     object-path "^0.11.4"
@@ -4597,7 +4556,7 @@ core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.6.tgz#0fe6d45bf3cac3ac364a9d72de7576f4eb221b9d"
 
-core-js@^2.5.3, core-js@^2.5.7:
+core-js@^2.5.3:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
 
@@ -6708,10 +6667,6 @@ home-or-tmp@^2.0.0:
   dependencies:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.1"
-
-home-or-tmp@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/home-or-tmp/-/home-or-tmp-3.0.0.tgz#57a8fe24cf33cdd524860a15821ddc25c86671fb"
 
 homedir-polyfill@^1.0.1:
   version "1.0.1"
@@ -8986,10 +8941,6 @@ node-libs-browser@^2.0.0:
     util "^0.10.3"
     vm-browserify "0.0.4"
 
-node-modules-regexp@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/node-modules-regexp/-/node-modules-regexp-1.0.0.tgz#8d9dbe28964a4ac5712e9131642107c71e90ec40"
-
 node-notifier@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/node-notifier/-/node-notifier-5.2.1.tgz#fa313dd08f5517db0e2502e5758d664ac69f9dea"
@@ -9645,12 +9596,6 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
-
-pirates@^3.0.1:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/pirates/-/pirates-3.0.2.tgz#7e6f85413fd9161ab4e12b539b06010d85954bb9"
-  dependencies:
-    node-modules-regexp "^1.0.0"
 
 pkg-dir@^2.0.0:
   version "2.0.0"
@@ -11929,7 +11874,7 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
-source-map-support@^0.4.15, source-map-support@^0.4.2:
+source-map-support@^0.4.15:
   version "0.4.18"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.18.tgz#0286a6de8be42641338594e97ccea75f0a2c585f"
   dependencies:

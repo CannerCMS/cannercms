@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const fs = require('fs');
 
 module.exports = {
   devServer: {
@@ -42,6 +43,18 @@ module.exports = {
           loader: 'canner-schema-loader',
         }, {
           loader: 'babel-loader',
+          /**
+          * babel-loader doesn't load the .babelrc
+          * TODO: Remove once the issue is addressed
+          * https://github.com/babel/babel-loader/issues/624
+          */
+          options: Object.assign(
+            {
+              babelrc: false,
+              cacheDirectory: true
+            },
+            JSON.parse(fs.readFileSync(path.join(__dirname, '.babelrc'), 'utf-8'))
+          ),
         }],
       },
       {
@@ -53,6 +66,18 @@ module.exports = {
         ],
         use: {
           loader: 'babel-loader',
+          /**
+          * babel-loader doesn't load the .babelrc
+          * TODO: Remove once the issue is addressed
+          * https://github.com/babel/babel-loader/issues/624
+          */
+          options: Object.assign(
+             {
+               babelrc: false,
+               cacheDirectory: true
+             },
+             JSON.parse(fs.readFileSync(path.join(__dirname, '.babelrc'), 'utf-8'))
+          ),
         },
       },
       {
