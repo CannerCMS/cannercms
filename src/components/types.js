@@ -1,33 +1,51 @@
 // @flow
-import type {ApolloClient} from 'apollo-boost';
-export type Connector = any;
-export type CannerSchema = {[key: string]: Object};
+import type {ApolloClient} from "apollo-boost";
+
+export type CannerSchema = {
+  [string]: any
+};
+
 export type LoadedSchema = {
   schema: CannerSchema,
+  visitors: Array<Object>,
   client: ApolloClient,
-  connectors: {[string]: Connector};
-}
-export interface CannerProps {
-  schema: {
+  connectors: {[string]: any},
+  connector: any,
+  resolvers: {[string]: any},
+  graphqlClient: any,
+  storages: {[key: string]: any}
+};
 
-  },
-  dataDidChange: Object => void,
-  afterDeploy: Object => void,
-  children: React.ChildrenArray<React.Node>,
-  client: ApolloClient,
-  imageServiceConfigs: Object,
-  hocs: {[string]: React.ComponentType<*>},
-  goTo: (path: string) => void,
-  baseUrl: string,
+export type DataDidChange = ({
+  [key: string]: boolean | {[id: string]: any}
+}) => void;
 
-  history: {
-    push: (path: string) => void,
-    location: Object
-  },
-  intl: {
-    locale: string,
-    defaultLocale: string,
-    message: Object
-  },
-  hideButtons: boolean
+export type AfterDeploy = ({
+  key: string,
+  id: string,
+  result: any
+}) => void;
+
+export type History ={
+  push: (path: string) => void,
+  location: Object
+};
+
+export type Intl = {
+  locale: string,
+  defaultLocale: string,
+  message: Object
+};
+
+export type HideButtons = boolean;
+export type BaseUrl = string;
+
+export type CMSProps = {
+  schema: LoadedSchema,
+  dataDidChange: DataDidChange,
+  afterDeploy: AfterDeploy,
+  baseUrl: BaseUrl,
+  history: History,
+  intl: Intl,
+  hideButtons: HideButtons
 }
