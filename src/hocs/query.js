@@ -91,6 +91,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const {refId} = this.props;
       
       if (refId.toString() !== props.refId.toString()) {
+        // refetch when route change
         this.queryData(props);
       } 
     }
@@ -141,6 +142,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const {updateQuery} = this.props;
       const reWatch = updateQuery(paths, args);
       if (reWatch) {
+        // if graphql query changes, it have to rewatch the new observableQuery
         this.unsubscribe();
         this.queryData();
       }

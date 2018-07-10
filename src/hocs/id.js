@@ -32,16 +32,20 @@ export default function connectId(Com: React.ComponentType<*>) {
       const {params, pattern, refId, keyName, routes} = props;
       let myRefId = refId;
       // route to children
-      
       if (params.op === 'create' && pattern === 'array') {
         this.state = {
           canRender: false,
           refId: refId
         };
+      } else if (isChildrenOfArray(pattern) && routes.length > 1 && refId.getPathArr().length === 1) {
+        // in this case,
+        // this hoc will fetch data with query {where: {id: id}} in componentDidMount
+        // so the index in refId must be 0
+        this.state = {
+          canRender: false,
+          refId: refId.child(`0/${keyName}`)
+        };
       } else {
-        if (isChildrenOfArray(pattern) && routes.length > 1 && refId.getPathArr().length === 1) {
-          myRefId = refId.child(routes[1]);
-        }
         myRefId = myRefId ? myRefId.child(keyName) : new RefId(keyName);
         this.state = {
           canRender: true,
@@ -88,7 +92,7 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     componentDidMount() {
-      const {params, pattern, request, keyName, items, fetch} = this.props;
+      const {params, pattern, request, keyName, items, fetch, routes, refId, query, path, updateQuery} = this.props;
       if (params.op === 'create' && pattern === 'array') {
         let value = createEmptyData(items);
         value = value.update('id', id => id || randomId());
@@ -112,6 +116,18 @@ export default function connectId(Com: React.ComponentType<*>) {
               });
             });
           });
+      } else if (isChildrenOfArray(pattern) && routes.length > 1 && refId.getPathArr().length === 1) {
+        const paths = refId.getPathArr();
+        updateQuery(paths, {
+          where: {id: routes[1]},
+        });
+        fetch(refId.getPathArr()[0])
+          .then(result => {
+            console.log(result);
+            this.setState({
+              canRender: true
+            });
+          })
       } else {
         this.setState({
           canRender: true
