@@ -68,14 +68,14 @@ class CMSExample extends React.Component {
     // eslint-disable-next-line
     return (
       <Router>
-        <Route path="/docs/**" render={({history}) => {
+        <Route path="/docs" render={({history}) => {
           return <Layout>
             <Layout.Sider>
               <Menu>
                 {
                   Object.keys(schema.schema).map(key => (
                     <Menu.Item key={key}>
-                      <Link to={`${baseUrl}/${key}`}>
+                      <Link to={`${baseUrl}?route=${key}`}>
                         {schema.schema[key].title}
                       </Link>
                     </Menu.Item>
@@ -89,7 +89,8 @@ class CMSExample extends React.Component {
                   <CMS
                     schema={schema}
                     baseUrl={baseUrl}
-                    history={history}
+                    query={history.location.search}
+                    push={history.push}
                     afterDeploy={this.afterDeploy}
                     dataDidChange={this.dataDidChange}
                   /> :

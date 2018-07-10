@@ -114,10 +114,12 @@ class CannerCMS extends React.Component<Props, State> {
     let {push} = this.props;
     let pathname = '';
     let params = {};
+    let routes = [];
     if (query) {
       params = queryString.parse(query);
       pathname = params.route;
       delete params.route;
+      routes = pathname.split('/');
     } else {
       const {location} = history;
       if (!location) {
@@ -126,8 +128,8 @@ class CannerCMS extends React.Component<Props, State> {
       params = queryString.parse(location.search);
       pathname = location.pathname;
       push = history.push;
+      routes = getRoutes(pathname, baseUrl);
     }
-    const routes = getRoutes(pathname, baseUrl);
     return (
       <IntlProvider
         locale={intl.locale || 'en'}
