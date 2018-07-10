@@ -108,12 +108,26 @@ class CannerCMS extends React.Component<Props, State> {
       afterDeploy,
       intl = {},
       hideButtons,
-      schema: {client, storages}
+      schema: {client, storages},
+      query
     } = this.props;
-    const {location, push} = history;
-    const {pathname} = location;
+    let {push} = this.props;
+    let pathname = '';
+    let params = {};
+    if (query) {
+      params = queryString.parse(query);
+      pathname = params.route;
+      delete params.route;
+    } else {
+      const {location} = history;
+      if (!location) {
+        throw new Error('There is no history object given.');
+      }
+      params = queryString.parse(location.search);
+      pathname = location.pathname;
+      push = history.push;
+    }
     const routes = getRoutes(pathname, baseUrl);
-    const params = queryString.parse(location.search);
     return (
       <IntlProvider
         locale={intl.locale || 'en'}

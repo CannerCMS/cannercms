@@ -122,8 +122,7 @@ export default function connectId(Com: React.ComponentType<*>) {
           where: {id: routes[1]},
         });
         fetch(refId.getPathArr()[0])
-          .then(result => {
-            console.log(result);
+          .then(() => {
             this.setState({
               canRender: true
             });
