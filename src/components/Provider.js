@@ -115,7 +115,6 @@ export default class Provider extends React.PureComponent<Props, State> {
       this.log('fetch', 'loaded', key, currentResult);
       return Promise.resolve(fromJS(currentResult.data));
     }
-   
   }
 
   subscribe = (key: string, callback: (data: any) => void) => {
