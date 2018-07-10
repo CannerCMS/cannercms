@@ -7,11 +7,13 @@ export type CannerSchema = {
 
 export type LoadedSchema = {
   schema: CannerSchema,
+  visitors: Array<Object>,
   client: ApolloClient,
   connectors: {[string]: any},
   connector: any,
   resolvers: {[string]: any},
-  graphqlClient: any
+  graphqlClient: any,
+  storages: {[key: string]: any}
 };
 
 export type DataDidChange = ({

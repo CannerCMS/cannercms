@@ -16,30 +16,9 @@ import pluginsLocales from '@canner/antd-locales';
 addLocaleData([...en, ...zh]);
 
 // type
-import type ApolloClient from 'apollo-client';
-type Props = {
-  schema: {[key: string]: any},
-  dataDidChange: Object => void,
-  afterDeploy: Object => void,
-  children: React.ChildrenArray<React.Node>,
-  client: ApolloClient,
-  imageServiceConfigs: Object,
-  hocs: {[string]: React.ComponentType<*>},
-  goTo: (path: string) => void,
-  baseUrl: string,
+import type {CMSProps} from './types';
 
-  history: {
-    push: (path: string) => void,
-    location: Object
-  },
-  intl: {
-    locale: string,
-    defaultLocale: string,
-    message: Object
-  },
-  hideButtons: boolean
-}
-
+type Props = CMSProps;
 type State = {
 }
 
@@ -51,16 +30,12 @@ class CannerCMS extends React.Component<Props, State> {
   schema: any;
 
   static defaultProps = {
-    schema: {},
+    schema: {
+      schema: {}
+    },
     dataDidChange: () => {},
     afterDeploy: () => {},
-    componentTree: {},
-    hocs,
-    layouts: {},
-    toolbars: {},
     baseUrl: '/',
-    connector: {},
-    resolver: {},
     intl: {
       locale: 'en',
       defaultLocale: 'en',
@@ -102,7 +77,6 @@ class CannerCMS extends React.Component<Props, State> {
   render() {
     const {
       dataDidChange,
-      hocs,
       baseUrl,
       history,
       afterDeploy,
