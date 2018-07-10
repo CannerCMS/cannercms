@@ -189,7 +189,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {params, goTo, baseUrl, routes, storages, onDeploy, removeOnDeploy, hideButtons} = this.props;
+    const {params, goTo, baseUrl, routes, storages, onDeploy, removeOnDeploy, hideButtons, routeMode} = this.props;
     if (component) {
       return <node.component
         {...restNodeData}
@@ -203,8 +203,12 @@ export default class Generator extends React.PureComponent<Props, State> {
         removeOnDeploy={removeOnDeploy}
         hideButtons={hideButtons}
         goTo={path => {
-          goTo(`${baseUrl}/${path}`)}
-        }
+          if (routeMode === 'query') {
+            goTo(`${baseUrl}?route=${path}`);
+          } else {
+            goTo(`${baseUrl}/${path}`);
+          }
+        }}
         {...props}
       />;
     }

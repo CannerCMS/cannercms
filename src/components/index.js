@@ -155,6 +155,7 @@ class CannerCMS extends React.Component<Props, State> {
             routes={routes}
             params={params}
             hideButtons={hideButtons}
+            routeMode={query ? 'query' : 'pathname'}
           />
         </Provider>
       </IntlProvider>
