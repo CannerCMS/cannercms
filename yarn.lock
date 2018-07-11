@@ -3293,9 +3293,9 @@ canner-graphql-interface@^1.12.0:
     pluralize "^7.0.0"
     uuid "^3.2.1"
 
-canner-graphql-interface@^1.14.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.14.0.tgz#24d7904f80cbb41583e412e29f95fa8b2051c39f"
+canner-graphql-interface@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.15.0.tgz#54b2a730bac716dc2e7decfec9c0366de267d2d5"
   dependencies:
     apollo-cache "^1.1.7"
     apollo-cache-inmemory "^1.1.12"
