@@ -89,9 +89,9 @@ class CannerCMS extends React.Component<Props, State> {
     let pathname = '';
     let params = {};
     let routes = [];
-    if (query) {
+    if ('query' in this.props) {
       params = queryString.parse(query);
-      pathname = params.route;
+      pathname = params.route || '';
       delete params.route;
       routes = pathname.split('/');
     } else {
