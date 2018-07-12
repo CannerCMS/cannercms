@@ -18,6 +18,7 @@ import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
 import RefId from 'canner-ref-id';
+import Layouts from 'canner-layouts';
 
 function defaultHoc(Component) {
   return Component;
@@ -141,6 +142,9 @@ export default class Generator extends React.PureComponent<Props, State> {
     const copyNode = {...node};
     let component;
     if (isLayout(copyNode)) {
+      if (typeof copyNode.component === 'string') {
+        copyNode.component = Layouts[copyNode.component]
+      }
       component = this.wrapByHOC(copyNode.component, (copyNode.hocs || ['containerRouter']).slice() || []);
     } else if (isComponent(copyNode)) { // TODO: need to fix, turn plugins to components in compiler
 
