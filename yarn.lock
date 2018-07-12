@@ -1607,13 +1607,6 @@ ansi-styles@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-1.0.0.tgz#cb102df1c56f5123eab8b67cd7b98027a0279178"
 
-antd-geosuggest@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/antd-geosuggest/-/antd-geosuggest-0.2.4.tgz#a78cb9f14cdbb43aae0ccbd13b291d79890cfcf2"
-  dependencies:
-    antd "^3.4.1"
-    lodash.debounce "^4.0.8"
-
 antd-geosuggest@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/antd-geosuggest/-/antd-geosuggest-0.3.1.tgz#5e3264aea3968982d4511e0a0771b5c0354c5a80"
@@ -1621,7 +1614,7 @@ antd-geosuggest@^0.3.1:
     antd "^3.4.1"
     lodash.debounce "^4.0.8"
 
-antd@^3.2.0, antd@^3.2.3, antd@^3.4.1:
+antd@^3.2.0, antd@^3.4.1:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/antd/-/antd-3.5.3.tgz#92249afbb1d0f90b4ea2832362b371a24cb5e3bd"
   dependencies:
