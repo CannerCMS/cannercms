@@ -18,7 +18,7 @@ import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
 import RefId from 'canner-ref-id';
-import dynamic, {SameLoopPromise} from 'next/dynamic';
+import Layouts from 'canner-layouts';
 
 function defaultHoc(Component) {
   return Component;
@@ -142,27 +142,19 @@ export default class Generator extends React.PureComponent<Props, State> {
     const copyNode = {...node};
     let component;
     if (isLayout(copyNode)) {
+      if (typeof copyNode.component === 'string') {
+        copyNode.component = Layouts[copyNode.component]
+      }
       component = this.wrapByHOC(copyNode.component, (copyNode.hocs || ['containerRouter']).slice() || []);
     } else if (isComponent(copyNode)) { // TODO: need to fix, turn plugins to components in compiler
 
       if (isFieldset(copyNode)) {
         component = () => <Item />;
       } else {
-        // if using next.js framework dynamic route should use next.js's dynmic function.
-        if (process.env.ENGINE === 'nextjs') {
-          component = dynamic(new SameLoopPromise((resolve, reject) => copyNode.loader.then(resolve).catch(reject)),
-            {
-              // Since we don't know whether the components are supporting SSR, so we are not going to SSR components.
-              ssr: false,
-              loading: Loading
-            }
-          )
-        } else {
-          component = Loadable({
-            loader: () => copyNode.loader || Promise.reject(`There is no loader in ${copyNode.path}`),
-            loading: Loading,
-          });
-        }
+        component = Loadable({
+          loader: () => copyNode.loader || Promise.reject(`There is no loader in ${copyNode.path}`),
+          loading: Loading,
+        });
       }
       component = this.wrapByHOC(component, ['title', 'onDeploy', 'deploy', 'request', 'query', 'cache', 'route', 'id', 'context'] || []);
     }
