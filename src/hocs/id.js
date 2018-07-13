@@ -91,7 +91,7 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     componentDidMount() {
-      const {params, pattern, keyName, items, fetch, routes, refId, updateQuery, query} = this.props;
+      const {params, pattern, keyName, items, routes} = this.props;
       if (params.op === 'create' && pattern === 'array') {
         // posts?op=create
         let value = createEmptyData(items);
@@ -155,11 +155,6 @@ export default function connectId(Com: React.ComponentType<*>) {
       />
     }
   };
-}
-
-function isChildrenOfArray(pattern: string) {
-  const patternArray = pattern.split('.');
-  return patternArray.length === 2 && patternArray[0] === 'array';
 }
 
 function randomId() {
