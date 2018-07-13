@@ -2,6 +2,16 @@ const path = require('path');
 const fs = require('fs');
 
 module.exports = {
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    antd: 'antd',
+    lodash: '_',
+    firebase: 'firebase',
+    immutable: 'Immutable',
+    'styled-components': 'styled',
+    'canner-slate-editor': 'CannerSlateEditor',
+  },
   module: {
     rules: [
       {
