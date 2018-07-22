@@ -75,7 +75,8 @@
     "style-loader": "^0.20.2",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.10",
-    "webpack-dev-server": "^3.1.0"
+    "webpack-dev-server": "^3.1.0",
+    "firebase": "^4.13.1"
   },
   "dependencies": {
     "@canner/antd-array-gallery": "0.2.5",
