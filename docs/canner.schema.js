@@ -11,10 +11,10 @@ import Users from './schema/realWorld/users.schema';
 import Home from './schema/realWorld/home.schema';
 import OnDeploy from './schema/onDeploy.schema';
 import TabsFilter from './toolbar/filter';
-// import utils from './utils';
-// const {connector, storage, graphClient} = utils;
-const connector = undefined;
-const storage = undefined;
+import utils from './utils';
+const {connector, storage, graphClient} = utils;
+// const connector = undefined;
+// const storage = undefined;
 const userColumns = [{
   title: 'Name',
   dataIndex: 'name'
@@ -31,7 +31,7 @@ const postColumns = [{
   dataIndex: 'title'
 }];
 
-export default <root>
+export default <root connector={connector}>
   <object keyName="overview"
     title="Components Overview"
     storage={storage}

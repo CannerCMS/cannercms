@@ -85,6 +85,9 @@ export default function connectId(Com: React.ComponentType<*>) {
 
       if (pattern === 'array' && routes.length === 1 && this.args && this.props.routes.length > 1) {
         // posts/<postId> => posts
+        this.setState({
+          refId: new RefId(`${keyName}`)
+        });
         updateQuery([keyName], this.args);
         delete this.args;
       }

@@ -89,11 +89,10 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     UNSAFE_componentWillReceiveProps(props: Props) {
       const {refId} = this.props;
-      
       if (refId.toString() !== props.refId.toString()) {
         // refetch when route change
         this.queryData(props);
-      } 
+      }
     }
 
     componentWillUnmount() {
