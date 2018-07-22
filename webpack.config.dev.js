@@ -11,7 +11,14 @@ module.exports = {
     index: './docs/index.js',
   },
   externals: {
-    antd: 'antd'
+    'react': "React",
+    'react-dom': "ReactDOM",
+    'antd': 'antd',
+    'lodash': '_',
+    'firebase': 'firebase',
+    'immutable': 'Immutable',
+    'styled-components': 'styled',
+    'canner-slate-editor': 'CannerSlateEditor'
   },
   output: {
     path: path.join(__dirname, 'dist'),
