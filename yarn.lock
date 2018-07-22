@@ -3013,9 +3013,9 @@ canner-compiler@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/canner-compiler/-/canner-compiler-0.1.6.tgz#516b5b2ded2029cf94fe4ef65ce024adad79fdd0"
 
-canner-graphql-interface@^1.15.0:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.15.0.tgz#54b2a730bac716dc2e7decfec9c0366de267d2d5"
+canner-graphql-interface@^1.16.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.16.0.tgz#6611aceeb9c5c5aad2eae8c6c6491df860b31636"
   dependencies:
     apollo-cache "^1.1.7"
     apollo-cache-inmemory "^1.1.12"
@@ -3024,7 +3024,6 @@ canner-graphql-interface@^1.15.0:
     apollo-link-http "^1.5.4"
     apollo-utilities "^1.0.11"
     canner-graphql-utils "^1.4.0"
-    firebase "^4.13.1"
     graphql "0.13.0"
     graphql-anywhere "^4.1.6"
     graphql-tag "^2.8.0"
