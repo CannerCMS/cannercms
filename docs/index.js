@@ -2,6 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import CMS from '../src/components';
+import RouteProvider from '../src/components/routeProvider/ReactRouterProvider';
 import schema from './canner.schema';
 import {Layout, Menu} from 'antd';
 // eslint-disable-next-line
@@ -34,7 +35,7 @@ class CMSExample extends React.Component {
                 {
                   Object.keys(schema.schema).map(key => (
                     <Menu.Item key={key}>
-                      <Link to={`${baseUrl}?route=${key}`}>
+                      <Link to={`${baseUrl}/${key}`}>
                         {schema.schema[key].title}
                       </Link>
                     </Menu.Item>
@@ -43,13 +44,16 @@ class CMSExample extends React.Component {
               </Menu>
             </Layout.Sider>
             <Layout.Content>
-              <CMS
-                schema={schema}
-                baseUrl={baseUrl}
+              <RouteProvider
                 history={history}
-                afterDeploy={this.afterDeploy}
-                dataDidChange={this.dataDidChange}
-              />
+                baseUrl={baseUrl}
+              >
+                <CMS
+                  schema={schema}
+                  afterDeploy={this.afterDeploy}
+                  dataDidChange={this.dataDidChange}
+                />
+              </RouteProvider>
             </Layout.Content>
           </Layout>;
         }}/>

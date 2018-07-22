@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import queryString from 'query-string';
 import Provider from './Provider';
 import Generator from './Generator';
 import hocs from '../hocs';
@@ -81,32 +80,15 @@ class CannerCMS extends React.Component<Props, State> {
     const {
       dataDidChange,
       baseUrl,
-      history,
+      routes,
+      params,
+      goTo,
       afterDeploy,
       intl = {},
       hideButtons,
-      schema: {storages},
-      query
+      schema: {storages}
     } = this.props;
-    let {push} = this.props;
-    let pathname = '';
-    let params = {};
-    let routes = [];
-    if ('query' in this.props) {
-      params = queryString.parse(query);
-      pathname = params.route || '';
-      delete params.route;
-      routes = pathname.split('/');
-    } else {
-      const {location} = history;
-      if (!location) {
-        throw new Error('There is no history object given.');
-      }
-      params = queryString.parse(location.search);
-      pathname = location.pathname;
-      push = history.push;
-      routes = getRoutes(pathname, baseUrl);
-    }
+
     return (
       <IntlProvider
         locale={intl.locale || 'en'}
@@ -129,25 +111,16 @@ class CannerCMS extends React.Component<Props, State> {
             storages={storages}
             componentTree={this.componentTree || {}}
             hocs={hocs}
-            goTo={push || function() {}}
+            goTo={goTo}
             baseUrl={baseUrl}
             routes={routes}
             params={params}
             hideButtons={hideButtons}
-            routeMode={query ? 'query' : 'pathname'}
           />
         </Provider>
       </IntlProvider>
     );
   }
-}
-
-function getRoutes(pathname, baseUrl = '/') {
-  let pathnameWithoutBaseUrl = pathname.substring(baseUrl.length);
-  if (pathnameWithoutBaseUrl[0] === '/') {
-    pathnameWithoutBaseUrl = pathnameWithoutBaseUrl.substring(1);
-  }
-  return pathnameWithoutBaseUrl.split('/');
 }
 
 function compile(schema, visitors) {
