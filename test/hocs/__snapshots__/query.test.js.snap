@@ -29,6 +29,12 @@ exports[`with  query should render 2`] = `
           "posts",
         ],
       ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": Promise {},
+        },
+      ],
     }
   }
   items={

@@ -18,7 +18,7 @@ Canner is flexible and agnostic, that you can ***learn once and create any form 
 
 ### ⛄ Create data model and UI design at the same time.
 
-While you are defining Canner schema in JSX, you are defining how your CMS store your data in your databases, and how your CMS UI/UX should look like.
+By defining a Canner schema in JSX, you can determine how the CMS stores data in your databases and the appearance of the CMS UI/UX.
 
 ![schema](./docs/schema.png)
 

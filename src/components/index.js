@@ -5,8 +5,10 @@ import queryString from 'query-string';
 import Provider from './Provider';
 import Generator from './Generator';
 import hocs from '../hocs';
+import {createEmptyData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
-
+import {createClient, MemoryConnector} from 'canner-graphql-interface';
+import {isEmpty, isPlainObject} from 'lodash';
 // i18n
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -58,6 +60,7 @@ class CannerCMS extends React.Component<Props, State> {
       result[key] = v;
       return result;
     }, {});
+    this.client = genClient({...props.schema, schema: schema});
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
@@ -82,7 +85,7 @@ class CannerCMS extends React.Component<Props, State> {
       afterDeploy,
       intl = {},
       hideButtons,
-      schema: {client, storages}
+      schema: {storages}
     } = this.props;
     const {location, push} = history;
     const {pathname} = location;
@@ -100,7 +103,7 @@ class CannerCMS extends React.Component<Props, State> {
       >
         <Provider
           ref={provider => this.provider = provider}
-          client={client}
+          client={this.client}
           schema={this.schema}
           dataDidChange={dataDidChange}
           afterDeploy={afterDeploy}
@@ -139,6 +142,49 @@ function compile(schema, visitors) {
   });
   const componentTree = traverser.traverse();
   return componentTree;
+}
+
+export function genClient(schema) {
+  const {
+    resolvers,
+    connector,
+    graphqlClient,
+  } = schema;
+
+  const options: Object = {
+    schema: schema.schema
+  };
+
+  if (connector) {
+    if (isPlainObject(connector)) {
+      if (!isEmpty(connector)) {
+        options.connectors = connector
+      }
+    } else {
+      options.connector = connector;
+    }
+  }
+
+  if (graphqlClient) {
+    if (isPlainObject(graphqlClient)) {
+      if (!isEmpty(connector)) {
+        options.graphqlClients = graphqlClient;
+      }
+    } else {
+      options.graphqlClient = graphqlClient;
+    }
+  }
+
+  if (isEmpty(connector) && isEmpty(graphqlClient)) {
+    options.connector = new MemoryConnector({
+      defaultData: createEmptyData(schema.schema).toJS()
+    });
+  }
+
+  if (!isEmpty(resolvers)) {
+    options.resolvers = resolvers
+  }
+  return createClient(options);
 }
 
 export default CannerCMS;
