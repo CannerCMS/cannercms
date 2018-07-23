@@ -27,11 +27,11 @@ const storage = new FirebaseClientService({
   hash: true, // if true, the filename will add a hash string, e.g.: `filename-${hash}.jpg`
 }).getServiceConfig();
 
-function renderImages(text) {
+function renderImages(values) {
   return (
     <React.Fragment>
       {
-        text.map(image => (
+        values.map(image => (
           <img src={image.url} key={image.url} width="50" height="50" style={{marginRight: 3}}/>
         ))
       }
@@ -39,7 +39,19 @@ function renderImages(text) {
   );
 }
 
+function renderPosts(values) {
+  console.log(values);
+  return (
+    <ul>
+      {
+        values.map(post => <li key={post.title}>{post.title}</li>)
+      }
+    </ul>
+  );
+}
+
 export default {
+  renderPosts,
   renderImages,
   storage,
   connector,

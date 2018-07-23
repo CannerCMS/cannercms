@@ -12,7 +12,7 @@ import Home from './schema/realWorld/home.schema';
 import OnDeploy from './schema/onDeploy.schema';
 import TabsFilter from './toolbar/filter';
 import utils from './utils';
-const {connector, storage, graphClient, renderImages} = utils;
+const {connector, storage, graphClient, renderImages, renderPosts} = utils;
 // const connector = undefined;
 // const storage = undefined;
 const userColumns = [{
@@ -34,6 +34,10 @@ const userColumns = [{
 }, {
   title: 'Hobbies',
   dataIndex: 'hobbies'
+}, {
+  title: 'Posts',
+  dataIndex: 'posts',
+  render: renderPosts
 }];
 
 const postColumns = [{
