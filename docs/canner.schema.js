@@ -39,6 +39,9 @@ const userColumns = [{
 const postColumns = [{
   title: 'Title',
   dataIndex: 'title'
+}, {
+  title: 'User',
+  dataIndex: 'author.name'
 }];
 
 export default <root connector={connector}>
