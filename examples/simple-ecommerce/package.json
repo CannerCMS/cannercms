@@ -6,7 +6,7 @@
     "start": "canner script:serve"
   },
   "dependencies": {
-    "@canner/cli": "^2.3.1",
+    "@canner/cli": "^2.3.2",
     "antd": "^3.7.1",
     "canner-script": "^1.2.0",
     "immutable": "^3.8.2",

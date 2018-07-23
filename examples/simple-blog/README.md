@@ -1,4 +1,4 @@
-# Simple ecommerce demo
+# Simple blog demo
 
 Start dev server:
 
