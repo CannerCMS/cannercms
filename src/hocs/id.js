@@ -75,8 +75,8 @@ export default function connectId(Com: React.ComponentType<*>) {
         });
       }
 
-      if (pattern === 'array' && routes.length > 1) {
-        // posts/<postId>
+      if (pattern === 'array' && routes.length > 1 && this.props.routes.length === 1) {
+        // posts => posts/<postId>
         this.setState({
           refId: new RefId(`${keyName}/0`)
         });
