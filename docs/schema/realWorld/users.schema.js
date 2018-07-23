@@ -48,6 +48,8 @@ const Users = ({attributes}) => (
     <string keyName="name" title="name"/>
     <string keyName="email" title="Email"/>
     <number keyName="age" title="Age"/>
+    <boolean keyName="isLogin" title="Logined" />
+    <array keyName="hobbies" title="Hobbies" ui="tag"/>
     <array keyName="images" title="Images">
       <string keyName="url" title="Url" />
     </array>

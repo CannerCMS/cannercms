@@ -1,9 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import queryString from 'query-string';
 import Provider from './Provider';
 import Generator from './Generator';
+import Sidebar from './Sidebar';
+import {Layout} from 'antd';
 import hocs from '../hocs';
 import {createEmptyData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
@@ -81,16 +82,17 @@ class CannerCMS extends React.Component<Props, State> {
     const {
       dataDidChange,
       baseUrl,
-      history,
+      routes,
+      params,
+      goTo,
       afterDeploy,
       intl = {},
       hideButtons,
       schema: {storages}
     } = this.props;
-    const {location, push} = history;
-    const {pathname} = location;
-    const routes = getRoutes(pathname, baseUrl);
-    const params = queryString.parse(location.search);
+
+    const sidebar = []
+
     return (
       <IntlProvider
         locale={intl.locale || 'en'}
@@ -101,36 +103,37 @@ class CannerCMS extends React.Component<Props, State> {
           ...(intl.messages || {})
         }}
       >
-        <Provider
-          ref={provider => this.provider = provider}
-          client={this.client}
-          schema={this.schema}
-          dataDidChange={dataDidChange}
-          afterDeploy={afterDeploy}
-          rootKey={routes[0]}
-        >
-          <Generator
-            storages={storages}
-            componentTree={this.componentTree || {}}
-            hocs={hocs}
-            goTo={push || function() {}}
-            baseUrl={baseUrl}
-            routes={routes}
-            params={params}
-            hideButtons={hideButtons}
+        <Layout>
+          <Sidebar
+            sidebar={sidebar}
+            goTo={goTo}
+            schema={this.schema}
           />
-        </Provider>
+          <Layout.Content>
+            <Provider
+              ref={provider => this.provider = provider}
+              client={this.client}
+              schema={this.schema}
+              dataDidChange={dataDidChange}
+              afterDeploy={afterDeploy}
+              rootKey={routes[0]}
+            >
+              <Generator
+                storages={storages}
+                componentTree={this.componentTree || {}}
+                hocs={hocs}
+                goTo={goTo}
+                baseUrl={baseUrl}
+                routes={routes}
+                params={params}
+                hideButtons={hideButtons}
+              />
+            </Provider>
+          </Layout.Content>
+        </Layout>
       </IntlProvider>
     );
   }
-}
-
-function getRoutes(pathname, baseUrl = '/') {
-  let pathnameWithoutBaseUrl = pathname.substring(baseUrl.length);
-  if (pathnameWithoutBaseUrl[0] === '/') {
-    pathnameWithoutBaseUrl = pathnameWithoutBaseUrl.substring(1);
-  }
-  return pathnameWithoutBaseUrl.split('/');
 }
 
 function compile(schema, visitors) {

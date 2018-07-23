@@ -7,6 +7,8 @@ import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
 import type ApolloClient from 'apollo-boost';
 import isEmpty from 'lodash/isEmpty';
+import pluralize from 'pluralize';
+import upperFirst from 'lodash/upperFirst';
 import {ActionManager, actionToMutation, actionsToVariables, mutatePure} from '../action';
 import {Query} from '../query';
 import {OnDeployManager} from '../onDeployManager';
@@ -113,7 +115,6 @@ export default class Provider extends React.PureComponent<Props, State> {
       this.log('fetch', 'loaded', key, currentResult);
       return Promise.resolve(fromJS(currentResult.data));
     }
-   
   }
 
   subscribe = (key: string, callback: (data: any) => void) => {
@@ -147,7 +148,6 @@ export default class Provider extends React.PureComponent<Props, State> {
     if (!actions || !actions.length) {
       return Promise.resolve();
     }
-    
     actions = removeIdInCreateArray(actions);
     actions = this.onDeploy(actions);
     const mutation = objectToQueries(actionToMutation(actions[0]), false);
@@ -156,6 +156,12 @@ export default class Provider extends React.PureComponent<Props, State> {
       mutation: gql`${mutation}`,
       variables
     }).then(result => {
+      if (actions[0].type === 'CREATE_ARRAY') {
+        this.updateID({
+          action: actions[0],
+          result
+        });
+      }
       this.log('deploy', key, {
         id,
         result,
@@ -179,6 +185,35 @@ export default class Provider extends React.PureComponent<Props, State> {
         mutation,
         variables
       });
+    });
+  }
+
+  updateID({
+    action,
+    result
+  }: {
+    action: Action<ActionType>,
+    result: any
+  }) {
+    const {client} = this.props;
+    const originId = action.payload.id;
+    const key = action.payload.key;
+    const resultKey = `create${upperFirst(pluralize.singular(key))}`;
+    const newId = result.data[resultKey].id;
+    const variables = this.query.getVairables();  
+    const query = gql`${this.query.toGQL(key)}`;
+    const data = client.readQuery({query, variables});
+    data[key].edges.map(edge => {
+      if (edge.cursor === originId) {
+        edge.cursor = newId;
+        edge.node.id = newId;
+      }
+      return edge;
+    });
+    client.writeQuery({
+      query,
+      variables,
+      data
     });
   }
 

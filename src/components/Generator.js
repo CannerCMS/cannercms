@@ -59,7 +59,7 @@ type Props = {
   layouts: {[string]: React.ComponentType<*>},
   storages: Object,
 
-  goTo: (path: string) => void,
+  goTo: (path: string, search?: Object | string) => void,
   baseUrl: string,
   routes: Array<string>,
   params: {[string]: string},
@@ -91,11 +91,11 @@ export default class Generator extends React.PureComponent<Props, State> {
     // prerender the tree in constructor, this action will add a
     // React Component with all hocs it needs in every node
     super(props);
-    const {componentTree, routes, baseUrl, goTo} = props;
+    const {componentTree, routes, goTo} = props;
     let activeKey = routes[0];
     if (!activeKey) {
       activeKey = Object.keys(componentTree)[0];
-      goTo(`${baseUrl}/${activeKey}`);
+      goTo(activeKey);
     }
     this.cacheTree = this.genCacheTree(componentTree);
     this.state = {
@@ -193,7 +193,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {params, goTo, baseUrl, routes, storages, onDeploy, removeOnDeploy, hideButtons} = this.props;
+    const {params, goTo, routes, storages, onDeploy, removeOnDeploy, hideButtons, routeMode} = this.props;
     if (component) {
       return <node.component
         {...restNodeData}
@@ -206,9 +206,14 @@ export default class Generator extends React.PureComponent<Props, State> {
         onDeploy={onDeploy}
         removeOnDeploy={removeOnDeploy}
         hideButtons={hideButtons}
-        goTo={path => {
-          goTo(`${baseUrl}/${path}`)}
-        }
+        goTo={(path, search) => {
+          if (!search) {
+            const [route, search] = path.split('?');
+            goTo(route, search);
+          } else {
+            goTo(path, search);
+          }
+        }}
         {...props}
       />;
     }
