@@ -1,0 +1,16 @@
+{
+  "name": "simple-ecommerce",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "canner script:serve"
+  },
+  "dependencies": {
+    "@canner/cli": "^2.3.2",
+    "antd": "^3.7.1",
+    "canner-script": "^1.2.0",
+    "immutable": "^3.8.2",
+    "lodash": "^4.17.10",
+    "react": "^16.4.1"
+  }
+}

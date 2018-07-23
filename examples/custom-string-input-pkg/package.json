@@ -1,0 +1,19 @@
+{
+  "name": "@canner/customize-string-input",
+  "version": "0.1.18",
+  "description": "string input",
+  "main": "lib/index.js",
+  "keywords": [
+    "cms",
+    "input",
+    "canner"
+  ],
+  "author": "canner",
+  "license": "ISC",
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0"
+  },
+  "canner": {
+    "cannerDataType": "string"
+  }
+}
