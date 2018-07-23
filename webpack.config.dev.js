@@ -8,6 +8,8 @@ module.exports = {
       index: '/docs/'
     }
   },
+  mode: 'development',
+  devtool: 'cheap-module-eval-source-map',
   entry: {
     index: './docs/index.js',
   },

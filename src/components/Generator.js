@@ -59,7 +59,7 @@ type Props = {
   layouts: {[string]: React.ComponentType<*>},
   storages: Object,
 
-  goTo: (path: string) => void,
+  goTo: (path: string, search?: Object | string) => void,
   baseUrl: string,
   routes: Array<string>,
   params: {[string]: string},
@@ -206,9 +206,13 @@ export default class Generator extends React.PureComponent<Props, State> {
         onDeploy={onDeploy}
         removeOnDeploy={removeOnDeploy}
         hideButtons={hideButtons}
-        goTo={path => {
-          const [route, search] = path.split('?');
-          goTo(route, search);
+        goTo={(path, search) => {
+          if (!search) {
+            const [route, search] = path.split('?');
+            goTo(route, search);
+          } else {
+            goTo(path, search);
+          }
         }}
         {...props}
       />;

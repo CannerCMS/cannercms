@@ -6,6 +6,7 @@ import type {ReactRouterProviderProps} from '../types';
 
 export default class ReactRouterProvider extends React.Component<ReactRouterProviderProps> {
   goTo = (path: string, search?: Object | string) => {
+    path = deleteFirstSlash(path);
     const {baseUrl, history: {push}} = this.props;
     const qs = typeof search === 'string' ? search : queryString.stringify(search);
     push(`${baseUrl}/${path}${qs ? `?${qs}` : ''}`);
@@ -34,4 +35,11 @@ function getRoutes(pathname, baseUrl = '/') {
     pathnameWithoutBaseUrl = pathnameWithoutBaseUrl.substring(1);
   }
   return pathnameWithoutBaseUrl.split('/');
+}
+
+function deleteFirstSlash(path) {
+  if (path && path[0] === '/') {
+    return path.substring(1);
+  }
+  return path;
 }

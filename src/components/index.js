@@ -91,16 +91,7 @@ class CannerCMS extends React.Component<Props, State> {
       schema: {storages}
     } = this.props;
 
-    const sidebar = [{
-      title: "Posts",
-      to: "/posts"
-    }, {
-      title: 'Other',
-      items: [{
-        title: 'Users',
-        to: '/users'
-      }]
-    }]
+    const sidebar = []
 
     return (
       <IntlProvider
@@ -116,6 +107,7 @@ class CannerCMS extends React.Component<Props, State> {
           <Sidebar
             sidebar={sidebar}
             goTo={goTo}
+            schema={this.schema}
           />
           <Layout.Content>
             <Provider

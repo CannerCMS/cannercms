@@ -61,3 +61,19 @@ export type ReactRouterProviderProps = {
     push: Function
   }
 }
+
+export type Submenu = {
+  title: string,
+  items: Sidebar,
+}
+export type MenuItem = {
+  title: string,
+  to: string
+}
+
+export type Sidebar = ?Array<Submenu | MenuItem>
+
+export type SidebarProps = {
+  schema: CannerSchema,
+  sidebar: Sidebar
+}
