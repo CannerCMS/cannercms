@@ -1,5 +1,5 @@
 /* globals FIREBASE_API_KEY */
-
+import React from 'react';
 import {FirebaseClientService} from '@canner/image-service-config';
 import firebase from 'firebase';
 import {FirebaseRtdbClientConnector, PrismaClient} from 'canner-graphql-interface';
@@ -27,7 +27,20 @@ const storage = new FirebaseClientService({
   hash: true, // if true, the filename will add a hash string, e.g.: `filename-${hash}.jpg`
 }).getServiceConfig();
 
+function renderImages(text) {
+  return (
+    <React.Fragment>
+      {
+        text.map(image => (
+          <img src={image.url} key={image.url} width="50" height="50" style={{marginRight: 3}}/>
+        ))
+      }
+    </React.Fragment>
+  );
+}
+
 export default {
+  renderImages,
   storage,
   connector,
   graphClient: new PrismaClient()
