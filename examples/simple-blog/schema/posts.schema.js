@@ -42,7 +42,7 @@ const Posts = ({attributes}) => <array
   </toolbar>
   <Focus focus={['name', 'content']}>
     <string keyName="name" title="Name" />
-    <object keyName="body" title="Post Body" ui="editor" />
+    <object keyName="content" title="Post Body" ui="editor" />
     <Default title="Basic" keyName="basic">
       <image keyName="mainImage" title="Main Image"/>
       <string keyName="summary" title="Post Summary" />
