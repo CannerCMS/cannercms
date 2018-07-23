@@ -40,7 +40,6 @@ function renderImages(values) {
 }
 
 function renderPosts(values) {
-  console.log(values);
   return (
     <ul>
       {
