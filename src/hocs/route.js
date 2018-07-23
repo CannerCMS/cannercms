@@ -40,7 +40,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
     state = {
       deploying: false
     };
-
+  
     deploy = () => {
       const {refId, deploy, goTo, routes} = this.props;
       this.setState({
@@ -63,19 +63,11 @@ export default function withRoute(Com: React.ComponentType<*>) {
 
     discard = () => {
       const {goTo, routes, params, reset, refId} = this.props;
-      confirm({
-        title: 'Do you Want to discard all changes?',
-        content: 'All unsaved changes will be discard.',
-        onOk() {
-          if (params.op === 'create') {
-            reset(refId.getPathArr()[0]).then(() => goTo(routes.join('/')));
-          } else {
-            reset(refId.getPathArr()[0]).then(() => goTo(routes.slice(0, -1).join('/')));
-          }
-        },
-        onCancel() {
-        },
-      });
+      if (params.op === 'create') {
+        reset(refId.getPathArr()[0]).then(() => goTo(routes.join('/')));
+      } else {
+        reset(refId.getPathArr()[0]).then(() => goTo(routes.slice(0, -1).join('/')));
+      }
       
     }
 
