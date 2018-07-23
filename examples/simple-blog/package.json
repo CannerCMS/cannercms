@@ -1,0 +1,9 @@
+{
+  "name": "simple-blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "canner-script": "^1.2.0"
+  }
+}

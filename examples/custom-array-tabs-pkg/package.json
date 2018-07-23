@@ -1,0 +1,22 @@
+{
+  "name": "@canner/customize-array-tabs",
+  "version": "0.1.19",
+  "description": "array tabs",
+  "main": "lib/index.js",
+  "scripts": {},
+  "keywords": [
+    "cms",
+    "tabs",
+    "canner"
+  ],
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0"
+  },
+  "author": "canner",
+  "license": "ISC",
+  "dependencies": {
+    "antd": "^3.2.0",
+    "immutable": "4.0.0-rc.9",
+    "rc-tabs": "^9.2.5"
+  }
+}
