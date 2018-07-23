@@ -193,7 +193,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {params, goTo, routes, storages, onDeploy, removeOnDeploy, hideButtons, routeMode} = this.props;
+    const {params, goTo, routes, storages, onDeploy, removeOnDeploy, hideButtons} = this.props;
     if (component) {
       return <node.component
         {...restNodeData}
