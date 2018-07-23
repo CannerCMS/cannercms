@@ -8,6 +8,7 @@ export type CannerSchema = {
 
 export type LoadedSchema = {
   schema: CannerSchema,
+  sidebar: Sidebar,
   visitors: Array<Object>,
   client: ApolloClient,
   connectors: {[string]: any},
@@ -75,5 +76,9 @@ export type Sidebar = ?Array<Submenu | MenuItem>
 
 export type SidebarProps = {
   schema: CannerSchema,
-  sidebar: Sidebar
+  sidebar: Sidebar,
+  goTo: Function,
+  dataChanged: Object,
+  reset: Function,
+  routes: Array<string>
 }

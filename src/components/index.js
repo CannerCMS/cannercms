@@ -19,11 +19,12 @@ import pluginsLocales from '@canner/antd-locales';
 addLocaleData([...en, ...zh]);
 
 // type
-import type {CMSProps} from './types';
+import type {CMSProps, LoadedSchema} from './types';
 
 type Props = CMSProps;
 type State = {
-}
+  dataChanged: Object
+};
 
 class CannerCMS extends React.Component<Props, State> {
   imageServiceConfigs: Object
@@ -62,6 +63,19 @@ class CannerCMS extends React.Component<Props, State> {
       return result;
     }, {});
     this.client = genClient({...props.schema, schema: schema});
+    this.state = {
+      dataChanged: {}
+    }
+  }
+
+  dataDidChange = (dataChanged: Object) => {
+    const {dataDidChange} = this.props;
+    if (dataDidChange) {
+      dataDidChange(dataChanged);
+    }
+    this.setState({
+      dataChanged
+    });
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
@@ -80,7 +94,6 @@ class CannerCMS extends React.Component<Props, State> {
 
   render() {
     const {
-      dataDidChange,
       baseUrl,
       routes,
       params,
@@ -88,10 +101,11 @@ class CannerCMS extends React.Component<Props, State> {
       afterDeploy,
       intl = {},
       hideButtons,
-      schema: {storages}
+      schema: {storages, sidebar}
     } = this.props;
-
-    const sidebar = []
+    const {
+      dataChanged
+    } = this.state;
 
     return (
       <IntlProvider
@@ -105,16 +119,19 @@ class CannerCMS extends React.Component<Props, State> {
       >
         <Layout>
           <Sidebar
+            dataChanged={dataChanged}
             sidebar={sidebar}
             goTo={goTo}
             schema={this.schema}
+            reset={this.reset}
+            routes={routes}
           />
           <Layout.Content>
             <Provider
               ref={provider => this.provider = provider}
               client={this.client}
               schema={this.schema}
-              dataDidChange={dataDidChange}
+              dataDidChange={this.dataDidChange}
               afterDeploy={afterDeploy}
               rootKey={routes[0]}
             >
@@ -147,7 +164,7 @@ function compile(schema, visitors) {
   return componentTree;
 }
 
-export function genClient(schema) {
+export function genClient(schema: LoadedSchema) {
   const {
     resolvers,
     connector,
