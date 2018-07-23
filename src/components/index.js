@@ -3,6 +3,8 @@
 import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
+import Sidebar from './Sidebar';
+import {Layout} from 'antd';
 import hocs from '../hocs';
 import {createEmptyData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
@@ -89,6 +91,17 @@ class CannerCMS extends React.Component<Props, State> {
       schema: {storages}
     } = this.props;
 
+    const sidebar = [{
+      title: "Posts",
+      to: "/posts"
+    }, {
+      title: 'Other',
+      items: [{
+        title: 'Users',
+        to: '/users'
+      }]
+    }]
+
     return (
       <IntlProvider
         locale={intl.locale || 'en'}
@@ -99,25 +112,33 @@ class CannerCMS extends React.Component<Props, State> {
           ...(intl.messages || {})
         }}
       >
-        <Provider
-          ref={provider => this.provider = provider}
-          client={this.client}
-          schema={this.schema}
-          dataDidChange={dataDidChange}
-          afterDeploy={afterDeploy}
-          rootKey={routes[0]}
-        >
-          <Generator
-            storages={storages}
-            componentTree={this.componentTree || {}}
-            hocs={hocs}
+        <Layout>
+          <Sidebar
+            sidebar={sidebar}
             goTo={goTo}
-            baseUrl={baseUrl}
-            routes={routes}
-            params={params}
-            hideButtons={hideButtons}
           />
-        </Provider>
+          <Layout.Content>
+            <Provider
+              ref={provider => this.provider = provider}
+              client={this.client}
+              schema={this.schema}
+              dataDidChange={dataDidChange}
+              afterDeploy={afterDeploy}
+              rootKey={routes[0]}
+            >
+              <Generator
+                storages={storages}
+                componentTree={this.componentTree || {}}
+                hocs={hocs}
+                goTo={goTo}
+                baseUrl={baseUrl}
+                routes={routes}
+                params={params}
+                hideButtons={hideButtons}
+              />
+            </Provider>
+          </Layout.Content>
+        </Layout>
       </IntlProvider>
     );
   }

@@ -29,33 +29,18 @@ class CMSExample extends React.Component {
     return (
       <Router>
         <Route path="/docs" render={({history}) => {
-          return <Layout>
-            <Layout.Sider>
-              <Menu>
-                {
-                  Object.keys(schema.schema).map(key => (
-                    <Menu.Item key={key}>
-                      <Link to={`${baseUrl}/${key}`}>
-                        {schema.schema[key].title}
-                      </Link>
-                    </Menu.Item>
-                  ))
-                }
-              </Menu>
-            </Layout.Sider>
-            <Layout.Content>
-              <RouteProvider
-                history={history}
-                baseUrl={baseUrl}
-              >
-                <CMS
-                  schema={schema}
-                  afterDeploy={this.afterDeploy}
-                  dataDidChange={this.dataDidChange}
-                />
-              </RouteProvider>
-            </Layout.Content>
-          </Layout>;
+          return (
+            <RouteProvider
+              history={history}
+              baseUrl={baseUrl}
+            >
+              <CMS
+                schema={schema}
+                afterDeploy={this.afterDeploy}
+                dataDidChange={this.dataDidChange}
+              />
+            </RouteProvider>
+          );
         }}/>
       </Router>
     );
