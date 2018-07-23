@@ -162,6 +162,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
         </Toolbar>;
       } else if (type === 'relation' && relation.type === 'toOne') {
         return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
+      } else if (type === 'relation' && relation.type === 'toMany') {
+        return <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue('array')} />;
       }
       return <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
     }

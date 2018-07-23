@@ -38,12 +38,6 @@ const Title = styled.div`
   font-weight: 400;
 `;
 
-const Description = styled.div`
-  font-size: 12px;
-  margin-top: 16px;
-  color: #aaa;
-`;
-
 // $FlowFixMe
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
   return class ComponentWithTitleAndDescription extends React.Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
@@ -85,15 +79,18 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 marginRight: 8,
                 display: 'flex',
                 flex: 1,
-                flexDirection: 'column'
+                flexDirection: 'row'
               }}>
                 <Title>
                   {title}
                 </Title>
-                <Description>
-                  {description}
-                  
-                </Description>
+                {
+                  description && (
+                    <Tooltip placement="top" title={description}>
+                      <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
+                    </Tooltip>
+                  )
+                }
               </div>
               {
                 (type === 'image' && isEmpty(imageServiceConfig)) && (
