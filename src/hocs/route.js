@@ -98,26 +98,10 @@ export default function withRoute(Com: React.ComponentType<*>) {
         }
         {
           renderType === RENDER_CHILDREN && renderChildren(node => {
-            if (node.nodeType === 'layout') {
-              return {
-                mergeNode: n => {
-                  n.children = n.children.map(layout => {
-                    layout.children = layout.children.map(com => ({
-                      ...com,
-                      hidden: renderKeys && renderKeys.indexOf(com.keyName) === -1
-                    }));
-                    return layout;
-                  })
-                },
-                refId
-              }
-            } else {
-              return {
-                hidden: renderKeys && renderKeys.indexOf(node.keyName) === -1,
-                refId
-              };
-            }
-            
+            return {
+              hidden: renderKeys && renderKeys.indexOf(node.keyName) === -1,
+              refId
+            };
           })
         }
         {
