@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "1.3.8",
+  "version": "1.3.9",
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "scripts": {
@@ -96,7 +96,7 @@
     "@canner/antd-number-input": "0.2.6",
     "@canner/antd-number-rate": "0.2.6",
     "@canner/antd-number-slider": "0.2.6",
-    "@canner/antd-object-editor": "^0.2.6",
+    "@canner/antd-object-editor": "^0.2.7",
     "@canner/antd-object-image": "0.2.6",
     "@canner/antd-object-map": "0.2.6",
     "@canner/antd-object-options": "0.2.6",
