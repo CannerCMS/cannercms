@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import RefId from 'canner-ref-id';
-import {Map, List, is, fromJS} from 'immutable';
+import {Map, List, fromJS} from 'immutable';
 import Toolbar from './components/toolbar';
 import type {Query} from '../query';
 import {mapValues} from 'lodash';
