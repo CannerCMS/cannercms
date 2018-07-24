@@ -68,7 +68,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     componentDidMount() {
       // defaultSort
-      const {toolbar, relation, path, query, updateQuery} = this.props;
+      const {relation, query, updateQuery} = this.props;
       if (!relation) {
         return;
       }
@@ -140,10 +140,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
       return <Com {...this.props} Toolbar={tb} relationValue={value}/>;
     }
   };
-}
-
-function shouldUpdate(value: any, newValue: any) {
-  return !is(value, newValue);
 }
 
 function defaultValue(type: string, relation: any) {

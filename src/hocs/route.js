@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
-import {Button, Icon, Modal, Spin} from 'antd';
-const confirm = Modal.confirm;
+import {Button, Icon, Spin} from 'antd';
 import styled from 'styled-components';
 import type RefId from 'canner-ref-id';
 
@@ -28,7 +27,8 @@ type Props = {
   renderChildren: (Object) => React.Node,
   request: Function,
   keyName: string,
-  items: Object
+  items: Object,
+  uiParams: Object
 }
 
 type State = {
