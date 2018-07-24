@@ -9,8 +9,10 @@ import title from './title';
 import containerRouter from './containerRouter';
 import onDeploy from './onDeploy';
 import context from './connectContext';
+import errorCatch from './errorCatch';
 
 export default {
+  errorCatch,
   query,
   route,
   cache,

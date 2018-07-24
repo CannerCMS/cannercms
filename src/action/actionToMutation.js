@@ -29,7 +29,7 @@ export default function actionToMutation(action: Action<ActionType>) {
   switch(type) {
     case 'UPDATE_OBJECT':
       args = {
-        $payload: 'any'
+        $payload: genUpdateInputType(action)
       }
       actionArgs = {
         data: '$payload'
