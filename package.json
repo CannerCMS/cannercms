@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "1.3.9",
+  "version": "1.3.12",
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "scripts": {
@@ -96,7 +96,7 @@
     "@canner/antd-number-input": "0.2.6",
     "@canner/antd-number-rate": "0.2.6",
     "@canner/antd-number-slider": "0.2.6",
-    "@canner/antd-object-editor": "^0.2.7",
+    "@canner/antd-object-editor": "^0.2.8",
     "@canner/antd-object-image": "0.2.6",
     "@canner/antd-object-map": "0.2.6",
     "@canner/antd-object-options": "0.2.6",
@@ -105,6 +105,7 @@
     "@canner/antd-relation-single_select": "0.2.6",
     "@canner/antd-share-card": "0.2.6",
     "@canner/antd-share-relation": "0.2.6",
+    "@canner/antd-string-mde": "0.2.6",
     "@canner/antd-string-card": "0.2.6",
     "@canner/antd-string-date_time_picker": "0.2.6",
     "@canner/antd-string-input": "0.2.6",
