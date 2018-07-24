@@ -137,6 +137,7 @@ class CannerCMS extends React.Component<Props, State> {
             >
               <Generator
                 storages={storages}
+                schema={this.schema}
                 componentTree={this.componentTree || {}}
                 hocs={hocs}
                 goTo={goTo}

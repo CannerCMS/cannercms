@@ -69,6 +69,7 @@ type Props = {
   onDeploy?: Function,
   removeOnDeploy?: Function,
   hideButtons: boolean,
+  schema: Object
 }
 
 type childrenProps = {
@@ -193,7 +194,11 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {params, goTo, routes, storages, onDeploy, removeOnDeploy, hideButtons} = this.props;
+    const {params, goTo, routes, storages, onDeploy, removeOnDeploy, hideButtons, schema} = this.props;
+    if (node.hidden || props.hidden) {
+      return null;
+    }
+
     if (component) {
       return <node.component
         {...restNodeData}
@@ -206,6 +211,7 @@ export default class Generator extends React.PureComponent<Props, State> {
         onDeploy={onDeploy}
         removeOnDeploy={removeOnDeploy}
         hideButtons={hideButtons}
+        schema={schema}
         goTo={(path, search) => {
           if (!search) {
             const [route, search] = path.split('?');
@@ -262,15 +268,21 @@ export default class Generator extends React.PureComponent<Props, State> {
     const {children} = node;
     if (children) {
       return children.map((child, index) => {
-        const childrenProps = typeof props === 'function' ? props(child) : props;
-        const {refId} = childrenProps;
+        const childProps = typeof props === 'function' ? props(child) : props;
+        const {refId} = childProps;
         if (isUndefined(refId)) {
           throw new Error(`refId is required for renderChildren, please check node '${node.keyName || ''}'`);
         }
-        if (childrenProps.hidden) {
+        if (childProps.hidden) {
           return null;
         }
-        return this.renderNode(child, index, childrenProps);
+
+        if (childProps.mergeNode) {
+          // mutate node
+          childProps.mergeNode(node);
+        }
+
+        return this.renderNode(child, index, childProps);
       });
     }
     return null;

@@ -73,7 +73,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
 
     render() {
       const {deploying} = this.state;
-      let {routes, pattern,  path, params, refId, renderChildren, hideButtons} = this.props;
+      let {routes, pattern,  path, params, refId, renderChildren, hideButtons, uiParams} = this.props;
       const renderType = getRenderType({
         pattern,
         routes,
@@ -83,6 +83,10 @@ export default function withRoute(Com: React.ComponentType<*>) {
       const pathArrLength = refId.getPathArr().length;
       const routesLength = routes.length;
       const {op} = params;
+      let renderKeys = uiParams && uiParams.updateKeys; // render all
+      if (op === 'create') {
+        renderKeys = uiParams && uiParams.createKeys;
+      }
       return <Spin tip="deploying" spinning={deploying}>
         {
           // quick fix for route array's children
@@ -93,8 +97,27 @@ export default function withRoute(Com: React.ComponentType<*>) {
             </Button>
         }
         {
-          renderType === RENDER_CHILDREN && renderChildren({
-            refId
+          renderType === RENDER_CHILDREN && renderChildren(node => {
+            if (node.nodeType === 'layout') {
+              return {
+                mergeNode: n => {
+                  n.children = n.children.map(layout => {
+                    layout.children = layout.children.map(com => ({
+                      ...com,
+                      hidden: renderKeys && renderKeys.indexOf(com.keyName) === -1
+                    }));
+                    return layout;
+                  })
+                },
+                refId
+              }
+            } else {
+              return {
+                hidden: renderKeys && renderKeys.indexOf(node.keyName) === -1,
+                refId
+              };
+            }
+            
           })
         }
         {

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
-import type RefId from 'canner-ref-id';
+import RefId from 'canner-ref-id';
 import {Map, List, is, fromJS} from 'immutable';
 import Toolbar from './components/toolbar';
 import type {Query} from '../query';
@@ -149,7 +149,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching, rootValue} = this.state;
-      const {toolbar, query, refId, items, type, path, relation, pattern} = this.props;
+      const {toolbar, query, refId, items, type, path, relation, pattern, schema} = this.props;
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
@@ -163,7 +163,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
       } else if (type === 'relation' && relation.type === 'toOne') {
         return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
       } else if (type === 'relation' && relation.type === 'toMany') {
-        return <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue('array')} />;
+        return (
+          <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue('array')} />
+        );
       }
       return <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
     }
