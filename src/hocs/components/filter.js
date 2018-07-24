@@ -3,6 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import SelectFilter from './select';
 import NumberFilter from './number';
+import TextFilter from './text';
 // import DateRangeFilter from './dateRange';
 import {Button, Row, Col} from 'antd';
 import isEmpty from 'lodash/isEmpty';
@@ -69,7 +70,10 @@ class FilterGroup extends React.Component<Props, State> {
         } else {
           condition[key] = cond[key]
         }
-      })
+      });
+      this.setState({
+        condition
+      });
     }
   }
 
@@ -92,8 +96,7 @@ class FilterGroup extends React.Component<Props, State> {
         */
         case 'text':
         default:
-          return null;
-          // return <TextFilter onChange={this.onChange} name={val.key} regexTemplate={val.regexTemplate} label={val.label}/>;
+          return <TextFilter onChange={this.onChange} name={val.key} label={val.label}/>;
       }
     });
     return (

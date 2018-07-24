@@ -1,4 +1,5 @@
 import query from './query';
+import relation from './relation';
 import route from './route';
 import cache from './cache';
 import request from './request';
@@ -15,6 +16,7 @@ export default {
   cache,
   request,
   deploy,
+  relation,
   // validator,
   id,
   title,

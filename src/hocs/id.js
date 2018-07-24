@@ -118,6 +118,7 @@ export default function connectId(Com: React.ComponentType<*>) {
       const variables = query.getVairables();
       this.args = mapValues(queries, v => variables[v.substr(1)]);
       updateQuery(paths, {
+        ...this.args,
         where: {id: id},
       });
       fetch(keyName)

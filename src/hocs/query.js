@@ -15,8 +15,8 @@ type Props = {
   items: Object,
   refId: RefId,
   query: Query,
-  fetch: FetchDef,
-  subscribe: SubscribeDef,
+  fetch: Function,
+  subscribe: Function,
   updateQuery: Function,
   ui: string,
   path: string,
@@ -25,6 +25,7 @@ type Props = {
     type: string,
     to: string
   },
+  schema: Object,
   params: Object,
   toolbar: {
     sort?: {
@@ -72,19 +73,19 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     componentDidMount() {
       // defaultSort
-      const {toolbar, refId, path, query, updateQuery} = this.props;
-      const defaultSort = toolbar && toolbar.sort && toolbar.sort.defaultSort;
-      if (defaultSort) {
+      const {pattern, path, query, updateQuery, refId} = this.props;
+      if (pattern === 'array') {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v.substr(1)]);
         const paths = refId.getPathArr();
         updateQuery(paths, {
           ...args,
-          orderBy: `${defaultSort}_ASC`
+          where: {}
         });
       }
       this.queryData();
+      this.subscribe();
     }
 
     UNSAFE_componentWillReceiveProps(props: Props) {
@@ -92,15 +93,12 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (refId.toString() !== props.refId.toString()) {
         // refetch when route change
         this.queryData(props);
+        this.subscribe();
       }
     }
 
     componentWillUnmount() {
       this.unsubscribe();
-    }
-
-    getRootValue = () => {
-      return this.state.rootValue;
     }
 
     queryData = (props?: Props): Promise<*> => {
@@ -112,7 +110,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
           value: getValue(data, refId.getPathArr()),
           isFetching: false
         });
-        this.subscribe();
       });
     }
 
@@ -144,12 +141,13 @@ export default function withQuery(Com: React.ComponentType<*>) {
         // if graphql query changes, it have to rewatch the new observableQuery
         this.unsubscribe();
         this.queryData();
+        this.subscribe();
       }
     }
 
     render() {
       const {value, isFetching, rootValue} = this.state;
-      const {toolbar, query, refId, items, type, path, relation, pattern, schema} = this.props;
+      const {toolbar, query, refId, items, type, path, relation, pattern} = this.props;
       if (isFetching) {
         return <Spin indicator={antIcon} />;
       }
@@ -164,7 +162,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
       } else if (type === 'relation' && relation.type === 'toMany') {
         return (
-          <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue('array')} />
+          <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue('array')}/>
         );
       }
       return <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue(type, relation)} />;

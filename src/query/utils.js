@@ -46,6 +46,12 @@ export function fieldToQueriesObject(field: any): any {
         queriesObj.connection = true;
         queriesObj.alias = field.getKey();
         variables[firstKey] = defaultFirst;
+        variables[whereKey] = {};
+        const toolbar = field.getAttr('toolbar');
+        const defaultSort = toolbar && toolbar.sort && toolbar.sort.defaultSort;
+        if (defaultSort) {
+          variables[orderByKey] = `${defaultSort}_ASC`
+        }
       }
       break;
     }
