@@ -60,21 +60,22 @@ export function fieldToQueriesObject(field: any): any {
           merge(variableTypes, qlo.variableTypes);
         }
       });
-      if (field.isToMany()) {
-        const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery();
-        queriesObj.args = args;
-        queriesObj.isPlural = true;
-        variables[firstKey] = defaultFirst;
-        variableTypes = {
-          ...variableTypes,
-          [firstKey]: 'Int',
-          [afterKey]: 'String',
-          [lastKey]: 'Int',
-          [beforeKey]: 'String',
-          [whereKey]: `${typeKey(field.relationTo())}WhereUniqueInput`,
-          [orderByKey]: `${typeKey(field.relationTo())}WhereUniqueInput`
-        }
-      }
+      // for now, fetch all toMany data
+      // if (field.isToMany()) {
+      //   const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery();
+      //   queriesObj.args = args;
+      //   queriesObj.isPlural = true;
+      //   variables[firstKey] = defaultFirst;
+      //   variableTypes = {
+      //     ...variableTypes,
+      //     [firstKey]: 'Int',
+      //     [afterKey]: 'String',
+      //     [lastKey]: 'Int',
+      //     [beforeKey]: 'String',
+      //     [whereKey]: `${typeKey(field.relationTo())}WhereUniqueInput`,
+      //     [orderByKey]: `${typeKey(field.relationTo())}WhereUniqueInput`
+      //   }
+      // }
       break;
     }
 
