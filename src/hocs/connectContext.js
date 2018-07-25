@@ -38,6 +38,8 @@ export default function connectContext(Com: React.ComponentType<*>) {
             request={context.request}
             deploy={context.deploy}
             updateQuery={context.updateQuery}
+            onDeploy={context.onDeploy}
+            removeOnDeploy={context.removeOnDeploy}
           />
         )}
       </HOCContext.Consumer>

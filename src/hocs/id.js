@@ -5,6 +5,9 @@ import RefId from 'canner-ref-id';
 import type {Query} from '../query';
 import {createEmptyData} from 'canner-helpers';
 import mapValues from 'lodash/mapValues';
+import {Spin, Icon} from 'antd';
+
+const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type Props = {
   refId: RefId,
@@ -153,7 +156,7 @@ export default function connectId(Com: React.ComponentType<*>) {
 
     render() {
       let {canRender, refId} = this.state;
-      if (!canRender) return null;
+      if (!canRender) return <Spin indicator={antIcon} />;
       return <Com {...this.props}
         refId={refId}
       />

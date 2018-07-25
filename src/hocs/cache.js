@@ -4,6 +4,7 @@ import {mutate as defaultMutate, ActionManager as DefaultAciontManager} from '..
 import {isCompleteContain, genPaths} from './route';
 import type {Action, ActionType} from '../action/types';
 import { isArray } from 'lodash';
+import { OnDeployManager } from '../onDeployManager';
 
 type Props = {
   request: Function,
@@ -25,12 +26,14 @@ type State = {
 
 export default function withCache(Com: React.ComponentType<*>, options: {
   mutate: typeof defaultMutate,
-  ActionManager: DefaultAciontManager
+  ActionManager: DefaultAciontManager,
+  onDeployManager: OnDeployManager
 }) {
   const {mutate = defaultMutate, ActionManager = DefaultAciontManager} = options || {};
   return class ComWithCache extends React.Component<Props, State> {
-    actionManager: ?ActionManager;
-    subscribers: {
+  actionManager: ?ActionManager;
+  onDeployManager: OnDeployManager;
+  subscribers: {
       [key: string]: Array<{id: string, callback: Function}>
     }
     subscribers = {};
@@ -42,6 +45,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         cacheActions
       ) {
         this.actionManager = new ActionManager();
+        this.onDeployManager = new OnDeployManager();
       }
       this.state = {
       };
@@ -144,13 +148,27 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       return Promise.resolve();
     }
 
+    onDeploy = (actions: Array<Action<ActionType>>) => {
+      console.log(this.onDeployManager);
+      return actions.map(action => {
+        const {key, id, value} = action.payload;
+        action.payload.value = this.onDeployManager.execute({
+          key,
+          id,
+          value
+        });
+        return action;
+      });
+    }
+
     deploy = (key: string, id?: string): Promise<*> => {
       // request cached actions
       const {request, deploy, pattern} = this.props;
       if (!this.actionManager) {
         return deploy(key, id);
       }
-      const actions = this.actionManager.getActions(key, id);
+      let actions = this.actionManager.getActions(key, id);
+      actions = this.onDeploy(actions);
       // $FlowFixMe
       this.actionManager.removeActions(key, id);
       request(actions);
@@ -197,6 +215,12 @@ export default function withCache(Com: React.ComponentType<*>, options: {
     }
 
     render() {
+      const onDeploy = this.onDeployManager ?
+        this.onDeployManager.registerCallback :
+        this.props.onDeploy;
+      const removeOnDeploy = this.onDeployManager ?
+        this.onDeployManager.unregisterCallback :
+        this.props.removeOnDeploy;
       return (
         <Com
           {...this.props}
@@ -206,6 +230,8 @@ export default function withCache(Com: React.ComponentType<*>, options: {
           reset={this.reset}
           subscribe={this.subscribe}
           updateQuery={this.updateQuery}
+          onDeploy={onDeploy}
+          removeOnDeploy={removeOnDeploy}
         />
       );
     }

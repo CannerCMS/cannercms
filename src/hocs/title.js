@@ -45,7 +45,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
       const {title, layout, description, hideTitle,
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
-        refId, routes, updateQuery, type, imageServiceConfig
+        refId, routes, updateQuery, type, imageServiceConfig,
+        onDeploy, removeOnDeploy,
       } = this.props;
       return <HOCContext.Provider
         value={{
@@ -56,6 +57,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           reset,
           query,
           updateQuery,
+          onDeploy,
+          removeOnDeploy
         }}
       >
         <Context.Provider value={{

@@ -228,6 +228,9 @@ export default class Provider extends React.PureComponent<Props, State> {
   request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {
     const {write = true} = options;
     const actions = [].concat(action);
+    if (actions.length === 0) {
+      return Promise.resolve();
+    }
     actions.forEach(ac => this.actionManager.addAction(ac));
     this.updateDataChanged();
     if (write) {
