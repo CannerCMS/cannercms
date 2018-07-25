@@ -34,7 +34,6 @@ export function generateAction(arg: {
   rootValue: any,
   relation: Object
 }): Action<ActionType> {
-  
   if (isCreateArray(arg)) {
     const {key} = splitId(arg.id, arg.rootValue);
     return {

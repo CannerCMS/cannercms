@@ -5,6 +5,7 @@ import {generateAction} from '../action';
 import isArray from 'lodash/isArray';
 import {createEmptyData} from 'canner-helpers';
 import RefId from 'canner-ref-id';
+import { List, Map } from 'immutable';
 
 type RelationDef = any;
 
@@ -99,9 +100,8 @@ export function createAction({
     // first layer array will gen id and typename by client, so we don;t have to do that
     // quick fix
     value = value.update('id', id => id || randomId());
-    value = value.update('__typename', typename => typename || null);
   }
-
+  value = addTypename(value)
   return generateAction({
     id,
     updateType: type,
@@ -113,4 +113,14 @@ export function createAction({
 
 function randomId() {
   return Math.random().toString(36).substr(2, 12);
+}
+
+function addTypename(value) {
+  if (Map.isMap(value)) {
+    value = value.update('__typename', typename => typename || null);
+    value = value.map(child => addTypename(child));
+  } else if (List.isList(value)) {
+    value = value.map(child => addTypename(child));
+  }
+  return value;
 }
