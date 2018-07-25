@@ -226,38 +226,29 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {
-    const {client} = this.props;
     const {write = true} = options;
-    let query, mutatedData, data;
-    const variables = this.query.getVairables();  
-    if (isArray(action)) {
-      if (!action.length) return Promise.resolve();
-      // $FlowFixMe
-      action.forEach(ac => this.actionManager.addAction(ac));
-      query = gql`${this.query.toGQL(action[0].payload.key)}`;
-      data = client.readQuery({query, variables});
-      this.log('request', action, data);
-    // $FlowFixMe
-      mutatedData = action.reduce((result, ac) => mutatePure(result, ac), data);
-    } else {
-      this.actionManager.addAction(action);
-      // $FlowFixMe
-      query = gql`${this.query.toGQL(action.payload.key)}`;
-      // $FlowFixMe
-      data = client.readQuery({query, variables});
-      this.log('request', action, data);
-      mutatedData = mutatePure(data, action)
-    }
-    this.log('request', 'mutatedData', mutatedData);
+    const actions = [].concat(action);
+    actions.forEach(ac => this.actionManager.addAction(ac));
     this.updateDataChanged();
     if (write) {
-      client.writeQuery({
-        query,
-        variables,
-        data: mutatedData
-      });
+      const {data, mutatedData} = this.updateCachedData(actions);
+      this.log('request', action, data, mutatedData);
     }
     return Promise.resolve();
+  }
+
+  updateCachedData = (actions: Array<Action<ActionType>>) => {
+    const {client} = this.props;
+    const variables = this.query.getVairables();  
+    const query = gql`${this.query.toGQL(actions[0].payload.key)}`;
+    const data = client.readQuery({query, variables});
+    const mutatedData = actions.reduce((result, ac) => mutatePure(result, ac), data);
+    client.writeQuery({
+      query,
+      variables,
+      data: mutatedData
+    });
+    return {data, mutatedData};
   }
 
   log(type: string, ...payload: any) {
