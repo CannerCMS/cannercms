@@ -3,33 +3,38 @@
 import {set, unset, get} from 'lodash';
 
 export class OnDeployManager {
-  _map: Object = {
+  _map: {
+    [string]: {
+      [string]: Function
+    }
   };
-
+  _map = {}
   execute = ({
     key,
-    id,
     value
   }: {
     key: string,
-    id: ?string,
     value: any
   }): any => {
-    const callback = this.findCallback(key, id);
-    return callback(value);
+    const callbacks = this.findCallback(key);
+    return callbacks.reduce((result, callback) => callback(result), value);
   }
 
-  findCallback = (key: string, id: ?string) => {
-    let callback: any = v => v;
-    callback = get(this._map, [key, id || 'DEFAULT'], callback);
-    return callback;
+  findCallback = (key: string): Array<any> => {
+    return Object.values(get(this._map, [key], {}));
   }
 
-  registerCallback = (key: string, id: ?string, callback: Function) => {
-    set(this._map, [key, id || 'DEFAULT'], callback);
+  registerCallback = (key: string, callback: Function) => {
+    const callbackId = randomStr();
+    set(this._map, [key, callbackId], callback);
+    return callbackId;
   }
 
-  unregisterCallback = (key: string, id: ?string) => {
-    unset(this._map, [key, id || 'DEFAULT']);
+  unregisterCallback = (key: string, callbackId: ?string) => {
+    unset(this._map, [key, callbackId]);
   }
+}
+
+function randomStr() {
+  return Math.random().toString(36).substr(2, 6);
 }

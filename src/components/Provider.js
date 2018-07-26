@@ -130,15 +130,10 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  onDeploy = (actions: Array<Action<ActionType>>) => {
-    return actions.map(action => {
-      const {key, id, value} = action.payload;
-      action.payload.value = this.onDeployManager.execute({
-        key,
-        id,
-        value
-      });
-      return action;
+  onDeploy = (key: string, id?: string, value: any) => {
+    return this.onDeployManager.execute({
+      key,
+      value
     });
   }
 
@@ -149,9 +144,9 @@ export default class Provider extends React.PureComponent<Props, State> {
       return Promise.resolve();
     }
     actions = removeIdInCreateArray(actions);
-    actions = this.onDeploy(actions);
     const mutation = objectToQueries(actionToMutation(actions[0]), false);
     const variables = actionsToVariables(actions, schema);
+    variables.payload = this.onDeploy(key, fromJS(variables.payload)).toJS();
     return client.mutate({
       mutation: gql`${mutation}`,
       variables

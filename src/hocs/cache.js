@@ -230,8 +230,8 @@ export default function withCache(Com: React.ComponentType<*>, options: {
           reset={this.reset}
           subscribe={this.subscribe}
           updateQuery={this.updateQuery}
-          onDeploy={onDeploy}
-          removeOnDeploy={removeOnDeploy}
+          // onDeploy={onDeploy}
+          // removeOnDeploy={removeOnDeploy}
         />
       );
     }

@@ -9,7 +9,7 @@ type Props = {
   keyName: string,
   routes: Array<string>,
   pattern: string,
-  onDeploy: (key: string, id: ?string, callback: any => any) => void,
+  onDeploy: (key: string, callback: any => any) => void,
   removeOnDeploy: (key: string, id: ?string) => void,
   rootValue: any,
 };
@@ -33,7 +33,7 @@ export default function withOndeploy(Com: React.ComponentType<*>) {
 
     onDeploy = (callback: Function) => {
       const {onDeploy, refId} = this.props;
-      onDeploy(this.key, this.id, v => {
+      onDeploy(this.key, v => {
         let restPathArr = refId.getPathArr();
         if (this.id) {
           restPathArr = restPathArr.slice(2);
