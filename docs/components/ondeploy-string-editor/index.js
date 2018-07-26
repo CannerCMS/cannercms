@@ -3,10 +3,13 @@ import {Input} from 'antd';
 export default class Editor extends React.Component {
   constructor(props) {
     super(props);
-    props.onDeploy(v => {
-      console.log(v);
+    this.callbackId = props.onDeploy(v => {
       return `${v}_appendByOnDeployMethod`;
     });
+  }
+
+  componentWillUnmount () {
+    this.props.removeOnDeploy(this.callbackId);
   }
 
   onChange = e => {

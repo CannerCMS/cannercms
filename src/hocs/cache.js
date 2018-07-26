@@ -148,16 +148,26 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       return Promise.resolve();
     }
 
-    onDeploy = (actions: Array<Action<ActionType>>) => {
-      console.log(this.onDeployManager);
-      return actions.map(action => {
-        const {key, id, value} = action.payload;
-        action.payload.value = this.onDeployManager.execute({
-          key,
-          id,
-          value
-        });
-        return action;
+    onDeploy = (key: string, callback: any) => {
+      const {onDeploy} = this.props;
+      if (!this.onDeployManager) {
+        return onDeploy(key, callback);
+      }
+      return this.onDeployManager.registerCallback(key, callback);
+    }
+
+    removeOnDeploy = (key: string, callbackId: string) => {
+      const {removeOnDeploy} = this.props;
+      if (!this.onDeployManager) {
+        return removeOnDeploy(key, callbackId);
+      }
+      return this.onDeployManager.unregisterCallback(key, callbackId);
+    }
+
+    _executeOnDeployCallback = (key: string, value: any) => {
+      return this.onDeployManager.execute({
+        key,
+        value
       });
     }
 
@@ -168,7 +178,11 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         return deploy(key, id);
       }
       let actions = this.actionManager.getActions(key, id);
-      actions = this.onDeploy(actions);
+      actions = actions.map(action => {
+        const {key, value} = action.payload;
+        action.payload.value = this._executeOnDeployCallback(key, value);
+        return action;
+      })
       // $FlowFixMe
       this.actionManager.removeActions(key, id);
       request(actions);
@@ -215,12 +229,6 @@ export default function withCache(Com: React.ComponentType<*>, options: {
     }
 
     render() {
-      const onDeploy = this.onDeployManager ?
-        this.onDeployManager.registerCallback :
-        this.props.onDeploy;
-      const removeOnDeploy = this.onDeployManager ?
-        this.onDeployManager.unregisterCallback :
-        this.props.removeOnDeploy;
       return (
         <Com
           {...this.props}
@@ -230,8 +238,8 @@ export default function withCache(Com: React.ComponentType<*>, options: {
           reset={this.reset}
           subscribe={this.subscribe}
           updateQuery={this.updateQuery}
-          // onDeploy={onDeploy}
-          // removeOnDeploy={removeOnDeploy}
+          onDeploy={this.onDeploy}
+          removeOnDeploy={this.removeOnDeploy}
         />
       );
     }

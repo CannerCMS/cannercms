@@ -57,8 +57,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           reset,
           query,
           updateQuery,
-          // onDeploy,
-          // removeOnDeploy
+          onDeploy,
+          removeOnDeploy
         }}
       >
         <Context.Provider value={{

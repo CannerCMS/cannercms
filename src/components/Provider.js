@@ -130,7 +130,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  onDeploy = (key: string, id?: string, value: any) => {
+  onDeploy = (key: string, value: any) => {
     return this.onDeployManager.execute({
       key,
       value

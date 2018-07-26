@@ -9,7 +9,7 @@ type Props = {
   keyName: string,
   routes: Array<string>,
   pattern: string,
-  onDeploy: (key: string, callback: any => any) => void,
+  onDeploy: (key: string, callback: any => any) => string,
   removeOnDeploy: (key: string, id: ?string) => void,
   rootValue: any,
 };
@@ -31,23 +31,39 @@ export default function withOndeploy(Com: React.ComponentType<*>) {
       this.id = id;
     }
 
-    onDeploy = (callback: Function) => {
+    removeOnDeploy = (arg1: string, callbackId: string) => {
+      const {removeOnDeploy} = this.props;
+      if (callbackId) {
+        return removeOnDeploy(arg1, callbackId);
+      } else {
+        return removeOnDeploy(this.key, arg1);
+      }
+    }
+
+    onDeploy = (arg1: string | Function, callback: Function): string => {
       const {onDeploy, refId} = this.props;
-      onDeploy(this.key, v => {
-        let restPathArr = refId.getPathArr();
-        if (this.id) {
-          restPathArr = restPathArr.slice(2);
-        } else {
-          restPathArr = restPathArr.slice(1);
-        }
-        const {paths, value} = getValueAndPaths(v, restPathArr);
-        return v.setIn(paths, callback(value));
-      });
+      if (typeof arg1 === 'string') {
+        return onDeploy(arg1, callback);
+      } else {
+        // first arguments is a function
+        return onDeploy(this.key, v => {
+          let restPathArr = refId.getPathArr();
+          if (this.id) {
+            restPathArr = restPathArr.slice(2);
+          } else {
+            restPathArr = restPathArr.slice(1);
+          }
+          const {paths, value} = getValueAndPaths(v, restPathArr);
+          // $FlowFixMe
+          return v.setIn(paths, arg1(value));
+        });
+      }
     }
 
     render() {
       return <Com {...this.props}
         onDeploy={this.onDeploy}
+        removeOnDeploy={this.removeOnDeploy}
       />
   }
   };
