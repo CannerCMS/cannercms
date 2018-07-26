@@ -45,16 +45,21 @@ const Users = ({attributes}) => (
         }]
       }]} />
     </toolbar>
-    <string keyName="name" title="name"/>
-    <string keyName="email" title="Email"/>
-    <number keyName="age" title="Age"/>
+    <string keyName="name" title="name" required validation={{
+      validator: {
+        validate: name => name === '123',
+        message: 'Should be 123'
+      }
+    }}/>
+    <string keyName="email" title="Email" required validation={{format: 'email'}}/>
+    <number keyName="age" title="Age" validation={{minimum: 18}}/>
     <boolean keyName="isLogin" title="Logined" />
     <array keyName="hobbies" title="Hobbies" ui="tag"/>
-    <array keyName="images" title="Images">
+    <array keyName="images" title="Images" validation={{minItems: 2}}>
       <string keyName="url" title="Url" />
     </array>
     <object keyName="status" title="Status">
-      <boolean keyName="draft" title="Draft"/>
+      <boolean keyName="draft" title="Draft" required/>
       <boolean keyName="stick" title="Stick"/>
     </object>
     <relation ui="multipleSelect" keyName="posts" relation={{to: 'posts', type: 'toMany'}} title="Posts" uiParams={{

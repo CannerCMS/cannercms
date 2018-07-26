@@ -46,16 +46,19 @@ export default function withOndeploy(Com: React.ComponentType<*>) {
         return onDeploy(arg1, callback);
       } else {
         // first arguments is a function
-        return onDeploy(this.key, v => {
+        return onDeploy(this.key, result => {
           let restPathArr = refId.getPathArr();
-          if (this.id) {
-            restPathArr = restPathArr.slice(2);
-          } else {
+          // if (this.id) {
+          //   restPathArr = restPathArr.slice(2);
+          // } else {
             restPathArr = restPathArr.slice(1);
+          // }
+          const {paths, value} = getValueAndPaths(result.data, restPathArr);
+          return {
+            ...result,
+            // $FlowFixMe
+            data: result.data.setIn(paths, arg1(value))
           }
-          const {paths, value} = getValueAndPaths(v, restPathArr);
-          // $FlowFixMe
-          return v.setIn(paths, arg1(value));
         });
       }
     }

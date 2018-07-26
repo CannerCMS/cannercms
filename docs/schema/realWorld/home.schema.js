@@ -9,7 +9,7 @@ export default ({attributes}) => <object keyName="home" title="Home" description
   </Block>
   <Block title="Header">
     <object keyName="header">
-      <string keyName="title" title="Title"/>
+      <string keyName="title" title="Title" validation={{maxLength: 4}}/>
       <string keyName="subTitle" title="Subtitle"/>
       <object keyName="desc" title="Description" ui="editor"/>
     </object>

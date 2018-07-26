@@ -10,6 +10,7 @@ import containerRouter from './containerRouter';
 import onDeploy from './onDeploy';
 import context from './connectContext';
 import errorCatch from './errorCatch';
+import validation from './validation';
 
 export default {
   errorCatch,
@@ -24,5 +25,6 @@ export default {
   title,
   containerRouter,
   onDeploy,
-  context
+  context,
+  validation
 };

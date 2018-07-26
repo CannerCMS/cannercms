@@ -80,7 +80,11 @@ export default <root connector={connector}>
   <Posts columns={postColumns} />
   <Users columns={userColumns} searchComponent={TabsFilter} />
   <array keyName="test" title="array" uiParams={{columns: [{title: 'title', dataIndex: 'title'}]}}>
-    <string keyName="title" title="title"/>
+    <string keyName="title" title="title"
+      validation={{
+        maxLength: 2
+      }}
+    />
     <OnDeploy
       keyName="test1"
       title="OnDeploy Demo"

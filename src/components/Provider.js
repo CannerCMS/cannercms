@@ -146,7 +146,16 @@ export default class Provider extends React.PureComponent<Props, State> {
     actions = removeIdInCreateArray(actions);
     const mutation = objectToQueries(actionToMutation(actions[0]), false);
     const variables = actionsToVariables(actions, schema);
-    variables.payload = this.onDeploy(key, fromJS(variables.payload)).toJS();
+    const queryVariables = this.query.getVairables();  
+    const query = gql`${this.query.toGQL(key)}`;
+    const cachedData = client.readQuery({query, variables: queryVariables});
+    const mutatedData = cachedData[key];
+    const {error} = this.onDeploy(key, fromJS(mutatedData));
+    if (error) {
+      return Promise.reject();
+    }
+    
+    // variables.payload = data.toJS();
     return client.mutate({
       mutation: gql`${mutation}`,
       variables

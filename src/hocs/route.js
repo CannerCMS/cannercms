@@ -52,6 +52,11 @@ export default function withRoute(Com: React.ComponentType<*>) {
             deploying: false
           });
           goTo(routes[0]);
+        })
+        .catch(() => {
+          this.setState({
+            deploying: false
+          });
         });
     }
 

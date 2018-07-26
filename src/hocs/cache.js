@@ -177,12 +177,22 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       if (!this.actionManager) {
         return deploy(key, id);
       }
+      const originData = this.state[key];
       let actions = this.actionManager.getActions(key, id);
-      actions = actions.map(action => {
-        const {key, value} = action.payload;
-        action.payload.value = this._executeOnDeployCallback(key, value);
-        return action;
-      })
+      const mutatedData = actions.reduce((result, action) => {
+        return mutate(result, action);
+      }, originData);
+      const {error} = this._executeOnDeployCallback(key, mutatedData.get(key));
+      if (error) {
+        return Promise.reject();
+      }
+      // actions = actions.map(action => {
+      //   const {key, value} = action.payload;
+      //   hasError = hasError || error;
+      //   action.payload.value = data;
+      //   return action;
+      // });
+
       // $FlowFixMe
       this.actionManager.removeActions(key, id);
       request(actions);

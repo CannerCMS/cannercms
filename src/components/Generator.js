@@ -157,7 +157,7 @@ export default class Generator extends React.PureComponent<Props, State> {
           loading: Loading,
         });
       }
-      component = this.wrapByHOC(component, ['title', 'onDeploy', 'deploy', 'request', 'relation', 'query', 'cache', 'route', 'id', 'context', 'errorCatch'] || []);
+      component = this.wrapByHOC(component, ['title', 'onDeploy', 'validation', 'deploy', 'request', 'relation', 'query', 'cache', 'route', 'id', 'context', 'errorCatch'] || []);
     }
 
     if (!component) {
