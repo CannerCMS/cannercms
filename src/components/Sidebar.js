@@ -65,7 +65,7 @@ export default class Sidebar extends React.Component<SidebarProps> {
   }
 }
 
-function renderMenuItem(item) {
+function renderMenuItem(item: Object) {
   return (
     <Menu.Item key={item.to}>
       {item.title}
@@ -73,7 +73,7 @@ function renderMenuItem(item) {
   )
 }
 
-function renderSubMenu(item) {
+function renderSubMenu(item: Object) {
   return (
     <Menu.SubMenu key={item.to} title={item.title}>
       {

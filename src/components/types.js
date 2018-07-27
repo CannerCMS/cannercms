@@ -1,6 +1,6 @@
 // @flow
 import type {ApolloClient} from "apollo-boost";
-import type React from 'react';
+import * as React from 'react';
 
 export type CannerSchema = {
   [string]: any
