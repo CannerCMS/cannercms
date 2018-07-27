@@ -44,7 +44,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
           });
           return result;
         }
-        const errorInfo = [].concat(isRequiredValid ? []:{message: 'Required Field!'})
+        const errorInfo = [].concat(isRequiredValid ? []:{message: 'required'})
           .concat(validate.errors || [])
           .concat(customValid ? []:{message: validator.message});
         this.setState({
