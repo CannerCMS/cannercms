@@ -13,7 +13,7 @@ export default function deploy(Com: React.ComponentType<*>) {
   return class ComponentWithDeploy extends React.Component<HOCProps, State> {
     deploy = (refId: RefId, callback: Function) => {
       const {deploy} = this.props;
-      return deploy(refId.getPathArr()[0]).then(callback);
+      return deploy(refId.getPathArr()[0]).then(callback).catch(() => {});
     }
 
     reset = (refId: RefId, callback: Function) => {

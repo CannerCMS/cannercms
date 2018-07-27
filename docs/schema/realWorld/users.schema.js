@@ -46,9 +46,10 @@ const Users = ({attributes}) => (
       }]} />
     </toolbar>
     <string keyName="name" title="name" required validation={{
-      validator: {
-        validate: name => name === '123',
-        message: 'Should be 123'
+      validator: (name, reject) => {
+        if (name !== '123') {
+          return reject('should be');
+        }
       }
     }}/>
     <string keyName="email" title="Email" required validation={{format: 'email'}}/>

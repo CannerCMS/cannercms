@@ -31,12 +31,17 @@ export default function withValidation(Com: React.ComponentType<*>) {
         return;
       }
       let paths = refId.getPathArr();
-      const {validator = {validate: (value?: any) => value || true, message: ''}} = validation;
+      const {validator} = validation;
       paths = paths.slice(1);
+      const reject = message => ({error: true, message});
       onDeploy(key, result => {
         const {value} = getValueAndPaths(result.data, paths);
         const isRequiredValid = required ? Boolean(value) : true;
-        const customValid = validator.validate(value);
+        const validatorResult = validator && validator(value, reject);
+        let customValid = true;
+        if (validatorResult && validatorResult.error) {
+          customValid = false;
+        }
         if (customValid && isRequiredValid && validate((value && value.toJS) ? value.toJS() : value)) {
           this.setState({
             error: false,
@@ -47,7 +52,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
         const errorInfo = [].concat(isRequiredValid ? [] : {
           message: 'should be required'
         }).concat(validate.errors || [])
-          .concat(customValid ? []:{message: validator.message});
+          .concat(customValid ? [] : validatorResult);
         this.setState({
           error: true,
           errorInfo: errorInfo
