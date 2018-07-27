@@ -3,23 +3,14 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import {Map, List} from 'immutable';
-
-type Props = {
-  refId: RefId,
-  keyName: string,
-  routes: Array<string>,
-  pattern: string,
-  onDeploy: (key: string, callback: any => any) => string,
-  removeOnDeploy: (key: string, id: ?string) => void,
-  rootValue: any,
-};
+import type {HOCProps} from './types';
 
 export default function withOndeploy(Com: React.ComponentType<*>) {
-  return class ComponentWithOnDeploy extends React.Component<Props> {
+  return class ComponentWithOnDeploy extends React.Component<HOCProps> {
     key: string;
     id: ?string;
 
-    constructor(props: Props) {
+    constructor(props: HOCProps) {
       super(props);
       const {pattern, refId, rootValue} = props;
       const {key, id} = splitRefId({

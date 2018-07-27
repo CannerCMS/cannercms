@@ -3,35 +3,9 @@ import * as React from 'react';
 import {Tooltip, Icon, Alert} from 'antd';
 import {HOCContext} from './context';
 import {Context} from 'canner-helpers';
-import type {Query} from '../query';
 import styled from 'styled-components';
 import {isEmpty} from 'lodash';
-
-type Props = {
-  title: string, // only used in withTitleAndDesription hoc
-  description: string, // only used in withTitleAndDesription hoc
-  layout?: 'horizontal' | 'vertical', // only used in withTitleAndDesription hoc
-  hideTitle?: boolean,
-
-  updateQuery: Function,
-  fetch: FetchDef,
-  subscribe: SubscribeDef,
-  request: RequestDef,
-  deploy: DeployDef,
-  reset: ResetDef,
-  query: Query,
-
-  renderChildren: ({[string]: any}) => React.Node,
-  renderComponent: (refId: RefId, props: Object) => React.Node,
-  renderConfirmButton: Object => React.Node,
-  renderCancelButton: Object => React.Node,
-  refId: RefId,
-  routes: Array<string>,
-
-  items: any,
-  keyName: string,
-  onChange: Function
-};
+import type {HOCProps} from './types';
 
 const Title = styled.div`
   font-size: 18px;
@@ -40,7 +14,7 @@ const Title = styled.div`
 
 // $FlowFixMe
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
-  return class ComponentWithTitleAndDescription extends React.Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
+  return class ComponentWithTitleAndDescription extends React.Component<HOCProps> {
     render() {
       const {title, layout, description, hideTitle,
         fetch, subscribe, request, deploy, reset, query,

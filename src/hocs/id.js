@@ -2,23 +2,14 @@
 
 import * as React from 'react';
 import RefId from 'canner-ref-id';
-import type {Query} from '../query';
 import {createEmptyData} from 'canner-helpers';
 import mapValues from 'lodash/mapValues';
 import {Spin, Icon} from 'antd';
 
-const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
+import type {HOCProps, Args} from './types';
+import type {Query} from '../query';
 
-type Props = {
-  refId: RefId,
-  keyName: string,
-  routes: Array<string>,
-  pattern: string,
-  params: Object,
-  request: Function,
-  items: Object,
-  fetch: Function
-};
+const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type State = {
   canRender: boolean,
@@ -26,12 +17,13 @@ type State = {
 };
 
 export default function connectId(Com: React.ComponentType<*>) {
-  return class ComponentConnectId extends React.Component<Props, State> {
+  return class ComponentConnectId extends React.Component<HOCProps, State> {
     refId: RefId;
     query: Query;
-    reset: ResetDef;
+    reset: Function;
+    args: Args;
 
-    constructor(props: Props) {
+    constructor(props: HOCProps) {
       super(props);
       const {params, pattern, refId, keyName, routes} = props;
       let myRefId = refId;
@@ -58,7 +50,7 @@ export default function connectId(Com: React.ComponentType<*>) {
       }
     }
 
-    UNSAFE_componentWillReceiveProps(props: Props) {
+    UNSAFE_componentWillReceiveProps(props: HOCProps) {
       const {params, pattern, items, keyName, routes, updateQuery} = props;
       if (params.op === 'create' && !this.props.params.op && pattern ==='array') {
         // posts => posts?op=create
@@ -114,7 +106,7 @@ export default function connectId(Com: React.ComponentType<*>) {
       }
     }
 
-    fetchById = id => {
+    fetchById = (id: string) => {
       const {query, keyName, updateQuery} = this.props;
       const paths = [keyName];
       const queries = query.getQueries(paths).args || {pagination: {first: 10}};
@@ -137,12 +129,13 @@ export default function connectId(Com: React.ComponentType<*>) {
       fetch(keyName)
         .then(result => {
           const size = result.getIn([keyName, 'edges']).size;
+          // $FlowFixMe
           return request({
             type: 'CREATE_ARRAY',
             payload: {
               id: value.get('id'),
               value,
-              key: keyName
+              key: keyName,
             }
           }).then(() => size);
         })

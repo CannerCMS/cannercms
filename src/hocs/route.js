@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {Button, Icon, Spin} from 'antd';
 import styled from 'styled-components';
-import type RefId from 'canner-ref-id';
+import type {HOCProps} from './types';
 
 const RENDER_CHILDREN = 0;
 const RENDER_COMPONENT = 1;
@@ -11,32 +11,12 @@ const RENDER_NULL = 2;
 const ButtonWrapper = styled.div`
   text-align: right;
 `
-
-type Props = {
-  pattern: string,
-  routes: Array<string>,
-  path: string,
-  params: {
-    op: string
-  },
-  goTo: Function,
-  refId: RefId,
-  deploy: Function,
-  reset: Function,
-  hideButtons: boolean,
-  renderChildren: (Object) => React.Node,
-  request: Function,
-  keyName: string,
-  items: Object,
-  uiParams: Object
-}
-
 type State = {
   deploying: boolean
 }
 
 export default function withRoute(Com: React.ComponentType<*>) {
-  return class ComWithRoute extends React.Component<Props, State> {
+  return class ComWithRoute extends React.Component<HOCProps, State> {
     state = {
       deploying: false
     };

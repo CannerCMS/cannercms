@@ -2,50 +2,12 @@
 
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
-import RefId from 'canner-ref-id';
 import {Map, List, is, fromJS} from 'immutable';
 import Toolbar from './components/toolbar';
-import type {Query} from '../query';
 import {mapValues} from 'lodash';
+import type {HOCProps} from './types';
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
-
-type Props = {
-  type: string,
-  items: Object,
-  refId: RefId,
-  query: Query,
-  fetch: Function,
-  subscribe: Function,
-  updateQuery: Function,
-  ui: string,
-  path: string,
-  pattern: string,
-  relation: {
-    type: string,
-    to: string
-  },
-  schema: Object,
-  params: Object,
-  toolbar: {
-    sort?: {
-      component?: React.ComponentType<*>,
-      [string]: *
-    },
-    pagination?: {
-      component?: React.ComponentType<*>,
-      [string]: *
-    },
-    filter?: {
-      component?: React.ComponentType<*>,
-      [string]: *
-    },
-    toolbarLayout?: {
-      component?: React.ComponentType<*>,
-      [string]: *
-    }
-  }
-};
 
 type State = {
   value: any,
@@ -56,11 +18,11 @@ type State = {
 
 export default function withQuery(Com: React.ComponentType<*>) {
   // this hoc will fetch data;
-  return class ComponentWithQuery extends React.PureComponent<Props, State> {
+  return class ComponentWithQuery extends React.PureComponent<HOCProps, State> {
     key: string;
     subscription: any;
 
-    constructor(props: Props) {
+    constructor(props: HOCProps) {
       super(props);
       this.state = {
         value: null,
@@ -88,7 +50,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.subscribe();
     }
 
-    UNSAFE_componentWillReceiveProps(props: Props) {
+    UNSAFE_componentWillReceiveProps(props: HOCProps) {
       const {refId} = this.props;
       if (refId.toString() !== props.refId.toString()) {
         // refetch when route change
@@ -101,7 +63,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.unsubscribe();
     }
 
-    queryData = (props?: Props): Promise<*> => {
+    queryData = (props?: HOCProps): Promise<*> => {
       const {refId, fetch} = props || this.props;
       return fetch(this.key).then(data => {
         this.setState({

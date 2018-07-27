@@ -5,24 +5,13 @@ import {generateAction} from '../action';
 import isArray from 'lodash/isArray';
 import {createEmptyData} from 'canner-helpers';
 import RefId from 'canner-ref-id';
-
-type RelationDef = any;
-
-type Props = {
-  value: any,
-  rootValue: any,
-  relation?: RelationDef,
-  fetchRelation: () => Promise<*>,
-  request: RequestDef,
-  items: any,
-  pattern: string
-};
+import type {HOCProps} from './types';
 
 type changeQueue = Array<{RefId: RefId | {firstRefId: RefId, secondRefId: RefId}, type: any, value: any}>;
 
 export default function withRequest(Com: React.ComponentType<*>) {
   // this hoc will update data;
-  return class ComponentWithRequest extends React.Component<Props> {
+  return class ComponentWithRequest extends React.Component<HOCProps> {
     onChange = (refId: RefId | {firstRefId: RefId, secondRefId: RefId} | changeQueue, type: any, delta: any, config: any): Promise<*> => {
       let id;
       if (isArray(refId)) { // changeQueue
@@ -59,6 +48,7 @@ export default function withRequest(Com: React.ComponentType<*>) {
       if (action.type === 'NOOP') {
         return Promise.resolve();
       }
+      // $FlowFixMe
       return request(action);
     }
 

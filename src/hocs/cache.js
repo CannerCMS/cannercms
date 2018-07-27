@@ -2,23 +2,10 @@
 import * as React from 'react';
 import {mutate as defaultMutate, ActionManager as DefaultAciontManager} from '../action';
 import {isCompleteContain, genPaths} from './route';
-import type {Action, ActionType} from '../action/types';
 import { isArray } from 'lodash';
 import { OnDeployManager } from '../onDeployManager';
-
-type Props = {
-  request: Function,
-  fetch: Function,
-  reset: Function,
-  deploy: Function,
-  subscribe: Function,
-  updateQuery: Function,
-  routes: Array<string>,
-  params: Object,
-  cacheActions: boolean,
-  pattern: string,
-  path: string
-}
+import type {Action, ActionType} from '../action/types';
+import type {HOCProps} from './types';
 
 type State = {
   [string]: *
@@ -30,7 +17,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
   onDeployManager: OnDeployManager
 }) {
   const {mutate = defaultMutate, ActionManager = DefaultAciontManager} = options || {};
-  return class ComWithCache extends React.Component<Props, State> {
+  return class ComWithCache extends React.Component<HOCProps, State> {
   actionManager: ?ActionManager;
   onDeployManager: OnDeployManager;
   subscribers: {
@@ -38,7 +25,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
     }
     subscribers = {};
     subscription: any;
-    constructor(props: Props) {
+    constructor(props: HOCProps) {
       super(props);
       const {routes, cacheActions, pattern, path} = this.props;
       if ((routes.length > 1 && isRoutesEndAtMe({routes, pattern, path})) ||
@@ -125,6 +112,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       // update state.actions
       const {request} = this.props;
       if (!this.actionManager) {
+        // $FlowFixMe
         return request(action);
       }
       let key, id;
@@ -195,6 +183,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
 
       // $FlowFixMe
       this.actionManager.removeActions(key, id);
+      // $FlowFixMe
       request(actions);
       // if this cache is on the first layer,
       // it should call the deploy after request

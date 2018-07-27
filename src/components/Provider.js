@@ -17,7 +17,7 @@ import gql from 'graphql-tag';
 import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
-import {isArray, groupBy, difference} from 'lodash';
+import {groupBy, difference} from 'lodash';
 type Props = {
   schema: {[key: string]: any},
   dataDidChange: Object => void,
@@ -130,7 +130,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     });
   }
 
-  onDeploy = (key: string, value: any) => {
+  executeOnDeploy = (key: string, value: any) => {
     return this.onDeployManager.execute({
       key,
       value
@@ -150,7 +150,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     const query = gql`${this.query.toGQL(key)}`;
     const cachedData = client.readQuery({query, variables: queryVariables});
     const mutatedData = cachedData[key];
-    const {error} = this.onDeploy(key, fromJS(mutatedData));
+    const {error} = this.executeOnDeploy(key, fromJS(mutatedData));
     if (error) {
       return Promise.reject();
     }

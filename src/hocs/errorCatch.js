@@ -1,18 +1,9 @@
-import React from 'react';
-import {Alert} from 'antd'
 // @flow
-import RefId from 'canner-ref-id';
 
-type Props = {
-  refId: RefId,
-  keyName: string,
-  routes: Array<string>,
-  pattern: string,
-  params: Object,
-  request: Function,
-  items: Object,
-  fetch: Function
-};
+import * as React from 'react';
+import {Alert} from 'antd';
+
+import type {HOCProps} from './types';
 
 type State = {
   error: any,
@@ -20,13 +11,13 @@ type State = {
 };
 
 export default function errorCatch(Com: React.ComponentType<*>) {
-  return class ComponentErrorCatch extends React.Component<Props, State> {
+  return class ComponentErrorCatch extends React.Component<HOCProps, State> {
     state = {
       error: false,
-      errorInfo: null
+      errorInfo: {componentStack: null}
     }
 
-    componentDidCatch(e, info) {
+    componentDidCatch(e: Error, info: Object) {
       this.setState({
         error: e,
         errorInfo: info

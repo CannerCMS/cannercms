@@ -5,17 +5,7 @@ import RefId from 'canner-ref-id';
 import {Map, List} from 'immutable';
 import Ajv from 'ajv';
 import {isEmpty} from 'lodash';
-
-type Props = {
-  refId: RefId,
-  keyName: string,
-  routes: Array<string>,
-  pattern: string,
-  onDeploy: (key: string, callback: any => any) => string,
-  removeOnDeploy: (key: string, id: ?string) => void,
-  rootValue: any,
-  validation: Object,
-};
+import type {HOCProps} from './types';
 
 type State = {
   error: boolean,
@@ -23,7 +13,7 @@ type State = {
 }
 
 export default function withValidation(Com: React.ComponentType<*>) {
-  return class ComponentWithValition extends React.Component<Props, State> {
+  return class ComponentWithValition extends React.Component<HOCProps, State> {
     key: string;
     id: ?string;
     state = {
@@ -41,7 +31,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
         return;
       }
       let paths = refId.getPathArr();
-      const {validator = {validate: () => true, message: ''}} = validation;
+      const {validator = {validate: (value?: any) => value || true, message: ''}} = validation;
       paths = paths.slice(1);
       onDeploy(key, result => {
         const {value} = getValueAndPaths(result.data, paths);
