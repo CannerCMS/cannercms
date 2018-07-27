@@ -1,13 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`withOnDeploy should onDeploy works 1`] = `
-Immutable.Map {
-  "id": "id1",
-  "images": Immutable.List [
-    Immutable.Map {
-      "url": "new url",
-    },
-  ],
+Object {
+  "data": Immutable.Map {
+    "id": "id1",
+    "images": Immutable.List [
+      Immutable.Map {
+        "url": "url1",
+      },
+    ],
+    "0": "new url",
+  },
 }
 `;
 
@@ -64,7 +67,7 @@ exports[`withOnDeploy should render 1`] = `
         "toString": [Function],
       }
     }
-    removeOnDeploy={[MockFunction]}
+    removeOnDeploy={[Function]}
     rootValue={
       Immutable.Map {
         "posts": Immutable.List [

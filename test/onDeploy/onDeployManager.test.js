@@ -23,6 +23,6 @@ describe('onDeployManager class', () => {
     const callback = () => {};
     const callbackId = onDeployManager.registerCallback('posts', callback);
     onDeployManager.unregisterCallback('posts', callbackId);
-    expect(onDeployManager._map.posts.id1).toEqual({});
+    expect(onDeployManager._map.posts).toEqual({});
   });
 });

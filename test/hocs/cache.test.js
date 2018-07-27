@@ -124,7 +124,7 @@ describe('with cache', () => {
     const wrapper = shallow(<WrapperComponent
       {...props}
     />);
-    wrapper.setState({data: fromJS({
+    wrapper.setState({info: fromJS({
       info: {
         name: '123'
       }
