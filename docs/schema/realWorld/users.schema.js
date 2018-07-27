@@ -70,7 +70,9 @@ const Users = ({attributes}) => (
         title: 'Title',
         dataIndex: 'title'
       }]
-    }} />
+    }}>
+      {/* <toolbar /> */}
+    </relation>
   </array>
 );
 export default Users
