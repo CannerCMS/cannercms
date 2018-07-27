@@ -10,6 +10,10 @@ import type {HOCProps} from './types';
 const Title = styled.div`
   font-size: 18px;
   font-weight: 400;
+  &:after {
+    content: ${props => props.required ? '"*"' : '""'};
+    color: red;
+  }
 `;
 
 // $FlowFixMe
@@ -20,7 +24,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
         refId, routes, updateQuery, type, imageServiceConfig,
-        onDeploy, removeOnDeploy,
+        onDeploy, removeOnDeploy, required
       } = this.props;
       return <HOCContext.Provider
         value={{
@@ -58,7 +62,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 flex: 1,
                 flexDirection: 'row'
               }}>
-                <Title>
+                <Title required={required}>
                   {title}
                 </Title>
                 {
@@ -89,7 +93,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <Title>
+                <Title required={required}>
                   {title}
                 </Title>
                 {

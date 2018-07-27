@@ -54,8 +54,10 @@ const Users = ({attributes}) => (
     <string keyName="email" title="Email" required validation={{format: 'email'}}/>
     <number keyName="age" title="Age" validation={{minimum: 18}}/>
     <boolean keyName="isLogin" title="Logined" />
-    <array keyName="hobbies" title="Hobbies" ui="tag"/>
-    <array keyName="images" title="Images" validation={{minItems: 2}}>
+    <array keyName="hobbies" title="Hobbies" ui="tag"
+      validation={{minItems: 2}}
+    />
+    <array keyName="images" title="Images">
       <string keyName="url" title="Url" />
     </array>
     <object keyName="status" title="Status">
