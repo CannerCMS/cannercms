@@ -38,8 +38,8 @@ export function fieldToQueriesObject(field: any): any {
           [afterKey]: 'String',
           [lastKey]: 'Int',
           [beforeKey]: 'String',
-          [whereKey]: `${typeKey(field.getKey())}WhereUniqueInput`,
-          [orderByKey]: `${typeKey(field.getKey())}WhereUniqueInput`
+          [whereKey]: `${typeKey(field.getKey())}WhereInput`,
+          [orderByKey]: `${typeKey(field.getKey())}OrderByInput`
         };
         queriesObj.args = args;
         queriesObj.isPlural = true;

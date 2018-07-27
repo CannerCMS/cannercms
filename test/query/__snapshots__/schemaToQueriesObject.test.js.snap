@@ -15,7 +15,7 @@ Object {
       },
       "connection": true,
       "declareArgs": Object {
-        "$RANDOM_KEY": "PostWhereUniqueInput",
+        "$RANDOM_KEY": "PostOrderByInput",
       },
       "fields": Object {
         "bestAuthor": Object {
@@ -49,7 +49,7 @@ Object {
       },
       "connection": true,
       "declareArgs": Object {
-        "$RANDOM_KEY": "UserWhereUniqueInput",
+        "$RANDOM_KEY": "UserOrderByInput",
       },
       "fields": Object {
         "email": null,
