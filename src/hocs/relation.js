@@ -62,12 +62,21 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (!relation) {
         return Promise.resolve();
       }
-      return fetch(relation.to).then(data => {
-        this.setState({
-          value: data.get(relation.to),
-          isFetching: false
-        });
+      this.setState({
+        isFetching: true,
       });
+      return fetch(relation.to)
+        .then(data => {
+          this.setState({
+            value: data.get(relation.to),
+            isFetching: false,
+          });
+        })
+        .catch(() => {
+          this.setState({
+            isFetching: false
+          })
+        });
     }
 
     updateQuery = (paths: Array<string>, args: Object) => {
@@ -83,12 +92,13 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (!relation) {
         return <Com {...this.props}/>;
       }
+      if (!value) {
+        return <Spin indicator={antIcon} />;
+      }
       const queries = query.getQueries([relation.to]).args || {pagination: {first: 10}};
       const variables = query.getVairables();
       const args = mapValues(queries, v => variables[v.substr(1)]);
-      if (isFetching) {
-        return <Spin indicator={antIcon} />;
-      }
+
       const tb = ({children, ...restProps}) => <Toolbar {...restProps}
         items={schema[relation.to].items.items}
         toolbar={toolbar || {pagination: {type: 'pagination'}}}
@@ -98,7 +108,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
         value={value || (defaultValue('connection'): any)}
         updateQuery={this.updateQuery}
       >
-        {children}
+        <Spin indicator={antIcon} spinning={isFetching}>
+          {children}
+        </Spin>
       </Toolbar>;
       return <Com {...this.props} Toolbar={tb} relationValue={value}/>;
     }
