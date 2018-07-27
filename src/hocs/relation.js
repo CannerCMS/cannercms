@@ -91,7 +91,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       }
       const tb = ({children, ...restProps}) => <Toolbar {...restProps}
         items={schema[relation.to].items.items}
-        toolbar={toolbar}
+        toolbar={toolbar || {pagination: {type: 'pagination'}}}
         args={args}
         query={query}
         refId={new RefId(relation.to)}
