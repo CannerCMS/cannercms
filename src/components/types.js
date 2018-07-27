@@ -1,5 +1,6 @@
 // @flow
 import type {ApolloClient} from "apollo-boost";
+import * as React from 'react';
 
 export type CannerSchema = {
   [string]: any
@@ -7,6 +8,7 @@ export type CannerSchema = {
 
 export type LoadedSchema = {
   schema: CannerSchema,
+  sidebar: Sidebar,
   visitors: Array<Object>,
   client: ApolloClient,
   connectors: {[string]: any},
@@ -45,7 +47,38 @@ export type CMSProps = {
   dataDidChange: DataDidChange,
   afterDeploy: AfterDeploy,
   baseUrl: BaseUrl,
-  history: History,
+  goTo: string => void,
+  routes: Array<string>,
+  params: Object,
   intl: Intl,
   hideButtons: HideButtons
+}
+
+export type ReactRouterProviderProps = {
+  children: React.Node,
+  baseUrl: string,
+  history: {
+    location: Object,
+    push: Function
+  }
+}
+
+export type Submenu = {
+  title: string,
+  items: Sidebar,
+}
+export type MenuItem = {
+  title: string,
+  to: string
+}
+
+export type Sidebar = ?Array<Submenu | MenuItem>
+
+export type SidebarProps = {
+  schema: CannerSchema,
+  sidebar: Sidebar,
+  goTo: Function,
+  dataChanged: Object,
+  reset: Function,
+  routes: Array<string>
 }

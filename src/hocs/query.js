@@ -2,49 +2,12 @@
 
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
-import type RefId from 'canner-ref-id';
 import {Map, List, is, fromJS} from 'immutable';
 import Toolbar from './components/toolbar';
-import type {Query} from '../query';
 import {mapValues} from 'lodash';
+import type {HOCProps} from './types';
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
-
-type Props = {
-  type: string,
-  items: Object,
-  refId: RefId,
-  query: Query,
-  fetch: FetchDef,
-  subscribe: SubscribeDef,
-  updateQuery: Function,
-  ui: string,
-  path: string,
-  pattern: string,
-  relation: {
-    type: string,
-    to: string
-  },
-  params: Object,
-  toolbar: {
-    sort?: {
-      component?: React.ComponentType<*>,
-      [string]: *
-    },
-    pagination?: {
-      component?: React.ComponentType<*>,
-      [string]: *
-    },
-    filter?: {
-      component?: React.ComponentType<*>,
-      [string]: *
-    },
-    toolbarLayout?: {
-      component?: React.ComponentType<*>,
-      [string]: *
-    }
-  }
-};
 
 type State = {
   value: any,
@@ -55,11 +18,11 @@ type State = {
 
 export default function withQuery(Com: React.ComponentType<*>) {
   // this hoc will fetch data;
-  return class ComponentWithQuery extends React.PureComponent<Props, State> {
+  return class ComponentWithQuery extends React.PureComponent<HOCProps, State> {
     key: string;
     subscription: any;
 
-    constructor(props: Props) {
+    constructor(props: HOCProps) {
       super(props);
       this.state = {
         value: null,
@@ -72,38 +35,35 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     componentDidMount() {
       // defaultSort
-      const {toolbar, refId, path, query, updateQuery} = this.props;
-      const defaultSort = toolbar && toolbar.sort && toolbar.sort.defaultSort;
-      if (defaultSort) {
+      const {pattern, path, query, updateQuery, refId} = this.props;
+      if (pattern === 'array') {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v.substr(1)]);
         const paths = refId.getPathArr();
         updateQuery(paths, {
           ...args,
-          orderBy: `${defaultSort}_ASC`
+          where: {}
         });
       }
       this.queryData();
+      this.subscribe();
     }
 
-    UNSAFE_componentWillReceiveProps(props: Props) {
+    UNSAFE_componentWillReceiveProps(props: HOCProps) {
       const {refId} = this.props;
-      
       if (refId.toString() !== props.refId.toString()) {
+        // refetch when route change
         this.queryData(props);
-      } 
+        this.subscribe();
+      }
     }
 
     componentWillUnmount() {
       this.unsubscribe();
     }
 
-    getRootValue = () => {
-      return this.state.rootValue;
-    }
-
-    queryData = (props?: Props): Promise<*> => {
+    queryData = (props?: HOCProps): Promise<*> => {
       const {refId, fetch} = props || this.props;
       return fetch(this.key).then(data => {
         this.setState({
@@ -112,7 +72,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
           value: getValue(data, refId.getPathArr()),
           isFetching: false
         });
-        this.subscribe();
       });
     }
 
@@ -141,8 +100,10 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const {updateQuery} = this.props;
       const reWatch = updateQuery(paths, args);
       if (reWatch) {
+        // if graphql query changes, it have to rewatch the new observableQuery
         this.unsubscribe();
         this.queryData();
+        this.subscribe();
       }
     }
 
@@ -161,6 +122,10 @@ export default function withQuery(Com: React.ComponentType<*>) {
         </Toolbar>;
       } else if (type === 'relation' && relation.type === 'toOne') {
         return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
+      } else if (type === 'relation' && relation.type === 'toMany') {
+        return (
+          <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue('array')}/>
+        );
       }
       return <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
     }

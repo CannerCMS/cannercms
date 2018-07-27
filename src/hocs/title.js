@@ -3,55 +3,28 @@ import * as React from 'react';
 import {Tooltip, Icon, Alert} from 'antd';
 import {HOCContext} from './context';
 import {Context} from 'canner-helpers';
-import type {Query} from '../query';
 import styled from 'styled-components';
 import {isEmpty} from 'lodash';
-
-type Props = {
-  title: string, // only used in withTitleAndDesription hoc
-  description: string, // only used in withTitleAndDesription hoc
-  layout?: 'horizontal' | 'vertical', // only used in withTitleAndDesription hoc
-  hideTitle?: boolean,
-
-  updateQuery: Function,
-  fetch: FetchDef,
-  subscribe: SubscribeDef,
-  request: RequestDef,
-  deploy: DeployDef,
-  reset: ResetDef,
-  query: Query,
-
-  renderChildren: ({[string]: any}) => React.Node,
-  renderComponent: (refId: RefId, props: Object) => React.Node,
-  renderConfirmButton: Object => React.Node,
-  renderCancelButton: Object => React.Node,
-  refId: RefId,
-  routes: Array<string>,
-
-  items: any,
-  keyName: string,
-  onChange: Function
-};
+import type {HOCProps} from './types';
 
 const Title = styled.div`
   font-size: 18px;
   font-weight: 400;
-`;
-
-const Description = styled.div`
-  font-size: 12px;
-  margin-top: 16px;
-  color: #aaa;
+  &:after {
+    content: ${props => props.required ? '"*"' : '""'};
+    color: red;
+  }
 `;
 
 // $FlowFixMe
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
-  return class ComponentWithTitleAndDescription extends React.Component<Props & {title: string, layout: 'inline' | 'vertical' | 'horizontal'}> {
+  return class ComponentWithTitleAndDescription extends React.Component<HOCProps> {
     render() {
       const {title, layout, description, hideTitle,
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
-        refId, routes, updateQuery, type, imageServiceConfig
+        refId, routes, updateQuery, type, imageServiceConfig,
+        onDeploy, removeOnDeploy, required
       } = this.props;
       return <HOCContext.Provider
         value={{
@@ -62,6 +35,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           reset,
           query,
           updateQuery,
+          onDeploy,
+          removeOnDeploy
         }}
       >
         <Context.Provider value={{
@@ -85,15 +60,18 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 marginRight: 8,
                 display: 'flex',
                 flex: 1,
-                flexDirection: 'column'
+                flexDirection: 'row'
               }}>
-                <Title>
+                <Title required={required}>
                   {title}
                 </Title>
-                <Description>
-                  {description}
-                  
-                </Description>
+                {
+                  description && (
+                    <Tooltip placement="top" title={description}>
+                      <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
+                    </Tooltip>
+                  )
+                }
               </div>
               {
                 (type === 'image' && isEmpty(imageServiceConfig)) && (
@@ -115,7 +93,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <Title>
+                <Title required={required}>
                   {title}
                 </Title>
                 {

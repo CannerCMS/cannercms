@@ -4,17 +4,7 @@ import * as React from 'react';
 import RefId from 'canner-ref-id';
 import {HOCContext} from './context';
 import type {Query} from '../query';
-
-type Props = {
-  refId: RefId,
-  keyName: string,
-  routes: Array<string>,
-  pattern: string,
-  params: Object,
-  request: Function,
-  items: Object,
-  fetch: Function
-};
+import type {HOCProps, Reset} from './types';
 
 type State = {
   canRender: boolean,
@@ -22,10 +12,10 @@ type State = {
 };
 
 export default function connectContext(Com: React.ComponentType<*>) {
-  return class ComponentConnectContext extends React.Component<Props, State> {
+  return class ComponentConnectContext extends React.Component<HOCProps, State> {
     refId: RefId;
     query: Query;
-    reset: ResetDef;
+    reset: Reset;
 
     render() {
       return <HOCContext.Consumer>
@@ -38,6 +28,8 @@ export default function connectContext(Com: React.ComponentType<*>) {
             request={context.request}
             deploy={context.deploy}
             updateQuery={context.updateQuery}
+            onDeploy={context.onDeploy}
+            removeOnDeploy={context.removeOnDeploy}
           />
         )}
       </HOCContext.Consumer>

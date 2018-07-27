@@ -93,9 +93,8 @@ describe('withOnDeploy', () => {
 
     wrapper.instance().onDeploy(callback);
     expect(mockOnDeploy.mock.calls[0][0]).toBe('posts');
-    expect(mockOnDeploy.mock.calls[0][1]).toBe('id1');
-    expect(typeof mockOnDeploy.mock.calls[0][2]).toBe('function');
-    expect(mockOnDeploy.mock.calls[0][2](props.rootValue.getIn(['posts', 0]))).toMatchSnapshot();
+    expect(typeof mockOnDeploy.mock.calls[0][1]).toBe('function');
+    expect(mockOnDeploy.mock.calls[0][1]({data: props.rootValue.getIn(['posts', 0])})).toMatchSnapshot();
     expect(callback).toHaveBeenCalledTimes(1);
   });
 });

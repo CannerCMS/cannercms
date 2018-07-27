@@ -1,9 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import queryString from 'query-string';
 import Provider from './Provider';
 import Generator from './Generator';
+import Sidebar from './Sidebar';
+import {Layout} from 'antd';
 import hocs from '../hocs';
 import {createEmptyData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
@@ -18,11 +19,12 @@ import pluginsLocales from '@canner/antd-locales';
 addLocaleData([...en, ...zh]);
 
 // type
-import type {CMSProps} from './types';
+import type {CMSProps, LoadedSchema} from './types';
 
 type Props = CMSProps;
 type State = {
-}
+  dataChanged: Object
+};
 
 class CannerCMS extends React.Component<Props, State> {
   imageServiceConfigs: Object
@@ -61,6 +63,19 @@ class CannerCMS extends React.Component<Props, State> {
       return result;
     }, {});
     this.client = genClient({...props.schema, schema: schema});
+    this.state = {
+      dataChanged: {}
+    }
+  }
+
+  dataDidChange = (dataChanged: Object) => {
+    const {dataDidChange} = this.props;
+    if (dataDidChange) {
+      dataDidChange(dataChanged);
+    }
+    this.setState({
+      dataChanged
+    });
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
@@ -79,18 +94,19 @@ class CannerCMS extends React.Component<Props, State> {
 
   render() {
     const {
-      dataDidChange,
       baseUrl,
-      history,
+      routes,
+      params,
+      goTo,
       afterDeploy,
       intl = {},
       hideButtons,
-      schema: {storages}
+      schema: {storages, sidebar}
     } = this.props;
-    const {location, push} = history;
-    const {pathname} = location;
-    const routes = getRoutes(pathname, baseUrl);
-    const params = queryString.parse(location.search);
+    const {
+      dataChanged
+    } = this.state;
+
     return (
       <IntlProvider
         locale={intl.locale || 'en'}
@@ -101,36 +117,41 @@ class CannerCMS extends React.Component<Props, State> {
           ...(intl.messages || {})
         }}
       >
-        <Provider
-          ref={provider => this.provider = provider}
-          client={this.client}
-          schema={this.schema}
-          dataDidChange={dataDidChange}
-          afterDeploy={afterDeploy}
-          rootKey={routes[0]}
-        >
-          <Generator
-            storages={storages}
-            componentTree={this.componentTree || {}}
-            hocs={hocs}
-            goTo={push || function() {}}
-            baseUrl={baseUrl}
+        <Layout>
+          <Sidebar
+            dataChanged={dataChanged}
+            sidebar={sidebar}
+            goTo={goTo}
+            schema={this.schema}
+            reset={this.reset}
             routes={routes}
-            params={params}
-            hideButtons={hideButtons}
           />
-        </Provider>
+          <Layout.Content>
+            <Provider
+              ref={provider => this.provider = provider}
+              client={this.client}
+              schema={this.schema}
+              dataDidChange={this.dataDidChange}
+              afterDeploy={afterDeploy}
+              rootKey={routes[0]}
+            >
+              <Generator
+                storages={storages}
+                schema={this.schema}
+                componentTree={this.componentTree || {}}
+                hocs={hocs}
+                goTo={goTo}
+                baseUrl={baseUrl}
+                routes={routes}
+                params={params}
+                hideButtons={hideButtons}
+              />
+            </Provider>
+          </Layout.Content>
+        </Layout>
       </IntlProvider>
     );
   }
-}
-
-function getRoutes(pathname, baseUrl = '/') {
-  let pathnameWithoutBaseUrl = pathname.substring(baseUrl.length);
-  if (pathnameWithoutBaseUrl[0] === '/') {
-    pathnameWithoutBaseUrl = pathnameWithoutBaseUrl.substring(1);
-  }
-  return pathnameWithoutBaseUrl.split('/');
 }
 
 function compile(schema, visitors) {
@@ -144,7 +165,7 @@ function compile(schema, visitors) {
   return componentTree;
 }
 
-export function genClient(schema) {
+export function genClient(schema: LoadedSchema) {
   const {
     resolvers,
     connector,

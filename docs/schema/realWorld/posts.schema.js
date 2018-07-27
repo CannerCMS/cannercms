@@ -26,6 +26,7 @@ const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="po
       }]
     }}
     ui="singleSelect"
+    required
   />
 </array>
 

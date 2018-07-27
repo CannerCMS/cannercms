@@ -97,7 +97,7 @@ describe('actions to variables', () => {
     }
 
     expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
-      $payload: 'any'
+      $payload: 'UserUpdateInput!'
     });
 
     expect(get(actionToMutation(updateAction), 'mutation.fields.updateUser')).toEqual({

@@ -46,6 +46,12 @@ export function fieldToQueriesObject(field: any): any {
         queriesObj.connection = true;
         queriesObj.alias = field.getKey();
         variables[firstKey] = defaultFirst;
+        variables[whereKey] = {};
+        const toolbar = field.getAttr('toolbar');
+        const defaultSort = toolbar && toolbar.sort && toolbar.sort.defaultSort;
+        if (defaultSort) {
+          variables[orderByKey] = `${defaultSort}_ASC`
+        }
       }
       break;
     }
@@ -60,21 +66,22 @@ export function fieldToQueriesObject(field: any): any {
           merge(variableTypes, qlo.variableTypes);
         }
       });
-      if (field.isToMany()) {
-        const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery();
-        queriesObj.args = args;
-        queriesObj.isPlural = true;
-        variables[firstKey] = defaultFirst;
-        variableTypes = {
-          ...variableTypes,
-          [firstKey]: 'Int',
-          [afterKey]: 'String',
-          [lastKey]: 'Int',
-          [beforeKey]: 'String',
-          [whereKey]: `${typeKey(field.relationTo())}WhereUniqueInput`,
-          [orderByKey]: `${typeKey(field.relationTo())}WhereUniqueInput`
-        }
-      }
+      // for now, fetch all toMany data
+      // if (field.isToMany()) {
+      //   const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery();
+      //   queriesObj.args = args;
+      //   queriesObj.isPlural = true;
+      //   variables[firstKey] = defaultFirst;
+      //   variableTypes = {
+      //     ...variableTypes,
+      //     [firstKey]: 'Int',
+      //     [afterKey]: 'String',
+      //     [lastKey]: 'Int',
+      //     [beforeKey]: 'String',
+      //     [whereKey]: `${typeKey(field.relationTo())}WhereUniqueInput`,
+      //     [orderByKey]: `${typeKey(field.relationTo())}WhereUniqueInput`
+      //   }
+      // }
       break;
     }
 
