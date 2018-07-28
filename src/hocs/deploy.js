@@ -4,70 +4,16 @@ import {Button} from 'antd';
 import type RefId from 'canner-ref-id';
 import {isRoutesEndAtMe} from './cache';
 import {List} from 'immutable';
-
-type Props = {
-  params: Object,
-  routes: Array<string>,
-  deploy: Function,
-  reset: Function,
-  refId: RefId,
-  path: string,
-  pattern: string,
-  controlDeployAndResetButtons: boolean,
-  rootValue: any,
-  hideButtons: boolean
-};
+import type {HOCProps} from './types';
 
 type State = {
 };
 
 export default function deploy(Com: React.ComponentType<*>) {
-  return class ComponentWithDeploy extends React.Component<Props, State> {
-    // componentWillReceiveProps(nextProps: Props) {
-    //   if (this.props.params.op !== nextProps.params.op || !isEqual(this.props.routes, nextProps.routes)) {
-    //     // everytime change the route, should reset the miniApp !
-    //     if (this.state.changed) {
-    //       this.reset();
-    //     }
-    //     this.setState({
-    //       app,
-    //       routesEndAtMe,
-    //       isCreateOp,
-    //       canBeRendered: !routesEndAtMe || !isCreateOp,
-    //     }, () => {
-    //       if (routesEndAtMe && isCreateOp) {
-    //         this.reset().then(() => this.create(nextProps));
-    //       }
-    //     });
-    //   }
-    // }
-
-    // create = (props: Props = this.props) => {
-    //   // this method is for route op
-    //   const {refId, items, params} = props;
-    //   const {app} = this.state;
-    //   if (app) {
-    //     const {payload} = params;
-    //     const data = createEmptyData(items).mergeDeep(fromJS(JSON.parse(payload || "{}")));
-    //     app.request(generateAction(refId.toString(), 'create', data, new List()))
-    //       .then(() => {
-    //         this.setState({
-    //           changed: true,
-    //           canBeRendered: true
-    //         });
-    //       });
-    //   }
-    // }
-
-    // resetButton = () => {
-    //   this.setState({
-    //     changed: false,
-    //   });
-    // }
-
+  return class ComponentWithDeploy extends React.Component<HOCProps, State> {
     deploy = (refId: RefId, callback: Function) => {
       const {deploy} = this.props;
-      return deploy(refId.getPathArr()[0]).then(callback);
+      return deploy(refId.getPathArr()[0]).then(callback).catch(() => {});
     }
 
     reset = (refId: RefId, callback: Function) => {

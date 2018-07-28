@@ -1,9 +1,8 @@
 // @flow
 import * as React from 'react';
-import {Button, Icon, Modal, Spin} from 'antd';
-const confirm = Modal.confirm;
+import {Button, Icon, Spin} from 'antd';
 import styled from 'styled-components';
-import type RefId from 'canner-ref-id';
+import type {HOCProps} from './types';
 
 const RENDER_CHILDREN = 0;
 const RENDER_COMPONENT = 1;
@@ -12,35 +11,16 @@ const RENDER_NULL = 2;
 const ButtonWrapper = styled.div`
   text-align: right;
 `
-
-type Props = {
-  pattern: string,
-  routes: Array<string>,
-  path: string,
-  params: {
-    op: string
-  },
-  goTo: Function,
-  refId: RefId,
-  deploy: Function,
-  reset: Function,
-  hideButtons: boolean,
-  renderChildren: (Object) => React.Node,
-  request: Function,
-  keyName: string,
-  items: Object
-}
-
 type State = {
   deploying: boolean
 }
 
 export default function withRoute(Com: React.ComponentType<*>) {
-  return class ComWithRoute extends React.Component<Props, State> {
+  return class ComWithRoute extends React.Component<HOCProps, State> {
     state = {
       deploying: false
     };
-
+  
     deploy = () => {
       const {refId, deploy, goTo, routes} = this.props;
       this.setState({
@@ -52,6 +32,11 @@ export default function withRoute(Com: React.ComponentType<*>) {
             deploying: false
           });
           goTo(routes[0]);
+        })
+        .catch(() => {
+          this.setState({
+            deploying: false
+          });
         });
     }
 
@@ -61,31 +46,19 @@ export default function withRoute(Com: React.ComponentType<*>) {
         .then(() => goTo(routes[0]));
     }
 
-    back = () => {
-      this.deploy();
-    }
-
     discard = () => {
       const {goTo, routes, params, reset, refId} = this.props;
-      confirm({
-        title: 'Do you Want to discard all changes?',
-        content: 'All unsaved changes will be discard.',
-        onOk() {
-          if (params.op === 'create') {
-            reset(refId.getPathArr()[0]).then(() => goTo(routes.join('/')));
-          } else {
-            reset(refId.getPathArr()[0]).then(() => goTo(routes.slice(0, -1).join('/')));
-          }
-        },
-        onCancel() {
-        },
-      });
+      if (params.op === 'create') {
+        reset(refId.getPathArr()[0]).then(() => goTo(routes.join('/')));
+      } else {
+        reset(refId.getPathArr()[0]).then(() => goTo(routes.slice(0, -1).join('/')));
+      }
       
     }
 
     render() {
       const {deploying} = this.state;
-      let {routes, pattern,  path, params, refId, renderChildren, hideButtons} = this.props;
+      let {routes, pattern,  path, params, refId, renderChildren, hideButtons, uiParams} = this.props;
       const renderType = getRenderType({
         pattern,
         routes,
@@ -95,29 +68,31 @@ export default function withRoute(Com: React.ComponentType<*>) {
       const pathArrLength = refId.getPathArr().length;
       const routesLength = routes.length;
       const {op} = params;
+      let renderKeys = uiParams && uiParams.updateKeys; // render all
+      if (op === 'create') {
+        renderKeys = uiParams && uiParams.createKeys;
+      }
       return <Spin tip="deploying" spinning={deploying}>
         {
           // quick fix for route array's children
           // need to find a stable way to control route
-          (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength > pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
-            <React.Fragment>
-              <Button onClick={this.back} style={{marginBottom: 16}}>
-                <Icon type="arrow-left" /> Back and Save
-              </Button>
-              <Button onClick={this.discard} style={{marginLeft: 16, marginBottom: 16}}>
-                Discard
-              </Button>
-            </React.Fragment>
+          (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
+            <Button onClick={this.discard} style={{marginBottom: 16}}>
+              <Icon type="arrow-left" /> Back
+            </Button>
         }
         {
-          renderType === RENDER_CHILDREN && renderChildren({
-            refId
+          renderType === RENDER_CHILDREN && renderChildren(node => {
+            return {
+              hidden: renderKeys && renderKeys.indexOf(node.keyName) === -1,
+              refId
+            };
           })
         }
         {
           // quick fix for route array's children
           // need to find a stable way to control route
-          (renderType === RENDER_CHILDREN  && pattern === 'array' && !hideButtons && (routesLength > pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
+          (renderType === RENDER_CHILDREN  && pattern === 'array' && !hideButtons && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
             <ButtonWrapper>
               <Button style={{marginRight: 16}} type="primary" onClick={this.deploy}>Confirm</Button>
               <Button onClick={this.reset}>Reset</Button>

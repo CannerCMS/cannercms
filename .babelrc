@@ -1,11 +1,22 @@
 {
   "presets": [
-    "env",
-    "react",
-    "flow",
-    "stage-0"
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": [
+          ">0.25%",
+          "not ie 11",
+          "not op_mini all"
+        ]
+      }
+    }],
+    "@babel/preset-react",
+    "@babel/preset-flow",
+    ["@babel/preset-stage-0", {
+      "decoratorsLegacy": true,
+      "pipelineProposal": "minimal"
+    }]
   ],
   "plugins": [
-    "babel-plugin-transform-decorators-legacy"
+    "@babel/plugin-proposal-class-properties"
   ]
 }

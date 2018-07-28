@@ -15,7 +15,7 @@ Object {
       },
       "connection": true,
       "declareArgs": Object {
-        "$RANDOM_KEY": "PostWhereUniqueInput",
+        "$RANDOM_KEY": "PostOrderByInput",
       },
       "fields": Object {
         "bestAuthor": Object {
@@ -28,19 +28,10 @@ Object {
         },
         "id": null,
         "staredPosts": Object {
-          "args": Object {
-            "after": "$RANDOM_KEY",
-            "before": "$RANDOM_KEY",
-            "first": "$RANDOM_KEY",
-            "last": "$RANDOM_KEY",
-            "orderBy": "$RANDOM_KEY",
-            "where": "$RANDOM_KEY",
-          },
           "fields": Object {
             "id": null,
             "title": null,
           },
-          "isPlural": true,
         },
         "title": null,
       },
@@ -58,7 +49,7 @@ Object {
       },
       "connection": true,
       "declareArgs": Object {
-        "$RANDOM_KEY": "UserWhereUniqueInput",
+        "$RANDOM_KEY": "UserOrderByInput",
       },
       "fields": Object {
         "email": null,
@@ -66,26 +57,17 @@ Object {
         "images": Object {},
         "name": null,
         "posts": Object {
-          "args": Object {
-            "after": "$RANDOM_KEY",
-            "before": "$RANDOM_KEY",
-            "first": "$RANDOM_KEY",
-            "last": "$RANDOM_KEY",
-            "orderBy": "$RANDOM_KEY",
-            "where": "$RANDOM_KEY",
-          },
           "fields": Object {
             "id": null,
             "title": null,
           },
-          "isPlural": true,
         },
       },
       "isPlural": true,
     },
   },
   "variables": Object {
-    "$RANDOM_KEY": 10,
+    "$RANDOM_KEY": Object {},
   },
 }
 `;

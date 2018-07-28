@@ -45,13 +45,21 @@ type Props = {
   refId: RefId,
   args: Args,
   items: Object,
-  value: Object
+  value: Object,
+  onChange?: Function
 }
 
 export default class Toolbar extends React.PureComponent<Props> {
 
   constructor(props: Props) {
     super(props);
+  }
+
+  UNSAFE_componentWillReceiveProps(props: Props) {
+    const {onChange, value} = props;
+    if (onChange && value) {
+      onChange(value);
+    }
   }
 
   changeOrder = ({orderField, orderType}: {orderField: string, orderType: string}) => {

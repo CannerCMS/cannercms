@@ -21,6 +21,10 @@ export default class ArrayField implements Field {
     this.isEntity = isEntity || false;
   }
 
+  getAttr(name: string) {
+    return this.schema[name];
+  }
+
   getKey() {
     return this.key;
   }

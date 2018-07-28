@@ -9,20 +9,20 @@ describe('onDeployManager class', () => {
 
   it('registerCallback', () => {
     const callback = () => {};
-    onDeployManager.registerCallback('posts', 'id1', callback);
-    expect(onDeployManager._map.posts.id1).toBe(callback);
+    const callbackId = onDeployManager.registerCallback('posts', callback);
+    expect(onDeployManager._map.posts[callbackId]).toEqual(callback);
   });
 
   it('findCallback', () => {
     const callback = () => {};
-    onDeployManager.registerCallback('posts', 'id1', callback);
-    expect(onDeployManager.findCallback('posts', 'id1')).toBe(callback);
+    onDeployManager.registerCallback('posts', callback);
+    expect(onDeployManager.findCallback('posts')).toEqual([callback]);
   });
 
   it('unregisterCallback', () => {
     const callback = () => {};
-    onDeployManager.registerCallback('posts', 'id1', callback);
-    onDeployManager.unregisterCallback('posts', 'id1');
-    expect(onDeployManager._map.posts.id1).toBeUndefined();
+    const callbackId = onDeployManager.registerCallback('posts', callback);
+    onDeployManager.unregisterCallback('posts', callbackId);
+    expect(onDeployManager._map.posts).toEqual({});
   });
 });

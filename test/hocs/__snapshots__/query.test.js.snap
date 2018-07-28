@@ -61,7 +61,7 @@ exports[`with  query should render 2`] = `
           },
           "connection": true,
           "declareArgs": Object {
-            "$RANDOM_KEY": "PostWhereUniqueInput",
+            "$RANDOM_KEY": "PostOrderByInput",
           },
           "fields": Object {
             "id": null,
@@ -86,7 +86,7 @@ exports[`with  query should render 2`] = `
       "toGQL": [Function],
       "updateQueries": [Function],
       "variables": Object {
-        "$RANDOM_KEY": 10,
+        "$RANDOM_KEY": Object {},
       },
     }
   }
@@ -103,7 +103,24 @@ exports[`with  query should render 2`] = `
   }
   rootValue={null}
   showPagination={true}
-  subscribe={[MockFunction]}
+  subscribe={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          "posts",
+          [Function],
+        ],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": Object {
+            "unsubscribe": [MockFunction],
+          },
+        },
+      ],
+    }
+  }
   unsubscribe={[MockFunction]}
   value={null}
 />
