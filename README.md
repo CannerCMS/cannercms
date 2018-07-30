@@ -137,11 +137,6 @@ Wonder why we use JSX? [read here](https://www.canner.io/docs/why-jsx)
 - live demo: https://fir-cms-15f83.firebaseapp.com/login
 - repo: https://github.com/Canner/canner-firebase-cms
 
-### HTML5UP templates using Canner
-
-- live demo:  https://www.canner.io/demo
-- repo: https://github.com/Canner/canner-html5up-demo
-
 **Posts**
 
 - Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up.html
