@@ -4,6 +4,8 @@
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "scripts": {
+    "test": "lerna exec -- jest --coverage",
+    "test:watch": "lerna exec -- jest --watch --coverage",
     "lint": "eslint ./packages/*/src/**/*.js",
     "clean": "lerna exec --parallel -- rimraf lib dist",
     "build:flow": "lerna exec --parallel -- flow-copy-source -v -i '**/test/**' src lib",
