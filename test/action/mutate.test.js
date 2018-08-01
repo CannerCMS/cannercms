@@ -1,7 +1,6 @@
 import mutate from '../../src/action/mutate';
-import {fromJS} from 'immutable';
 
-const originValue = fromJS({
+const originValue = {
   info: {
     basicInfo: {
       name: 'name'
@@ -20,7 +19,7 @@ const originValue = fromJS({
       }
     }]
   }
-})
+}
 
 describe('mutate', () => {
   test('update object', () => {
@@ -28,14 +27,14 @@ describe('mutate', () => {
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'info',
-        value: fromJS({
+        value: {
           basicInfo: {
             name: 'name2'
           }
-        })
+        }
       }
     };
-    expect(mutate(originValue, action).getIn(['info', 'basicInfo', 'name'])).toEqual('name2');
+    expect(mutate(originValue, action).info.basicInfo.name).toEqual('name2');
   });
 
   test('update array', () => {
@@ -44,12 +43,12 @@ describe('mutate', () => {
       payload: {
         key: 'posts',
         id: 'post1',
-        value: fromJS({
+        value: {
           title: 'post2',
-        })
+        }
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node']).toJS()).toMatchObject({
+    expect(mutate(originValue, action).posts.edges[0].node).toMatchObject({
       id: 'post1',
       title: 'post2',
       author: [{
@@ -64,17 +63,17 @@ describe('mutate', () => {
       type: 'CREATE_ARRAY',
       payload: {
         key: 'posts',
-        value: fromJS({
+        value: {
           id: 'id2',
           title: 'post2',
           author: [{
             name: 'author1',
             id: 'author1'
           }]
-        })
+        }
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 'edges', 1, 'node']).toJS()).toMatchObject({
+    expect(mutate(originValue, action).posts.edges[1].node).toMatchObject({
       id: expect.anything(String),
       title: 'post2',
       author: [{
@@ -92,7 +91,7 @@ describe('mutate', () => {
         id: 'post1',
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 'edges']).size).toEqual(0);
+    expect(mutate(originValue, action).posts.edges.length).toEqual(0);
   });
 
   test('connect', () => {
@@ -102,13 +101,13 @@ describe('mutate', () => {
         key: 'posts',
         id: 'post1',
         path: 'author',
-        value: fromJS({
+        value: {
           id: 'author2',
           name: 'author2'
-        })
+        }
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node', 'author', 1]).toJS()).toMatchObject({
+    expect(mutate(originValue, action).posts.edges[0].node.author[1]).toMatchObject({
       id: 'author2',
       name: 'author2'
     });
@@ -121,13 +120,13 @@ describe('mutate', () => {
         key: 'posts',
         path: 'author',
         id: 'post1',
-        value: fromJS({
+        value: {
           id: 'author2',
           name: 'author2'
-        })
+        }
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node', 'author', 1]).toJS()).toMatchObject({
+    expect(mutate(originValue, action).posts.edges[0].node.author[1]).toMatchObject({
       id: 'author2',
       name: 'author2'
     });
@@ -140,12 +139,12 @@ describe('mutate', () => {
         key: 'posts',
         id: 'post1',
         path: 'author',
-        value: fromJS({
+        value: {
           id: 'author1'
-        })
+        }
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node', 'author']).size).toEqual(0);
+    expect(mutate(originValue, action).posts.edges[0].node.author).toEqual(0);
   });
 
   test('disconnect and delete', () => {
@@ -155,11 +154,11 @@ describe('mutate', () => {
         key: 'posts',
         id: 'post1',
         path: 'author',
-        value: fromJS({
+        value: {
           id: 'author1'
-        })
+        }
       }
     };
-    expect(mutate(originValue, action).getIn(['posts', 'edges', 0, 'node', 'author']).size).toEqual(0);
+    expect(mutate(originValue, action).posts.edges[0].node.author.length).toEqual(0);
   })
 })

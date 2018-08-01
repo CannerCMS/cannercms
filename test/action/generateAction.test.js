@@ -1,7 +1,6 @@
 import {generateAction} from '../../src/action/generateAction';
-import {fromJS} from 'immutable';
 
-const rootValue = fromJS({
+const rootValue = {
   user: {
     name: 'name',
     info: {
@@ -38,7 +37,7 @@ const rootValue = fromJS({
     }],
     users: [{id: 'user1', name: 'name1'}, {id: 'user2', name: 'name2'}]
   }],
-});
+};
 
 describe('update action', () => {
   it('update an array item', () => {
@@ -48,16 +47,18 @@ describe('update action', () => {
       value: 'zzz',
       rootValue,
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
         id: 'id1',
-        value: rootValue.getIn(['posts', 0])
-          .setIn(['comment', 0, 'text'], 'zzz')
-          .filter((v, k) => k === 'comment')
-          .toJS()
+        value: rootValue.posts[0].comment.map((c, index) => {
+          if (index === 0) {
+            return {...c, text: 'zzz'}
+          }
+          return c;
+        })
       }
     });
   });
@@ -69,16 +70,15 @@ describe('update action', () => {
       value: 'C',
       rootValue,
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
+    const newUser = {...rootValue.user};
+    newUser.info.phone[0].type = 'C';
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
         id: "",
-        value: rootValue.getIn(['user'])
-          .setIn(['info', 'phone', 0, 'type'], 'C')
-          .filter((v, k) => k === 'info')
-          .toJS()
+        value: newUser.info
       }
     });
   });
@@ -94,7 +94,7 @@ describe('update action', () => {
         to: 'users'
       }
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'UPDATE_CONNECT',
       payload: {
@@ -114,15 +114,15 @@ describe('create action', () => {
     const action = generateAction({
       id: 'posts',
       updateType: 'create',
-      value: fromJS({
+      value: {
         id: 'id1',
         title: '',
         comments: [],
         users: []
-      }),
+      },
       rootValue,
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'CREATE_ARRAY',
       payload: {
@@ -147,16 +147,16 @@ describe('create action', () => {
       },
       rootValue,
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
+    const newValue = {...rootValue};
+    newValue.posts[0].users.push({name: ''});
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
         id: 'id1',
-        value: rootValue.getIn(['posts', 0])
-          .updateIn(['users'], list => list.push(fromJS({name: ''})))
-          .filter((v, k) => k === 'users')
-          .toJS()
+        value: newValue.posts[0].users
+          
       }
     });
   });
@@ -171,16 +171,15 @@ describe('create action', () => {
       },
       rootValue,
     });
-    action.payload.value = action.payload.value.toJS();
+    const newUser = {...rootValue.user};
+    newUser.info.phone.push({type: '',  value: ''});
+    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
         id: '',
-        value: rootValue.get('user')
-          .updateIn(['info', 'phone'], list => list.push(fromJS({type: '', value: ''})))
-          .filter((v, k) => k === 'info')
-          .toJS()
+        value: newUser.info
       }
     });
   });
@@ -189,7 +188,7 @@ describe('create action', () => {
     const action = generateAction({
       id: 'posts/0/users',
       updateType: 'create',
-      value: fromJS({
+      value: {
         name: ''
       }),
       relation: {
@@ -197,8 +196,8 @@ describe('create action', () => {
         type: 'toMany'
       },
       rootValue,
-    });
-    action.payload.value = action.payload.value.toJS();
+    };
+    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'CREATE_AND_CONNECT',
       payload: {
@@ -220,7 +219,7 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'DELETE_ARRAY',
       payload: {
@@ -237,16 +236,15 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
+    const newPost1 = {...rootValue.posts[1]};
+    newPost1.users.shift();
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
         id: 'id2',
-        value: rootValue.getIn(['posts', 1])
-          .updateIn(['users'], list => list.delete(0))
-          .filter((v, k) => k === 'users')
-          .toJS()
+        value: newPost1.users
       }
     });
   });
@@ -257,16 +255,15 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
+    const newUser = {...rootValue.user};
+    newUser.info.phone.splice(1, 1);
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
         id: '',
-        value: rootValue.get('user')
-          .updateIn(['info', 'phone'], list => list.delete(1))
-          .filter((v, k) => k === 'info')
-          .toJS()
+        value: newUser.info
       }
     });
   });
@@ -308,7 +305,7 @@ describe('swap action', () => {
       updateType: 'swap',
       rootValue
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'NOOP',
       payload: {
@@ -327,22 +324,19 @@ describe('swap action', () => {
       updateType: 'swap',
       rootValue
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
         id: 'id2',
-        value: rootValue.getIn(['posts', 1])
-          .set('comment', fromJS([{
-            text: 'yyy',
-            author: 'yyy'
-          }, {
-            text: 'xxx',
-            author: 'xxx'
-          }]))
-          .filter((v, k) => k === 'comment')
-          .toJS()
+        value: [{
+          text: 'yyy',
+          author: 'yyy'
+        }, {
+          text: 'xxx',
+          author: 'xxx'
+        }]
       }
     });
   });
@@ -356,22 +350,21 @@ describe('swap action', () => {
       updateType: 'swap',
       rootValue
     });
-    action.payload.value = action.payload.value.toJS();
+    action.payload.value = action.payload.value;
+    const newUser = {...rootValue.user};
+    newUser.info.phone = [{
+      type: 'C',
+      value: 'yyy'
+    }, {
+      type: 'H',
+      value: 'xxx'
+    }];
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
         id: '',
-        value: rootValue.getIn(['user'])
-          .setIn(['info', 'phone'],fromJS([{
-            type: 'C',
-            value: 'yyy'
-          }, {
-            type: 'H',
-            value: 'xxx'
-          }]))
-          .filter((v, k) => k === 'info')
-          .toJS()
+        value: newUser.info
       }
     });
   });

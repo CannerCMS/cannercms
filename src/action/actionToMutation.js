@@ -39,7 +39,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         const firstField = action.payload.path.split('/')[0];
         fields = {[firstField]: null};
       } else {
-        fields = action.payload.value.toJS();
+        fields = action.payload.value.map(() => null).toJS();
       }
       break;
     case 'UPDATE_ARRAY':

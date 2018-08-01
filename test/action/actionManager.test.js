@@ -1,5 +1,4 @@
 import {ActionManager} from '../../src/action';
-import {fromJS} from 'immutable';
 import {
   ArrayPattern,
   ObjectPattern,
@@ -10,9 +9,9 @@ const objectAction = {
   type: 'UPDATE_OBJECT',
   payload: {
     key: 'user',
-    value: fromJS({
+    value: {
       name: 'User'
-    })
+    }
   }
 }
 
@@ -21,9 +20,9 @@ const updateArrayAction = {
   payload: {
     key: 'posts',
     id: 'id1',
-    value: fromJS({
+    value: {
       title: 'POST1'
-    })
+    }
   }
 }
 
@@ -32,9 +31,9 @@ const createArrayAction = {
   payload: {
     key: 'posts',
     id: 'id1',
-    value: fromJS({
+    value: {
       title: 'POST2'
-    })
+    }
   }
 }
 
@@ -44,9 +43,9 @@ const connectAction = {
     key: 'posts',
     path: 'author',
     id: 'id1',
-    value: fromJS({
+    value: {
       id: 'author1'
-    })
+    }
   }
 }
 
@@ -56,9 +55,9 @@ const disconnectAction = {
     key: 'posts',
     path: 'author',
     id: 'id1',
-    value: fromJS({
+    value: {
       id: 'author1'
-    })
+    }
   }
 }
 

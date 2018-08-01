@@ -1,44 +1,34 @@
 import ArrayPattern from '../../../src/action/pattern/arrayPattern';
-import {fromJS} from 'immutable';
-
-/*
-const value = [{
-  title: 'title',
-  info: {
-    author: ['author1']
-  }
-}];
-*/
 
 const createAction = {
   type: 'CREATE_ARRAY',
   payload: {
-    value: fromJS({
+    value: {
       title: '',
       info: {
         author: []
       }
-    })
+    }
   }
 }
 
 const updateAction1 = {
   type: 'UPDATE_ARRAY',
   payload: {
-    value: fromJS({
+    value: {
       title: 'title'
-    })
+    }
   }
 }
 
 const updateAction2 = {
   type: 'UPDATE_ARRAY',
   payload: {
-    value: fromJS({
+    value: {
       info: {
         author: []
       }
-    })
+    }
   }
 }
 

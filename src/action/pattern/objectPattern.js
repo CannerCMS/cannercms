@@ -12,7 +12,7 @@ export default class ObjectPattern implements Pattern<ObjectAction> {
 
   mergeMultiMapUpdate() {
     this.actions = [this.actions.reduce((result, action) => {
-      result.payload.value = result.payload.value.merge(action.payload.value);
+      result.payload.value = {...result.payload.value, ...action.payload.value};
       return result;
     })];
   }
