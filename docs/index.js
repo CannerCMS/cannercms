@@ -35,7 +35,7 @@ class CMSExample extends React.Component {
               baseUrl={baseUrl}
             >
               <CMS
-                schema={{...schema, sidebar: []}}
+                schema={{...schema}}
                 afterDeploy={this.afterDeploy}
                 dataDidChange={this.dataDidChange}
               />
