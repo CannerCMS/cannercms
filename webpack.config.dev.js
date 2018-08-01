@@ -36,7 +36,8 @@ module.exports = {
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
       'cms-helpers': path.resolve(__dirname, 'node_modules', 'cms-helpers'),
       '@canner': path.resolve(__dirname, 'node_modules', '@canner'),
-      'antd': path.resolve(__dirname, 'node_modules/antd')
+      'antd': path.resolve(__dirname, 'node_modules/antd'),
+      packages: path.resolve(__dirname, "./packages"),
     }
   },
   resolveLoader: {
@@ -73,7 +74,7 @@ module.exports = {
         test: /\.js$/,
         include: [
           path.resolve(__dirname, 'docs'),
-          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'packages'),
           path.resolve(__dirname, 'node_modules/@canner/image-upload')
         ],
         use: {
