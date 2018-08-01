@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
-import CMS from '../src/components';
-import RouteProvider from '../src/components/routeProvider/ReactRouterProvider';
+import CMS from 'packages/CMS/src/components';
+import RouteProvider from 'packages/CMS/src/components/routeProvider/ReactRouterProvider';
 import schema from './canner.schema';
 import {Layout, Menu} from 'antd';
 // eslint-disable-next-line
