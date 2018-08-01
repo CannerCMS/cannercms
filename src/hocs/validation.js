@@ -34,7 +34,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
       const {validator} = validation;
       paths = paths.slice(1);
       const reject = message => ({error: true, message});
-      onDeploy(key, result => {
+      this.callbackId = onDeploy(key, result => {
         const {value} = getValueAndPaths(result.data, paths);
         const isRequiredValid = required ? Boolean(value) : true;
         const validatorResult = validator && validator(value, reject);
@@ -63,6 +63,18 @@ export default function withValidation(Com: React.ComponentType<*>) {
           errorInfo: errorInfo
         }
       });
+    }
+
+    componentWillUnmount() {
+      this.removeOnDeploy();
+    }
+
+    removeOnDeploy = () => {
+      const {refId, removeOnDeploy} = this.props;
+      console.log(this.callbackId);
+      if (this.callbackId) {
+        removeOnDeploy(refId.getPathArr()[0], this.callbackId);
+      }
     }
 
     render() {
