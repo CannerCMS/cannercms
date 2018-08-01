@@ -71,7 +71,6 @@ export default function withValidation(Com: React.ComponentType<*>) {
 
     removeOnDeploy = () => {
       const {refId, removeOnDeploy} = this.props;
-      console.log(this.callbackId);
       if (this.callbackId) {
         removeOnDeploy(refId.getPathArr()[0], this.callbackId);
       }
