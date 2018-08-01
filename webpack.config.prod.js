@@ -12,6 +12,11 @@ module.exports = {
     'styled-components': 'styled',
     'canner-slate-editor': 'CannerSlateEditor',
   },
+  resolve: {
+    alias: {
+      packages: path.resolve(__dirname, "./packages"),
+    }
+  },
   module: {
     rules: [
       {
