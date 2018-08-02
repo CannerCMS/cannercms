@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
-import Canner from 'packages/canner/src/components';
+import Canner from 'packages/canner/src';
 import {ReactRouterProvider} from 'packages/canner/src';
 import schema from './canner.schema';
 import {Layout, Menu} from 'antd';
