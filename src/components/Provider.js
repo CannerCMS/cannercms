@@ -5,26 +5,20 @@
 import * as React from 'react';
 import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
-import type ApolloClient from 'apollo-boost';
 import isEmpty from 'lodash/isEmpty';
 import pluralize from 'pluralize';
 import upperFirst from 'lodash/upperFirst';
 import {ActionManager, actionToMutation, actionsToVariables, mutate} from '../action';
 import {Query} from '../query';
 import {OnDeployManager} from '../onDeployManager';
-import type {Action, ActionType} from '../action/types';
 import gql from 'graphql-tag';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
 import {groupBy, difference} from 'lodash';
-type Props = {
-  schema: {[key: string]: any},
-  dataDidChange: Object => void,
-  afterDeploy: Object => void,
-  children: React.Node,
-  client: ApolloClient,
-  rootKey: string
-}
+import type {ProviderProps} from './types';
+import type {Action, ActionType} from '../action/types';
+
+type Props = ProviderProps;
 
 type State = {
 }

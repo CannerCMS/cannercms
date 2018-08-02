@@ -78,6 +78,14 @@ export type GeneratorProps = {
   schema: Object
 }
 
+export type ProviderProps = {
+  schema: CannerSchema,
+  dataDidChange: DataDidChange,
+  afterDeploy: AfterDeploy,
+  children: Array<React.Node>,
+  client: ApolloClient,
+  rootKey: string
+};
 
 export type ReactRouterProviderProps = {
   children: React.Node,
