@@ -68,7 +68,7 @@ export class ActionManager implements ActionManagerDef {
         // $FlowFixMe
         return patternItem.array.getActions().concat(patternItem.connect.getActions());
       } else {
-        return item.reduce((result, currItem) => {
+        return item.reduce((result: Array<string>, currItem: Object) => {
           const actions = currItem.array.getActions().concat(currItem.connect.getActions());
           return result.concat(actions);
         }, []);

@@ -56,7 +56,7 @@ type childrenProps = {
 type State = {
   componentTree: {[string]: any},
   error: any,
-  errorInfo: string
+  errorInfo: Object
 }
 
 export default class Generator extends React.PureComponent<Props, State> {
@@ -76,7 +76,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     this.state = {
       componentTree: this.cacheTree[activeKey],
       error: null,
-      errorInfo: ''
+      errorInfo: {}
     };
   }
 
@@ -89,7 +89,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     });
   }
 
-  componentDidCatch(error: any, errorInfo: string) {
+  componentDidCatch(error: any, errorInfo: Object) {
     // Catch errors in any components below and re-render with error message
     this.setState({
       error: error,

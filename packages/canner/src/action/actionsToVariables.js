@@ -140,7 +140,7 @@ export function parseArrayToSet(payload: any, relationField: Array<string>, key?
 /**
  * find the relation field in first level relation
  */
-export function genRelationField(schema: Object, key: string) {
+export function genRelationField(schema: Object, key: string): Array<string> {
   const keySchema = schema[key];
   let items = {};
   if (keySchema.type === 'object') {
@@ -151,5 +151,5 @@ export function genRelationField(schema: Object, key: string) {
     return [];
   }
 
-  return Object.keys(items).filter(field => items[field].type === 'relation');
+  return Object.keys(items).filter((field: string) => items[field].type === 'relation');
 }

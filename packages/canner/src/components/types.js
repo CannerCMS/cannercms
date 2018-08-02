@@ -82,7 +82,7 @@ export type ProviderProps = {
   schema: CannerSchema,
   dataDidChange: DataDidChange,
   afterDeploy: AfterDeploy,
-  children: Array<React.Node>,
+  children: React.Element<*>,
   client: ApolloClient,
   rootKey: string
 };

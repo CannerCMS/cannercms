@@ -171,7 +171,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       this.updateDataChanged();
       afterDeploy && afterDeploy({
         key,
-        id,
+        id: id || '',
         result
       });
       return result;
@@ -241,7 +241,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     const variables = this.query.getVairables();  
     const query = gql`${this.query.toGQL(actions[0].payload.key)}`;
     const data = client.readQuery({query, variables});
-    const mutatedData = actions.reduce((result, ac) => mutate(result, ac), data);
+    const mutatedData = actions.reduce((result: Object, ac: any) => mutate(result, ac), data);
     client.writeQuery({
       query,
       variables,

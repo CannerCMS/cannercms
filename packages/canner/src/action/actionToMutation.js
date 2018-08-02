@@ -117,6 +117,6 @@ function genWhereInputType(action) {
   return `${transformKey(key)}WhereUniqueInput!`;
 }
 
-export function transformKey(key) {
+export function transformKey(key: string) {
   return upperFirst(pluralize.singular(key));
 }

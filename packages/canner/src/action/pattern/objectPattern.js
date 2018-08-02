@@ -11,7 +11,7 @@ export default class ObjectPattern implements Pattern<ObjectAction> {
   }
 
   mergeMultiMapUpdate() {
-    this.actions = [this.actions.reduce((result, action) => {
+    this.actions = [this.actions.reduce((result: Object, action: ObjectAction) => {
       result.payload.value = {...result.payload.value, ...action.payload.value};
       return result;
     })];
