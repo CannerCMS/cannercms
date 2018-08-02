@@ -47,7 +47,6 @@ describe('update action', () => {
       value: 'zzz',
       rootValue,
     });
-    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
@@ -70,7 +69,6 @@ describe('update action', () => {
       value: 'C',
       rootValue,
     });
-    action.payload.value = action.payload.value;
     const newUser = {...rootValue.user};
     newUser.info.phone[0].type = 'C';
     expect(action).toMatchObject({
@@ -82,31 +80,6 @@ describe('update action', () => {
       }
     });
   });
-
-  it('update relation', () => {
-    const action = generateAction({
-      id: 'posts/1/users/0/name',
-      updateType: 'update',
-      value: 'NAME1',
-      rootValue,
-      relation: {
-        type: 'toOne',
-        to: 'users'
-      }
-    });
-    action.payload.value = action.payload.value;
-    expect(action).toMatchObject({
-      type: 'UPDATE_CONNECT',
-      payload: {
-        key: 'posts',
-        id: 'id2',
-        path: 'users',
-        value: {
-          name: 'NAME1'
-        }
-      }
-    });
-  })
 });
 
 describe('create action', () => {
@@ -115,21 +88,20 @@ describe('create action', () => {
       id: 'posts',
       updateType: 'create',
       value: {
-        id: 'id1',
+        id: 'id2',
         title: '',
         comments: [],
         users: []
       },
       rootValue,
     });
-    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'CREATE_ARRAY',
       payload: {
         key: 'posts',
-        id: 'id1',
+        id: 'id2',
         value: {
-          id: 'id1',
+          id: 'id2',
           title: '',
           comments: [],
           users: []
@@ -147,7 +119,6 @@ describe('create action', () => {
       },
       rootValue,
     });
-    action.payload.value = action.payload.value;
     const newValue = {...rootValue};
     newValue.posts[0].users.push({name: ''});
     expect(action).toMatchObject({
@@ -173,7 +144,6 @@ describe('create action', () => {
     });
     const newUser = {...rootValue.user};
     newUser.info.phone.push({type: '',  value: ''});
-    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
@@ -190,14 +160,13 @@ describe('create action', () => {
       updateType: 'create',
       value: {
         name: ''
-      }),
+      },
       relation: {
         to: 'users',
         type: 'toMany'
       },
       rootValue,
-    };
-    action.payload.value = action.payload.value;
+    });
     expect(action).toMatchObject({
       type: 'CREATE_AND_CONNECT',
       payload: {
@@ -219,7 +188,6 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
-    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'DELETE_ARRAY',
       payload: {
@@ -236,7 +204,6 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
-    action.payload.value = action.payload.value;
     const newPost1 = {...rootValue.posts[1]};
     newPost1.users.shift();
     expect(action).toMatchObject({
@@ -255,7 +222,6 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
-    action.payload.value = action.payload.value;
     const newUser = {...rootValue.user};
     newUser.info.phone.splice(1, 1);
     expect(action).toMatchObject({
@@ -305,7 +271,6 @@ describe('swap action', () => {
       updateType: 'swap',
       rootValue
     });
-    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'NOOP',
       payload: {
@@ -324,7 +289,6 @@ describe('swap action', () => {
       updateType: 'swap',
       rootValue
     });
-    action.payload.value = action.payload.value;
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
@@ -350,7 +314,6 @@ describe('swap action', () => {
       updateType: 'swap',
       rootValue
     });
-    action.payload.value = action.payload.value;
     const newUser = {...rootValue.user};
     newUser.info.phone = [{
       type: 'C',

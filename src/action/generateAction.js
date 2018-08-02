@@ -1,7 +1,6 @@
 // @flow
 
-import type {UpdateType, Action, ActionType} from './types';
-import {fromJS, List} from 'immutable';
+import {update, set, get} from 'lodash';
 import {
   isCreateArray,
   isCreateNestedArrayInArray,
@@ -24,8 +23,11 @@ import {
   isConnect,
   isDisconnect,
 
-  isList
+  isArrayAction
 } from './isAction';
+
+import type {UpdateType, Action, ActionType} from './types';
+
 
 export function generateAction(arg: {
   id: string,
@@ -40,7 +42,7 @@ export function generateAction(arg: {
       type: 'CREATE_ARRAY',
       payload: {
         key,
-        id: arg.value.get('id'),
+        id: arg.value.id,
         value: arg.value
       }
     }
@@ -48,29 +50,28 @@ export function generateAction(arg: {
 
   if (isCreateNestedArrayInArray(arg)) {
     const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
+    const item = get(arg.rootValue, [key, index]);
+    update(item, paths, arr => arr.concat(arg.avlue));
     return {
       type: 'UPDATE_ARRAY',
       payload: {
         key,
         id,
-        value: arg.rootValue.getIn([key, index])
-          .updateIn(paths, list => (list || new List()).push(arg.value))
-          .filter((v, k) => k === paths[0])
+        value: item[paths[0]]
       }
     }
   }
 
   if (isCreateNestedArrayInObject(arg)) {
     const {key, id, paths} = splitId(arg.id, arg.rootValue);
+    const item = get(arg.rootValue, [key]);
+    update(item, paths, arr => arr.concat(arg.avlue));
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        value: arg.rootValue
-          .get(key)
-          .updateIn(paths, list => (list || new List()).push(arg.value))
-          .filter((v, k) => k === paths[0])
+        value: item[paths[0]]
       }
     }
   }
@@ -96,37 +97,41 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: fromJS({})
+        value: {}
       }
     }
   }
 
   if (isDeleteNestedArrayInArray(arg)) {
     const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
+    const prePaths = paths.slice(0, -1);
+    const deleteIndex = paths.slice(-1)[0];
+    const item = get(arg.rootValue, [key, index]);
+    update(item, prePaths, arr => arr.splice(deleteIndex, 1));
+
     return {
       type: 'UPDATE_ARRAY',
       payload: {
         key,
         id,
-        value: arg.rootValue
-          .getIn([key, index])
-          .updateIn(paths.slice(0, -1), list => list.delete(paths.slice(-1)[0]))
-          .filter((v, k) => k === paths[0])
+        value: item[paths[0]]
       }
     }
   }
 
   if (isDeleteNestedArrayInObject(arg)) {
     const {key, id, paths} = splitId(arg.id, arg.rootValue);
+    const prePaths = paths.slice(0, -1);
+    const deleteIndex = paths.slice(-1)[0];
+    const item = get(arg.rootValue, [key]);
+    update(item, prePaths, arr => arr.splice(deleteIndex, 1));
+
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        value: arg.rootValue
-          .getIn([key])
-          .updateIn(paths.slice(0, -1), list => list.delete(paths.slice(-1)[0]))
-          .filter((v, k) => k === paths[0])
+        value: item[paths[0]]
       }
     }
   }
@@ -147,47 +152,34 @@ export function generateAction(arg: {
 
   if (isUpdateArray(arg)) {
     const {key, id, paths, index} = splitId(arg.id, arg.rootValue);
+    const item = get(arg.rootValue, [key, index]);
+    set(item, paths, arg.value);
     return {
       type: 'UPDATE_ARRAY',
       payload: {
         key,
         id,
-        value: arg.rootValue
-          .getIn([key, index])
-          .setIn(paths, arg.value)
-          .filter((v, k) => k === paths[0])
+        value: item[paths[0]]
       }
     };
   }
 
   if (isUpdateConnect(arg)) {
-    const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
-    return {
-      type: 'UPDATE_CONNECT',
-      payload: {
-        key,
-        id,
-        path: paths[0],
-        value: arg.rootValue
-          .getIn([key, index].concat(paths.slice(0, 2)))
-          .setIn(paths.slice(2), arg.value)
-          .filter((v, k) => k === paths[2]),
-        relation: arg.relation
-      }
-    };
+    /**
+     * unsupport action
+     */
   }
 
   if (isUpdateObject(arg)) {
     const {key, id, paths} = splitId(arg.id, arg.rootValue);
+    const item = get(arg.rootValue, key);
+    set(item, paths, arg.value);
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        value: arg.rootValue
-          .get(key)
-          .setIn(paths, arg.value)
-          .filter((v, k) => k === paths[0])
+        value: item[paths[0]]
       }
     };
   }
@@ -202,21 +194,23 @@ export function generateAction(arg: {
     const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
     // $FlowFixMe
     const {firstId, secondId} = arg.id;
+    const nestedArrPath = paths.slice(0, -1);
+    const item = get(arg.rootValue, [key, index]);
     const firstIndex = firstId.split('/').slice(-1)[0];
     const secondIndex = secondId.split('/').slice(-1)[0];
+    update(item, nestedArrPath, arr => {
+      let newArr = arr.slice();
+      newArr[firstIndex] = arr[secondIndex];
+      newArr[secondIndex] = arr[firstIndex];
+      return newArr;
+    })
+
     return {
       type: 'UPDATE_ARRAY',
       payload: {
         key,
         id,
-        value: arg.rootValue
-          .getIn([key, index])
-          .updateIn(paths.slice(0, -1), list => {
-            let newList = list.set(firstIndex, list.get(secondIndex));
-            newList = newList.set(secondIndex, list.get(firstIndex));
-            return newList;
-          })
-          .filter((v, k) => k === paths[0])
+        value: item[paths[0]]
       }
     }
   }
@@ -225,21 +219,22 @@ export function generateAction(arg: {
     const {key, id, paths} = splitId(arg.id, arg.rootValue);
     // $FlowFixMe
     const {firstId, secondId} = arg.id;
+    const nestedArrPath = paths.slice(0, -1);
+    const item = get(arg.rootValue, [key]);
     const firstIndex = firstId.split('/').slice(-1)[0];
     const secondIndex = secondId.split('/').slice(-1)[0];
+    update(item, nestedArrPath, arr => {
+      let newArr = arr.slice();
+      newArr[firstIndex] = arr[secondIndex];
+      newArr[secondIndex] = arr[firstIndex];
+      return newArr;
+    })    
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        value: arg.rootValue
-          .get(key)
-          .updateIn(paths.slice(0, -1), list => {
-            let newList = list.set(firstIndex, list.get(secondIndex));
-            newList = newList.set(secondIndex, list.get(firstIndex));
-            return newList;
-          })
-          .filter((v, k) => k === paths[0])
+        value: item[paths[0]]
       }
     }
   }
@@ -276,19 +271,19 @@ export function generateAction(arg: {
     type: 'NOOP',
     payload: {
       key: '',
-      value: fromJS({})
+      value: {}
     }
   }
 }
 
 function splitId(id, rootValue) {
   if (typeof id === 'string') {
-    if (isList(rootValue, id)) {
+    if (isArrayAction(rootValue, id)) {
       const [key, index, ...path] = id.split('/');
-      const recordId = rootValue.getIn([key, index, 'id']);
+      const item = rootValue[key][index];
       return {
         key,
-        id: recordId,
+        id: item && item.id,
         index,
         paths: path,
         path: path.join('/')

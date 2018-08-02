@@ -64,7 +64,7 @@ describe('array pattern', () => {
     arrayPattern.addAction(updateAction1);
     arrayPattern.addAction(updateAction2);
     expect(arrayPattern.getActions().length).toBe(1);
-    expect(arrayPattern.getActions()[0].payload.value.toJS()).toEqual({
+    expect(arrayPattern.getActions()[0].payload.value).toEqual({
       info: {
         author: []
       },
@@ -78,7 +78,7 @@ describe('array pattern', () => {
     arrayPattern.addAction(updateAction2);
     expect(arrayPattern.getActions().length).toBe(1);
     expect(arrayPattern.getActions()[0].type).toBe('CREATE_ARRAY');
-    expect(arrayPattern.getActions()[0].payload.value.toJS()).toEqual({
+    expect(arrayPattern.getActions()[0].payload.value).toEqual({
       info: {
         author: []
       },

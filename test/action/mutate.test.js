@@ -1,6 +1,6 @@
 import mutate from '../../src/action/mutate';
 
-const originValue = {
+let originValue = {
   info: {
     basicInfo: {
       name: 'name'
@@ -144,7 +144,7 @@ describe('mutate', () => {
         }
       }
     };
-    expect(mutate(originValue, action).posts.edges[0].node.author).toEqual(0);
+    expect(mutate(originValue, action).posts.edges[0].node.author.length).toEqual(0);
   });
 
   test('disconnect and delete', () => {

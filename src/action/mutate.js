@@ -1,17 +1,16 @@
 // @flow
-import {Map, List, fromJS} from 'immutable';
-import type {Action, ActionType} from './types';
 import produce from 'immer';
-import {merge, findIndex, remove} from 'lodash';
+import {merge, findIndex, remove, isArray} from 'lodash';
 
-export function mutatePure(originValue: Object, action: Action<ActionType>): any {
+import type {Action, ActionType} from './types';
+
+export default function mutate(originValue: Object, action: Action<ActionType>): any {
   let {key, id, value, path, relation} = action.payload;
-  value = (value && value.toJS) ? value.toJS() : value;
   // $FlowFixMe
   return produce(originValue, draft => {
     switch (action.type) {
       case 'CREATE_ARRAY': {
-        if (draft[key].edges) {
+        if (draft[key].edges) { // array connection
           draft[key].edges.push({
             __typename: null,
             cursor: value.id,
@@ -100,14 +99,46 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
       }
 
       case 'CREATE_AND_CONNECT': {
-        const index = findIndex(draft[key] || [], item => item.id === id);
-        draft[key][index][path].push(value);
+        if (id) {
+          const index = findIndex(draft[key].edges || [], item => item.cursor === id);
+          if (index === -1) {
+            throw new Error(`Can't find the id in rootValue`);
+          }
+          const relationValue = draft[key].edges[index].node[path];
+          if (!relationValue) {
+            draft[key].edges[index].node[path] = [value];
+          } else if (isArray(relationValue)) {
+            draft[key].edges[index].node[path].push(value);
+          }
+        } else {
+          const relationValue = draft[key][path];
+          if (!relationValue) {
+            draft[key][path] = [value];
+          } else if (isArray(relationValue)) {
+            draft[key][path].push(value);
+          }
+        }
         break;
       }
 
       case 'DISCONNECT_AND_DELETE': {
-        const index = findIndex(draft[key] || [], item => item.id === id);
-        remove(draft[key][index][path], item => item.id === id);
+        if (id) {
+          const index = findIndex(draft[key].edges || [], item => item.cursor === id);
+          if (index === -1) {
+            throw new Error(`Can't find the id in rootValue`);
+          }
+          const relationValue = draft[key].edges[index].node[path];
+          if (isArray(relationValue)) {
+            remove(draft[key].edges[index].node[path], item => item.id === value.id);
+          }
+        } else {
+          const relationValue = draft[key][path];
+          if (!relationValue) {
+            draft[key][path] = [value];
+          } else if (isArray(relationValue)) {
+            remove(draft[key][path], item => item.id === value.id);
+          }
+        }
         break;
       }
 
@@ -116,89 +147,4 @@ export function mutatePure(originValue: Object, action: Action<ActionType>): any
         break;
     }
   });
-}
-
-export default function mutate(originValue: Map<string, *>, action: Action<ActionType>): any {
-  let {key, id, value, path, relation} = action.payload;
-  switch (action.type) {
-    case 'CREATE_ARRAY': {
-      if (originValue.hasIn([key, 'edges'])) {
-        return originValue.updateIn([key, 'edges'], list => list.push(fromJS({
-          cursor: value.get('id'),
-          node: value
-        })));
-      }
-      return originValue.update(key, list => list.push(value));
-    }
-    case 'UPDATE_ARRAY': {
-      if (originValue.hasIn([key, 'edges'])) {
-        return originValue.updateIn([key, 'edges'], list => list.map(item => item.get('cursor') === id ? item.mergeIn(['node'], value): item));
-      }
-      return originValue.update(key, list => list.map(item => item.get('id') === id ? item.merge(value): item));
-    }
-    
-    case 'DELETE_ARRAY': {
-      if (originValue.hasIn([key, 'edges'])) {
-        return originValue.updateIn([key, 'edges'], list =>
-          list.filter(item => item.get('cursor') !== id));
-      }
-      return originValue.update(key, list => list.filter(item => item.get('id') !== id));
-    }
-
-    case 'UPDATE_OBJECT': {
-      return originValue.update(key, map => map.merge(value));
-    }
-
-    case 'CREATE_AND_CONNECT':
-    case 'CONNECT': {
-      if (id) {
-        // array connect
-        const index = (originValue.getIn([key, 'edges']) || new List()).findIndex(item => item.get('cursor') === id);
-        if (index === -1) return originValue;
-        if (relation && relation.type === 'toOne') {
-          return originValue.updateIn([key, 'edges', index, 'node', path], () => value)
-        } else {
-          return originValue.updateIn([key, 'edges', index, 'node', path], fieldValue => {
-            return (fieldValue || new List()).push(value);
-          });
-        }
-      } else {
-        if (relation && relation.type === 'toOne') {
-          return originValue.updateIn([key, path], value);
-        } else {
-          return originValue.updateIn([key, path], fieldValue => {
-            return (fieldValue || new List()).push(value);
-          });
-        }
-      }
-    }
-
-    case 'DISCONNECT_AND_DELETE':
-    case 'DISCONNECT': {
-      if (id) {
-        // array disconnect
-        const index = (originValue.getIn([key, 'edges']) || new List()).findIndex(item => item.get('cursor') === id);
-        if (index === -1) return originValue;
-        if (relation && relation.type === 'toOne') {
-          return originValue.updateIn([key, 'edges', index, 'node', path], () => null);
-        } else {
-          return originValue.updateIn([key, 'edges', index, 'node', path], fieldValue => {
-            return (fieldValue || new List()).filter(item => item.get('id') !== value.get('id'));
-          });
-        }
-      } else {
-        if (relation && relation.type === 'toOne') {
-          return originValue.updateIn([key, path], () => null);
-        } else {
-          return originValue.updateIn([key, path], fieldValue => {
-            return (fieldValue || new List()).filter(item => item.get('id') !== value.get('id'));
-          });
-        }
-      }
-    }
-
-    case 'NOOP':
-    default:
-      return originValue;
-  }
 }
