@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
-import CMS from '../src/components';
-import RouteProvider from '../src/components/routeProvider/ReactRouterProvider';
+import Canner from 'packages/canner/src';
+import {ReactRouterProvider} from 'packages/canner/src';
 import schema from './canner.schema';
 import {Layout, Menu} from 'antd';
 // eslint-disable-next-line
@@ -30,16 +30,16 @@ class CMSExample extends React.Component {
       <Router>
         <Route path="/docs" render={({history}) => {
           return (
-            <RouteProvider
+            <ReactRouterProvider
               history={history}
               baseUrl={baseUrl}
             >
-              <CMS
+              <Canner
                 schema={{...schema}}
                 afterDeploy={this.afterDeploy}
                 dataDidChange={this.dataDidChange}
               />
-            </RouteProvider>
+            </ReactRouterProvider>
           );
         }}/>
       </Router>
