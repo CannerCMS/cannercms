@@ -1,7 +1,7 @@
 {
-  "name": "@canner/cms",
+  "name": "canner",
   "version": "1.4.4",
-  "description": "Canner CMS",
+  "description": "Build CMS in few lines of code for different data sources",
   "main": "src/index.js",
   "scripts": {
     "test": "../../node_modules/.bin/jest --coverage",
