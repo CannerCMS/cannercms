@@ -104,7 +104,9 @@ describe('actions to variables', () => {
       args: {
         data: '$payload'
       },
-      fields: null
+      fields: {
+        title: "123"
+      }
     });
   });
 });
