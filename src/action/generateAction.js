@@ -32,7 +32,7 @@ import type {UpdateType, Action, ActionType} from './types';
 export function generateAction(arg: {
   id: string,
   updateType: UpdateType,
-  value: *,
+  value: any,
   rootValue: any,
   relation: Object
 }): Action<ActionType> {
@@ -51,7 +51,7 @@ export function generateAction(arg: {
   if (isCreateNestedArrayInArray(arg)) {
     const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
     const item = get(arg.rootValue, [key, index]);
-    update(item, paths, arr => arr.concat(arg.avlue));
+    update(item, paths, arr => arr.concat(arg.value));
     return {
       type: 'UPDATE_ARRAY',
       payload: {
@@ -65,7 +65,7 @@ export function generateAction(arg: {
   if (isCreateNestedArrayInObject(arg)) {
     const {key, id, paths} = splitId(arg.id, arg.rootValue);
     const item = get(arg.rootValue, [key]);
-    update(item, paths, arr => arr.concat(arg.avlue));
+    update(item, paths, arr => arr.concat(arg.value));
     return {
       type: 'UPDATE_OBJECT',
       payload: {

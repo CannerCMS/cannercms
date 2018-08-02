@@ -15,6 +15,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
   return class ComponentWithValition extends React.Component<HOCProps, State> {
     key: string;
     id: ?string;
+    callbackId: ?string;
     state = {
       error: false,
       errorInfo: []
@@ -71,7 +72,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
     removeOnDeploy = () => {
       const {refId, removeOnDeploy} = this.props;
       if (this.callbackId) {
-        removeOnDeploy(refId.getPathArr()[0], this.callbackId);
+        removeOnDeploy(refId.getPathArr()[0], this.callbackId || '');
       }
     }
 

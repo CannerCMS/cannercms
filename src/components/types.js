@@ -88,7 +88,7 @@ export type ProviderProps = {
 };
 
 export type ReactRouterProviderProps = {
-  children: React.Node,
+  children: React.Element<*>,
   baseUrl: string,
   history: {
     location: Object,

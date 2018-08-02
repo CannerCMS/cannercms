@@ -200,7 +200,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     return null;
   }
 
-  static findNode = (pathArr: Array<string>, node: Node): ?Node => {
+  static findNode = (pathArr: Array<string>, node: ComponentNode): ?Node => {
     if (isComponent(node) && node.keyName === pathArr[0]) {
       pathArr = pathArr.slice(1);
       if (!pathArr.length) {
@@ -236,7 +236,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     return this.renderNode(node, 0, {...props});
   }
 
-  renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {
+  renderChildren = (node: ComponentNode, props: childrenProps | Node => childrenProps): React.Node => {
     // just get the props and call renderNode
     // this method is called by components themselves
     const {children} = node;
