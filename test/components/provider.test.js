@@ -1,13 +1,10 @@
 import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
-// import toJson from 'enzyme-to-json';
 import Adapter from '../react163Adapter';
 import {schema, defaultData} from './data';
 import Provider from '../../src/components/Provider';
-// import {HOCContext as Context} from '../../src/hocs/context';
 import {createClient, MemoryConnector} from 'canner-graphql-interface';
 import {Query} from '../../src/query';
-import {fromJS} from 'immutable';
 import gql from "graphql-tag";
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -37,7 +34,7 @@ describe('provider methods', () => {
       <div>children</div>
     </Provider>);
     return wrapper.instance().fetch('home').then(d => {
-      expect(d.toJS()).toMatchSnapshot();
+      expect(d).toMatchSnapshot();
     });
   });
 
@@ -52,7 +49,7 @@ describe('provider methods', () => {
   //     <div>children</div>
   //   </Provider>)
   //   return wrapper.instance().fetch('posts').then(d => {
-  //     expect(d.toJS()).toMatchSnapshot();
+  //     expect(d).toMatchSnapshot();
   //   });
   // });
 
@@ -66,7 +63,7 @@ describe('provider methods', () => {
   //   const originData = await wrapper.instance().fetch('posts');
   //   wrapper.instance().updateQuery(['posts'], {where: {author: {name: "user2"}}});
   //   const newData = await wrapper.instance().fetch('posts');
-  //   expect(originData.toJS()).not.toEqual(newData.toJS());
+  //   expect(originData).not.toEqual(newData);
   // });
 
   test('request', async () => {
@@ -81,9 +78,9 @@ describe('provider methods', () => {
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'home',
-        value: fromJS({
+        value: {
           count: 11,
-        })
+        }
       }
     };
     await instance.fetch('home');
@@ -107,9 +104,9 @@ describe('provider methods', () => {
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'home',
-        value: fromJS({
+        value: {
           count: 11,
-        })
+        }
       }
     };
     await instance.fetch('home');
@@ -134,9 +131,9 @@ describe('provider methods', () => {
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'home',
-        value: fromJS({
+        value: {
           count: 11,
-        })
+        }
       }
     };
     await instance.fetch('home');
@@ -146,7 +143,7 @@ describe('provider methods', () => {
     return new Promise((resolver) => {
       setTimeout(resolver, 100);
     }).then(() => {
-      expect(mockCallback.mock.calls[0][0].toJS()).toHaveProperty('home', expect.anything(Object));
+      expect(mockCallback.mock.calls[0][0]).toHaveProperty('home', expect.anything(Object));
     });
   });
 
@@ -162,15 +159,15 @@ describe('provider methods', () => {
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'home',
-        value: fromJS({
+        value: {
           count: 11,
-        })
+        }
       }
     };
     await instance.fetch('home');
     instance.request(action, {write: false});
     return instance.deploy('home').then(data => {
-      expect(data.toJS()).toMatchObject({updateHome: {count: 11}});
+      expect(data).toMatchObject({updateHome: {count: 11}});
     });
     // const newData = client.readQuery({
     //   query: toGQL(schema, 'home')

@@ -2,12 +2,10 @@
 
 import * as React from 'react';
 import {generateAction} from '../action';
-import isArray from 'lodash/isArray';
 import {createEmptyData} from 'canner-helpers';
 import RefId from 'canner-ref-id';
-import {Map, List} from 'immutable';
-
 import type {HOCProps} from './types';
+import {update, merge, isArray, isPlainObject, mapValues} from 'lodash';
 
 type changeQueue = Array<{RefId: RefId | {firstRefId: RefId, secondRefId: RefId}, type: any, value: any}>;
 
@@ -81,16 +79,13 @@ export function createAction({
   if (type === 'create') {
     if (!config) {
       const emptyData = createEmptyData(items);
-      
-      if (emptyData.toJS) {
-        value = emptyData.mergeDeep(value);
+      if (isPlainObject(emptyData)) {
+        value = merge(emptyData, value);
       } else {
         value = emptyData;
       }
     }
-    // first layer array will gen id and typename by client, so we don;t have to do that
-    // quick fix
-    value = value.update('id', id => id || randomId());
+    update(value, 'id', id => id || randomId());
   }
   value = addTypename(value)
   return generateAction({
@@ -107,10 +102,10 @@ function randomId() {
 }
 
 function addTypename(value) {
-  if (Map.isMap(value)) {
-    value = value.update('__typename', typename => typename || null);
-    value = value.map(child => addTypename(child));
-  } else if (List.isList(value)) {
+  if (isPlainObject(value)) {
+    update(value, '__typename', typename => typename || null);
+    value = mapValues(value, child => addTypename(child));
+  } else if (isArray(value)) {
     value = value.map(child => addTypename(child));
   }
   return value;

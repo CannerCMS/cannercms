@@ -198,7 +198,7 @@ export function genClient(schema: LoadedSchema) {
 
   if (isEmpty(connector) && isEmpty(graphqlClient)) {
     options.connector = new MemoryConnector({
-      defaultData: createEmptyData(schema.schema).toJS()
+      defaultData: createEmptyData(schema.schema)
     });
   }
 

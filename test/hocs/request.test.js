@@ -3,7 +3,6 @@ import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import withRequest, {createAction} from '../../src/hocs/request';
-import {fromJS} from 'immutable';
 import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -16,12 +15,12 @@ describe('with request', () => {
       return (<div>Component</div>);
     }
     mockRequest = jest.fn().mockImplementation(() => Promise.resolve());
-    const rootValue = fromJS({
+    const rootValue = {
       posts: [{
         id: 'id1',
         title: 'post1'
       }]
-    });
+    };
     props = {
       refId: new RefId('posts'),
       value: rootValue,
@@ -48,10 +47,10 @@ describe('with request', () => {
     it('should call props.request with arguments action', () => {
       const wrapper = shallow(<WrapperComponent {...props} />);
       const type = 'create';
-      const delta = fromJS({
+      const delta = {
         id: 'id2',
         title: 'post2'
-      });
+      };
       wrapper.instance().onChange(props.refId, type, delta).then(() => {
         expect(mockRequest.mock.calls[0][0]).toBeTruthy();
       });
@@ -61,7 +60,7 @@ describe('with request', () => {
       const wrapper = shallow(<WrapperComponent {...props} />);
       const refId = props.refId;
       const type = 'create';
-      const delta = i => fromJS({
+      const delta = i => ({
         title: `post${i}`
       });
       const changeQueue = [2,3,4,5].map(i => ({refId, type, value: delta(i)}));
@@ -80,11 +79,11 @@ describe('createAction', () => {
       const action = createAction({
         id: 'posts',
         type: 'create',
-        value: fromJS({
+        value: {
           id: 'id2',
           title: 'post2'
-        }),
-        rootValue: fromJS({posts: []}),
+        },
+        rootValue: {posts: []},
         items: {
           title: {
             type: 'string'
@@ -95,7 +94,7 @@ describe('createAction', () => {
         }
       })
       expect(action.type).toBe('CREATE_ARRAY');
-      expect(action.payload.value.toJS()).toMatchObject({
+      expect(action.payload.value).toMatchObject({
         title: 'post2',
         field: 0
       });
@@ -105,12 +104,12 @@ describe('createAction', () => {
       const action = createAction({
         id: 'posts',
         type: 'create',
-        value: fromJS({
+        value: {
           id: 'id2',
           title: 'post2'
-        }),
+        },
         config: true, // this will cause unmerged
-        rootValue: fromJS({posts: []}),
+        rootValue: {posts: []},
         items: {
           title: {
             type: 'string'
@@ -121,7 +120,7 @@ describe('createAction', () => {
         }
       })
       expect(action.type).toBe('CREATE_ARRAY');
-      expect(action.payload.value.toJS()).toMatchObject({
+      expect(action.payload.value).toMatchObject({
         title: 'post2'
       });
     });
@@ -131,7 +130,7 @@ describe('createAction', () => {
         id: 'posts',
         type: 'create',
         config: false, // this will cause unmerged
-        rootValue: fromJS({posts: []}),
+        rootValue: {posts: []},
         items: {
           title: {
             type: 'string'
@@ -142,7 +141,7 @@ describe('createAction', () => {
         }
       })
       expect(action.type).toBe('CREATE_ARRAY');
-      expect(action.payload.value.toJS()).toMatchObject({
+      expect(action.payload.value).toMatchObject({
         title: '',
         field: 0
       });

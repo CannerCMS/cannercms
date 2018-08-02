@@ -3,7 +3,6 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import RefId from 'canner-ref-id';
-import {Map, List, fromJS} from 'immutable';
 import Toolbar from './components/toolbar';
 import {mapValues} from 'lodash';
 import type {HOCProps} from './types';
@@ -68,7 +67,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       return fetch(relation.to)
         .then(data => {
           this.setState({
-            value: data.get(relation.to),
+            value: data[relation.to],
             isFetching: false,
           });
         })
@@ -120,19 +119,19 @@ export default function withQuery(Com: React.ComponentType<*>) {
 function defaultValue(type: string, relation: any) {
   switch (type) {
     case 'connection': {
-      return fromJS({
+      return {
         edges: [],
         pageInfo: {
           hasNextPage: false,
           hasPreviousPage: false
         }
-      })
+      }
     }
     case 'array': {
-      return new List();
+      return [];
     }
     case 'object': {
-      return new Map();
+      return [];
     }
     case 'boolean': {
       return false;
@@ -145,34 +144,33 @@ function defaultValue(type: string, relation: any) {
     }
     case 'relation': {
       if (relation.type === 'toMany') {
-        return fromJS({
+        return {
           edges: [],
           pageInfo: {
             hasNextPage: false,
             hasPreviousPage: false
           }
-        });
-      } else {
-        return null;
+        };
       }
+      return null;
     }
     case 'image':
     case 'file': {
-      return fromJS({
+      return {
         url: '',
         contentType: '',
         name: '',
         size: 0,
         __typename: null
-      })
+      }
     }
     case 'geoPoint': {
-      return fromJS({
+      return {
         placeId: '',
         address: '',
         lat: 122,
         lng: 23
-      });
+      };
     }
     default: {
       return null;

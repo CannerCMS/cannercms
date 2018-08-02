@@ -83,7 +83,7 @@
     "bson-objectid": "^1.2.2",
     "canner-compiler": "^0.1.6",
     "canner-graphql-interface": "^1.16.0",
-    "canner-helpers": "^0.1.16",
+    "canner-helpers": "^1.0.0-beta.0",
     "canner-layouts": "^1.1.1",
     "canner-ref-id": "^0.1.2",
     "graphql-tag": "^2.9.1",

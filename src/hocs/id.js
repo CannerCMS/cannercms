@@ -3,7 +3,7 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import {createEmptyData} from 'canner-helpers';
-import mapValues from 'lodash/mapValues';
+import {get} from 'lodash';
 import {Spin, Icon} from 'antd';
 
 import type {HOCProps, Args} from './types';
@@ -111,7 +111,7 @@ export default function connectId(Com: React.ComponentType<*>) {
       const paths = [keyName];
       const queries = query.getQueries(paths).args || {pagination: {first: 10}};
       const variables = query.getVairables();
-      this.args = mapValues(queries, v => variables[v.substr(1)]);
+      this.args =(queries, v => variables[v.substr(1)]);
       updateQuery(paths, {
         ...this.args,
         where: {id: id},
@@ -128,12 +128,12 @@ export default function connectId(Com: React.ComponentType<*>) {
       const {fetch, request} = this.props;
       fetch(keyName)
         .then(result => {
-          const size = result.getIn([keyName, 'edges']).size;
+          const size = get(result, [keyName, 'edges']).length;
           // $FlowFixMe
           return request({
             type: 'CREATE_ARRAY',
             payload: {
-              id: value.get('id'),
+              id: value.id,
               value,
               key: keyName,
             }

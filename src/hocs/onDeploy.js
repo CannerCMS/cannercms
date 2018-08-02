@@ -1,8 +1,8 @@
 // @flow
 
 import * as React from 'react';
+import {get, isArray, isPlainObject, set} from 'lodash';
 import RefId from 'canner-ref-id';
-import {Map, List} from 'immutable';
 import type {HOCProps} from './types';
 
 export default function withOndeploy(Com: React.ComponentType<*>) {
@@ -48,7 +48,7 @@ export default function withOndeploy(Com: React.ComponentType<*>) {
           return {
             ...result,
             // $FlowFixMe
-            data: result.data.setIn(paths, arg1(value))
+            data: set(result.data, paths, arg1(value))
           }
         });
       }
@@ -76,7 +76,7 @@ export function splitRefId({
   const [key, index] = refId.getPathArr();
   let id;
   if (pattern.startsWith('array')) {
-    id = rootValue.getIn([key, index, 'id']);
+    id = get(rootValue, [key, index, 'id']);
   }
   return {
     key,
@@ -88,16 +88,16 @@ export function getValueAndPaths(value: Map<string, *>, idPathArr: Array<string>
   return idPathArr.reduce((result: any, key: string) => {
     let v = result.value;
     let paths = result.paths;
-    if (Map.isMap(v)) {
-      if (v.has('edges') && v.has('pageInfo')) {
-        v = v.getIn(['edges', key, 'node']);
+    if (isPlainObject(v)) {
+      if ('edges' in v && 'pageInfo' in v) {
+        v = get(v, ['edges', key, 'node']);
         paths = paths.concat(['edges', key, 'node']);
       } else {
-        v = v.get(key);
+        v = get(v, key);
         paths = paths.concat(key);
       }
-    } else if (List.isList(v)) {
-      v = v.get(key);
+    } else if (isArray(v)) {
+      v = get(v, key);
       paths = paths.concat(key);
     }
     return {

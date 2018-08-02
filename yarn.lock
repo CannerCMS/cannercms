@@ -3094,11 +3094,10 @@ canner-graphql-utils@^1.4.0:
     lowdb "^1.0.0"
     pluralize "^7.0.0"
 
-canner-helpers@^0.1.16:
-  version "0.1.16"
-  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-0.1.16.tgz#3410ae9b5f07555f17b15790adb89c9debd85a4d"
+canner-helpers@^1.0.0-beta.0:
+  version "1.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-1.0.0-beta.0.tgz#844bc84a5e5d542ee4e1a3ee5ad179100ca26753"
   dependencies:
-    immutable "^4.0.0-rc.9"
     lodash "^4.17.5"
 
 canner-image-gallery@^0.2.0:
@@ -5701,7 +5700,7 @@ immer@^1.3.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.3.1.tgz#3a8c18d9d618c8b7169760a79beec24a1da6a43e"
 
-immutable@4.0.0-rc.9, immutable@^4.0.0-rc.9:
+immutable@4.0.0-rc.9:
   version "4.0.0-rc.9"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.9.tgz#1e6e0094e649013ec3742d2b5aeeca5eeda4f0bf"
 

@@ -2,14 +2,14 @@
 
 exports[`withOnDeploy should onDeploy works 1`] = `
 Object {
-  "data": Immutable.Map {
+  "data": Object {
+    "0": "new url",
     "id": "id1",
-    "images": Immutable.List [
-      Immutable.Map {
+    "images": Array [
+      Object {
         "url": "url1",
       },
     ],
-    "0": "new url",
   },
 }
 `;
@@ -35,12 +35,12 @@ exports[`withOnDeploy should render 1`] = `
   }
   removeOnDeploy={[MockFunction]}
   rootValue={
-    Immutable.Map {
-      "posts": Immutable.List [
-        Immutable.Map {
+    Object {
+      "posts": Array [
+        Object {
           "id": "id1",
-          "images": Immutable.List [
-            Immutable.Map {
+          "images": Array [
+            Object {
               "url": "url1",
             },
           ],
@@ -69,12 +69,12 @@ exports[`withOnDeploy should render 1`] = `
     }
     removeOnDeploy={[Function]}
     rootValue={
-      Immutable.Map {
-        "posts": Immutable.List [
-          Immutable.Map {
+      Object {
+        "posts": Array [
+          Object {
             "id": "id1",
-            "images": Immutable.List [
-              Immutable.Map {
+            "images": Array [
+              Object {
                 "url": "url1",
               },
             ],

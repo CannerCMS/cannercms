@@ -3,7 +3,6 @@ import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import withQuery, {getValue, parseConnectionToNormal} from '../../src/hocs/query';
-import {fromJS} from 'immutable';
 import RefId from 'canner-ref-id';
 import { Query } from '../../src/query';
 
@@ -17,7 +16,7 @@ describe('with  query', () => {
     MockComponent = function MockComponent() {
       return (<div>Component</div>);
     }
-    mockFetch = jest.fn().mockImplementation(() => Promise.resolve(fromJS({
+    mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
       posts: {
         edges: [{
           cursor: 'id1',
@@ -30,7 +29,7 @@ describe('with  query', () => {
           hasNextPage: false
         }
       }
-    })));
+    }));
     mockUnsubscribe = jest.fn();
     mockSubscribe = jest.fn().mockImplementation(() => ({
       unsubscribe: mockUnsubscribe
@@ -95,15 +94,15 @@ describe('with  query', () => {
 
 describe('getValue', () => {
   it('should get connection map', () => {
-    const value = fromJS({
+    const value = {
       posts: {
         edges: [],
         pageInfo: {
           hasNextInfo: false
         }
       }
-    });
-    expect(getValue(value, ['posts']).toJS()).toEqual({
+    };
+    expect(getValue(value, ['posts'])).toEqual({
       edges: [],
       pageInfo: {
         hasNextInfo: false
@@ -112,7 +111,7 @@ describe('getValue', () => {
   });
 
   it('should get item of list', () => {
-    const value = fromJS({
+    const value = {
       posts: {
         edges: [{
           cursor: 'dsa',
@@ -125,15 +124,15 @@ describe('getValue', () => {
           hasNextInfo: false
         }
       }
-    });
-    expect(getValue(value, ['posts', 0]).toJS()).toEqual({
+    };
+    expect(getValue(value, ['posts', 0])).toEqual({
       id: 'dsa',
       title: 'test'
     });
   });
 
   test('should get the field of item of list', () => {
-    const value = fromJS({
+    const value = {
       posts: {
         edges: [{
           cursor: 'dsa',
@@ -146,7 +145,7 @@ describe('getValue', () => {
           hasNextInfo: false
         }
       }
-    });
+    };
     expect(getValue(value, ['posts', 0, 'title'])).toEqual('test');
   });
 });
@@ -154,7 +153,7 @@ describe('getValue', () => {
 
 describe('parseConnectionToNormal', () => {
   it('should work', () => {
-    const value = fromJS({
+    const value = {
       post: {
         edges: [{
           cursor: 'id1',
@@ -195,8 +194,8 @@ describe('parseConnectionToNormal', () => {
           }
         }
       }
-    });
-    expect(parseConnectionToNormal(value).toJS()).toEqual({
+    };
+    expect(parseConnectionToNormal(value)).toEqual({
       post: [{
         id: 'id1',
         title: 'test',

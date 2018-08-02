@@ -170,7 +170,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       const mutatedData = actions.reduce((result, action) => {
         return mutate(result, action);
       }, originData);
-      const {error} = this._executeOnDeployCallback(key, mutatedData.get(key));
+      const {error} = this._executeOnDeployCallback(key, mutatedData[key]);
       if (error) {
         return Promise.reject();
       }
