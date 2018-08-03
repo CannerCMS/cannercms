@@ -69,7 +69,7 @@ function renderMenuItem(item: Object) {
 
 function renderSubMenu(item: Object) {
   return (
-    <Menu.SubMenu key={item.pathname} title={item.title}>
+    <Menu.SubMenu key={`submenu-${item.pathname}`} title={item.title}>
       {
         item.items.map(i => renderMenuItem(i))
       }
