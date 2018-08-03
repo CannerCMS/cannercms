@@ -52,7 +52,7 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
     const {
       dataChanged
     } = this.state;
-  
+
     return (
       <Layout>
         <Navbar
@@ -89,7 +89,7 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
 function transformSchemaToMenuConfig(schema) {
   return Object.keys(schema).map(key => ({
     title: schema[key].title,
-    pathname: schema[key].keyName
+    pathname: `/${schema[key].keyName}`
   }));
 }
 
