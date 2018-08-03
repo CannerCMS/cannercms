@@ -190,7 +190,7 @@ export function parsePagination(args: Object = {}) {
 }
 
 export function parseWhere(where: Object) {
-  return Object.keys(where).reduce((result, key) => {
+  return Object.keys(where).reduce((result: Object, key: string) => {
     const v = where[key];
     const type = typeof v;
     const [field, op] = key.split('_');
@@ -214,7 +214,7 @@ export function parseWhere(where: Object) {
 }
 
 export function processWhere(where: Object)  {
-  return Object.keys(where).reduce((result, key) => {
+  return Object.keys(where).reduce((result: Object, key: string) => {
     const v = where[key];
     if (isEnd(v)) {
       const {op, value} = parseOpAndValue(v);

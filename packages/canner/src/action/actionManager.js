@@ -1,5 +1,5 @@
 // @flow
-import type {ActionManagerDef, ActionManagerStore, Action, ActionType } from './types';
+import type {ActionManagerDef, Action, ActionType } from './types';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import updateWith from 'lodash/updateWith';
@@ -9,7 +9,6 @@ import ArrayPattern from './pattern/arrayPattern';
 import ConnectPattern from './pattern/connectPattern';
 
 export class ActionManager implements ActionManagerDef {
-  store: ActionManagerStore;
   store = {};
   addAction = (action: Action<ActionType>): void => {
     const {key, id} = action.payload;
@@ -50,9 +49,9 @@ export class ActionManager implements ActionManagerDef {
     }
   }
 
-  getActions = (key?: string, id?: string) => {
+  getActions = (key?: string, id?: string): Array<any> => {
     if (!key) {
-      return Object.keys(this.store).reduce((result, key) => {
+      return Object.keys(this.store).reduce((result: any, key: any) => {
         return result.concat(this.getActions(key));
       }, []);
     }
@@ -68,7 +67,7 @@ export class ActionManager implements ActionManagerDef {
         // $FlowFixMe
         return patternItem.array.getActions().concat(patternItem.connect.getActions());
       } else {
-        return item.reduce((result: Array<string>, currItem: Object) => {
+        return item.reduce((result: Array<any>, currItem: Object) => {
           const actions = currItem.array.getActions().concat(currItem.connect.getActions());
           return result.concat(actions);
         }, []);

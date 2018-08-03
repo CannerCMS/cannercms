@@ -17,7 +17,7 @@ export class OnDeployManager {
     value: any
   }): any => {
     const callbacks = this.findCallback(key);
-    return callbacks.reduce((result, callback) => callback(result), {data: value});
+    return callbacks.reduce((result: any, callback: Function) => callback(result), {data: value});
   }
 
   findCallback = (key: string): Array<any> => {

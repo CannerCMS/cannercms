@@ -161,7 +161,7 @@ function getRenderType({
 
 export function isCompleteContain(paths: Array<string>, routes: Array<string>) {
   return paths.map((key, i) => routes[i] === key || key === '__ARRAY_INDEX__')
-    .reduce((result, curr) => result && curr);
+    .reduce((result: any, curr: any) => result && curr);
 }
 
 export function genPaths(path: string, pattern: string): Array<string> {
@@ -170,6 +170,6 @@ export function genPaths(path: string, pattern: string): Array<string> {
     .filter(index => index !== -1);
   let paths = path.split('/')
     .map((route, i) => indexs.indexOf(i) === -1 ? route : [].concat(route, '__ARRAY_INDEX__'))
-    .reduce((result, curr) => result.concat(curr), []);
+    .reduce((result: any, curr: any) => result.concat(curr), []);
   return paths;
 }

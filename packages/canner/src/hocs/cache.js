@@ -66,7 +66,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         return;
       }
       const actions = this.actionManager.getActions(key, id);
-      const mutatedData = actions.reduce((result, action) => {
+      const mutatedData = actions.reduce((result: any, action: Action<ActionType>) => {
         return mutate(result, action);
       }, data);
       (this.subscribers[key] || []).forEach(subscribe => {
@@ -86,7 +86,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
           [key]: data
         });
         this._subscribe(key);
-        return actions.reduce((result, action) => {
+        return actions.reduce((result: any, action: Action<ActionType>) => {
           return mutate(result, action);
         }, data);
       });
@@ -167,7 +167,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       }
       const originData = this.state[key];
       let actions = this.actionManager.getActions(key, id);
-      const mutatedData = actions.reduce((result, action) => {
+      const mutatedData = actions.reduce((result: any, action: Action<ActionType>) => {
         return mutate(result, action);
       }, originData);
       const {error} = this._executeOnDeployCallback(key, mutatedData[key]);
