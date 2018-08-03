@@ -2,7 +2,7 @@
   "name": "canner",
   "version": "1.4.4",
   "description": "Build CMS in few lines of code for different data sources",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "../../node_modules/.bin/jest --coverage",
     "test:watch": "../../node_modules/.bin/jest --watch --coverage"

@@ -30,13 +30,11 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'canner-graphql-interface': path.resolve(__dirname, 'node_modules/canner-graphql-interface'),
+      'canner-graphql-interface': path.resolve(__dirname, 'packages/canner/node_modules/canner-graphql-interface'),
+      'canner-helpers': path.resolve(__dirname, 'packages/canner/node_modules/canner-helpers'),
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
-      'cms-helpers': path.resolve(__dirname, 'node_modules', 'cms-helpers'),
-      '@canner': path.resolve(__dirname, 'node_modules', '@canner'),
-      'antd': path.resolve(__dirname, 'node_modules/antd'),
       packages: path.resolve(__dirname, "./packages"),
     }
   },
