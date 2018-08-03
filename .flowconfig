@@ -3,8 +3,8 @@
 .*/node_modules/config-chain/test/broken.json
 .*/node_modules/npmconf/test/.*
 .*/node_modules/protobufjs/src/.*
-.*/node_modules/@canner/.*
 packages/.*/lib
+.*/lib/.*
 
 [include]
 packages/*/src
@@ -15,5 +15,6 @@ flow-typed/
 [lints]
 
 [options]
-
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=packages/.*/node_modules
 [strict]

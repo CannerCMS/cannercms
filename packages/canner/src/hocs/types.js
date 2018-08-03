@@ -5,7 +5,7 @@ import type RefId from 'canner-ref-id';
 import * as React from 'react';
 
 export type Args = Object;
-export type Fetch = (key: string) => Promise<*>
+export type Fetch = (key: string, id: ?string) => Promise<*>
 export type RequestWithAction = (action: Action<ActionType>, options: {write: boolean}) => Promise<*>;
 export type RequestWithActions = (action: Array<Action<ActionType>>, options: {write: boolean}) => Promise<*>;
 export type Request = RequestWithAction | RequestWithActions;

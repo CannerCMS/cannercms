@@ -164,7 +164,7 @@ export function isCompleteContain(paths: Array<string>, routes: Array<string>) {
     .reduce((result, curr) => result && curr);
 }
 
-export function genPaths(path: string, pattern: string) {
+export function genPaths(path: string, pattern: string): Array<string> {
   const patterns = pattern.split('.');
   const indexs = patterns.map((type, i) => type === 'array' ? i : -1)
     .filter(index => index !== -1);

@@ -146,9 +146,9 @@ export function getValue(value: Map<string, *>, idPathArr: Array<string>) {
   }, value);
 }
 
-export function parseConnectionToNormal(value: Object | Array<*>) {
+export function parseConnectionToNormal(value: any) {
   if (isPlainObject(value)) {
-    if ('edges' in value && 'pageInfo' in value) {
+    if (value.edges && value.pageInfo) {
       return value.edges.map(edge => parseConnectionToNormal(edge.node));
     }
     return mapValues(value, item => parseConnectionToNormal(item));
