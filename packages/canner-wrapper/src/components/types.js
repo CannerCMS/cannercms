@@ -46,7 +46,6 @@ export type NavbarConfig = {
 
 export type CannerWrapperProps = {
   schema: LoadedSchema,
-  dataDidChange: DataDidChange,
   goTo: string => void,
   routes: Array<string>,
   navbarConfig: navbarConfig,
