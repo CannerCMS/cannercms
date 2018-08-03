@@ -50,15 +50,6 @@ describe('<Navbar>', () => {
     expect(wrapper.find(Badge).length).toBe(1);
   });
 
-  // it('should render one Menu.SubMenu', () => {
-  //   const wrapper = renderComponent();
-  //   expect(wrapper.find(Menu.SubMenu).length).toBe(1);
-  // });
-
-  // it('should render null', () => {
-  //   const wrapper = renderComponent({ menuConfig: false });
-  //   expect(wrapper.isEmptyRender()).toBe(true);
-  // });
 
   it('should call deploy', () => {
     const deploy = jest.fn()
