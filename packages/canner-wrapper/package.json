@@ -1,0 +1,33 @@
+{
+  "name": "canner-wrapper",
+  "version": "0.0.1",
+  "description": "The wrapper renders sidebar, navbar and pass some properties to canner",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "../../node_modules/.bin/jest --coverage",
+    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
+  },
+  "keywords": [
+    "canner",
+    "wrapper"
+  ],
+  "author": "Canner",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "styled-components": "^3.2.1"
+  },
+  "peerDependencies": {
+    "antd": "^3.2.3",
+    "react": ">=16.3",
+    "react-dom": ">=16.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  }
+}
