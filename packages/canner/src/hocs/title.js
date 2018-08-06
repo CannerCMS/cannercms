@@ -49,7 +49,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           routes
         }}>
           {
-            hideTitle && <Com {...this.props}/>
+            hideTitle && <Com {...this.props} />
           }
           {
             (!hideTitle && layout === 'horizontal') && <div style={{
@@ -82,7 +82,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
               <div style={{
                 flex: 2
               }}>
-                <Com {...this.props}/>
+                <Com {...this.props} />
               </div>
             </div>
           }
@@ -114,7 +114,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
               <div style={{
                 marginBottom: 8
               }}>
-                <Com {...this.props}/>
+                <Com {...this.props} />
               </div>
             </div>
           }

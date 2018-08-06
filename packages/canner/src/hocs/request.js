@@ -79,7 +79,6 @@ export function createAction({
   if (type === 'create') {
     if (!config) {
       const emptyData = createEmptyData(items);
-      console.log(emptyData);
       if (isPlainObject(emptyData)) {
         value = merge(emptyData, value);
       } else {

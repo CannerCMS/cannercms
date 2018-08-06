@@ -44,7 +44,9 @@ class CannerCMS extends React.Component<Props, State> {
       locale: 'en',
       defaultLocale: 'en',
       messages: {}
-    }
+    },
+    params: {},
+    routes: []
   }
 
   constructor(props: Props) {

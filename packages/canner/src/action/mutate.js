@@ -1,6 +1,6 @@
 // @flow
 import produce from 'immer';
-import {merge, findIndex, remove, isArray} from 'lodash';
+import {findIndex, remove, isArray} from 'lodash';
 
 import type {Action, ActionType} from './types';
 
@@ -28,14 +28,14 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
               {
                 __typename: null,
                 cursor: id,
-                node: merge(item.node, value)
+                node: {...item.node, ...value}
               }:
               item
           });
         } else {
           draft[key] = draft[key].map(item => {
             return item.id === id ?
-              merge(item, value) :
+              {...item, ...value} :
               item
           });
         }      
@@ -60,19 +60,20 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
         if (id) {
           // array connect
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
-          value.__typename = null;
+          let relationValue = draft[key].edges[index].node[path] || [];
           if (relation && relation.type === 'toOne') {
-            draft[key].edges[index].node[path] = value;
+            relationValue = {...value, __typename: null};
           } else {
-            draft[key].edges[index].node[path] = draft[key].edges[index].node[path] || [];
-            draft[key].edges[index].node[path].push(value);
+            if(!relationValue.find(v => v.id === value.id)) {
+              relationValue.push({...value, __typename: null});
+            }
           }
         } else {
           if (relation && relation.type === 'toOne') {
-            draft[key][path] = value;
+            draft[key][path] = {...value, __typename: null};
           } else {
             draft[key][path] = draft[key][path] || [];
-            draft[key][path].push(value);
+            draft[key][path].push({...value, __typename: null});
           }
         }
         break;
@@ -104,18 +105,20 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
           if (index === -1) {
             throw new Error(`Can't find the id in rootValue`);
           }
-          const relationValue = draft[key].edges[index].node[path];
-          if (!relationValue) {
-            draft[key].edges[index].node[path] = [value];
-          } else if (isArray(relationValue)) {
-            draft[key].edges[index].node[path].push(value);
+          let relationValue = draft[key].edges[index].node[path] || [];
+          if (relation && relation.type === 'toOne') {
+            relationValue = {...value, __typename: null};
+          } else {
+            if(!relationValue.find(v => v.id === value.id)) {
+              relationValue.push({...value, __typename: null});
+            }
           }
         } else {
-          const relationValue = draft[key][path];
-          if (!relationValue) {
-            draft[key][path] = [value];
-          } else if (isArray(relationValue)) {
-            draft[key][path].push(value);
+          if (relation && relation.type === 'toOne') {
+            draft[key][path] = {...value, __typename: null};
+          } else {
+            draft[key][path] = draft[key][path] || [];
+            draft[key][path].push({...value, __typename: null});
           }
         }
         break;
