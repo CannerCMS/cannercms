@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 import updateWith from 'lodash/updateWith';
 import isArray from 'lodash/isArray';
+import isPlainObject from 'lodash/isPlainObject';
 import ObjectPattern from './pattern/objectPattern';
 import ArrayPattern from './pattern/arrayPattern';
 import ConnectPattern from './pattern/connectPattern';
@@ -64,7 +65,7 @@ export class ActionManager implements ActionManagerDef {
         };
         // $FlowFixMe
         patternItem.connect.addAction(action);
-        updateWith(this.store, key, patternItem);
+        set(this.store, key, patternItem);
       }
     }
   }
@@ -76,8 +77,8 @@ export class ActionManager implements ActionManagerDef {
       }, []);
     }
     const item = get(this.store, key);
-    if (item instanceof ObjectPattern) {
-      return item.getActions();
+    if (isPlainObject(item)) {
+      return item.object.getActions().concat(item.connect.getActions());
     } else if (isArray(item)) {
       if (id) {
         // get action by key, id

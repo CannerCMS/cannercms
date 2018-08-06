@@ -88,6 +88,20 @@ export default function actionToMutation(action: Action<ActionType>) {
         }
         name = `update${transformKey(key)}`;
         fields = {id: null};
+      } else {
+        args = {
+          $payload: genUpdateInputType(action)
+        }
+        actionArgs = {
+          data: '$payload'
+        }
+        name = `update${upperFirst(key)}`;
+        // $FlowFixMe
+        fields = {[action.payload.path]: {
+          fields: {
+            id: null
+          }
+        }};
       }
       break;
     default:

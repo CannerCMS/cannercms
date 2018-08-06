@@ -68,6 +68,7 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
               relationValue.push({...value, __typename: null});
             }
           }
+          draft[key].edges[index].node[path] = value;
         } else {
           if (relation && relation.type === 'toOne') {
             draft[key][path] = {...value, __typename: null};
@@ -113,6 +114,7 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
               relationValue.push({...value, __typename: null});
             }
           }
+          draft[key].edges[index].node[path] = value;
         } else {
           if (relation && relation.type === 'toOne') {
             draft[key][path] = {...value, __typename: null};
