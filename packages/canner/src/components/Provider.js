@@ -5,27 +5,20 @@
 import * as React from 'react';
 import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
-import type ApolloClient from 'apollo-boost';
 import isEmpty from 'lodash/isEmpty';
 import pluralize from 'pluralize';
 import upperFirst from 'lodash/upperFirst';
-import {ActionManager, actionToMutation, actionsToVariables, mutatePure} from '../action';
+import {ActionManager, actionToMutation, actionsToVariables, mutate} from '../action';
 import {Query} from '../query';
 import {OnDeployManager} from '../onDeployManager';
-import type {Action, ActionType} from '../action/types';
 import gql from 'graphql-tag';
-import {fromJS} from 'immutable';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
 import {groupBy, difference} from 'lodash';
-type Props = {
-  schema: {[key: string]: any},
-  dataDidChange: Object => void,
-  afterDeploy: Object => void,
-  children: React.Node,
-  client: ApolloClient,
-  rootKey: string
-}
+import type {ProviderProps} from './types';
+import type {Action, ActionType} from '../action/types';
+
+type Props = ProviderProps;
 
 type State = {
 }
@@ -105,15 +98,15 @@ export default class Provider extends React.PureComponent<Props, State> {
       return observabale.result()
         .then(result => {
           this.log('fetch', 'loading', key, result);
-          return fromJS(result.data);
+          return result.data;
         })
     } else if (error) {
       const lastResult = observabale.getLastResult();
       this.log('fetch', 'error', key, lastResult);
-      return Promise.resolve(fromJS(lastResult.data));
+      return Promise.resolve(lastResult.data);
     } else {
       this.log('fetch', 'loaded', key, currentResult);
-      return Promise.resolve(fromJS(currentResult.data));
+      return Promise.resolve(currentResult.data);
     }
   }
 
@@ -124,7 +117,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         const {loading, errors, data} = observableQuery.currentResult();
         if (!loading && !errors && data && !isEmpty(data)) {
           // this.log('subscribe', key, data);
-          callback(fromJS(data));
+          callback(data);
         }
       } 
     });
@@ -150,12 +143,11 @@ export default class Provider extends React.PureComponent<Props, State> {
     const query = gql`${this.query.toGQL(key)}`;
     const cachedData = client.readQuery({query, variables: queryVariables});
     const mutatedData = cachedData[key];
-    const {error} = this.executeOnDeploy(key, fromJS(mutatedData));
+    const {error} = this.executeOnDeploy(key, mutatedData);
     if (error) {
       return Promise.reject();
     }
     
-    // variables.payload = data.toJS();
     return client.mutate({
       mutation: gql`${mutation}`,
       variables
@@ -174,12 +166,12 @@ export default class Provider extends React.PureComponent<Props, State> {
       });
       this.actionManager.removeActions(key, id);
       // client.resetStore();
-      return fromJS(result.data);
+      return result.data;
     }).then(result => {
       this.updateDataChanged();
       afterDeploy && afterDeploy({
         key,
-        id,
+        id: id || '',
         result
       });
       return result;
@@ -249,7 +241,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     const variables = this.query.getVairables();  
     const query = gql`${this.query.toGQL(actions[0].payload.key)}`;
     const data = client.readQuery({query, variables});
-    const mutatedData = actions.reduce((result, ac) => mutatePure(result, ac), data);
+    const mutatedData = actions.reduce((result: Object, ac: any) => mutate(result, ac), data);
     client.writeQuery({
       query,
       variables,

@@ -3,16 +3,22 @@
 .*/node_modules/config-chain/test/broken.json
 .*/node_modules/npmconf/test/.*
 .*/node_modules/protobufjs/src/.*
-.*/react-cms-components/**/*
-lib/**/*
+packages/.*/lib
+packages/.*/test
+.*/docs/.*
+.*/node_modules/
 
 [include]
+packages/*/src
 
 [libs]
 flow-typed/
+packages/.*/flow-typed/
 
 [lints]
 
 [options]
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=packages/canner/node_modules
 
 [strict]

@@ -44,14 +44,16 @@ class CannerCMS extends React.Component<Props, State> {
       locale: 'en',
       defaultLocale: 'en',
       messages: {}
-    }
+    },
+    params: {},
+    routes: []
   }
 
   constructor(props: Props) {
     super(props);
     const {schema, visitors} = props.schema;
     this.componentTree = compile(schema, visitors);
-    this.schema = Object.keys(schema).reduce((result, key) => {
+    this.schema = Object.keys(schema).reduce((result: any, key: string) => {
       let v = {...schema[key]};
       if (v.type === 'array') {
         // v.items = v.items.items;
@@ -198,7 +200,7 @@ export function genClient(schema: LoadedSchema) {
 
   if (isEmpty(connector) && isEmpty(graphqlClient)) {
     options.connector = new MemoryConnector({
-      defaultData: createEmptyData(schema.schema).toJS()
+      defaultData: createEmptyData(schema.schema)
     });
   }
 

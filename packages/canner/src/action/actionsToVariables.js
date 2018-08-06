@@ -1,11 +1,13 @@
 // @flow
-import type {Action, ActionType} from './types';
-import {Map, List, fromJS} from 'immutable';
-import merge from 'lodash/merge';
-import update from 'lodash/update';
-import set from 'lodash/set';
+import {update, set, merge, isPlainObject, isArray, mapValues, pickBy} from 'lodash';
 
-export default function actionsToVariables(actions: Array<Action<ActionType>>, schema: Object) {
+import type {Action, ActionType} from './types';
+import type {CannerSchema} from '../components/types';
+
+/**
+ * change actions to variables which is the argument of graphql mutation
+ */
+export default function actionsToVariables(actions: Array<Action<ActionType>>, schema: CannerSchema) {
   const variables = {payload: {}, where: {}};
 
   actions.forEach(action => {
@@ -16,33 +18,33 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
     
     switch(action.type) {
       case 'CREATE_ARRAY': {
-        // quick fix, remove null relation, it will cause apollo break
-        const ensureValue = value.filter((v, k) => v !== null && k !== '__typename' && relationField.indexOf(k) === -1);
-        merge(variables.payload, (ensureValue && ensureValue.toJS) ? ensureValue.toJS() : ensureValue);
+        // remove null relation
+        const ensureValue = pickBy(value, (v, k) => v !== null && k !== '__typename' && relationField.indexOf(k) === -1);
+        merge(variables.payload, ensureValue);
         break;
       }
       case 'UPDATE_ARRAY':
       case 'UPDATE_OBJECT':
-        merge(variables.payload, (value && value.toJS) ? value.toJS() : value);
+        merge(variables.payload, value);
         merge(variables.where, {id});
         break;
       case 'CONNECT': {
         if (relation && relation.type === 'toMany') {
           update(variables.payload, path.split('/'), relationField => {
-            if (Array.isArray(relationField) || !relationField) {
+            if (isArray(relationField) || !relationField) {
               return {
                 connect: [{
-                  id: value.get('id')
+                  id: value.id
                 }]
               };
             }
             relationField.connect.push({
-              id: value.get('id')
+              id: value.id
             });
             return relationField;
           });
         } else {
-          set(variables.payload, path.split('/').concat('connect'), {id: value.get('id')});
+          set(variables.payload, path.split('/').concat('connect'), {id: value.id});
         }
         if (id) {
           merge(variables.where, {id});
@@ -51,16 +53,16 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
       }
       case 'CREATE_AND_CONNECT': {
         if (relation && relation.type === 'toMany') {
-          update(variables.payload, path.split('/').concat('create'), arr => (arr || []).concat(value.toJS()));
+          update(variables.payload, path.split('/').concat('create'), arr => (arr || []).concat(value));
         } else {
-          set(variables.payload, path.split('/').concat('create'), value.toJS());
+          set(variables.payload, path.split('/').concat('create'), value);
         }
         merge(variables.where, {id});
         break;
       }
       case 'DISCONNECT':
         if (relation && relation.type === 'toMany') {
-          update(variables.payload, path.split('/').concat('disconnect'), arr => (arr || []).concat({id: value.get('id')}));
+          update(variables.payload, path.split('/').concat('disconnect'), arr => (arr || []).concat({id: value.id}));
         } else {
           set(variables.payload, path.split('/').concat('disconnect'), true);
         }
@@ -70,7 +72,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
         break;
       case 'DISCONNECT_AND_DELETE':
         if (relation && relation.type === 'toMany') {
-          update(variables.payload, path.split('/').concat('delete'), arr => (arr || []).concat(value.toJS()));
+          update(variables.payload, path.split('/').concat('delete'), arr => (arr || []).concat(value));
         } else {
           set(variables.payload, path.split('/').concat('delete'), true);
         }
@@ -86,41 +88,68 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
   return variables;
 }
 
+/**
+ * add typename: null in every object
+ */
 export function addTypename(payload: any): any {
-  if (List.isList(payload)) {
+  if (isArray(payload)) {
     return payload.map(item => addTypename(item));
-  } else if (Map.isMap(payload)) {
-    return payload.map((item, key) => {
+  }
+  if (isPlainObject(payload)) {
+    return mapValues(payload, (item, key) => {
       return key === '__typename' ?
         item :
         addTypename(item)
     });
-    
   } else {
     return payload;
   }
 }
 
+/**
+ * 
+ * In canner graphql interface,
+ * an array value should become a object with `set` keyword.
+ * 
+ * for examples:
+ * origin payload = {
+ *   hobbies: ['basketball', 'swim'] 
+ *   name: 'James'
+ * }
+ * will become
+ * {
+ *   hobbies: {
+ *     set: ['basketball', 'swim']
+ *   },
+ *   name: 'James'
+ * } 
+ *
+ */
 export function parseArrayToSet(payload: any, relationField: Array<string>, key?: string): any {
-  if (List.isList(payload) && relationField.indexOf(key) === -1) {
-    return fromJS({
+  if (isArray(payload) && relationField.indexOf(key) === -1) {
+    return {
       set: payload.map(v => parseArrayToSet(v, relationField))
-    });
-  } else if (Map.isMap(payload)) {
-    return payload.map((v, k) => parseArrayToSet(v, relationField, k));
+    };
+  } else if (isPlainObject(payload)) {
+    return mapValues(payload, (v, k) => parseArrayToSet(v, relationField, k));
   } else {
     return payload
   }
 }
 
-export function genRelationField(schema: Object, key: string) {
+/**
+ * find the relation field in first level relation
+ */
+export function genRelationField(schema: Object, key: string): Array<string> {
   const keySchema = schema[key];
   let items = {};
   if (keySchema.type === 'object') {
     items = keySchema.items;
-  } else {
+  } else if (keySchema.type === 'array') {
     items = keySchema.items.items
+  } else {
+    return [];
   }
 
-  return Object.keys(items).filter(field => items[field].type === 'relation');
+  return Object.keys(items).filter((field: string) => items[field].type === 'relation');
 }

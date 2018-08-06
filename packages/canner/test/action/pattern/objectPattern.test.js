@@ -1,5 +1,4 @@
 import ObjectPattern from '../../../src/action/pattern/objectPattern';
-import {fromJS} from 'immutable';
 
 const value = {
   name: 'name',
@@ -15,9 +14,9 @@ const action1 = {
   type: 'UPDATE_OBJECT',
   payload: {
     key: 'person',
-    value: fromJS({
+    value: {
       name: 'name'
-    })
+    }
   }
 }
 
@@ -25,9 +24,9 @@ const action2 = {
   type: 'UPDATE_OBJECT',
   payload: {
     key: 'person',
-    value: fromJS({
+    value: {
       nickname: 'nickname'
-    })
+    }
   }
 }
 
@@ -35,12 +34,12 @@ const action3 = {
   type: 'UPDATE_OBJECT',
   payload: {
     key: 'person',
-    value: fromJS({
+    value: {
       communicationInfo: {
         address: 'zzz',
         phone: ['xxx', 'yyy']
       }
-    })
+    }
   }
 }
 
@@ -54,6 +53,6 @@ describe('object pattern', () => {
     expect(pattern.getActions().length).toBe(1);
     pattern.addAction(action3);
     expect(pattern.getActions().length).toBe(1);
-    expect(pattern.getActions()[0].payload.value.toJS()).toEqual(value);
+    expect(pattern.getActions()[0].payload.value).toEqual(value);
   });
 });

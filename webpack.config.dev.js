@@ -19,7 +19,6 @@ module.exports = {
     'antd': 'antd',
     'lodash': '_',
     'firebase': 'firebase',
-    'immutable': 'Immutable',
     'styled-components': 'styled',
     'canner-slate-editor': 'CannerSlateEditor'
   },
@@ -29,6 +28,10 @@ module.exports = {
     publicPath: '/docs/static/',
   },
   resolve: {
+    modules: [
+      'packages/canner/node_modules',
+      'node_modules'
+    ],
     alias: {
       'canner-graphql-interface': path.resolve(__dirname, 'packages/canner/node_modules/canner-graphql-interface'),
       'canner-helpers': path.resolve(__dirname, 'packages/canner/node_modules/canner-helpers'),
@@ -39,6 +42,10 @@ module.exports = {
     }
   },
   resolveLoader: {
+    modules: [
+      'packages/canner/node_modules',
+      'node_modules'
+    ],
      moduleExtensions: ["-loader"]
   },
   plugins: [

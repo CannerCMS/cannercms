@@ -1,5 +1,4 @@
 import actionsToVariables from '../../src/action/actionsToVariables';
-import {fromJS} from 'immutable';
 
 const schema = {
   posts: {
@@ -26,9 +25,9 @@ const updateArrayAction = {
   payload: {
     id: 'post1',
     key: 'posts',
-    value: fromJS({
+    value: {
       "title": "123"
-    })
+    }
   }
 };
 
@@ -37,7 +36,7 @@ const updateArrayWithNestedArrayAction = {
   payload: {
     id: 'post1',
     key: 'posts',
-    value: fromJS({
+    value: {
       name: '321',
       tags: ['1', '2'],
       info: {
@@ -45,7 +44,7 @@ const updateArrayWithNestedArrayAction = {
           url: 'url1'
         }]
       }
-    })
+    }
   }
 }
 
@@ -54,9 +53,9 @@ const createArrayAction = {
   payload: {
     id: 'post2',
     key: 'posts',
-    value: fromJS({
+    value: {
       "title": "123"
-    })
+    }
   }
 };
 
@@ -65,7 +64,7 @@ const deleteArrayAction = {
   payload: {
     id: 'post3',
     key: 'posts',
-    value: fromJS({})
+    value: {}
   }
 }
 
@@ -73,9 +72,9 @@ const updateObjectAction = {
   type: 'UPDATE_OBJECT',
   payload: {
     key: 'info',
-    value: fromJS({
+    value: {
       name: '321'
-    })
+    }
   }
 }
 
@@ -83,7 +82,7 @@ const updateObjectWithNestedArrayAction = {
   type: 'UPDATE_OBJECT',
   payload: {
     key: 'info',
-    value: fromJS({
+    value: {
       name: '321',
       tags: ['1', '2'],
       info: {
@@ -91,7 +90,7 @@ const updateObjectWithNestedArrayAction = {
           url: 'url1'
         }]
       }
-    })
+    }
   }
 }
 
@@ -105,10 +104,10 @@ const connectToOneAction = {
     relation: {
       type: 'toOne'
     },
-    value: fromJS({
+    value: {
       id: 'id1',
       name: 'newAuthor'
-    })
+    }
   }
 }
 
@@ -121,10 +120,10 @@ const connectToManyAction = {
     relation: {
       type: 'toMany'
     },
-    value: fromJS({
+    value: {
       id: 'id1',
       name: 'newAuthor'
-    })
+    }
   }
 }
 
@@ -137,10 +136,10 @@ const createAndConnectToOneAction = {
     relation: {
       type: 'toOne'
     },
-    value: fromJS({
+    value: {
       id: 'id1',
       name: 'newAuthor'
-    })
+    }
   }
 }
 
@@ -153,10 +152,10 @@ const createAndConnectToManyAction = {
     relation: {
       type: 'toMany'
     },
-    value: fromJS({
+    value: {
       id: 'id1',
       name: 'newAuthor'
-    })
+    }
   }
 }
 
@@ -169,9 +168,9 @@ const disconnectToOneAction = {
     relation: {
       type: 'toOne'
     },
-    value: fromJS({
+    value: {
       id: '67428a37-107a-4a59-811d-15810c7c49a9'
-    })
+    }
   }
 }
 
@@ -185,9 +184,9 @@ const disconnectToManyAction = {
     relation: {
       type: 'toMany'
     },
-    value: fromJS({
+    value: {
       id: '67428a37-107a-4a59-811d-15810c7c49a9'
-    })
+    }
   }
 }
 
@@ -200,9 +199,9 @@ const disconnectAndDeleteToOneAction = {
     relation: {
       type: 'toOne'
     },
-    value: fromJS({
+    value: {
       id: '67428a37-107a-4a59-811d-15810c7c49a9'
-    })
+    }
   }
 }
 
@@ -215,9 +214,9 @@ const disconnectAndDeleteToManyAction = {
     relation: {
       type: 'toMany'
     },
-    value: fromJS({
+    value: {
       id: '67428a37-107a-4a59-811d-15810c7c49a9'
-    })
+    }
   }
 }
 
@@ -225,13 +224,13 @@ describe('single action to variable', () => {
   test('update array', () => {
     expect(actionsToVariables([updateArrayAction], schema))
       .toMatchObject({
-        payload: updateArrayAction.payload.value.toJS(),
+        payload: updateArrayAction.payload.value,
         where: {id: updateArrayAction.payload.id}
       });
   });
 
   test('update nested array in array', () => {
-    const value = updateArrayWithNestedArrayAction.payload.value.toJS();
+    const value = updateArrayWithNestedArrayAction.payload.value;
     expect(actionsToVariables([updateArrayWithNestedArrayAction], schema))
       .toMatchObject({
         payload: {
@@ -252,12 +251,12 @@ describe('single action to variable', () => {
   test('create array', () => {
     expect(actionsToVariables([createArrayAction], schema))
       .toMatchObject({
-        payload: createArrayAction.payload.value.toJS()
+        payload: createArrayAction.payload.value
       });
   });
 
   test('update nested array in object', () => {
-    const value = updateObjectWithNestedArrayAction.payload.value.toJS();
+    const value = updateObjectWithNestedArrayAction.payload.value;
     expect(actionsToVariables([updateObjectWithNestedArrayAction], schema))
       .toMatchObject({
         payload: {
@@ -278,14 +277,14 @@ describe('single action to variable', () => {
   test('delete array', () => {
     expect(actionsToVariables([deleteArrayAction], schema))
       .toMatchObject({
-        payload: deleteArrayAction.payload.value.toJS()
+        payload: deleteArrayAction.payload.value
       })
   });
 
   test('update object', () => {
     expect(actionsToVariables([updateObjectAction], schema))
       .toMatchObject({
-        payload: updateObjectAction.payload.value.toJS()
+        payload: updateObjectAction.payload.value
       });
   })
 
@@ -295,7 +294,7 @@ describe('single action to variable', () => {
         payload: {
           [connectToOneAction.payload.path]: {
             connect: {
-              id: connectToOneAction.payload.value.toJS().id
+              id: connectToOneAction.payload.value.id
             }
           }
         },
@@ -309,7 +308,7 @@ describe('single action to variable', () => {
         payload: {
           [connectToManyAction.payload.path]: {
             connect: [{
-              id: connectToManyAction.payload.value.toJS().id
+              id: connectToManyAction.payload.value.id
             }]
           }
         },
@@ -323,7 +322,7 @@ describe('single action to variable', () => {
         payload: {
           [createAndConnectToOneAction.payload.path]: {
             create: {
-              id: createAndConnectToOneAction.payload.value.toJS().id
+              id: createAndConnectToOneAction.payload.value.id
             }
           }
         },
@@ -337,7 +336,7 @@ describe('single action to variable', () => {
         payload: {
           [createAndConnectToManyAction.payload.path]: {
             create: [{
-              id: createAndConnectToManyAction.payload.value.toJS().id
+              id: createAndConnectToManyAction.payload.value.id
             }]
           }
         },
@@ -363,7 +362,7 @@ describe('single action to variable', () => {
         payload: {
           [disconnectToManyAction.payload.path]: {
             disconnect: [{
-              id: disconnectToManyAction.payload.value.toJS().id
+              id: disconnectToManyAction.payload.value.id
             }]
           }
         },
@@ -389,7 +388,7 @@ describe('single action to variable', () => {
         payload: {
           [disconnectAndDeleteToManyAction.payload.path]: {
             delete: [{
-              id: disconnectAndDeleteToManyAction.payload.value.toJS().id
+              id: disconnectAndDeleteToManyAction.payload.value.id
             }]
           }
         },

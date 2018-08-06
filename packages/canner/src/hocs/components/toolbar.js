@@ -1,12 +1,12 @@
 // @flow
 
 import * as React from 'react';
+import {get} from 'lodash';
 import DefaultToolbarLayout from './toolbarlayout';
 import Pagination from './pagination';
 import Sort from './sort';
 import Filter from './filter';
 import isObject from 'lodash/isObject';
-import {Map} from 'immutable';
 import type {Query} from '../../query';
 import type RefId from 'canner-ref-id';
 
@@ -75,9 +75,9 @@ export default class Toolbar extends React.PureComponent<Props> {
 
   nextPage = () => {
     const {updateQuery, args, value, refId} = this.props;
-    if (value.getIn(['pageInfo', 'hasNextPage'])) {
+    if (get(value, ['pageInfo', 'hasNextPage'])) {
       const {first = 10} = parsePagination(args);
-      const after = value.get('edges').last().get('cursor');
+      const after = value.edges.slice(-1)[0].cursor;
       updateQuery(refId.getPathArr(), {
         ...args, 
         first,
@@ -90,9 +90,9 @@ export default class Toolbar extends React.PureComponent<Props> {
 
   prevPage = () => {
     const {updateQuery, args, value, refId} = this.props;
-    if (value.getIn(['pageInfo', 'hasPreviousPage'])) {
+    if (get(value, ['pageInfo', 'hasPreviousPage'])) {
       const {last = 10} = parsePagination(args);
-      const before = value.getIn(['edges', 0, 'cursor']);
+      const before = get(value, ['edges', 0, 'cursor']);
       updateQuery(refId.getPathArr(), {
         ...args,
         last,
@@ -110,7 +110,7 @@ export default class Toolbar extends React.PureComponent<Props> {
       updateQuery(refId.getPathArr(), {
         ...args,
         last: size,
-        before: pagination.before || value.getIn(['edges', 0, 'cursor']),
+        before: pagination.before || get(value, ['edges', 0, 'cursor']),
         after: undefined,
         first: undefined
       });
@@ -118,7 +118,7 @@ export default class Toolbar extends React.PureComponent<Props> {
       updateQuery(refId.getPathArr(), {
         ...args,
         first: size,
-        after: pagination.after || (value.get('edges').last() || new Map()).get('cursor'),
+        after: pagination.after || (value.edges.slice(-1)[0] || {}).cursor,
         last: undefined,
         before: undefined
       });
@@ -147,8 +147,8 @@ export default class Toolbar extends React.PureComponent<Props> {
       /> : null}
       Pagination={pagination ? <PaginationComponent
         {...pagination}
-        hasNextPage={value.getIn(['pageInfo', 'hasNextPage'])}
-        hasPreviousPage={value.getIn(['pageInfo', 'hasPreviousPage'])}
+        hasNextPage={get(value, ['pageInfo', 'hasNextPage'])}
+        hasPreviousPage={get(value, ['pageInfo', 'hasPreviousPage'])}
         nextPage={this.nextPage}
         prevPage={this.prevPage}
         changeSize={this.changeSize}
@@ -190,7 +190,7 @@ export function parsePagination(args: Object = {}) {
 }
 
 export function parseWhere(where: Object) {
-  return Object.keys(where).reduce((result, key) => {
+  return Object.keys(where).reduce((result: Object, key: string) => {
     const v = where[key];
     const type = typeof v;
     const [field, op] = key.split('_');
@@ -214,7 +214,7 @@ export function parseWhere(where: Object) {
 }
 
 export function processWhere(where: Object)  {
-  return Object.keys(where).reduce((result, key) => {
+  return Object.keys(where).reduce((result: Object, key: string) => {
     const v = where[key];
     if (isEnd(v)) {
       const {op, value} = parseOpAndValue(v);

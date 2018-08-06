@@ -17,6 +17,11 @@ export type LoadedSchema = {
   graphqlClient: any,
   storages: {[key: string]: any}
 };
+export type ComponentNode = any;
+
+export type ComponentTree = {
+  [string]: ComponentNode
+}
 
 export type DataDidChange = ({
   [key: string]: boolean | {[id: string]: any}
@@ -54,8 +59,36 @@ export type CMSProps = {
   hideButtons: HideButtons
 }
 
+export type GeneratorProps = {
+  componentTree: ComponentTree,
+  hocs: Array<{[string]: React.ComponentType<*>}>,
+  layouts: {[string]: React.ComponentType<*>},
+  storages: Object,
+
+  goTo: (path: string, search?: Object | string) => void,
+  baseUrl: string,
+  routes: Array<string>,
+  params: {[string]: string},
+  refresh?: boolean,
+  deploy?: Function,
+  reset?: Function,
+  onDeploy?: Function,
+  removeOnDeploy?: Function,
+  hideButtons: boolean,
+  schema: Object
+}
+
+export type ProviderProps = {
+  schema: CannerSchema,
+  dataDidChange: DataDidChange,
+  afterDeploy: AfterDeploy,
+  children: React.Element<*>,
+  client: ApolloClient,
+  rootKey: string
+};
+
 export type ReactRouterProviderProps = {
-  children: React.Node,
+  children: React.Element<*>,
   baseUrl: string,
   history: {
     location: Object,

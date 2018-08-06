@@ -5,7 +5,6 @@ import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import RefId from 'canner-ref-id';
 import {Query} from '../../src/query';
-import {fromJS} from 'immutable';
 import {mapValues} from 'lodash';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -130,7 +129,7 @@ describe('toolbar method', () => {
     });
     updateQuery = jest.fn();
     refId = new RefId('posts');
-    value = fromJS({
+    value = {
       edges: [{
         cursor: "0",
         node: {
@@ -142,7 +141,7 @@ describe('toolbar method', () => {
         hasNextPage: true,
         hasPreviousPage: true,
       }
-    });
+    };
     items = schema.posts.items.items;
     toolbar = {
       sort: {},

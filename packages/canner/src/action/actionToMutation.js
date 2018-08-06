@@ -1,20 +1,21 @@
 // @flow
-import type {Action, ActionType} from './types';
 import pluralize from 'pluralize';
-import upperFirst from 'lodash/upperFirst';
-import set from 'lodash/set';
-import isEmpty from 'lodash/isEmpty';
+import {upperFirst, set, isEmpty, mapValues} from 'lodash';
 
+import type {Action, ActionType} from './types';
+
+/**
+ * change an action to mutation object which's used to generate graphql string
+ */
 export default function actionToMutation(action: Action<ActionType>) {
   const mutation = {
     mutation: {
       args: {
-
       },
       fields: {
       }
     }
-  }
+  };
   const {type, payload: {key = '', id}} = action;
   let name = '';
   let args = {
@@ -39,7 +40,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         const firstField = action.payload.path.split('/')[0];
         fields = {[firstField]: null};
       } else {
-        fields = action.payload.value.toJS();
+        fields = mapValues(action.payload.value, () => null);
       }
       break;
     case 'UPDATE_ARRAY':
@@ -51,7 +52,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         data: '$payload',
         where: '$where'
       }
-      name = `update${upperFirst(pluralize.singular(key))}`;
+      name = `update${transformKey(key)}`;
       fields = {id: null};
       break;
     case 'CREATE_ARRAY':
@@ -61,7 +62,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       actionArgs = {
         data: '$payload',
       }
-      name = `create${upperFirst(pluralize.singular(key))}`;
+      name = `create${transformKey(key)}`;
       fields = {id: null};
       break;
     case 'DELETE_ARRAY':
@@ -71,7 +72,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       actionArgs = {
         where: '$where',
       }
-      name = `delete${upperFirst(pluralize.singular(key))}`;
+      name = `delete${transformKey(key)}`;
       fields = {id: null};
       break;
     case 'CONNECT':
@@ -85,12 +86,26 @@ export default function actionToMutation(action: Action<ActionType>) {
           data: '$payload',
           where: '$where'
         }
-        name = `update${upperFirst(pluralize.singular(key))}`;
+        name = `update${transformKey(key)}`;
         fields = {id: null};
+      } else {
+        args = {
+          $payload: genUpdateInputType(action)
+        }
+        actionArgs = {
+          data: '$payload'
+        }
+        name = `update${upperFirst(key)}`;
+        // $FlowFixMe
+        fields = {[action.payload.path]: {
+          fields: {
+            id: null
+          }
+        }};
       }
       break;
     default:
-      name = `update${upperFirst(pluralize.singular(key))}`;
+      name = `update${transformKey(key)}`;
       break;
   }
   set(mutation, `mutation.args`, args);
@@ -103,19 +118,19 @@ export default function actionToMutation(action: Action<ActionType>) {
 
 function genCreateInputType(action) {
   const key = action.payload.key;
-  return `${KeyType(key)}CreateInput!`
+  return `${transformKey(key)}CreateInput!`
 }
 
 function genUpdateInputType(action) {
   const key = action.payload.key;
-  return `${KeyType(key)}UpdateInput!`;
+  return `${transformKey(key)}UpdateInput!`;
 }
 
 function genWhereInputType(action) {
   const key = action.payload.key;
-  return `${KeyType(key)}WhereUniqueInput!`;
+  return `${transformKey(key)}WhereUniqueInput!`;
 }
 
-function KeyType(key) {
+export function transformKey(key: string) {
   return upperFirst(pluralize.singular(key));
 }

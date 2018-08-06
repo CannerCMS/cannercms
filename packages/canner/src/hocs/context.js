@@ -8,8 +8,8 @@ export const defaultContext = {
   request: () => {throw new Error('there is no request method');},
   deploy: () => {throw new Error('there is no deploy method');},
   reset: () => {throw new Error('there is not reset method');},
-  // onDeploy: () => {throw new Error('there is not onDeploy method');},
-  // removeOnDeploy: () => {throw new Error('there is not removeOnDeploy method');},
+  onDeploy: () => {throw new Error('there is not onDeploy method');},
+  removeOnDeploy: () => {throw new Error('there is not removeOnDeploy method');},
   updateQuery: () => {}
 }
 

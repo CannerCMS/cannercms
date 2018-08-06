@@ -26,6 +26,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         refId, routes, updateQuery, type, imageServiceConfig,
         onDeploy, removeOnDeploy, required
       } = this.props;
+      // $FlowFixMe: default funcitons in HOCContext only throw error, so they don't have any arguments
       return <HOCContext.Provider
         value={{
           fetch,
@@ -48,7 +49,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           routes
         }}>
           {
-            hideTitle && <Com {...this.props}/>
+            hideTitle && <Com {...this.props} />
           }
           {
             (!hideTitle && layout === 'horizontal') && <div style={{
@@ -81,7 +82,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
               <div style={{
                 flex: 2
               }}>
-                <Com {...this.props}/>
+                <Com {...this.props} />
               </div>
             </div>
           }
@@ -113,7 +114,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
               <div style={{
                 marginBottom: 8
               }}>
-                <Com {...this.props}/>
+                <Com {...this.props} />
               </div>
             </div>
           }

@@ -2,8 +2,8 @@
 import * as React from 'react';
 import {Button} from 'antd';
 import type RefId from 'canner-ref-id';
+import {isArray} from 'antd';
 import {isRoutesEndAtMe} from './cache';
-import {List} from 'immutable';
 import type {HOCProps} from './types';
 
 type State = {
@@ -19,7 +19,7 @@ export default function deploy(Com: React.ComponentType<*>) {
     reset = (refId: RefId, callback: Function) => {
       const {reset, rootValue} = this.props;
       const key = refId.getPathArr()[0];
-      const recordId = getRecordId(rootValue, refId);
+      const recordId = getItemId(rootValue, refId);
       reset(key, recordId);
       callback();
     }
@@ -114,12 +114,12 @@ export function genCancelButton(reset: Function, currentRefId: RefId) {
 }
 
 
-function getRecordId(rootValue: any, refId: RefId) {
+function getItemId(rootValue: any, refId: RefId) {
   const [key, index] = refId.getPathArr();
-  let recordId = '';
-  const value = rootValue.get(key);
-  if (List.isList(value)) {
-    recordId = value.getIn([index, 'id']);
+  let itemId = '';
+  const value = rootValue[key];
+  if (isArray(value)) {
+    itemId = value[index].id;
   }
-  return recordId;
+  return itemId;
 }

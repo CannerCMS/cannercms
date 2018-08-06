@@ -1,6 +1,5 @@
 import actionToMutation from '../../src/action/actionToMutation';
 import {objectToQueries} from '../../src/query/utils';
-import {fromJS} from 'immutable';
 import {get} from 'lodash';
 import gql from 'graphql-tag';
 
@@ -11,9 +10,9 @@ describe('actions to variables', () => {
       payload: {
         key: 'posts',
         id: 'id1',
-        value: fromJS({
+        value: {
           "title": "123"
-        })
+        }
       }
     }
 
@@ -39,9 +38,9 @@ describe('actions to variables', () => {
       payload: {
         key: 'posts',
         id: 'id1',
-        value: fromJS({
+        value: {
           "title": "123"
-        })
+        }
       }
     }
 
@@ -65,9 +64,9 @@ describe('actions to variables', () => {
       payload: {
         key: 'posts',
         id: 'id1',
-        value: fromJS({
+        value: {
           "title": "123"
-        })
+        }
       }
     }
 
@@ -90,9 +89,9 @@ describe('actions to variables', () => {
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
-        value: fromJS({
+        value: {
           "title": "123"
-        })
+        }
       }
     }
 
@@ -105,7 +104,7 @@ describe('actions to variables', () => {
         data: '$payload'
       },
       fields: {
-        title: "123"
+        title: null
       }
     });
   });
@@ -117,9 +116,9 @@ describe('integration', () => {
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
-        value: fromJS({
+        value: {
           "title": "123"
-        })
+        }
       }
     };
     const mutation = objectToQueries(actionToMutation(updateAction), false);

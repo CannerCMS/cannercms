@@ -19,6 +19,7 @@ import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
 import RefId from 'canner-ref-id';
 import Layouts from 'canner-layouts';
+import type {GeneratorProps, ComponentTree, ComponentNode} from './types';
 
 function defaultHoc(Component) {
   return Component;
@@ -44,33 +45,8 @@ function Loading(props) {
   }
 }
 
-export type Node = {
-  keyName: string,
-  nodeType: string,
-  hocs: Array<string>,
-  children: Array<Node>,
-  component: React.ComponentType<*>,
-  loader: Promise<*>
-} 
 
-type Props = {
-  componentTree: {[string]: Node},
-  hocs: {[string]: React.ComponentType<*>},
-  layouts: {[string]: React.ComponentType<*>},
-  storages: Object,
-
-  goTo: (path: string, search?: Object | string) => void,
-  baseUrl: string,
-  routes: Array<string>,
-  params: {[string]: string},
-  refresh?: boolean,
-  deploy?: Function,
-  reset?: Function,
-  onDeploy?: Function,
-  removeOnDeploy?: Function,
-  hideButtons: boolean,
-  schema: Object
-}
+type Props = GeneratorProps;
 
 type childrenProps = {
   refId: RefId,
@@ -80,13 +56,11 @@ type childrenProps = {
 type State = {
   componentTree: {[string]: any},
   error: any,
-  errorInfo: string
+  errorInfo: Object
 }
 
 export default class Generator extends React.PureComponent<Props, State> {
-  cacheTree: {
-    [key: string]: Node
-  } // store the prerenders tree
+  cacheTree: ComponentTree // store the prerenders tree
   idNodeMap = {}
   constructor(props: Props) {
     // prerender the tree in constructor, this action will add a
@@ -102,7 +76,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     this.state = {
       componentTree: this.cacheTree[activeKey],
       error: null,
-      errorInfo: ''
+      errorInfo: {}
     };
   }
 
@@ -115,7 +89,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     });
   }
 
-  componentDidCatch(error: any, errorInfo: string) {
+  componentDidCatch(error: any, errorInfo: Object) {
     // Catch errors in any components below and re-render with error message
     this.setState({
       error: error,
@@ -124,7 +98,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     // You can also log error messages to an error reporting service here
   }
 
-  genCacheTree = (tree: {[string]: Node}): {[string]: Node} => {
+  genCacheTree = (tree: ComponentTree): ComponentTree => {
     return mapValues(tree, (branch) => {
       return this.prerender(branch);
     });
@@ -137,7 +111,7 @@ export default class Generator extends React.PureComponent<Props, State> {
   }
 
   // wrap the plugin with hoc if it has
-  prerender = (node: Node): Node => {
+  prerender = (node: ComponentNode): ComponentNode => {
     // add a field `component` in every node.
     // it's a React Component with all hocs it needs in every node
     const copyNode = {...node};
@@ -185,7 +159,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     return component;
   }
 
-  renderNode = (node: Node, index: number, props: childrenProps): React$Node => {
+  renderNode = (node: ComponentNode, index: number, props: childrenProps): React$Node => {
     // take the node.component to render it, and give the component
     // some props it maybe needs such as renderChildren
     // eslint-disable-next-line no-unused-vars
@@ -226,7 +200,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     return null;
   }
 
-  static findNode = (pathArr: Array<string>, node: Node): ?Node => {
+  static findNode = (pathArr: Array<string>, node: ComponentNode): ?Node => {
     if (isComponent(node) && node.keyName === pathArr[0]) {
       pathArr = pathArr.slice(1);
       if (!pathArr.length) {
@@ -262,7 +236,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     return this.renderNode(node, 0, {...props});
   }
 
-  renderChildren = (node: Node, props: childrenProps | Node => childrenProps): React$Node => {
+  renderChildren = (node: ComponentNode, props: childrenProps | Node => childrenProps): React.Node => {
     // just get the props and call renderNode
     // this method is called by components themselves
     const {children} = node;

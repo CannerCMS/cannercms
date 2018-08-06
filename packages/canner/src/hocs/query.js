@@ -2,9 +2,8 @@
 
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
-import {Map, List, is, fromJS} from 'immutable';
 import Toolbar from './components/toolbar';
-import {mapValues} from 'lodash';
+import {mapValues, get, isPlainObject, isArray} from 'lodash';
 import type {HOCProps} from './types';
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
@@ -118,10 +117,10 @@ export default function withQuery(Com: React.ComponentType<*>) {
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v.substr(1)]);
         return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value || (defaultValue('connection'): any)} updateQuery={this.updateQuery}>
-          <Com {...this.props} showPagination={false} rootValue={rootValue} value={value ? value.getIn(['edges'], new List()).map(item => item.get('node')) : defaultValue('array')} />
+          <Com {...this.props} showPagination={false} rootValue={rootValue} value={value ? get(value, 'edges', []).map(item => item.node) : defaultValue('array')} />
         </Toolbar>;
       } else if (type === 'relation' && relation.type === 'toOne') {
-        return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.get('id')) ? value : defaultValue(type, relation)} />;
+        return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.id) ? value : defaultValue(type, relation)} />;
       } else if (type === 'relation' && relation.type === 'toMany') {
         return (
           <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue('array')}/>
@@ -134,28 +133,26 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
 export function getValue(value: Map<string, *>, idPathArr: Array<string>) {
   return idPathArr.reduce((result: any, key: string) => {
-    if (Map.isMap(result)) {
-      if (result.has('edges') && result.has('pageInfo')) {
-        return result.getIn(['edges', key, 'node']);
+    if (isPlainObject(result)) {
+      if ('edges' in result && 'pageInfo' in result) {
+        return get(result, ['edges', key, 'node']);
       }
-      return result.get(key);
-
-    } else if (List.isList(result)) {
-      return result.get(key);
+      return get(result, key);
+    } else if (isArray(result)) {
+      return get(result, key);
     } else {
       return result;
     }
   }, value);
 }
 
-export function parseConnectionToNormal(value: Map<string, *> | List<*>) {
-  if (Map.isMap(value)) {
-    value = ((value: any): Map<string, any>);
-    if (value.has('edges') && value.has('pageInfo')) {
-      return (value.get('edges'): any).map(edge => parseConnectionToNormal(edge.get('node')));
+export function parseConnectionToNormal(value: any) {
+  if (isPlainObject(value)) {
+    if (value.edges && value.pageInfo) {
+      return value.edges.map(edge => parseConnectionToNormal(edge.node));
     }
-    return value.map(item => parseConnectionToNormal(item));
-  } else if (List.isList(value)) {
+    return mapValues(value, item => parseConnectionToNormal(item));
+  } else if (isArray(value)) {
     return value.map(item => parseConnectionToNormal(item))
   } else {
     return value;
@@ -163,25 +160,25 @@ export function parseConnectionToNormal(value: Map<string, *> | List<*>) {
 }
 
 function shouldUpdate(value: any, newValue: any) {
-  return !is(value, newValue);
+  return value != newValue;
 }
 
 function defaultValue(type: string, relation: any) {
   switch (type) {
     case 'connection': {
-      return fromJS({
+      return {
         edges: [],
         pageInfo: {
           hasNextPage: false,
           hasPreviousPage: false
         }
-      })
+      }
     }
     case 'array': {
-      return new List();
+      return [];
     }
     case 'object': {
-      return new Map();
+      return {};
     }
     case 'boolean': {
       return false;
@@ -194,34 +191,34 @@ function defaultValue(type: string, relation: any) {
     }
     case 'relation': {
       if (relation.type === 'toMany') {
-        return fromJS({
+        return {
           edges: [],
           pageInfo: {
             hasNextPage: false,
             hasPreviousPage: false
           }
-        });
+        };
       } else {
         return null;
       }
     }
     case 'image':
     case 'file': {
-      return fromJS({
+      return {
         url: '',
         contentType: '',
         name: '',
         size: 0,
         __typename: null
-      })
+      }
     }
     case 'geoPoint': {
-      return fromJS({
+      return {
         placeId: '',
         address: '',
         lat: 122,
         lng: 23
-      });
+      };
     }
     default: {
       return null;

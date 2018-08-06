@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import {fromJS} from 'immutable';
 import withHOC, {isRoutesEndAtMe} from '../../src/hocs/cache';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -62,11 +61,11 @@ describe('with cache', () => {
       return (<div>Component</div>);
     }
     pattern = 'object';
-    mockFetch = jest.fn().mockImplementation(() => Promise.resolve(fromJS({
+    mockFetch = jest.fn().mockImplementation(() => Promise.resolve({
       info: {
         name: '123'
       }
-    })));
+    }));
     mockRequest = jest.fn();
     mockDeploy = jest.fn();
     mockReset = jest.fn();
@@ -92,7 +91,7 @@ describe('with cache', () => {
       {...props}
     />);
     return wrapper.find(MockComponent).prop('fetch')().then(data => {
-      expect(data.toJS()).toMatchObject({info: {name: '123'}});
+      expect(data).toMatchObject({info: {name: '123'}});
     })
   });
 
@@ -100,23 +99,23 @@ describe('with cache', () => {
     const wrapper = shallow(<WrapperComponent
       {...props}
     />);
-    wrapper.setState({data: fromJS({
+    wrapper.setState({data: {
       info: {
         name: '123'
       }
-    })});
+    }});
     wrapper.find(MockComponent).prop('request')({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'info',
-        value: fromJS({
+        value: {
           name: '321'
-        })
+        }
       }
     });
     expect(mockRequest).toHaveBeenCalledTimes(0);
     return wrapper.find(MockComponent).prop('fetch')('info').then(data => {
-      expect(data.toJS()).toMatchObject({info: {name: '321'}});
+      expect(data).toMatchObject({info: {name: '321'}});
     })
   });
 
@@ -124,18 +123,18 @@ describe('with cache', () => {
     const wrapper = shallow(<WrapperComponent
       {...props}
     />);
-    wrapper.setState({info: fromJS({
+    wrapper.setState({info: {
       info: {
         name: '123'
       }
-    })});
+    }});
     wrapper.find(MockComponent).prop('request')({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'info',
-        value: fromJS({
+        value: {
           name: '321'
-        })
+        }
       }
     });
     wrapper.find(MockComponent).prop('deploy')('info');
@@ -146,23 +145,23 @@ describe('with cache', () => {
     const wrapper = shallow(<WrapperComponent
       {...props}
     />);
-    wrapper.setState({info: fromJS({
+    wrapper.setState({info: {
       info: {
         name: '123'
       }
-    })});
+    }});
     const subscription = wrapper.find(MockComponent).prop('subscribe')('info', mockSubscribe);
     wrapper.find(MockComponent).prop('request')({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'info',
-        value: fromJS({
+        value: {
           name: '321'
-        })
+        }
       }
     });
     expect(mockSubscribe).toHaveBeenCalledTimes(1);
-    expect(mockSubscribe.mock.calls[0][0].toJS()).toMatchObject({
+    expect(mockSubscribe.mock.calls[0][0]).toMatchObject({
       info: {
         name: '321'
       }

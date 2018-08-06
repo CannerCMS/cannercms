@@ -2,9 +2,8 @@
 
 import * as React from 'react';
 import RefId from 'canner-ref-id';
-import {Map, List} from 'immutable';
 import Ajv from 'ajv';
-import {isEmpty} from 'lodash';
+import {isEmpty, isArray, isPlainObject, get} from 'lodash';
 import type {HOCProps} from './types';
 
 type State = {
@@ -16,6 +15,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
   return class ComponentWithValition extends React.Component<HOCProps, State> {
     key: string;
     id: ?string;
+    callbackId: ?string;
     state = {
       error: false,
       errorInfo: []
@@ -42,7 +42,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
         if (validatorResult && validatorResult.error) {
           customValid = false;
         }
-        if (customValid && isRequiredValid && validate((value && value.toJS) ? value.toJS() : value)) {
+        if (customValid && isRequiredValid && validate(value)) {
           this.setState({
             error: false,
             errorInfo: []
@@ -72,7 +72,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
     removeOnDeploy = () => {
       const {refId, removeOnDeploy} = this.props;
       if (this.callbackId) {
-        removeOnDeploy(refId.getPathArr()[0], this.callbackId);
+        removeOnDeploy(refId.getPathArr()[0], this.callbackId || '');
       }
     }
 
@@ -100,7 +100,7 @@ export function splitRefId({
   const [key, index] = refId.getPathArr();
   let id;
   if (pattern.startsWith('array')) {
-    id = rootValue.getIn([key, index, 'id']);
+    id = get(rootValue, [key, index, 'id']);
   }
   return {
     key,
@@ -108,20 +108,20 @@ export function splitRefId({
   }
 }
 
-export function getValueAndPaths(value: Map<string, *>, idPathArr: Array<string>) {
+export function getValueAndPaths(value: Object, idPathArr: Array<string>) {
   return idPathArr.reduce((result: any, key: string) => {
     let v = result.value;
     let paths = result.paths;
-    if (Map.isMap(v)) {
-      if (v.has('edges') && v.has('pageInfo')) {
-        v = v.getIn(['edges', key, 'node']);
+    if (isPlainObject(v)) {
+      if ('edges' in v && 'pageInfo' in v) {
+        v = get(v, ['edges', key, 'node']);
         paths = paths.concat(['edges', key, 'node']);
       } else {
-        v = v.get(key);
+        v = v[key];
         paths = paths.concat(key);
       }
-    } else if (List.isList(v)) {
-      v = v.get(key);
+    } else if (isArray(v)) {
+      v = v[key];
       paths = paths.concat(key);
     }
     return {

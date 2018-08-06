@@ -2,6 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
 import Canner from 'packages/canner/src';
+import Wrapper from 'packages/canner-wrapper/src';
 import {ReactRouterProvider} from 'packages/canner/src';
 import schema from './canner.schema';
 import {Layout, Menu} from 'antd';
@@ -34,11 +35,21 @@ class CMSExample extends React.Component {
               history={history}
               baseUrl={baseUrl}
             >
-              <Canner
-                schema={{...schema}}
-                afterDeploy={this.afterDeploy}
-                dataDidChange={this.dataDidChange}
-              />
+              <Wrapper
+                schema={schema}
+                sidebarConfig={{
+                  menuConfig: true
+                }}
+                navbarConfig={{
+                  renderMenu: () => null
+                }}
+              >
+                <Canner
+                  schema={{...schema}}
+                  afterDeploy={this.afterDeploy}
+                  dataDidChange={this.dataDidChange}
+                />
+              </Wrapper>
             </ReactRouterProvider>
           );
         }}/>

@@ -20,7 +20,7 @@
     "bson-objectid": "^1.2.2",
     "canner-compiler": "^0.1.6",
     "canner-graphql-interface": "^1.16.0",
-    "canner-helpers": "^0.1.16",
+    "canner-helpers": "^1.0.0-beta.0",
     "canner-layouts": "^1.1.1",
     "canner-ref-id": "^0.1.2",
     "graphql-tag": "^2.9.1",
@@ -40,9 +40,9 @@
   },
   "peerDependencies": {
     "@canner/antd-components": ">=0.2.0",
-    "antd": "^3.2.3",
-    "canner-graphql-interface": "^1.16.0",
-    "canner-helpers": "^0.1.15",
+    "antd": ">=3.2.3",
+    "canner-graphql-interface": ">=1.16.0",
+    "canner-helpers": ">=0.1.15",
     "react": ">=16.3",
     "react-dom": ">=16.3"
   },
@@ -53,6 +53,7 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    }
+    },
+    "testURL": "http://localhost"
   }
 }

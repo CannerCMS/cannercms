@@ -1,23 +1,18 @@
-/**
-|--------------------------------------------------
-| this is just for copy and past
-|--------------------------------------------------
-*/
 
 
 import * as React from 'react';
+import {get} from 'lodash';
 import Enzyme, { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from '../react163Adapter';
 import withOnDeploy, {getValueAndPaths} from '../../src/hocs/onDeploy';
 import RefId from 'canner-ref-id';
-import {fromJS} from 'immutable';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('getValueAndPaths', () => {
   it('should works', () => {
-    const rootValue = fromJS({
+    const rootValue = {
       posts: {
         edges: [{
           cursor: 'id1',
@@ -32,10 +27,10 @@ describe('getValueAndPaths', () => {
           hasNextInfo: false
         }
       }
-    });
+    };
 
     const idPathArr = ['posts', '0', 'images', '0', 'url'];
-    expect(getValueAndPaths(rootValue.getIn(['posts', 'edges', '0', 'node']), idPathArr.slice(2))).toEqual({
+    expect(getValueAndPaths(get(rootValue, ['posts', 'edges', '0', 'node']), idPathArr.slice(2))).toEqual({
       value: 'url1',
       paths: ['images', '0', 'url']
     });
@@ -58,14 +53,14 @@ describe('withOnDeploy', () => {
       pattern: 'array.array.string',
       onDeploy: mockOnDeploy,
       removeOnDeploy: mockRemoveOnDeploy,
-      rootValue: fromJS({
+      rootValue: {
         posts:[{
           id: 'id1',
           images: [{
             url: 'url1'
           }]
         }]
-      }),
+      },
   
     }
 
@@ -94,7 +89,7 @@ describe('withOnDeploy', () => {
     wrapper.instance().onDeploy(callback);
     expect(mockOnDeploy.mock.calls[0][0]).toBe('posts');
     expect(typeof mockOnDeploy.mock.calls[0][1]).toBe('function');
-    expect(mockOnDeploy.mock.calls[0][1]({data: props.rootValue.getIn(['posts', 0])})).toMatchSnapshot();
+    expect(mockOnDeploy.mock.calls[0][1]({data: get(props.rootValue, ['posts', 0])})).toMatchSnapshot();
     expect(callback).toHaveBeenCalledTimes(1);
   });
 });
