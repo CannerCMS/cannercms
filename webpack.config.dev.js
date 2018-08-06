@@ -19,7 +19,6 @@ module.exports = {
     'antd': 'antd',
     'lodash': '_',
     'firebase': 'firebase',
-    'immutable': 'Immutable',
     'styled-components': 'styled',
     'canner-slate-editor': 'CannerSlateEditor'
   },
@@ -29,18 +28,25 @@ module.exports = {
     publicPath: '/docs/static/',
   },
   resolve: {
+    modules: [
+      'packages/canner/node_modules',
+      'node_modules'
+    ],
     alias: {
-      'canner-graphql-interface': path.resolve(__dirname, 'node_modules/canner-graphql-interface'),
+      'canner-graphql-interface': path.resolve(__dirname, 'packages/canner/node_modules/canner-graphql-interface'),
+      'canner-helpers': path.resolve(__dirname, 'packages/canner/node_modules/canner-helpers'),
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
-      'cms-helpers': path.resolve(__dirname, 'node_modules', 'cms-helpers'),
-      '@canner': path.resolve(__dirname, 'node_modules', '@canner'),
       'antd': path.resolve(__dirname, 'node_modules/antd'),
       packages: path.resolve(__dirname, "./packages"),
     }
   },
   resolveLoader: {
+    modules: [
+      'packages/canner/node_modules',
+      'node_modules'
+    ],
      moduleExtensions: ["-loader"]
   },
   plugins: [

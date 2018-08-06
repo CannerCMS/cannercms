@@ -23,7 +23,7 @@
     "@babel/preset-flow": "^7.0.0-beta.52",
     "@babel/preset-react": "^7.0.0-beta.52",
     "@babel/preset-stage-0": "^7.0.0-beta.52",
-    "@canner/antd-components": "^0.3.0-beta.8",
+    "@canner/antd-components": "^0.4.0-beta.1",
     "antd": "^3.2.3",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.2",
