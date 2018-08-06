@@ -57,7 +57,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item[paths[0]]
+        value: item
       }
     }
   }
@@ -65,13 +65,13 @@ export function generateAction(arg: {
   if (isCreateNestedArrayInObject(arg)) {
     const {key, id, paths} = splitId(arg.id, arg.rootValue);
     const item = get(arg.rootValue, [key]);
-    update(item, paths, arr => arr.concat(arg.value));
+    update(item, paths, arr => arr ? arr.concat(arg.value) : [arg.value]);
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        value: item[paths[0]]
+        value: item
       }
     }
   }
@@ -114,7 +114,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item[paths[0]]
+        value: item
       }
     }
   }
@@ -131,7 +131,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item[paths[0]]
+        value: item
       }
     }
   }
@@ -159,7 +159,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item[paths[0]]
+        value: item
       }
     };
   }
@@ -179,7 +179,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item[paths[0]]
+        value: item
       }
     };
   }
@@ -210,7 +210,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item[paths[0]]
+        value: item
       }
     }
   }
@@ -234,7 +234,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item[paths[0]]
+        value: item
       }
     }
   }
