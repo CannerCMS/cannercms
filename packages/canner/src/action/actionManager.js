@@ -107,7 +107,7 @@ export class ActionManager implements ActionManagerDef {
       });
     }
     const item = get(this.store, key);
-    if (item instanceof ObjectPattern) {
+    if (isPlainObject(item)) {
       delete this.store[key];
     } else if (isArray(item)) {
       if (id) {

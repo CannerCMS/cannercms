@@ -37,6 +37,7 @@ exports[`with route mini app should render 1`] = `
     }
   >
     <Button
+      block={false}
       disabled={false}
       ghost={false}
       loading={false}
@@ -52,6 +53,7 @@ exports[`with route mini app should render 1`] = `
       Confirm
     </Button>
     <Button
+      block={false}
       disabled={false}
       ghost={false}
       loading={false}

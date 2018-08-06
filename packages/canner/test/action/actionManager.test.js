@@ -69,7 +69,10 @@ describe('add action', () => {
 
   it('add object action', () => {
     actionManager.addAction(objectAction);
-    expect(actionManager.store.user).toBeInstanceOf(ObjectPattern);
+    expect(actionManager.store.user).toMatchObject({
+      object: expect.any(ObjectPattern),
+      connect: expect.any(ConnectPattern)
+    });
   });
 
   it('add array action', () => {

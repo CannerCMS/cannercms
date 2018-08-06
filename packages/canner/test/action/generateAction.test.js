@@ -52,12 +52,14 @@ describe('update action', () => {
       payload: {
         key: 'posts',
         id: 'id1',
-        value: rootValue.posts[0].comment.map((c, index) => {
-          if (index === 0) {
-            return {...c, text: 'zzz'}
-          }
-          return c;
-        })
+        value: {
+          comment: rootValue.posts[0].comment.map((c, index) => {
+            if (index === 0) {
+              return {...c, text: 'zzz'}
+            }
+            return c;
+          })
+        }
       }
     });
   });
@@ -76,7 +78,7 @@ describe('update action', () => {
       payload: {
         key: 'user',
         id: "",
-        value: newUser.info
+        value: newUser
       }
     });
   });
@@ -126,7 +128,7 @@ describe('create action', () => {
       payload: {
         key: 'posts',
         id: 'id1',
-        value: newValue.posts[0].users
+        value: newValue.posts[0]
           
       }
     });
@@ -134,7 +136,7 @@ describe('create action', () => {
 
   it('create array item in object', () => {
     const action = generateAction({
-      id: 'user/info/phone',
+      id: 'user/phone',
       updateType: 'create',
       value: {
         type: '',
@@ -149,7 +151,7 @@ describe('create action', () => {
       payload: {
         key: 'user',
         id: '',
-        value: newUser.info
+        value: newUser
       }
     });
   });
@@ -211,7 +213,7 @@ describe('delete action', () => {
       payload: {
         key: 'posts',
         id: 'id2',
-        value: newPost1.users
+        value: newPost1
       }
     });
   });
@@ -229,7 +231,7 @@ describe('delete action', () => {
       payload: {
         key: 'user',
         id: '',
-        value: newUser.info
+        value: newUser
       }
     });
   });
@@ -294,13 +296,16 @@ describe('swap action', () => {
       payload: {
         key: 'posts',
         id: 'id2',
-        value: [{
-          text: 'yyy',
-          author: 'yyy'
-        }, {
-          text: 'xxx',
-          author: 'xxx'
-        }]
+        value: {
+          ...rootValue.posts[1],
+          comment: [{
+            text: 'yyy',
+            author: 'yyy'
+          }, {
+            text: 'xxx',
+            author: 'xxx'
+          }]
+        }
       }
     });
   });
@@ -327,7 +332,7 @@ describe('swap action', () => {
       payload: {
         key: 'user',
         id: '',
-        value: newUser.info
+        value: newUser
       }
     });
   });

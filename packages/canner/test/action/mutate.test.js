@@ -104,6 +104,9 @@ describe('mutate', () => {
         value: {
           id: 'author2',
           name: 'author2'
+        },
+        relation: {
+          type: 'toMany'
         }
       }
     };
