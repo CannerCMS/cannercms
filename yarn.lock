@@ -24,27 +24,33 @@
   dependencies:
     "@babel/highlight" "7.0.0-beta.44"
 
+"@babel/code-frame@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.54.tgz#0024f96fdf7028a21d68e273afd4e953214a1ead"
+  dependencies:
+    "@babel/highlight" "7.0.0-beta.54"
+
 "@babel/code-frame@7.0.0-beta.56", "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0-beta.56.tgz#09f76300673ac085d3b90e02aafa0ffc2c96846a"
   dependencies:
     "@babel/highlight" "7.0.0-beta.56"
 
-"@babel/core@^7.0.0-beta.52":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.0.0-beta.56.tgz#cc03ffbb62564fef58fd1cefcbb3e32011c21df9"
+"@babel/core@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.0.0-beta.54.tgz#253c54d0095403a5cfa764e7d9b458194692d02b"
   dependencies:
-    "@babel/code-frame" "7.0.0-beta.56"
-    "@babel/generator" "7.0.0-beta.56"
-    "@babel/helpers" "7.0.0-beta.56"
-    "@babel/parser" "7.0.0-beta.56"
-    "@babel/template" "7.0.0-beta.56"
-    "@babel/traverse" "7.0.0-beta.56"
-    "@babel/types" "7.0.0-beta.56"
+    "@babel/code-frame" "7.0.0-beta.54"
+    "@babel/generator" "7.0.0-beta.54"
+    "@babel/helpers" "7.0.0-beta.54"
+    "@babel/parser" "7.0.0-beta.54"
+    "@babel/template" "7.0.0-beta.54"
+    "@babel/traverse" "7.0.0-beta.54"
+    "@babel/types" "7.0.0-beta.54"
     convert-source-map "^1.1.0"
     debug "^3.1.0"
     json5 "^0.5.0"
-    lodash "^4.17.10"
+    lodash "^4.17.5"
     resolve "^1.3.2"
     semver "^5.4.1"
     source-map "^0.5.0"
@@ -56,6 +62,16 @@
     "@babel/types" "7.0.0-beta.44"
     jsesc "^2.5.1"
     lodash "^4.2.0"
+    source-map "^0.5.0"
+    trim-right "^1.0.1"
+
+"@babel/generator@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.0.0-beta.54.tgz#c043c7eebeebfd7e665d95c281a4aafc83d4e1c9"
+  dependencies:
+    "@babel/types" "7.0.0-beta.54"
+    jsesc "^2.5.1"
+    lodash "^4.17.5"
     source-map "^0.5.0"
     trim-right "^1.0.1"
 
@@ -120,6 +136,14 @@
     "@babel/template" "7.0.0-beta.44"
     "@babel/types" "7.0.0-beta.44"
 
+"@babel/helper-function-name@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.0.0-beta.54.tgz#307875507a1eda2482a09a9a4df6a25632ffb34b"
+  dependencies:
+    "@babel/helper-get-function-arity" "7.0.0-beta.54"
+    "@babel/template" "7.0.0-beta.54"
+    "@babel/types" "7.0.0-beta.54"
+
 "@babel/helper-function-name@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.0.0-beta.56.tgz#4e9c8a84ce4368b4a779409d0c4fe3f714be60ab"
@@ -134,6 +158,12 @@
   dependencies:
     "@babel/types" "7.0.0-beta.44"
 
+"@babel/helper-get-function-arity@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.0.0-beta.54.tgz#757bd189b077074a004028cfde5f083c306cc6c4"
+  dependencies:
+    "@babel/types" "7.0.0-beta.54"
+
 "@babel/helper-get-function-arity@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/helper-get-function-arity/-/helper-get-function-arity-7.0.0-beta.56.tgz#872864d67e25705b94d1c71afc72344aafc8dc9c"
@@ -145,6 +175,12 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-hoist-variables/-/helper-hoist-variables-7.0.0-beta.56.tgz#6d32ac403a51b0a19e2144820d53a793a04df263"
   dependencies:
     "@babel/types" "7.0.0-beta.56"
+
+"@babel/helper-member-expression-to-functions@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.0.0-beta.54.tgz#bce9ddc484317b13d2615bafe2b524d0d56d99df"
+  dependencies:
+    "@babel/types" "7.0.0-beta.54"
 
 "@babel/helper-member-expression-to-functions@7.0.0-beta.56":
   version "7.0.0-beta.56"
@@ -170,11 +206,21 @@
     "@babel/types" "7.0.0-beta.56"
     lodash "^4.17.10"
 
+"@babel/helper-optimise-call-expression@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.0.0-beta.54.tgz#4af8dd4ff90dbd29b3bcf85fff43952e2ae1016e"
+  dependencies:
+    "@babel/types" "7.0.0-beta.54"
+
 "@babel/helper-optimise-call-expression@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.0.0-beta.56.tgz#e9814da0d175ca39901f2d895d6dfef658fe8953"
   dependencies:
     "@babel/types" "7.0.0-beta.56"
+
+"@babel/helper-plugin-utils@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0-beta.54.tgz#61d2a9a0f9a3e31838a458debb9eebd7bdd249b4"
 
 "@babel/helper-plugin-utils@7.0.0-beta.56":
   version "7.0.0-beta.56"
@@ -195,6 +241,15 @@
     "@babel/template" "7.0.0-beta.56"
     "@babel/traverse" "7.0.0-beta.56"
     "@babel/types" "7.0.0-beta.56"
+
+"@babel/helper-replace-supers@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helper-replace-supers/-/helper-replace-supers-7.0.0-beta.54.tgz#901f5a1493a410799fd3ab3e0c0d29d18071c89f"
+  dependencies:
+    "@babel/helper-member-expression-to-functions" "7.0.0-beta.54"
+    "@babel/helper-optimise-call-expression" "7.0.0-beta.54"
+    "@babel/traverse" "7.0.0-beta.54"
+    "@babel/types" "7.0.0-beta.54"
 
 "@babel/helper-replace-supers@7.0.0-beta.56":
   version "7.0.0-beta.56"
@@ -219,11 +274,26 @@
   dependencies:
     "@babel/types" "7.0.0-beta.44"
 
+"@babel/helper-split-export-declaration@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.0.0-beta.54.tgz#89cd8833c95481a0827ac6a1bfccddb92b75a109"
+  dependencies:
+    "@babel/types" "7.0.0-beta.54"
+
 "@babel/helper-split-export-declaration@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.0.0-beta.56.tgz#82d53382836134ba3ed0ea2394ca21fe579ec241"
   dependencies:
     "@babel/types" "7.0.0-beta.56"
+
+"@babel/helper-wrap-function@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helper-wrap-function/-/helper-wrap-function-7.0.0-beta.54.tgz#dc1b7a483a3074a3531b36523e03156d910a3a2a"
+  dependencies:
+    "@babel/helper-function-name" "7.0.0-beta.54"
+    "@babel/template" "7.0.0-beta.54"
+    "@babel/traverse" "7.0.0-beta.54"
+    "@babel/types" "7.0.0-beta.54"
 
 "@babel/helper-wrap-function@7.0.0-beta.56":
   version "7.0.0-beta.56"
@@ -234,17 +304,25 @@
     "@babel/traverse" "7.0.0-beta.56"
     "@babel/types" "7.0.0-beta.56"
 
-"@babel/helpers@7.0.0-beta.56":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.0.0-beta.56.tgz#a01cac1481c6fa38197ae410137539045b160443"
+"@babel/helpers@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.0.0-beta.54.tgz#b86a99a80efd81668caef307610b961197446a74"
   dependencies:
-    "@babel/template" "7.0.0-beta.56"
-    "@babel/traverse" "7.0.0-beta.56"
-    "@babel/types" "7.0.0-beta.56"
+    "@babel/template" "7.0.0-beta.54"
+    "@babel/traverse" "7.0.0-beta.54"
+    "@babel/types" "7.0.0-beta.54"
 
 "@babel/highlight@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.0.0-beta.44.tgz#18c94ce543916a80553edcdcf681890b200747d5"
+  dependencies:
+    chalk "^2.0.0"
+    esutils "^2.0.2"
+    js-tokens "^3.0.0"
+
+"@babel/highlight@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.0.0-beta.54.tgz#155d507358329b8e7068970017c3fd74a9b08584"
   dependencies:
     chalk "^2.0.0"
     esutils "^2.0.2"
@@ -258,6 +336,10 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@babel/parser@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0-beta.54.tgz#c01aa63b57c9c8dce8744796c81d9df121f20db4"
+
 "@babel/parser@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0-beta.56.tgz#8638aa02e0130cd10b2ba4128e2b804112073ed3"
@@ -269,6 +351,88 @@
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
     "@babel/helper-remap-async-to-generator" "7.0.0-beta.56"
     "@babel/plugin-syntax-async-generators" "7.0.0-beta.56"
+
+"@babel/plugin-proposal-class-properties@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.0.0-beta.54.tgz#5953f0499c1e69e732d33a550bce8799aa6b76f3"
+  dependencies:
+    "@babel/helper-function-name" "7.0.0-beta.54"
+    "@babel/helper-member-expression-to-functions" "7.0.0-beta.54"
+    "@babel/helper-optimise-call-expression" "7.0.0-beta.54"
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/helper-replace-supers" "7.0.0-beta.54"
+    "@babel/plugin-syntax-class-properties" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-decorators@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-decorators/-/plugin-proposal-decorators-7.0.0-beta.54.tgz#eb14bd5223ced8ccec8e6b900ba025e04f49578d"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-decorators" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-do-expressions@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-do-expressions/-/plugin-proposal-do-expressions-7.0.0-beta.54.tgz#7a4b705505f3d5c1144875dc0e9b46aae1a28406"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-do-expressions" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-export-default-from@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-export-default-from/-/plugin-proposal-export-default-from-7.0.0-beta.54.tgz#affda344fedfdf6c14247efd34d314b476933942"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-export-default-from" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-export-namespace-from@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-export-namespace-from/-/plugin-proposal-export-namespace-from-7.0.0-beta.54.tgz#87ccd73694aa0edb1ddb758da40b648036b40313"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-export-namespace-from" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-function-bind@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-function-bind/-/plugin-proposal-function-bind-7.0.0-beta.54.tgz#518c9ef82c0037c2a8b6c1eac073843015506f09"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-function-bind" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-function-sent@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-function-sent/-/plugin-proposal-function-sent-7.0.0-beta.54.tgz#18c3327ce497dc1014190581a2ba0aa67bbaa2f1"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/helper-wrap-function" "7.0.0-beta.54"
+    "@babel/plugin-syntax-function-sent" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-json-strings@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-json-strings/-/plugin-proposal-json-strings-7.0.0-beta.54.tgz#35292e0716b35ac8c279d6430836ce741c32fe5d"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-json-strings" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-logical-assignment-operators@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-logical-assignment-operators/-/plugin-proposal-logical-assignment-operators-7.0.0-beta.54.tgz#1bb95181595aa899f25db4c2ab362cefc5c413ae"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-logical-assignment-operators" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-nullish-coalescing-operator@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-nullish-coalescing-operator/-/plugin-proposal-nullish-coalescing-operator-7.0.0-beta.54.tgz#5b5176f3619dd17bcedfe99b58add67981efc46f"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-nullish-coalescing-operator" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-numeric-separator@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-numeric-separator/-/plugin-proposal-numeric-separator-7.0.0-beta.54.tgz#d73566a69c475dc7b113f458845d2b445edf9294"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-numeric-separator" "7.0.0-beta.54"
 
 "@babel/plugin-proposal-object-rest-spread@7.0.0-beta.56":
   version "7.0.0-beta.56"
@@ -284,6 +448,27 @@
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
     "@babel/plugin-syntax-optional-catch-binding" "7.0.0-beta.56"
 
+"@babel/plugin-proposal-optional-chaining@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.0.0-beta.54.tgz#4fca8cd7f9a37fa94c1ca41832fad29bfba5cd81"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-optional-chaining" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-pipeline-operator@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-pipeline-operator/-/plugin-proposal-pipeline-operator-7.0.0-beta.54.tgz#bdf75415fd9094bcc18c2541ef986830dda1eb82"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-pipeline-operator" "7.0.0-beta.54"
+
+"@babel/plugin-proposal-throw-expressions@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-throw-expressions/-/plugin-proposal-throw-expressions-7.0.0-beta.54.tgz#0a015d86026f55251b790b515f91f566b50e15c0"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+    "@babel/plugin-syntax-throw-expressions" "7.0.0-beta.54"
+
 "@babel/plugin-proposal-unicode-property-regex@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-unicode-property-regex/-/plugin-proposal-unicode-property-regex-7.0.0-beta.56.tgz#df00a82966ebaf2ddd3a7fee8f746dbbf0013956"
@@ -298,17 +483,95 @@
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
 
+"@babel/plugin-syntax-class-properties@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-class-properties/-/plugin-syntax-class-properties-7.0.0-beta.54.tgz#5e70f22dc3628c1d35402b63ff1a8f8e005bd871"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-decorators@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-decorators/-/plugin-syntax-decorators-7.0.0-beta.54.tgz#4b3c57ecb3b35a9c995447e083bd6b503edc95ba"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-do-expressions@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-do-expressions/-/plugin-syntax-do-expressions-7.0.0-beta.54.tgz#36c2b1ac605c8644db483369690bd58427b7b913"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-dynamic-import@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-dynamic-import/-/plugin-syntax-dynamic-import-7.0.0-beta.54.tgz#c962627f4e1a15da6d0842306d421e7b1e52f587"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-export-default-from@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-export-default-from/-/plugin-syntax-export-default-from-7.0.0-beta.54.tgz#77b5a112f173cb271ab703fb4360d159e6188128"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-export-namespace-from@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-export-namespace-from/-/plugin-syntax-export-namespace-from-7.0.0-beta.54.tgz#fbe44261b46d388e10def932203eaf05d12dcdb7"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
 "@babel/plugin-syntax-flow@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-flow/-/plugin-syntax-flow-7.0.0-beta.56.tgz#bbd6e75fe409b9c34c4841737beced0b167829ce"
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
 
+"@babel/plugin-syntax-function-bind@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-function-bind/-/plugin-syntax-function-bind-7.0.0-beta.54.tgz#f93ff660d4f194a08b2a4fb88f5251d8b573f4be"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-function-sent@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-function-sent/-/plugin-syntax-function-sent-7.0.0-beta.54.tgz#772daa8bef744790579e3568d989b860af3993d1"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-import-meta@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-import-meta/-/plugin-syntax-import-meta-7.0.0-beta.54.tgz#3c54d07aafe09714303b995ac4ad6b10b0fdbc30"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-json-strings@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-json-strings/-/plugin-syntax-json-strings-7.0.0-beta.54.tgz#7f53c35362f359e5881e21278ca3359dc0bb7055"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
 "@babel/plugin-syntax-jsx@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.0.0-beta.56.tgz#d018279f6fc3cae489f72022fa449c568d913681"
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
+
+"@babel/plugin-syntax-logical-assignment-operators@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-logical-assignment-operators/-/plugin-syntax-logical-assignment-operators-7.0.0-beta.54.tgz#82adc9cb5692a51c5a49a266e9e27f43ebf88ab9"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-nullish-coalescing-operator@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-nullish-coalescing-operator/-/plugin-syntax-nullish-coalescing-operator-7.0.0-beta.54.tgz#872b7be782ba170f12196ff5421c14fdfb8e6f9d"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-numeric-separator@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-numeric-separator/-/plugin-syntax-numeric-separator-7.0.0-beta.54.tgz#9e4f56f78e0dc28cc81bcce95da4c33b9e58115e"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
 
 "@babel/plugin-syntax-object-rest-spread@7.0.0-beta.56":
   version "7.0.0-beta.56"
@@ -321,6 +584,24 @@
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-optional-catch-binding/-/plugin-syntax-optional-catch-binding-7.0.0-beta.56.tgz#3606e382384507b71adaf2f2f239395c5695ec2c"
   dependencies:
     "@babel/helper-plugin-utils" "7.0.0-beta.56"
+
+"@babel/plugin-syntax-optional-chaining@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-optional-chaining/-/plugin-syntax-optional-chaining-7.0.0-beta.54.tgz#40dc10c00d9acd523c6ac1f9332652b1e5af4f20"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-pipeline-operator@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-pipeline-operator/-/plugin-syntax-pipeline-operator-7.0.0-beta.54.tgz#980c9abdc2ebeb84f5e02b5e27e83fb237474c77"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
+
+"@babel/plugin-syntax-throw-expressions@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-throw-expressions/-/plugin-syntax-throw-expressions-7.0.0-beta.54.tgz#d3058ab0c63fe690aba152c2e7b08294e5b77a9f"
+  dependencies:
+    "@babel/helper-plugin-utils" "7.0.0-beta.54"
 
 "@babel/plugin-transform-arrow-functions@7.0.0-beta.56":
   version "7.0.0-beta.56"
@@ -607,10 +888,6 @@
     "@babel/plugin-transform-react-jsx-self" "7.0.0-beta.56"
     "@babel/plugin-transform-react-jsx-source" "7.0.0-beta.56"
 
-"@babel/preset-stage-0@^7.0.0-beta.52":
-  version "7.0.0-beta.56"
-  resolved "https://registry.yarnpkg.com/@babel/preset-stage-0/-/preset-stage-0-7.0.0-beta.56.tgz#e310c4a16dadfa632adb7b7235408eda3103c92e"
-
 "@babel/template@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.44.tgz#f8832f4fdcee5d59bf515e595fc5106c529b394f"
@@ -619,6 +896,15 @@
     "@babel/types" "7.0.0-beta.44"
     babylon "7.0.0-beta.44"
     lodash "^4.2.0"
+
+"@babel/template@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.54.tgz#d5b0d2d2d55c0e78b048c61a058f36cfd7d91af3"
+  dependencies:
+    "@babel/code-frame" "7.0.0-beta.54"
+    "@babel/parser" "7.0.0-beta.54"
+    "@babel/types" "7.0.0-beta.54"
+    lodash "^4.17.5"
 
 "@babel/template@7.0.0-beta.56":
   version "7.0.0-beta.56"
@@ -644,6 +930,20 @@
     invariant "^2.2.0"
     lodash "^4.2.0"
 
+"@babel/traverse@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.0.0-beta.54.tgz#2c17f98dcdbf19aa918fde128f0e1a0bc089e05a"
+  dependencies:
+    "@babel/code-frame" "7.0.0-beta.54"
+    "@babel/generator" "7.0.0-beta.54"
+    "@babel/helper-function-name" "7.0.0-beta.54"
+    "@babel/helper-split-export-declaration" "7.0.0-beta.54"
+    "@babel/parser" "7.0.0-beta.54"
+    "@babel/types" "7.0.0-beta.54"
+    debug "^3.1.0"
+    globals "^11.1.0"
+    lodash "^4.17.5"
+
 "@babel/traverse@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.0.0-beta.56.tgz#62fdfe69328cfaad414ef01844f5ab40e32f4ad0"
@@ -666,6 +966,14 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@babel/types@7.0.0-beta.54":
+  version "7.0.0-beta.54"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.54.tgz#025ad68492fed542c13f14c579a44c848e531063"
+  dependencies:
+    esutils "^2.0.2"
+    lodash "^4.17.5"
+    to-fast-properties "^2.0.0"
+
 "@babel/types@7.0.0-beta.56":
   version "7.0.0-beta.56"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.56.tgz#df456947a82510ec30361971e566110d89489056"
@@ -674,250 +982,250 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@canner/antd-array-gallery@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-gallery/-/antd-array-gallery-0.4.0-beta.1.tgz#0f6a824e05fdf348a77414e03e32b73b62f9350f"
+"@canner/antd-array-gallery@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-gallery/-/antd-array-gallery-0.4.0-beta.2.tgz#c52ef9c270bc4fc33da410c6cff301563b61c9d4"
   dependencies:
     "@canner/image-service-config" "^0.3.0"
     canner-image-gallery "^0.2.0"
 
-"@canner/antd-array-panel@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-panel/-/antd-array-panel-0.4.0-beta.1.tgz#56dc9ac3f2116ca470e0605297d80ee1092de26b"
+"@canner/antd-array-panel@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-panel/-/antd-array-panel-0.4.0-beta.2.tgz#46a9ee10f8d42e713eefd0a39f46b0eb342c6aa3"
   dependencies:
     react-intl "^2.4.0"
 
-"@canner/antd-array-slider@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-slider/-/antd-array-slider-0.4.0-beta.1.tgz#526c94d94b765dca834c934fb76a9742b58e0f19"
+"@canner/antd-array-slider@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-slider/-/antd-array-slider-0.4.0-beta.2.tgz#18fff5ae8c0c75a6b7f597493336e655a0d8440e"
 
-"@canner/antd-array-tab_bottom@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_bottom/-/antd-array-tab_bottom-0.4.0-beta.1.tgz#b9007a0c190a528897972894dd694744e6bee4f9"
+"@canner/antd-array-tab_bottom@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_bottom/-/antd-array-tab_bottom-0.4.0-beta.2.tgz#09366637494140953d0e9572f53a44514f785daf"
   dependencies:
-    "@canner/antd-array-tabs" "^0.4.0-beta.1"
+    "@canner/antd-array-tabs" "^0.4.0-beta.2"
 
-"@canner/antd-array-tab_left@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_left/-/antd-array-tab_left-0.4.0-beta.1.tgz#4823b3103dd909b885d06196e219d3c42162d625"
+"@canner/antd-array-tab_left@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_left/-/antd-array-tab_left-0.4.0-beta.2.tgz#15a1893e14f3a8680232a71959010e494c09ff3d"
   dependencies:
-    "@canner/antd-array-tabs" "^0.4.0-beta.1"
+    "@canner/antd-array-tabs" "^0.4.0-beta.2"
 
-"@canner/antd-array-tab_right@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_right/-/antd-array-tab_right-0.4.0-beta.1.tgz#23cedc07475dd219d8ba8a14eb99af7c1a5a50ae"
+"@canner/antd-array-tab_right@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_right/-/antd-array-tab_right-0.4.0-beta.2.tgz#17684b3a63c96426669df6409c7128289a017a4c"
   dependencies:
-    "@canner/antd-array-tabs" "^0.4.0-beta.1"
+    "@canner/antd-array-tabs" "^0.4.0-beta.2"
 
-"@canner/antd-array-tab_top@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_top/-/antd-array-tab_top-0.4.0-beta.1.tgz#a74e1a41a1170a13887be47e760f61d66b53eb9b"
+"@canner/antd-array-tab_top@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_top/-/antd-array-tab_top-0.4.0-beta.2.tgz#4c2294145cc244deb8c871c3092e5bd12c32191a"
   dependencies:
-    "@canner/antd-array-tabs" "^0.4.0-beta.1"
+    "@canner/antd-array-tabs" "^0.4.0-beta.2"
 
-"@canner/antd-array-table@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-table/-/antd-array-table-0.4.0-beta.1.tgz#602cae7087331fd77cc18f8bd3afe6b42b1344ec"
+"@canner/antd-array-table@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-table/-/antd-array-table-0.4.0-beta.2.tgz#7fe27515ae047e76d311ed40abd22277a893dccd"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
     prop-types "^15.6.0"
 
-"@canner/antd-array-table_route@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-table_route/-/antd-array-table_route-0.4.0-beta.1.tgz#f12d5c9cdfdd90bfd3bfcfcdea59d0b404374f66"
+"@canner/antd-array-table_route@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-table_route/-/antd-array-table_route-0.4.0-beta.2.tgz#cf3288b5dadc1097ae8629c3650525a39f0b16af"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
 
-"@canner/antd-array-tabs@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tabs/-/antd-array-tabs-0.4.0-beta.1.tgz#0b4ef12039535395f79e18c82eb957c71cb014be"
+"@canner/antd-array-tabs@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tabs/-/antd-array-tabs-0.4.0-beta.2.tgz#ba33ad116aac085312156552c973a6007d000b4b"
   dependencies:
     "@canner/rc-tabs" "^9.2.7"
     react-sortablejs "^1.3.6"
     sortablejs "^1.7.0"
 
-"@canner/antd-array-tag@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tag/-/antd-array-tag-0.4.0-beta.1.tgz#b5dbdd7fe882f6925f9451c6f03b9354dbedfe19"
+"@canner/antd-array-tag@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tag/-/antd-array-tag-0.4.0-beta.2.tgz#d83679da004653d7553d3695d807a775216e3991"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
 
-"@canner/antd-boolean-card@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-boolean-card/-/antd-boolean-card-0.4.0-beta.1.tgz#4675e97ed7136067c033d2271d87a1378f845804"
+"@canner/antd-boolean-card@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-boolean-card/-/antd-boolean-card-0.4.0-beta.2.tgz#5b17874514060da0d0a86341edc0e35dae7b5eb4"
   dependencies:
-    "@canner/antd-share-card" "^0.4.0-beta.1"
+    "@canner/antd-share-card" "^0.4.0-beta.2"
 
-"@canner/antd-boolean-switch@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-boolean-switch/-/antd-boolean-switch-0.4.0-beta.1.tgz#6abb45374991502a4e77503e342bb227e67d3da2"
+"@canner/antd-boolean-switch@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-boolean-switch/-/antd-boolean-switch-0.4.0-beta.2.tgz#bdf95503abdbd3f756771018b7e684dfcaa37c89"
   dependencies:
     react-intl "^2.4.0"
 
-"@canner/antd-components@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-components/-/antd-components-0.4.0-beta.1.tgz#addf468e5a27f2625c6aa1874ea13b6bdfc2a212"
+"@canner/antd-components@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-components/-/antd-components-0.4.0-beta.2.tgz#e1912231046687840b9ccafbe86618f7c7a0393d"
   dependencies:
-    "@canner/antd-array-gallery" "^0.4.0-beta.1"
-    "@canner/antd-array-panel" "^0.4.0-beta.1"
-    "@canner/antd-array-slider" "^0.4.0-beta.1"
-    "@canner/antd-array-tab_bottom" "^0.4.0-beta.1"
-    "@canner/antd-array-tab_left" "^0.4.0-beta.1"
-    "@canner/antd-array-tab_right" "^0.4.0-beta.1"
-    "@canner/antd-array-tab_top" "^0.4.0-beta.1"
-    "@canner/antd-array-table" "^0.4.0-beta.1"
-    "@canner/antd-array-table_route" "^0.4.0-beta.1"
-    "@canner/antd-array-tabs" "^0.4.0-beta.1"
-    "@canner/antd-array-tag" "^0.4.0-beta.1"
-    "@canner/antd-boolean-card" "^0.4.0-beta.1"
-    "@canner/antd-boolean-switch" "^0.4.0-beta.1"
-    "@canner/antd-locales" "^0.4.0-beta.1"
-    "@canner/antd-number-input" "^0.4.0-beta.1"
-    "@canner/antd-number-rate" "^0.4.0-beta.1"
-    "@canner/antd-number-slider" "^0.4.0-beta.1"
-    "@canner/antd-object-editor" "^0.4.0-beta.1"
-    "@canner/antd-object-image" "^0.4.0-beta.1"
-    "@canner/antd-object-map" "^0.4.0-beta.1"
-    "@canner/antd-object-options" "^0.4.0-beta.1"
-    "@canner/antd-object-variants" "^0.4.0-beta.1"
-    "@canner/antd-relation-multiple_select" "^0.4.0-beta.1"
-    "@canner/antd-relation-single_select" "^0.4.0-beta.1"
-    "@canner/antd-share-card" "^0.4.0-beta.1"
-    "@canner/antd-share-relation" "^0.4.0-beta.1"
-    "@canner/antd-string-card" "^0.4.0-beta.1"
-    "@canner/antd-string-date_time_picker" "^0.4.0-beta.1"
-    "@canner/antd-string-input" "^0.4.0-beta.1"
-    "@canner/antd-string-link" "^0.4.0-beta.1"
-    "@canner/antd-string-radio" "^0.4.0-beta.1"
-    "@canner/antd-string-select" "^0.4.0-beta.1"
-    "@canner/antd-string-textarea" "^0.4.0-beta.1"
-    "@canner/antd-string-time_picker" "^0.4.0-beta.1"
+    "@canner/antd-array-gallery" "^0.4.0-beta.2"
+    "@canner/antd-array-panel" "^0.4.0-beta.2"
+    "@canner/antd-array-slider" "^0.4.0-beta.2"
+    "@canner/antd-array-tab_bottom" "^0.4.0-beta.2"
+    "@canner/antd-array-tab_left" "^0.4.0-beta.2"
+    "@canner/antd-array-tab_right" "^0.4.0-beta.2"
+    "@canner/antd-array-tab_top" "^0.4.0-beta.2"
+    "@canner/antd-array-table" "^0.4.0-beta.2"
+    "@canner/antd-array-table_route" "^0.4.0-beta.2"
+    "@canner/antd-array-tabs" "^0.4.0-beta.2"
+    "@canner/antd-array-tag" "^0.4.0-beta.2"
+    "@canner/antd-boolean-card" "^0.4.0-beta.2"
+    "@canner/antd-boolean-switch" "^0.4.0-beta.2"
+    "@canner/antd-locales" "^0.4.0-beta.2"
+    "@canner/antd-number-input" "^0.4.0-beta.2"
+    "@canner/antd-number-rate" "^0.4.0-beta.2"
+    "@canner/antd-number-slider" "^0.4.0-beta.2"
+    "@canner/antd-object-editor" "^0.4.0-beta.2"
+    "@canner/antd-object-image" "^0.4.0-beta.2"
+    "@canner/antd-object-map" "^0.4.0-beta.2"
+    "@canner/antd-object-options" "^0.4.0-beta.2"
+    "@canner/antd-object-variants" "^0.4.0-beta.2"
+    "@canner/antd-relation-multiple_select" "^0.4.0-beta.2"
+    "@canner/antd-relation-single_select" "^0.4.0-beta.2"
+    "@canner/antd-share-card" "^0.4.0-beta.2"
+    "@canner/antd-share-relation" "^0.4.0-beta.2"
+    "@canner/antd-string-card" "^0.4.0-beta.2"
+    "@canner/antd-string-date_time_picker" "^0.4.0-beta.2"
+    "@canner/antd-string-input" "^0.4.0-beta.2"
+    "@canner/antd-string-link" "^0.4.0-beta.2"
+    "@canner/antd-string-radio" "^0.4.0-beta.2"
+    "@canner/antd-string-select" "^0.4.0-beta.2"
+    "@canner/antd-string-textarea" "^0.4.0-beta.2"
+    "@canner/antd-string-time_picker" "^0.4.0-beta.2"
 
-"@canner/antd-locales@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-locales/-/antd-locales-0.4.0-beta.1.tgz#228bbe0e237af92ced36387fa3ff6e5ab87ed8ac"
+"@canner/antd-locales@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-locales/-/antd-locales-0.4.0-beta.2.tgz#07911c5baee2a62c5b6e1ebe08559c1bc6df7b5f"
   dependencies:
     dayjs "^1.7.4"
 
-"@canner/antd-number-input@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-number-input/-/antd-number-input-0.4.0-beta.1.tgz#44e4e56e03b294c02c0a95006de5aab86d477998"
+"@canner/antd-number-input@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-number-input/-/antd-number-input-0.4.0-beta.2.tgz#56357ece5870bdb9996203a9549014e13395be7e"
 
-"@canner/antd-number-rate@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-number-rate/-/antd-number-rate-0.4.0-beta.1.tgz#ed72ae4874c6bccae0dd9010459f407eb9558072"
+"@canner/antd-number-rate@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-number-rate/-/antd-number-rate-0.4.0-beta.2.tgz#05e94f95d8b45ae24c2ecfcc564ae441923c5745"
 
-"@canner/antd-number-slider@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-number-slider/-/antd-number-slider-0.4.0-beta.1.tgz#bb02895d2e42c823bc78fe08d91a0a5d3bc2142f"
+"@canner/antd-number-slider@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-number-slider/-/antd-number-slider-0.4.0-beta.2.tgz#246e43206569d288a764cf3d25e93f68f41fbc77"
 
-"@canner/antd-object-editor@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-editor/-/antd-object-editor-0.4.0-beta.1.tgz#f25adf6511abd5e9790149940102ee77618f44ce"
+"@canner/antd-object-editor@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-editor/-/antd-object-editor-0.4.0-beta.2.tgz#385caf0fc2afd35a705107ec44e50e11aae5b500"
   dependencies:
     react-quill "^1.3.1"
 
-"@canner/antd-object-image@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-image/-/antd-object-image-0.4.0-beta.1.tgz#b4597c896e1ba2e9ff81fb35161b24e5dfb424ba"
+"@canner/antd-object-image@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-image/-/antd-object-image-0.4.0-beta.2.tgz#328a5a449b41cc0bb88318a8e75f7b1956f80619"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
     "@canner/image-service-config" "^0.3.0"
     "@canner/image-upload" "^0.12.0"
     react-loading-image "^0.4.1"
 
-"@canner/antd-object-map@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-map/-/antd-object-map-0.4.0-beta.1.tgz#cd19ae7689e0262de906cc6972aa119a795649b7"
+"@canner/antd-object-map@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-map/-/antd-object-map-0.4.0-beta.2.tgz#7a23788a54245759160a0b0ff6df7055cf8d5a16"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
     antd-geosuggest "^0.3.2"
     react-google-maps "^9.4.5"
 
-"@canner/antd-object-options@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-options/-/antd-object-options-0.4.0-beta.1.tgz#6f45f7d3e546fff656b982944e5405cb471d09f1"
+"@canner/antd-object-options@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-options/-/antd-object-options-0.4.0-beta.2.tgz#1b9bb4c20f86c3e9f6450e6f5030bea0d2bb5660"
 
-"@canner/antd-object-variants@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-variants/-/antd-object-variants-0.4.0-beta.1.tgz#27cf65fc15803baa607852fcb1708fa8dd91a236"
+"@canner/antd-object-variants@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-variants/-/antd-object-variants-0.4.0-beta.2.tgz#f8593a3bb0771a371ae62f7c7fa8cbbee8d1a1d1"
   dependencies:
     styled-components "^3.2.6"
 
-"@canner/antd-relation-multiple_select@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-relation-multiple_select/-/antd-relation-multiple_select-0.4.0-beta.1.tgz#87dacd46d13370d5e995fe9457708a77f9d83006"
+"@canner/antd-relation-multiple_select@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-relation-multiple_select/-/antd-relation-multiple_select-0.4.0-beta.2.tgz#68ae05c46c70e4e8af137f85882c8dab8229cca5"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
-    "@canner/antd-share-relation" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
+    "@canner/antd-share-relation" "^0.4.0-beta.2"
     lodash.difference "*"
 
-"@canner/antd-relation-single_select@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select/-/antd-relation-single_select-0.4.0-beta.1.tgz#f8b857cab3879961dd98adb224600d992e956026"
+"@canner/antd-relation-single_select@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select/-/antd-relation-single_select-0.4.0-beta.2.tgz#097293cc58daa2ad608fad257bbe399001876ece"
   dependencies:
-    "@canner/antd-share-relation" "^0.4.0-beta.1"
+    "@canner/antd-share-relation" "^0.4.0-beta.2"
     lodash.template "^4.4.0"
     styled-components "^3.2.6"
 
-"@canner/antd-share-card@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-share-card/-/antd-share-card-0.4.0-beta.1.tgz#7031c81978d3510d26ed02b89e9358ed71a34467"
+"@canner/antd-share-card@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-share-card/-/antd-share-card-0.4.0-beta.2.tgz#6972ecc5cf06978896f93bf65f5975051152d6ff"
   dependencies:
     styled-components "3.2.1"
 
-"@canner/antd-share-relation@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-share-relation/-/antd-share-relation-0.4.0-beta.1.tgz#89fb511cd8184d6a9555db377a15bb576dbd923d"
+"@canner/antd-share-relation@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-share-relation/-/antd-share-relation-0.4.0-beta.2.tgz#61c7f0051a27bf5697def094a7bd1c889e89060a"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
 
-"@canner/antd-string-card@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-card/-/antd-string-card-0.4.0-beta.1.tgz#e42c44d7f0ef476a080a92e7fc21a0f7bfdaa2e5"
+"@canner/antd-string-card@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-card/-/antd-string-card-0.4.0-beta.2.tgz#bf61bf9eadeeb20495fd609990e79e2574a25f17"
   dependencies:
-    "@canner/antd-share-card" "^0.4.0-beta.1"
+    "@canner/antd-share-card" "^0.4.0-beta.2"
 
-"@canner/antd-string-date_time_picker@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-date_time_picker/-/antd-string-date_time_picker-0.4.0-beta.1.tgz#9d81d466ca08e21da0046de0313a060e2ffb865f"
+"@canner/antd-string-date_time_picker@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-date_time_picker/-/antd-string-date_time_picker-0.4.0-beta.2.tgz#940edca4d2e0d9f35707225ce30db95b103c54ef"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
     moment "^2.20.1"
     moment-timezone "^0.5.14"
     react-intl "^2.4.0"
 
-"@canner/antd-string-input@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-input/-/antd-string-input-0.4.0-beta.1.tgz#2993eb8ff057f7e6200bef4aa27c12444713c100"
+"@canner/antd-string-input@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-input/-/antd-string-input-0.4.0-beta.2.tgz#1c0667f9fa76b09d3d6d4f65d15db70a6ea48123"
 
-"@canner/antd-string-link@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-link/-/antd-string-link-0.4.0-beta.1.tgz#0fedb86df50aa7e637961c73c1fd8d832c0990c4"
+"@canner/antd-string-link@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-link/-/antd-string-link-0.4.0-beta.2.tgz#adb26b0787a0cbafe5f10b1ccd4fa4a1b93f30f5"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
-    "@canner/antd-string-input" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
+    "@canner/antd-string-input" "^0.4.0-beta.2"
     react-intl "^2.4.0"
 
-"@canner/antd-string-radio@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-radio/-/antd-string-radio-0.4.0-beta.1.tgz#ccdf74df4a901158d9c31df8f4f7daaead253c56"
+"@canner/antd-string-radio@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-radio/-/antd-string-radio-0.4.0-beta.2.tgz#a56ff9ac693b2636cfa1bcf75923db020dde0f30"
 
-"@canner/antd-string-select@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-select/-/antd-string-select-0.4.0-beta.1.tgz#c9724c2e88473814e985b6cbc779630588ba97ea"
+"@canner/antd-string-select@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-select/-/antd-string-select-0.4.0-beta.2.tgz#4fe4bc3dc28dda68388935307edd40bcf59ecea5"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
 
-"@canner/antd-string-textarea@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-textarea/-/antd-string-textarea-0.4.0-beta.1.tgz#7d02b8d965aba6444405f06310eafe5f3cd96a16"
+"@canner/antd-string-textarea@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-textarea/-/antd-string-textarea-0.4.0-beta.2.tgz#086ed3b0e3fd1b6d13e3cd3c0b04cbcbeecd6bc3"
 
-"@canner/antd-string-time_picker@^0.4.0-beta.1":
-  version "0.4.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-time_picker/-/antd-string-time_picker-0.4.0-beta.1.tgz#b9fddb2adab467a981d96f0a4d06f79aa8de75fe"
+"@canner/antd-string-time_picker@^0.4.0-beta.2":
+  version "0.4.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-time_picker/-/antd-string-time_picker-0.4.0-beta.2.tgz#6b204b9b6b9e59a54a16f0bb6545891a2fbcaa01"
   dependencies:
-    "@canner/antd-locales" "^0.4.0-beta.1"
+    "@canner/antd-locales" "^0.4.0-beta.2"
     moment-timezone "^0.5.14"
 
 "@canner/image-service-config@^0.3.0":
@@ -1699,7 +2007,7 @@ babel-core@^6.0.0, babel-core@^6.26.0:
     slash "^1.0.0"
     source-map "^0.5.7"
 
-babel-core@^7.0.0-0:
+babel-core@^7.0.0-bridge.0:
   version "7.0.0-bridge.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-7.0.0-bridge.0.tgz#95a492ddd90f9b4e9a4a1da14eb335b87b634ece"
 
@@ -1852,7 +2160,7 @@ babel-jest@^23.2.0, babel-jest@^23.4.2:
     babel-plugin-istanbul "^4.1.6"
     babel-preset-jest "^23.2.0"
 
-babel-loader@^8.0.0-beta:
+babel-loader@^8.0.0-beta.0:
   version "8.0.0-beta.4"
   resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.0.0-beta.4.tgz#c3fab00696c385c70c04dbe486391f0eb996f345"
   dependencies:
