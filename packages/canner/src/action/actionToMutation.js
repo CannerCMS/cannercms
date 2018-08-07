@@ -1,6 +1,6 @@
 // @flow
 import pluralize from 'pluralize';
-import {upperFirst, set, isEmpty, mapValues} from 'lodash';
+import {upperFirst, set, isEmpty} from 'lodash';
 
 import type {Action, ActionType} from './types';
 
