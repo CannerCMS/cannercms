@@ -29,7 +29,7 @@ const sidebarConfig = {
 const renderComponent = (props) => {
   return shallow(
     <Sidebar 
-      goTo={(pathname) => ({pathname})}
+      goTo={({pathname, params}) => ({pathname, params})}
       reset={jest.fn()}
       routes={['1', '2']}
       dataChanged={{}}
@@ -71,6 +71,6 @@ describe('<Sidebar>', () => {
     const wrapper = renderComponent({ goTo });
     const menuItem = { key: 'key', params: {}};
     wrapper.find(Menu).simulate('click', menuItem)
-    expect(goTo).toBeCalledWith(menuItem.key, {pathname: menuItem.key, params: menuItem.params});
+    expect(goTo).toBeCalledWith({pathname: menuItem.key, params: menuItem.params});
   });
 });
