@@ -1,6 +1,8 @@
 // @flow
 import type {Action, ActionType} from './types';
 import {Map, List, fromJS} from 'immutable';
+import isPlainObject from 'lodash/isPlainObject';
+import mapValues from 'lodash/mapValues';
 import merge from 'lodash/merge';
 import update from 'lodash/update';
 import set from 'lodash/set';
@@ -22,10 +24,12 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
         break;
       }
       case 'UPDATE_ARRAY':
-      case 'UPDATE_OBJECT':
+      case 'UPDATE_OBJECT': {
         merge(variables.payload, (value && value.toJS) ? value.toJS() : value);
         merge(variables.where, {id});
+        variables.payload = removeTypename(variables.payload);
         break;
+      }
       case 'CONNECT': {
         if (relation && relation.type === 'toMany') {
           update(variables.payload, path.split('/'), relationField => {
@@ -84,6 +88,17 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
     }
   });
   return variables;
+}
+
+export function removeTypename(payload: any): any {
+  if (isPlainObject(payload)) {
+    const newPayload = {...payload};
+    delete newPayload.__typename;
+    return mapValues(newPayload, value => removeTypename(value));
+  } else if (Array.isArray(payload)) {
+    return payload.map(item => removeTypename(item));
+  }
+  return payload;
 }
 
 export function addTypename(payload: any): any {
