@@ -9,7 +9,6 @@ export default class Sidebar extends React.Component<SidebarProps> {
   siderMenuOnClick = (menuItem: {key: string, params: MenuParams}) => {
     const {goTo, dataChanged, reset, routes} = this.props;
     const {key, params} = menuItem;
-
     if (dataChanged && Object.keys(dataChanged).length > 0 && key !== routes[0]) {
       confirm({
         title: 'Do you want to reset all changes?',
@@ -46,6 +45,7 @@ export default class Sidebar extends React.Component<SidebarProps> {
           mode="inline"
         >
           {
+            // $FlowIgnore
             menuConfig.length > 0 && menuConfig.map(item => {
               if (item.pathname) {
                 return renderMenuItem(item);

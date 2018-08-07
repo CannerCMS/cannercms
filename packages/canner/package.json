@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "1.4.5",
+  "version": "1.4.7",
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "scripts": {
@@ -55,5 +55,8 @@
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
     },
     "testURL": "http://localhost"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.78.0"
   }
 }

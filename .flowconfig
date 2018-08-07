@@ -3,13 +3,14 @@
 .*/node_modules/config-chain/test/broken.json
 .*/node_modules/npmconf/test/.*
 .*/node_modules/protobufjs/src/.*
-packages/.*/lib
-packages/.*/test
+.*/node_modules/conventional-changelog-core/.*
+.*/lib/.*
+.*/test/.*
 .*/docs/.*
-.*/node_modules/
+.*/node_modules/.*
 
 [include]
-packages/*/src
+packages/.*/src/
 
 [libs]
 flow-typed/
@@ -20,5 +21,7 @@ packages/.*/flow-typed/
 [options]
 module.system.node.resolve_dirname=node_modules
 module.system.node.resolve_dirname=packages/canner/node_modules
+suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
 
 [strict]

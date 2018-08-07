@@ -1,6 +1,6 @@
 // @flow
 import pluralize from 'pluralize';
-import {upperFirst, set, isEmpty, mapValues} from 'lodash';
+import {upperFirst, set, isEmpty} from 'lodash';
 
 import type {Action, ActionType} from './types';
 
@@ -36,12 +36,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         data: '$payload'
       }
       name = `update${upperFirst(key)}`;
-      if (action.payload.path) {
-        const firstField = action.payload.path.split('/')[0];
-        fields = {[firstField]: null};
-      } else {
-        fields = mapValues(action.payload.value, () => null);
-      }
+      fields = {__typename: null};
       break;
     case 'UPDATE_ARRAY':
       args = {

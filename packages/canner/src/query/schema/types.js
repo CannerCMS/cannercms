@@ -5,6 +5,7 @@ export const types = {
   OBJECT: 'OBJECT',
   STRING: 'STRING',
   BOOLEAN: 'BOOLEAN',
+  NUMBER: 'NUMBER',
   INT: 'INT',
   ID: 'ID',
   IMAGE: 'IMAGE',

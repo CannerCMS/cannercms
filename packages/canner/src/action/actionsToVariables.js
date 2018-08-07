@@ -24,10 +24,12 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
         break;
       }
       case 'UPDATE_ARRAY':
-      case 'UPDATE_OBJECT':
+      case 'UPDATE_OBJECT': {
         merge(variables.payload, value);
         merge(variables.where, {id});
+        variables.payload = removeTypename(variables.payload);
         break;
+      }
       case 'CONNECT': {
         if (relation && relation.type === 'toMany') {
           update(variables.payload, path.split('/'), relationField => {
@@ -91,6 +93,17 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
 /**
  * add typename: null in every object
  */
+export function removeTypename(payload: any): any {
+  if (isPlainObject(payload)) {
+    const newPayload = {...payload};
+    delete newPayload.__typename;
+    return mapValues(newPayload, value => removeTypename(value));
+  } else if (Array.isArray(payload)) {
+    return payload.map(item => removeTypename(item));
+  }
+  return payload;
+}
+
 export function addTypename(payload: any): any {
   if (isArray(payload)) {
     return payload.map(item => addTypename(item));

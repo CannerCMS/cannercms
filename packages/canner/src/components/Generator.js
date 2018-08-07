@@ -37,7 +37,7 @@ function isFieldset(node) {
   return node.packageName === '@canner/antd-object-fieldset';
 }
 
-function Loading(props) {
+function Loading(props: any) {
   if (props.error) {
     return <div>Error! <button onClick={ props.retry }>Retry</button></div>;
   } else {

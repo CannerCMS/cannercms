@@ -7,21 +7,21 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 
 // type
-import type {CannerWrapperProps, menuConfig} from './types';
+import type {CannerWrapperProps, MenuConfig} from './types';
 
 type State = {
   dataChanged: Object
 };
 
 class CannerWrapper extends React.Component<CannerWrapperProps, State> {
-  cannerRef: React.Ref;
-  menuConfig: menuConfig;
+  cannerRef: React.ElementRef<any>;
+  menuConfig: MenuConfig | boolean;
 
-  constructor(props: Props) {
+  constructor(props: CannerWrapperProps) {
     super(props);
     const {sidebarConfig, schema} = props;
 
-    if (sidebarConfig.menuConfig == true) {
+    if (sidebarConfig.menuConfig === true) {
       this.menuConfig = transformSchemaToMenuConfig(schema.schema);
     } else {
       this.menuConfig = sidebarConfig.menuConfig;
@@ -90,7 +90,7 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
   }
 }
 
-function transformSchemaToMenuConfig(schema) {
+function transformSchemaToMenuConfig(schema): MenuConfig {
   return Object.keys(schema).map(key => ({
     title: schema[key].title,
     pathname: `/${schema[key].keyName}`
