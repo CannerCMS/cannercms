@@ -3,13 +3,13 @@
 .*/node_modules/config-chain/test/broken.json
 .*/node_modules/npmconf/test/.*
 .*/node_modules/protobufjs/src/.*
-packages/.*/lib
-packages/.*/test
+.*/node_modules/conventional-changelog-core/.*
+.*/lib/.*
+.*/test/.*
 .*/docs/.*
-.*/node_modules/
 
 [include]
-packages/*/src
+packages/.*/src/
 
 [libs]
 flow-typed/
