@@ -35,12 +35,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         data: '$payload'
       }
       name = `update${upperFirst(key)}`;
-      if (action.payload.path) {
-        const firstField = action.payload.path.split('/')[0];
-        fields = {[firstField]: null};
-      } else {
-        fields = action.payload.value.toJS();
-      }
+      fields = {__typename: null};
       break;
     case 'UPDATE_ARRAY':
       args = {
