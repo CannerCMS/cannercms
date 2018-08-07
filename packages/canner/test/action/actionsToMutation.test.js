@@ -105,7 +105,7 @@ describe('actions to variables', () => {
         data: '$payload'
       },
       fields: {
-        title: "123"
+        __typename: null
       }
     });
   });
