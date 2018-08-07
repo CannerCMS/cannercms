@@ -10,7 +10,7 @@ type HistoryType = {
   push: string => void
 }
 
-export default class RouterHistory {
+export default class HistoryRouter {
   constructor({baseUrl = '/', history}: {baseUrl: string, history: HistoryType}) {
     this.baseUrl = baseUrl;
     this.history = history;

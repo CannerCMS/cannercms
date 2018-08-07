@@ -1,4 +1,4 @@
-import RouterHistory from  '../src/index';
+import HistoryRouter from  '../src/index';
 
 const baseUrl = '/tests';
 
@@ -10,15 +10,15 @@ const history = {
     push: () => {}
 };
 
-describe('RouterHistory', () => {
+describe('HistoryRouter', () => {
   it('should getRoutes return expected results', () => {
-    const router = new RouterHistory({baseUrl, history});
+    const router = new HistoryRouter({baseUrl, history});
     expect(router.getRoutes()).toEqual(['posts', 'postId1']);
   });
   
 
   it('should getParams return expected results', () => {
-    const router = new RouterHistory({baseUrl, history});
+    const router = new HistoryRouter({baseUrl, history});
     expect(router.getParams()).toEqual({op: 'create', payload: {title: 'Default title'}});
   });
 
@@ -30,13 +30,13 @@ describe('RouterHistory', () => {
       },
       push: () => {}
     }
-    const router = new RouterHistory({baseUrl, history: historyWithEmptySearch});
+    const router = new HistoryRouter({baseUrl, history: historyWithEmptySearch});
     expect(router.getParams()).toEqual({});
   });
 
   it('should call history.push', () => {
     history.push = jest.fn()
-    const router = new RouterHistory({baseUrl, history});
+    const router = new HistoryRouter({baseUrl, history});
     router.goTo({
       pathname: '/path',
       params: {op: 'create', payload: {title: 'Default title'}}
@@ -46,7 +46,7 @@ describe('RouterHistory', () => {
 
   it('should call history.push with no query string', () => {
     history.push = jest.fn()
-    const router = new RouterHistory({baseUrl, history});
+    const router = new HistoryRouter({baseUrl, history});
     router.goTo({
       pathname: '/path'
     })
