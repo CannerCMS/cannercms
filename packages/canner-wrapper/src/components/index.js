@@ -48,6 +48,7 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
       router: {
         goTo,
         getRoutes,
+        getParams,
       }
     } = this.props;
 
@@ -56,6 +57,7 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
     } = this.state;
 
     const routes = getRoutes();
+    const params = getParams();
 
     return (
       <Layout>
@@ -80,7 +82,8 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
                 dataDidChange: this.dataDidChange,
                 schema,
                 goTo,
-                routes
+                routes,
+                params
               })
             }
           </Layout.Content>
