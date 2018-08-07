@@ -7,6 +7,7 @@
 .*/lib/.*
 .*/test/.*
 .*/docs/.*
+.*/node_modules/.*
 
 [include]
 packages/.*/src/
@@ -20,5 +21,7 @@ packages/.*/flow-typed/
 [options]
 module.system.node.resolve_dirname=node_modules
 module.system.node.resolve_dirname=packages/canner/node_modules
+suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
 
 [strict]

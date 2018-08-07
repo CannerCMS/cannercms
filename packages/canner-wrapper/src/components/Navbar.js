@@ -23,7 +23,7 @@ const HeaderMenu = styled.div`
 
 
 type State = {
-  dataChanged: Object
+  deploying: boolean
 };
 
 export default class Navbar extends React.Component<NavbarProps, State> {
