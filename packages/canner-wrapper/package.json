@@ -30,5 +30,8 @@
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
     },
     "testURL": "http://localhost"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.78.0"
   }
 }

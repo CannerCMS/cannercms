@@ -1,13 +1,12 @@
 // @flow
 import * as React from 'react';
-
+type ApolloClient = any;
 export type CannerSchema = {
   [string]: any
 };
 
 export type LoadedSchema = {
   schema: CannerSchema,
-  sidebar: Sidebar,
   visitors: Array<Object>,
   client: ApolloClient,
   connectors: {[string]: any},
@@ -19,8 +18,8 @@ export type LoadedSchema = {
 
 export type MenuParams = {
   operation?: 'create' | 'update',
-  defaultPayload?: JSONString,
-  filter?: JSONString
+  defaultPayload?: string,
+  filter?: string
 };
 
 export type MenuItemConfig = {
@@ -34,8 +33,10 @@ export type SubmenuConfig = {
   items: Array<MenuItemConfig>
 };
 
+export type MenuConfig = Array<SubmenuConfig | MenuItemConfig>
+
 export type SidebarConfig = {
-  menuConfig: Array<SubmenuConfig | MenuItemConfig> | boolean
+  menuConfig: MenuConfig | boolean
 };
 
 export type NavbarConfig = {
@@ -48,21 +49,19 @@ export type CannerWrapperProps = {
   schema: LoadedSchema,
   goTo: string => void,
   routes: Array<string>,
-  navbarConfig: navbarConfig,
-  SidebarConfig: SidebarConfig,
-  children: React.Node
+  navbarConfig: NavbarConfig,
+  sidebarConfig: SidebarConfig,
+  children: React.Element<*>
 };
 
-export type NavbarProps = {
+export type NavbarProps = NavbarConfig & {
   dataChanged: Object,
   deploy: Function,
-  ...NavbarConfig
 };
 
-export type SidebarProps = {
+export type SidebarProps = SidebarConfig & {
   goTo: Function,
   dataChanged: Object,
   reset: Function,
   routes: Array<string>,
-  ...SidebarConfig
 };
