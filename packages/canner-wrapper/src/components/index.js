@@ -45,13 +45,17 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
       sidebarConfig,
       navbarConfig,
       children,
-      goTo,
-      routes
+      router: {
+        goTo,
+        getRoutes,
+      }
     } = this.props;
 
     const {
       dataChanged
     } = this.state;
+
+    const routes = getRoutes();
 
     return (
       <Layout>

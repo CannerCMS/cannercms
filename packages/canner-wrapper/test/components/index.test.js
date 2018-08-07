@@ -53,14 +53,19 @@ const transformedSchemaMenuConfig = [{
   pathname: '/authors'
 }];
 
+const router = {
+  getRoutes: jest.fn().mockReturnValue(() => ['1', '2']),
+  getParams: jest.fn(),
+  goTo: jest.fn()
+}
+
 const renderComponent = (props) => {
   return shallow(
     <CannerWrapper
       sidebarConfig={sidebarConfig}
       navbarConfig={navbarConfig}
       schema={schema}
-      goTo={(pathname) => ({pathname})}
-      routes={['1', '2']}
+      router={router}
       {...props}
     >
       <TestChildren />
@@ -74,8 +79,7 @@ const renderMountComponent = (props) => {
       sidebarConfig={sidebarConfig}
       navbarConfig={navbarConfig}
       schema={schema}
-      goTo={(pathname) => ({pathname})}
-      routes={['1', '2']}
+      router={router}
       {...props}
     >
       <TestChildren />
