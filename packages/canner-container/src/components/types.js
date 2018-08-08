@@ -45,13 +45,31 @@ export type NavbarConfig = {
   showSaveButton: boolean
 }
 
-export type CannerWrapperProps = {
+export type Router = {
+  getRoutes: () => Array<string>,
+  getOperator: () => 'create' | 'update',
+  getPayload: () => Object,
+  getWhere: () => Object,
+  getSort: () => Object, 
+  getPagination: () => Object,
+  goTo: ({
+    pathname: string,
+    operator?: 'create' | 'update',
+    payload?: Object,
+    where?: Object,
+    sort?: Object,
+    pagination?: Object
+  }) => void
+};
+
+export type CannerContainerProps = {
   schema: LoadedSchema,
   goTo: string => void,
   routes: Array<string>,
   navbarConfig: NavbarConfig,
   sidebarConfig: SidebarConfig,
-  children: React.Element<*>
+  children: React.Element<any>,
+  router: Router
 };
 
 export type NavbarProps = NavbarConfig & {

@@ -7,17 +7,17 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 
 // type
-import type {CannerWrapperProps, MenuConfig} from './types';
+import type {CannerContainerProps, MenuConfig} from './types';
 
 type State = {
   dataChanged: Object
 };
 
-class CannerWrapper extends React.Component<CannerWrapperProps, State> {
+class CannerContainer extends React.Component<CannerContainerProps, State> {
   cannerRef: React.ElementRef<any>;
   menuConfig: MenuConfig | boolean;
 
-  constructor(props: CannerWrapperProps) {
+  constructor(props: CannerContainerProps) {
     super(props);
     const {sidebarConfig, schema} = props;
 
@@ -45,13 +45,21 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
       sidebarConfig,
       navbarConfig,
       children,
-      goTo,
-      routes
+      router
     } = this.props;
 
     const {
       dataChanged
     } = this.state;
+
+    const routes = router.getRoutes();
+    const routerParams = {
+      operator: router.getOperator(),
+      payload: router.getPayload(),
+      where: router.getWhere(),
+      sort: router.getSort(),
+      pagination: router.getPagination()
+    };
 
     return (
       <Layout>
@@ -63,7 +71,7 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
         <Layout>
           <Sidebar
             dataChanged={dataChanged}
-            goTo={goTo}
+            goTo={router.goTo}
             reset={this.cannerRef.reset}
             routes={routes}
             {...sidebarConfig}
@@ -75,8 +83,9 @@ class CannerWrapper extends React.Component<CannerWrapperProps, State> {
                 ref: this.cannerRef,
                 dataDidChange: this.dataDidChange,
                 schema,
-                goTo,
-                routes
+                goTo: router.goTo,
+                routes,
+                routerParams
               })
             }
           </Layout.Content>
@@ -93,4 +102,4 @@ function transformSchemaToMenuConfig(schema): MenuConfig {
   }));
 }
 
-export default CannerWrapper;
+export default CannerContainer;

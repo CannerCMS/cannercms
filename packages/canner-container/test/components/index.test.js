@@ -3,7 +3,7 @@ import * as React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow, mount } from 'enzyme';
 
-import CannerWrapper from  '../../src/components/index';
+import CannerContainer from  '../../src/components/index';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -53,38 +53,46 @@ const transformedSchemaMenuConfig = [{
   pathname: '/authors'
 }];
 
+const router = {
+  getRoutes: jest.fn().mockReturnValue(() => ['1', '2']),
+  getPayload: jest.fn(),
+  getOperator: jest.fn(),
+  getWhere: jest.fn(),
+  getSort: jest.fn(),
+  getPagination: jest.fn(),
+  goTo: jest.fn()
+}
+
 const renderComponent = (props) => {
   return shallow(
-    <CannerWrapper
+    <CannerContainer
       sidebarConfig={sidebarConfig}
       navbarConfig={navbarConfig}
       schema={schema}
-      goTo={(pathname) => ({pathname})}
-      routes={['1', '2']}
+      router={router}
       {...props}
     >
       <TestChildren />
-    </CannerWrapper>
+    </CannerContainer>
   )
 };
 
 const renderMountComponent = (props) => {
   return mount(
-    <CannerWrapper
+    <CannerContainer
       sidebarConfig={sidebarConfig}
       navbarConfig={navbarConfig}
       schema={schema}
-      goTo={(pathname) => ({pathname})}
-      routes={['1', '2']}
+      router={router}
       {...props}
     >
       <TestChildren />
-    </CannerWrapper>
+    </CannerContainer>
   )
 };
 
 
-describe('<CannerWrapper>', () => {
+describe('<CannerContainer>', () => {
   it('should render children', () => {
     const wrapper = renderComponent();
     expect(wrapper.find(TestChildren).length).toBe(1);
