@@ -3,6 +3,7 @@
     "test": "lerna exec -- jest --coverage",
     "test:watch": "lerna exec -- jest --watch --coverage",
     "lint": "eslint ./packages/*/src/**/*.js",
+    "link": "lerna link",
     "bootstrap": "lerna exec --parallel -- npm i",
     "clean": "lerna exec --parallel -- rimraf lib dist",
     "build:flow": "lerna exec --parallel -- flow-copy-source -v -i '**/test/**' src lib",
