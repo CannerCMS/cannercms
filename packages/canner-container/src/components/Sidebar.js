@@ -20,14 +20,14 @@ export default class Sidebar extends React.Component<SidebarProps> {
             setTimeout(resolve, 1000);
           }).then(reset)
             .then(() => {
-              goTo({pathname: key, params});
+              goTo({pathname: key, ...params});
             });
         },
         onCancel: () => {
         },
       });
     } else {
-      goTo({pathname: key, params});
+      goTo({pathname: key, ...params});
     }
   }
 
