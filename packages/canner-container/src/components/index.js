@@ -45,19 +45,21 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
       sidebarConfig,
       navbarConfig,
       children,
-      router: {
-        goTo,
-        getRoutes,
-        getParams,
-      }
+      router
     } = this.props;
 
     const {
       dataChanged
     } = this.state;
 
-    const routes = getRoutes();
-    const params = getParams();
+    const routes = router.getRoutes();
+    const routerParams = {
+      operator: router.getOperator(),
+      payload: router.getPayload(),
+      where: router.getWhere(),
+      sort: router.getSort(),
+      pagination: router.getPagination()
+    };
 
     return (
       <Layout>
@@ -69,7 +71,7 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
         <Layout>
           <Sidebar
             dataChanged={dataChanged}
-            goTo={goTo}
+            goTo={router.goTo}
             reset={this.cannerRef.reset}
             routes={routes}
             {...sidebarConfig}
@@ -81,9 +83,9 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
                 ref: this.cannerRef,
                 dataDidChange: this.dataDidChange,
                 schema,
-                goTo,
+                goTo: router.goTo,
                 routes,
-                params
+                routerParams
               })
             }
           </Layout.Content>
