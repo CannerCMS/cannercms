@@ -55,7 +55,11 @@ const transformedSchemaMenuConfig = [{
 
 const router = {
   getRoutes: jest.fn().mockReturnValue(() => ['1', '2']),
-  getParams: jest.fn(),
+  getPayload: jest.fn(),
+  getOperator: jest.fn(),
+  getWhere: jest.fn(),
+  getSort: jest.fn(),
+  getPagination: jest.fn(),
   goTo: jest.fn()
 }
 
