@@ -51,7 +51,7 @@ export type Router = {
   goTo: ({pathname: string, params: Object}) => void
 };
 
-export type CannerWrapperProps = {
+export type CannerContainerProps = {
   schema: LoadedSchema,
   goTo: string => void,
   routes: Array<string>,

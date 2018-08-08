@@ -3,7 +3,7 @@ import * as React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow, mount } from 'enzyme';
 
-import CannerWrapper from  '../../src/components/index';
+import CannerContainer from  '../../src/components/index';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -61,7 +61,7 @@ const router = {
 
 const renderComponent = (props) => {
   return shallow(
-    <CannerWrapper
+    <CannerContainer
       sidebarConfig={sidebarConfig}
       navbarConfig={navbarConfig}
       schema={schema}
@@ -69,13 +69,13 @@ const renderComponent = (props) => {
       {...props}
     >
       <TestChildren />
-    </CannerWrapper>
+    </CannerContainer>
   )
 };
 
 const renderMountComponent = (props) => {
   return mount(
-    <CannerWrapper
+    <CannerContainer
       sidebarConfig={sidebarConfig}
       navbarConfig={navbarConfig}
       schema={schema}
@@ -83,12 +83,12 @@ const renderMountComponent = (props) => {
       {...props}
     >
       <TestChildren />
-    </CannerWrapper>
+    </CannerContainer>
   )
 };
 
 
-describe('<CannerWrapper>', () => {
+describe('<CannerContainer>', () => {
   it('should render children', () => {
     const wrapper = renderComponent();
     expect(wrapper.find(TestChildren).length).toBe(1);

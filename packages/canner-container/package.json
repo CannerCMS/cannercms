@@ -1,7 +1,7 @@
 {
-  "name": "canner-wrapper",
+  "name": "@canner/container",
   "version": "0.0.1",
-  "description": "The wrapper renders sidebar, navbar and pass some properties to canner",
+  "description": "The container renders sidebar, navbar and pass some properties to canner",
   "main": "src/index.js",
   "scripts": {
     "test": "../../node_modules/.bin/jest --coverage",
@@ -9,7 +9,7 @@
   },
   "keywords": [
     "canner",
-    "wrapper"
+    "container"
   ],
   "author": "Canner",
   "license": "Apache-2.0",

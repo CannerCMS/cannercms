@@ -7,17 +7,17 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 
 // type
-import type {CannerWrapperProps, MenuConfig} from './types';
+import type {CannerContainerProps, MenuConfig} from './types';
 
 type State = {
   dataChanged: Object
 };
 
-class CannerWrapper extends React.Component<CannerWrapperProps, State> {
+class CannerContainer extends React.Component<CannerContainerProps, State> {
   cannerRef: React.ElementRef<any>;
   menuConfig: MenuConfig | boolean;
 
-  constructor(props: CannerWrapperProps) {
+  constructor(props: CannerContainerProps) {
     super(props);
     const {sidebarConfig, schema} = props;
 
@@ -100,4 +100,4 @@ function transformSchemaToMenuConfig(schema): MenuConfig {
   }));
 }
 
-export default CannerWrapper;
+export default CannerContainer;
