@@ -2,7 +2,7 @@
   "name": "@canner/history-router",
   "version": "0.0.1",
   "description": "Pass a history object to let canner get the routes, params and gotTo",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "../../node_modules/.bin/jest --coverage",
     "test:watch": "../../node_modules/.bin/jest --watch --coverage"
