@@ -8,7 +8,7 @@ type HistoryType = {
     search: string
   },
   push: string => void
-}
+};
 
 type GoToParamsType = {
   pathname: string,
