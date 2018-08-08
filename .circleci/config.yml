@@ -28,11 +28,11 @@ jobs:
 
       - run: yarn install
       
+      - run: yarn build
+      
       - run: yarn run link
       
       - run: yarn bootstrap
-      
-      - run: yarn build
       
       - save_cache:
           paths:
