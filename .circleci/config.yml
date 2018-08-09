@@ -28,6 +28,8 @@ jobs:
 
       - run: yarn install
       
+      - run: yarn build
+      
       - run: yarn bootstrap
       
       - save_cache:
