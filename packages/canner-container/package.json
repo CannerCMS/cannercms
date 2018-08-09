@@ -1,6 +1,6 @@
 {
   "name": "@canner/container",
-  "version": "0.0.1",
+  "version": "1.4.7-canary.0",
   "description": "The container renders sidebar, navbar and pass some properties to canner",
   "main": "lib/index.js",
   "scripts": {
