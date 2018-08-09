@@ -3,7 +3,7 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import {createEmptyData} from 'canner-helpers';
-import {get} from 'lodash';
+import {get, update} from 'lodash';
 import {Spin, Icon} from 'antd';
 
 import type {HOCProps, Args} from './types';
@@ -55,8 +55,8 @@ export default function connectId(Com: React.ComponentType<*>) {
       if (params.op === 'create' && !this.props.params.op && pattern ==='array') {
         // posts => posts?op=create
         let value = createEmptyData(items);
-        value = value.update('id', id => id || randomId());
-        value = value.update('__typename', typename => typename || null);
+        update(value, 'id', id => id || randomId());
+        update(value, '__typename', typename => typename || null);
         this.setState({
           canRender: false
         });
@@ -93,8 +93,8 @@ export default function connectId(Com: React.ComponentType<*>) {
       if (params.op === 'create' && pattern === 'array') {
         // posts?op=create
         let value = createEmptyData(items);
-        value = value.update('id', id => id || randomId());
-        value = value.update('__typename', typename => typename || null);
+        update(value, 'id', id => id || randomId());
+        update(value, '__typename', typename => typename || null);
         this.createArray(keyName, value);
       } else if (pattern === 'array' && routes.length > 1) {
         // posts/<postId>/title
