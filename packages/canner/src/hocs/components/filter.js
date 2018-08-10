@@ -96,7 +96,7 @@ class FilterGroup extends React.Component<Props, State> {
         */
         case 'text':
         default:
-          return <TextFilter onChange={this.onChange} name={val.key} label={val.label}/>;
+          return <TextFilter onChange={this.onChange} name={val.key} label={val.label} where={where}/>;
       }
     });
     return (

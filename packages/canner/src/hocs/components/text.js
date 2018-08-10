@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Input} from 'antd';
+import get from 'lodash/get';
 import {FilterPlugin, Label} from './share';
 
 export default class TextFilter extends Component {
@@ -18,14 +19,14 @@ export default class TextFilter extends Component {
     } else {
       onChange({
         [name]: {
-          eq: value
+          contains: value
         }
       });
     }
   }
 
   render() {
-    const {label} = this.props;
+    const {label, where, name} = this.props;
     return (
       <FilterPlugin>
         <Label>{label}</Label>
@@ -33,6 +34,7 @@ export default class TextFilter extends Component {
           style={{width: '40%'}}
           placeholder={label}
           onChange={this.onInput}
+          defaultValue={get(where, [name, 'contains'], '')}
         />
       </FilterPlugin>
     );

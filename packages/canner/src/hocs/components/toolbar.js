@@ -195,11 +195,11 @@ export function parseWhere(where: Object) {
     const type = typeof v;
     const [field, op] = key.split('_');
     if (type === 'string') {
-      result[field] = {eq: v};
+      result[field] = {[op || 'eq']: v};
     }
 
     if (type === 'boolean') {
-      result[field] = {eq: v};
+      result[field] = {[op || 'eq']: v};
     }
 
     if (type === 'number') {
@@ -235,7 +235,7 @@ function isEnd(v: Object) {
   const keys = Object.keys(v);
   const value = v[keys[0]];
   return keys.length === 1 &&
-    ['lt', 'lte', 'gt', 'gte', 'eq'].indexOf(keys[0]) !== -1 &&
+    ['lt', 'lte', 'gt', 'gte', 'eq', 'contains'].indexOf(keys[0]) !== -1 &&
     (typeof value === 'string' ||
     typeof value === 'boolean' ||
     typeof value === 'number');
