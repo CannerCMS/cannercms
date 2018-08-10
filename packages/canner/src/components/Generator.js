@@ -175,6 +175,7 @@ export default class Generator extends React.PureComponent<Props, State> {
 
     if (component) {
       return <node.component
+        hideButtons={hideButtons}
         {...restNodeData}
         routes={routes}
         key={index}
@@ -184,7 +185,6 @@ export default class Generator extends React.PureComponent<Props, State> {
         params={params}
         onDeploy={onDeploy}
         removeOnDeploy={removeOnDeploy}
-        hideButtons={hideButtons}
         schema={schema}
         goTo={(path, search) => {
           if (!search) {
