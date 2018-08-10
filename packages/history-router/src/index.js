@@ -20,6 +20,9 @@ type GoToParamsType = {
 };
 
 export default class HistoryRouter {
+  baseUrl: string;
+  history: HistoryType;
+
   constructor({baseUrl = '/', history}: {baseUrl: string, history: HistoryType}) {
     this.baseUrl = baseUrl;
     this.history = history;
