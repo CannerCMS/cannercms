@@ -12,38 +12,54 @@ const ButtonWrapper = styled.div`
   text-align: right;
 `
 type State = {
-  deploying: boolean
+  loading: boolean,
+  loadingTip: string
 }
 
 export default function withRoute(Com: React.ComponentType<*>) {
   return class ComWithRoute extends React.Component<HOCProps, State> {
     state = {
-      deploying: false
+      loading: false,
+      loadingTip: 'loading...'
     };
   
     deploy = () => {
-      const {refId, deploy, goTo, routes} = this.props;
+      const {refId, deploy} = this.props;
       this.setState({
-        deploying: true
-      })
+        loading: true,
+        loadingTip: 'deploying...',
+      });
       deploy(refId.getPathArr()[0])
-        .then(() => {
-          this.setState({
-            deploying: false
-          });
-          goTo(routes[0]);
-        })
-        .catch(() => {
-          this.setState({
-            deploying: false
-          });
-        });
+        .then(this.success)
+        .catch(this.fail);
     }
 
     reset = () => {
-      const {refId, reset, goTo, routes} = this.props;
+      const {refId, reset} = this.props;
+      this.setState({
+        loading: true,
+        loadingTip: 'reseting...',
+      });
       reset(refId.getPathArr()[0])
-        .then(() => goTo(routes[0]));
+        .then(this.success)
+        .catch(this.fail);
+    }
+
+    success = () => {
+      const {goTo, routes} = this.props;
+      setTimeout(() => {
+        this.setState({
+          loading: false
+        }, () => {
+          goTo(routes[0]);
+        });
+      }, 400);
+    }
+
+    fail = () => {
+      this.setState({
+        loading: false
+      });
     }
 
     discard = () => {
@@ -57,7 +73,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     render() {
-      const {deploying} = this.state;
+      const {loading, loadingTip} = this.state;
       let {routes, pattern,  path, params, refId, renderChildren, hideButtons, uiParams} = this.props;
       const renderType = getRenderType({
         pattern,
@@ -72,13 +88,13 @@ export default function withRoute(Com: React.ComponentType<*>) {
       if (op === 'create') {
         renderKeys = uiParams && uiParams.createKeys;
       }
-      return <Spin tip="deploying" spinning={deploying}>
+      return <Spin tip={loadingTip} spinning={loading}>
         {
           // quick fix for route array's children
           // need to find a stable way to control route
           (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
             <Button onClick={this.discard} style={{marginBottom: 16}}>
-              <Icon type="arrow-left" /> Back
+              <Icon type="arrow-left" /> success
             </Button>
         }
         {
