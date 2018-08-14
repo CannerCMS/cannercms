@@ -21,7 +21,7 @@ export default class PaginationPlugin extends Component<Props> {
   render() {
     const {nextPage, prevPage, hasNextPage, hasPreviousPage} = this.props;
     return <Fragment>
-      <Wrapper>
+      <Wrapper marginTop={32}>
         <ButtonGroup>
           <Button disabled={!hasPreviousPage} onClick={prevPage}>
             <Icon type="left" />
