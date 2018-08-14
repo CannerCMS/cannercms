@@ -94,7 +94,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
           // need to find a stable way to control route
           (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
             <Button onClick={this.discard} style={{marginBottom: 16}}>
-              <Icon type="arrow-left" /> success
+              <Icon type="arrow-left" /> Back
             </Button>
         }
         {
