@@ -15,7 +15,8 @@ export type LoadedSchema = {
   connector: any,
   resolvers: {[string]: any},
   graphqlClient: any,
-  storages: {[key: string]: any}
+  storages: {[key: string]: any},
+  dict: Object
 };
 export type ComponentNode = any;
 
@@ -41,7 +42,7 @@ export type History ={
 export type Intl = {
   locale: string,
   defaultLocale: string,
-  message: Object
+  messages: Object
 };
 
 export type HideButtons = boolean;

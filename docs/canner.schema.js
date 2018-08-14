@@ -10,9 +10,10 @@ import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
 import Home from './schema/realWorld/home.schema';
 import OnDeploy from './schema/onDeploy.schema';
+import SelfRelation from './schema/selfRelation.schema';
 import TabsFilter from './toolbar/filter';
 import utils from './utils';
-const {connector, storage, graphClient, renderImages, renderPosts} = utils;
+const {connector, storage, renderImages, renderPosts} = utils;
 // const connector = undefined;
 // const storage = undefined;
 const userColumns = [{
@@ -91,4 +92,5 @@ export default <root connector={connector}>
     />
     <array keyName="gallery" packageName="./components/def-array-gallery"/>
   </array>
+  <SelfRelation />
 </root>

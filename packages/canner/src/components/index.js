@@ -43,7 +43,9 @@ class CannerCMS extends React.Component<Props, State> {
     intl: {
       locale: 'en',
       defaultLocale: 'en',
-      messages: {}
+      messages: {
+        'en': {}
+      }
     },
     params: {},
     routes: []
@@ -103,20 +105,21 @@ class CannerCMS extends React.Component<Props, State> {
       afterDeploy,
       intl = {},
       hideButtons,
-      schema: {storages, sidebar}
+      schema: {storages, sidebar, dict = {}}
     } = this.props;
     const {
       dataChanged
     } = this.state;
-
+    const currentLocale = intl.locale || 'en';
     return (
       <IntlProvider
-        locale={intl.locale || 'en'}
-        defaultLocale={intl.defaultLocale || intl.locale || 'en'}
+        locale={currentLocale}
+        defaultLocale={intl.defaultLocale || currentLocale}
         messages={{
-          ...pluginsLocales[intl.locale || 'en'],
-          ...hocsLocales[intl.locale || 'en'],
-          ...(intl.messages || {})
+          ...(pluginsLocales[currentLocale] || {}),
+          ...(hocsLocales[currentLocale] || {}),
+          ...(dict[currentLocale] || {}),
+          ...((intl.messages || {})[currentLocale] || {})
         }}
       >
         <Layout>

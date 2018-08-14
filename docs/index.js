@@ -1,11 +1,10 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Canner from 'packages/canner/src';
 import Wrapper from 'packages/canner-wrapper/src';
 import {ReactRouterProvider} from 'packages/canner/src';
 import schema from './canner.schema';
-import {Layout, Menu} from 'antd';
 // eslint-disable-next-line
 console.log(schema);
 
