@@ -35,6 +35,7 @@ class CMSExample extends React.Component {
               history={history}
               baseUrl={baseUrl}
             >
+<<<<<<< HEAD
               <Wrapper
                 schema={schema}
                 sidebarConfig={{
@@ -50,6 +51,13 @@ class CMSExample extends React.Component {
                   dataDidChange={this.dataDidChange}
                 />
               </Wrapper>
+=======
+              <Canner
+                schema={{...schema, sidebar: []}}
+                afterDeploy={this.afterDeploy}
+                dataDidChange={this.dataDidChange}
+              />
+>>>>>>> bug/self-relation
             </ReactRouterProvider>
           );
         }}/>

@@ -4,7 +4,7 @@ import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import RefId from 'canner-ref-id';
 import Toolbar from './components/toolbar';
-import {mapValues} from 'lodash';
+import {mapValues, update} from 'lodash';
 import type {HOCProps} from './types';
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
@@ -87,7 +87,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching} = this.state;
-      const {toolbar, query, relation, schema} = this.props;
+      const {toolbar, query, relation, schema, refId} = this.props;
       if (!relation) {
         return <Com {...this.props}/>;
       }
@@ -97,23 +97,31 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const queries = query.getQueries([relation.to]).args || {pagination: {first: 10}};
       const variables = query.getVairables();
       const args = mapValues(queries, v => variables[v.substr(1)]);
-
+      const relationValue = value ? removeSelf(value, refId, relation.to) : defaultValue('connection');
       const tb = ({children, ...restProps}) => <Toolbar {...restProps}
         items={schema[relation.to].items.items}
         toolbar={toolbar || {pagination: {type: 'pagination'}}}
         args={args}
         query={query}
         refId={new RefId(relation.to)}
-        value={value || (defaultValue('connection'): any)}
+        value={relationValue}
         updateQuery={this.updateQuery}
       >
         <Spin indicator={antIcon} spinning={isFetching}>
           {children}
         </Spin>
       </Toolbar>;
-      return <Com {...this.props} Toolbar={tb} relationValue={value}/>;
+      return <Com {...this.props} Toolbar={tb} relationValue={relationValue}/>;
     }
   };
+}
+
+export function removeSelf(value, refId, relationTo) {
+  const [key, index] = refId.getPathArr().slice(0, 2);
+  if (key !== relationTo) {
+    return value;
+  }
+  return {...value, edges: value.edges.filter((v, i) => i !== Number(index))};
 }
 
 function defaultValue(type: string, relation: any) {
