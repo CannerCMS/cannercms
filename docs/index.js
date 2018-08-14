@@ -35,7 +35,7 @@ class CMSExample extends React.Component {
               baseUrl={baseUrl}
             >
               <Canner
-                schema={{...schema}}
+                schema={{...schema, sidebar: []}}
                 afterDeploy={this.afterDeploy}
                 dataDidChange={this.dataDidChange}
               />

@@ -170,7 +170,7 @@ describe('provider methods', () => {
     await instance.fetch('home');
     instance.request(action, {write: false});
     return instance.deploy('home').then(data => {
-      expect(data.toJS()).toMatchObject({updateHome: {__typename: null}});
+      expect(data.toJS()).toMatchObject({updateHome: {__typename: 'HomePayload'}});
     });
     // const newData = client.readQuery({
     //   query: toGQL(schema, 'home')
