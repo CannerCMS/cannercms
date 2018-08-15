@@ -6,7 +6,8 @@
           ">0.25%",
           "not ie 11",
           "not op_mini all"
-        ]
+        ],
+        "node": "6.10"
       }
     }],
     "@babel/preset-react",
