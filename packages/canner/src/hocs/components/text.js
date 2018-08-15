@@ -19,7 +19,7 @@ export default class TextFilter extends Component {
     } else {
       onChange({
         [name]: {
-          contains: value
+          eq: value
         }
       });
     }
@@ -34,7 +34,7 @@ export default class TextFilter extends Component {
           style={{width: '40%'}}
           placeholder={label}
           onChange={this.onInput}
-          defaultValue={get(where, [name, 'contains'], '')}
+          defaultValue={get(where, [name, 'eq'], '')}
         />
       </FilterPlugin>
     );
