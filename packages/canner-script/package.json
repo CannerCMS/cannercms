@@ -15,7 +15,8 @@
   ],
   "scripts": {
     "test": "../../node_modules/.bin/jest --coverage",
-    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
+    "test:watch": "../../node_modules/.bin/jest --watch --coverage",
+    "build:watch": "cross-env BABEL_ENV=commonjs ../../node_modules/.bin/babel src --out-dir lib --copy-files --watch"
   },
   "jest": {
     "browser": true,
