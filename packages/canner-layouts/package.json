@@ -1,0 +1,27 @@
+{
+  "name": "canner-layouts",
+  "version": "1.1.1",
+  "description": "Layouts for Canner",
+  "files": [
+    "lib"
+  ],
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "../../node_modules/.bin/jest --coverage",
+    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "peerDependencies": {
+    "antd": "^3.2.3",
+    "canner-helpers": "*",
+    "react": ">=16.x",
+    "react-dom": ">=16.x"
+  },
+  "license": "Apache-2.0",
+  "author": "Canner",
+  "devDependencies": {
+    "flow-bin": "^0.78.0"
+  }
+}
