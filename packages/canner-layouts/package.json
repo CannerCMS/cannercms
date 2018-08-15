@@ -13,6 +13,9 @@
   "pre-commit": [
     "lint"
   ],
+  "dependencies": {
+    "canner-helpers": "1.0.0-beta.0"
+  },
   "peerDependencies": {
     "antd": "^3.2.3",
     "canner-helpers": "*",
