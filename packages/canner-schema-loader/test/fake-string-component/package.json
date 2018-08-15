@@ -1,0 +1,6 @@
+{
+  "canner": {
+    "cannerDataType": "string",
+    "cacheActions": true
+  }
+}
