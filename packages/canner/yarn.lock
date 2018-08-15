@@ -177,10 +177,6 @@ buffer@^5.0.3:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
 
-canner-compiler@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/canner-compiler/-/canner-compiler-0.1.6.tgz#516b5b2ded2029cf94fe4ef65ce024adad79fdd0"
-
 canner-graphql-interface@^1.16.0:
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/canner-graphql-interface/-/canner-graphql-interface-1.16.0.tgz#6611aceeb9c5c5aad2eae8c6c6491df860b31636"
@@ -209,20 +205,6 @@ canner-graphql-utils@^1.4.0:
     lodash "^4.17.5"
     lowdb "^1.0.0"
     pluralize "^7.0.0"
-
-canner-helpers@^1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/canner-helpers/-/canner-helpers-1.0.0-beta.0.tgz#844bc84a5e5d542ee4e1a3ee5ad179100ca26753"
-  dependencies:
-    lodash "^4.17.5"
-
-canner-layouts@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/canner-layouts/-/canner-layouts-1.1.1.tgz#f3944718885bf40a7a53f5e9420590de37545058"
-
-canner-ref-id@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/canner-ref-id/-/canner-ref-id-0.1.2.tgz#9c534d517818e915cef1004116012458bd165d83"
 
 change-emitter@^0.1.2:
   version "0.1.6"

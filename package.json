@@ -46,7 +46,6 @@
     "babel-jest": "^23.2.0",
     "babel-loader": "^8.0.0-beta.0",
     "canner-schema-loader": "^1.3.0",
-    "canner-script": "^1.2.0",
     "cross-env": "^5.1.3",
     "css-loader": "^0.28.10",
     "enzyme": "^3.3.0",
