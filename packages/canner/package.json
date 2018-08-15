@@ -57,6 +57,7 @@
     "testURL": "http://localhost"
   },
   "devDependencies": {
-    "flow-bin": "^0.78.0"
+    "flow-bin": "^0.78.0",
+    "canner-script": "^1.2.7"
   }
 }
