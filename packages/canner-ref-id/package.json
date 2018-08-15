@@ -1,0 +1,30 @@
+{
+  "name": "canner-ref-id",
+  "version": "0.1.2",
+  "description": "Use to create refId in Canner CMS",
+  "homepage": "",
+  "author": {
+    "name": "chilijung",
+    "email": "chilijung@canner.io",
+    "url": ""
+  },
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "keywords": [
+    ""
+  ],
+  "devDependencies": {
+    "flow-bin": "^0.78.0"
+  },
+  "scripts": {
+    "test": "../../node_modules/.bin/jest --coverage",
+    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "repository": "Canner/canner-ref-id",
+  "license": "MIT"
+}
