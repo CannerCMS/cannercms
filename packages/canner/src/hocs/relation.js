@@ -116,7 +116,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
   };
 }
 
-export function removeSelf(value, refId, relationTo) {
+export function removeSelf(value: any, refId: RefId, relationTo: string) {
   const [key, index] = refId.getPathArr().slice(0, 2);
   if (key !== relationTo) {
     return value;

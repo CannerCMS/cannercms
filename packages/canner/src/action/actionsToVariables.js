@@ -87,6 +87,9 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
         break;
     }
   });
+  if (isPlainObject(variables.payload)) {
+    delete variables.payload.id;
+  }
   return variables;
 }
 
