@@ -29,12 +29,14 @@ module.exports = {
   },
   resolve: {
     modules: [
+      'packages',
       'packages/canner/node_modules',
       'node_modules'
     ],
     alias: {
       'canner-graphql-interface': path.resolve(__dirname, 'packages/canner/node_modules/canner-graphql-interface'),
-      'canner-helpers': path.resolve(__dirname, 'packages/canner/node_modules/canner-helpers'),
+      'canner-helpers': path.resolve(__dirname, 'packages/canner-helpers'),
+      'canner-script': path.resolve(__dirname, 'packages/canner-script'),
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
@@ -43,6 +45,7 @@ module.exports = {
   },
   resolveLoader: {
     modules: [
+      'packages',
       'packages/canner/node_modules',
       'node_modules'
     ],
