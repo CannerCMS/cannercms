@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`type and ui to packageName should get default packageName 1`] = `
+"
+      builder('string', {packageName: '@canner/antd-string-input'});
+    "
+`;
+
+exports[`type and ui to packageName should get default packageName 2`] = `
+"
+      builder('string', {packageName: '@canner/antd-string-input', 
+        keyName: 'string'
+      });
+    "
+`;
+
+exports[`type and ui to packageName should get package name 1`] = `
+"
+      builder('object', {packageName: '@canner/antd-object-fieldset', keyName: 'info'},
+        builder('string', {packageName: '@canner/antd-string-input', 
+          keyName: 'string'
+        });
+      );
+    "
+`;
+
+exports[`type and ui to packageName should get package name 2`] = `
+"
+      builder('object', {packageName: '@canner/antd-object-fieldset', keyName: 'info'},
+        builder('string', {packageName: '@canner/antd-string-input'});
+      );
+    "
+`;
+
+exports[`type and ui to packageName should get select packageName 1`] = `
+"
+      builder('string', {packageName: '@canner/antd-string-select', 
+        keyName: 'string',
+        ui: 'select'
+      });
+    "
+`;
