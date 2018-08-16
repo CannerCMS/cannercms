@@ -1,9 +1,9 @@
 /** @jsx builder */
 import builder, {Block} from '../src';
-import {Parser, Traverser} from 'canner-compiler';
+import compiler from 'canner-compiler';
 import serializer from './serializer';
 expect.addSnapshotSerializer(serializer);
-
+const {Traverser, Parser} = compiler;
 function compile(schema, visitors) {
   const parser = new Parser();
   const tree = parser.parse(schema);
