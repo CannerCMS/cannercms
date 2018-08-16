@@ -356,7 +356,27 @@ describe('builder', () => {
       // eslint-disable-next-line
       expect(<object keyName="variants" packageName={packageName} builder={require(`${packageName}/canner.def.js`)}>
         <string keyName="desc" />
-      </object>).toMatchSnapshot();
+      </object>).toMatchObject({
+        "description": "",
+        "items": {
+          "a": {
+            "keyName": "a",
+            "packageName": "@canner/antd-string-input",
+          },
+          "d": {
+            "keyName": "d",
+            "packageName": "@canner/antd-string-input",
+          },
+          "desc": {
+            "keyName": "desc",
+            "packageName": "@canner/antd-string-input",
+          },
+        },
+        "keyName": "variants",
+        "packageName": packageName,
+        "type": "object",
+        "ui": "fieldset",
+      });
     });
 
     it('require builder', () => {
@@ -364,7 +384,41 @@ describe('builder', () => {
       // eslint-disable-next-line
       expect(<object keyName="variants" packageName={packageName} builder={require(`${packageName}/canner.def.js`)}>
         <string keyName="desc" />
-      </object>).toMatchSnapshot();
+      </object>).toMatchObject({
+        "items": {
+          "a": {
+            "description": "",
+            "keyName": "a",
+            "packageName": "@canner/antd-string-input",
+            "title": "",
+            "type": "string",
+            "ui": "input",
+          },
+          "d": {
+            "description": "",
+            "keyName": "d",
+            "packageName": "@canner/antd-string-input",
+            "title": "",
+            "type": "string",
+            "ui": "input",
+          },
+          "desc": {
+            "description": "",
+            "keyName": "desc",
+            "packageName": "@canner/antd-string-input",
+            "title": "",
+            "type": "string",
+            "ui": "input",
+            
+          },
+        },
+        "keyName": "variants",
+        "packageName": packageName,
+        "title": "",
+        "type": "object",
+        "ui": "fieldset",
+        
+      });
     });
   })
 
