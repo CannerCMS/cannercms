@@ -28,16 +28,16 @@ module.exports = {
     publicPath: '/docs/static/',
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"],
+    extensions: [".ts", ".js"],
     modules: [
       'packages',
       'packages/canner/node_modules',
       'node_modules'
     ],
     alias: {
-      'canner-graphql-interface': path.resolve(__dirname, 'packages/canner/node_modules/canner-graphql-interface'),
+      'canner-graphql-interface': path.resolve(__dirname, 'packages/canner-graphql-interface'),
       'canner-helpers': path.resolve(__dirname, 'packages/canner-helpers'),
-      'canner-script': path.resolve(__dirname, 'packages/canner-script'),
+      // 'canner-script': path.resolve(__dirname, 'packages/canner-script'),
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
@@ -59,6 +59,11 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        type: 'javascript/auto',
+        test: /\.mjs$/,
+        use: []
+      },
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
