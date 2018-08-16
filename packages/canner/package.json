@@ -19,7 +19,7 @@
     "apollo-boost": "^0.1.4",
     "bson-objectid": "^1.2.2",
     "canner-compiler": "^0.1.6",
-    "canner-graphql-interface": "^1.16.0",
+    "canner-graphql-interface": "^1.16.2",
     "canner-helpers": "^1.0.0-beta.0",
     "canner-layouts": "^1.1.1",
     "canner-ref-id": "^0.1.2",

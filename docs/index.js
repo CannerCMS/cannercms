@@ -5,6 +5,7 @@ import Canner from 'packages/canner/src';
 import Wrapper from 'packages/canner-container/src';
 import R from 'packages/history-router/src';
 import schema from './canner.schema';
+import Graphql from './components/grahql';
 // eslint-disable-next-line
 console.log(schema);
 
@@ -51,6 +52,7 @@ class CMSExample extends React.Component {
             </Wrapper>
           );
         }}/>
+        <Route path="/graphql" component={Graphql}/>
       </Router>
     );
   }

@@ -28,6 +28,7 @@ module.exports = {
     publicPath: '/docs/static/',
   },
   resolve: {
+    extensions: [".ts", ".tsx", ".js"],
     modules: [
       'packages',
       'packages/canner/node_modules',
@@ -58,6 +59,13 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader'
+        }
+      },
       {
         test: /(\.schema\.js|canner\.def\.js)$/,
         use: [{
