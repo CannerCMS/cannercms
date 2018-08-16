@@ -1118,10 +1118,6 @@ caniuse-lite@^1.0.30000844:
   version "1.0.30000877"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000877.tgz#f189673b86ecc06436520e3e391de6a13ca923b4"
 
-canner-compiler@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/canner-compiler/-/canner-compiler-0.1.6.tgz#516b5b2ded2029cf94fe4ef65ce024adad79fdd0"
-
 capture-exit@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/capture-exit/-/capture-exit-1.2.0.tgz#1c5fcc489fd0ab00d4f1ac7ae1072e3173fbab6f"
