@@ -4,5 +4,6 @@
     "packages/*"
   ],
   "version": "1.4.7-canary.1",
-  "npmClient": "yarn"
+  "npmClient": "yarn",
+  "useWorkspaces": true
 }
