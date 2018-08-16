@@ -74,27 +74,27 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
   title: \\"Object type\\"
 }))), (0, _cannerScript.default)(_cannerScript.Block, {
   title: \\"test\\"
-}, (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-tag',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-tag\\"));});}),builder: require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-tag/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-tag/canner.def.js\\").default : require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-tag/canner.def.js\\"), 
+}, (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-array-tag',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-tag\\"));});}), builder: require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-tag/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-tag/canner.def.js\\").default : require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-tag/canner.def.js\\"), 
   keyName: \\"tag\\",
   ui: \\"tag\\",
   uiParams: {
     defaultOptions: []
   }
-}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input\\"));});}),builder: undefined})), (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-slider',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-slider\\"));});}),builder: undefined, 
+}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));});})})), (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-array-slider',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-slider\\"));});}), 
   keyName: \\"slider\\",
   ui: \\"slider\\"
-}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input\\"));});}),builder: undefined})), (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-gallery',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-gallery\\"));});}),builder: require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-gallery/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-gallery/canner.def.js\\").default : require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-gallery/canner.def.js\\"), 
+}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));});})})), (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery\\"));});}), builder: require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery/canner.def.js\\").default : require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery/canner.def.js\\"), 
   keyName: \\"gallery\\",
   ui: \\"gallery\\",
   title: \\"Gallery\\"
-}, (0, _cannerScript.default)(\\"image\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-image',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-image\\"));});}),builder: undefined, type: 'image'})), (0, _cannerScript.default)(\\"image\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-image',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-image\\"));});}),builder: undefined, type: 'image', 
+}, (0, _cannerScript.default)(\\"image\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-object-image',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-image\\"));});}), type: 'image'})), (0, _cannerScript.default)(\\"image\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-object-image',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-image\\"));});}), type: 'image', 
   keyName: \\"image\\",
   ui: \\"image\\",
   title: \\"Image\\"
-}), (0, _cannerScript.default)(\\"object\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-editor',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-editor\\"));});}),builder: undefined, 
+}), (0, _cannerScript.default)(\\"object\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-object-editor',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor\\"));});}), builder: require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor/canner.def.js\\").default : require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor/canner.def.js\\"), 
   keyName: \\"editor\\",
   ui: \\"editor\\"
-}), (0, _cannerScript.default)(\\"geoPoint\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-map',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-map\\"));});}),builder: undefined, type: 'geoPoint', 
+}), (0, _cannerScript.default)(\\"geoPoint\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-object-map',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-map\\"));});}), type: 'geoPoint', 
   keyName: \\"map\\",
   title: \\"Map\\"
 }))), (0, _cannerScript.default)(\\"object\\", {packageName: '@canner/antd-object-fieldset', 
@@ -103,10 +103,10 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
   description: \\"t to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of L \\"
 }, (0, _cannerScript.default)(_cannerScript.Block, {
   title: \\"Basic\\"
-}, (0, _cannerScript.default)(\\"number\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-number-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-number-input\\"));});}),builder: undefined, 
+}, (0, _cannerScript.default)(\\"number\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-number-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-number-input\\"));});}), 
   keyName: \\"count\\",
   title: \\"Count\\"
-}), (0, _cannerScript.default)(\\"relation\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-relation-single_select',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-relation-single_select\\"));});}),builder: undefined, 
+}), (0, _cannerScript.default)(\\"relation\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-relation-single_select',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-relation-single_select\\"));});}), 
   title: \\"StaredPosts\\",
   description: \\"Ref to Posts\\",
   keyName: \\"staredPosts\\",
@@ -119,7 +119,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
     textCol: 'title',
     columns: postColumns
   }
-}), (0, _cannerScript.default)(\\"relation\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-relation-single_select',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-relation-single_select\\"));});}),builder: undefined, 
+}), (0, _cannerScript.default)(\\"relation\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-relation-single_select',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-relation-single_select\\"));});}), 
   title: \\"BestAuthor\\",
   description: \\"Ref to Users\\",
   keyName: \\"bestAuthor\\",
@@ -135,21 +135,21 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
   title: \\"Header\\"
 }, (0, _cannerScript.default)(\\"object\\", {packageName: '@canner/antd-object-fieldset', 
   keyName: \\"header\\"
-}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input\\"));});}),builder: undefined, 
+}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));});}), 
   keyName: \\"title\\",
   title: \\"Title\\"
-}), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input\\"));});}),builder: undefined, 
+}), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));});}), 
   keyName: \\"subTitle\\",
   title: \\"Subtitle\\"
-}), (0, _cannerScript.default)(\\"object\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-editor',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-editor\\"));});}),builder: undefined, 
+}), (0, _cannerScript.default)(\\"object\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-object-editor',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor\\"));});}), builder: require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor/canner.def.js\\").default : require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor/canner.def.js\\"), 
   keyName: \\"desc\\",
   title: \\"Description\\",
   ui: \\"editor\\"
 }))), (0, _cannerScript.default)(_cannerScript.Block, {
   title: \\"Navs\\"
-}, (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-table',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-table\\"));});}),builder: undefined, cacheActions: true,controlDeployAndResetButtons: true,type: 'array', 
+}, (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-array-table',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-table\\"));});}), cacheActions: true,controlDeployAndResetButtons: true,type: 'array', 
   keyName: \\"navs\\"
-}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input\\"));});}),builder: undefined, 
+}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));});}), 
   keyName: \\"text\\"
 })))), (0, _cannerScript.default)(_posts.default, {
   ui: \\"tableRoute\\",
@@ -162,7 +162,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
     type: 'text',
     label: 'Title'
   }]
-}))), (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-table',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-array-table\\"));});}),builder: undefined, cacheActions: true,controlDeployAndResetButtons: true,type: 'array', 
+}))), (0, _cannerScript.default)(\\"array\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-array-table',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-table\\"));});}), cacheActions: true,controlDeployAndResetButtons: true,type: 'array', 
   keyName: \\"test\\",
   title: \\"array\\",
   uiParams: {
@@ -171,11 +171,11 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
       dataIndex: 'title'
     }]
   }
-}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input\\"));});}),builder: undefined, 
+}, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));});}), 
   keyName: \\"title\\"
 }), (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"gallery\\",
-  packageName: '/Users/siou/projects/canner-schema-loader/test/fake-string-component',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/test/fake-string-component\\"));});}),builder: require(\\"/Users/siou/projects/canner-schema-loader/test/fake-string-component/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner-schema-loader/test/fake-string-component/canner.def.js\\").default : require(\\"/Users/siou/projects/canner-schema-loader/test/fake-string-component/canner.def.js\\"), type: 'string',cacheActions: true
+  packageName: '/Users/siou/projects/canner/packages/canner-schema-loader/test/fake-string-component',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/packages/canner-schema-loader/test/fake-string-component\\"));});}), builder: require(\\"/Users/siou/projects/canner/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\").default : require(\\"/Users/siou/projects/canner/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\"), type: 'string',cacheActions: true
 })));
 
 exports.default = _default;"
@@ -196,11 +196,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** @jsx builder */
 var Strings = function Strings(_ref) {
   var attributes = _ref.attributes;
-  return (0, _cannerScript.default)(\\"object\\", attributes, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-input\\"));});}),builder: undefined, 
+  return (0, _cannerScript.default)(\\"object\\", attributes, (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-input',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));});}), 
     keyName: \\"input\\",
     title: \\"Input\\",
     description: \\"Input is the default ui of string type\\"
-  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-card',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-card\\"));});}),builder: undefined, 
+  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-card',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-card\\"));});}), 
     keyName: \\"card\\",
     title: \\"Card\\",
     ui: \\"card\\",
@@ -213,15 +213,15 @@ var Strings = function Strings(_ref) {
         value: 'no'
       }]
     }
-  }), (0, _cannerScript.default)(\\"object\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-editor',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-object-editor\\"));});}),builder: undefined, 
+  }), (0, _cannerScript.default)(\\"object\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-object-editor',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor\\"));});}), builder: require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor/canner.def.js\\").default : require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-editor/canner.def.js\\"), 
     keyName: \\"editor\\",
     title: \\"Editor\\",
     ui: \\"editor\\"
-  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-link',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-link\\"));});}),builder: undefined, 
+  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-link',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-link\\"));});}), 
     keyName: \\"link\\",
     title: \\"Link\\",
     ui: \\"link\\"
-  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-radio',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-radio\\"));});}),builder: undefined, 
+  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-radio',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-radio\\"));});}), 
     keyName: \\"radio\\",
     title: \\"Radio\\",
     ui: \\"radio\\",
@@ -234,7 +234,7 @@ var Strings = function Strings(_ref) {
         value: 'no'
       }]
     }
-  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-select',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-select\\"));});}),builder: undefined, 
+  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-select',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-select\\"));});}), 
     keyName: \\"select\\",
     title: \\"Select\\",
     ui: \\"select\\",
@@ -247,14 +247,14 @@ var Strings = function Strings(_ref) {
         value: 'no'
       }]
     }
-  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-textarea',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-textarea\\"));});}),builder: undefined, 
+  }), (0, _cannerScript.default)(\\"string\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-textarea',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-textarea\\"));});}), 
     keyName: \\"textarea\\",
     title: \\"Textarea\\",
     ui: \\"textarea\\"
   }), (0, _cannerScript.default)(\\"file\\", {
     keyName: \\"image\\",
     title: \\"Image\\"
-  }), (0, _cannerScript.default)(\\"dateTime\\", {packageName: '/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-date_time_picker',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner-schema-loader/node_modules/@canner/antd-string-date_time_picker\\"));});}),builder: undefined, 
+  }), (0, _cannerScript.default)(\\"dateTime\\", {packageName: '/Users/siou/projects/canner/node_modules/@canner/antd-string-date_time_picker',loader: new Promise((resolve) => {require.ensure([], (require) => {resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-date_time_picker\\"));});}), 
     keyName: \\"date\\",
     title: \\"Date\\"
   }));

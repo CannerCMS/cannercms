@@ -43,6 +43,7 @@
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.1.8",
     "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "canner-compiler": "^0.1.6",
     "flow-bin": "^0.78.0",
