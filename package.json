@@ -8,7 +8,7 @@
     "build:flow": "lerna exec --parallel --ignore *graphql* -- flow-copy-source -v -i '**/test/**' src lib",
     "build:commonjs": "lerna exec --parallel --ignore *graphql* -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
     "build:watch": "lerna exec --parallel --ignore *graphql* -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --watch",
-    "build:ts": "lerna run --parallel --scope *graphql* -- build",
+    "build:ts": "lerna run --scope canner-graphql-utils build && lerna run --scope canner-graphql-interface build",
     "build": "npm run build:commonjs && npm run build:ts && npm run build:flow",
     "prepublishOnly": "npm run clean && npm run check:src && npm run build",
     "release": "npm run clean && npm run build && lerna publish",
@@ -74,7 +74,7 @@
     "webpack-dev-server": "^3.1.0"
   },
   "private": true,
-  "workspace": [
+  "workspaces": [
     "packages/*"
   ],
   "dependencies": {

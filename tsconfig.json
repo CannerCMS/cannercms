@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.release.json",
+  "compilerOptions": {
+    "baseUrl": "./packages",
+    "paths": {
+      "canner-graphql-*": ["./canner-graphql-*/src"]
+    }
+  }
+}
