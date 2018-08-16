@@ -27,11 +27,11 @@ jobs:
           - v1-dependencies-
 
       - run: yarn install
-      
-      - run: yarn build
-      
+
       - run: yarn bootstrap
-      
+
+      - run: yarn build
+
       - save_cache:
           paths:
             - node_modules
