@@ -192,7 +192,7 @@ Object {
     },
   },
   "keyName": "variants",
-  "packageName": "/Users/siou/projects/canner-script/__test__/fake-object-variants",
+  "packageName": "/Users/siou/projects/canner/packages/canner-script/test/fake-object-variants",
   "title": "",
   "type": "object",
   "ui": "fieldset",
@@ -234,7 +234,7 @@ Object {
     },
   },
   "keyName": "variants",
-  "packageName": "/Users/siou/projects/canner-script/__test__/fake-object-variants",
+  "packageName": "/Users/siou/projects/canner/packages/canner-script/test/fake-object-variants",
   "title": "",
   "type": "object",
   "ui": "fieldset",
@@ -280,6 +280,7 @@ Object {
   "items": Object {
     "a": Object {
       "description": "",
+      "key": "a",
       "keyName": "a",
       "packageName": "@canner/antd-string-input",
       "title": "",
@@ -289,6 +290,7 @@ Object {
     },
     "b": Object {
       "description": "",
+      "key": "b",
       "keyName": "b",
       "packageName": "@canner/antd-string-input",
       "title": "",
@@ -298,6 +300,7 @@ Object {
     },
     "c": Object {
       "description": "",
+      "key": "c",
       "keyName": "c",
       "packageName": "@canner/antd-string-input",
       "title": "",
