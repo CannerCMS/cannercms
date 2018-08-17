@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const fs = require('fs');
-
 module.exports = {
   devServer: {
     historyApiFallback: {
@@ -29,15 +28,9 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".js"],
-    modules: [
-      'packages',
-      'packages/canner/node_modules',
-      'node_modules'
-    ],
     alias: {
-      'canner-graphql-interface': path.resolve(__dirname, 'packages/canner-graphql-interface'),
-      'canner-helpers': path.resolve(__dirname, 'packages/canner-helpers'),
-      // 'canner-script': path.resolve(__dirname, 'packages/canner-script'),
+      'canner-script': path.resolve(__dirname, 'packages', 'canner-script'),
+      'canner-helpers': path.resolve(__dirname, 'packages', 'canner-helpers'),
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
@@ -45,17 +38,17 @@ module.exports = {
     }
   },
   resolveLoader: {
-    modules: [
-      'packages',
-      'packages/canner/node_modules',
-      'node_modules'
-    ],
-     moduleExtensions: ["-loader"]
+    moduleExtensions: ["-loader"]
   },
   plugins: [
     new webpack.DefinePlugin({
       FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
-    })
+    }),
+    // https://github.com/graphql/graphql-language-service/issues/128
+    new webpack.ContextReplacementPlugin(
+      /graphql-language-service-interface[\\/]dist$/,
+      new RegExp(`^\\./.*\\.js$`)
+    )
   ],
   module: {
     rules: [
@@ -71,10 +64,11 @@ module.exports = {
           loader: 'ts-loader'
         }
       },
+      
       {
         test: /(\.schema\.js|canner\.def\.js)$/,
         use: [{
-          loader: 'canner-schema-loader',
+          loader: './packages/canner-schema-loader/lib/index.js',
         }, {
           loader: 'babel-loader',
           /**
