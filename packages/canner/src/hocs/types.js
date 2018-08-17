@@ -14,7 +14,7 @@ export type Reset = (key?: string, id?: string) => Promise<*>;
 export type Subscription = any;
 export type Subscribe = (key: string, callback: (data: any) => void) => Subscription
 export type Deploy = (key: string, id?: string) => Promise<*>;
-export type OnDeploy = (key: string, callback: Function) => Object => void;
+export type OnDeploy = (key: string, callback: Function) => any;
 export type RemoveOnDeploy = (key: string, callbackId: string) => void;
 export type Validation = Object;
 export type UIParams = Object;

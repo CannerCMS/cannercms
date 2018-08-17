@@ -136,7 +136,6 @@ export default class Provider extends React.PureComponent<Props, State> {
     if (!actions || !actions.length) {
       return Promise.resolve();
     }
-    console.log(actions);
     actions = removeIdInCreateArray(actions);
     const mutation = objectToQueries(actionToMutation(actions[0]), false);
     const variables = actionsToVariables(actions, schema);

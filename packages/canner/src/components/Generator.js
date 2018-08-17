@@ -258,7 +258,6 @@ export default class Generator extends React.PureComponent<Props, State> {
   render() {
     const {componentTree, error, errorInfo} = this.state;
     const {routes, routerParams} = this.props;
-    console.log(routes);
     if (error) {
       return errorInfo;
     }

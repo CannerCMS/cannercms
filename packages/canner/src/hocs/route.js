@@ -74,7 +74,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
 
     render() {
       const {loading, loadingTip} = this.state;
-      let {routes, pattern,  path, routerParams, refId, renderChildren, hideButtons, uirouterParams} = this.props;
+      let {routes, pattern,  path, routerParams, refId, renderChildren, hideButtons, uiParams} = this.props;
       const renderType = getRenderType({
         pattern,
         routes,
@@ -84,9 +84,9 @@ export default function withRoute(Com: React.ComponentType<*>) {
       const pathArrLength = refId.getPathArr().length;
       const routesLength = routes.length;
       const {operator} = routerParams;
-      let renderKeys = uirouterParams && uirouterParams.updateKeys; // render all
+      let renderKeys = uiParams && uiParams.updateKeys; // render all
       if (operator === 'create') {
-        renderKeys = uirouterParams && uirouterParams.createKeys;
+        renderKeys = uiParams && uiParams.createKeys;
       }
       return <Spin tip={loadingTip} spinning={loading}>
         {
