@@ -57,8 +57,6 @@
     "testURL": "http://localhost"
   },
   "devDependencies": {
-    "flow-bin": "^0.78.0",
-    "canner-script": "^1.2.7",
-    "@canner/antd-components": "^0.4.0-beta.2"
+    "flow-bin": "^0.78.0"
   }
 }
