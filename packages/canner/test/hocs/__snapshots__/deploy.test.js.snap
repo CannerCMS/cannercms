@@ -4,7 +4,6 @@ exports[`with route mini app should render 1`] = `
 <div>
   <MockComponent
     deploy={[MockFunction]}
-    params={Object {}}
     path="posts"
     pattern="array"
     refId={
@@ -22,6 +21,7 @@ exports[`with route mini app should render 1`] = `
     renderChildren={[Function]}
     renderConfirmButton={[Function]}
     reset={[MockFunction]}
+    routerParams={Object {}}
     routes={
       Array [
         "posts",

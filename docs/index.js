@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Canner from 'packages/canner/src';
-import Wrapper from 'packages/canner-container/src';
+import Container from 'packages/canner-container/src';
 import R from 'packages/history-router/src';
 import schema from './canner.schema';
 import Graphql from './components/graphql';
@@ -32,7 +32,7 @@ class CMSExample extends React.Component {
         <div>
           <Route path="/docs" render={({history}) => {
             return (
-              <Wrapper
+              <Container
                 schema={schema}
                 sidebarConfig={{
                   menuConfig: true
@@ -50,7 +50,7 @@ class CMSExample extends React.Component {
                   afterDeploy={this.afterDeploy}
                   dataDidChange={this.dataDidChange}
                 />
-              </Wrapper>
+              </Container>
             );
           }}/>
           <Route path="/graphql" component={Graphql}/>

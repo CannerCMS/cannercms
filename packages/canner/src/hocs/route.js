@@ -51,7 +51,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
         this.setState({
           loading: false
         }, () => {
-          goTo(routes[0]);
+          goTo({pathname: routes[0]});
         });
       }, 400);
     }
@@ -63,36 +63,36 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     discard = () => {
-      const {goTo, routes, params, reset, refId} = this.props;
-      if (params.op === 'create') {
-        reset(refId.getPathArr()[0]).then(() => goTo(routes.join('/')));
+      const {goTo, routes, routerParams, reset, refId} = this.props;
+      if (routerParams.operator === 'create') {
+        reset(refId.getPathArr()[0]).then(() => goTo({pathname: routes.join('/')}));
       } else {
-        reset(refId.getPathArr()[0]).then(() => goTo(routes.slice(0, -1).join('/')));
+        reset(refId.getPathArr()[0]).then(() => goTo({pathname: routes.slice(0, -1).join('/')}));
       }
       
     }
 
     render() {
       const {loading, loadingTip} = this.state;
-      let {routes, pattern,  path, params, refId, renderChildren, hideButtons, uiParams} = this.props;
+      let {routes, pattern,  path, routerParams, refId, renderChildren, hideButtons, uirouterParams} = this.props;
       const renderType = getRenderType({
         pattern,
         routes,
         path,
-        params
+        routerParams
       });
       const pathArrLength = refId.getPathArr().length;
       const routesLength = routes.length;
-      const {op} = params;
-      let renderKeys = uiParams && uiParams.updateKeys; // render all
-      if (op === 'create') {
-        renderKeys = uiParams && uiParams.createKeys;
+      const {operator} = routerParams;
+      let renderKeys = uirouterParams && uirouterParams.updateKeys; // render all
+      if (operator === 'create') {
+        renderKeys = uirouterParams && uirouterParams.createKeys;
       }
       return <Spin tip={loadingTip} spinning={loading}>
         {
           // quick fix for route array's children
           // need to find a stable way to control route
-          (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
+          (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))) &&
             <Button onClick={this.discard} style={{marginBottom: 16}}>
               <Icon type="arrow-left" /> Back
             </Button>
@@ -108,7 +108,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
         {
           // quick fix for route array's children
           // need to find a stable way to control route
-          (renderType === RENDER_CHILDREN  && pattern === 'array' && !hideButtons && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && op === 'create'))) &&
+          (renderType === RENDER_CHILDREN  && pattern === 'array' && !hideButtons && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))) &&
             <ButtonWrapper>
               <Button style={{marginRight: 16}} type="primary" onClick={this.deploy}>Confirm</Button>
               <Button onClick={this.reset}>Reset</Button>
@@ -126,7 +126,7 @@ function getRenderType({
   routes,
   path,
   pattern,
-  params
+  routerParams
 }) {
   const paths = genPaths(path, pattern);
   const pathsLength = paths.length;
@@ -135,7 +135,7 @@ function getRenderType({
     return RENDER_NULL;
   }
   const type = pattern.split('.').slice(-1)[0];
-  const {op} = params;
+  const {operator} = routerParams;
   if (type === 'object') {
     if (routesLength === pathsLength && isCompleteContain(paths, routes)) {
       return RENDER_COMPONENT;
@@ -152,7 +152,7 @@ function getRenderType({
       return RENDER_CHILDREN;
     }
     if (routesLength < pathsLength) {
-      if (routesLength === pathsLength - 1 && op === 'create') {
+      if (routesLength === pathsLength - 1 && operator === 'create') {
         return RENDER_CHILDREN;
       }
       return RENDER_COMPONENT;

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {Button} from 'antd';
 import type RefId from 'canner-ref-id';
-import {isArray} from 'antd';
+import {isArray} from 'lodash';
 import {isRoutesEndAtMe} from './cache';
 import type {HOCProps} from './types';
 
@@ -25,14 +25,14 @@ export default function deploy(Com: React.ComponentType<*>) {
     }
 
     render() {
-      const {params, routes, refId, path, pattern, controlDeployAndResetButtons, hideButtons} = this.props;
+      const {routerParams, routes, refId, path, pattern, controlDeployAndResetButtons, hideButtons} = this.props;
       const buttonContainer = {
         textAlign: 'right',
         marginTop: 60
       }
       const renderConfirmButton = genDeployButton(this.deploy, refId);
       const renderCancelButton = genCancelButton(this.reset, refId);
-      const isCreateOp = params.op === 'create';
+      const isCreateOp = routerParams.operator === 'create';
       const shouldRenderButtons = (routes.length === 1 || isRoutesEndAtMe({routes, path, pattern}) &&
       isCreateOp) && !controlDeployAndResetButtons && !hideButtons && refId.getPathArr().length <= routes.length;
       return <div>
@@ -47,7 +47,7 @@ export default function deploy(Com: React.ComponentType<*>) {
             <div style={buttonContainer}>
               {renderConfirmButton({
                 callback: () => {
-                  // location.href = params.backUrl || location.href.split('?')[0];
+                  // location.href = routerParams.backUrl || location.href.split('?')[0];
                 },
                 style: {marginRight: 16}
               })}
@@ -118,7 +118,7 @@ function getItemId(rootValue: any, refId: RefId) {
   const [key, index] = refId.getPathArr();
   let itemId = '';
   const value = rootValue[key];
-  if (isArray(value)) {
+  if (isArray(value) && index) {
     itemId = value[index].id;
   }
   return itemId;

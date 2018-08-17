@@ -25,10 +25,10 @@ export default function connectId(Com: React.ComponentType<*>) {
 
     constructor(props: HOCProps) {
       super(props);
-      const {params, pattern, refId, keyName, routes} = props;
+      const {routerParams, pattern, refId, keyName, routes} = props;
       let myRefId = refId;
       // route to children
-      if (params.op === 'create' && pattern === 'array') {
+      if (routerParams.operator === 'create' && pattern === 'array') {
         this.state = {
           canRender: false,
           refId: refId
@@ -51,8 +51,8 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     UNSAFE_componentWillReceiveProps(props: HOCProps) {
-      const {params, pattern, items, keyName, routes, updateQuery} = props;
-      if (params.op === 'create' && !this.props.params.op && pattern ==='array') {
+      const {routerParams: {operator}, pattern, items, keyName, routes, updateQuery} = props;
+      if (operator === 'create' && this.props.routerParams.operator === 'update' && pattern ==='array') {
         // posts => posts?op=create
         let value = createEmptyData(items);
         update(value, 'id', id => id || randomId());
@@ -63,7 +63,7 @@ export default function connectId(Com: React.ComponentType<*>) {
         this.createArray(keyName, value);
       }
 
-      if (!params.op && this.props.params.op === 'create' && pattern === 'array') {
+      if (operator === 'update' && this.props.routerParams.operator === 'create' && pattern === 'array') {
         // posts?op=create => posts
         this.setState({
           refId: new RefId(keyName)
@@ -89,8 +89,8 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     componentDidMount() {
-      const {params, pattern, keyName, items, routes} = this.props;
-      if (params.op === 'create' && pattern === 'array') {
+      const {routerParams, pattern, keyName, items, routes} = this.props;
+      if (routerParams.operator === 'create' && pattern === 'array') {
         // posts?op=create
         let value = createEmptyData(items);
         update(value, 'id', id => id || randomId());

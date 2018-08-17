@@ -26,7 +26,7 @@ describe('with route mini app', () => {
     mockReset = jest.fn().mockImplementation(() => Promise.resolve());
     props = {
       refId: new RefId('posts'),
-      params: {},
+      routerParams: {},
       pattern: 'array',
       path: 'posts',
       routes: ['posts'],

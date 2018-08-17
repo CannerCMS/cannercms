@@ -70,7 +70,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     let activeKey = routes[0];
     if (!activeKey) {
       activeKey = Object.keys(componentTree)[0];
-      goTo(activeKey);
+      goTo({pathname: activeKey});
     }
     this.cacheTree = this.genCacheTree(componentTree);
     this.state = {
@@ -168,7 +168,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {params, goTo, routes, storages, onDeploy, removeOnDeploy, hideButtons, schema} = this.props;
+    const {routerParams = {}, goTo, routes, storages, onDeploy, removeOnDeploy, hideButtons, schema} = this.props;
     if (node.hidden || props.hidden) {
       return null;
     }
@@ -182,18 +182,11 @@ export default class Generator extends React.PureComponent<Props, State> {
         imageServiceConfig={(storages || {})[routes[0]]}
         renderChildren={(props) => this.renderChildren(node, props)}
         renderComponent={this.renderComponent}
-        params={params}
+        routerParams={routerParams}
         onDeploy={onDeploy}
         removeOnDeploy={removeOnDeploy}
         schema={schema}
-        goTo={(path, search) => {
-          if (!search) {
-            const [route, search] = path.split('?');
-            goTo(route, search);
-          } else {
-            goTo(path, search);
-          }
-        }}
+        goTo={goTo}
         {...props}
       />;
     }
@@ -264,15 +257,15 @@ export default class Generator extends React.PureComponent<Props, State> {
 
   render() {
     const {componentTree, error, errorInfo} = this.state;
-    const {routes, params} = this.props;
-   
+    const {routes, routerParams} = this.props;
+    console.log(routes);
     if (error) {
       return errorInfo;
     }
     return (
       <div>
         {/* {this.renderComponent(new RefId(routes.join('/')), {refId: new RefId(routes.slice(1).join('/')), routes, params})} */}
-        {this.renderNode(componentTree, 0, {refId: new RefId(''), routes, params})}
+        {this.renderNode(componentTree, 0, {refId: new RefId(''), routes, routerParams})}
       </div>
     );
   }

@@ -51,7 +51,7 @@ describe('withRoute', () => {
       routes={routes}
       path={path}
       pattern="object"
-      params={{}}
+      routerParams={{}}
     />);
     expect(wrapper.find(MockComponent).length).toBe(0);
   });
@@ -64,7 +64,7 @@ describe('withRoute', () => {
       routes={routes}
       path={path}
       pattern="object.string"
-      params={{}}
+      routerParams={{}}
     />);
     expect(wrapper.find(MockComponent).length).toBe(0);
   });
@@ -77,7 +77,7 @@ describe('withRoute', () => {
       routes={routes}
       path={path}
       pattern="array.string"
-      params={{}}
+      routerParams={{}}
     />);
     expect(wrapper.find(MockComponent).length).toBe(0);
   });
@@ -90,7 +90,7 @@ describe('withRoute', () => {
       routes={routes}
       path={path}
       pattern="object"
-      params={{}}
+      routerParams={{}}
     />);
     expect(wrapper.find(MockComponent).length).toBe(1);
   });
@@ -103,7 +103,7 @@ describe('withRoute', () => {
       routes={routes}
       path={path}
       pattern="array"
-      params={{}}
+      routerParams={{}}
     />);
     expect(wrapper.find(MockComponent).length).toBe(1);
   });
@@ -116,7 +116,7 @@ describe('withRoute', () => {
       routes={routes}
       path={path}
       pattern="array"
-      params={{}}
+      routerParams={{}}
     />);
     expect(wrapper.find(MockComponent).length).toBe(0);
     expect(mockRenderChildren).toHaveBeenCalledTimes(1);

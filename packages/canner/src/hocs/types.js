@@ -14,7 +14,7 @@ export type Reset = (key?: string, id?: string) => Promise<*>;
 export type Subscription = any;
 export type Subscribe = (key: string, callback: (data: any) => void) => Subscription
 export type Deploy = (key: string, id?: string) => Promise<*>;
-export type OnDeploy = (key: string, callback: Function) => string;
+export type OnDeploy = (key: string, callback: Function) => Object => void;
 export type RemoveOnDeploy = (key: string, callbackId: string) => void;
 export type Validation = Object;
 export type UIParams = Object;
@@ -58,11 +58,11 @@ export type HOCProps = {
   nodeType: string,
   rootValue: any,
   value: any,
-  params: Object,
+  routerParams: Object,
   items: Object,
   toolbar: Toolbar,
   schema: any,
-  goTo: Function,
+  goTo: Object => void,
   query: Query,
   reset: Reset,
   fetch: Fetch,

@@ -1,10 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import GraphiQL from 'graphiql';
 import gql from 'graphql-tag';
-import { execute, makePromise, ApolloLink } from 'apollo-link';
-// tslint:disable-next-line:no-var-requires
-const style = require('graphiql/graphiql.css');
+import {execute} from 'apollo-link';
 import { createLink } from 'packages/canner-graphql-interface/src/link';
 import MemoryConnector from 'packages/canner-graphql-interface/src/connector/memoryConnector';
 

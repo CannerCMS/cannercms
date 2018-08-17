@@ -3,8 +3,6 @@
 import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
-import Sidebar from './Sidebar';
-import {Layout} from 'antd';
 import hocs from '../hocs';
 import {createEmptyData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
@@ -47,7 +45,7 @@ class CannerCMS extends React.Component<Props, State> {
         'en': {}
       }
     },
-    params: {},
+    routerParams: {},
     routes: []
   }
 
@@ -100,16 +98,13 @@ class CannerCMS extends React.Component<Props, State> {
     const {
       baseUrl,
       routes,
-      params,
+      routerParams,
       goTo,
       afterDeploy,
       intl = {},
       hideButtons,
-      schema: {storages, sidebar, dict = {}}
+      schema: {storages, dict = {}}
     } = this.props;
-    const {
-      dataChanged
-    } = this.state;
     const currentLocale = intl.locale || 'en';
     return (
       <IntlProvider
@@ -122,38 +117,26 @@ class CannerCMS extends React.Component<Props, State> {
           ...((intl.messages || {})[currentLocale] || {})
         }}
       >
-        <Layout>
-          <Sidebar
-            dataChanged={dataChanged}
-            sidebar={sidebar}
-            goTo={goTo}
+        <Provider
+          ref={provider => this.provider = provider}
+          client={this.client}
+          schema={this.schema}
+          dataDidChange={this.dataDidChange}
+          afterDeploy={afterDeploy}
+          rootKey={routes[0]}
+        >
+          <Generator
+            storages={storages}
             schema={this.schema}
-            reset={this.reset}
+            componentTree={this.componentTree || {}}
+            hocs={hocs}
+            goTo={goTo}
+            baseUrl={baseUrl}
             routes={routes}
+            routerParams={routerParams || {}}
+            hideButtons={hideButtons}
           />
-          <Layout.Content>
-            <Provider
-              ref={provider => this.provider = provider}
-              client={this.client}
-              schema={this.schema}
-              dataDidChange={this.dataDidChange}
-              afterDeploy={afterDeploy}
-              rootKey={routes[0]}
-            >
-              <Generator
-                storages={storages}
-                schema={this.schema}
-                componentTree={this.componentTree || {}}
-                hocs={hocs}
-                goTo={goTo}
-                baseUrl={baseUrl}
-                routes={routes}
-                params={params}
-                hideButtons={hideButtons}
-              />
-            </Provider>
-          </Layout.Content>
-        </Layout>
+        </Provider>
       </IntlProvider>
     );
   }

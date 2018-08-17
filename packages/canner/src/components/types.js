@@ -53,9 +53,9 @@ export type CMSProps = {
   dataDidChange: DataDidChange,
   afterDeploy: AfterDeploy,
   baseUrl: BaseUrl,
-  goTo: string => void,
+  goTo: Object => void,
   routes: Array<string>,
-  params: Object,
+  routerParams: Object,
   intl: Intl,
   hideButtons: HideButtons
 }
@@ -66,10 +66,10 @@ export type GeneratorProps = {
   layouts: {[string]: React.ComponentType<*>},
   storages: Object,
 
-  goTo: (path: string, search?: Object | string) => void,
+  goTo: Object => void,
   baseUrl: string,
   routes: Array<string>,
-  params: {[string]: string},
+  routerParams: {[string]: string},
   refresh?: boolean,
   deploy?: Function,
   reset?: Function,
@@ -87,15 +87,6 @@ export type ProviderProps = {
   client: ApolloClient,
   rootKey: string
 };
-
-export type ReactRouterProviderProps = {
-  children: React.Element<*>,
-  baseUrl: string,
-  history: {
-    location: Object,
-    push: Function
-  }
-}
 
 export type Submenu = {
   title: string,

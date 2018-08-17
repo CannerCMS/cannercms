@@ -78,7 +78,7 @@ describe('update action', () => {
       payload: {
         key: 'user',
         id: "",
-        value: newUser
+        value: {info: newUser.info}
       }
     });
   });
@@ -128,7 +128,7 @@ describe('create action', () => {
       payload: {
         key: 'posts',
         id: 'id1',
-        value: newValue.posts[0]
+        value: {users: newValue.posts[0].users}
           
       }
     });
@@ -151,7 +151,7 @@ describe('create action', () => {
       payload: {
         key: 'user',
         id: '',
-        value: newUser
+        value: {phone: newUser.phone}
       }
     });
   });
@@ -213,7 +213,7 @@ describe('delete action', () => {
       payload: {
         key: 'posts',
         id: 'id2',
-        value: newPost1
+        value: {users: newPost1.users}
       }
     });
   });
@@ -231,7 +231,7 @@ describe('delete action', () => {
       payload: {
         key: 'user',
         id: '',
-        value: newUser
+        value: {info: newUser.info}
       }
     });
   });
@@ -297,7 +297,6 @@ describe('swap action', () => {
         key: 'posts',
         id: 'id2',
         value: {
-          ...rootValue.posts[1],
           comment: [{
             text: 'yyy',
             author: 'yyy'
@@ -332,7 +331,7 @@ describe('swap action', () => {
       payload: {
         key: 'user',
         id: '',
-        value: newUser
+        value: {info: newUser.info}
       }
     });
   });

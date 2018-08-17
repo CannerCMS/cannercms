@@ -1,6 +1,6 @@
 // @flow
 
-import {update, set, get} from 'lodash';
+import {pick, update, set, get} from 'lodash';
 import {
   isCreateArray,
   isCreateNestedArrayInArray,
@@ -57,7 +57,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item
+        value: pick(item, paths.slice(0, 1))
       }
     }
   }
@@ -71,7 +71,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item
+        value: pick(item, paths.slice(0, 1))
       }
     }
   }
@@ -114,7 +114,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item
+        value: pick(item, paths.slice(0, 1))
       }
     }
   }
@@ -131,7 +131,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item
+        value: pick(item, paths.slice(0, 1))
       }
     }
   }
@@ -159,7 +159,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item
+        value: pick(item, paths.slice(0, 1))
       }
     };
   }
@@ -179,7 +179,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item
+        value: pick(item, paths.slice(0, 1))
       }
     };
   }
@@ -210,7 +210,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item
+        value: pick(item, paths.slice(0, 1))
       }
     }
   }
@@ -234,7 +234,7 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: item
+        value: pick(item, paths.slice(0, 1))
       }
     }
   }
