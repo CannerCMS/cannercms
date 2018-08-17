@@ -1,0 +1,10 @@
+{
+  "presets": [
+    "env",
+    "flow",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-react-jsx"
+  ]
+}

@@ -5,6 +5,7 @@ import Canner from 'packages/canner/src';
 import Wrapper from 'packages/canner-container/src';
 import R from 'packages/history-router/src';
 import schema from './canner.schema';
+import Graphql from './components/graphql';
 // eslint-disable-next-line
 console.log(schema);
 
@@ -28,29 +29,32 @@ class CMSExample extends React.Component {
     // eslint-disable-next-line
     return (
       <Router>
-        <Route path="/docs" render={({history}) => {
-          return (
-            <Wrapper
-              schema={schema}
-              sidebarConfig={{
-                menuConfig: true
-              }}
-              navbarConfig={{
-                renderMenu: () => null
-              }}
-              router={new R({
-                history,
-                baseUrl
-              })}
-            >
-              <Canner
-                schema={{...schema}}
-                afterDeploy={this.afterDeploy}
-                dataDidChange={this.dataDidChange}
-              />
-            </Wrapper>
-          );
-        }}/>
+        <div>
+          <Route path="/docs" render={({history}) => {
+            return (
+              <Wrapper
+                schema={schema}
+                sidebarConfig={{
+                  menuConfig: true
+                }}
+                navbarConfig={{
+                  renderMenu: () => null
+                }}
+                router={new R({
+                  history,
+                  baseUrl
+                })}
+              >
+                <Canner
+                  schema={{...schema}}
+                  afterDeploy={this.afterDeploy}
+                  dataDidChange={this.dataDidChange}
+                />
+              </Wrapper>
+            );
+          }}/>
+          <Route path="/graphql" component={Graphql}/>
+        </div>
       </Router>
     );
   }

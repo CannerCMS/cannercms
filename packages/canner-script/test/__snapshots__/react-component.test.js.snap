@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`get react component from canner script should works 1`] = `
+<div>
+  123
+</div>
+`;

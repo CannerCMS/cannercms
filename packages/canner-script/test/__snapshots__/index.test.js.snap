@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`builder blog schema 1`] = `
+Object {
+  "connector": undefined,
+  "dict": Object {},
+  "graphqlClient": undefined,
+  "resolvers": Object {},
+  "schema": Object {
+    "posts": Object {
+      "description": "",
+      "items": Object {
+        "items": Object {
+          "featureImage": Object {
+            "contentType": "image",
+            "description": "",
+            "keyName": "featureImage",
+            "packageName": "@canner/antd-object-image",
+            "title": "",
+            "type": "file",
+            "ui": "file",
+            "uiParams": Object {},
+          },
+          "other": Object {
+            "description": "",
+            "items": Object {
+              "introduction": Object {
+                "description": "",
+                "keyName": "introduction",
+                "packageName": "@canner/antd-string-input",
+                "title": "",
+                "type": "string",
+                "ui": "input",
+                "uiParams": Object {},
+              },
+              "position": Object {
+                "description": "",
+                "keyName": "position",
+                "packageName": "@canner/antd-object-map",
+                "title": "",
+                "type": "geoPoint",
+                "ui": "default",
+                "uiParams": Object {},
+              },
+            },
+            "keyName": "other",
+            "packageName": "@canner/antd-object-fieldset",
+            "title": "",
+            "type": "object",
+            "ui": "fieldset",
+            "uiParams": Object {},
+          },
+          "pageProperty": Object {
+            "description": "",
+            "items": Object {
+              "onTop": Object {
+                "description": "",
+                "keyName": "onTop",
+                "packageName": "@canner/antd-boolean-switch",
+                "title": "",
+                "type": "boolean",
+                "ui": "switch",
+                "uiParams": Object {},
+              },
+              "order": Object {
+                "description": "",
+                "keyName": "order",
+                "packageName": "@canner/antd-number-input",
+                "title": "",
+                "type": "number",
+                "ui": "input",
+                "uiParams": Object {},
+              },
+            },
+            "keyName": "pageProperty",
+            "packageName": "@canner/antd-object-fieldset",
+            "title": "",
+            "type": "object",
+            "ui": "fieldset",
+            "uiParams": Object {},
+          },
+          "share": Object {
+            "description": "",
+            "items": Object {
+              "showGoodBottom": Object {
+                "description": "",
+                "keyName": "showGoodBottom",
+                "packageName": "@canner/antd-boolean-switch",
+                "title": "",
+                "type": "boolean",
+                "ui": "switch",
+                "uiParams": Object {},
+              },
+              "showShareBottom": Object {
+                "description": "",
+                "keyName": "showShareBottom",
+                "packageName": "@canner/antd-boolean-switch",
+                "title": "",
+                "type": "boolean",
+                "ui": "switch",
+                "uiParams": Object {},
+              },
+            },
+            "keyName": "share",
+            "packageName": "@canner/antd-object-fieldset",
+            "title": "",
+            "type": "object",
+            "ui": "fieldset",
+            "uiParams": Object {},
+          },
+          "status": Object {
+            "description": "",
+            "items": Object {
+              "createAt": Object {
+                "description": "",
+                "keyName": "createAt",
+                "packageName": "@canner/antd-string-date_time_picker",
+                "title": "",
+                "type": "dateTime",
+                "ui": "dateTime",
+                "uiParams": Object {},
+              },
+              "draft": Object {
+                "description": "",
+                "keyName": "draft",
+                "packageName": "@canner/antd-boolean-switch",
+                "title": "",
+                "type": "boolean",
+                "ui": "switch",
+                "uiParams": Object {},
+              },
+            },
+            "keyName": "status",
+            "packageName": "@canner/antd-object-fieldset",
+            "title": "",
+            "type": "object",
+            "ui": "fieldset",
+            "uiParams": Object {},
+          },
+        },
+        "type": "object",
+      },
+      "keyName": "posts",
+      "packageName": "@canner/antd-array-table",
+      "title": "",
+      "toolbar": Object {
+        "pagination": Object {},
+      },
+      "type": "array",
+      "ui": "table",
+      "uiParams": Object {},
+    },
+  },
+  "storages": Object {
+    "posts": Object {},
+  },
+  "visitors": Array [],
+}
+`;
+
+exports[`builder function 1`] = `
+Object {
+  "description": "",
+  "items": Object {
+    "desc": Object {
+      "description": "",
+      "keyName": "desc",
+      "packageName": "@canner/antd-string-input",
+      "title": "",
+      "type": "string",
+      "ui": "input",
+      "uiParams": Object {},
+    },
+    "title": Object {
+      "description": "",
+      "keyName": "title",
+      "packageName": "@canner/antd-string-input",
+      "title": "",
+      "type": "string",
+      "ui": "input",
+      "uiParams": Object {},
+    },
+  },
+  "keyName": "variants",
+  "packageName": "@canner/antd-object-fieldset",
+  "title": "",
+  "type": "object",
+  "ui": "fieldset",
+  "uiParams": Object {},
+}
+`;
+
+exports[`builder map chilren 1`] = `
+Object {
+  "description": "",
+  "items": Object {
+    "a": Object {
+      "description": "",
+      "key": "a",
+      "keyName": "a",
+      "packageName": "@canner/antd-string-input",
+      "title": "",
+      "type": "string",
+      "ui": "input",
+      "uiParams": Object {},
+    },
+    "b": Object {
+      "description": "",
+      "key": "b",
+      "keyName": "b",
+      "packageName": "@canner/antd-string-input",
+      "title": "",
+      "type": "string",
+      "ui": "input",
+      "uiParams": Object {},
+    },
+    "c": Object {
+      "description": "",
+      "key": "c",
+      "keyName": "c",
+      "packageName": "@canner/antd-string-input",
+      "title": "",
+      "type": "string",
+      "ui": "input",
+      "uiParams": Object {},
+    },
+    "desc": Object {
+      "description": "",
+      "keyName": "desc",
+      "packageName": "@canner/antd-string-input",
+      "title": "",
+      "type": "string",
+      "ui": "input",
+      "uiParams": Object {},
+    },
+  },
+  "keyName": "variants",
+  "packageName": "@canner/antd-object-fieldset",
+  "title": "",
+  "type": "object",
+  "ui": "fieldset",
+  "uiParams": Object {},
+}
+`;
+
+exports[`builder null 1`] = `
+Object {
+  "description": "",
+  "keyName": "info",
+  "packageName": "@canner/antd-object-fieldset",
+  "title": "",
+  "type": "object",
+  "ui": "fieldset",
+  "uiParams": Object {},
+}
+`;

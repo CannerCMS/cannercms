@@ -1,0 +1,20 @@
+{
+  "exclude": ["node_modules", "lib"],
+  "extends": ["tslint:latest"],
+  "rules": {
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "any",
+        "named-imports-order": "any"
+      }
+    ],
+    "quotemark": [true, "single"],
+    "no-implicit-dependencies": [true, "dev"],
+    "no-submodule-imports": false,
+    "object-literal-sort-keys": false,
+    "trailing-comma": false,
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "interface-name": [true, "never-prefix"]
+  }
+}

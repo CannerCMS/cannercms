@@ -1,0 +1,56 @@
+{
+  "name": "canner-script",
+  "version": "1.2.7",
+  "description": "Sugar syntax of Canner CMS schema",
+  "license": "Apache-2.0",
+  "repository": "",
+  "main": "lib/index.js",
+  "author": "Canner",
+  "engines": {
+    "node": ">=6"
+  },
+  "files": [
+    "lib",
+    "index.js"
+  ],
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest --watch --coverage",
+    "build:watch": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --watch",
+    "build": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files"
+  },
+  "jest": {
+    "browser": true,
+    "moduleNameMapper": {
+      "\\.(css|less)$": "./__test__/__mocks__/styleMock.js",
+      "@canner/antd": "./__test__/__mocks__/componentMock.js"
+    },
+    "testURL": "http://localhost"
+  },
+  "keywords": [],
+  "dependencies": {
+    "eval": "^0.1.2",
+    "object-path": "^0.11.4",
+    "react": "^16.4.2",
+    "react-intl": "^2.4.0",
+    "safer-eval": "^1.2.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.2",
+    "babel-jest": "^23.4.2",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "canner-compiler": "^0.1.6",
+    "flow-bin": "^0.78.0",
+    "jest": "^23.5.0",
+    "regenerator-runtime": "^0.12.1"
+  },
+  "peerDependencies": {
+    "react": ">=16.3.0",
+    "react-intl": ">=2.4.0"
+  }
+}

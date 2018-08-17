@@ -1,0 +1,41 @@
+{
+  "name": "canner-simulator",
+  "version": "0.0.2",
+  "description": "Testing tool for Canner ",
+  "homepage": "",
+  "author": "Canner",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "keywords": [
+    ""
+  ],
+  "devDependencies": {
+    "flow-bin": "^0.78.0"
+  },
+  "scripts": {
+    "test": "../../node_modules/.bin/jest --coverage",
+    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "repository": "Canner/react-cms-simulator",
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0 || 16.x",
+    "react-dom": "^0.14.0 || ^15.0.0 || 16.x"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less)$": "./test/__mocks__/styleMock.js"
+    }
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "antd": "^3.4.1",
+    "canner-helpers": "^0.0.1",
+    "canner-ref-id": "^0.1.2",
+    "immutable": "^3.8.2"
+  }
+}

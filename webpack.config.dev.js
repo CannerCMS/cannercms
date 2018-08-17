@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const fs = require('fs');
-
 module.exports = {
   devServer: {
     historyApiFallback: {
@@ -28,13 +27,10 @@ module.exports = {
     publicPath: '/docs/static/',
   },
   resolve: {
-    modules: [
-      'packages/canner/node_modules',
-      'node_modules'
-    ],
+    extensions: [".ts", ".js"],
     alias: {
-      'canner-graphql-interface': path.resolve(__dirname, 'packages/canner/node_modules/canner-graphql-interface'),
-      'canner-helpers': path.resolve(__dirname, 'packages/canner/node_modules/canner-helpers'),
+      'canner-script': path.resolve(__dirname, 'packages', 'canner-script'),
+      'canner-helpers': path.resolve(__dirname, 'packages', 'canner-helpers'),
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
@@ -42,23 +38,37 @@ module.exports = {
     }
   },
   resolveLoader: {
-    modules: [
-      'packages/canner/node_modules',
-      'node_modules'
-    ],
-     moduleExtensions: ["-loader"]
+    moduleExtensions: ["-loader"]
   },
   plugins: [
     new webpack.DefinePlugin({
       FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
-    })
+    }),
+    // https://github.com/graphql/graphql-language-service/issues/128
+    new webpack.ContextReplacementPlugin(
+      /graphql-language-service-interface[\\/]dist$/,
+      new RegExp(`^\\./.*\\.js$`)
+    )
   ],
   module: {
     rules: [
       {
+        type: 'javascript/auto',
+        test: /\.mjs$/,
+        use: []
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader'
+        }
+      },
+      
+      {
         test: /(\.schema\.js|canner\.def\.js)$/,
         use: [{
-          loader: 'canner-schema-loader',
+          loader: './packages/canner-schema-loader/lib/index.js',
         }, {
           loader: 'babel-loader',
           /**
