@@ -1,7 +1,9 @@
-import Traverser from './traverser';
-import Parser from './parser';
+import traverser from './traverser';
+import parser from './parser';
 
+export const Traverser = traverser;
+export const Parser = parser;
 export default {
-  Traverser,
-  Parser,
+  Traverser: traverser,
+  Parser: parser,
 };

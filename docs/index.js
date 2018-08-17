@@ -29,30 +29,32 @@ class CMSExample extends React.Component {
     // eslint-disable-next-line
     return (
       <Router>
-        <Route path="/docs" render={({history}) => {
-          return (
-            <Wrapper
-              schema={schema}
-              sidebarConfig={{
-                menuConfig: true
-              }}
-              navbarConfig={{
-                renderMenu: () => null
-              }}
-              router={new R({
-                history,
-                baseUrl
-              })}
-            >
-              <Canner
-                schema={{...schema}}
-                afterDeploy={this.afterDeploy}
-                dataDidChange={this.dataDidChange}
-              />
-            </Wrapper>
-          );
-        }}/>
-        <Route path="/graphql" component={Graphql}/>
+        <div>
+          <Route path="/docs" render={({history}) => {
+            return (
+              <Wrapper
+                schema={schema}
+                sidebarConfig={{
+                  menuConfig: true
+                }}
+                navbarConfig={{
+                  renderMenu: () => null
+                }}
+                router={new R({
+                  history,
+                  baseUrl
+                })}
+              >
+                <Canner
+                  schema={{...schema}}
+                  afterDeploy={this.afterDeploy}
+                  dataDidChange={this.dataDidChange}
+                />
+              </Wrapper>
+            );
+          }}/>
+          <Route path="/graphql" component={Graphql}/>
+        </div>
       </Router>
     );
   }

@@ -2,7 +2,7 @@
 import React from 'react';
 import {FirebaseClientService} from '@canner/image-service-config';
 import firebase from 'firebase';
-import {FirebaseRtdbClientConnector, PrismaClient} from 'canner-graphql-interface';
+import {FirebaseRtdbClientConnector, PrismaClient} from 'packages/canner-graphql-interface';
 
 
 firebase.initializeApp({

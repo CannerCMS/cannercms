@@ -4,7 +4,7 @@
   "description": "Sugar syntax of Canner CMS schema",
   "license": "Apache-2.0",
   "repository": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "author": "Canner",
   "engines": {
     "node": ">=6"
