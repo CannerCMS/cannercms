@@ -277,6 +277,16 @@ describe('builder', () => {
     });
   });
 
+  describe('chart', () => {
+    it('should work', () => {
+      expect(<chart keyName="chart"/>).toMatchObject({
+        type: 'chart',
+        ui: 'line',
+        keyName: 'chart'
+      });
+    });
+  });
+
   describe('root', () => {
     it('should work', () => {
       const root = <root dict={{en: {title: 'title'}}}>
