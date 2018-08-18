@@ -71,6 +71,12 @@ export const componentMap = {
     dateTime: {
       dateTime: '@canner/antd-string-date_time_picker', 
       default: '@canner/antd-string-date_time_picker'
+    },
+    chart: {
+      line: '@canner/vega-chart-line',
+      bar: '@canner/vega-chart-bar',
+      pie: '@canner/vega-chart-pie',
+      scatter: '@canner/vega-chart-scatter'
     }
   },
   get: function(type: string, ui: string = 'default') {
