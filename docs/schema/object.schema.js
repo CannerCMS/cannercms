@@ -17,6 +17,16 @@ const Objects = ({attributes}) => <object {...attributes}>
     <string keyName="one" />
     <boolean keyName="two" />
   </object>
+  <object ui="variants" keyName="variants"
+    uiParams={{
+      columns: [{
+        title: 'Price',
+        dataIndex: 'price'
+      }]
+    }}
+  >
+    <number keyName="price" title="Price"/>
+  </object>
 </object>;
 
 export default Objects;

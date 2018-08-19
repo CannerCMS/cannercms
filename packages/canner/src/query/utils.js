@@ -24,7 +24,6 @@ export function fieldToQueriesObject(field: any): any {
     }
     case types.ARRAY: {
       field.forEach(childField => {
-        set(queriesObj, ['fields', 'id'], null);
         const qlo = fieldToQueriesObject(childField);
         set(queriesObj, ['fields', childField.getKey()], qlo.queriesObj);
         merge(variables, qlo.variables);
@@ -45,6 +44,7 @@ export function fieldToQueriesObject(field: any): any {
         queriesObj.isPlural = true;
         queriesObj.connection = true;
         queriesObj.alias = field.getKey();
+        set(queriesObj, ['fields', 'id'], null);
         variables[firstKey] = defaultFirst;
         variables[whereKey] = {};
         const toolbar = field.getAttr('toolbar');

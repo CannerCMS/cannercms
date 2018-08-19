@@ -80,17 +80,5 @@ export default <root connector={connector}>
   <Home userColumns={userColumns} postColumns={postColumns}/>
   <Posts columns={postColumns} />
   <Users columns={userColumns} searchComponent={TabsFilter} />
-  <array keyName="test" title="array" uiParams={{columns: [{title: 'title', dataIndex: 'title'}]}}>
-    <string keyName="title" title="title"
-      validation={{
-        maxLength: 2
-      }}
-    />
-    <OnDeploy
-      keyName="test1"
-      title="OnDeploy Demo"
-    />
-    <array keyName="gallery" packageName="./components/def-array-gallery"/>
-  </array>
   <SelfRelation />
 </root>
