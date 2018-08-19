@@ -287,6 +287,34 @@ describe('builder', () => {
     });
   });
 
+  describe('chart', () => {
+    it('should work', () => {
+      expect(<chart keyName="chart"/>).toMatchObject({
+        type: 'chart',
+        ui: 'line',
+        keyName: 'chart'
+      });
+    });
+
+    it('should have keyName', () => {
+      expect(<chart />).toHaveProperty('keyName');
+    });
+  });
+
+  describe('indicator', () => {
+    it('should work', () => {
+      expect(<indicator keyName="indicator"/>).toMatchObject({
+        type: 'indicator',
+        ui: 'amount',
+        keyName: 'indicator'
+      });
+    });
+
+    it('should have keyName', () => {
+      expect(<indicator />).toHaveProperty('keyName');
+    });
+  });
+
   describe('root', () => {
     it('should work', () => {
       const root = <root dict={{en: {title: 'title'}}} storage="storage">
