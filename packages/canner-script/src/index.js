@@ -13,7 +13,8 @@ import {
   RootModel,
   RelationModel,
   ImageModel,
-  ChartModel
+  ChartModel,
+  IndicatorModel
 } from './models';
 import type {CannerSchema, Props} from './flow-types';
 import {createLayoutVisitor, CANNER_KEY} from './layout';
@@ -73,6 +74,8 @@ export default function builder(tag: string | Function, attributes: Object, ...c
       return createJSON(RelationModel, [attributes, children]);
     case 'chart':
       return createJSON(ChartModel, [attributes, children]);
+    case 'indicator':
+      return createJSON(IndicatorModel, [attributes, children])
     case 'root': {
       const renderView = {
         dict: attributes.dict || {},
