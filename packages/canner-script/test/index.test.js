@@ -289,11 +289,14 @@ describe('builder', () => {
 
   describe('root', () => {
     it('should work', () => {
-      const root = <root dict={{en: {title: 'title'}}}>
-        <object keyName="info">
+      const root = <root dict={{en: {title: 'title'}}} storage="storage">
+        <object keyName="info" >
           <string keyName="name"/>
         </object>
       </root>
+      expect(root.storages).toMatchObject({
+        info: 'storage'
+      });
       expect(root.schema).toMatchObject({
         info: {
           type: 'object',

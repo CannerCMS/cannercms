@@ -78,7 +78,7 @@ export default function builder(tag: string | Function, attributes: Object, ...c
         dict: attributes.dict || {},
         schema: new RootModel(attributes, children).toJson(),
         visitors: visitorManager.getAllVisitors(),
-        storages: genStorages(children),
+        storages: genStorages(attributes, children),
         connector: parseConnector(attributes, children) || parseConnectors(attributes, children),
         resolvers: parseResolvers(attributes, children),
         graphqlClient: parseGraphqlClient(attributes, children) || parseGraphqlClients(attributes, children)
@@ -150,9 +150,9 @@ function createJSON(Model: any, args: Array<*>) {
   return json;
 }
 
-function genStorages(children: Array<*>) {
+function genStorages(attrs: Object, children: Array<*>) {
   return children.reduce((result: Object, child: Object): Object => {
-    result[child.keyName] = child.storage || {};
+    result[child.keyName] = child.storage ||attrs.storage || {};
     return result;
   }, {});
 }
