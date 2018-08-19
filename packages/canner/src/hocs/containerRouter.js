@@ -2,13 +2,71 @@
 
 import * as React from 'react';
 import {Context} from 'canner-helpers';
+import {mapValues, get, isPlainObject, isArray} from 'lodash';
 import type {HOCProps} from './types';
 
 // $FlowFixMe
 export default function withContainerRouter(Com: React.ComponentType<*>) {
   return class ContainerWithRouter extends React.Component<HOCProps> {
+    state = {
+      value: {},
+      recordValue: {}
+    };
+
+    constructor(props) {
+      super(props);
+      this.key = props.refId.getPathArr()[0];
+    }
+
+    componentDidMount() {
+      if (this.key) {
+        this.queryData();
+        this.subscribe();
+      }
+    }
+
+    componentWillUnmount() {
+      this.unsubscribe();
+    }
+    
+    queryData = (props?: HOCProps): Promise<*> => {
+      const {refId, fetch} = props || this.props;
+      return fetch(this.key).then(data => {
+        const rootValue = parseConnectionToNormal(data);
+        this.setState({
+          originRootValue: data,
+          rootValue,
+          recordValue: getRecordValue(rootValue, refId),
+          value: getValue(data, refId.getPathArr()),
+          isFetching: false
+        });
+      });
+    }
+
+    subscribe = () => {
+      const {subscribe, refId} = this.props;
+      const subscription = subscribe(this.key, (data) => {
+        const rootValue = parseConnectionToNormal(data);
+        this.setState({
+          originRootValue: data,
+          rootValue,
+          recordValue: getRecordValue(rootValue, refId),
+          value: getValue(data, refId.getPathArr()),
+          isFetching: false
+        });
+      });
+      this.subscription = subscription;
+    }
+
+    unsubscribe = () => {
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+      }
+    }
+
     render() {
       const {routes, renderChildren, refId} = this.props;
+      const {value, recordValue} = this.state;
       return <Context.Provider
         value={{
           renderChildren,
@@ -16,8 +74,40 @@ export default function withContainerRouter(Com: React.ComponentType<*>) {
           refId
         }}
       >
-        <Com {...this.props}/>
+        <Com {...this.props} value={value} recordValue={recordValue}/>
       </Context.Provider>;
     }
   };
+}
+
+export function getValue(value: Map<string, *>, idPathArr: Array<string>) {
+  return idPathArr.reduce((result: any, key: string) => {
+    if (isPlainObject(result)) {
+      if ('edges' in result && 'pageInfo' in result) {
+        return get(result, ['edges', key, 'node']);
+      }
+      return get(result, key);
+    } else if (isArray(result)) {
+      return get(result, key);
+    } else {
+      return result;
+    }
+  }, value);
+}
+
+export function parseConnectionToNormal(value: any) {
+  if (isPlainObject(value)) {
+    if (value.edges && value.pageInfo) {
+      return value.edges.map(edge => parseConnectionToNormal(edge.node));
+    }
+    return mapValues(value, item => parseConnectionToNormal(item));
+  } else if (isArray(value)) {
+    return value.map(item => parseConnectionToNormal(item))
+  } else {
+    return value;
+  }
+}
+
+function getRecordValue(rootValue, refId) {
+  return get(rootValue, refId.getPathArr(), {});
 }

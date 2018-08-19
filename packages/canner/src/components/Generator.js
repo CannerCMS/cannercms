@@ -120,7 +120,7 @@ export default class Generator extends React.PureComponent<Props, State> {
       if (typeof copyNode.component === 'string') {
         copyNode.component = Layouts[copyNode.component]
       }
-      component = this.wrapByHOC(copyNode.component, (copyNode.hocs || ['containerRouter']).slice() || []);
+      component = this.wrapByHOC(copyNode.component, ['containerRouter', 'context']);
     } else if (isComponent(copyNode)) { // TODO: need to fix, turn plugins to components in compiler
 
       if (isFieldset(copyNode)) {
@@ -131,7 +131,7 @@ export default class Generator extends React.PureComponent<Props, State> {
           loading: Loading,
         });
       }
-      component = this.wrapByHOC(component, ['title', 'onDeploy', 'validation', 'deploy', 'request', 'relation', 'query', 'cache', 'route', 'id', 'context', 'errorCatch'] || []);
+      component = this.wrapByHOC(component, ['title', 'onDeploy', 'validation', 'deploy', 'request', 'relation', 'query', 'cache', 'route', 'id', 'context', 'errorCatch']);
     }
 
     if (!component) {

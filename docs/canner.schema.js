@@ -10,6 +10,7 @@ import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
 import Home from './schema/realWorld/home.schema';
 import OnDeploy from './schema/onDeploy.schema';
+import Condition from './schema/condition.schema';
 import SelfRelation from './schema/selfRelation.schema';
 import TabsFilter from './toolbar/filter';
 import utils from './utils';
@@ -81,4 +82,5 @@ export default <root connector={connector}>
   <Posts columns={postColumns} />
   <Users columns={userColumns} searchComponent={TabsFilter} />
   <SelfRelation />
+  <Condition />
 </root>

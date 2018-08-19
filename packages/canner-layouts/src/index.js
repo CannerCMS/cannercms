@@ -6,6 +6,7 @@ import Row from './Row';
 import InnerBlock from './InnerBlock';
 import Focus from './Focus';
 import Tabs from './Tabs';
+import Condition from './Condition';
 
 export default {
   block: Block,
@@ -15,5 +16,6 @@ export default {
   row: Row,
   innerBlock: InnerBlock,
   focus: Focus,
-  tabs: Tabs
+  tabs: Tabs,
+  condition: Condition
 };

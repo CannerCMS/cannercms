@@ -31,6 +31,7 @@ export const Block = ({attributes, children}: Props) => <Layout component="block
 export const Default = ({attributes, children}: Props) => <Layout component="default" {...attributes}>{children}</Layout>;
 export const Tabs = ({attributes, children}: Props) => <Layout component="tabs" {...attributes}>{children}</Layout>;
 export const Focus = ({attributes, children}: Props) => <Layout component="focus" {...attributes}>{children}</Layout>;
+export const Condition = ({attributes, children}: Props) => <Layout component="condition" {...attributes}>{children}</Layout>;
 
 // validator config
 export const configure = configuration.configure;
