@@ -340,6 +340,25 @@ describe('builder', () => {
       });
       expect(root.dict).toMatchObject({en: {title: 'title'}});
     });
+
+    it('should work with <page>child', () => {
+      const root = <root>
+        <page keyName="overview">
+          <chart keyName="line" ui="line" />
+        </page>
+      </root>
+      expect(root.pageSchema).toMatchObject({
+        keyName: 'overview',
+        type: 'page',
+        items: {
+            line: {
+                type: 'chart',
+                ui: 'line',
+                keyName: 'line'
+            }
+        }
+      });
+    });
   });
 
 
