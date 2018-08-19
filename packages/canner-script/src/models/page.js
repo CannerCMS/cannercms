@@ -7,8 +7,10 @@ export default class PageModel {
   keyName: string;
 
   constructor({ keyName }: string, children: Array<CannerSchema>) {
+    if (!keyName) {
+      throw new Error('The keyName of <page /> is required');
+    }
     this.keyName = keyName;
-
     if (children && children.length) {
       this.items = children.reduce((result, child) => {
         if (child.keyName in result) {
