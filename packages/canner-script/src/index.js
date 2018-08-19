@@ -14,7 +14,8 @@ import {
   RelationModel,
   ImageModel,
   ChartModel,
-  IndicatorModel
+  IndicatorModel,
+  PageModel
 } from './models';
 import type {CannerSchema, Props} from './flow-types';
 import {createLayoutVisitor, CANNER_KEY} from './layout';
@@ -76,6 +77,8 @@ export default function builder(tag: string | Function, attributes: Object, ...c
       return createJSON(ChartModel, [attributes, children]);
     case 'indicator':
       return createJSON(IndicatorModel, [attributes, children])
+    case 'page':
+      return new PageModel(attributes, children).toJson();
     case 'root': {
       const renderView = {
         dict: attributes.dict || {},

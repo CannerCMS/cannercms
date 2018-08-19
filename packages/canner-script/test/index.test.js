@@ -342,6 +342,38 @@ describe('builder', () => {
     });
   });
 
+
+  describe('page', () => {
+    it('should work', () => {
+      const page = <page keyName="overview">
+        <indicator ui="amount" keyName="key1"/>
+        <indicator ui="list" keyName="key2"/>
+        <chart ui="bar" keyName="key3"/>
+      </page>
+      expect(page).toMatchObject({
+        keyName: 'overview',
+        type: 'page',
+        items: {
+          key1: {
+              type: 'indicator',
+              ui: 'amount',
+              keyName: 'key1'
+          },
+          key2: {
+              type: 'indicator',
+              ui: 'list',
+              keyName: 'key2'
+          },
+          key3: {
+              type: 'chart',
+              ui: 'bar',
+              keyName: 'key3'
+          }
+        }
+      });
+    });
+  });
+
   describe('children with map', () => {
     it('should work', () => {
       const schema = <root>
