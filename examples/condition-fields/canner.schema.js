@@ -2,58 +2,51 @@
 
 import builder, {Condition} from 'canner-script';
 
-const condition = () => (
-  <array keyName="condition" title="Condition" ui="tableRoute">
-    <string keyName="field1" ui="select"
-      uiParams={{
-        options: [{
-          text: 'hidden',
-          value: 'hidden'
-        }, {
-          text: 'normal',
-          value: 'normal'
-        }]
-      }}
-    />
-    <Condition match={data => data.field1 === 'normal'}>
-      <number keyName="field2" />
-    </Condition>
-    <string keyName="field3" ui="select"
-      uiParams={{
-        options: [{
-          text: 'disabled',
-          value: 'disabled'
-        }, {
-          text: 'normal',
-          value: 'normal'
-        }]
-      }}
-    />
-    <Condition match={data => data.field3 === 'normal'} defaultMode="disabled">
-      <number keyName="field4" />
-    </Condition>
-    <array keyName="field5" >
-      <string keyName="field6" ui="select"
+export default (
+  <root>
+    <array keyName="condition" title="Condition" ui="tableRoute">
+      <string keyName="controlField" ui="select"
         uiParams={{
           options: [{
-            text: 'hidden',
-            value: 'hidden'
+            text: 'unmatch',
+            value: 'unmatch'
           }, {
-            text: 'normal',
-            value: 'normal'
+            text: 'match',
+            value: 'match'
           }]
         }}
       />
-      <Condition match={data => data.field6 === 'normal'}>
-        <number keyName="field7" />
+      <Condition match={data => data.controlField === 'match'}>
+        <number keyName="hiddenField" title="Hidden Field"/>
+      </Condition>
+      <Condition match={data => data.controlField === 'match'} defaultMode="disabled">
+        <number keyName="disabledField" title="Disabled Field "/>
+      </Condition>
+
+      <array keyName="nested" >
+        <string keyName="controlField" ui="select"
+          uiParams={{
+            options: [{
+              text: 'unmatch',
+              value: 'unmatch'
+            }, {
+              text: 'match',
+              value: 'match'
+            }]
+          }}
+        />
+        <Condition match={data => data.controlField === 'match'}>
+          <number keyName="hiddenField" />
+        </Condition>
+      </array>
+
+
+      <Condition match={(data, operator) => operator === 'create'}>
+        <string keyName="showOnCreate" title="Show on create"/>
+      </Condition>
+      <Condition match={(data, operator) => operator === 'update'}>
+        <string keyName="showOnUpdate" title="Show on update"/>
       </Condition>
     </array>
-    <Condition match={(data, operator) => operator === 'create'}>
-      <string keyName="showOnCreate" title="show on create"/>
-    </Condition>
-    <Condition match={(data, operator) => operator === 'update'}>
-      <string keyName="showOnUpdate" title="show on update"/>
-    </Condition>
-  </array>
-)
-export default condition;
+  </root>
+);

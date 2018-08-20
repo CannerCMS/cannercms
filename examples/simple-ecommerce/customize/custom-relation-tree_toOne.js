@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
 import { Tree } from "antd";
-import { fromJS } from 'immutable';
-import template from 'lodash/template';
 import update from 'lodash/update';
+import get from 'lodash/get';
 import 'antd/lib/tree/style/index.css';
 const TreeNode = Tree.TreeNode;
 
@@ -14,11 +13,11 @@ export default class RelationTree extends PureComponent {
       autoExpandParent: true,
       checkedKeys: [],
       treeData: [],
-      data: fromJS({
+      data: {
         [props.relation.to]: {
           edges: []
         }
-      })
+      }
     }
   }
 
@@ -60,7 +59,7 @@ export default class RelationTree extends PureComponent {
 
   updateData = (data) => {
     const {relation, uiParams: {textCol}} = this.props;
-    const treeData = genRelationTree(data.getIn([relation.to, 'edges']).map(edge => edge.get('node')).toJS(), textCol);
+    const treeData = genRelationTree(get(data, [relation.to, 'edges']).map(edge => edge.node), textCol);
     this.setState({
       treeData,
       data
@@ -73,14 +72,12 @@ export default class RelationTree extends PureComponent {
     const {onChange, refId, value, relation} = this.props;
     const {data} = this.state;
     if (checkedKeys.length > 1 && !nodes[1].props.disableCheckbox) {
-      const checked = data.getIn([relation.to, 'edges'])
-        .find(edge => edge.get('cursor') === checkedKeys[1])
-        .get('node');
+      const checked = get(data, [relation.to, 'edges'], [])
+        .find(edge => edge.cursor === checkedKeys[1]).node;
       onChange(refId, 'connect', checked);
     } else if (checkedKeys[0] && !nodes[0].props.disableCheckbox) {
-      const checked = data.getIn([relation.to, 'edges'])
-        .find(edge => edge.get('cursor') === checkedKeys[0])
-        .get('node');
+      const checked = get(data, [relation.to, 'edges'])
+        .find(edge => edge.cursor === checkedKeys[0]).node;
       onChange(refId, 'connect', checked);
     } else {
       onChange(refId, 'disconnect', value);
@@ -98,7 +95,7 @@ export default class RelationTree extends PureComponent {
           </TreeNode>
         );
       }
-      return <TreeNode {...item} disableCheckbox={isSelf || disableCheckbox}/>;
+      return <TreeNode {...item} key={item.key} disableCheckbox={isSelf || disableCheckbox}/>;
     });
   }
 
@@ -106,11 +103,11 @@ export default class RelationTree extends PureComponent {
     const { treeData, data } = this.state;
     const { value, refId, relation } = this.props;
     const [key, index] = refId.getPathArr();
-    const checkedId = value && value.get('id');
+    const checkedId = value && value.id;
     let selfId = null;
     if (key === relation.to) {
       // self relation
-      selfId = data.getIn([key, 'edges', index, 'cursor']);
+      selfId = get(data, [key, 'edges', index, 'cursor']);
     }
     return (
       <Tree
@@ -118,7 +115,7 @@ export default class RelationTree extends PureComponent {
         checkStrictly
         checkable
         onCheck={this.onCheck}
-        checkedKeys={value ? [value.get('id')] : []}
+        checkedKeys={value ? [value.id] : []}
       >
         {this.renderTreeNodes(treeData, checkedId, selfId)}
       </Tree>
@@ -161,25 +158,4 @@ function genRelationTree(data, textCol, treeData, treeMap) {
   }
   return treeData;
 
-}
-
-function getTag(v, uiParams) {
-  // use value and uiParams to generateTagName
-  const {textCol, subtextCol, renderText} = uiParams;
-  let tag = '';
-  if (renderText) {
-    // if there is renderText, textCol and subtextCol will be ignored;
-    const compiler = template(renderText);
-    try {
-      tag = compiler(v);
-    } catch (e) {
-      throw e;
-    }
-  } else {
-    const text = v[textCol];
-    const subtext = v[subtextCol];
-    tag = text + (subtext ? `(${subtext})` : '');
-  }
-
-  return tag;
 }

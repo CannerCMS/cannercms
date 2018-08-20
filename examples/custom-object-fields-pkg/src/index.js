@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import {Map} from 'immutable';
 
 export default class Fields extends Component {
   static defaultProps = {
-    value: new Map()
+    value: {}
   };
 
   onChange = (e, type) => {
     const { refId, value } = this.props;
     const newValue = e.target.value;
-    this.props.onChange(refId, "update", value.setIn([type], newValue));
+    this.props.onChange(refId, "update", {...value, [type]: newValue});
   }
 
   render() {
@@ -19,12 +18,12 @@ export default class Fields extends Component {
         <h1>Your name</h1>
         <input
           type="text"
-          value={value.get('name')}
+          value={value.name}
           onChange={(e) => this.onChange(e, 'name')}
         />
         <h1>Content</h1>
         <textarea
-          value={value.get('content')}
+          value={value.content}
           onChange={(e) => this.onChange(e, 'content')}
         />
       </div>

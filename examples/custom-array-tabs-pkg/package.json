@@ -16,7 +16,6 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^3.2.0",
-    "immutable": "4.0.0-rc.9",
     "rc-tabs": "^9.2.5"
   }
 }

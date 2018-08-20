@@ -3,7 +3,6 @@ import Tabs, { TabPane } from "rc-tabs";
 import TabContent from "rc-tabs/lib/TabContent";
 import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
 import { Button, Icon, Modal } from "antd";
-import { List } from "immutable";
 import {Item} from 'canner-helpers';
 import 'antd/lib/tabs/style';
 
@@ -19,7 +18,7 @@ export default class TabUi extends Component {
 
   static defaultProps = {
     uiParams: {},
-    value: new List()
+    value: []
   };
 
   handleTabChange = (key) => {
@@ -32,7 +31,7 @@ export default class TabUi extends Component {
       refId,
       onChange,
     } = this.props;
-    const size = value.size;
+    const size = value.length;
     onChange(refId, 'create');
     this.setState({ activeKey: `${size}` });
   };
@@ -46,7 +45,7 @@ export default class TabUi extends Component {
         onChange(refId.child(index), "delete")
           .then(() => {
             that.setState({
-              activeKey: `${value.size - 2}`
+              activeKey: `${value.length - 2}`
             });
           });
       }
