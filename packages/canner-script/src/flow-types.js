@@ -10,6 +10,7 @@ export type CannerSchema = {
   component?: any,
   builder?: Function,
   uiParams?: Object,
+  graphql?: String,
   items?: {
     [key: string]: CannerSchema
   } | CannerSchema,

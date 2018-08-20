@@ -5,6 +5,7 @@ Object {
   "connector": undefined,
   "dict": Object {},
   "graphqlClient": undefined,
+  "pageSchema": Object {},
   "resolvers": Object {},
   "schema": Object {
     "posts": Object {

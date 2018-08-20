@@ -287,6 +287,34 @@ describe('builder', () => {
     });
   });
 
+  describe('chart', () => {
+    it('should work', () => {
+      expect(<chart keyName="chart"/>).toMatchObject({
+        type: 'chart',
+        ui: 'line',
+        keyName: 'chart'
+      });
+    });
+
+    it('should have keyName', () => {
+      expect(<chart />).toHaveProperty('keyName');
+    });
+  });
+
+  describe('indicator', () => {
+    it('should work', () => {
+      expect(<indicator keyName="indicator"/>).toMatchObject({
+        type: 'indicator',
+        ui: 'amount',
+        keyName: 'indicator'
+      });
+    });
+
+    it('should have keyName', () => {
+      expect(<indicator />).toHaveProperty('keyName');
+    });
+  });
+
   describe('root', () => {
     it('should work', () => {
       const root = <root dict={{en: {title: 'title'}}} storage="storage">
@@ -311,6 +339,57 @@ describe('builder', () => {
         }
       });
       expect(root.dict).toMatchObject({en: {title: 'title'}});
+    });
+
+    it('should work with <page>child', () => {
+      const root = <root>
+        <page keyName="overview">
+          <chart keyName="line" ui="line" />
+        </page>
+      </root>
+      expect(root.pageSchema).toMatchObject({
+        keyName: 'overview',
+        type: 'page',
+        items: {
+            line: {
+                type: 'chart',
+                ui: 'line',
+                keyName: 'line'
+            }
+        }
+      });
+    });
+  });
+
+
+  describe('page', () => {
+    it('should work', () => {
+      const page = <page keyName="overview">
+        <indicator ui="amount" keyName="key1"/>
+        <indicator ui="list" keyName="key2"/>
+        <chart ui="bar" keyName="key3"/>
+      </page>
+      expect(page).toMatchObject({
+        keyName: 'overview',
+        type: 'page',
+        items: {
+          key1: {
+              type: 'indicator',
+              ui: 'amount',
+              keyName: 'key1'
+          },
+          key2: {
+              type: 'indicator',
+              ui: 'list',
+              keyName: 'key2'
+          },
+          key3: {
+              type: 'chart',
+              ui: 'bar',
+              keyName: 'key3'
+          }
+        }
+      });
     });
   });
 
