@@ -52,10 +52,10 @@ describe('query', () => {
   });
 
   it('should get root gql', () => {
-    expect(query.toGQL()).toEqual(`query($RANDOM_KEY: PostOrderByInput){posts: postsConnection(first: $RANDOM_KEY,after: $RANDOM_KEY,last: $RANDOM_KEY,before: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage hasPreviousPage}}}`);
+    expect(query.toGQL()).toEqual(`query($RANDOM_KEY: PostOrderByInput){posts: postsConnection(first: $RANDOM_KEY,after: $RANDOM_KEY,last: $RANDOM_KEY,before: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
   });
 
   it('should get posts gql', () => {
-    expect(query.toGQL('posts')).toEqual(`query($RANDOM_KEY: PostOrderByInput){posts: postsConnection(first: $RANDOM_KEY,after: $RANDOM_KEY,last: $RANDOM_KEY,before: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{id title}} pageInfo{hasNextPage hasPreviousPage}}}`);
+    expect(query.toGQL('posts')).toEqual(`query($RANDOM_KEY: PostOrderByInput){posts: postsConnection(first: $RANDOM_KEY,after: $RANDOM_KEY,last: $RANDOM_KEY,before: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
   });
 });

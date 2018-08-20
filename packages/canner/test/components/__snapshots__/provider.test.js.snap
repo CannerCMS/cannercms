@@ -28,13 +28,11 @@ Object {
     "navs": Array [
       Object {
         "__typename": null,
-        "id": "0",
         "text": "nav1",
         Symbol(id): "$ROOT_QUERY.home.navs.0",
       },
       Object {
         "__typename": null,
-        "id": "1",
         "text": "nav2",
         Symbol(id): "$ROOT_QUERY.home.navs.1",
       },
@@ -46,13 +44,11 @@ Object {
         "notes": Array [
           Object {
             "__typename": null,
-            "id": "0",
             "text": "note1",
             Symbol(id): "Post:1.notes.0",
           },
           Object {
             "__typename": null,
-            "id": "1",
             "text": "note2",
             Symbol(id): "Post:1.notes.1",
           },
@@ -66,13 +62,11 @@ Object {
         "notes": Array [
           Object {
             "__typename": null,
-            "id": "0",
             "text": "note3",
             Symbol(id): "Post:2.notes.0",
           },
           Object {
             "__typename": null,
-            "id": "1",
             "text": "note4",
             Symbol(id): "Post:2.notes.1",
           },
