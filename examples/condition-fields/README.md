@@ -1,4 +1,4 @@
-# Simple blog demo
+# Condition Fields Demo
 
 Start dev server:
 
