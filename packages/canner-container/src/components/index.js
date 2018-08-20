@@ -34,6 +34,10 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
   }
 
   dataDidChange = (dataChanged: Object) => {
+    const {dataDidChange} = this.props;
+    if (dataDidChange) {
+      dataDidChange(dataChanged);
+    }
     this.setState({
       dataChanged
     });

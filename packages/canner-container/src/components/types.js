@@ -69,7 +69,8 @@ export type CannerContainerProps = {
   navbarConfig: NavbarConfig,
   sidebarConfig: SidebarConfig,
   children: React.Element<any>,
-  router: Router
+  router: Router,
+  dataDidChange?: Function
 };
 
 export type NavbarProps = NavbarConfig & {
