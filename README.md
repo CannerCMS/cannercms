@@ -122,6 +122,8 @@ Wonder why we use JSX? [read here](https://www.canner.io/docs/why-jsx)
 
 ![syntax](./docs/syntax.png)
 
+- DEMO: CMS for Firebase with SSR supported (NextJS) https://github.com/Canner/canner-firebase-cms
+
 **More demo visit [/examples folder](./examples) & [canner-demo](https://github.com/Canner/canner-demo) and  [canner.io](https://www.canner.io/)**
 
 ***👉👉 START USING CANNER: https://www.canner.io***
