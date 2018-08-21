@@ -1,6 +1,6 @@
 {
   "name": "canner-schema-loader",
-  "version": "1.5.0-canary.6",
+  "version": "1.5.0-canary.7",
   "description": "Deconstruct JSX into objects schema object and componentTree.",
   "main": "lib/index.js",
   "files": [
@@ -18,7 +18,7 @@
     "strip-bom": "^3.0.0"
   },
   "devDependencies": {
-    "canner-script": "^1.5.0-canary.6",
+    "canner-script": "^1.5.0-canary.7",
     "flow-bin": "^0.78.0",
     "memory-fs": "^0.4.1"
   }
