@@ -75,14 +75,14 @@ export default class Navbar extends React.Component<NavbarProps, State> {
               (logo || null)
           }
         <HeaderMenu>
+          { renderMenu() }
           <Menu
             theme="dark"
             mode="horizontal"
-            style={{ lineHeight: '64px' }}
+            style={{ lineHeight: '64px', display: 'inline-block' }}
             selectedKeys={[]}
             onClick={this.headerMenuOnClick}
           >
-            { renderMenu() }
             {
               showSaveButton && (
                 hasChanged ?

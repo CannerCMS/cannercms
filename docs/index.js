@@ -1,5 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import {Menu} from 'antd';
+const SubMenu = Menu.SubMenu;
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Canner from 'packages/canner/src';
 import Container, {transformSchemaToMenuConfig} from 'packages/canner-container/src';
@@ -46,17 +48,27 @@ class CMSExample extends React.Component {
                 navbarConfig={{
                   logo: <Logo src="https://cdn.canner.io/cms-page/d89f77c19e5d3aa366ba1498dddd64ef.svg" />,
                   showSaveButton: true,
-                  renderMenu: () => null
+                  renderMenu: () => (<Menu
+                    theme="dark"
+                    mode="horizontal"
+                    style={{ lineHeight: '64px', display: 'inline-block' }}
+                    onClick={this.headerMenuOnClick}
+                    selectedKeys={[]}
+                  ><SubMenu title="submenu">
+                    <Menu.Item theme="light" key="logout">
+                      menuitem
+                    </Menu.Item>
+                  </SubMenu>
+                  <Menu.Item>
+                    menuitem
+                  </Menu.Item></Menu>)
                 }}
                 router={new R({
                   history,
                   baseUrl
                 })}
               >
-                <Canner
-                  schema={{...schema}}
-                  ref={cms => this.cms = cms}
-                />
+                <Canner/>
               </Container>
             );
           }}/>
