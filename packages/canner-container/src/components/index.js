@@ -71,7 +71,13 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
           deploy={this.cannerRef.current && this.cannerRef.current.deploy}
           {...navbarConfig}
         />
-        <Layout>
+        <Layout style={{
+          WebkitBoxOrient: 'horizontal',
+          WebkitBoxDirection: 'normal',
+          WebkitFlexDirection: 'row',
+          MsFlexDirection: 'row',
+          flexDirection: 'row'
+        }}>
           <Sidebar
             dataChanged={dataChanged}
             goTo={router.goTo}
