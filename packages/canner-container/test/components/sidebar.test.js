@@ -33,6 +33,7 @@ const renderComponent = (props) => {
       reset={jest.fn()}
       routes={['1', '2']}
       dataChanged={{}}
+      schema={{key: {}}}
       {...sidebarConfig}
       {...props}
     />
