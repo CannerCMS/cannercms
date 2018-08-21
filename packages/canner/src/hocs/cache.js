@@ -225,6 +225,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         this._unsubscribe();
         this.fetch(paths[0]);
       }
+      return reWatch;
     }
 
     render() {

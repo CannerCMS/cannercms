@@ -116,7 +116,6 @@ export default class Provider extends React.PureComponent<Props, State> {
       next: () => {
         const {loading, errors, data} = observableQuery.currentResult();
         if (!loading && !errors && data && !isEmpty(data)) {
-          // this.log('subscribe', key, data);
           callback(data);
         }
       } 

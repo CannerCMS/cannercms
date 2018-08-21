@@ -43,6 +43,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         where: {}
       });
       this.queryData();
+      this.subscribe();
     }
 
     UNSAFE_componentWillReceiveProps(props: HOCProps) {
@@ -53,7 +54,28 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (refId.toString() !== props.refId.toString()) {
         // refetch when route change
         this.queryData(props);
+        this.subscribe();
       }
+    }
+
+    componentWillUnmount() {
+      this.unsubscribe();
+    }
+
+    unsubscribe = () => {
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+      }
+    }
+
+    subscribe = () => {
+      const {subscribe, relation} = this.props;
+      const subscription = subscribe(relation.to, (data) => {
+        this.setState({
+          value: data[relation.to],
+        });
+      });
+      this.subscription = subscription;
     }
 
     queryData = (props?: HOCProps): Promise<*> => {
@@ -80,9 +102,13 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     updateQuery = (paths: Array<string>, args: Object) => {
       const {updateQuery} = this.props;
-      updateQuery(paths, args);
-      // quick fix
-      this.queryData();
+      const reWatch = updateQuery(paths, args);
+      if (reWatch) {
+        // if graphql query changes, it have to rewatch the new observableQuery
+        this.unsubscribe();
+        this.queryData();
+        this.subscribe();
+      }
     }
 
     render() {
