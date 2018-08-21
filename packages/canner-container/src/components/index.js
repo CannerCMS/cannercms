@@ -77,6 +77,7 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
             goTo={router.goTo}
             reset={this.cannerRef.current && this.cannerRef.current.reset}
             routes={routes}
+            schema={schema.schema}
             {...sidebarConfig}
             menuConfig={this.menuConfig}
           />
@@ -98,7 +99,7 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
   }
 }
 
-function transformSchemaToMenuConfig(schema): MenuConfig {
+export function transformSchemaToMenuConfig(schema: Object): MenuConfig {
   return Object.keys(schema).map(key => ({
     title: schema[key].title,
     pathname: `/${schema[key].keyName}`

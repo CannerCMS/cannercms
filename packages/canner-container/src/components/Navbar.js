@@ -67,9 +67,13 @@ export default class Navbar extends React.Component<NavbarProps, State> {
     const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
     return (
       <Header className="header" style={{padding: "0 20px"}}>
-        <LogoContainer>
-          <img src={logo} width={150}/>
-        </LogoContainer>
+          {
+            typeof logo === 'string' ?
+              <LogoContainer>
+                <img src={logo} width={150}/>
+              </LogoContainer> :
+              (logo || null)
+          }
         <HeaderMenu>
           <Menu
             theme="dark"

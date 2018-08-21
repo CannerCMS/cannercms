@@ -2,13 +2,18 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Canner from 'packages/canner/src';
-import Container from 'packages/canner-container/src';
+import Container, {transformSchemaToMenuConfig} from 'packages/canner-container/src';
 import R from 'packages/history-router/src';
 import schema from './canner.schema';
 import Graphql from './components/graphql';
+import styled from 'styled-components';
 // eslint-disable-next-line
-console.log(schema);
-
+export const Logo = styled.img`
+  background-color: #283050;
+  padding: 20px;
+  margin-left: -20px;
+  width: 200px;
+`
 class CMSExample extends React.Component {
   constructor(props) {
     super(props);
@@ -25,9 +30,21 @@ class CMSExample extends React.Component {
               <Container
                 schema={schema}
                 sidebarConfig={{
-                  menuConfig: true
+                  menuConfig: [
+                    {
+                      pathname: '__back',
+                      title: 'Back to Dashboard',
+                      onClick: () => {
+                        // eslint-disable-next-line
+                        console.log('back to dashboard');
+                      },
+                      icon: 'left'
+                    },
+                    ...transformSchemaToMenuConfig(schema.schema)
+                  ]
                 }}
                 navbarConfig={{
+                  logo: <Logo src="https://cdn.canner.io/cms-page/d89f77c19e5d3aa366ba1498dddd64ef.svg" />,
                   showSaveButton: true,
                   renderMenu: () => null
                 }}
@@ -38,6 +55,7 @@ class CMSExample extends React.Component {
               >
                 <Canner
                   schema={{...schema}}
+                  ref={cms => this.cms = cms}
                 />
               </Container>
             );
