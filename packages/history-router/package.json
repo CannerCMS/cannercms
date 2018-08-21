@@ -1,6 +1,6 @@
 {
   "name": "@canner/history-router",
-  "version": "1.5.0-canary.4",
+  "version": "1.5.0-canary.5",
   "description": "Pass a history object to let canner get the routes, params and gotTo",
   "main": "lib/index.js",
   "scripts": {
