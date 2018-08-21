@@ -14,16 +14,6 @@ class CMSExample extends React.Component {
     super(props);
   }
 
-  dataDidChange = (dataChanged) => {
-    // eslint-disable-next-line
-    console.log(dataChanged);
-  }
-
-  afterDeploy = () => {
-    // eslint-disable-next-line
-    console.log('deployed');
-  }
-
   render() {
     const baseUrl = "/docs";
     // eslint-disable-next-line
@@ -38,6 +28,7 @@ class CMSExample extends React.Component {
                   menuConfig: true
                 }}
                 navbarConfig={{
+                  showSaveButton: true,
                   renderMenu: () => null
                 }}
                 router={new R({
@@ -47,8 +38,6 @@ class CMSExample extends React.Component {
               >
                 <Canner
                   schema={{...schema}}
-                  afterDeploy={this.afterDeploy}
-                  dataDidChange={this.dataDidChange}
                 />
               </Container>
             );

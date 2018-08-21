@@ -32,12 +32,13 @@ export default class Navbar extends React.Component<NavbarProps, State> {
   }
 
   deploy = () => {
-    const {deploy} = this.props;
+    const {deploy, dataChanged} = this.props;
     if (deploy) {
       this.setState({
         deploying: true
       });
-      return deploy()
+      const key = Object.keys(dataChanged)[0];
+      return deploy(key)
         .then(() => {
           setTimeout(() => {
             this.setState({

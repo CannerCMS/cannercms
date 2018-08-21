@@ -64,19 +64,18 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
       sort: router.getSort(),
       pagination: router.getPagination()
     };
-
     return (
       <Layout>
         <Navbar
           dataChanged={dataChanged}
-          deploy={this.cannerRef.deploy}
+          deploy={this.cannerRef.current && this.cannerRef.current.deploy}
           {...navbarConfig}
         />
         <Layout>
           <Sidebar
             dataChanged={dataChanged}
             goTo={router.goTo}
-            reset={this.cannerRef.reset}
+            reset={this.cannerRef.current && this.cannerRef.current.reset}
             routes={routes}
             {...sidebarConfig}
             menuConfig={this.menuConfig}
