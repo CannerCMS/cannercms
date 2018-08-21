@@ -50,6 +50,11 @@ export default class Navbar extends React.Component<NavbarProps, State> {
               placement: 'bottomRight'
             });
           }, 1000)
+        })
+        .catch(() => {
+          this.setState({
+            deploying: false
+          });
         });
     }
   }
@@ -84,21 +89,26 @@ export default class Navbar extends React.Component<NavbarProps, State> {
             onClick={this.headerMenuOnClick}
           >
             {
-              showSaveButton && (
+              showSaveButton && deploying && (
+                <Menu.Item key="loading">
+                  {spinIcon}
+                </Menu.Item>
+              )
+            }
+            {
+              showSaveButton && !deploying && (
                 hasChanged ?
                 <Menu.Item key="deploy">
-                {
-                  deploying ?
-                    spinIcon :
-                    <Badge dot>
-                      <MenuText>
-                        Save
-                      </MenuText>
-                    </Badge>
-                }
+                  <Badge dot>
+                    <MenuText>
+                      Save
+                    </MenuText>
+                  </Badge>
                 </Menu.Item> :
                 <Menu.Item key="saved">
-                  Saved
+                  <MenuText>
+                    Saved
+                  </MenuText>
                 </Menu.Item>
               )
             }
