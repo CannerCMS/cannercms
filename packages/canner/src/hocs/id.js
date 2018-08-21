@@ -3,7 +3,7 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import {createEmptyData} from 'canner-helpers';
-import {get, update} from 'lodash';
+import {get, update, mapValues} from 'lodash';
 import {Spin, Icon} from 'antd';
 
 import type {HOCProps, Args} from './types';
@@ -111,7 +111,8 @@ export default function connectId(Com: React.ComponentType<*>) {
       const paths = [keyName];
       const queries = query.getQueries(paths).args || {pagination: {first: 10}};
       const variables = query.getVairables();
-      this.args =(queries, v => variables[v.substr(1)]);
+      // get current args
+      this.args = mapValues(queries, v => variables[v.substr(1)]);
       updateQuery(paths, {
         ...this.args,
         where: {id: id},
