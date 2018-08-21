@@ -54,7 +54,7 @@
     "typescript": "^2.7.2"
   },
   "peerDependencies": {
-    "firebase": "^4.13.1"
+    "firebase": "^5.0.4"
   },
   "repository": "Canner/canner-graphql-interface",
   "license": "MIT"
