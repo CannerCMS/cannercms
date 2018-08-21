@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "1.5.0-canary.9",
+  "version": "1.5.0-canary.10",
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "scripts": {
@@ -19,9 +19,9 @@
     "apollo-boost": "^0.1.4",
     "bson-objectid": "^1.2.2",
     "canner-compiler": "^0.1.6",
-    "canner-graphql-interface": "^1.5.0-canary.9",
-    "canner-helpers": "^1.5.0-canary.9",
-    "canner-layouts": "^1.5.0-canary.9",
+    "canner-graphql-interface": "^1.5.0-canary.10",
+    "canner-helpers": "^1.5.0-canary.10",
+    "canner-layouts": "^1.5.0-canary.10",
     "canner-ref-id": "^0.1.2",
     "graphql-tag": "^2.9.1",
     "immer": "^1.3.0",
