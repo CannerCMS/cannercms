@@ -285,14 +285,23 @@ describe('builder', () => {
         keyName: 'chart'
       });
     });
-  });
 
-  describe('chart', () => {
-    it('should work', () => {
-      expect(<chart keyName="chart"/>).toMatchObject({
+    it('should work with children', () => {
+      expect(
+        <chart keyName="chart">
+           <toolbar>
+              <filter />
+          </toolbar>
+        </chart>
+      ).toMatchObject({
         type: 'chart',
         ui: 'line',
-        keyName: 'chart'
+        keyName: 'chart',
+        toolbar: {
+          filter: {
+            "type": "filter"
+          }
+        }
       });
     });
 
@@ -307,6 +316,25 @@ describe('builder', () => {
         type: 'indicator',
         ui: 'amount',
         keyName: 'indicator'
+      });
+    });
+
+    it('should work with children', () => {
+      expect(
+        <indicator keyName="amount">
+           <toolbar>
+              <filter />
+          </toolbar>
+        </indicator>
+      ).toMatchObject({
+        type: 'indicator',
+        ui: 'amount',
+        keyName: 'amount',
+        toolbar: {
+          filter: {
+            "type": "filter"
+          }
+        }
       });
     });
 
