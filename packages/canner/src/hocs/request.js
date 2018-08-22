@@ -31,7 +31,9 @@ export default function withRequest(Com: React.ComponentType<*>) {
           secondId: refId.secondRefId.toString()
         };
       } 
-      const {rootValue, relation, request, items, pattern} = this.props;
+      const {schema, rootValue, request} = this.props;
+      const itemSchema = findSchemaByRefId(schema, refId);
+      const {relation, items, pattern} = itemSchema;
       const action = createAction({
         relation,
         id,
@@ -109,4 +111,36 @@ function addTypename(value) {
     value = value.map(child => addTypename(child));
   }
   return value;
+}
+
+function findSchemaByRefId(schema: Object, refId: any) {
+  const paths = refId.getPathArr();
+  let pattern = '';
+  return loop(schema, paths, pattern);
+}
+
+export function loop(schema: Object, paths: Array<string>, pattern: string) {
+  if (paths.length === 0) {
+    return {
+      ...schema,
+      pattern: removeFirstSlash(pattern)
+    };
+  }
+
+  if (!schema.type) { // in items of object
+    return loop(schema[paths[0]], paths.slice(1), `${pattern}/${schema[paths[0]].type}`);
+  }
+
+  if (schema.type === 'array') {
+    if (schema.items.type === 'object') {
+      // path[0] is index, so we take the paths[1]
+      return loop(schema.items.items[paths[1]], paths.slice(2), `${pattern}/${schema.items.items[paths[1]].type}`);
+    }
+  } else {
+    return loop(schema.items[paths[0]], paths.slice(1), `${pattern}/${schema.items[paths[0]].type}`);
+  }
+}
+
+function removeFirstSlash(pattern: string) {
+  return pattern.split('/').slice(1).join('/');
 }

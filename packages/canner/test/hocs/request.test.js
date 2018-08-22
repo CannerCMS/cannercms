@@ -2,7 +2,7 @@ import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
-import withRequest, {createAction} from '../../src/hocs/request';
+import withRequest, {createAction, loop} from '../../src/hocs/request';
 import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -30,7 +30,22 @@ describe('with request', () => {
       },
       items: {
         title: {
-          tyep: 'string'
+          type: 'string'
+        }
+      },
+      schema: {
+        posts: {
+          type: 'array',
+          keyName: 'posts',
+          items: {
+            type: 'object',
+            items: {
+              title: {
+                keyName: 'title',
+                type: 'string'
+              }
+            }
+          }
         }
       },
       request: mockRequest
@@ -148,3 +163,68 @@ describe('createAction', () => {
     });
   });
 });
+
+describe('loop schema', () => {
+  const schema = {
+    info: {
+      type: 'object',
+      keyName: 'info',
+      items: {
+        name: {
+          type: 'string',
+          keyName: 'name',
+        }
+      }
+    },
+    posts: {
+      type: 'array',
+      keyName: 'posts',
+      items: {
+        type: 'object',
+        items: {
+          name: {
+            keyName: 'name',
+            type: 'string'
+          }
+        }
+      }
+    }
+  }
+
+  it('should find info', () => {
+    const paths = ['info'];
+    expect(loop(schema, paths, '')).toMatchObject({
+      type: 'object',
+      keyName: 'info',
+      pattern: 'object'
+    });
+  });
+
+  it('should find posts', () => {
+    const paths = ['posts'];
+    expect(loop(schema, paths, '')).toMatchObject({
+      type: 'array',
+      keyName: 'posts',
+      pattern: 'array'
+    });
+  });
+
+  it('should find info/name', () => {
+    const paths = ['info', 'name'];
+    expect(loop(schema, paths, '')).toMatchObject({
+      type: 'string',
+      keyName: 'name',
+      pattern: 'object/string'
+    });
+  });
+
+  it('should find posts/0/name', () => {
+    const paths = ['posts', '0', 'name'];
+    expect(loop(schema, paths, '')).toMatchObject({
+      type: 'string',
+      keyName: 'name',
+      pattern: 'array/string'
+    });
+  });
+
+})

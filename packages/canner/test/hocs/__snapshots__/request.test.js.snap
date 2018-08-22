@@ -6,7 +6,7 @@ exports[`with request should render 1`] = `
   items={
     Object {
       "title": Object {
-        "tyep": "string",
+        "type": "string",
       },
     }
   }
@@ -31,6 +31,23 @@ exports[`with request should render 1`] = `
           "title": "post1",
         },
       ],
+    }
+  }
+  schema={
+    Object {
+      "posts": Object {
+        "items": Object {
+          "items": Object {
+            "title": Object {
+              "keyName": "title",
+              "type": "string",
+            },
+          },
+          "type": "object",
+        },
+        "keyName": "posts",
+        "type": "array",
+      },
     }
   }
   value={
