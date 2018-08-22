@@ -40,4 +40,15 @@ export default class BasicModel {
   getDefaultUI() {
     return 'default';
   }
+
+  withToolBar(children) {
+    const toolbar = children.find((child) => child.__TOOLBAR__);
+
+    if (toolbar) {
+      this.attributes = {
+        ...this.attributes,
+        toolbar
+      };
+    }
+  }
 }
