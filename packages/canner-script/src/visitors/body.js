@@ -5,7 +5,7 @@ import type {Path, Node} from '../flow-types';
  */
 
 const arrayBody = {
-  'components.array': {
+  'component.array': {
     exit: function(path: Path) {
       if (path.node.pattern === 'array') {
         const routeMap = genRouteMap('', path.node);
@@ -30,7 +30,7 @@ const arrayBody = {
   },
 };
 const objectBody = {
-  'components.object': {
+  'component.object': {
     exit: function(path: Path) {
       if (path.node.pattern === 'object') {
         const routeMap = genRouteMap('', path.node);
