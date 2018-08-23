@@ -50,7 +50,7 @@ describe('insertion layout', () => {
         setChildren: mockSetChildren,
       }
     }
-    visitor['plugins.object.fieldset'].exit(fakePath);
+    visitor['components.object.fieldset'].exit(fakePath);
     // route
     expect(mockSetChildren.mock.calls[0][0]).toBe('body.0');
     // new children
@@ -89,7 +89,7 @@ describe('insertion layout', () => {
         setChildren: mockSetChildren,
       }
     }
-    visitor['plugins.object.fieldset'].exit(fakePath);
+    visitor['components.object.fieldset'].exit(fakePath);
     // route
     expect(mockSetChildren.mock.calls[0][0]).toBe('body.0');
     // new node
@@ -147,7 +147,7 @@ describe('insertion layout', () => {
         setChildren: mockSetChildren,
       }
     }
-    visitor['plugins.object.fieldset'].exit(fakePath);
+    visitor['components.object.fieldset'].exit(fakePath);
     // route
     expect(mockSetChildren.mock.calls[0][0]).toBe('body.0');
     // new node
@@ -183,7 +183,7 @@ describe('insertion layout', () => {
         setChildren: mockSetChildren,
       }
     }
-    visitor['plugins.object.fieldset'].exit(fakePath);
+    visitor['components.object.fieldset'].exit(fakePath);
     // route
     expect(mockSetChildren.mock.calls[0][0]).toBe('body.0');
     // new node
@@ -225,9 +225,9 @@ describe('injection layout', () => {
   it('should change node value', () => {
     const {cannerKey, visitor} = createLayoutVisitor(injectBlock, [node]);
     node[CANNER_KEY] = [cannerKey];
-    visitor['plugins.string']({node});
+    visitor['components.string']({node});
     expect(node.vertical).toBe(true);
-    visitor['plugins.string']({node: node2});
+    visitor['components.string']({node: node2});
     expect(node2.vertical).not.toBe(true);
   });
 
@@ -235,9 +235,9 @@ describe('injection layout', () => {
     const {cannerKey, visitor} = createLayoutVisitor(injectBlock, [node, node2]);
     node[CANNER_KEY] = [cannerKey];
     node2[CANNER_KEY] = [cannerKey];
-    visitor['plugins.string']({node});
+    visitor['components.string']({node});
     expect(node.vertical).toBe(true);
-    visitor['plugins.string']({node: node2});
+    visitor['components.string']({node: node2});
     expect(node2.vertical).toBe(true);
   });
 });
@@ -375,7 +375,7 @@ describe('script handle layout', () => {
         }
       },
       visitors: [{
-        'plugins.object.fieldset': {
+        'components.object.fieldset': {
           exit: expect.any(Function)
         }
       }]
