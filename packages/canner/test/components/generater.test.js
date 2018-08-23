@@ -8,13 +8,13 @@ describe('renderComponnet', () => {
         nodeType: 'layout',
         component: 'block',
         children: [{
-          nodeType: 'plugins.object',
+          nodeType: 'component.object',
           keyName: 'info',
           children: [{
             nodeType: 'layout',
             keyName: 'name',
             children: [{
-              nodeType: 'plugins.string',
+              nodeType: 'component.string',
               keyName: 'name'
             }]
           }]
@@ -23,7 +23,7 @@ describe('renderComponnet', () => {
     };
     const pathArr = ['info', 'name'];
     expect(Generator.findNode(pathArr, node)).toEqual({
-      nodeType: 'plugins.string',
+      nodeType: 'component.string',
       keyName: 'name'
     });
   });
