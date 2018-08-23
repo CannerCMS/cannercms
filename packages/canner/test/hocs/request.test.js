@@ -209,6 +209,15 @@ describe('loop schema', () => {
     });
   });
 
+  it('should find posts', () => {
+    const paths = ['posts', '0'];
+    expect(loop(schema, paths, '')).toMatchObject({
+      type: 'array',
+      keyName: 'posts',
+      pattern: 'array'
+    });
+  });
+
   it('should find info/name', () => {
     const paths = ['info', 'name'];
     expect(loop(schema, paths, '')).toMatchObject({

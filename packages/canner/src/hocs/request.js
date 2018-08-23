@@ -132,7 +132,10 @@ export function loop(schema: Object, paths: Array<string>, pattern: string) {
   }
 
   if (schema.type === 'array') {
-    if (schema.items.type === 'object') {
+    if (paths.length === 1) {
+      // paths = [index], so just return
+      return loop(schema, [], pattern);
+    } else if (schema.items.type === 'object') {
       // path[0] is index, so we take the paths[1]
       return loop(schema.items.items[paths[1]], paths.slice(2), `${pattern}/${schema.items.items[paths[1]].type}`);
     }
