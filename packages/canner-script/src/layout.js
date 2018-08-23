@@ -68,13 +68,13 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
   };
   return {
     visitor: {
-      'plugins.object.fieldset': {
+      'component.object.fieldset': {
         exit: visitor
       },
-      'plugins.array': {
+      'component.array': {
         exit: visitor
       }
-      // [`plugins.${lastChild.type}`]: {
+      // [`component.${lastChild.type}`]: {
       //   exit: path => {
       //     if (path.route.split('.').length <= 1 || path.node.keyName !== lastChild.keyName || !path.node[CANNER_KEY] || path.node[CANNER_KEY].indexOf(cannerKey) === -1) {
       //       return;
@@ -129,11 +129,11 @@ export function createInjectionLayout(attrs: Object, children: Array<CannerSchem
     });
   }
   const allVisitor = children.reduce((result, child) => {
-    if (`plugins.${child.type}` in result) {
+    if (`component.${child.type}` in result) {
       return result;
     }
 
-    result[`plugins.${child.type}`] = visitor;
+    result[`component.${child.type}`] = visitor;
     return result;
   }, {});
 

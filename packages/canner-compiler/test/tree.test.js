@@ -6,16 +6,16 @@ beforeEach(() => {
   ast = {
     info: {
       name: 'info',
-      nodeType: 'plugins.object.fieldset',
+      nodeType: 'component.object.fieldset',
       children: [{
         name: 'name1',
-        nodeType: 'plugins.string.input',
+        nodeType: 'component.string.input',
       }, {
         name: 'name2',
-        nodeType: 'plugins.string.input',
+        nodeType: 'component.string.input',
       }, {
         name: 'name3',
-        nodeType: 'plugins.string.input',
+        nodeType: 'component.string.input',
       }],
     },
   };
@@ -65,7 +65,7 @@ describe('edit node', function() {
     const newTree = {...ast};
     const newNode = {
       name: 'address',
-      nodeType: 'plugins.string.input',
+      nodeType: 'component.string.input',
     };
     newTree.info.children[0] = newNode;
     expect(tree.setNode('info.0', newNode).getTree())
@@ -75,7 +75,7 @@ describe('edit node', function() {
     const newTree = {...ast};
     const newNodes = [{
       name: 'address',
-      nodeType: 'plugins.string.input',
+      nodeType: 'component.string.input',
     }];
     newTree.info.children = newNodes;
     expect(tree.setChildren('info', newNodes).getTree())
@@ -96,7 +96,7 @@ describe('edit node', function() {
     const newTree = {...ast};
     const newNode = {
       name: 'address',
-      nodeType: 'plugins.string.input',
+      nodeType: 'component.string.input',
     };
     newTree.info.children.push(newNode);
     expect(tree.pushChildren('info', newNode).getTree())
@@ -106,7 +106,7 @@ describe('edit node', function() {
     const newTree = {...ast};
     const newNode = {
       name: 'address',
-      nodeType: 'plugins.string.input',
+      nodeType: 'component.string.input',
     };
     newTree.info.children.unshift(newNode);
     expect(tree.unshiftChildren('info', newNode).getTree())

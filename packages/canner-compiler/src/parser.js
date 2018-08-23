@@ -4,6 +4,8 @@ type State = {
   path: string;
   pattern: string;
 }
+import type {Tree, NodeType, Schema, ParentNode} from './types';
+
 
 export default class Parser {
   ast: Tree;
@@ -20,11 +22,18 @@ export default class Parser {
           pattern: 'array',
           path: key,
         });
-      } else {
+      } else if (entitySchema.type === 'object') {
         this.ast[key] = this.parseObject(key, entitySchema, {
           pattern: 'object',
           path: key,
         });
+      } else if (entitySchema.type === 'page') {
+        this.ast[key] = this.parsePage(key, entitySchema, {
+          pattern: 'page',
+          path: key,
+        });
+      } else {
+        throw new Error('Entity schema type shoule be one of ["object", "array", "page"]');
       }
     });
     return this.ast;
@@ -41,7 +50,26 @@ export default class Parser {
     return {
       ...schema,
       name: key,
-      nodeType: `plugins.${schema.type}.${ui}`,
+      nodeType: generateNodeType(schema),
+      children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
+      pattern: state.pattern,
+      path: state.path,
+      ui: ui,
+    };
+  }
+
+  parsePage(key: string, schema: Schema, state: State): ParentNode {
+    let children = {};
+    if (schema.type !== 'page') {
+      throw new Error(`${key} is not a page schema`);
+    }
+
+    children = schema.items || {};
+    const ui = schema.ui || getDefaultUI(schema.type);
+    return {
+      ...schema,
+      name: key,
+      nodeType: generateNodeType(schema),
       children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
       pattern: state.pattern,
       path: state.path,
@@ -59,7 +87,7 @@ export default class Parser {
       return {
         ...schema,
         name: key,
-        nodeType: `plugins.${schema.type}.${ui}`,
+        nodeType: generateNodeType(schema),
         children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
         pattern: state.pattern,
         path: state.path,
@@ -70,7 +98,7 @@ export default class Parser {
     return {
       ...schema,
       name: key,
-      nodeType: `plugins.${schema.type}.${schema.ui}`,
+      nodeType: generateNodeType(schema),
       pattern: state.pattern,
       path: state.path,
     };
@@ -93,11 +121,11 @@ export default class Parser {
     }
 
     const ui = schema.ui || getDefaultUI(schema.type);
-
+    
     return {
       ...schema,
       name: key,
-      nodeType: `plugins.${schema.type}.${ui}`,
+      nodeType: generateNodeType(schema),
       pattern: `${pattern}.${schema.type}`,
       path: `${path}/${key}`,
       ui,
@@ -119,6 +147,16 @@ function getDefaultUI(type: string) {
     case 'relation':
       return 'one';
     default:
-      return '';
+      return 'default';
   }
+}
+
+
+function generateNodeType(schema: Schema) {
+  const ui = schema.ui || getDefaultUI(schema.type);
+  let nodetype = 'component';
+  if (['page', 'indicator', 'chart'].indexOf(schema.type) !== -1) {
+    nodetype = 'page';
+  }
+  return `${nodetype}.${schema.type}.${ui}`;
 }

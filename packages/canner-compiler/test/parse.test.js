@@ -1,7 +1,7 @@
 import Parser from '../src/parser';
 const parser = new Parser();
 
-describe('PackageName', function() {
+describe('parser', function() {
   it('parse plugin', function() {
     const schema = {
       type: 'string',
@@ -12,7 +12,7 @@ describe('PackageName', function() {
       name: 'name',
       type: 'string',
       ui: 'input',
-      nodeType: 'plugins.string.input',
+      nodeType: 'component.string.input',
       description: 'xxx',
       pattern: 'object.string',
       path: 'info/name',
@@ -35,7 +35,7 @@ describe('PackageName', function() {
       type: 'object',
       pattern: 'object',
       path: 'info',
-      nodeType: 'plugins.object.fieldset',
+      nodeType: 'component.object.fieldset',
       items: {
         name: {
           type: 'string',
@@ -45,7 +45,7 @@ describe('PackageName', function() {
       children: [
         {
           name: 'name',
-          nodeType: 'plugins.string.input',
+          nodeType: 'component.string.input',
           type: 'string',
           ui: 'input',
           pattern: 'object.string',
@@ -79,7 +79,7 @@ describe('PackageName', function() {
       ui: 'tab',
       pattern: 'array',
       path: 'posts',
-      nodeType: 'plugins.array.tab',
+      nodeType: 'component.array.tab',
       items: {
         type: 'object',
         items: {
@@ -92,7 +92,7 @@ describe('PackageName', function() {
       children: [
         {
           name: 'name',
-          nodeType: 'plugins.string.input',
+          nodeType: 'component.string.input',
           type: 'string',
           ui: 'input',
           pattern: 'array.string',
@@ -123,7 +123,7 @@ describe('PackageName', function() {
         pattern: 'object',
         path: 'info',
         name: 'info',
-        nodeType: 'plugins.object.fieldset',
+        nodeType: 'component.object.fieldset',
         type: 'object',
         items: {
           name: {
@@ -135,7 +135,7 @@ describe('PackageName', function() {
           name: 'name',
           type: 'string',
           ui: 'input',
-          nodeType: 'plugins.string.input',
+          nodeType: 'component.string.input',
           pattern: 'object.string',
           path: 'info/name',
         }],
@@ -146,4 +146,60 @@ describe('PackageName', function() {
       path: 'posts/name',
     })).toMatchObject(tree);
   });
+
+  it('parse page schema', () => {
+    const pageSchmea = {
+      overview: {
+        type: 'page',
+        keyName: 'overview',
+        items: {
+          highestPrice: {
+            keyName: 'highestPrice',
+            type: 'indicator',
+            ui: 'amount'
+          },
+          lineChart: {
+            keyName: 'lineChart',
+            type: 'chart',
+            ui: 'line'
+          }
+        }
+      }
+    };
+    const tree = {
+      overview: {
+        type: 'page',
+        keyName: 'overview',
+        nodeType: 'page.page.default',
+        items: {
+          highestPrice: {
+            keyName: 'highestPrice',
+            type: 'indicator',
+            ui: 'amount'
+          },
+          lineChart: {
+            keyName: 'lineChart',
+            type: 'chart',
+            ui: 'line'
+          }
+        },
+        children: [ {
+          keyName: 'highestPrice',
+          type: 'indicator',
+          ui: 'amount',
+          nodeType: 'page.indicator.amount',
+          pattern: 'page.indicator',
+          path: 'overview/highestPrice'
+        }, {
+          keyName: 'lineChart',
+          type: 'chart',
+          ui: 'line',
+          nodeType: 'page.chart.line',
+          pattern: 'page.chart',
+          path: 'overview/lineChart'
+        }]
+      }
+    }
+    expect(new Parser().parse(pageSchmea)).toMatchObject(tree);
+  })
 });

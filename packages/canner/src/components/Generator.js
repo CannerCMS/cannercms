@@ -26,11 +26,11 @@ function defaultHoc(Component) {
 }
 
 function isComponent(node) {
-  return node.nodeType && node.nodeType.startsWith('plugins');
+  return node.nodeType && node.nodeType.startsWith('component');
 }
 
 function isLayout(node) {
-  return node.nodeType === 'layout';
+  return node.nodeType && node.nodeType.startsWith('layout');
 }
 
 function isFieldset(node) {
@@ -121,7 +121,7 @@ export default class Generator extends React.PureComponent<Props, State> {
         copyNode.component = Layouts[copyNode.component]
       }
       component = this.wrapByHOC(copyNode.component, ['containerRouter', 'context']);
-    } else if (isComponent(copyNode)) { // TODO: need to fix, turn plugins to components in compiler
+    } else if (isComponent(copyNode)) {
 
       if (isFieldset(copyNode)) {
         component = () => <Item />;

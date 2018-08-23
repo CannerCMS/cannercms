@@ -18,7 +18,7 @@ const FilterRow = styled(Row)`
   box-shadow: 1px 1px 4px #eee;
 `;
 
-const FilterPlugins = styled.div`
+const FilterComponent = styled.div`
   flex: 1;
   margin-right: 15px;
   min-width: 100px;
@@ -102,9 +102,9 @@ class FilterGroup extends React.Component<Props, State> {
     return (
       <FilterRow type="flex" justify="space-between" align="bottom">
         <Col span={20}>
-          <FilterPlugins>
+          <FilterComponent>
             {[filters]}
-          </FilterPlugins>
+          </FilterComponent>
         </Col>
         <ButtonCol span={4}>
           <Button type="primary" icon="search" size="large" onClick={this.submit}>

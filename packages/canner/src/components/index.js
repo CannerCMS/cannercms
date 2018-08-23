@@ -13,7 +13,7 @@ import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import hocsLocales from '../hocs/components/locale';
-import pluginsLocales from '@canner/antd-locales';
+import componentLocales from '@canner/antd-locales';
 addLocaleData([...en, ...zh]);
 
 // type
@@ -111,7 +111,7 @@ class CannerCMS extends React.Component<Props, State> {
         locale={currentLocale}
         defaultLocale={intl.defaultLocale || currentLocale}
         messages={{
-          ...(pluginsLocales[currentLocale] || {}),
+          ...(componentLocales[currentLocale] || {}),
           ...(hocsLocales[currentLocale] || {}),
           ...(dict[currentLocale] || {}),
           ...((intl.messages || {})[currentLocale] || {})
