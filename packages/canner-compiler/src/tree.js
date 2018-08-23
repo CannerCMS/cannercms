@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 import isArray from 'lodash/isArray';
 import unset from 'lodash/unset';
+import type {Tree, NodeType, Route} from './types';
 
 export default class TreeHandler {
   tree: Tree;
@@ -120,7 +121,7 @@ export default class TreeHandler {
     return this.getAncestryNodesFrom(route, () => true);
   }
 
-  getAncestryNodesFrom(route: Route, filter: ParentNode => boolean) {
+  getAncestryNodesFrom(route: Route, filter: Function) {
     const nodes = [];
     let routes = route.split('.');
     while (routes.length) {

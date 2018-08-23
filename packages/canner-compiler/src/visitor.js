@@ -1,6 +1,7 @@
 // @flow
 
 import isFunction from 'lodash/isFunction';
+import type {Visitor, InputVisitor, VisitorObj} from './types';
 
 export default class VisitorHandler {
   visitor: Visitor;

@@ -2,6 +2,7 @@
 
 import TreeHandler from './tree';
 import VisitorHandler from './visitor';
+import type {Tree, NodeType, InputVisitor, ParentNode, Route, Path} from './types';
 
 export default class Traverser {
   tree: TreeHandler;
