@@ -119,7 +119,7 @@ function findSchemaByRefId(schema: Object, refId: any) {
   return loop(schema, paths, pattern);
 }
 
-export function loop(schema: Object, paths: Array<string>, pattern: string) {
+export function loop(schema: Object, paths: Array<string>, pattern: string): any {
   if (paths.length === 0) {
     return {
       ...schema,
@@ -139,9 +139,8 @@ export function loop(schema: Object, paths: Array<string>, pattern: string) {
       // path[0] is index, so we take the paths[1]
       return loop(schema.items.items[paths[1]], paths.slice(2), `${pattern}/${schema.items.items[paths[1]].type}`);
     }
-  } else {
-    return loop(schema.items[paths[0]], paths.slice(1), `${pattern}/${schema.items[paths[0]].type}`);
   }
+  return loop(schema.items[paths[0]], paths.slice(1), `${pattern}/${schema.items[paths[0]].type}`);
 }
 
 function removeFirstSlash(pattern: string) {
