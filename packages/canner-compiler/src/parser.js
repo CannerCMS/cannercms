@@ -43,7 +43,7 @@ export default class Parser {
     return {
       ...schema,
       name: key,
-      nodeType: `components.${schema.type}.${ui}`,
+      nodeType: `component.${schema.type}.${ui}`,
       children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
       pattern: state.pattern,
       path: state.path,
@@ -61,7 +61,7 @@ export default class Parser {
       return {
         ...schema,
         name: key,
-        nodeType: `components.${schema.type}.${ui}`,
+        nodeType: `component.${schema.type}.${ui}`,
         children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
         pattern: state.pattern,
         path: state.path,
@@ -72,7 +72,7 @@ export default class Parser {
     return {
       ...schema,
       name: key,
-      nodeType: `components.${schema.type}.${schema.ui}`,
+      nodeType: `component.${schema.type}.${schema.ui}`,
       pattern: state.pattern,
       path: state.path,
     };
@@ -99,7 +99,7 @@ export default class Parser {
     return {
       ...schema,
       name: key,
-      nodeType: `components.${schema.type}.${ui}`,
+      nodeType: `component.${schema.type}.${ui}`,
       pattern: `${pattern}.${schema.type}`,
       path: `${path}/${key}`,
       ui,
