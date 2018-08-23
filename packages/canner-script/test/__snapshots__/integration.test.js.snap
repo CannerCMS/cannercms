@@ -19,28 +19,20 @@ exports[`array integration 1 1`] = `
             "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,query,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
-                "childrenName": "[status]",
-                "hocs": "[containerRouter]",
+                "nodeType": "plugins.object.fieldset",
+                "keyName": "status",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "plugins.object.fieldset",
-                    "keyName": "status",
-                    "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                    "nodeType": "layout",
+                    "component": "block",
+                    "childrenName": "[isDraft]",
+                    "hocs": "[containerRouter]",
                     "children": [
                       {
-                        "nodeType": "layout",
-                        "component": "block",
-                        "childrenName": "[isDraft]",
-                        "hocs": "[containerRouter]",
-                        "children": [
-                          {
-                            "nodeType": "plugins.boolean.switch",
-                            "keyName": "isDraft",
-                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                          }
-                        ]
+                        "nodeType": "plugins.boolean.switch",
+                        "keyName": "isDraft",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                       }
                     ]
                   }
@@ -87,7 +79,7 @@ exports[`array integration 2 1`] = `
                   {
                     "nodeType": "plugins.object.fieldset",
                     "keyName": "buttons",
-                    "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                     "children": [
                       {
                         "nodeType": "plugins.boolean.switch",
@@ -99,7 +91,7 @@ exports[`array integration 2 1`] = `
                   {
                     "nodeType": "plugins.object.fieldset",
                     "keyName": "otherinfo",
-                    "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                     "children": [
                       {
                         "nodeType": "plugins.string.input",
@@ -143,115 +135,75 @@ exports[`complex schema integration 1 1`] = `
             "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,query,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
-                "childrenName": "[featureImage]",
-                "hocs": "[containerRouter]",
+                "nodeType": "plugins.object.fieldset",
+                "keyName": "status",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "plugins.string.input",
-                    "keyName": "featureImage",
+                    "nodeType": "plugins.dateTime.dateTime",
+                    "keyName": "createAt",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  },
+                  {
+                    "nodeType": "plugins.number.input",
+                    "keyName": "draft",
                     "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                   }
                 ]
               },
               {
-                "nodeType": "layout",
-                "component": "block",
-                "childrenName": "[status]",
-                "hocs": "[containerRouter]",
+                "nodeType": "plugins.string.input",
+                "keyName": "featureImage",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+              },
+              {
+                "nodeType": "plugins.object.fieldset",
+                "keyName": "pageProperty",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "plugins.object.fieldset",
-                    "keyName": "status",
-                    "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
-                    "children": [
-                      {
-                        "nodeType": "plugins.dateTime.dateTime",
-                        "keyName": "createAt",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                      },
-                      {
-                        "nodeType": "plugins.number.input",
-                        "keyName": "draft",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                      }
-                    ]
+                    "nodeType": "plugins.number.input",
+                    "keyName": "onTop",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  },
+                  {
+                    "nodeType": "plugins.number.input",
+                    "keyName": "order",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                   }
                 ]
               },
               {
-                "nodeType": "layout",
-                "component": "block",
-                "childrenName": "[pageProperty]",
-                "hocs": "[containerRouter]",
+                "nodeType": "plugins.object.fieldset",
+                "keyName": "share",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "plugins.object.fieldset",
-                    "keyName": "pageProperty",
-                    "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
-                    "children": [
-                      {
-                        "nodeType": "plugins.number.input",
-                        "keyName": "onTop",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                      },
-                      {
-                        "nodeType": "plugins.number.input",
-                        "keyName": "order",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                      }
-                    ]
+                    "nodeType": "plugins.number.input",
+                    "keyName": "showShareBottom",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  },
+                  {
+                    "nodeType": "plugins.number.input",
+                    "keyName": "showGoodBottom",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                   }
                 ]
               },
               {
-                "nodeType": "layout",
-                "component": "block",
-                "childrenName": "[share]",
-                "hocs": "[containerRouter]",
+                "nodeType": "plugins.object.fieldset",
+                "keyName": "other",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "plugins.object.fieldset",
-                    "keyName": "share",
-                    "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
-                    "children": [
-                      {
-                        "nodeType": "plugins.number.input",
-                        "keyName": "showShareBottom",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                      },
-                      {
-                        "nodeType": "plugins.number.input",
-                        "keyName": "showGoodBottom",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "nodeType": "layout",
-                "component": "block",
-                "childrenName": "[other]",
-                "hocs": "[containerRouter]",
-                "children": [
+                    "nodeType": "plugins.string.input",
+                    "keyName": "introduction",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  },
                   {
-                    "nodeType": "plugins.object.fieldset",
-                    "keyName": "other",
-                    "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
-                    "children": [
-                      {
-                        "nodeType": "plugins.string.input",
-                        "keyName": "introduction",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                      },
-                      {
-                        "nodeType": "plugins.geoPoint.default",
-                        "keyName": "position",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                      }
-                    ]
+                    "nodeType": "plugins.geoPoint.default",
+                    "keyName": "position",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                   }
                 ]
               }
@@ -270,7 +222,7 @@ exports[`complex schema integration 1 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
@@ -293,12 +245,12 @@ exports[`complex schema integration 1 1`] = `
           {
             "nodeType": "plugins.object.fieldset",
             "keyName": "info",
-            "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
                 "nodeType": "plugins.object.fieldset",
                 "keyName": "info2",
-                "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
                     "nodeType": "plugins.string.input",
@@ -330,17 +282,9 @@ exports[`complex schema integration 1 1`] = `
             "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,query,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
-                "childrenName": "[name]",
-                "hocs": "[containerRouter]",
-                "children": [
-                  {
-                    "nodeType": "plugins.string.input",
-                    "keyName": "name",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                  }
-                ]
+                "nodeType": "plugins.string.input",
+                "keyName": "name",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
               }
             ]
           }
@@ -365,17 +309,9 @@ exports[`complex schema integration 1 1`] = `
             "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
-                "childrenName": "[name]",
-                "hocs": "[containerRouter]",
-                "children": [
-                  {
-                    "nodeType": "plugins.string.input",
-                    "keyName": "name",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                  }
-                ]
+                "nodeType": "plugins.string.input",
+                "keyName": "name",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
               }
             ]
           }
@@ -399,17 +335,9 @@ exports[`complex schema integration 1 1`] = `
             "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,query,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
-                "childrenName": "[name]",
-                "hocs": "[containerRouter]",
-                "children": [
-                  {
-                    "nodeType": "plugins.string.input",
-                    "keyName": "name",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                  }
-                ]
+                "nodeType": "plugins.string.input",
+                "keyName": "name",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
               }
             ]
           }
@@ -431,7 +359,7 @@ exports[`complex schema integration 2 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
@@ -466,7 +394,7 @@ exports[`complex schema integration 2 1`] = `
               {
                 "nodeType": "plugins.object.fieldset",
                 "keyName": "thumbnail",
-                "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
                     "nodeType": "plugins.string.input",
@@ -483,7 +411,7 @@ exports[`complex schema integration 2 1`] = `
               {
                 "nodeType": "plugins.object.fieldset",
                 "keyName": "contactInfo",
-                "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
                     "nodeType": "plugins.array.table",
@@ -559,36 +487,28 @@ exports[`integration with qa-compiler, test object
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
-            "childrenName": "[info1]",
-            "hocs": "[containerRouter]",
+            "nodeType": "plugins.object.fieldset",
+            "keyName": "info1",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "plugins.object.fieldset",
-                "keyName": "info1",
-                "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "nodeType": "layout",
+                "component": "block",
+                "childrenName": "[info2]",
+                "hocs": "[containerRouter]",
                 "children": [
                   {
-                    "nodeType": "layout",
-                    "component": "block",
-                    "childrenName": "[info2]",
-                    "hocs": "[containerRouter]",
+                    "nodeType": "plugins.object.fieldset",
+                    "keyName": "info2",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                     "children": [
                       {
-                        "nodeType": "plugins.object.fieldset",
-                        "keyName": "info2",
-                        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
-                        "children": [
-                          {
-                            "nodeType": "plugins.string.input",
-                            "keyName": "name3",
-                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                          }
-                        ]
+                        "nodeType": "plugins.string.input",
+                        "keyName": "name3",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                       }
                     ]
                   }
@@ -614,7 +534,7 @@ exports[`integration with qa-compiler, test object integration 1 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
@@ -647,7 +567,7 @@ exports[`integration with qa-compiler, test object integration 2 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
@@ -685,7 +605,7 @@ exports[`integration with qa-compiler, test object integration 3 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
@@ -723,7 +643,7 @@ exports[`integration with qa-compiler, test object integration 4 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
@@ -734,7 +654,7 @@ exports[`integration with qa-compiler, test object integration 4 1`] = `
               {
                 "nodeType": "plugins.object.fieldset",
                 "keyName": "info1",
-                "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
                     "nodeType": "plugins.string.input",
@@ -763,7 +683,7 @@ exports[`integration with qa-compiler, test object integration 5 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
@@ -774,7 +694,7 @@ exports[`integration with qa-compiler, test object integration 5 1`] = `
               {
                 "nodeType": "plugins.object.fieldset",
                 "keyName": "info1",
-                "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
                     "nodeType": "layout",
@@ -811,7 +731,7 @@ exports[`integration with qa-compiler, test object integration 7 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
@@ -834,12 +754,12 @@ exports[`integration with qa-compiler, test object integration 7 1`] = `
           {
             "nodeType": "plugins.object.fieldset",
             "keyName": "info",
-            "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
                 "nodeType": "plugins.object.fieldset",
                 "keyName": "info2",
-                "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
                     "nodeType": "plugins.string.input",
@@ -868,7 +788,7 @@ exports[`integration with qa-compiler, test object integration 8 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
@@ -891,12 +811,12 @@ exports[`integration with qa-compiler, test object integration 8 1`] = `
           {
             "nodeType": "plugins.object.fieldset",
             "keyName": "info",
-            "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
                 "nodeType": "plugins.object.fieldset",
                 "keyName": "info2",
-                "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
                     "nodeType": "layout",
@@ -956,12 +876,12 @@ exports[`integration with qa-compiler, test object integration 8 1`] = `
               {
                 "nodeType": "plugins.object.fieldset",
                 "keyName": "info",
-                "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
                     "nodeType": "plugins.object.fieldset",
                     "keyName": "info2",
-                    "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                     "children": [
                       {
                         "nodeType": "plugins.string.input",
@@ -992,7 +912,7 @@ exports[`integration with qa-compiler, test object integration 9 1`] = `
       {
         "nodeType": "plugins.object.fieldset",
         "keyName": "info",
-        "hocs": "[validator,withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
             "nodeType": "layout",
