@@ -9,7 +9,7 @@ export default class Sidebar extends React.Component<SidebarProps> {
   siderMenuOnClick = (menuItem: {key: string, params: MenuParams}) => {
     const {goTo, dataChanged, reset, routes, schema} = this.props;
     const {key, params} = menuItem;
-    if (Object.keys(schema).indexOf(key.split('/')[1]) === -1) {
+    if (Object.keys(schema).indexOf(removeFirstSlash(key).split('/')[0]) === -1) {
       // not include in schema
       return;
     }
@@ -90,4 +90,11 @@ function renderIcon(icon: any) {
       icon;
   }
   return null;
+}
+
+function removeFirstSlash(key) {
+  if (key[0] === '/') {
+    return key.substr(1);
+  }
+  return key;
 }
