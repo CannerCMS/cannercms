@@ -4,6 +4,8 @@ type State = {
   path: string;
   pattern: string;
 }
+import type {Tree, NodeType, Schema, ParentNode} from './types';
+
 
 export default class Parser {
   ast: Tree;
