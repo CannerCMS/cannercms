@@ -146,4 +146,60 @@ describe('parser', function() {
       path: 'posts/name',
     })).toMatchObject(tree);
   });
+
+  it('parse page schema', () => {
+    const pageSchmea = {
+      overview: {
+        type: 'page',
+        keyName: 'overview',
+        items: {
+          highestPrice: {
+            keyName: 'highestPrice',
+            type: 'indicator',
+            ui: 'amount'
+          },
+          lineChart: {
+            keyName: 'lineChart',
+            type: 'chart',
+            ui: 'line'
+          }
+        }
+      }
+    };
+    const tree = {
+      overview: {
+        type: 'page',
+        keyName: 'overview',
+        nodeType: 'page.page.default',
+        items: {
+          highestPrice: {
+            keyName: 'highestPrice',
+            type: 'indicator',
+            ui: 'amount'
+          },
+          lineChart: {
+            keyName: 'lineChart',
+            type: 'chart',
+            ui: 'line'
+          }
+        },
+        children: [ {
+          keyName: 'highestPrice',
+          type: 'indicator',
+          ui: 'amount',
+          nodeType: 'page.indicator.amount',
+          pattern: 'page.indicator',
+          path: 'overview/highestPrice'
+        }, {
+          keyName: 'lineChart',
+          type: 'chart',
+          ui: 'line',
+          nodeType: 'page.chart.line',
+          pattern: 'page.chart',
+          path: 'overview/lineChart'
+        }]
+      }
+    }
+    expect(new Parser().parse(pageSchmea)).toMatchObject(tree);
+  })
 });
