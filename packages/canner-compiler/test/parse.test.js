@@ -1,7 +1,7 @@
 import Parser from '../src/parser';
 const parser = new Parser();
 
-describe('PackageName', function() {
+describe('parser', function() {
   it('parse plugin', function() {
     const schema = {
       type: 'string',
@@ -12,7 +12,7 @@ describe('PackageName', function() {
       name: 'name',
       type: 'string',
       ui: 'input',
-      nodeType: 'plugins.string.input',
+      nodeType: 'components.string.input',
       description: 'xxx',
       pattern: 'object.string',
       path: 'info/name',
@@ -35,7 +35,7 @@ describe('PackageName', function() {
       type: 'object',
       pattern: 'object',
       path: 'info',
-      nodeType: 'plugins.object.fieldset',
+      nodeType: 'components.object.fieldset',
       items: {
         name: {
           type: 'string',
@@ -45,7 +45,7 @@ describe('PackageName', function() {
       children: [
         {
           name: 'name',
-          nodeType: 'plugins.string.input',
+          nodeType: 'components.string.input',
           type: 'string',
           ui: 'input',
           pattern: 'object.string',
@@ -79,7 +79,7 @@ describe('PackageName', function() {
       ui: 'tab',
       pattern: 'array',
       path: 'posts',
-      nodeType: 'plugins.array.tab',
+      nodeType: 'components.array.tab',
       items: {
         type: 'object',
         items: {
@@ -92,7 +92,7 @@ describe('PackageName', function() {
       children: [
         {
           name: 'name',
-          nodeType: 'plugins.string.input',
+          nodeType: 'components.string.input',
           type: 'string',
           ui: 'input',
           pattern: 'array.string',
@@ -123,7 +123,7 @@ describe('PackageName', function() {
         pattern: 'object',
         path: 'info',
         name: 'info',
-        nodeType: 'plugins.object.fieldset',
+        nodeType: 'components.object.fieldset',
         type: 'object',
         items: {
           name: {
@@ -135,7 +135,7 @@ describe('PackageName', function() {
           name: 'name',
           type: 'string',
           ui: 'input',
-          nodeType: 'plugins.string.input',
+          nodeType: 'components.string.input',
           pattern: 'object.string',
           path: 'info/name',
         }],

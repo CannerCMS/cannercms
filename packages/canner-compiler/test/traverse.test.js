@@ -8,7 +8,7 @@ beforeEach(() => {
   tree = {
     info: {
       name: 'info',
-      nodeType: 'plugins.object.fieldset',
+      nodeType: 'components.object.fieldset',
       type: 'object',
       items: {
         name: {
@@ -23,12 +23,12 @@ beforeEach(() => {
         name: 'name',
         type: 'string',
         ui: 'input',
-        nodeType: 'plugins.string.input',
+        nodeType: 'components.string.input',
       }],
     },
     info2: {
       name: 'info2',
-      nodeType: 'plugins.object.fieldset',
+      nodeType: 'components.object.fieldset',
       type: 'object',
       items: {
         name: {
@@ -43,7 +43,7 @@ beforeEach(() => {
         name: 'name',
         type: 'string',
         ui: 'input',
-        nodeType: 'plugins.string.input',
+        nodeType: 'components.string.input',
       }],
     },
   };
@@ -54,7 +54,7 @@ describe('PackageName', function() {
   it('vistor queue', function() {
     const fn = jest.fn();
     const visitor = {
-      'plugins.string.input': fn,
+      'components.string.input': fn,
     };
     traverser.addVisitor(visitor);
     traverser.addVisitor(visitor);
@@ -95,7 +95,7 @@ describe('PackageName', function() {
 
   it('node name should change', function() {
     const visitor = {
-      'plugins.object.fieldset': (path) => {
+      'components.object.fieldset': (path) => {
         path.node.name = 'test';
       },
     };
@@ -111,17 +111,17 @@ describe('PackageName', function() {
       name: 'name2',
       type: 'string',
       ui: 'input',
-      nodeType: 'plugins.string.input',
+      nodeType: 'components.string.input',
     });
     tree.info.children.push({
       name: 'name3',
       type: 'string',
       ui: 'input',
-      nodeType: 'plugins.string.input',
+      nodeType: 'components.string.input',
     });
     traverser = new Traverser(tree);
     const visitor = {
-      'plugins.string.input': (path) => {
+      'components.string.input': (path) => {
         if (path.route === 'info.0') {
           const bro = path.tree.getSiblingNodes(path.route).down;
           path.tree.setChildren(path.route.split('.').slice(0, -1).join('.'), [path.node, bro[1]]);
@@ -130,7 +130,7 @@ describe('PackageName', function() {
     };
     const mockChildren3Action = jest.fn();
     const visitor2 = {
-      'plugins.string.input': (path) => {
+      'components.string.input': (path) => {
         if (path.route === 'info.2') {
           mockChildren3Action();
         }
@@ -151,17 +151,17 @@ describe('PackageName', function() {
   //     name: "name2",
   //     type: "string",
   //     ui: "input",
-  //     nodeType: "plugins.string.input"
+  //     nodeType: "components.string.input"
   //   });
   //   tree.info.children.push({
   //     name: "name3",
   //     type: "string",
   //     ui: "input",
-  //     nodeType: "plugins.string.input"
+  //     nodeType: "components.string.input"
   //   });
   //   traverser = new Traverser(tree);
   //   const visitor = {
-  //     "plugins.string.input": path => {
+  //     "components.string.input": path => {
   //       if (path.route === 'info.1') {
   //         const topBro = path.tree.getSiblingNodes(path.route).top;
   //         path.tree.setChildren(path.route.split('.').slice(0, -1).join('.'), [topBro[0], path.node]);
@@ -170,7 +170,7 @@ describe('PackageName', function() {
   //   };
   //   const mockChildren3Action = jest.fn();
   //   const visitor2 = {
-  //     "plugins.string.input": path => {
+  //     "components.string.input": path => {
   //       if (path.route === 'info.1') {
   //         mockChildren3Action();
   //       }
@@ -190,10 +190,10 @@ describe('PackageName', function() {
       name: 'address',
       type: 'string',
       ui: 'input',
-      nodeType: 'plugins.string.input',
+      nodeType: 'components.string.input',
     };
     const visitor = {
-      'plugins.object.fieldset': (path) => {
+      'components.object.fieldset': (path) => {
         path.node.name = 'test';
         path.tree.pushChildren(path.route, newNode);
       },
@@ -230,7 +230,7 @@ describe('PackageName', function() {
 
   it('wrap the block container on children', function() {
     const visitor = {
-      'plugins.object': (path) => {
+      'components.object': (path) => {
         const children = path.node.children;
         // has the setting
         if (path.node.blocks) {
@@ -256,7 +256,7 @@ describe('PackageName', function() {
 
   it('wrap the block container on children', function() {
     const visitor = {
-      'plugins.object': (path) => {
+      'components.object': (path) => {
         const children = path.node.children;
         // has the setting
         if (path.node.blocks) {
