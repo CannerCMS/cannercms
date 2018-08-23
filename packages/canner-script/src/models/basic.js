@@ -41,7 +41,7 @@ export default class BasicModel {
     return 'default';
   }
 
-  withToolBar(children) {
+  withToolBar(children: Array<Object>) {
     const toolbar = children.find((child) => child.__TOOLBAR__);
 
     if (toolbar) {

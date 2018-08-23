@@ -2,13 +2,21 @@
 
 import * as React from 'react';
 import {Item} from 'canner-helpers';
+import type CannerRefId from 'canner-ref-id';
 
 type Props = {
   id: string,
   title: string,
   description: string,
   name: string,
-  routes: Array<string>
+  routes: Array<string>,
+  recordValue: Object,
+  match: (recordValue: Object, operator: 'create' | 'update') => boolean,
+  defaultMode: 'disabled' | 'hidden',
+  routerParams: {
+    operator: 'create' | 'update',
+  },
+  refId: CannerRefId
 };
 
 export default class Condition extends React.Component<Props> {

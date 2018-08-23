@@ -5,15 +5,27 @@ import {Context} from 'canner-helpers';
 import {mapValues, get, isPlainObject, isArray} from 'lodash';
 import type {HOCProps} from './types';
 
+type State = {
+  value: any,
+  recordValue: Object,
+  originRootValue: Object,
+  rootValue: Object,
+  isFetching: boolean
+}
+
 // $FlowFixMe
 export default function withContainerRouter(Com: React.ComponentType<*>) {
-  return class ContainerWithRouter extends React.Component<HOCProps> {
+  return class ContainerWithRouter extends React.Component<HOCProps, State> {
     state = {
       value: {},
-      recordValue: {}
+      recordValue: {},
+      originRootValue: {},
+      rootValue: {},
+      isFetching: false
     };
-
-    constructor(props) {
+    key: string;
+    subscription: any;
+    constructor(props: HOCProps) {
       super(props);
       this.key = props.refId.getPathArr()[0];
     }
