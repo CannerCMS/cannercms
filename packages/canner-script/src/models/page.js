@@ -6,7 +6,7 @@ export default class PageModel {
   items: CannerSchema | {[string]: CannerSchema};
   keyName: string;
 
-  constructor({ keyName }: string, children: Array<CannerSchema>) {
+  constructor({ keyName }: {keyName: string}, children: Array<CannerSchema>) {
     if (!keyName) {
       throw new Error('The keyName of <page /> is required');
     }

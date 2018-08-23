@@ -83,7 +83,8 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     case 'root': {
       const schema = new RootModel(attributes, children).toJson();
       const schemaKeys = Object.keys(schema);
-      const pageSchema = (schemaKeys.length > 0  && schema[schemaKeys[0]].type == 'page') ? schema[schemaKeys[0]] : {};
+      // $FlowFixMe
+      const pageSchema = (schemaKeys.length > 0  && schema[schemaKeys[0]].type === 'page') ? schema[schemaKeys[0]] : {};
       const renderView = {
         dict: attributes.dict || {},
         schema: schema,
@@ -101,7 +102,7 @@ export default function builder(tag: string | Function, attributes: Object, ...c
         // CLI node env
         return {
           entry: children.map(child => child.keyName),
-          storages: genStorages(children),
+          storages: genStorages(attributes, children),
           resolvers: parseResolvers(attributes, children),
           connector: parseConnector(attributes, children) || parseConnectors(attributes, children),
           graphqlClient: parseGraphqlClient(attributes, children) || parseGraphqlClients(attributes, children)
