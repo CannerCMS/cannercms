@@ -1,5 +1,5 @@
 const visitors = {
-  plugins: {
+  components: {
     enter: function(path) {
       // first layer
       path.node.hocs = ['withTitleAndDescription']; // the bottom HOC
