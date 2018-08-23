@@ -12,7 +12,7 @@ describe('parser', function() {
       name: 'name',
       type: 'string',
       ui: 'input',
-      nodeType: 'components.string.input',
+      nodeType: 'component.string.input',
       description: 'xxx',
       pattern: 'object.string',
       path: 'info/name',
@@ -35,7 +35,7 @@ describe('parser', function() {
       type: 'object',
       pattern: 'object',
       path: 'info',
-      nodeType: 'components.object.fieldset',
+      nodeType: 'component.object.fieldset',
       items: {
         name: {
           type: 'string',
@@ -45,7 +45,7 @@ describe('parser', function() {
       children: [
         {
           name: 'name',
-          nodeType: 'components.string.input',
+          nodeType: 'component.string.input',
           type: 'string',
           ui: 'input',
           pattern: 'object.string',
@@ -79,7 +79,7 @@ describe('parser', function() {
       ui: 'tab',
       pattern: 'array',
       path: 'posts',
-      nodeType: 'components.array.tab',
+      nodeType: 'component.array.tab',
       items: {
         type: 'object',
         items: {
@@ -92,7 +92,7 @@ describe('parser', function() {
       children: [
         {
           name: 'name',
-          nodeType: 'components.string.input',
+          nodeType: 'component.string.input',
           type: 'string',
           ui: 'input',
           pattern: 'array.string',
@@ -123,7 +123,7 @@ describe('parser', function() {
         pattern: 'object',
         path: 'info',
         name: 'info',
-        nodeType: 'components.object.fieldset',
+        nodeType: 'component.object.fieldset',
         type: 'object',
         items: {
           name: {
@@ -135,7 +135,7 @@ describe('parser', function() {
           name: 'name',
           type: 'string',
           ui: 'input',
-          nodeType: 'components.string.input',
+          nodeType: 'component.string.input',
           pattern: 'object.string',
           path: 'info/name',
         }],
