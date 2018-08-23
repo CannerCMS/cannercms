@@ -1,10 +1,8 @@
 //@flow
 import type {Path, Node} from '../flow-types';
-
-// these vistors handles the body view
-// first layer plguin will move into a container (body)
-// the routeMap will generate here and given to body container
-// so they must be the last vistors to make sure the route will change again!
+/**
+  these vistors handles the body layout that all first level components will move into
+ */
 
 const arrayBody = {
   'plugins.array': {
@@ -83,22 +81,6 @@ function genRouteMap(currentRoute: string, node: Node): RouteMap {
     const childMap = genRouteMap(currentRoute, child);
     routeMap = {...routeMap, ...childMap};
   });
-  // merge the routemap of children
-  // if ((node.type === 'object' && node.ui === 'fieldset')) {
-  //   (node.children || []).forEach(child => {
-  //     console.log('here', child);
-  //     const childRoute = `${currentRoute}/${child.name}`;
-  //     const childMap = genRouteMap(currentRoute, child);
-  //     routeMap = {...routeMap, ...childMap};
-  //   });
-  // } else if (node.type === 'container') {
-  //   (node.children || []).forEach(child => {
-  //     const childMap = genRouteMap(currentRoute, child);
-  //     routeMap = {...routeMap, ...childMap};
-  //   });
-  // } else {
-  //   console.log(node);
-  // }
 
   return routeMap;
 }
