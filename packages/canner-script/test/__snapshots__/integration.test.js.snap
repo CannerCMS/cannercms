@@ -3,15 +3,10 @@
 exports[`array integration 1 1`] = `
 {
   "posts": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[posts]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "layout",
-        "component": "block",
-        "childrenName": "[posts]",
+        "nodeType": "layout.block",
         "children": [
           {
             "nodeType": "component.array.table",
@@ -24,10 +19,8 @@ exports[`array integration 1 1`] = `
                 "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "layout",
-                    "component": "block",
+                    "nodeType": "layout.block",
                     "childrenName": "[isDraft]",
-                    "hocs": "[containerRouter]",
                     "children": [
                       {
                         "nodeType": "component.boolean.switch",
@@ -50,15 +43,10 @@ exports[`array integration 1 1`] = `
 exports[`array integration 2 1`] = `
 {
   "posts": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[posts]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "layout",
-        "component": "block",
-        "childrenName": "[posts]",
+        "nodeType": "layout.block",
         "children": [
           {
             "nodeType": "component.array.table",
@@ -66,10 +54,8 @@ exports[`array integration 2 1`] = `
             "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,query,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
+                "nodeType": "layout.block",
                 "childrenName": "[content,buttons,otherinfo]",
-                "hocs": "[containerRouter]",
                 "children": [
                   {
                     "nodeType": "component.string.input",
@@ -119,15 +105,10 @@ exports[`array integration 2 1`] = `
 exports[`complex schema integration 1 1`] = `
 {
   "posts": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[posts]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "layout",
-        "component": "block",
-        "childrenName": "[posts]",
+        "nodeType": "layout.block",
         "children": [
           {
             "nodeType": "component.array.table",
@@ -214,10 +195,7 @@ exports[`complex schema integration 1 1`] = `
     ]
   },
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -225,10 +203,8 @@ exports[`complex schema integration 1 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[name,description]",
-            "hocs": "[containerRouter]",
             "children": [
               {
                 "nodeType": "component.string.input",
@@ -266,15 +242,10 @@ exports[`complex schema integration 1 1`] = `
     ]
   },
   "popup": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[popup]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "layout",
-        "component": "block",
-        "childrenName": "[popup]",
+        "nodeType": "layout.block",
         "children": [
           {
             "nodeType": "component.array.table",
@@ -293,15 +264,10 @@ exports[`complex schema integration 1 1`] = `
     ]
   },
   "tab": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[tab]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "layout",
-        "component": "block",
-        "childrenName": "[tab]",
+        "nodeType": "layout.block",
         "children": [
           {
             "nodeType": "component.array.tab",
@@ -320,15 +286,10 @@ exports[`complex schema integration 1 1`] = `
     ]
   },
   "undefined": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[undefined]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "layout",
-        "component": "block",
-        "childrenName": "[undefined]",
+        "nodeType": "layout.block",
         "children": [
           {
             "nodeType": "component.array.table",
@@ -351,10 +312,7 @@ exports[`complex schema integration 1 1`] = `
 exports[`complex schema integration 2 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -362,17 +320,13 @@ exports[`complex schema integration 2 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[name,test,thumbnail,contactInfo]",
-            "hocs": "[containerRouter]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
+                "nodeType": "layout.block",
                 "keyName": "name",
                 "childrenName": "[name,nickname]",
-                "hocs": "[containerRouter]",
                 "children": [
                   {
                     "nodeType": "component.string.input",
@@ -479,10 +433,7 @@ exports[`integration with qa-compiler, test object
   integration 6 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -495,10 +446,8 @@ exports[`integration with qa-compiler, test object
             "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
+                "nodeType": "layout.block",
                 "childrenName": "[info2]",
-                "hocs": "[containerRouter]",
                 "children": [
                   {
                     "nodeType": "component.object.fieldset",
@@ -526,10 +475,7 @@ exports[`integration with qa-compiler, test object
 exports[`integration with qa-compiler, test object integration 1 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -537,10 +483,8 @@ exports[`integration with qa-compiler, test object integration 1 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[name]",
-            "hocs": "[containerRouter]",
             "children": [
               {
                 "nodeType": "component.string.input",
@@ -559,10 +503,7 @@ exports[`integration with qa-compiler, test object integration 1 1`] = `
 exports[`integration with qa-compiler, test object integration 2 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -570,10 +511,8 @@ exports[`integration with qa-compiler, test object integration 2 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[name]",
-            "hocs": "[containerRouter]",
             "children": [
               {
                 "nodeType": "component.string.input",
@@ -597,10 +536,7 @@ exports[`integration with qa-compiler, test object integration 2 1`] = `
 exports[`integration with qa-compiler, test object integration 3 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -608,10 +544,8 @@ exports[`integration with qa-compiler, test object integration 3 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[name,nickname]",
-            "hocs": "[containerRouter]",
             "children": [
               {
                 "nodeType": "component.string.input",
@@ -635,10 +569,7 @@ exports[`integration with qa-compiler, test object integration 3 1`] = `
 exports[`integration with qa-compiler, test object integration 4 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -646,10 +577,8 @@ exports[`integration with qa-compiler, test object integration 4 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[info1]",
-            "hocs": "[containerRouter]",
             "children": [
               {
                 "nodeType": "component.object.fieldset",
@@ -675,10 +604,7 @@ exports[`integration with qa-compiler, test object integration 4 1`] = `
 exports[`integration with qa-compiler, test object integration 5 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -686,10 +612,8 @@ exports[`integration with qa-compiler, test object integration 5 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[info1]",
-            "hocs": "[containerRouter]",
             "children": [
               {
                 "nodeType": "component.object.fieldset",
@@ -697,10 +621,8 @@ exports[`integration with qa-compiler, test object integration 5 1`] = `
                 "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "layout",
-                    "component": "block",
+                    "nodeType": "layout.block",
                     "childrenName": "[name]",
-                    "hocs": "[containerRouter]",
                     "children": [
                       {
                         "nodeType": "component.string.input",
@@ -723,10 +645,7 @@ exports[`integration with qa-compiler, test object integration 5 1`] = `
 exports[`integration with qa-compiler, test object integration 7 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -734,10 +653,8 @@ exports[`integration with qa-compiler, test object integration 7 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[name,description]",
-            "hocs": "[containerRouter]",
             "children": [
               {
                 "nodeType": "component.string.input",
@@ -780,10 +697,7 @@ exports[`integration with qa-compiler, test object integration 7 1`] = `
 exports[`integration with qa-compiler, test object integration 8 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -791,10 +705,8 @@ exports[`integration with qa-compiler, test object integration 8 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[name,description]",
-            "hocs": "[containerRouter]",
             "children": [
               {
                 "nodeType": "component.string.input",
@@ -819,10 +731,8 @@ exports[`integration with qa-compiler, test object integration 8 1`] = `
                 "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "layout",
-                    "component": "block",
+                    "nodeType": "layout.block",
                     "childrenName": "[name2]",
-                    "hocs": "[containerRouter]",
                     "children": [
                       {
                         "nodeType": "component.string.input",
@@ -840,15 +750,10 @@ exports[`integration with qa-compiler, test object integration 8 1`] = `
     ]
   },
   "info3": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info3]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "layout",
-        "component": "block",
-        "childrenName": "[info3]",
+        "nodeType": "layout.block",
         "children": [
           {
             "nodeType": "component.array.table",
@@ -856,10 +761,8 @@ exports[`integration with qa-compiler, test object integration 8 1`] = `
             "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,query,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
+                "nodeType": "layout.block",
                 "childrenName": "[name,description]",
-                "hocs": "[containerRouter]",
                 "children": [
                   {
                     "nodeType": "component.string.input",
@@ -904,10 +807,7 @@ exports[`integration with qa-compiler, test object integration 8 1`] = `
 exports[`integration with qa-compiler, test object integration 9 1`] = `
 {
   "info": {
-    "nodeType": "layout",
-    "component": "body",
-    "childrenName": "[info]",
-    "hocs": "[containerRouter]",
+    "nodeType": "layout.body",
     "children": [
       {
         "nodeType": "component.object.fieldset",
@@ -915,16 +815,12 @@ exports[`integration with qa-compiler, test object integration 9 1`] = `
         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
         "children": [
           {
-            "nodeType": "layout",
-            "component": "block",
+            "nodeType": "layout.block",
             "childrenName": "[]",
-            "hocs": "[containerRouter]",
             "children": [
               {
-                "nodeType": "layout",
-                "component": "block",
+                "nodeType": "layout.block",
                 "childrenName": "[name]",
-                "hocs": "[containerRouter]",
                 "children": [
                   {
                     "nodeType": "component.string.input",
