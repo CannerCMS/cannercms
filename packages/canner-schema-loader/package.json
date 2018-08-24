@@ -17,6 +17,9 @@
     "object-path": "^0.11.4",
     "strip-bom": "^3.0.0"
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "devDependencies": {
     "canner-script": "^1.5.0-canary.13",
     "flow-bin": "^0.78.0",
