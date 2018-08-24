@@ -3,14 +3,13 @@
 import builder from 'canner-script';
 const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
     uiParams={{
-      columns: [{
-        title: 'name',
-        dataIndex: 'name'
-      }]
+      textCol: 'name',
+      relationField: 'toOneSelfRelation'
     }}
+    ui="tree"
   >
   <string keyName="name" title="Name" />
-  <relation keyName="toOneSelfRelation" title="selfRelation" relation={{type: 'toOne', to: 'selfRelation'}}
+  <relation ui="singleSelectTree" keyName="toOneSelfRelation" title="selfRelation" relation={{type: 'toOne', to: 'selfRelation'}}
     uiParams={{
       textCol: 'name',
       columns: [{
@@ -18,7 +17,6 @@ const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
         dataIndex: 'name'
       }]
     }}
-    ui="singleSelect"
   />
   <relation ui="multipleSelect" keyName="toManySelfRelation" title="toManySelfRelation" relation={{type: 'toMany', to: 'selfRelation'}}
     uiParams={{

@@ -31,6 +31,7 @@ export const componentMap = {
       panel: '@canner/antd-array-panel',
       tag: '@canner/antd-array-tag',
       tableRoute: '@canner/antd-array-table_route',
+      tree: '@canner/antd-array-tree',
       default: '@canner/antd-array-table'
     },
     object: {
@@ -43,6 +44,7 @@ export const componentMap = {
     relation: {
       singleSelect: '@canner/antd-relation-single_select',
       multipleSelect: '@canner/antd-relation-multiple_select',
+      singleSelectTree: '@canner/antd-relation-single_select_tree',
       default: '@canner/antd-relation-single_select'
     },
     boolean: {
