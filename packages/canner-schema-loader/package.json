@@ -13,9 +13,13 @@
   "author": "Canner",
   "license": "Apache-2.0",
   "dependencies": {
+    "babel-generator": "^6.26.1",
+    "babel-template": "^6.26.0",
+    "babel-traverse": "^6.26.0",
+    "babel-types": "^6.26.0",
+    "babylon": "^6.18.0",
     "loader-utils": "^1.1.0",
-    "object-path": "^0.11.4",
-    "strip-bom": "^3.0.0"
+    "object-path": "^0.11.4"
   },
   "jest": {
     "testEnvironment": "node"

@@ -75,9 +75,5 @@
     "webpack-cli": "^2.0.10",
     "webpack-dev-server": "^3.1.0"
   },
-  "private": true,
-  "dependencies": {
-    "babel-template": "^6.26.0",
-    "babel-types": "^6.26.0"
-  }
+  "private": true
 }
