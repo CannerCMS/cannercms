@@ -22,9 +22,9 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
     throw new Error('Layout required one child at least');
   }
 
-  const {component, title, description} = attrs;
-  if (!component) {
-    throw new Error('Layout should have the property `component`');
+  const {component, ui, title, description} = attrs;
+  if (!component && !ui) {
+    throw new Error('Layout should have one of properties `component` and `ui` at least.');
   }
 
   let cannerKey = getCannerKey();
@@ -41,13 +41,12 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
     }
     const layout = {
       ...attrs,
-      nodeType: 'layout',
+      nodeType: `layout.${attrs.ui}`,
       name: childrenOfLayout[0].keyName,
       childrenName: childrenOfLayout.map(child => child.keyName),
       title: title,
       description: description,
       children: childrenOfLayout,
-      hocs: ['containerRouter'],
       [CANNER_KEY]: childrenOfLayout.reduce(((result, child) => result.concat(child[CANNER_KEY] || [])), []),
     }
     let meetChildOfLayout = false;

@@ -117,10 +117,10 @@ export default class Generator extends React.PureComponent<Props, State> {
     const copyNode = {...node};
     let component;
     if (isLayout(copyNode)) {
-      if (typeof copyNode.component === 'string') {
-        copyNode.component = Layouts[copyNode.component]
+        if (!copyNode.component) {
+        copyNode.component = Layouts[copyNode.ui];
       }
-      component = this.wrapByHOC(copyNode.component, ['containerRouter', 'context']);
+      component = this.wrapByHOC(copyNode.component, copyNode.hocs || ['containerRouter', 'context']);
     } else if (isComponent(copyNode)) {
 
       if (isFieldset(copyNode)) {

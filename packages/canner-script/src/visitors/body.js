@@ -10,16 +10,13 @@ const arrayBody = {
       if (path.node.pattern === 'array') {
         const routeMap = genRouteMap('', path.node);
         const componentInBody = {
-          nodeType: 'layout',
-          component: "body",
+          nodeType: 'layout.body',
+          ui: "body",
           children: [{
-            nodeType: 'layout',
-            component: "block",
+            nodeType: 'layout.block',
+            ui: "block",
             children: [path.node],
-            childrenName: [path.node.name],
           }],
-          childrenName: [path.node.name],
-          hocs: ['containerRouter'],
           routeMap,
         };
         // remove title description to body container
@@ -35,11 +32,9 @@ const objectBody = {
       if (path.node.pattern === 'object') {
         const routeMap = genRouteMap('', path.node);
         const componentInBody = {
-          nodeType: 'layout',
-          component: "body",
+          nodeType: 'layout.body',
+          ui: 'body',
           children: [path.node],
-          childrenName: [path.node.name],
-          hocs: ['containerRouter'],
           routeMap,
         };
         // hide first layer title decsription to body container
