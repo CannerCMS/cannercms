@@ -36,6 +36,14 @@ const visitors = {
       path.node.hocs.push('connectId'); // the top HOC
     },
   },
+  "layout": {
+    enter: function(path) {
+      path.node.hocs = ['containerRouter', 'context'];
+      if (path.node.ui === 'row' || path.node.ui === 'col') {
+        path.node.hocs = [];
+      }
+    }
+  }
 };
 
 export default [visitors];

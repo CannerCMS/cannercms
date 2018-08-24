@@ -28,12 +28,14 @@ import {parseConnector, parseConnectors, parseGraphqlClient,
 
 // layout
 export const Layout = 'Layout';
-export const Collapse = ({attributes, children}: Props) => <Layout component="collapse" {...attributes}>{children}</Layout>;
-export const Block = ({attributes, children}: Props) => <Layout component="block" {...attributes}>{children}</Layout>;
-export const Default = ({attributes, children}: Props) => <Layout component="default" {...attributes}>{children}</Layout>;
-export const Tabs = ({attributes, children}: Props) => <Layout component="tabs" {...attributes}>{children}</Layout>;
-export const Focus = ({attributes, children}: Props) => <Layout component="focus" {...attributes}>{children}</Layout>;
-export const Condition = ({attributes, children}: Props) => <Layout component="condition" {...attributes}>{children}</Layout>;
+export const Collapse = ({attributes, children}: Props) => <Layout ui="collapse" {...attributes}>{children}</Layout>;
+export const Block = ({attributes, children}: Props) => <Layout ui="block" {...attributes}>{children}</Layout>;
+export const Default = ({attributes, children}: Props) => <Layout ui="default" {...attributes}>{children}</Layout>;
+export const Tabs = ({attributes, children}: Props) => <Layout ui="tabs" {...attributes}>{children}</Layout>;
+export const Focus = ({attributes, children}: Props) => <Layout ui="focus" {...attributes}>{children}</Layout>;
+export const Condition = ({attributes, children}: Props) => <Layout ui="condition" {...attributes}>{children}</Layout>;
+export const Row = ({attributes, children}: Props) => <Layout ui="row" {...attributes}>{children}</Layout>;
+export const Col = ({attributes, children}: Props) => <Layout ui="col" {...attributes}>{children}</Layout>;
 
 // validator config
 export const configure = configuration.configure;

@@ -9,9 +9,9 @@ import Arrays from './schema/array.schema';
 import Posts from './schema/realWorld/posts.schema';
 import Users from './schema/realWorld/users.schema';
 import Home from './schema/realWorld/home.schema';
-import OnDeploy from './schema/onDeploy.schema';
 import Condition from './schema/condition.schema';
 import SelfRelation from './schema/selfRelation.schema';
+import RowAndCol from './schema/rowAndCol.schema';
 import TabsFilter from './toolbar/filter';
 import utils from './utils';
 const {connector, storage, renderImages, renderPosts} = utils;
@@ -64,23 +64,11 @@ export default <root connector={connector}>
         <Objects keyName="object" title="Object type" />
       </Tabs>
     </Block>
-    <Block title="test">
-      <array keyName="tag" ui="tag" uiParams={{defaultOptions: []}}>
-        <string />
-      </array>
-      
-      <array keyName="slider" ui="slider">
-        <string />
-      </array>
-      <array keyName="gallery" ui="gallery" title="Gallery" />
-      <image keyName="image" ui="image" title="Image" />
-      <object keyName="editor" ui="editor" />
-      {/* <geoPoint keyName="map" title="Map" /> */}
-    </Block>
   </object>
   <Home userColumns={userColumns} postColumns={postColumns}/>
   <Posts columns={postColumns} />
   <Users columns={userColumns} searchComponent={TabsFilter} />
   <SelfRelation />
   <Condition />
+  <RowAndCol />
 </root>

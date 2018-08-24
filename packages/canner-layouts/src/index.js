@@ -7,15 +7,17 @@ import InnerBlock from './InnerBlock';
 import Focus from './Focus';
 import Tabs from './Tabs';
 import Condition from './Condition';
+import Col from './Col';
 
 export default {
   block: Block,
   collapse: Collapse,
   default: Default,
   body: Body,
-  row: Row,
   innerBlock: InnerBlock,
   focus: Focus,
   tabs: Tabs,
-  condition: Condition
+  condition: Condition,
+  row: Row,
+  col: Col
 };
