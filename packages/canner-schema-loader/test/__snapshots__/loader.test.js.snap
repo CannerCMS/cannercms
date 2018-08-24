@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Inserts schema and outputs JSONSchema and componentTree 1`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.default = void 0;
+
+var _cannerScript = _interopRequireWildcard(require(\\"canner-script\\"));
+
+function _interopRequireWildcard(obj) {
+  if (obj && obj.__esModule) {
+    return obj;
+  } else {
+    var newObj = {};if (obj != null) {
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {
+            Object.defineProperty(newObj, key, desc);
+          } else {
+            newObj[key] = obj[key];
+          }
+        }
+      }
+    }newObj.default = obj;return newObj;
+  }
+}
+
+/** @jsx builder */
+var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.default)(\\"object\\", {
+  keyName: \\"test\\"
+}, (0, _cannerScript.default)(\\"string\\", {
+  keyName: \\"defaultUI\\",
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));
+    });
+  }),
+  \\"builder\\": null
+}), (0, _cannerScript.default)(\\"string\\", {
+  keyName: \\"withUI\\",
+  ui: \\"textarea\\",
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-string-textarea\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-textarea\\"));
+    });
+  }),
+  \\"builder\\": null
+}), (0, _cannerScript.default)(\\"array\\", {
+  keyName: \\"withBuilder\\",
+  ui: \\"tag\\",
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-array-tag\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-tag\\"));
+    });
+  }),
+  \\"builder\\": require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-tag/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-tag/canner.def.js\\").default : require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-tag/canner.def.js\\")
+}), (0, _cannerScript.default)(\\"array\\", {
+  keyName: \\"withBuilder2\\",
+  ui: \\"gallery\\",
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery\\"));
+    });
+  }),
+  \\"builder\\": require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery/canner.def.js\\").default : require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-gallery/canner.def.js\\")
+}), (0, _cannerScript.default)(\\"object\\", {
+  keyName: \\"withBuilder3\\",
+  ui: \\"variants\\",
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-object-variants\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-variants\\"));
+    });
+  }),
+  \\"builder\\": require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-variants/canner.def.js\\").default ? require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-variants/canner.def.js\\").default : require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-object-variants/canner.def.js\\")
+}), (0, _cannerScript.default)(\\"array\\", {
+  keyName: \\"withCannerConfigInPackageJson\\",
+  ui: \\"table\\",
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-array-table\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-table\\"));
+    });
+  }),
+  \\"builder\\": null,
+  \\"cacheActions\\": true,
+  \\"controlDeployAndResetButtons\\": true,
+  \\"type\\": \\"array\\"
+}), (0, _cannerScript.default)(\\"array\\", {
+  keyName: \\"uiParams\\",
+  ui: \\"table\\",
+  uiParams: {
+    columns: [{
+      title: 'name',
+      dataIndex: 'name'
+    }]
+  },
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-array-table\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-table\\"));
+    });
+  }),
+  \\"builder\\": null,
+  \\"cacheActions\\": true,
+  \\"controlDeployAndResetButtons\\": true,
+  \\"type\\": \\"array\\"
+}, (0, _cannerScript.default)(\\"array\\", {
+  keyName: \\"nested\\",
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-array-table\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-array-table\\"));
+    });
+  }),
+  \\"builder\\": null,
+  \\"cacheActions\\": true,
+  \\"controlDeployAndResetButtons\\": true,
+  \\"type\\": \\"array\\"
+}, (0, _cannerScript.default)(\\"string\\", {
+  keyName: \\"string\\",
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));
+    });
+  }),
+  \\"builder\\": null
+}))), (0, _cannerScript.default)(\\"string\\", {
+  keyName: \\"packageName\\",
+  packageName: \\"./fake-string-component\\",
+  \\"packageName\\": \\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\",
+  \\"loader\\": new Promise(resolve => {
+    require.ensure([], require => {
+      resolve(require(\\"/Users/siou/projects/canner/node_modules/@canner/antd-string-input\\"));
+    });
+  }),
+  \\"builder\\": null
+})));
+
+exports.default = _default;"
+`;

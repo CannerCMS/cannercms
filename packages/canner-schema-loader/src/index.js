@@ -1,191 +1,145 @@
-import {getOptions, stringifyRequest} from 'loader-utils';
-import path from 'path';
-import objectPath from 'object-path';
-import Module from 'module';
+import {getOptions} from 'loader-utils';
+import * as babylon from 'babylon';
+import traverse from 'babel-traverse';
+import generate from 'babel-generator';
+import * as t from 'babel-types';
+import template from 'babel-template';
 import fs from 'fs';
-import stripBOM from 'strip-bom';
+import path from 'path';
+import {componentMap} from './utils'
 
-const componentMap = {
-  _map: {
-    string: {
-      input: '@canner/antd-string-input',
-      card: '@canner/antd-string-card',
-      link: '@canner/antd-string-link',
-      radio: '@canner/antd-string-radio',
-      select: '@canner/antd-string-select',
-      textarea: '@canner/antd-string-textarea',
-      time: '@canner/antd-string-time_picker',
-      markdown: '@canner/antd-string-mde',
-      default: '@canner/antd-string-input'
-    },
-    number: {
-      input: '@canner/antd-number-input',
-      rate: '@canner/antd-number-rate',
-      slider: '@canner/antd-number-slider',
-      default: '@canner/antd-number-input'
-    },
-    array: {
-      tab: '@canner/antd-array-tabs',
-      tabs: '@canner/antd-array-tabs',
-      tabTop: '@canner/antd-array-tab_top',
-      tabRight: '@canner/antd-array-tab_right',
-      tabLeft: '@canner/antd-array-tab_left',
-      tabBottom: '@canner/antd-array-tab_bottom',
-      gallery: '@canner/antd-array-gallery',
-      table: '@canner/antd-array-table',
-      slider: '@canner/antd-array-slider',
-      panel: '@canner/antd-array-panel',
-      tag: '@canner/antd-array-tag',
-      tableRoute: '@canner/antd-array-table_route',
-      default: '@canner/antd-array-table'
-    },
-    object: {
-      variants: '@canner/antd-object-variants',
-      options: '@canner/antd-object-options',
-      editor: '@canner/antd-object-editor',
-      fieldset: '@canner/antd-object-fieldset',
-      default: '@canner/antd-object-fieldset'
-    },
-    relation: {
-      singleSelect: '@canner/antd-relation-single_select',
-      multipleSelect: '@canner/antd-relation-multiple_select',
-      default: '@canner/antd-relation-single_select'
-    },
-    boolean: {
-      switch: '@canner/antd-boolean-switch',
-      card: '@canner/antd-boolean-card',
-      default: '@canner/antd-boolean-switch'
-    },
-    geoPoint: {
-      default: '@canner/antd-object-map'
-    },
-    file: {
-      file: '@canner/antd-object-image',
-      default: '@canner/antd-object-image'
-    },
-    image: {
-      image: '@canner/antd-object-image',
-      default: '@canner/antd-object-image'
-    },
-    dateTime: {
-      dateTime: '@canner/antd-string-date_time_picker', 
-      default: '@canner/antd-string-date_time_picker'
-    }
-  },
-  get: function(type, ui = 'default') {
-    if (!(type in this._map)) {
-      return undefined;
-    }
+const buildDynamicImport = template(`
+  new Promise((resolve) => {
+    require.ensure([], (require) => {
+      resolve(require(PACKAGE_NAME));
+    });
+  })
+`);
 
-    if (!(ui in this._map[type])) {
-      throw new Error(`there is no ui ${ui} in type ${type}`);
-    }
+const buildRequire = template(`
+  require(DEF_FILE).default ? require(DEF_FILE).default : require(DEF_FILE)
+`)
 
-    return objectPath.get(this._map, `${type}.${ui}`, ui);
-  },
-  set: function(path, name) {
-    const paths = path.split('.');
-    objectPath.set(this._map, paths, name);
-  }
-};
-function nullReplace(match, type) {
-  const packageName = componentMap.get(type);
-  return match.replace('null', `{packageName: '${packageName}'}`);
-}
-function getPackageName(match, type, attrs) {
-  const result = /ui: ['"](\w+)['"]/.exec(match);
-  let packageName = '';
-  if (result === null) {
-    packageName = componentMap.get(type);
-  } else {
-    packageName = componentMap.get(type, result[1]);
-  }
-  if (!packageName) {
-    return match;
-  }
-  if (attrs === 'null') {
-    return match.replace(/['"](string|number|boolean|array|object|relation|geoPoint|dateTime|image)['"], null/g, nullReplace);
-  } else {
-    var braceIndex = match.indexOf('{');
-    if (braceIndex === -1) {
-      return match;
+export default function loader(source) {
+  const ast = babylon.parse(source);
+  traverse(ast, {
+    CallExpression(path) {
+      let typeNode, propsNode, type, packageName;
+      if (path.node.arguments.length < 2) {
+        return;
+      }
+      typeNode = path.get('arguments.0');
+      propsNode = path.get('arguments.1');
+      if (typeNode.isStringLiteral() && propsNode.isNullLiteral()) {
+        type = typeNode.node.value;
+        packageName = componentMap.get('type');
+        if (!packageName) {
+          return;
+        }
+        packageName = absPackageName(packageName);
+        path.get('arguments.1').replaceWith(
+          t.objectExpression([
+            t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)),
+            t.objectProperty(t.stringLiteral('loader'), buildLoader(packageName)),
+            t.objectProperty(t.stringLiteral('builder'), buildBuilder(packageName)),
+            ...builderCannerConfig(packageName)
+          ])
+        );
+      }
+
+      if (typeNode.isStringLiteral() && propsNode.isObjectExpression()) {
+        type = typeNode.node.value;
+        const properties = getProperties(propsNode);
+        packageName = componentMap.get(type, properties.ui);
+        if (!packageName) {
+          return;
+        }
+        packageName = absPackageName(packageName);
+        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)));
+        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('loader'), buildLoader(packageName)));
+        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('builder'), buildBuilder(packageName)));
+        propsNode.node.properties = propsNode.node.properties.concat(builderCannerConfig(packageName));
+      }
     }
-    return `${match.substring(0, braceIndex + 1)}packageName: '${packageName}', ${match.substring(braceIndex + 1)}`;
-  }
+  });
+  return generate(ast, {}, source).code;
 }
 
-function packageNameTemplate(match, source, context) {
-  /** fieldset is not a real component, so return its name, and Generator will deal with it */
-  if (!source || source.endsWith('@canner/antd-object-fieldset')) {
-    return match;
+
+function getProperties(propsNode) {
+  return propsNode.node.properties.reduce((result, property) => {
+    return {
+      ...result,
+      [getPropertyKey(property)]: getPropertyValue(property)
+    }
+  }, {});
+}
+
+function getPropertyKey(property) {
+  return property.key.name;
+}
+
+function getPropertyValue(property) {
+  if (t.isStringLiteral(property.value)) {
+    return property.value.value;
   }
-  let packageName = source;
-  if (packageName.startsWith('.') || packageName.startsWith('/')) {
+  // for now, we only need ui and packagename, so If it's not string literal we can ignore it.
+  return undefined;
+}
+
+export function absPackageName(sourcePkgName, context) {
+  let packageName = sourcePkgName;
+  if (packageName.startsWith('.') || packageName.startsWith(path.sep)) {
     // customize component
-    packageName = path.resolve(context.context, source);
+    packageName = path.resolve(context.context, sourcePkgName);
   } else {
     // deployed component
     const paths = require.resolve(packageName).split(path.sep);
     const dirPathIndex = paths.indexOf(packageName);
-    packageName = paths.slice(0, dirPathIndex - 1).join('/');
+    packageName = paths.slice(0, dirPathIndex - 1).join(path.sep);
   }
-  const loader = ['new Promise((resolve) => {',
-    'require.ensure([], (require) => {',
-      `resolve(require("${packageName}"));`,
-    '});',
-  '})'].join('');
+  return packageName;
+}
+
+function buildLoader(packageName) {
+  return buildDynamicImport({
+    PACKAGE_NAME: t.stringLiteral(packageName)
+  }).expression;
+}
+
+function buildBuilder(packageName) {
   let builder;
   const defFile = `${packageName}/canner.def.js`;
   if (fs.existsSync(defFile)) {
     // to check defFile is exist or not, if not this line will throw an error
-    builder = `require("${defFile}").default ? require("${defFile}").default : require("${defFile}")`;
+    builder = buildRequire({
+      DEF_FILE: t.stringLiteral(defFile)
+    }).expression;
   } else {
-    builder = undefined;
+    builder = t.nullLiteral();
   }
+  return builder;
+}
 
-  let canner = {};
+function builderCannerConfig(packageName) {
+  let canner = {}, properties = [];
   try {
     canner = require(`${packageName}/package.json`).canner || {};
   } catch (e) {
     canner = {};
   }
-  canner = Object.keys(canner).reduce((result, key, currentIndex, arr) => {
-    const last = arr.length - 1 === currentIndex;
+  Object.keys(canner).forEach(key => {
     if (key === 'cannerDataType') {
-      result += `type: '${canner[key]}'${last ? '' : ','}`;
+      properties.push(t.objectProperty(t.stringLiteral('type'), t.stringLiteral(canner[key])));
+    } else if (typeof canner[key] === 'string'){
+      properties.push(t.objectProperty(t.stringLiteral(key), t.stringLiteral(canner[key])));
+    } else if (typeof canner[key] === 'number'){
+      properties.push(t.objectProperty(t.stringLiteral(key), t.numberLiteral(canner[key])));
+    } else if (typeof canner[key] === 'boolean'){
+      properties.push(t.objectProperty(t.stringLiteral(key), t.booleanLiteral(canner[key])));
     } else {
-      result += `${key}: ${typeof canner[key] === 'string' ? `'${canner[key]}'` : canner[key]}${last ? '' : ','}`;
+      throw new Error(`Not support the type of object and array config in canner yet, but got key: ${key} with value: ${canner[key]}.`);
     }
-    return result;
-  }, '');
-  return [`packageName: '${packageName}',`,
-    `loader: ${loader}`,
-    `${builder ? `, builder: ${builder}` : ''}${canner ? `, ${canner}`: ''}`
-  ].join('');
-}
-
-export default function loader(source) {
-  const options = getOptions(this);
-  const cannerComponentMap = {};
-  // get type and ui and add packagename in code
-  let str = replaceTypeAndUItoPackageName(source);
-  // transform packageName to loader, builder, and other attributes in package.json
-  str = replacePackageNameToDynamicImport(str, this);
-  return str;
-}
-
-function replacer(key, val) {
-  if (key === '__CANNER_KEY__') {
-    return [];
-  }
-
-  return val;
-}
-
-export function replaceTypeAndUItoPackageName(str) {
-  return str.replace(/\s*?['"](string|number|boolean|array|object|relation|geoPoint|dateTime|image)['"],\s*?(({\s*?((?!(packageName)).|\s)*?})|null)/g, getPackageName);
-}
-
-export function replacePackageNameToDynamicImport(str, that) {
-  return str.replace(/packageName: ['"]([\w\/\-\@\.]+)['"]/g, (match, name) => packageNameTemplate(match, name, that))
+  });
+  return properties;
 }
