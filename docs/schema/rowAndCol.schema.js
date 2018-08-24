@@ -4,17 +4,16 @@ import builder, {Block, Row, Col} from 'canner-script';
 const RowAndCol = () => <object keyName="rowAndCol" title="Row And Col">
   <Block>
     <Row>
-      <Col span={8}>
+      <Col span={5}>
         <string keyName="test1" title="test1" />
         <string keyName="test2" title="test2" />
       </Col>
-      <Col span={8}>
-        <string keyName="test3" title="test3" />
-        <string keyName="test4" title="test4" />
-      </Col>
-      <Col span={8}>
+      <Col span={5} offset={1}>
         <string keyName="test5" title="test5" />
         <string keyName="test6" title="test6" />
+      </Col>
+      <Col span={12} offset={1}>
+        <image keyName="image" title="image" />
       </Col>
     </Row>
   </Block>
