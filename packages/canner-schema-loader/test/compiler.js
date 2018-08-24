@@ -15,6 +15,7 @@ export default (fixture, options = {}) => {
         test: /(\.schema\.js|canner\.def\.js)/,
         use: [{
           loader: path.resolve(__dirname, '../src/index.js'),
+          options
         }, {
           loader: 'babel-loader'
         }]
