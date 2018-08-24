@@ -1,4 +1,3 @@
-import {getOptions} from 'loader-utils';
 import * as babylon from 'babylon';
 import traverse from 'babel-traverse';
 import generate from 'babel-generator';
@@ -22,6 +21,7 @@ const buildRequire = template(`
 
 export default function loader(source) {
   const ast = babylon.parse(source);
+  const that = this;
   traverse(ast, {
     CallExpression(path) {
       let typeNode, propsNode, type, packageName;
@@ -36,7 +36,7 @@ export default function loader(source) {
         if (!packageName) {
           return;
         }
-        packageName = absPackageName(packageName);
+        packageName = absPackageName(packageName, that);
         path.get('arguments.1').replaceWith(
           t.objectExpression([
             t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)),
@@ -54,7 +54,7 @@ export default function loader(source) {
         if (!packageName) {
           return;
         }
-        packageName = absPackageName(packageName);
+        packageName = absPackageName(packageName, that);
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)));
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('loader'), buildLoader(packageName)));
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('builder'), buildBuilder(packageName)));
