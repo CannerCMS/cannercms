@@ -33,7 +33,7 @@ describe('insertion layout', () => {
     </Layout>
   , should create layout visitor`, () => {
     const {visitor, cannerKey} = createLayoutVisitor({
-      component: 'block'
+      ui: 'block'
     }, [{
       type: 'string',
       keyName: 'name'
@@ -55,7 +55,7 @@ describe('insertion layout', () => {
     expect(mockSetChildren.mock.calls[0][0]).toBe('body.0');
     // new children
     expect(mockSetChildren.mock.calls[0][1]).toMatchObject([{
-      nodeType: 'layout',
+      nodeType: 'layout.block',
       childrenName: [node.keyName],
       children: [node],
       
@@ -69,7 +69,7 @@ describe('insertion layout', () => {
     </Layout>,
   should create layout visitor`, () => {
     const {visitor, cannerKey} = createLayoutVisitor({
-      component: 'block'
+      ui: 'block'
     }, [{
       type: 'string',
       keyName: 'name'
@@ -94,7 +94,7 @@ describe('insertion layout', () => {
     expect(mockSetChildren.mock.calls[0][0]).toBe('body.0');
     // new node
     expect(mockSetChildren.mock.calls[0][1]).toMatchObject([{
-      nodeType: 'layout',
+      nodeType: 'layout.block',
       childrenName: [node.keyName, node2.keyName],
       children: [node, node2],
       
@@ -110,7 +110,7 @@ describe('insertion layout', () => {
     </Layout>,
    one is object, should create layout visitor`, () => {
     const {visitor, cannerKey} = createLayoutVisitor({
-      component: 'block'
+      ui: 'block'
     }, [{
       type: 'object',
       name: 'info',
@@ -152,7 +152,7 @@ describe('insertion layout', () => {
     expect(mockSetChildren.mock.calls[0][0]).toBe('body.0');
     // new node
     expect(mockSetChildren.mock.calls[0][1]).toMatchObject([{
-      nodeType: 'layout',
+      nodeType: 'layout.block',
       childrenName: [node.keyName, node2.keyName],
       children: [node, node2],
       
@@ -166,7 +166,7 @@ describe('insertion layout', () => {
      <string />,
    silibing doesnt have cannerkey should create layout visitor`, () => {
     const {visitor, cannerKey} = createLayoutVisitor({
-      component: 'block'
+      ui: 'block'
     }, [{
       type: 'string',
       keyName: 'name'
@@ -189,7 +189,7 @@ describe('insertion layout', () => {
     // new node
     expect(mockSetChildren.mock.calls[0][1].length).toBe(2);
     expect(mockSetChildren.mock.calls[0][1]).toMatchObject([{
-      nodeType: 'layout',
+      nodeType: 'layout.block',
       childrenName: [node.keyName],
       children: [node],
       
