@@ -55,15 +55,15 @@ export default <root connector={connector}>
     title="Components Overview"
     storage={storage}
   >
-    <Block title="All Types">
-      <Tabs>
+    {/* <Block title="All Types">
+      <Tabs> */}
         <Strings keyName="string" title="String Type" />
         <Booleans keyName="boolean" title="Boolean Type"/>
         <Numbers keyName="number" title="Number Types" />
         <Arrays keyName="array" title="Array Type" />
         <Objects keyName="object" title="Object type" />
-      </Tabs>
-    </Block>
+      {/* </Tabs>
+    </Block> */}
   </object>
   <Home userColumns={userColumns} postColumns={postColumns}/>
   <Posts columns={postColumns} />

@@ -34,7 +34,11 @@ const objectBody = {
         const componentInBody = {
           nodeType: 'layout.body',
           ui: 'body',
-          children: [path.node],
+          children: [{
+            nodeType: 'layout.block',
+            ui: "block",
+            children: [path.node],
+          }],
           routeMap,
         };
         // hide first layer title decsription to body container
