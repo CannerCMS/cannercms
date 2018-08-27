@@ -66,11 +66,13 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
     };
     return (
       <Layout>
-        <Navbar
-          dataChanged={dataChanged}
-          deploy={this.cannerRef.current && this.cannerRef.current.deploy}
-          {...navbarConfig}
-        />
+        {navbarConfig && (
+          <Navbar
+            dataChanged={dataChanged}
+            deploy={this.cannerRef.current && this.cannerRef.current.deploy}
+            {...navbarConfig}
+          />
+        )}
         <Layout style={{
           WebkitBoxOrient: 'horizontal',
           WebkitBoxDirection: 'normal',
