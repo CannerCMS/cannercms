@@ -66,7 +66,7 @@ export type CannerContainerProps = {
   schema: LoadedSchema,
   goTo: string => void,
   routes: Array<string>,
-  navbarConfig: NavbarConfig,
+  navbarConfig?: NavbarConfig,
   sidebarConfig: SidebarConfig,
   children: React.Element<any>,
   router: Router,
