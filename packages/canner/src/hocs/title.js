@@ -24,7 +24,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
         refId, routes, updateQuery, type, imageServiceConfig,
-        onDeploy, removeOnDeploy, required
+        onDeploy, removeOnDeploy, required, dataChanged
       } = this.props;
       // $FlowFixMe: default funcitons in HOCContext only throw error, so they don't have any arguments
       return <HOCContext.Provider
@@ -37,7 +37,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           query,
           updateQuery,
           onDeploy,
-          removeOnDeploy
+          removeOnDeploy,
+          dataChanged
         }}
       >
         <Context.Provider value={{
