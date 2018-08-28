@@ -1,12 +1,10 @@
 // @flow
 
 import * as React from 'react';
-import {Spin, Icon} from 'antd';
+import { List } from 'react-content-loader'
 import Toolbar from './components/toolbar';
 import {mapValues, get, isPlainObject, isArray} from 'lodash';
 import type {HOCProps} from './types';
-
-const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type State = {
   value: any,
@@ -110,7 +108,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const {value, isFetching, rootValue} = this.state;
       const {toolbar, query, refId, items, type, path, relation, pattern} = this.props;
       if (isFetching) {
-        return <Spin indicator={antIcon} />;
+        return <List />;
       }
       if (pattern === 'array') {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
