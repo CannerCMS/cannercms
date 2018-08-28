@@ -198,40 +198,45 @@ exports[`complex schema integration 1 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
-          {
-            "nodeType": "layout.block",
-            "childrenName": "[name,description]",
-            "children": [
-              {
-                "nodeType": "component.string.input",
-                "keyName": "name",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-              },
-              {
-                "nodeType": "component.string.input",
-                "keyName": "description",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-              }
-            ]
-          },
           {
             "nodeType": "component.object.fieldset",
             "keyName": "info",
             "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "component.object.fieldset",
-                "keyName": "info2",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "nodeType": "layout.block",
+                "childrenName": "[name,description]",
                 "children": [
                   {
                     "nodeType": "component.string.input",
-                    "keyName": "name2",
+                    "keyName": "name",
                     "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  },
+                  {
+                    "nodeType": "component.string.input",
+                    "keyName": "description",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  }
+                ]
+              },
+              {
+                "nodeType": "component.object.fieldset",
+                "keyName": "info",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "children": [
+                  {
+                    "nodeType": "component.object.fieldset",
+                    "keyName": "info2",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                    "children": [
+                      {
+                        "nodeType": "component.string.input",
+                        "keyName": "name2",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                      }
+                    ]
                   }
                 ]
               }
@@ -315,106 +320,111 @@ exports[`complex schema integration 2 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
           {
-            "nodeType": "layout.block",
-            "childrenName": "[name,test,thumbnail,contactInfo]",
+            "nodeType": "component.object.fieldset",
+            "keyName": "info",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
                 "nodeType": "layout.block",
-                "keyName": "name",
-                "childrenName": "[name,nickname]",
+                "childrenName": "[name,test,thumbnail,contactInfo]",
                 "children": [
                   {
-                    "nodeType": "component.string.input",
+                    "nodeType": "layout.block",
                     "keyName": "name",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                  },
-                  {
-                    "nodeType": "component.string.input",
-                    "keyName": "nickname",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                  }
-                ]
-              },
-              {
-                "nodeType": "component.string.input",
-                "keyName": "test",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-              },
-              {
-                "nodeType": "component.object.fieldset",
-                "keyName": "thumbnail",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
-                "children": [
-                  {
-                    "nodeType": "component.string.input",
-                    "keyName": "imageName",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                  },
-                  {
-                    "nodeType": "component.file.file",
-                    "keyName": "imageSrc",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-                  }
-                ]
-              },
-              {
-                "nodeType": "component.object.fieldset",
-                "keyName": "contactInfo",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
-                "children": [
-                  {
-                    "nodeType": "component.array.table",
-                    "keyName": "phones",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,withQuery,routeMiniApp,connectId]",
+                    "childrenName": "[name,nickname]",
                     "children": [
                       {
-                        "nodeType": "component.string.select",
-                        "keyName": "type",
+                        "nodeType": "component.string.input",
+                        "keyName": "name",
                         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                       },
                       {
                         "nodeType": "component.string.input",
-                        "keyName": "value",
+                        "keyName": "nickname",
                         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                       }
                     ]
                   },
                   {
-                    "nodeType": "component.array.table",
-                    "keyName": "addresses",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,withQuery,routeMiniApp,connectId]",
+                    "nodeType": "component.string.input",
+                    "keyName": "test",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  },
+                  {
+                    "nodeType": "component.object.fieldset",
+                    "keyName": "thumbnail",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                     "children": [
                       {
-                        "nodeType": "component.string.select",
-                        "keyName": "type",
+                        "nodeType": "component.string.input",
+                        "keyName": "imageName",
                         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                       },
                       {
-                        "nodeType": "component.string.input",
-                        "keyName": "value",
+                        "nodeType": "component.file.file",
+                        "keyName": "imageSrc",
                         "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
                       }
                     ]
                   },
                   {
-                    "nodeType": "component.array.table",
-                    "keyName": "emails",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,withQuery,routeMiniApp,connectId]",
+                    "nodeType": "component.object.fieldset",
+                    "keyName": "contactInfo",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                     "children": [
                       {
-                        "nodeType": "component.string.select",
-                        "keyName": "type",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                        "nodeType": "component.array.table",
+                        "keyName": "phones",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,withQuery,routeMiniApp,connectId]",
+                        "children": [
+                          {
+                            "nodeType": "component.string.select",
+                            "keyName": "type",
+                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                          },
+                          {
+                            "nodeType": "component.string.input",
+                            "keyName": "value",
+                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                          }
+                        ]
                       },
                       {
-                        "nodeType": "component.string.input",
-                        "keyName": "value",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                        "nodeType": "component.array.table",
+                        "keyName": "addresses",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,withQuery,routeMiniApp,connectId]",
+                        "children": [
+                          {
+                            "nodeType": "component.string.select",
+                            "keyName": "type",
+                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                          },
+                          {
+                            "nodeType": "component.string.input",
+                            "keyName": "value",
+                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                          }
+                        ]
+                      },
+                      {
+                        "nodeType": "component.array.table",
+                        "keyName": "emails",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,miniApp,withRoute,withQuery,routeMiniApp,connectId]",
+                        "children": [
+                          {
+                            "nodeType": "component.string.select",
+                            "keyName": "type",
+                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                          },
+                          {
+                            "nodeType": "component.string.input",
+                            "keyName": "value",
+                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -436,28 +446,33 @@ exports[`integration with qa-compiler, test object
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
           {
             "nodeType": "component.object.fieldset",
-            "keyName": "info1",
+            "keyName": "info",
             "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "layout.block",
-                "childrenName": "[info2]",
+                "nodeType": "component.object.fieldset",
+                "keyName": "info1",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "component.object.fieldset",
-                    "keyName": "info2",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                    "nodeType": "layout.block",
+                    "childrenName": "[info2]",
                     "children": [
                       {
-                        "nodeType": "component.string.input",
-                        "keyName": "name3",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                        "nodeType": "component.object.fieldset",
+                        "keyName": "info2",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                        "children": [
+                          {
+                            "nodeType": "component.string.input",
+                            "keyName": "name3",
+                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -478,18 +493,23 @@ exports[`integration with qa-compiler, test object integration 1 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
           {
-            "nodeType": "layout.block",
-            "childrenName": "[name]",
+            "nodeType": "component.object.fieldset",
+            "keyName": "info",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "component.string.input",
-                "keyName": "name",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                "nodeType": "layout.block",
+                "childrenName": "[name]",
+                "children": [
+                  {
+                    "nodeType": "component.string.input",
+                    "keyName": "name",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  }
+                ]
               }
             ]
           }
@@ -506,25 +526,30 @@ exports[`integration with qa-compiler, test object integration 2 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
           {
-            "nodeType": "layout.block",
-            "childrenName": "[name]",
+            "nodeType": "component.object.fieldset",
+            "keyName": "info",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
+                "nodeType": "layout.block",
+                "childrenName": "[name]",
+                "children": [
+                  {
+                    "nodeType": "component.string.input",
+                    "keyName": "name",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  }
+                ]
+              },
+              {
                 "nodeType": "component.string.input",
-                "keyName": "name",
+                "keyName": "nickname",
                 "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
               }
             ]
-          },
-          {
-            "nodeType": "component.string.input",
-            "keyName": "nickname",
-            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
           }
         ]
       }
@@ -539,23 +564,28 @@ exports[`integration with qa-compiler, test object integration 3 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
           {
-            "nodeType": "layout.block",
-            "childrenName": "[name,nickname]",
+            "nodeType": "component.object.fieldset",
+            "keyName": "info",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "component.string.input",
-                "keyName": "name",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-              },
-              {
-                "nodeType": "component.string.input",
-                "keyName": "nickname",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                "nodeType": "layout.block",
+                "childrenName": "[name,nickname]",
+                "children": [
+                  {
+                    "nodeType": "component.string.input",
+                    "keyName": "name",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  },
+                  {
+                    "nodeType": "component.string.input",
+                    "keyName": "nickname",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  }
+                ]
               }
             ]
           }
@@ -572,23 +602,28 @@ exports[`integration with qa-compiler, test object integration 4 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
           {
-            "nodeType": "layout.block",
-            "childrenName": "[info1]",
+            "nodeType": "component.object.fieldset",
+            "keyName": "info",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "component.object.fieldset",
-                "keyName": "info1",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "nodeType": "layout.block",
+                "childrenName": "[info1]",
                 "children": [
                   {
-                    "nodeType": "component.string.input",
-                    "keyName": "name",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                    "nodeType": "component.object.fieldset",
+                    "keyName": "info1",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                    "children": [
+                      {
+                        "nodeType": "component.string.input",
+                        "keyName": "name",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                      }
+                    ]
                   }
                 ]
               }
@@ -607,27 +642,32 @@ exports[`integration with qa-compiler, test object integration 5 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
           {
-            "nodeType": "layout.block",
-            "childrenName": "[info1]",
+            "nodeType": "component.object.fieldset",
+            "keyName": "info",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "component.object.fieldset",
-                "keyName": "info1",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "nodeType": "layout.block",
+                "childrenName": "[info1]",
                 "children": [
                   {
-                    "nodeType": "layout.block",
-                    "childrenName": "[name]",
+                    "nodeType": "component.object.fieldset",
+                    "keyName": "info1",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                     "children": [
                       {
-                        "nodeType": "component.string.input",
-                        "keyName": "name",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                        "nodeType": "layout.block",
+                        "childrenName": "[name]",
+                        "children": [
+                          {
+                            "nodeType": "component.string.input",
+                            "keyName": "name",
+                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -648,40 +688,45 @@ exports[`integration with qa-compiler, test object integration 7 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
-          {
-            "nodeType": "layout.block",
-            "childrenName": "[name,description]",
-            "children": [
-              {
-                "nodeType": "component.string.input",
-                "keyName": "name",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-              },
-              {
-                "nodeType": "component.string.input",
-                "keyName": "description",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-              }
-            ]
-          },
           {
             "nodeType": "component.object.fieldset",
             "keyName": "info",
             "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
-                "nodeType": "component.object.fieldset",
-                "keyName": "info2",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "nodeType": "layout.block",
+                "childrenName": "[name,description]",
                 "children": [
                   {
                     "nodeType": "component.string.input",
-                    "keyName": "name2",
+                    "keyName": "name",
                     "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  },
+                  {
+                    "nodeType": "component.string.input",
+                    "keyName": "description",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  }
+                ]
+              },
+              {
+                "nodeType": "component.object.fieldset",
+                "keyName": "info",
+                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                "children": [
+                  {
+                    "nodeType": "component.object.fieldset",
+                    "keyName": "info2",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+                    "children": [
+                      {
+                        "nodeType": "component.string.input",
+                        "keyName": "name2",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                      }
+                    ]
                   }
                 ]
               }
@@ -700,44 +745,49 @@ exports[`integration with qa-compiler, test object integration 8 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
-          {
-            "nodeType": "layout.block",
-            "childrenName": "[name,description]",
-            "children": [
-              {
-                "nodeType": "component.string.input",
-                "keyName": "name",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-              },
-              {
-                "nodeType": "component.string.input",
-                "keyName": "description",
-                "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
-              }
-            ]
-          },
           {
             "nodeType": "component.object.fieldset",
             "keyName": "info",
             "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
+                "nodeType": "layout.block",
+                "childrenName": "[name,description]",
+                "children": [
+                  {
+                    "nodeType": "component.string.input",
+                    "keyName": "name",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  },
+                  {
+                    "nodeType": "component.string.input",
+                    "keyName": "description",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                  }
+                ]
+              },
+              {
                 "nodeType": "component.object.fieldset",
-                "keyName": "info2",
+                "keyName": "info",
                 "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                 "children": [
                   {
-                    "nodeType": "layout.block",
-                    "childrenName": "[name2]",
+                    "nodeType": "component.object.fieldset",
+                    "keyName": "info2",
+                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
                     "children": [
                       {
-                        "nodeType": "component.string.input",
-                        "keyName": "name2",
-                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                        "nodeType": "layout.block",
+                        "childrenName": "[name2]",
+                        "children": [
+                          {
+                            "nodeType": "component.string.input",
+                            "keyName": "name2",
+                            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -810,22 +860,27 @@ exports[`integration with qa-compiler, test object integration 9 1`] = `
     "nodeType": "layout.body",
     "children": [
       {
-        "nodeType": "component.object.fieldset",
-        "keyName": "info",
-        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
+        "nodeType": "layout.block",
         "children": [
           {
-            "nodeType": "layout.block",
-            "childrenName": "[]",
+            "nodeType": "component.object.fieldset",
+            "keyName": "info",
+            "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]",
             "children": [
               {
                 "nodeType": "layout.block",
-                "childrenName": "[name]",
+                "childrenName": "[]",
                 "children": [
                   {
-                    "nodeType": "component.string.input",
-                    "keyName": "name",
-                    "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                    "nodeType": "layout.block",
+                    "childrenName": "[name]",
+                    "children": [
+                      {
+                        "nodeType": "component.string.input",
+                        "keyName": "name",
+                        "hocs": "[withTitleAndDescription,withRequest,relation,withRoute,withQuery,routeMiniApp,connectId]"
+                      }
+                    ]
                   }
                 ]
               }
