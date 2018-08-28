@@ -57,7 +57,8 @@ export type CMSProps = {
   routes: Array<string>,
   routerParams: Object,
   intl: Intl,
-  hideButtons: HideButtons
+  hideButtons: HideButtons,
+  errorHandler: Error => any
 }
 
 export type GeneratorProps = {
@@ -85,7 +86,8 @@ export type ProviderProps = {
   afterDeploy: AfterDeploy,
   children: React.Element<*>,
   client: ApolloClient,
-  rootKey: string
+  rootKey: string,
+  errorHandler: Error => any
 };
 
 export type Submenu = {

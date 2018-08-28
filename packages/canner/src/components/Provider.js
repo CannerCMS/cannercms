@@ -130,7 +130,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
-    const {client, afterDeploy, schema} = this.props;
+    const {client, afterDeploy, schema, errorHandler} = this.props;
     let actions = this.actionManager.getActions(key, id);
     if (!actions || !actions.length) {
       return Promise.resolve();
@@ -144,9 +144,10 @@ export default class Provider extends React.PureComponent<Props, State> {
     const mutatedData = cachedData[key];
     const {error} = this.executeOnDeploy(key, mutatedData);
     if (error) {
-      return Promise.reject();
+      errorHandler && errorHandler(new Error('Invalid field'));
+      return Promise.reject(error);
     }
-    
+
     return client.mutate({
       mutation: gql`${mutation}`,
       variables
@@ -175,11 +176,14 @@ export default class Provider extends React.PureComponent<Props, State> {
       });
       return result;
     }).catch(e => {
+      errorHandler && errorHandler(e);
       this.log('deploy', e, key, {
         id,
         mutation,
         variables
       });
+      // to hocs
+      throw e;
     });
   }
 

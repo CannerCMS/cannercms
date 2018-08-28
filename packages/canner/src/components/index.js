@@ -4,6 +4,7 @@ import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
 import hocs from '../hocs';
+import {notification} from 'antd';
 import {createEmptyData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
 import {createClient, MemoryConnector} from 'canner-graphql-interface';
@@ -103,6 +104,7 @@ class CannerCMS extends React.Component<Props, State> {
       afterDeploy,
       intl = {},
       hideButtons,
+      errorHandler,
       schema: {storages, dict = {}}
     } = this.props;
     const currentLocale = intl.locale || 'en';
@@ -124,6 +126,7 @@ class CannerCMS extends React.Component<Props, State> {
           dataDidChange={this.dataDidChange}
           afterDeploy={afterDeploy}
           rootKey={routes[0]}
+          errorHandler={errorHandler || defaultErrorHandler}
         >
           <Generator
             storages={storages}
@@ -197,3 +200,10 @@ export function genClient(schema: LoadedSchema) {
 }
 
 export default CannerCMS;
+
+function defaultErrorHandler(e) {
+  return notification.error({
+    message: e.message,
+    placement: 'bottomRight'
+  });
+}
