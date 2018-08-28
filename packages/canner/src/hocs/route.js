@@ -1,8 +1,10 @@
 // @flow
 import * as React from 'react';
-import {Button, Icon, Spin} from 'antd';
+import {Button, Icon, Spin, Modal} from 'antd';
 import styled from 'styled-components';
 import type {HOCProps} from './types';
+
+const confirm = Modal.confirm;
 
 const RENDER_CHILDREN = 0;
 const RENDER_COMPONENT = 1;
@@ -63,13 +65,35 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     discard = () => {
-      const {goTo, routes, routerParams, reset, refId} = this.props;
-      if (routerParams.operator === 'create') {
-        reset(refId.getPathArr()[0]).then(() => goTo({pathname: routes.join('/')}));
-      } else {
-        reset(refId.getPathArr()[0]).then(() => goTo({pathname: routes.slice(0, -1).join('/')}));
+      const {goTo, routes, routerParams, reset, refId, dataChanged} = this.props;
+
+      const resetCondFn = () => {
+        if (routerParams.operator === 'create') {
+          reset(refId.getPathArr()[0]).then(() => goTo({pathname: routes.join('/')}));
+        } else {
+          reset(refId.getPathArr()[0]).then(() => goTo({pathname: routes.slice(0, -1).join('/')}));
+        }
       }
-      
+      if (dataChanged && Object.keys(dataChanged).length > 0) {
+        confirm({
+          title: 'Do you want to reset all changes?',
+          content: <div>Leaving without deployment will reset all changes.</div>,
+          okText: 'Yes',
+          cancelText: 'No',
+          onOk: () => {
+            return new Promise(resolve => {
+              setTimeout(resolve, 1000);
+            }).then()
+              .then(() => {
+                resetCondFn();
+              });
+          },
+          onCancel: () => {
+          },
+        });
+      } else {
+        resetCondFn();
+      }
     }
 
     render() {
