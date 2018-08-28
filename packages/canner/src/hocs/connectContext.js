@@ -22,6 +22,7 @@ export default function connectContext(Com: React.ComponentType<*>) {
         {context => (
           <Com {...this.props}
             query={context.query}
+            dataChanged={context.dataChanged}
             reset={context.reset}
             fetch={context.fetch}
             subscribe={context.subscribe}
