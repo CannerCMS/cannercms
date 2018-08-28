@@ -21,13 +21,18 @@ import type {Action, ActionType} from '../action/types';
 type Props = ProviderProps;
 
 type State = {
-}
+  dataChanged: Object,
+};
 
 export default class Provider extends React.PureComponent<Props, State> {
   actionManager: ActionManager;
   query: Query;
   observableQueryMap: {[string]: any}
   onDeployManager: OnDeployManager;
+
+  state = {
+    dataChanged: {}
+  };
 
   constructor(props: Props) {
     super(props);
@@ -68,6 +73,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     if (dataDidChange) {
       dataDidChange(dataChanged);
     }
+    this.setState({dataChanged});
   }
 
   updateQuery = (paths: Array<string>, args: Object) => {
@@ -295,7 +301,8 @@ export default class Provider extends React.PureComponent<Props, State> {
         subscribe: this.subscribe,
         query: this.query,
         onDeploy: this.onDeployManager.registerCallback,
-        removeOnDeploy: this.onDeployManager.unregisterCallback
+        removeOnDeploy: this.onDeployManager.unregisterCallback,
+        dataChanged: this.state.dataChanged
       }}>
         {/* $FlowFixMe */}
         {React.cloneElement(this.props.children, {
