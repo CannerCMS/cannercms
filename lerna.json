@@ -3,6 +3,6 @@
   "packages": [
     "packages/*"
   ],
-  "version": "1.5.0-canary.17",
+  "version": "1.5.0-canary.18",
   "npmClient": "yarn"
 }

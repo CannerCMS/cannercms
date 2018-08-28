@@ -1,6 +1,6 @@
 {
   "name": "canner-script",
-  "version": "1.5.0-canary.17",
+  "version": "1.5.0-canary.18",
   "description": "Sugar syntax of Canner CMS schema",
   "license": "Apache-2.0",
   "repository": "",
@@ -44,7 +44,7 @@
     "babel-preset-env": "^1.1.8",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
-    "canner-compiler": "^1.5.0-canary.17",
+    "canner-compiler": "^1.5.0-canary.18",
     "flow-bin": "^0.78.0",
     "jest": "^23.5.0",
     "regenerator-runtime": "^0.12.1"
