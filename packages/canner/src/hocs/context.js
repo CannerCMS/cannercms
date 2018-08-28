@@ -3,6 +3,7 @@ import * as React from 'react';
 
 export const defaultContext = {
   query: {},
+  dataChanged: {},
   fetch: () => {throw new Error('there is no fetch method');},
   subscribe: () => {throw new Error('there is no subscribe method');},
   request: () => {throw new Error('there is no request method');},
@@ -10,7 +11,7 @@ export const defaultContext = {
   reset: () => {throw new Error('there is not reset method');},
   onDeploy: () => {throw new Error('there is not onDeploy method');},
   removeOnDeploy: () => {throw new Error('there is not removeOnDeploy method');},
-  updateQuery: () => {}
+  updateQuery: () => {},
 }
 
 // $FlowFixMe: waiting for flow updata the libdef
