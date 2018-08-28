@@ -3,12 +3,15 @@ import * as React from 'react';
 import {mutate as defaultMutate, ActionManager as DefaultAciontManager} from '../action';
 import {isCompleteContain, genPaths} from './route';
 import { isArray } from 'lodash';
+import mapValues from 'lodash/mapValues';
+import {groupBy} from 'lodash';
 import { OnDeployManager } from '../onDeployManager';
 import type {Action, ActionType} from '../action/types';
 import type {HOCProps} from './types';
 
 type State = {
-  [string]: *
+  [string]: *,
+  dataChanged: Object,
 }
 
 export default function withCache(Com: React.ComponentType<*>, options: {
@@ -35,6 +38,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         this.onDeployManager = new OnDeployManager();
       }
       this.state = {
+        dataChanged: {}
       };
     }
 
@@ -132,6 +136,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         // $FlowFixMe
         id = action.payload.id;
       }
+      this.updateDataChanged();
       this.publish(key, id);
       return Promise.resolve();
     }
@@ -183,6 +188,8 @@ export default function withCache(Com: React.ComponentType<*>, options: {
 
       // $FlowFixMe
       this.actionManager.removeActions(key, id);
+
+      this.updateDataChanged();
       // $FlowFixMe
       request(actions);
       // if this cache is on the first layer,
@@ -200,6 +207,7 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         return reset(key, id);
       }
       this.actionManager.removeActions(key, id);
+      this.updateDataChanged();
       this.publish(key, id);
       return Promise.resolve();
     }
@@ -216,6 +224,21 @@ export default function withCache(Com: React.ComponentType<*>, options: {
           this.unsubscribe(key, id);
         }
       }
+    }
+
+    updateDataChanged = () => {
+      if (!this.actionManager) {
+        return;
+      }
+      const actions = this.actionManager.getActions();
+      let dataChanged = groupBy(actions, (action => action.payload.key));
+      dataChanged = mapValues(dataChanged, value => {
+        if (value[0].type === 'UPDATE_OBJECT') {
+          return true;
+        }
+        return value.map(v => v.payload.id);
+      });
+      this.setState({dataChanged});
     }
 
     updateQuery = (paths: Array<string>, args: Object) => {
@@ -240,6 +263,8 @@ export default function withCache(Com: React.ComponentType<*>, options: {
           updateQuery={this.updateQuery}
           onDeploy={this.onDeploy}
           removeOnDeploy={this.removeOnDeploy}
+          dataChanged={this.state.dataChanged}
+          
         />
       );
     }
