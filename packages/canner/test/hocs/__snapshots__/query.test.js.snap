@@ -1,6 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`with  query should render 1`] = `<ListStyle />`;
+exports[`with  query should render 1`] = `
+<ListStyle
+  style={
+    Object {
+      "maxWidth": "600px",
+    }
+  }
+/>
+`;
 
 exports[`with  query should render 2`] = `
 <MockComponent
