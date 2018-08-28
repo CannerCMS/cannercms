@@ -108,7 +108,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const {value, isFetching, rootValue} = this.state;
       const {toolbar, query, refId, items, type, path, relation, pattern} = this.props;
       if (isFetching) {
-        return <List />;
+        return <List style={{maxWidth: '600px'}}/>;
       }
       if (pattern === 'array') {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
