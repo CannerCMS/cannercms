@@ -81,4 +81,5 @@ export type HOCProps = {
   renderComponent: (refId: RefId, props: Object) => React.Node,
   renderConfirmButton: Object => React.Node,
   renderCancelButton: Object => React.Node,
+  dataChanged: Object
 }
