@@ -343,6 +343,17 @@ describe('builder', () => {
     });
   });
 
+  describe('enum', () => {
+    it('should work', () => {
+      expect(<enum keyName="enum" values={['A', 'B', 'C']}/>).toMatchObject({
+        type: 'enum',
+        ui: 'select',
+        keyName: 'enum',
+        values: ['A', 'B', 'C']
+      });
+    });
+  });
+
   describe('root', () => {
     it('should work', () => {
       const root = <root dict={{en: {title: 'title'}}} storage="storage">
