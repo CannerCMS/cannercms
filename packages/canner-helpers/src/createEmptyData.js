@@ -77,6 +77,10 @@ type SchemaMap = {
 
 function loop(schema: Schema) {
   let result: any;
+  // $FlowFixMe
+  if (typeof schema === 'object' && schema.defaultValue) {
+    return genDefaultValue(schema.defaultValue);
+  }
   switch (schema.type) {
     case 'object':
       result = mapSchema(schema.items);
@@ -153,6 +157,13 @@ function mapSchema(schemaMap: SchemaMap) {
       result[key] = loop(schemaMap[key]);
       return result;
     }, {});
+}
+
+export function genDefaultValue(defaultValue: any) {
+  if (typeof defaultValue === 'function') {
+    return defaultValue();
+  }
+  return defaultValue;
 }
 
 export default function(schema: Schema | SchemaMap) {
