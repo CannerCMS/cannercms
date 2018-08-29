@@ -1,0 +1,12 @@
+{
+  "name": "self-relation-fields",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "canner script:serve"
+  },
+  "dependencies": {
+    "@canner/cli": "latest"
+  }
+}
