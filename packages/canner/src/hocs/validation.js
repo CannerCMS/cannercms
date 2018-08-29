@@ -23,50 +23,60 @@ export default function withValidation(Com: React.ComponentType<*>) {
 
     componentDidMount() {
       const {refId, validation = {}, onDeploy, required = false} = this.props;
-      const key = refId.getPathArr()[0];
-      const ajv = new Ajv();
-      const validate = ajv.compile(validation);
       if (isEmpty(validation) && !required) {
         // no validation
         return;
       }
-      let paths = refId.getPathArr();
-      const {validator} = validation;
-      paths = paths.slice(1);
-      const reject = message => ({error: true, message});
-      this.callbackId = onDeploy(key, result => {
-        const {value} = getValueAndPaths(result.data, paths);
-        const isRequiredValid = required ? Boolean(value) : true;
-        const validatorResult = validator && validator(value, reject);
-        let customValid = true;
-        if (validatorResult && validatorResult.error) {
-          customValid = false;
-        }
-        if (customValid && isRequiredValid && validate(value)) {
-          this.setState({
-            error: false,
-            errorInfo: []
-          });
-          return result;
-        }
-        const errorInfo = [].concat(isRequiredValid ? [] : {
-          message: 'should be required'
-        }).concat(validate.errors || [])
-          .concat(customValid ? [] : validatorResult);
-        this.setState({
-          error: true,
-          errorInfo: errorInfo
-        });
-        return {
-          ...result,
-          error: true,
-          errorInfo: errorInfo
-        }
-      });
+      const key = refId.getPathArr()[0];
+      this.callbackId = onDeploy(key, this.validate);
     }
 
     componentWillUnmount() {
       this.removeOnDeploy();
+    }
+
+    validate = (result: any) => {
+      const {refId, validation = {}, required = false} = this.props;
+      // required
+      const paths = refId.getPathArr().slice(1);
+      const {value} = getValueAndPaths(result.data, paths);
+      const isRequiredValid = required ? Boolean(value) : true;
+
+      // Ajv validation
+      const ajv = new Ajv();
+      const validate = ajv.compile(validation);
+      
+      // custom validator
+      const {validator, errorMessage} = validation;
+      const reject = message => ({error: true, message});
+      const validatorResult = validator && validator(value, reject);
+  
+      let customValid = !(validatorResult && validatorResult.error);
+      if (customValid && isRequiredValid && validate(value)) {
+        this.setState({
+          error: false,
+          errorInfo: []
+        });
+        return result;
+      }
+      
+  
+      const errorInfo = []
+        .concat(isRequiredValid ? [] : {
+          message: 'should be required'
+        })
+        .concat(validate.errors ? (errorMessage ? {message: errorMessage} : validate.errors) : [])
+        .concat(customValid ? [] : validatorResult);
+
+      this.setState({
+        error: true,
+        errorInfo: errorInfo
+      });
+      return {
+        ...result,
+        error: true,
+        errorInfo: errorInfo
+      }
     }
 
     removeOnDeploy = () => {
@@ -75,6 +85,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
         removeOnDeploy(refId.getPathArr()[0], this.callbackId || '');
       }
     }
+    
 
     render() {
       const {error, errorInfo} = this.state;
