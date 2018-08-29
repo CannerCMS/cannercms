@@ -12,5 +12,6 @@ export {default as ImageModel} from './image';
 export {default as RootModel} from './root';
 export {default as RelationModel} from './relation';
 export {default as ChartModel} from './chart';
-export {default as IndicatorModel} from './indicator.js';
-export {default as PageModel} from './page.js';
+export {default as IndicatorModel} from './indicator';
+export {default as PageModel} from './page';
+export {default as EnumModel} from './enum';
