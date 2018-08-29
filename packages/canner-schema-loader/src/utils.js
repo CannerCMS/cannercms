@@ -66,6 +66,22 @@ export const componentMap = {
     dateTime: {
       dateTime: '@canner/antd-string-date_time_picker', 
       default: '@canner/antd-string-date_time_picker'
+    },
+    chart: {
+      line: '@canner/vega-chart-line',
+      bar: '@canner/vega-chart-bar',
+      pie: '@canner/vega-chart-pie',
+      scatter: '@canner/vega-chart-scatter',
+      default: '@canner/vega-chart-line'
+    },
+    indicator: {
+      list: '@canner/antd-indicator-list',
+      amount: '@canner/antd-indicator-amount',
+      default: '@canner/antd-indicator-amount'
+    },
+    enum: {
+      select: '@canner/antd-string-select',
+      default: '@canner/antd-string-select'
     }
   },
   get: function(type, ui = 'default') {
