@@ -78,11 +78,17 @@ export const componentMap = {
       line: '@canner/vega-chart-line',
       bar: '@canner/vega-chart-bar',
       pie: '@canner/vega-chart-pie',
-      scatter: '@canner/vega-chart-scatter'
+      scatter: '@canner/vega-chart-scatter',
+      default: '@canner/vega-chart-line'
     },
     indicator: {
       list: '@canner/antd-indicator-list',
-      amount: '@canner/antd-indicator-amount'
+      amount: '@canner/antd-indicator-amount',
+      default: '@canner/antd-indicator-amount'
+    },
+    enum: {
+      select: '@canner/antd-string-select',
+      default: '@canner/antd-string-select'
     }
   },
   get: function(type: string, ui: string = 'default') {

@@ -15,6 +15,7 @@ import {
   ImageModel,
   ChartModel,
   IndicatorModel,
+  EnumModel,
   PageModel
 } from './models';
 import type {CannerSchema, Props} from './flow-types';
@@ -79,7 +80,9 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     case 'chart':
       return createJSON(ChartModel, [attributes, children]);
     case 'indicator':
-      return createJSON(IndicatorModel, [attributes, children])
+      return createJSON(IndicatorModel, [attributes, children]);
+    case 'enum':
+      return new createJSON(EnumModel, [attributes, children]);
     case 'page':
       return new PageModel(attributes, children).toJson();
     case 'root': {
