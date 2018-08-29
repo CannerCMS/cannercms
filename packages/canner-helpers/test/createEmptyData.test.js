@@ -1,25 +1,39 @@
 import {createEmptyData} from '../src';
+import {genDefaultValue} from '../src/createEmptyData';
 
-describe('creatEmptyData', () => {
-  it('string', () => {
+describe('create string empty data', () => {
+  it('should return empty string', () => {
     expect(createEmptyData({
       type: 'string'
     })).toBe('');
   });
 
-  it('boolean', () => {
+  it('should return 123', () => {
+    expect(createEmptyData({
+      type: 'string',
+      defaultValue: '123'
+    }));
+  })
+});
+
+describe('create boolean empty data', () => {
+  it('should return false', () => {
     expect(createEmptyData({
       type: 'boolean'
     })).toBe(false);
   });
+});
 
-  it('number', () => {
+describe('create number empty data', () => {
+  it('should return 0', () => {
     expect(createEmptyData({
       type: 'number'
     })).toBe(0);
   });
+});
 
-  it('geoPoint', () => {
+describe('create geoPoint empty data', () => {
+  it('should return object {lat:0, lng:0, placeId: \'\', _typename: null}', () => {
     expect(createEmptyData({
       type: 'geoPoint'
     })).toEqual({
@@ -29,14 +43,18 @@ describe('creatEmptyData', () => {
       placeId: ''
     });
   });
+});
 
-  it('dateTime', () => {
+describe('create dateTime empty data', () => {
+  it('should return empty string', () => {
     expect(createEmptyData({
       type: 'dateTime',
     })).toEqual('');
   });
+});
 
-  it('file', () => {
+describe('create file empty data', () => {
+  it('should return empty file', () => {
     expect(createEmptyData({
       type: 'file',
     })).toEqual({
@@ -46,8 +64,10 @@ describe('creatEmptyData', () => {
       size: 0, url: ""
     });
   });
+});
 
-  it('image', () => {
+describe('create image empty data', () => {
+  it('should return image empty data', () => {
     expect(createEmptyData({
       type: 'image',
     })).toEqual({
@@ -57,14 +77,18 @@ describe('creatEmptyData', () => {
       size: 0, url: ""
     });
   });
+});
 
-  it('json', () => {
+describe('create json empty data', () => {
+  it('should return empty object', () => {
     expect(createEmptyData({
       type: 'json'
     })).toEqual({});
   });
+});
 
-  it('object', () => {
+describe('create object empty data', () => {
+  it('should return object with fileds', () => {
     expect(createEmptyData({
       type: 'object',
       items: {
@@ -85,30 +109,46 @@ describe('creatEmptyData', () => {
       number: 0
     });
   });
+});
 
-  it('array of string', () => {
+describe('create array of string empty data', () => {
+  it('should return []', () => {
     expect(createEmptyData({
       type: 'array',
     })).toEqual([]);
   });
-
-  describe('relation', () => {
-    it('toOne', () => {
-      expect(createEmptyData({
-        type: 'relation',
-        relation: {
-          type: 'toOne'
-        }
-      })).toBe(null);
-    });
-
-    it('toMany', () => {
-      expect(createEmptyData({
-        type: 'relation',
-        relation: {
-          type: 'toMany'
-        }
-      })).toEqual([]);
-    });
-  })
 });
+
+
+describe('create relation empty data', () => {
+  it('should return null', () => {
+    expect(createEmptyData({
+      type: 'relation',
+      relation: {
+        type: 'toOne'
+      }
+    })).toBe(null);
+  });
+
+  it('should return []', () => {
+    expect(createEmptyData({
+      type: 'relation',
+      relation: {
+        type: 'toMany'
+      }
+    })).toEqual([]);
+  });
+})
+
+
+describe('genDefaultValue', () => {
+  it('should return value with given string', () => {
+    const defaultValue = 'value';
+    expect(genDefaultValue(defaultValue)).toBe(defaultValue);
+  });
+
+  it('should retrun value with given funciton', () => {
+    const defaultValue = () => 'value';
+    expect(genDefaultValue(defaultValue)).toBe(defaultValue());
+  })
+})
