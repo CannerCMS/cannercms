@@ -163,6 +163,7 @@ export default class Provider extends React.PureComponent<Props, State> {
           action: actions[0],
           result
         });
+        client.resetStore();
       }
       this.log('deploy', key, {
         id,
@@ -171,7 +172,6 @@ export default class Provider extends React.PureComponent<Props, State> {
         variables
       });
       this.actionManager.removeActions(key, id);
-      // client.resetStore();
       return result.data;
     }).then(result => {
       this.updateDataChanged();
