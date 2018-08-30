@@ -89,7 +89,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         variables
       });
     } else {
-      this.observableQueryMap[paths[0]].refetch(variables);
+      this.observableQueryMap[paths[0]].setVariables(variables);
     }
     this.log('updateQuery', variables, args);
     return reWatchQuery;
@@ -227,7 +227,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.actionManager.removeActions(key, id);
     this.updateDataChanged();
     const variables = this.query.getVairables();
-    return this.observableQueryMap[key || rootKey].refetch(variables);
+    return this.observableQueryMap[key || rootKey].setVariables(variables);
   }
 
   request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {

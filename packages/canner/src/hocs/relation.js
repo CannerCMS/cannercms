@@ -34,7 +34,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (!relation) {
         return;
       }
-
       const queries = query.getQueries([relation.to]).args || {pagination: {first: 10}};
       const variables = query.getVairables();
       const args = mapValues(queries, v => variables[v.substr(1)]);
@@ -42,6 +41,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         ...args,
         where: {}
       });
+
       this.queryData();
       this.subscribe();
     }
