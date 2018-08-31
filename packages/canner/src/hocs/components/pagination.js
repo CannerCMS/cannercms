@@ -1,6 +1,6 @@
 // @flow
 import React, {Component} from 'react';
-import {Button, Icon} from 'antd';
+import {Button, Icon, Pagination} from 'antd';
 import styled from 'styled-components';
 const ButtonGroup = Button.Group;
 const Wrapper = styled.div`
@@ -13,15 +13,24 @@ const Wrapper = styled.div`
 type Props = {
   nextPage: () => void,
   prevPage: () => void,
+  changePage: number => void,
   hasNextPage: boolean,
   hasPreviousPage: boolean,
   changeSize: (size: number) => void,
-  size: number
+  size: number,
+  async: boolean,
+  total: number,
+  current: number
 }
 
 export default class PaginationPlugin extends Component<Props> {
   render() {
-    const {nextPage, prevPage, hasNextPage, hasPreviousPage} = this.props;
+    const {nextPage, prevPage, hasNextPage, hasPreviousPage, async, total, changePage, current} = this.props;
+    if (!async) {
+      return <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+        <Pagination current={current} onChange={changePage} total={total} />
+      </div>;
+    }
     return <div style={{display: 'flex', justifyContent: 'flex-end'}}>
       <Wrapper marginTop={16}>
         <ButtonGroup>

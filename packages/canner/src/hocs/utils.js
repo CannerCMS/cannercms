@@ -91,3 +91,10 @@ export function defaultValue(type: string, relation: any) {
     }
   }
 }
+
+export function paginate(rootValue: Object, field: string, currentPage: number, pageSize: number = 10) {
+  const copyValue = JSON.parse(JSON.stringify(rootValue));
+  const index = (currentPage - 1) * pageSize;
+  copyValue[field].edges = copyValue[field].edges.slice(index, index + pageSize);
+  return copyValue;
+}

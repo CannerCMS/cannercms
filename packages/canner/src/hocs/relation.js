@@ -11,8 +11,7 @@ import {withApollo} from 'react-apollo';
 import gql from 'graphql-tag';
 import {Query} from '../query';
 import {List} from 'react-content-loader';
-
-const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
+import {paginate} from './utils';
 
 type State = {
   originRootValue: any,
@@ -109,7 +108,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     render() {
-      const {originRootValue, isFetching} = this.state;
+      let {originRootValue, isFetching} = this.state;
       const {toolbar, relation, schema, refId} = this.props;
       if (!relation) {
         return <Com {...this.props}/>;
@@ -117,27 +116,28 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (!originRootValue) {
         return <List style={{maxWidth: 500}} />;
       }
-      const value = originRootValue[relation.to];
+      const removeSelfRootValue = {[relation.to]: removeSelf(originRootValue[relation.to], refId, relation.to)};
       const args = this.getArgs();
-      const relationValue = value ? removeSelf(value, refId, relation.to) : defaultValue('connection');
-      const tb = ({children, ...restProps}) => <Toolbar {...restProps}
+      const tb = ({children, ...restProps}) => <Toolbar
+        {...restProps}
         items={schema[relation.to].items.items}
         toolbar={toolbar || {pagination: {type: 'pagination'}}}
         args={args}
         query={this.query}
         keyName={relation.to}
         refId={new RefId(relation.to)}
-        originRootValue={originRootValue}
+        originRootValue={removeSelfRootValue}
         updateQuery={this.updateQuery}
         parseConnectionToNormal={parseConnectionToNormal}
         getValue={getValue}
         defaultValue={defaultValue}
       >
-        <Spin indicator={antIcon} spinning={isFetching}>
+        {/* $FlowFixMe */}
+        <SpinWrapper isFetching={isFetching}>
           {children}
-        </Spin>
+        </SpinWrapper>
       </Toolbar>;
-      return <Com {...this.props} Toolbar={tb} relationValue={relationValue}/>;
+      return <Com {...this.props} Toolbar={tb} relationValue={removeSelfRootValue[relation.to]}/>;
     }
   };
 }
@@ -148,4 +148,22 @@ export function removeSelf(value: any, refId: RefId, relationTo: string) {
     return value;
   }
   return {...value, edges: value.edges.filter((v, i) => i !== Number(index))};
+}
+
+const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
+
+function SpinWrapper({
+  isFetching,
+  children,
+  value
+}: {
+  isFetching: boolean,
+  children: Function,
+  value: any
+}): React.Element<*> {
+  return (
+    <Spin indicator={antIcon} spinning={isFetching}>
+      {children(value)}
+    </Spin>
+  )
 }

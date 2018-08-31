@@ -7,6 +7,7 @@ import Pagination from './pagination';
 import Sort from './sort';
 import Filter from './filter';
 import isObject from 'lodash/isObject';
+import {paginate} from '../utils';
 import type {Query} from '../../query';
 import type RefId from 'canner-ref-id';
 
@@ -17,7 +18,7 @@ type Args = {
   },
   where?: Object,
   orderBy?: string,
-  updateQuery: Function
+  updateQuery: Function,
 }
 
 type Props = {
@@ -60,7 +61,8 @@ type State = {
   originRootValue: any,
   sort: any,
   filter: any,
-  pagination: any
+  pagination: any,
+  current: number
 }
 
 export default class Toolbar extends React.PureComponent<Props, State> {
@@ -74,7 +76,8 @@ export default class Toolbar extends React.PureComponent<Props, State> {
       originRootValue,
       sort: parseOrder(args.orderBy),
       filter: parseWhere(args.where || {}),
-      pagination: parsePagination(args)
+      pagination: parsePagination(args),
+      current: 1
     };
   }
 
@@ -111,6 +114,12 @@ export default class Toolbar extends React.PureComponent<Props, State> {
         filter: where
       });
     }
+  }
+
+  changePage = (page: number) => {
+    this.setState({
+      current: page
+    });
   }
 
   nextPage = () => {
@@ -160,8 +169,8 @@ export default class Toolbar extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {children, toolbar = {}, args, refId, items, defaultValue, parseConnectionToNormal, getValue} = this.props;
-    const {originRootValue} = this.state;
+    const {children, toolbar = {}, args, refId, keyName, items, defaultValue, parseConnectionToNormal, getValue} = this.props;
+    let {originRootValue, current} = this.state;
     const {sort, pagination, filter, toolbarLayout} = toolbar;
     const ToolbarLayout = toolbarLayout && toolbarLayout.component ? toolbarLayout.component : DefaultToolbarLayout;
     const SortComponent = sort && sort.component ? sort.component : Sort;
@@ -170,6 +179,10 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const {orderField, orderType} = parseOrder(args.orderBy);
     const where = parseWhere(args.where || {});
     const {first, last} = parsePagination(args);
+    const total = originRootValue[keyName].edges.length;
+    if (!toolbar.async) {
+      originRootValue = paginate(originRootValue, keyName, current, 10);
+    }
     const rootValue = parseConnectionToNormal(originRootValue);
     const value = getValue(originRootValue, refId.getPathArr());
     return <ToolbarLayout
@@ -192,6 +205,9 @@ export default class Toolbar extends React.PureComponent<Props, State> {
         prevPage={this.prevPage}
         changeSize={this.changeSize}
         size={first || last}
+        current={current}
+        changePage={this.changePage}
+        total={total}
       /> : null}
       Filter={filter ? <FilterComponent
         async={toolbar.async}

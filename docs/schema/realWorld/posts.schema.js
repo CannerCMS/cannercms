@@ -5,7 +5,7 @@ import builder from 'canner-script';
 const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="posts" uiParams={{
   columns: attributes.columns
 }}>
-  <toolbar async>
+  <toolbar>
     <pagination />
     <filter fields={[{
       key: 'title',
@@ -34,7 +34,7 @@ const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="po
     ui="singleSelect"
     required
   >
-    <toolbar async>
+    <toolbar>
       <pagination />
     </toolbar>
   </relation>

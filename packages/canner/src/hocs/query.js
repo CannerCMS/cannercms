@@ -161,7 +161,10 @@ function SpinWrapper({
   isFetching,
   children,
   ...props
-}) {
+}: {
+  isFetching: boolean,
+  children: React.Element<*>
+}): React.Element<*> {
   return (
     <Spin indicator={antIcon} spinning={isFetching}>
       {React.cloneElement(children, props)}
