@@ -3,7 +3,7 @@
 // eslint-disable-next-line
 import builder, {configure} from '../src'
 import path from 'path';
-import Sort from './toolbar/sort';
+import Sorter from './toolbar/sorter';
 import Pagination from './toolbar/pagination';
 import Filter from './toolbar/filter';
 
@@ -213,16 +213,16 @@ describe('builder', () => {
     it('should work', () => {
       expect(<array>
         <toolbar>
-          <sort component={Sort} />
+          <sorter component={Sorter} />
           <pagination component={Pagination} />
           <filter component={Filter} />
         </toolbar>
       </array>).toMatchObject({
         type: 'array',
         toolbar: {
-          sort: {
-            component: Sort,
-            type: 'sort'
+          sorter: {
+            component: Sorter,
+            type: 'sorter'
           },
           pagination: {
             component: Pagination,

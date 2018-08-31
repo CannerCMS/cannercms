@@ -127,10 +127,10 @@ export default function builder(tag: string | Function, attributes: Object, ...c
         __TOOLBAR__: true
       });
     }
-    case 'sort': {
+    case 'sorter': {
       return {
         ...attributes,
-        type: 'sort'
+        type: 'sorter'
       }
     }
     case 'pagination': {
