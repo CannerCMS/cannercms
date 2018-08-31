@@ -297,6 +297,18 @@ describe('builder', () => {
     });
   });
 
+  describe('actions', () => {
+    it('should work', () => {
+      expect(<toolbar>
+        <actions exportButton importButton filterButton />
+      </toolbar>).toMatchObject({actions: {
+        exportButton: true,
+        importButton: true,
+        filterButton: true
+      }});
+    });
+  });
+
   describe('geoPoint', () => {
     it('should work', () => {
       expect(<geoPoint keyName="map"/>).toMatchObject({

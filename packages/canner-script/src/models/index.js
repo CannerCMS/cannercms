@@ -15,4 +15,3 @@ export {default as ChartModel} from './chart';
 export {default as IndicatorModel} from './indicator';
 export {default as PageModel} from './page';
 export {default as EnumModel} from './enum';
-export {default as FilterModel} from './filter';
