@@ -17,6 +17,7 @@ const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="po
   <array keyName="notes" title="Notes">
     <string keyName="text" title="Text" />
   </array>
+  <array keyName="images" ui="gallery"/>
   <relation keyName="author" title="author" relation={{type: 'toOne', to: 'users'}}
     uiParams={{
       textCol: 'name',
