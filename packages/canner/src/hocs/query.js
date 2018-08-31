@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { List } from 'react-content-loader'
+import { List } from 'react-content-loader';
 import Toolbar from './components/toolbar';
 import {mapValues, get, isPlainObject, isArray} from 'lodash';
 import type {HOCProps} from './types';

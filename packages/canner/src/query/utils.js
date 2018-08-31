@@ -7,7 +7,8 @@ import {merge, mapValues, set} from 'lodash';
 import {createSchema} from './schema/utils';
 import {types} from './schema/types';
 
-const defaultFirst = 10;
+const DEFAULT_FIRST = 10;
+const MAX = 999999999;
 
 export function fieldToQueriesObject(field: any): any {
   let queriesObj = {};
@@ -45,10 +46,14 @@ export function fieldToQueriesObject(field: any): any {
         queriesObj.connection = true;
         queriesObj.alias = field.getKey();
         set(queriesObj, ['fields', 'id'], null);
-        variables[firstKey] = defaultFirst;
+        variables[firstKey] = MAX;
         variables[whereKey] = {};
         const toolbar = field.getAttr('toolbar');
+        const asyncToolbar = toolbar && toolbar.async;
         const defaultSort = toolbar && toolbar.sort && toolbar.sort.defaultSort;
+        if (asyncToolbar) {
+          variables[firstKey] = DEFAULT_FIRST;
+        }
         if (defaultSort) {
           variables[orderByKey] = `${defaultSort}_ASC`
         }

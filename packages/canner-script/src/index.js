@@ -123,6 +123,7 @@ export default function builder(tag: string | Function, attributes: Object, ...c
         };
         return result;
       }, {
+        ...attributes,
         __TOOLBAR__: true
       });
     }

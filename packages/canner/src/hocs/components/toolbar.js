@@ -24,6 +24,7 @@ type Props = {
   children: React.Node,
   updateQuery: Function,
   toolbar: {
+    async: boolean,
     sort?: {
       component?: React.ComponentType<*>,
       [string]: *
@@ -104,23 +105,17 @@ export default class Toolbar extends React.PureComponent<Props> {
   }
 
   changeSize = (size: number) => {
-    const {value, updateQuery, args, refId} = this.props;
+    const {updateQuery, args, refId} = this.props;
     const pagination = parsePagination(args);
-    if ('last' in pagination) {
+    if (pagination.last) {
       updateQuery(refId.getPathArr(), {
         ...args,
-        last: size,
-        before: pagination.before || get(value, ['edges', 0, 'cursor']),
-        after: undefined,
-        first: undefined
+        last: size
       });
     } else {
       updateQuery(refId.getPathArr(), {
         ...args,
-        first: size,
-        after: pagination.after || (value.edges.slice(-1)[0] || {}).cursor,
-        last: undefined,
-        before: undefined
+        first: size
       });
     }
   }
@@ -138,6 +133,7 @@ export default class Toolbar extends React.PureComponent<Props> {
     return <ToolbarLayout
       Sort={sort ? <SortComponent
         {...sort}
+        async={toolbar.async}
         defaultSort={sort.defaultSort}
         options={sort.options}
         changeOrder={this.changeOrder}
@@ -147,6 +143,7 @@ export default class Toolbar extends React.PureComponent<Props> {
       /> : null}
       Pagination={pagination ? <PaginationComponent
         {...pagination}
+        async={toolbar.async}
         hasNextPage={get(value, ['pageInfo', 'hasNextPage'])}
         hasPreviousPage={get(value, ['pageInfo', 'hasPreviousPage'])}
         nextPage={this.nextPage}
@@ -155,6 +152,7 @@ export default class Toolbar extends React.PureComponent<Props> {
         size={first || last}
       /> : null}
       Filter={filter ? <FilterComponent
+        async={toolbar.async}
         {...filter}
         items={items}
         where={where}

@@ -1,11 +1,15 @@
 // @flow
 import React, {Component, Fragment} from 'react';
-import {Button, Icon} from 'antd';
+import {Button, Icon, Select} from 'antd';
 import styled from 'styled-components';
+const Option = Select.Option;
 const ButtonGroup = Button.Group;
 const Wrapper = styled.div`
   text-align: right;
   margin-top: ${props => props.marginTop}px;
+  margin-right: ${props => props.marginRight}px;
+  display: inline-block;
+  float: right;
 `;
 
 type Props = {
@@ -19,9 +23,10 @@ type Props = {
 
 export default class PaginationPlugin extends Component<Props> {
   render() {
-    const {nextPage, prevPage, hasNextPage, hasPreviousPage} = this.props;
-    return <Fragment>
-      <Wrapper marginTop={32}>
+    const {nextPage, prevPage, hasNextPage, hasPreviousPage, changeSize} = this.props;
+    return <div style={{marginLeft: 'auto'}}>
+      
+      <Wrapper marginTop={16}>
         <ButtonGroup>
           <Button disabled={!hasPreviousPage} onClick={prevPage}>
             <Icon type="left" />
@@ -33,12 +38,9 @@ export default class PaginationPlugin extends Component<Props> {
           </Button>
         </ButtonGroup>
       </Wrapper>
-      {/*
-        FIX
-      */}
-      {/* <Wrapper marginTop={16}>
+      {/* <Wrapper marginTop={16} marginRight={16}>
         <span>Page size: </span>
-        <Select style={{width: 150}} onChange={changeSize} defaultValue={10}>
+        <Select style={{width: 100}} onChange={changeSize} defaultValue={10}>
           <Option value={1}>1</Option>
           <Option value={10}>10</Option>
           <Option value={20}>20</Option>
@@ -46,6 +48,6 @@ export default class PaginationPlugin extends Component<Props> {
           <Option value={100}>100</Option>
         </Select>
       </Wrapper> */}
-    </Fragment>;
+    </div>;
   }
 }
