@@ -6,47 +6,59 @@ import RefId from 'canner-ref-id';
 import Toolbar from './components/toolbar';
 import {mapValues} from 'lodash';
 import type {HOCProps} from './types';
+import {parseConnectionToNormal, getValue, defaultValue} from './utils';
+import {withApollo} from 'react-apollo';
+import gql from 'graphql-tag';
+import {Query} from '../query';
+import {List} from 'react-content-loader';
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type State = {
-  value: any,
+  originRootValue: any,
   isFetching: boolean,
 }
 
+type Props = HOCProps & {
+  client: any
+}
+
+@withApollo
 export default function withQuery(Com: React.ComponentType<*>) {
   // this hoc will fetch data;
-  return class ComponentWithQuery extends React.PureComponent<HOCProps, State> {
-    key: string;
-    subscription: any;
+  return class ComponentWithQuery extends React.PureComponent<Props, State> {
+    query: Query;
 
-    constructor(props: HOCProps) {
+    constructor(props: Props) {
       super(props);
       this.state = {
-        value: null,
+        originRootValue: null,
         isFetching: true
       };
+      if (props.relation) {
+        this.query = new Query({schema: props.schema});
+      }
     }
 
     componentDidMount() {
       // defaultSort
-      const {relation, query, updateQuery} = this.props;
+      const {relation, toolbar} = this.props;
       if (!relation) {
         return;
       }
-      const queries = query.getQueries([relation.to]).args || {pagination: {first: 10}};
-      const variables = query.getVairables();
-      const args = mapValues(queries, v => variables[v.substr(1)]);
-      updateQuery([relation.to], {
-        ...args,
-        where: {}
-      });
-
-      this.queryData();
-      this.subscribe();
+      if (toolbar && toolbar.async) {
+        const args = this.getArgs();
+        this.updateQuery([relation.to], {
+          ...args,
+          first: 10
+        });
+      } else {
+        this.queryData();
+      }
+      
     }
 
-    UNSAFE_componentWillReceiveProps(props: HOCProps) {
+    UNSAFE_componentWillReceiveProps(props: Props) {
       const {refId, relation} = this.props;
       if (!relation) {
         return;
@@ -54,42 +66,25 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (refId.toString() !== props.refId.toString()) {
         // refetch when route change
         this.queryData(props);
-        this.subscribe();
       }
     }
 
-    componentWillUnmount() {
-      this.unsubscribe();
-    }
-
-    unsubscribe = () => {
-      if (this.subscription) {
-        this.subscription.unsubscribe();
-      }
-    }
-
-    subscribe = () => {
-      const {subscribe, relation} = this.props;
-      const subscription = subscribe(relation.to, (data) => {
-        this.setState({
-          value: data[relation.to],
-        });
-      });
-      this.subscription = subscription;
-    }
-
-    queryData = (props?: HOCProps): Promise<*> => {
-      const {relation, fetch} = props || this.props;
+    queryData = (props?: Props): Promise<*> => {
+      const {relation, client} = props || this.props;
       if (!relation) {
         return Promise.resolve();
       }
       this.setState({
         isFetching: true,
       });
-      return fetch(relation.to)
-        .then(data => {
+      const gqlStr = this.query.toGQL(relation.to);
+      const variables = this.query.getVairables();
+      return client.query({
+        query: gql`${gqlStr}`,
+        variables
+      }).then(({data}) => {
           this.setState({
-            value: data[relation.to],
+            originRootValue: data,
             isFetching: false,
           });
         })
@@ -100,38 +95,44 @@ export default function withQuery(Com: React.ComponentType<*>) {
         });
     }
 
+    getArgs = () => {
+      const {relation} = this.props;
+      const queries = this.query.getQueries([relation.to]).args || {pagination: {first: 10}};
+      const variables = this.query.getVairables();
+      const args = mapValues(queries, v => variables[v.substr(1)]);
+      return args;
+    }
+
     updateQuery = (paths: Array<string>, args: Object) => {
-      const {updateQuery} = this.props;
-      const reWatch = updateQuery(paths, args);
-      if (reWatch) {
-        // if graphql query changes, it have to rewatch the new observableQuery
-        this.unsubscribe();
-        this.queryData();
-        this.subscribe();
-      }
+      this.query.updateQueries(paths, 'args', args);
+      this.queryData();
     }
 
     render() {
-      const {value, isFetching} = this.state;
-      const {toolbar, query, relation, schema, refId} = this.props;
+      const {originRootValue, isFetching} = this.state;
+      const {toolbar, relation, schema, refId} = this.props;
       if (!relation) {
         return <Com {...this.props}/>;
       }
-      if (!value) {
-        return <Spin indicator={antIcon} />;
+      console.log(originRootValue);
+      if (!originRootValue) {
+        return <List style={{maxWidth: 500}} />;
       }
-      const queries = query.getQueries([relation.to]).args || {pagination: {first: 10}};
-      const variables = query.getVairables();
-      const args = mapValues(queries, v => variables[v.substr(1)]);
+      const value = originRootValue[relation.to];
+      const args = this.getArgs();
       const relationValue = value ? removeSelf(value, refId, relation.to) : defaultValue('connection');
       const tb = ({children, ...restProps}) => <Toolbar {...restProps}
         items={schema[relation.to].items.items}
         toolbar={toolbar || {pagination: {type: 'pagination'}}}
         args={args}
-        query={query}
+        query={this.query}
+        keyName={relation.to}
         refId={new RefId(relation.to)}
-        value={relationValue}
+        originRootValue={originRootValue}
         updateQuery={this.updateQuery}
+        parseConnectionToNormal={parseConnectionToNormal}
+        getValue={getValue}
+        defaultValue={defaultValue}
       >
         <Spin indicator={antIcon} spinning={isFetching}>
           {children}
@@ -148,66 +149,4 @@ export function removeSelf(value: any, refId: RefId, relationTo: string) {
     return value;
   }
   return {...value, edges: value.edges.filter((v, i) => i !== Number(index))};
-}
-
-function defaultValue(type: string, relation: any) {
-  switch (type) {
-    case 'connection': {
-      return {
-        edges: [],
-        pageInfo: {
-          hasNextPage: false,
-          hasPreviousPage: false
-        }
-      }
-    }
-    case 'array': {
-      return [];
-    }
-    case 'object': {
-      return [];
-    }
-    case 'boolean': {
-      return false;
-    }
-    case 'number': {
-      return 0;
-    }
-    case 'string': {
-      return '';
-    }
-    case 'relation': {
-      if (relation.type === 'toMany') {
-        return {
-          edges: [],
-          pageInfo: {
-            hasNextPage: false,
-            hasPreviousPage: false
-          }
-        };
-      }
-      return null;
-    }
-    case 'image':
-    case 'file': {
-      return {
-        url: '',
-        contentType: '',
-        name: '',
-        size: 0,
-        __typename: null
-      }
-    }
-    case 'geoPoint': {
-      return {
-        placeId: '',
-        address: '',
-        lat: 122,
-        lng: 23
-      };
-    }
-    default: {
-      return null;
-    }
-  }
 }

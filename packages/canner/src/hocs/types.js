@@ -9,7 +9,7 @@ export type Fetch = (key: string, id: ?string) => Promise<*>
 export type RequestWithAction = (action: Action<ActionType>, options: {write: boolean}) => Promise<*>;
 export type RequestWithActions = (action: Array<Action<ActionType>>, options: {write: boolean}) => Promise<*>;
 export type Request = RequestWithAction | RequestWithActions;
-export type UpdateQuery = (paths: Array<string>, args: Args) => void;
+export type UpdateQuery = (paths: Array<string>, args: Args) => Promise<*>;
 export type Reset = (key?: string, id?: string) => Promise<*>;
 export type Subscription = any;
 export type Subscribe = (key: string, callback: (data: any) => void) => Subscription
@@ -36,7 +36,8 @@ export type Toolbar = {
   toolbarLayout?: {
     component?: React.ComponentType<*>,
     [string]: *
-  }
+  },
+  async: boolean
 };
 
 export type HOCProps = {

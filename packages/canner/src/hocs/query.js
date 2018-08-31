@@ -3,9 +3,10 @@
 import * as React from 'react';
 import { List } from 'react-content-loader';
 import Toolbar from './components/toolbar';
-import {mapValues, get, isPlainObject, isArray} from 'lodash';
+import {Icon, Spin} from 'antd';
+import {mapValues} from 'lodash';
+import {parseConnectionToNormal, getValue, defaultValue} from './utils';
 import type {HOCProps} from './types';
-
 type State = {
   value: any,
   rootValue: any,
@@ -41,10 +42,18 @@ export default function withQuery(Com: React.ComponentType<*>) {
         updateQuery(paths, {
           ...args,
           where: {}
+        }).then(() => {
+          this.queryData();
+          this.subscribe();
         });
+      } else {
+        this.queryData();
+        this.subscribe();
       }
-      this.queryData();
-      this.subscribe();
+    }
+
+    componentWillUnmount() {
+      this.unsubscribe();
     }
 
     UNSAFE_componentWillReceiveProps(props: HOCProps) {
@@ -54,22 +63,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
         this.queryData(props);
         this.subscribe();
       }
-    }
-
-    componentWillUnmount() {
-      this.unsubscribe();
-    }
-
-    queryData = (props?: HOCProps): Promise<*> => {
-      const {refId, fetch} = props || this.props;
-      return fetch(this.key).then(data => {
-        this.setState({
-          originRootValue: data,
-          rootValue: parseConnectionToNormal(data),
-          value: getValue(data, refId.getPathArr()),
-          isFetching: false
-        });
-      });
     }
 
     unsubscribe = () => {
@@ -93,30 +86,63 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.subscription = subscription;
     }
 
+    queryData = (props?: HOCProps): Promise<*> => {
+      const {refId, fetch} = props || this.props;
+      this.setState({
+        isFetching: true
+      });
+      return fetch(this.key).then(data => {
+        this.setState({
+          originRootValue: data,
+          rootValue: parseConnectionToNormal(data),
+          value: getValue(data, refId.getPathArr()),
+          isFetching: false
+        });
+      });
+    }
+
     updateQuery = (paths: Array<string>, args: Object) => {
       const {updateQuery} = this.props;
-      const reWatch = updateQuery(paths, args);
-      if (reWatch) {
-        // if graphql query changes, it have to rewatch the new observableQuery
-        this.unsubscribe();
-        this.queryData();
-        this.subscribe();
-      }
+      updateQuery(paths, args)
+        .then(rewatch => {
+          if (rewatch) {
+            this.unsubscribe();
+            this.queryData();
+            this.subscribe();
+          } else {
+            this.queryData();
+          }
+        });
     }
 
     render() {
-      const {value, isFetching, rootValue} = this.state;
-      const {toolbar, query, refId, items, type, path, relation, pattern} = this.props;
-      if (isFetching) {
+      const {value, isFetching, rootValue, originRootValue} = this.state;
+      const {toolbar, query, refId, items, type, path, relation, pattern, keyName} = this.props;
+      if (!originRootValue) {
         return <List style={{maxWidth: '600px'}}/>;
       }
       if (pattern === 'array') {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v.substr(1)]);
-        return <Toolbar items={items} toolbar={toolbar} args={args} query={query} refId={refId} value={value || (defaultValue('connection'): any)} updateQuery={this.updateQuery}>
-          <Com {...this.props} showPagination={false} rootValue={rootValue} value={value ? get(value, 'edges', []).map(item => item.node) : defaultValue('array')} />
-        </Toolbar>;
+        return (
+          <Toolbar items={items}
+            toolbar={toolbar}
+            args={args}
+            query={query}
+            refId={refId}
+            keyName={keyName}
+            originRootValue={originRootValue}
+            parseConnectionToNormal={parseConnectionToNormal}
+            getValue={getValue}
+            defaultValue={defaultValue}
+            updateQuery={this.updateQuery}
+          >
+            <SpinWrapper isFetching={isFetching}>
+              <Com {...this.props} showPagination={false} />
+            </SpinWrapper>
+          </Toolbar>
+        );
       } else if (type === 'relation' && relation.type === 'toOne') {
         return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.id) ? value : defaultValue(type, relation)} />;
       } else if (type === 'relation' && relation.type === 'toMany') {
@@ -129,97 +155,20 @@ export default function withQuery(Com: React.ComponentType<*>) {
   };
 }
 
-export function getValue(value: Map<string, *>, idPathArr: Array<string>) {
-  return idPathArr.reduce((result: any, key: string) => {
-    if (isPlainObject(result)) {
-      if ('edges' in result && 'pageInfo' in result) {
-        return get(result, ['edges', key, 'node']);
-      }
-      return get(result, key);
-    } else if (isArray(result)) {
-      return get(result, key);
-    } else {
-      return result;
-    }
-  }, value);
+const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
+
+function SpinWrapper({
+  isFetching,
+  children,
+  ...props
+}) {
+  return (
+    <Spin indicator={antIcon} spinning={isFetching}>
+      {React.cloneElement(children, props)}
+    </Spin>
+  )
 }
 
-export function parseConnectionToNormal(value: any) {
-  if (isPlainObject(value)) {
-    if (value.edges && value.pageInfo) {
-      return value.edges.map(edge => parseConnectionToNormal(edge.node));
-    }
-    return mapValues(value, item => parseConnectionToNormal(item));
-  } else if (isArray(value)) {
-    return value.map(item => parseConnectionToNormal(item))
-  } else {
-    return value;
-  }
-}
-
-function shouldUpdate(value: any, newValue: any) {
+export function shouldUpdate(value: any, newValue: any) {
   return value != newValue;
-}
-
-function defaultValue(type: string, relation: any) {
-  switch (type) {
-    case 'connection': {
-      return {
-        edges: [],
-        pageInfo: {
-          hasNextPage: false,
-          hasPreviousPage: false
-        }
-      }
-    }
-    case 'array': {
-      return [];
-    }
-    case 'object': {
-      return {};
-    }
-    case 'boolean': {
-      return false;
-    }
-    case 'number': {
-      return 0;
-    }
-    case 'string': {
-      return '';
-    }
-    case 'relation': {
-      if (relation.type === 'toMany') {
-        return {
-          edges: [],
-          pageInfo: {
-            hasNextPage: false,
-            hasPreviousPage: false
-          }
-        };
-      } else {
-        return null;
-      }
-    }
-    case 'image':
-    case 'file': {
-      return {
-        url: '',
-        contentType: '',
-        name: '',
-        size: 0,
-        __typename: null
-      }
-    }
-    case 'geoPoint': {
-      return {
-        placeId: '',
-        address: '',
-        lat: 122,
-        lng: 23
-      };
-    }
-    default: {
-      return null;
-    }
-  }
 }

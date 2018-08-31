@@ -89,10 +89,10 @@ export default class Provider extends React.PureComponent<Props, State> {
         variables
       });
     } else {
-      this.observableQueryMap[paths[0]].setVariables(variables);
+      return this.observableQueryMap[paths[0]].setVariables(variables).then(() => false);
     }
     this.log('updateQuery', variables, args);
-    return reWatchQuery;
+    return Promise.resolve(reWatchQuery);
   }
 
   // path: posts/name args: {where, pagination, sort}

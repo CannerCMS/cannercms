@@ -54,34 +54,59 @@ export default class Toolbar extends React.PureComponent<Props> {
 
   constructor(props: Props) {
     super(props);
+    const {args, toolbar, originRootValue, parseConnectionToNormal, getValue, refId} = props;
+    this.async = props.toolbar.async;
+    this.state = {
+      originRootValue,
+      sort: parseOrder(args.orderBy),
+      filter: parseWhere(args.where),
+      pagination: parsePagination(args)
+    };
   }
 
-  UNSAFE_componentWillReceiveProps(props: Props) {
-    const {onChange, value} = props;
-    if (onChange && value) {
-      onChange(value);
-    }
+  static getDerivedStateFromProps(nextProps: Props, nextState: State) {
+    const {originRootValue, args} = nextProps;
+    return {
+      originRootValue,
+      sort: parseOrder(args.orderBy),
+      filter: parseWhere(args.where),
+      pagination: parsePagination(args)
+    };
   }
 
   changeOrder = ({orderField, orderType}: {orderField: string, orderType: string}) => {
-    const {updateQuery, refId, args} = this.props;
-    updateQuery(refId.getPathArr(), {first: 10, orderBy: `${orderField}_${orderType}`, where: args.where});
+    const {toolbar, updateQuery, refId, args} = this.props;
+    if (this.async) {
+      updateQuery(refId.getPathArr(), {first: 10, orderBy: `${orderField}_${orderType}`, where: args.where});
+    } else {
+      this.setState({
+        sort: {
+          orderField,
+          orderType
+        }
+      });
+    }
   }
 
   changeFilter = (where: Object) => {
     const {updateQuery, refId, args} = this.props;
-    const validWhere = processWhere(where);
-    updateQuery(refId.getPathArr(), {first: 10, orderBy: args.orderBy, where: validWhere});
+    if (this.async) {
+      updateQuery(refId.getPathArr(), {first: 10, orderBy: args.orderBy, where: processWhere(where)});
+    } else {
+      this.setState({
+        where
+      });
+    }
   }
 
   nextPage = () => {
-    const {updateQuery, args, value, refId} = this.props;
-    if (get(value, ['pageInfo', 'hasNextPage'])) {
-      const {first = 10} = parsePagination(args);
-      const after = value.edges.slice(-1)[0].cursor;
+    const {updateQuery, args, refId, keyName} = this.props;
+    const {originRootValue, pagination} = this.state;
+    if (get(originRootValue, [keyName, 'pageInfo', 'hasNextPage'])) {
+      const after = originRootValue[keyName].edges.slice(-1)[0].cursor; // the last one
       updateQuery(refId.getPathArr(), {
         ...args, 
-        first,
+        first: pagination.first || 10,
         after,
         last: undefined,
         before: undefined
@@ -90,13 +115,13 @@ export default class Toolbar extends React.PureComponent<Props> {
   }
 
   prevPage = () => {
-    const {updateQuery, args, value, refId} = this.props;
-    if (get(value, ['pageInfo', 'hasPreviousPage'])) {
-      const {last = 10} = parsePagination(args);
-      const before = get(value, ['edges', 0, 'cursor']);
+    const {updateQuery, args, refId, keyName} = this.props;
+    const {originRootValue, pagination} = this.state;
+    if (get(originRootValue, [keyName, 'pageInfo', 'hasPreviousPage'])) {
+      const before = get(originRootValue, [keyName, 'edges', 0, 'cursor']); // the first one
       updateQuery(refId.getPathArr(), {
         ...args,
-        last,
+        last: pagination.last || 10,
         before,
         after: undefined,
         first: undefined
@@ -121,7 +146,8 @@ export default class Toolbar extends React.PureComponent<Props> {
   }
 
   render() {
-    const {children, toolbar = {}, args, items, value} = this.props;
+    const {children, toolbar = {}, args, refId, items, defaultValue, parseConnectionToNormal, getValue} = this.props;
+    const {originRootValue} = this.state;
     const {sort, pagination, filter, toolbarLayout} = toolbar;
     const ToolbarLayout = toolbarLayout && toolbarLayout.component ? toolbarLayout.component : DefaultToolbarLayout;
     const SortComponent = sort && sort.component ? sort.component : Sort;
@@ -130,6 +156,8 @@ export default class Toolbar extends React.PureComponent<Props> {
     const {orderField, orderType} = parseOrder(args.orderBy);
     const where = parseWhere(args.where || {});
     const {first, last} = parsePagination(args);
+    const rootValue = parseConnectionToNormal(originRootValue);
+    const value = getValue(originRootValue, refId.getPathArr());
     return <ToolbarLayout
       Sort={sort ? <SortComponent
         {...sort}
@@ -159,7 +187,10 @@ export default class Toolbar extends React.PureComponent<Props> {
         changeFilter={this.changeFilter}
       /> : null}
     >
-      {React.Children.only(children)}
+      {React.cloneElement(children, {
+        rootValue,
+        value: value ? get(value, 'edges', []).map(item => item.node) : defaultValue('array')
+      })}
     </ToolbarLayout>
   }
 }

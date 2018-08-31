@@ -243,12 +243,14 @@ export default function withCache(Com: React.ComponentType<*>, options: {
 
     updateQuery = (paths: Array<string>, args: Object) => {
       const {updateQuery} = this.props;
-      const reWatch = updateQuery(paths, args);
-      if (reWatch) {
-        this._unsubscribe();
-        this.fetch(paths[0]);
-      }
-      return reWatch;
+      return updateQuery(paths, args)
+        .then(reWatch => {
+          if (reWatch) {
+            this._unsubscribe();
+            this.fetch(paths[0]);
+          }
+          return reWatch;
+        });
     }
 
     render() {

@@ -12,11 +12,16 @@ const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="po
       type: 'text',
       label: 'Title'
     }]}/>
+    <sort options={[{
+      key: 'title',
+      title: 'Title'
+    }]} />
   </toolbar>
   <string keyName="title" title="title" />
   <array keyName="notes" title="Notes">
     <string keyName="text" title="Text" />
   </array>
+  <image keyName="image" />
   <array keyName="images" ui="gallery"/>
   <relation keyName="author" title="author" relation={{type: 'toOne', to: 'users'}}
     uiParams={{
@@ -28,7 +33,11 @@ const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="po
     }}
     ui="singleSelect"
     required
-  />
+  >
+    <toolbar async>
+      <pagination />
+    </toolbar>
+  </relation>
 </array>
 
 export default Posts

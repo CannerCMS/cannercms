@@ -8,6 +8,9 @@ const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
     }}
     ui="tableRoute"
   >
+  <toolbar async>
+    <pagination />
+  </toolbar>
   <string keyName="name" title="Name" />
   <relation ui="singleSelect" keyName="toOneSelfRelation" title="selfRelation" relation={{type: 'toOne', to: 'selfRelation'}}
     uiParams={{
@@ -17,7 +20,11 @@ const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
         dataIndex: 'name'
       }]
     }}
-  />
+  >
+    <toolbar async>
+      <pagination />
+    </toolbar>
+  </relation>
   <relation ui="multipleSelect" keyName="toManySelfRelation" title="toManySelfRelation" relation={{type: 'toMany', to: 'selfRelation'}}
     uiParams={{
       textCol: 'name',
