@@ -16,6 +16,7 @@ import {
   ChartModel,
   IndicatorModel,
   EnumModel,
+  FilterModel,
   PageModel
 } from './models';
 import type {CannerSchema, Props} from './flow-types';
@@ -138,11 +139,38 @@ export default function builder(tag: string | Function, attributes: Object, ...c
         type: 'pagination'
       }
     }
-    case 'filter': {
+    case 'textFilter': {
       return {
         ...attributes,
-        type: 'filter'
-      }
+        type: 'text'
+      };
+    }
+    case 'numberFilter': {
+      return {
+        ...attributes,
+        type: 'number'
+      };
+    }
+    case 'dateFilter': {
+      return {
+        ...attributes,
+        type: 'date'
+      };
+    }
+    case 'relationSelectFilter': {
+      return {
+        ...attributes,
+        type: 'relation'
+      };
+    }
+    case 'selectFilter': {
+      return {
+        ...attributes,
+        type: 'select'
+      };
+    }
+    case 'filter': {
+      return new FilterModel(attributes, children).toJson();
     }
     case 'Layout': {
       const {visitor, cannerKey} = createLayoutVisitor(attributes, children);
