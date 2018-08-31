@@ -16,7 +16,6 @@ import {
   ChartModel,
   IndicatorModel,
   EnumModel,
-  FilterModel,
   PageModel
 } from './models';
 import type {CannerSchema, Props} from './flow-types';
@@ -171,7 +170,17 @@ export default function builder(tag: string | Function, attributes: Object, ...c
       };
     }
     case 'filter': {
-      return new FilterModel(attributes, children).toJson();
+      return {
+        ...attributes,
+        type: 'filter',
+        filters: children
+      };
+    }
+    case 'actions': {
+      return {
+        ...attributes,
+        type: 'actions'
+      };
     }
     case 'Layout': {
       const {visitor, cannerKey} = createLayoutVisitor(attributes, children);
