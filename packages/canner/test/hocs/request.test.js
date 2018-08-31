@@ -2,7 +2,7 @@ import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
-import withRequest, {createAction, loop} from '../../src/hocs/request';
+import withRequest, {createAction, loop, findSchemaByRefId} from '../../src/hocs/request';
 import RefId from 'canner-ref-id';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -237,3 +237,91 @@ describe('loop schema', () => {
   });
 
 })
+
+
+describe('findSchemaByRefId', () => {
+  it('should find string schema in object', () => {
+    const refId = new RefId('info/name');
+    const schema = {
+      info: {
+        keyName: 'info',
+        type: 'object',
+        items: {
+          name: {
+            type: 'string',
+            keyName: 'name'
+          }
+        }
+      }
+    };
+    expect(findSchemaByRefId(schema, refId)).toEqual({
+      type: 'string',
+      pattern: 'object/string',
+      keyName: 'name'
+    });
+  });
+
+  it('should find string schema in array', () => {
+    const refId = new RefId('info/0/name');
+    const schema = {
+      info: {
+        keyName: 'info',
+        type: 'array',
+        items: {
+          type: 'object',
+          items: {
+            name: {
+              type: 'string',
+              keyName: 'name'
+            }
+          }
+        }
+      }
+    };
+    expect(findSchemaByRefId(schema, refId)).toEqual({
+      type: 'string',
+      pattern: 'array/string',
+      keyName: 'name'
+    });
+  });
+
+  it('should find string schema in nested array', () => {
+    const refId = {
+      firstRefId: new RefId('info/notes/0'),
+      secondRefId: new RefId('info/notes/1')
+    };
+    const schema = {
+      info: {
+        keyName: 'info',
+        type: 'object',
+        items: {
+          notes: {
+            type: 'array',
+            items: {
+              type: 'object',
+              items: {
+                name: {
+                  type: 'string',
+                  keyName: 'name'
+                }
+              } 
+            }
+          }
+        }
+      }
+    };
+    expect(findSchemaByRefId(schema, refId)).toEqual({
+      type: 'array',
+      pattern: 'object/array',
+      items: {
+        type: 'object',
+        items: {
+          name: {
+            type: 'string',
+            keyName: 'name'
+          }
+        }
+      }
+    });
+  });
+});

@@ -113,8 +113,13 @@ function addTypename(value) {
   return value;
 }
 
-function findSchemaByRefId(schema: Object, refId: any) {
-  const paths = refId.getPathArr();
+export function findSchemaByRefId(schema: Object, refId: any) {
+  let paths = [];
+  if (isPlainObject(refId)) {
+    paths = refId.firstRefId.getPathArr();
+  } else {
+    paths = refId.getPathArr();
+  }
   let pattern = '';
   return loop(schema, paths, pattern);
 }
