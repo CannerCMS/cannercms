@@ -23,6 +23,12 @@ type Args = {
 type Props = {
   children: React.Node,
   updateQuery: Function,
+  parseConnectionToNormal: Function,
+  getValue: Function,
+  refId: RefId,
+  keyName: string,
+  defaultValue: Function,
+  children: React.Element<*>,
   toolbar: {
     async: boolean,
     sort?: {
@@ -46,36 +52,44 @@ type Props = {
   refId: RefId,
   args: Args,
   items: Object,
-  value: Object,
+  originRootValue: Object,
   onChange?: Function
 }
 
-export default class Toolbar extends React.PureComponent<Props> {
+type State = {
+  originRootValue: any,
+  sort: any,
+  filter: any,
+  pagination: any
+}
+
+export default class Toolbar extends React.PureComponent<Props, State> {
+  async: boolean;
 
   constructor(props: Props) {
     super(props);
-    const {args, toolbar, originRootValue, parseConnectionToNormal, getValue, refId} = props;
+    const {args, originRootValue} = props;
     this.async = props.toolbar.async;
     this.state = {
       originRootValue,
       sort: parseOrder(args.orderBy),
-      filter: parseWhere(args.where),
+      filter: parseWhere(args.where || {}),
       pagination: parsePagination(args)
     };
   }
 
-  static getDerivedStateFromProps(nextProps: Props, nextState: State) {
+  static getDerivedStateFromProps(nextProps: Props) {
     const {originRootValue, args} = nextProps;
     return {
       originRootValue,
       sort: parseOrder(args.orderBy),
-      filter: parseWhere(args.where),
+      filter: parseWhere(args.where || {}),
       pagination: parsePagination(args)
     };
   }
 
   changeOrder = ({orderField, orderType}: {orderField: string, orderType: string}) => {
-    const {toolbar, updateQuery, refId, args} = this.props;
+    const {updateQuery, refId, args} = this.props;
     if (this.async) {
       updateQuery(refId.getPathArr(), {first: 10, orderBy: `${orderField}_${orderType}`, where: args.where});
     } else {
@@ -94,7 +108,7 @@ export default class Toolbar extends React.PureComponent<Props> {
       updateQuery(refId.getPathArr(), {first: 10, orderBy: args.orderBy, where: processWhere(where)});
     } else {
       this.setState({
-        where
+        filter: where
       });
     }
   }

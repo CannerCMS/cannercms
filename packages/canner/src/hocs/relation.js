@@ -114,7 +114,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (!relation) {
         return <Com {...this.props}/>;
       }
-      console.log(originRootValue);
       if (!originRootValue) {
         return <List style={{maxWidth: 500}} />;
       }

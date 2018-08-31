@@ -1,8 +1,7 @@
 // @flow
-import React, {Component, Fragment} from 'react';
-import {Button, Icon, Select} from 'antd';
+import React, {Component} from 'react';
+import {Button, Icon} from 'antd';
 import styled from 'styled-components';
-const Option = Select.Option;
 const ButtonGroup = Button.Group;
 const Wrapper = styled.div`
   text-align: right;
@@ -22,7 +21,7 @@ type Props = {
 
 export default class PaginationPlugin extends Component<Props> {
   render() {
-    const {nextPage, prevPage, hasNextPage, hasPreviousPage, changeSize} = this.props;
+    const {nextPage, prevPage, hasNextPage, hasPreviousPage} = this.props;
     return <div style={{display: 'flex', justifyContent: 'flex-end'}}>
       <Wrapper marginTop={16}>
         <ButtonGroup>
