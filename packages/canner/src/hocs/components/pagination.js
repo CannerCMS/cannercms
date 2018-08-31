@@ -9,7 +9,6 @@ const Wrapper = styled.div`
   margin-top: ${props => props.marginTop}px;
   margin-right: ${props => props.marginRight}px;
   display: inline-block;
-  float: right;
 `;
 
 type Props = {
@@ -24,8 +23,7 @@ type Props = {
 export default class PaginationPlugin extends Component<Props> {
   render() {
     const {nextPage, prevPage, hasNextPage, hasPreviousPage, changeSize} = this.props;
-    return <div style={{marginLeft: 'auto'}}>
-      
+    return <div style={{display: 'flex', justifyContent: 'flex-end'}}>
       <Wrapper marginTop={16}>
         <ButtonGroup>
           <Button disabled={!hasPreviousPage} onClick={prevPage}>
