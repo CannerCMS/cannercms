@@ -43,7 +43,7 @@ const Users = ({attributes}) => (
             }
           }
         }]
-      }]} />
+      }]}/>
     </toolbar>
     <string keyName="name" title="name" required validation={{
       validator: (name, reject) => {

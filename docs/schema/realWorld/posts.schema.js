@@ -5,13 +5,13 @@ import builder from 'canner-script';
 const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="posts" uiParams={{
   columns: attributes.columns
 }}>
-  <toolbar>
+  <toolbar async>
     <pagination />
     <filter fields={[{
       key: 'title',
       type: 'text',
       label: 'Title'
-    }]}/>
+    }]} permanentFilter={{title_eq: 'fds'}}/>
     <sort options={[{
       key: 'title',
       title: 'Title'

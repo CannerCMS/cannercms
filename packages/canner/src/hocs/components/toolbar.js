@@ -7,7 +7,7 @@ import Pagination from './pagination';
 import Sort from './sort';
 import Filter from './filter';
 import isObject from 'lodash/isObject';
-import {paginate} from '../utils';
+import {paginate, filterByWhere} from '../utils';
 import type {Query} from '../../query';
 import type RefId from 'canner-ref-id';
 
@@ -72,10 +72,12 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     super(props);
     const {args, originRootValue} = props;
     this.async = props.toolbar.async;
+    // $FlowFixMe
+    const permanentFilter = props.toolbar.filter.permanentFilter || {};
     this.state = {
       originRootValue,
       sort: parseOrder(args.orderBy),
-      filter: parseWhere(args.where || {}),
+      filter: {...parseWhere(args.where || {}), ...parseWhere(permanentFilter)},
       pagination: parsePagination(args),
       current: 1
     };
@@ -83,10 +85,12 @@ export default class Toolbar extends React.PureComponent<Props, State> {
 
   static getDerivedStateFromProps(nextProps: Props) {
     const {originRootValue, args} = nextProps;
+    // $FlowFixMe
+    const permanentFilter = nextProps.toolbar.filter.permanentFilter || {};
     return {
       originRootValue,
       sort: parseOrder(args.orderBy),
-      filter: parseWhere(args.where || {}),
+      filter: {...parseWhere(args.where || {}), ...parseWhere(permanentFilter)},
       pagination: parsePagination(args)
     };
   }
@@ -106,12 +110,20 @@ export default class Toolbar extends React.PureComponent<Props, State> {
   }
 
   changeFilter = (where: Object) => {
-    const {updateQuery, refId, args} = this.props;
+    const {updateQuery, refId, args, toolbar} = this.props;
+    let permanentFilter = {}
+    if (toolbar && toolbar.filter && toolbar.filter.permanentFilter) {
+      permanentFilter = toolbar.filter.permanentFilter;
+    }
     if (this.async) {
-      updateQuery(refId.getPathArr(), {first: 10, orderBy: args.orderBy, where: processWhere(where)});
+      updateQuery(refId.getPathArr(), {
+        first: 10,
+        orderBy: args.orderBy,
+        where: {...processWhere(where), ...permanentFilter}
+      });
     } else {
       this.setState({
-        filter: where
+        filter: {...where, ...parseWhere(permanentFilter)}
       });
     }
   }
@@ -179,8 +191,10 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const {orderField, orderType} = parseOrder(args.orderBy);
     const where = parseWhere(args.where || {});
     const {first, last} = parsePagination(args);
-    const total = originRootValue[keyName].edges.length;
+    let total = 0;
     if (!toolbar.async) {
+      originRootValue = filterByWhere(originRootValue, keyName, this.state.filter);
+      total = originRootValue[keyName].edges.length;
       originRootValue = paginate(originRootValue, keyName, current, 10);
     }
     const rootValue = parseConnectionToNormal(originRootValue);

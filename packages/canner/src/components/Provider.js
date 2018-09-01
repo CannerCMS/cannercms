@@ -88,11 +88,12 @@ export default class Provider extends React.PureComponent<Props, State> {
         query: gql`${gqlStr}`,
         variables
       });
+      this.log('updateQuery', variables, args);
+      return Promise.resolve(reWatchQuery);
     } else {
+      this.log('updateQuery', variables, args);
       return this.observableQueryMap[paths[0]].setVariables(variables).then(() => false);
     }
-    this.log('updateQuery', variables, args);
-    return Promise.resolve(reWatchQuery);
   }
 
   // path: posts/name args: {where, pagination, sort}

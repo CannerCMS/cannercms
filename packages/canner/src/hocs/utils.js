@@ -98,3 +98,43 @@ export function paginate(rootValue: Object, field: string, currentPage: number, 
   copyValue[field].edges = copyValue[field].edges.slice(index, index + pageSize);
   return copyValue;
 }
+
+export function filterByWhere(rootValue: Object, field: string, where: Object) {
+  const copyValue = JSON.parse(JSON.stringify(rootValue));
+  copyValue[field].edges = copyValue[field].edges.filter(edge => {
+    return Object.keys(where).reduce((result, key) => {
+      const condition = where[key];
+      const data = edge.node[key];
+      return result && passCondition(data , condition);
+    }, true);
+  });
+  return copyValue;
+}
+
+export function passCondition(data: any, condition: Object) {
+  return Object.keys(condition).reduce((result, conditionKey) => {
+    let isPass = true;
+    const conditionValue = condition[conditionKey];
+    switch(conditionKey) {
+      case 'contains':
+        isPass = data.indexOf(conditionValue) !== -1;
+        break;
+      case 'eq':
+        isPass = data === conditionValue;
+        break;
+      case 'gt':
+        isPass = data > conditionValue;
+        break;
+      case 'gte':
+        isPass = data >= conditionValue;
+        break;
+      case 'lt':
+        isPass = data < conditionValue;
+        break;
+      case 'lte':
+        isPass = data <= conditionValue;
+        break;
+    }
+    return result && isPass;
+  }, true);
+}
