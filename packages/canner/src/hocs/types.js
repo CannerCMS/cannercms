@@ -30,6 +30,7 @@ export type Toolbar = {
     [string]: *
   },
   filter?: {
+    permanentFilter?: Object,
     component?: React.ComponentType<*>,
     [string]: *
   },

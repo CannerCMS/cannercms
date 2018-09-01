@@ -6,13 +6,13 @@ const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
       textCol: 'name',
       relationField: 'toOneSelfRelation'
     }}
-    ui="tableRoute"
+    ui="tree"
   >
   <toolbar async>
     <pagination />
   </toolbar>
   <string keyName="name" title="Name" />
-  <relation ui="singleSelect" keyName="toOneSelfRelation" title="selfRelation" relation={{type: 'toOne', to: 'selfRelation'}}
+  <relation ui="singleSelectTree" keyName="toOneSelfRelation" title="selfRelation" relation={{type: 'toOne', to: 'selfRelation'}}
     uiParams={{
       textCol: 'name',
       columns: [{
@@ -21,7 +21,7 @@ const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
       }]
     }}
   >
-    <toolbar async>
+    <toolbar>
       <pagination />
     </toolbar>
   </relation>

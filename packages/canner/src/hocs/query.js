@@ -32,24 +32,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     componentDidMount() {
-      // defaultSort
-      const {pattern, path, query, updateQuery, refId} = this.props;
-      if (pattern === 'array') {
-        const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
-        const variables = query.getVairables();
-        const args = mapValues(queries, v => variables[v.substr(1)]);
-        const paths = refId.getPathArr();
-        updateQuery(paths, {
-          ...args,
-          where: {}
-        }).then(() => {
-          this.queryData();
-          this.subscribe();
-        });
-      } else {
-        this.queryData();
-        this.subscribe();
-      }
+      this.queryData();
+      this.subscribe();
     }
 
     componentWillUnmount() {

@@ -51,12 +51,17 @@ export function fieldToQueriesObject(field: any): any {
         const toolbar = field.getAttr('toolbar');
         const asyncToolbar = toolbar && toolbar.async;
         const defaultSort = toolbar && toolbar.sort && toolbar.sort.defaultSort;
+        const permanentFilter = toolbar && toolbar.filter && toolbar.filter.permanentFilter;
         if (asyncToolbar) {
           variables[firstKey] = DEFAULT_FIRST;
+          if (permanentFilter) {
+            variables[whereKey] = permanentFilter;
+          }
         }
         if (defaultSort) {
           variables[orderByKey] = `${defaultSort}_ASC`
         }
+        
       }
       break;
     }

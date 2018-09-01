@@ -11,7 +11,6 @@ import {withApollo} from 'react-apollo';
 import gql from 'graphql-tag';
 import {Query} from '../query';
 import {List} from 'react-content-loader';
-import {paginate} from './utils';
 
 type State = {
   originRootValue: any,
@@ -45,16 +44,15 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (!relation) {
         return;
       }
+      let args = this.getArgs();
       if (toolbar && toolbar.async) {
-        const args = this.getArgs();
-        this.updateQuery([relation.to], {
-          ...args,
-          first: 10
-        });
-      } else {
-        this.queryData();
+        args = {...args, first: 10}
       }
-      
+      if (toolbar && toolbar.filter && toolbar.filter.permanentFilter) {
+        args = {...args, filter: toolbar.filter.permanentFilter};       
+      }
+      // this method will also query data
+      this.updateQuery([relation.to], args);
     }
 
     UNSAFE_componentWillReceiveProps(props: Props) {
