@@ -12,7 +12,7 @@ const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="po
       type: 'text',
       label: 'Title'
     }]}/>
-    <sort options={[{
+    <sorter options={[{
       key: 'title',
       title: 'Title'
     }]} />
