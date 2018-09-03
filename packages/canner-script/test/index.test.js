@@ -3,7 +3,7 @@
 // eslint-disable-next-line
 import builder, {configure} from '../src'
 import path from 'path';
-import Sort from './toolbar/sort';
+import Sorter from './toolbar/sorter';
 import Pagination from './toolbar/pagination';
 import Filter from './toolbar/filter';
 
@@ -213,16 +213,16 @@ describe('builder', () => {
     it('should work', () => {
       expect(<array>
         <toolbar>
-          <sort component={Sort} />
+          <sorter component={Sorter} />
           <pagination component={Pagination} />
           <filter component={Filter} />
         </toolbar>
       </array>).toMatchObject({
         type: 'array',
         toolbar: {
-          sort: {
-            component: Sort,
-            type: 'sort'
+          sorter: {
+            component: Sorter,
+            type: 'sorter'
           },
           pagination: {
             component: Pagination,
@@ -234,6 +234,78 @@ describe('builder', () => {
           }
         }
       });
+    });
+  });
+
+  describe('filter', () => {
+    it('should work', () => {
+      expect(
+        <toolbar>
+          <filter>
+            <textFilter label="Title" field="title"/>
+            <numberFilter label="Clicks" field="clicks"/>
+            <dateFilter label="CreatedDate" field="createdDate"/>
+            <relationSelectFilter label="Author" field="author" textCol="name"/>
+            <selectFilter
+              label="Status"
+              options={[{
+                  text: 'Draft',
+                  condition: {
+                    draft_eq: true,
+                    trash_eq: false
+                  }
+              }, {
+                text: 'All',
+                condition: {}
+              }]}
+            />
+          </filter>
+        </toolbar>).toMatchObject({
+            filter: {
+              filters: [{
+              type: 'text',
+              label: 'Title',
+              field: 'title' 
+            }, {
+              type: 'number',
+              label: 'Clicks',
+              field: 'clicks'
+            }, {
+              type: 'date',
+              label: 'CreatedDate',
+              field: 'createdDate'
+            }, {
+              type: 'relation',
+              label: 'Author',
+              field: 'author',
+              textCol: 'name'
+            }, {
+              type: 'select',
+              label: 'Status',
+              options: [{
+                text: 'Draft',
+                condition: {
+                  draft_eq: true,
+                  trash_eq: false
+                }
+            }, {
+              text: 'All',
+              condition: {}
+            }]
+            }]}
+        });
+    });
+  });
+
+  describe('actions', () => {
+    it('should work', () => {
+      expect(<toolbar>
+        <actions exportButton importButton filterButton />
+      </toolbar>).toMatchObject({actions: {
+        exportButton: true,
+        importButton: true,
+        filterButton: true
+      }});
     });
   });
 

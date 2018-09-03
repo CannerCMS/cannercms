@@ -127,10 +127,10 @@ export default function builder(tag: string | Function, attributes: Object, ...c
         __TOOLBAR__: true
       });
     }
-    case 'sort': {
+    case 'sorter': {
       return {
         ...attributes,
-        type: 'sort'
+        type: 'sorter'
       }
     }
     case 'pagination': {
@@ -139,11 +139,48 @@ export default function builder(tag: string | Function, attributes: Object, ...c
         type: 'pagination'
       }
     }
+    case 'textFilter': {
+      return {
+        ...attributes,
+        type: 'text'
+      };
+    }
+    case 'numberFilter': {
+      return {
+        ...attributes,
+        type: 'number'
+      };
+    }
+    case 'dateFilter': {
+      return {
+        ...attributes,
+        type: 'date'
+      };
+    }
+    case 'relationSelectFilter': {
+      return {
+        ...attributes,
+        type: 'relation'
+      };
+    }
+    case 'selectFilter': {
+      return {
+        ...attributes,
+        type: 'select'
+      };
+    }
     case 'filter': {
       return {
         ...attributes,
-        type: 'filter'
-      }
+        type: 'filter',
+        filters: children
+      };
+    }
+    case 'actions': {
+      return {
+        ...attributes,
+        type: 'actions'
+      };
     }
     case 'Layout': {
       const {visitor, cannerKey} = createLayoutVisitor(attributes, children);
