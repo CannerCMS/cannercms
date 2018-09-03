@@ -12,6 +12,10 @@ export default class RelationModel extends BasicModel {
       if (toolbar) {
         this.attributes.toolbar = toolbar;
       }
+    } else {
+      this.attributes.toolbar = {
+        pagination: {}
+      };
     }
   }
 
