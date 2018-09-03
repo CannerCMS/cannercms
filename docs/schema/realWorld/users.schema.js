@@ -10,7 +10,7 @@ const Users = ({attributes}) => (
   >
     <toolbar>
       <pagination />
-      <sort
+      <sorter
         options={[{
           key: 'age',
           title: 'Age'
