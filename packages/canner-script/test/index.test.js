@@ -57,6 +57,11 @@ describe('builder', () => {
         relation: {
           type: 'toOne',
           to: 'users'
+        },
+        toolbar: {
+          pagination: {
+            
+          }
         }
       });
     });
