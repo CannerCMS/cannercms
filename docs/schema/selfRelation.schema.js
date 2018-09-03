@@ -8,8 +8,7 @@ const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
     }}
     ui="tree"
   >
-  <toolbar async>
-    <pagination />
+  <toolbar>
   </toolbar>
   <string keyName="name" title="Name" />
   <relation ui="singleSelectTree" keyName="toOneSelfRelation" title="selfRelation" relation={{type: 'toOne', to: 'selfRelation'}}
@@ -22,7 +21,6 @@ const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
     }}
   >
     <toolbar>
-      <pagination />
     </toolbar>
   </relation>
   <relation ui="multipleSelect" keyName="toManySelfRelation" title="toManySelfRelation" relation={{type: 'toMany', to: 'selfRelation'}}

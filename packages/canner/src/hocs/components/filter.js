@@ -83,7 +83,10 @@ class FilterGroup extends React.Component<Props, State> {
   }
 
   render() {
-    const {fields, where} = this.props;
+    const {fields = [], where} = this.props;
+    if (!fields || !fields.length) {
+      return null;
+    }
     const filters = fields.map((val) => {
       switch (val.type) {
         case 'select':
@@ -95,8 +98,9 @@ class FilterGroup extends React.Component<Props, State> {
           return <DateRangeFilter onChange={this.onChange} schema={{[val.key]: val}}/>
         */
         case 'text':
-        default:
           return <TextFilter onChange={this.onChange} name={val.key} label={val.label} where={where}/>;
+        default:
+          return null;
       }
     });
     return (

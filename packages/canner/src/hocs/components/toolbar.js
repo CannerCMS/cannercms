@@ -73,7 +73,7 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const {args, originRootValue} = props;
     this.async = props.toolbar.async;
     // $FlowFixMe
-    const permanentFilter = props.toolbar.filter.permanentFilter || {};
+    const permanentFilter = (props.toolbar.filter && props.toolbar.filter.permanentFilter) || {};
     this.state = {
       originRootValue,
       sort: parseOrder(args.orderBy),
@@ -84,9 +84,9 @@ export default class Toolbar extends React.PureComponent<Props, State> {
   }
 
   static getDerivedStateFromProps(nextProps: Props) {
-    const {originRootValue, args} = nextProps;
+    const {originRootValue, args, toolbar} = nextProps;
     // $FlowFixMe
-    const permanentFilter = nextProps.toolbar.filter.permanentFilter || {};
+    const permanentFilter = (toolbar.filter && toolbar.filter.permanentFilter) || {};
     return {
       originRootValue,
       sort: parseOrder(args.orderBy),
@@ -195,7 +195,9 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     if (!toolbar.async) {
       originRootValue = filterByWhere(originRootValue, keyName, this.state.filter);
       total = originRootValue[keyName].edges.length;
-      originRootValue = paginate(originRootValue, keyName, current, 10);
+      if (pagination) {
+        originRootValue = paginate(originRootValue, keyName, current, 10);
+      }
     }
     const rootValue = parseConnectionToNormal(originRootValue);
     const value = getValue(originRootValue, refId.getPathArr());

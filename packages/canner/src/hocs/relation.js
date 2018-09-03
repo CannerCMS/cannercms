@@ -3,10 +3,10 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import RefId from 'canner-ref-id';
-import Toolbar from './components/toolbar';
+import Toolbar, { parseWhere } from './components/toolbar';
 import {mapValues} from 'lodash';
 import type {HOCProps} from './types';
-import {parseConnectionToNormal, getValue, defaultValue} from './utils';
+import {parseConnectionToNormal, getValue, defaultValue, filterByWhere, paginate} from './utils';
 import {withApollo} from 'react-apollo';
 import gql from 'graphql-tag';
 import {Query} from '../query';
@@ -15,6 +15,7 @@ import {List} from 'react-content-loader';
 type State = {
   originRootValue: any,
   isFetching: boolean,
+  current: number
 }
 
 type Props = HOCProps & {
@@ -31,7 +32,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
       super(props);
       this.state = {
         originRootValue: null,
-        isFetching: true
+        isFetching: true,
+        current: 0
       };
       if (props.relation) {
         this.query = new Query({schema: props.schema});
@@ -39,7 +41,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     componentDidMount() {
-      // defaultSort
       const {relation, toolbar} = this.props;
       if (!relation) {
         return;
@@ -49,7 +50,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         args = {...args, first: 10}
       }
       if (toolbar && toolbar.filter && toolbar.filter.permanentFilter) {
-        args = {...args, filter: toolbar.filter.permanentFilter};       
+        args = {...args, where: toolbar.filter.permanentFilter};       
       }
       // this method will also query data
       this.updateQuery([relation.to], args);
@@ -106,7 +107,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     render() {
-      let {originRootValue, isFetching} = this.state;
+      let {originRootValue, isFetching, current} = this.state;
       const {toolbar, relation, schema, refId} = this.props;
       if (!relation) {
         return <Com {...this.props}/>;
@@ -114,8 +115,14 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (!originRootValue) {
         return <List style={{maxWidth: 500}} />;
       }
-      const removeSelfRootValue = {[relation.to]: removeSelf(originRootValue[relation.to], refId, relation.to)};
       const args = this.getArgs();
+      let parsedRootValue = {[relation.to]: removeSelf(originRootValue[relation.to], refId, relation.to)};
+      if (toolbar && !toolbar.async) {
+        parsedRootValue = filterByWhere(originRootValue, relation.to, parseWhere(args.where));
+        if (toolbar.pagination) {
+          parsedRootValue = paginate(originRootValue, relation.to, current, 10);
+        }
+      }
       const tb = ({children, ...restProps}) => <Toolbar
         {...restProps}
         items={schema[relation.to].items.items}
@@ -124,7 +131,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         query={this.query}
         keyName={relation.to}
         refId={new RefId(relation.to)}
-        originRootValue={removeSelfRootValue}
+        originRootValue={parsedRootValue}
         updateQuery={this.updateQuery}
         parseConnectionToNormal={parseConnectionToNormal}
         getValue={getValue}
@@ -135,7 +142,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
           {children}
         </SpinWrapper>
       </Toolbar>;
-      return <Com {...this.props} Toolbar={tb} relationValue={removeSelfRootValue[relation.to]}/>;
+      return <Com {...this.props} Toolbar={tb} relationValue={parsedRootValue[relation.to]}/>;
     }
   };
 }
