@@ -116,11 +116,12 @@ export default function withQuery(Com: React.ComponentType<*>) {
         return <List style={{maxWidth: 500}} />;
       }
       const args = this.getArgs();
-      let parsedRootValue = {[relation.to]: removeSelf(originRootValue[relation.to], refId, relation.to)};
+      const removeSelfRootValue = {[relation.to]: removeSelf(originRootValue[relation.to], refId, relation.to)};
+      let parsedRootValue = removeSelfRootValue;
       if (toolbar && !toolbar.async) {
-        parsedRootValue = filterByWhere(originRootValue, relation.to, parseWhere(args.where));
+        parsedRootValue = filterByWhere(removeSelfRootValue, relation.to, parseWhere(args.where));
         if (toolbar.pagination) {
-          parsedRootValue = paginate(originRootValue, relation.to, current, 10);
+          parsedRootValue = paginate(removeSelfRootValue, relation.to, current, 10);
         }
       }
       const tb = ({children, ...restProps}) => <Toolbar
@@ -142,7 +143,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
           {children}
         </SpinWrapper>
       </Toolbar>;
-      return <Com {...this.props} Toolbar={tb} relationValue={parsedRootValue[relation.to]}/>;
+      return <Com {...this.props} Toolbar={tb} relationValue={removeSelfRootValue[relation.to]}/>;
     }
   };
 }
