@@ -1,5 +1,4 @@
 import {createEmptyData} from '../src';
-import {genDefaultValue} from '../src/createEmptyData';
 
 describe('create string empty data', () => {
   it('should return empty string', () => {
@@ -12,7 +11,7 @@ describe('create string empty data', () => {
     expect(createEmptyData({
       type: 'string',
       defaultValue: '123'
-    }));
+    })).toBe('123');
   })
 });
 
@@ -138,17 +137,4 @@ describe('create relation empty data', () => {
       }
     })).toEqual([]);
   });
-})
-
-
-describe('genDefaultValue', () => {
-  it('should return value with given string', () => {
-    const defaultValue = 'value';
-    expect(genDefaultValue(defaultValue)).toBe(defaultValue);
-  });
-
-  it('should retrun value with given funciton', () => {
-    const defaultValue = () => 'value';
-    expect(genDefaultValue(defaultValue)).toBe(defaultValue());
-  })
 })
