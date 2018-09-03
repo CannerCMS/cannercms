@@ -59,13 +59,13 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const {subscribe, refId} = this.props;
       const subscription = subscribe(this.key, (newOriginRootValue) => {
         const {originRootValue} = this.state
-        if (shouldUpdate(originRootValue, newOriginRootValue)) {
+        // if (shouldUpdate(originRootValue, newOriginRootValue)) {
           this.setState({
             originRootValue: newOriginRootValue,
             rootValue: parseConnectionToNormal(newOriginRootValue),
             value: getValue(newOriginRootValue, refId.getPathArr()),
           });
-        }
+        // }
       });
       this.subscription = subscription;
     }
