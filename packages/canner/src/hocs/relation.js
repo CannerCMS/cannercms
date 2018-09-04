@@ -119,7 +119,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const removeSelfRootValue = {[relation.to]: removeSelf(originRootValue[relation.to], refId, relation.to)};
       let parsedRootValue = removeSelfRootValue;
       if (toolbar && !toolbar.async) {
-        parsedRootValue = filterByWhere(removeSelfRootValue, relation.to, parseWhere(args.where));
+        // TODO
+        // parsedRootValue = filterByWhere(removeSelfRootValue, relation.to, parseWhere(args.where));
         // if (toolbar.pagination) {
         //   parsedRootValue = paginate(removeSelfRootValue, relation.to, current, 10);
         // }
