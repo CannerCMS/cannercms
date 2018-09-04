@@ -112,14 +112,25 @@ export default class Toolbar extends React.PureComponent<Props, State> {
   changeOrder = ({orderField, orderType}: {orderField: string, orderType: string}) => {
     const {updateQuery, refId, args} = this.props;
     if (this.async) {
-      updateQuery(refId.getPathArr(), {first: 10, orderBy: `${orderField}_${orderType}`, where: args.where});
+      if (orderField) {
+        updateQuery(refId.getPathArr(), {first: 10, orderBy: `${orderField}_${orderType}`, where: args.where});
+      } else {
+        updateQuery(refId.getPathArr(), {first: 10, where: args.where});
+      }
     } else {
-      this.setState({
-        sort: {
-          orderField,
-          orderType
-        }
-      });
+      if (orderField) {
+        this.setState({
+          sort: {
+            orderField,
+            orderType
+          }
+        });
+      } else {
+        this.setState({
+          sort: {}
+        });
+      }
+      
     }
   }
 
@@ -211,9 +222,9 @@ export default class Toolbar extends React.PureComponent<Props, State> {
   render() {
     const {children, toolbar = {}, args, refId, items, defaultValue, parseConnectionToNormal, getValue} = this.props;
     let {originRootValue, current, displayedFilterIndexs} = this.state;
-    const {sort, pagination, filter, toolbarLayout, actions} = toolbar;
+    const {sorter, pagination, filter, toolbarLayout, actions} = toolbar;
     const ToolbarLayout = toolbarLayout && toolbarLayout.component ? toolbarLayout.component : DefaultToolbarLayout;
-    const SortComponent = sort && sort.component ? sort.component : Sort;
+    const SortComponent = sorter && sorter.component ? sorter.component : Sort;
     const FilterComponent = filter && filter.component ? filter.component : Filter;
     const PaginationComponent = pagination && pagination.component ? pagination.component : Pagination;
     const ActionsComponent = actions && actions.component ? actions.component : Actions;
@@ -239,11 +250,11 @@ export default class Toolbar extends React.PureComponent<Props, State> {
         displayedFilters={displayedFilterIndexs}
         addFilter={this.addFilter}
       /> : null}
-      Sort={sort ? <SortComponent
-        {...sort}
+      Sort={sorter ? <SortComponent
+        {...sorter}
         async={toolbar.async}
-        defaultSort={sort.defaultSort}
-        options={sort.options}
+        defaultField={sorter.defaultField}
+        sort={sorter.sort}
         changeOrder={this.changeOrder}
         orderField={orderField}
         orderType={orderType}

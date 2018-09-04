@@ -22,7 +22,7 @@ export default class ToolbarLayout extends React.PureComponent<Props> {
         }}>
           <div style={{
             display: 'flex',
-            justifyContent: 'spaceBetween'
+            justifyContent: 'space-between'
           }}>
             {Actions}
             {Sort}
