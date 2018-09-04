@@ -166,7 +166,7 @@ describe('create an array data', () => {
     })).toEqual([]);
   });
 
-  it('should return an non-empty arrary', () => {
+  it('should return an non-empty arrary of object', () => {
     const listLength = 3;
     expect(createFakeData({
       type: 'array',
@@ -185,6 +185,23 @@ describe('create an array data', () => {
         }
       }
     }, listLength).length).toBe(listLength);
+  });
+
+  it('should return an non-empty arrary of string', () => {
+    const listLength = 3;
+    expect(createFakeData({
+      type: 'array',
+      items: {
+        type: 'string'
+      }
+    }, listLength).length).toBe(listLength);
+
+    expect(typeof createFakeData({
+      type: 'array',
+      items: {
+        type: 'string'
+      }
+    }, listLength)[0]).toBe('string');
   });
 });
 
