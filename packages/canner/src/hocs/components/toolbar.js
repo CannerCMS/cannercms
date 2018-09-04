@@ -7,7 +7,7 @@ import Pagination from './pagination';
 import Sort from './sort';
 import Filter from './filter';
 import isObject from 'lodash/isObject';
-import {paginate, filterByWhere} from '../utils';
+import {filterByWhere} from '../utils';
 import type {Query} from '../../query';
 import type RefId from 'canner-ref-id';
 
@@ -85,6 +85,9 @@ export default class Toolbar extends React.PureComponent<Props, State> {
 
   static getDerivedStateFromProps(nextProps: Props) {
     const {originRootValue, args, toolbar} = nextProps;
+    if (toolbar && !toolbar.async) {
+      return;
+    }
     // $FlowFixMe
     const permanentFilter = (toolbar.filter && toolbar.filter.permanentFilter) || {};
     return {
@@ -194,10 +197,10 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     let total = 0;
     if (!toolbar.async) {
       originRootValue = filterByWhere(originRootValue, keyName, this.state.filter);
-      total = originRootValue[keyName].edges.length;
-      if (pagination) {
-        originRootValue = paginate(originRootValue, keyName, current, 10);
-      }
+      // total = originRootValue[keyName].edges.length;
+      // if (pagination) {
+      //   originRootValue = paginate(originRootValue, keyName, current, 10);
+      // }
     }
     const rootValue = parseConnectionToNormal(originRootValue);
     const value = getValue(originRootValue, refId.getPathArr());
@@ -212,7 +215,7 @@ export default class Toolbar extends React.PureComponent<Props, State> {
         orderType={orderType}
         items={items}
       /> : null}
-      Pagination={pagination ? <PaginationComponent
+      Pagination={pagination && toolbar.async ? <PaginationComponent
         {...pagination}
         async={toolbar.async}
         hasNextPage={get(value, ['pageInfo', 'hasNextPage'])}
@@ -235,7 +238,8 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     >
       {React.cloneElement(children, {
         rootValue,
-        value: value ? get(value, 'edges', []).map(item => item.node) : defaultValue('array')
+        value: value ? get(value, 'edges', []).map(item => item.node) : defaultValue('array'),
+        showPagination: toolbar && !toolbar.async
       })}
     </ToolbarLayout>
   }
