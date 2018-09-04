@@ -38,7 +38,7 @@ type Props = {
       importButton?: boolean,
       filterButton?: boolean,
     },
-    sort?: {
+    sorter?: {
       component?: React.ComponentType<*>,
       [string]: *
     },
