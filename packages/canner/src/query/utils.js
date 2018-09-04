@@ -54,9 +54,9 @@ export function fieldToQueriesObject(field: any): any {
         const permanentFilter = toolbar && toolbar.filter && toolbar.filter.permanentFilter;
         if (asyncToolbar) {
           variables[firstKey] = DEFAULT_FIRST;
-          if (permanentFilter) {
-            variables[whereKey] = permanentFilter;
-          }
+        }
+        if (permanentFilter) {
+          variables[whereKey] = permanentFilter;
         }
         if (defaultSort) {
           variables[orderByKey] = `${defaultSort}_ASC`

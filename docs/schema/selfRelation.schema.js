@@ -8,8 +8,6 @@ const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
     }}
     ui="tree"
   >
-  <toolbar>
-  </toolbar>
   <string keyName="name" title="Name" />
   <relation ui="singleSelectTree" keyName="toOneSelfRelation" title="selfRelation" relation={{type: 'toOne', to: 'selfRelation'}}
     uiParams={{
