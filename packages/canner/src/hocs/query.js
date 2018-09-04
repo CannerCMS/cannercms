@@ -58,7 +58,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
     subscribe = () => {
       const {subscribe, refId} = this.props;
       const subscription = subscribe(this.key, (newOriginRootValue) => {
-        const {originRootValue} = this.state
+        // const {originRootValue} = this.state
         // if (shouldUpdate(originRootValue, newOriginRootValue)) {
           this.setState({
             originRootValue: newOriginRootValue,

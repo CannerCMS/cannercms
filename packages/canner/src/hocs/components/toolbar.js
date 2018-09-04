@@ -86,7 +86,9 @@ export default class Toolbar extends React.PureComponent<Props, State> {
   static getDerivedStateFromProps(nextProps: Props) {
     const {originRootValue, args, toolbar} = nextProps;
     if (toolbar && !toolbar.async) {
-      return;
+      return {
+        originRootValue
+      };
     }
     // $FlowFixMe
     const permanentFilter = (toolbar.filter && toolbar.filter.permanentFilter) || {};
