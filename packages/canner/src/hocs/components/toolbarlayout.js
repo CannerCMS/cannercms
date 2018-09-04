@@ -7,15 +7,34 @@ type Props = {
   Filter: React.Node,
   Pagination: React.Node,
   children: React.Node,
+  Actions: React.Node,
 }
 
 export default class ToolbarLayout extends React.PureComponent<Props> {
   render() {
-    const {Filter, Sort, children, Pagination} = this.props;
+    const {Filter, Sort, Actions, children, Pagination} = this.props;
     return (
+      
       <React.Fragment>
-        {Filter}
-        {Sort}
+        <div style={{
+          marginBottom: 24,
+          flexWrap: 'wrap',
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'spaceBetween'
+          }}>
+            {Actions}
+            {Sort}
+          </div>
+          <div style={{
+            marginTop: 16,
+            display: 'flex',
+            flexWrap: 'wrap'
+          }}>
+            {Filter}
+          </div>
+        </div>
         {React.Children.only(children)}
         {Pagination}
       </React.Fragment>

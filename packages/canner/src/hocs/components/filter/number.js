@@ -4,7 +4,6 @@ import {Input, Select} from 'antd';
 import isNaN from 'lodash/isNaN';
 import isEmpty from 'lodash/isEmpty';
 import {injectIntl} from 'react-intl';
-import {FilterPlugin, Label} from './share';
 const Option = Select.Option;
 const InputGroup = Input.Group;
 const operators = [
@@ -83,34 +82,31 @@ export default class NumberRangeFilter extends Component {
   }
 
   render() {
-    const {label, intl} = this.props;
+    const {intl} = this.props;
     const {operator, input} = this.state;
     const placeholder = intl.formatMessage({
       id: 'query.numberRange.placeholder',
     });
     return (
-      <FilterPlugin>
-        <Label>{label}</Label>
-        <InputGroup compact>
-          <Select style={{width: '20%'}}
-            value={operator}
-            onChange={this.changeOperator}
-          >
-            {
-              operators.map((operator) =>
-                <Option key={operator.value} value={operator.value}>
-                  {operator.symbol}
-                </Option>)
-            }
-          </Select>
-          <Input
-            style={{width: '40%'}}
-            placeholder={placeholder}
-            value={input}
-            onChange={this.onInput}
-          />
-        </InputGroup>
-      </FilterPlugin>
+      <InputGroup compact>
+        <Select style={{width: 60}}
+          value={operator}
+          onChange={this.changeOperator}
+        >
+          {
+            operators.map((operator) =>
+              <Option key={operator.value} value={operator.value}>
+                {operator.symbol}
+              </Option>)
+          }
+        </Select>
+        <Input
+          style={{width: 120}}
+          placeholder={placeholder}
+          value={input}
+          onChange={this.onInput}
+        />
+      </InputGroup>
     );
   }
 }

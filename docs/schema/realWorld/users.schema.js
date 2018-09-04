@@ -8,7 +8,8 @@ const Users = ({attributes}) => (
       columns: attributes.columns
     }}
   >
-    <toolbar>
+    <toolbar async>
+      <actions filterButton />
       <pagination />
       <sorter
         options={[{
@@ -17,14 +18,10 @@ const Users = ({attributes}) => (
         }]}
         defaultSort="age"
       />
-      <filter fields={[{
-        label: 'Type',
-        type: 'select',
-        options: [{
-          text: 'All',
-          condition: {
-          }
-        }, {
+      <filter>
+        <textFilter label="Name" field="name"/>
+        <numberFilter label="Age" field="age"/>
+        <selectFilter label="Status" options={[{
           text: 'Draft',
           condition: {
             status: {
@@ -34,16 +31,11 @@ const Users = ({attributes}) => (
             }
           }
         }, {
-          text: 'Stick',
+          text: 'All',
           condition: {
-            status: {
-              stick: {
-                eq: true
-              }
-            }
           }
-        }]
-      }]}/>
+        }]}/>
+      </filter>
     </toolbar>
     <string keyName="name" title="name" required validation={{
       validator: (name, reject) => {
