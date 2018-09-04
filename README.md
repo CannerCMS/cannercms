@@ -13,7 +13,9 @@
 
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/canner)
 
-> Canner is a universal Content Management System (CMS) framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma. In other words, an agnostic CMS framework for any applications and data sources. 
+> Canner is a universal Content Management System (CMS) framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma. In other words, an agnostic CMS framework for any applications and data sources.
+
+**NOTE: Canner BETA is planning to release in Oct 2018 😍**
 
 ![Canner flow](./docs/structure.gif)
 

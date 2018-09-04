@@ -7,6 +7,7 @@ export LiteCMS from './liteCMS';
 
 // methods
 export createEmptyData from './createEmptyData';
+export createFakeData from './createFakeData';
 
 // constants
 export const UNIQUE_ID = '_id';
