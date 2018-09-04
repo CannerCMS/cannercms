@@ -56,7 +56,7 @@ export default class Sort extends Component<Props, State> {
         {
           filterButton && (
             <Dropdown overlay={menu}>
-              <Button style={{ marginLeft: 8 }}>
+              <Button>
                 <Icon type="filter" /> Add Filter
               </Button>
             </Dropdown>

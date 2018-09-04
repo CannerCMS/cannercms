@@ -246,15 +246,15 @@ export default class Toolbar extends React.PureComponent<Props, State> {
       Actions={actions ? <ActionsComponent
         {...actions}
         async={toolbar.async}
-        filters={filter && filter.filters}
+        filters={filter && filter.filters || []}
         displayedFilters={displayedFilterIndexs}
         addFilter={this.addFilter}
-      /> : null}
+      /> : <div />}
       Sort={sorter ? <SortComponent
         {...sorter}
         async={toolbar.async}
         defaultField={sorter.defaultField}
-        sort={sorter.sort}
+        sort={sorter.sort || []}
         changeOrder={this.changeOrder}
         orderField={orderField}
         orderType={orderType}

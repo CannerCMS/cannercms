@@ -9,7 +9,7 @@ const Users = ({attributes}) => (
     }}
   >
     <toolbar async>
-      <actions filterButton />
+      <actions filterButton importButton exportButton />
       <pagination />
       <sorter
         sort={[{
