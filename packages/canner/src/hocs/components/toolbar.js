@@ -196,7 +196,8 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const {first, last} = parsePagination(args);
     let total = 0;
     if (!toolbar.async) {
-      originRootValue = filterByWhere(originRootValue, keyName, this.state.filter);
+      // TODO
+      // originRootValue = filterByWhere(originRootValue, keyName, this.state.filter);
       // total = originRootValue[keyName].edges.length;
       // if (pagination) {
       //   originRootValue = paginate(originRootValue, keyName, current, 10);
