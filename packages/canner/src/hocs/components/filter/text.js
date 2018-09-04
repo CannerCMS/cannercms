@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Input} from 'antd';
 import get from 'lodash/get';
-import {FilterPlugin, Label} from './share';
 
 export default class TextFilter extends Component {
   static propTypes = {
@@ -28,15 +27,12 @@ export default class TextFilter extends Component {
   render() {
     const {label, where, name} = this.props;
     return (
-      <FilterPlugin>
-        <Label>{label}</Label>
-        <Input
-          style={{width: '40%'}}
-          placeholder={label}
-          onChange={this.onInput}
-          defaultValue={get(where, [name, 'eq'], '')}
-        />
-      </FilterPlugin>
+      <Input
+        style={{width: 140}}
+        placeholder={label}
+        onChange={this.onInput}
+        defaultValue={get(where, [name, 'eq'], '')}
+      />
     );
   }
 }

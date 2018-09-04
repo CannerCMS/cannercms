@@ -5,9 +5,9 @@ import {get} from 'lodash';
 import DefaultToolbarLayout from './toolbarlayout';
 import Pagination from './pagination';
 import Sort from './sort';
-import Filter from './filter';
+import Filter from './filter/index';
+import Actions from './actions';
 import isObject from 'lodash/isObject';
-import {filterByWhere} from '../utils';
 import type {Query} from '../../query';
 import type RefId from 'canner-ref-id';
 
@@ -32,6 +32,12 @@ type Props = {
   children: React.Element<*>,
   toolbar: {
     async: boolean,
+    actions?: {
+      component?: React.ComponentType<*>,
+      exportButton?: boolean,
+      importButton?: boolean,
+      filterButton?: boolean,
+    },
     sort?: {
       component?: React.ComponentType<*>,
       [string]: *
@@ -42,6 +48,7 @@ type Props = {
     },
     filter?: {
       component?: React.ComponentType<*>,
+      filters?: Array<Object>,
       [string]: *
     },
     toolbarLayout?: {
@@ -62,7 +69,8 @@ type State = {
   sort: any,
   filter: any,
   pagination: any,
-  current: number
+  current: number,
+  displayedFilterIndexs: Array<number>
 }
 
 export default class Toolbar extends React.PureComponent<Props, State> {
@@ -79,7 +87,8 @@ export default class Toolbar extends React.PureComponent<Props, State> {
       sort: parseOrder(args.orderBy),
       filter: {...parseWhere(args.where || {}), ...parseWhere(permanentFilter)},
       pagination: parsePagination(args),
-      current: 1
+      current: 1,
+      displayedFilterIndexs: []
     };
   }
 
@@ -118,17 +127,19 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const {updateQuery, refId, args, toolbar} = this.props;
     let permanentFilter = {}
     if (toolbar && toolbar.filter && toolbar.filter.permanentFilter) {
-      permanentFilter = toolbar.filter.permanentFilter;
+      permanentFilter = toolbar.filter.permanentFilter || {};
     }
     if (this.async) {
       updateQuery(refId.getPathArr(), {
         first: 10,
         orderBy: args.orderBy,
+        // $FlowFixMe
         where: {...processWhere(where), ...permanentFilter}
       });
     } else {
       this.setState({
-        filter: {...where, ...parseWhere(permanentFilter)}
+        // $FlowFixMe
+        filter: {...where}
       });
     }
   }
@@ -185,14 +196,27 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     }
   }
 
+  addFilter = (index: number) => {
+    this.setState({
+      displayedFilterIndexs: this.state.displayedFilterIndexs.concat(index)
+    });
+  }
+
+  deleteFilter = (index: number) => {
+    this.setState({
+      displayedFilterIndexs: this.state.displayedFilterIndexs.filter(i => i !== index)
+    });
+  }
+
   render() {
-    const {children, toolbar = {}, args, refId, keyName, items, defaultValue, parseConnectionToNormal, getValue} = this.props;
-    let {originRootValue, current} = this.state;
-    const {sort, pagination, filter, toolbarLayout} = toolbar;
+    const {children, toolbar = {}, args, refId, items, defaultValue, parseConnectionToNormal, getValue} = this.props;
+    let {originRootValue, current, displayedFilterIndexs} = this.state;
+    const {sort, pagination, filter, toolbarLayout, actions} = toolbar;
     const ToolbarLayout = toolbarLayout && toolbarLayout.component ? toolbarLayout.component : DefaultToolbarLayout;
     const SortComponent = sort && sort.component ? sort.component : Sort;
     const FilterComponent = filter && filter.component ? filter.component : Filter;
     const PaginationComponent = pagination && pagination.component ? pagination.component : Pagination;
+    const ActionsComponent = actions && actions.component ? actions.component : Actions;
     const {orderField, orderType} = parseOrder(args.orderBy);
     const where = parseWhere(args.where || {});
     const {first, last} = parsePagination(args);
@@ -208,6 +232,13 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const rootValue = parseConnectionToNormal(originRootValue);
     const value = getValue(originRootValue, refId.getPathArr());
     return <ToolbarLayout
+      Actions={actions ? <ActionsComponent
+        {...actions}
+        async={toolbar.async}
+        filters={filter && filter.filters}
+        displayedFilters={displayedFilterIndexs}
+        addFilter={this.addFilter}
+      /> : null}
       Sort={sort ? <SortComponent
         {...sort}
         async={toolbar.async}
@@ -234,9 +265,11 @@ export default class Toolbar extends React.PureComponent<Props, State> {
       Filter={filter ? <FilterComponent
         async={toolbar.async}
         {...filter}
+        displayedFilters={displayedFilterIndexs}
         items={items}
         where={where}
         changeFilter={this.changeFilter}
+        deleteFilter={this.deleteFilter}
       /> : null}
     >
       {React.cloneElement(children, {
