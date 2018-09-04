@@ -1,25 +1,8 @@
 // @flow
 import React, {Component} from 'react';
-import {Row, Col, Select, Icon} from 'antd';
+import {Select, Icon} from 'antd';
 const Option = Select.Option;
-import {FormattedMessage} from 'react-intl';
-import defaultMessage from './locale';
 import styled from 'styled-components';
-
-
-const SortCol = styled(Col)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-`;
-
-const Label = styled.span`
-  font-size: 14px;
-  letter-spacing: 2px;
-  font-weight: 400;
-  color: #aaa;
-`;
 
 const Selector = styled(Select)`
   width: 150px;
@@ -43,16 +26,16 @@ const DownIcon = styled(Icon)`
 type Props = {
   orderField: ?string,
   items: Object,
-  options: Array<{
-    key: string,
-    title: string
+  sort: Array<{
+    field: string,
+    label: string
   }>,
   orderType: 'ASC' | 'DESC',
   changeOrder: ({
     orderField: string,
     orderType: string
   }) => void,
-  defaultSort: string
+  defaultField: string
 }
 
 type State = {
@@ -69,19 +52,19 @@ export default class Sort extends Component<Props, State> {
     };
   }
 
-  onSelect = (key: string) => {
+  onChange = (value: string) => {
     this.setState({
-      key,
-    }, this.onChange);
+      key: value
+    }, this.submit);
   }
 
   changeOrder = () => {
     this.setState({
       order: !this.state.order,
-    }, this.onChange);
+    }, this.submit);
   }
 
-  onChange = () => {
+  submit = () => {
     const {changeOrder} = this.props;
     const {key, order} = this.state;
     changeOrder({
@@ -91,25 +74,19 @@ export default class Sort extends Component<Props, State> {
   }
 
   render() {
-    const {options, defaultSort} = this.props;
+    const {sort, defaultField} = this.props;
     const {key, order} = this.state;
-    return <Row type="flex" justify="end">
-      <SortCol>
-        <Label>
-          <FormattedMessage
-            id="query.sort.label"
-            defaultMessage={defaultMessage.en['query.sort.label']}
-          />
-        </Label>
-        <Selector onSelect={this.onSelect} value={key} defaultValue={defaultSort}>
-          {options.map((cond, i) => <Option key={i} value={cond.key}>{cond.title}</Option>)}
+    return (
+      <div style={{display: 'flex'}}>
+        <Selector onChange={this.onChange} value={key} defaultValue={defaultField} allowClear>
+          {(sort || []).map((cond, i) => <Option key={i} value={cond.field}>{cond.label}</Option>)}
         </Selector>
         <OrderSwitch onClick={this.changeOrder}>
           <UpIcon order={order} type="caret-up" />
           <DownIcon order={order} type="caret-down" />
         </OrderSwitch>
-      </SortCol>
-    </Row>;
+      </div>
+    );
   }
 }
 

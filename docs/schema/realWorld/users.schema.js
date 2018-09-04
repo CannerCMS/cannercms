@@ -12,11 +12,11 @@ const Users = ({attributes}) => (
       <actions filterButton />
       <pagination />
       <sorter
-        options={[{
-          key: 'age',
-          title: 'Age'
+        sort={[{
+          field: 'age',
+          label: 'Age'
         }]}
-        defaultSort="age"
+        defaultField="age"
       />
       <filter>
         <textFilter label="Name" field="name"/>
