@@ -15,7 +15,7 @@
 
 > Canner is a universal Content Management System (CMS) framework that allows you to build CMS in React JSX(XML-like) for Firebase, GraphQL, Restful API, Prisma. In other words, an agnostic CMS framework for any applications and data sources.
 
-**NOTE: Canner BETA is planning to release in Sep 2018 😍**
+**NOTE: Canner BETA is planning to release in Oct 2018 😍**
 
 ![Canner flow](./docs/structure.gif)
 
