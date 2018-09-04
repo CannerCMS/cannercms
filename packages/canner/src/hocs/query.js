@@ -123,7 +123,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
             updateQuery={this.updateQuery}
           >
             <SpinWrapper isFetching={isFetching}>
-              <Com {...this.props} showPagination={false} />
+              <Com {...this.props} showPagination={toolbar && !toolbar.async} />
             </SpinWrapper>
           </Toolbar>
         );

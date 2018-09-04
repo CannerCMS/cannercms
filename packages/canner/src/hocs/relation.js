@@ -120,9 +120,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
       let parsedRootValue = removeSelfRootValue;
       if (toolbar && !toolbar.async) {
         parsedRootValue = filterByWhere(removeSelfRootValue, relation.to, parseWhere(args.where));
-        if (toolbar.pagination) {
-          parsedRootValue = paginate(removeSelfRootValue, relation.to, current, 10);
-        }
+        // if (toolbar.pagination) {
+        //   parsedRootValue = paginate(removeSelfRootValue, relation.to, current, 10);
+        // }
       }
       const tb = ({children, ...restProps}) => <Toolbar
         {...restProps}
