@@ -42,7 +42,11 @@ function loop(schema: Schema, listLength: number) {
     case 'array':
       result = [];
       for (let i = 0; i < listLength; ++i) {
-        result.push(mapSchema(schema.items.items, loop));
+        if (schema.items && schema.items.items) {
+          result.push(mapSchema(schema.items.items, loop));
+        } else {
+          result.push(loop(schema.items, 1));
+        }
       }
       break;
     case 'number':
