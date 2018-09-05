@@ -5,6 +5,13 @@ import builder from 'canner-script';
 const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="posts" uiParams={{
   columns: attributes.columns
 }}>
+  <toolbar>
+    <actions filterButton/>
+    <filter>
+      <textFilter label="Title" field="title" />
+    </filter>
+    <pagination />
+  </toolbar>
   <string keyName="title" title="title" />
   <array keyName="notes" title="Notes">
     <string keyName="text" title="Text" />
