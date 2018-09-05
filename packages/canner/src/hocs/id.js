@@ -4,12 +4,10 @@ import * as React from 'react';
 import RefId from 'canner-ref-id';
 import {createEmptyData} from 'canner-helpers';
 import {get, update, mapValues} from 'lodash';
-import {Spin, Icon} from 'antd';
+import {List} from 'react-content-loader';
 
 import type {HOCProps, Args} from './types';
 import type {Query} from '../query';
-
-const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
 
 type State = {
   canRender: boolean,
@@ -75,15 +73,21 @@ export default function connectId(Com: React.ComponentType<*>) {
         this.setState({
           refId: new RefId(`${keyName}/0`)
         });
-        this.fetchById(routes[1]);
+        this.fetchById(routes[1], 400);
       }
 
       if (pattern === 'array' && routes.length === 1 && this.args && this.props.routes.length > 1) {
         // posts/<postId> => posts
         this.setState({
-          refId: new RefId(`${keyName}`)
+          refId: new RefId(`${keyName}`),
+          canRender: false
         });
-        updateQuery([keyName], this.args);
+        updateQuery([keyName], this.args)
+          .then(() => {
+            this.setState({
+              canRender: true
+            });
+          });
         delete this.args;
       }
     }
@@ -106,7 +110,7 @@ export default function connectId(Com: React.ComponentType<*>) {
       }
     }
 
-    fetchById = (id: string) => {
+    fetchById = (id: string, timeIntervale?: number) => {
       const {query, keyName, updateQuery} = this.props;
       const paths = [keyName];
       const queries = query.getQueries(paths).args || {pagination: {first: 10}};
@@ -117,11 +121,16 @@ export default function connectId(Com: React.ComponentType<*>) {
         ...this.args,
         where: {id: id},
       });
+      this.setState({
+        canRender: false
+      })
       fetch(keyName)
         .then(() => {
-          this.setState({
-            canRender: true
-          });
+          setTimeout(() => {
+            this.setState({
+              canRender: true
+            });
+          }, timeIntervale || 0)
         });
     }
 
@@ -150,7 +159,7 @@ export default function connectId(Com: React.ComponentType<*>) {
 
     render() {
       let {canRender, refId} = this.state;
-      if (!canRender) return <Spin indicator={antIcon} />;
+      if (!canRender) return <List style={{maxWidth: 600}}/>;
       return <Com {...this.props}
         refId={refId}
       />
