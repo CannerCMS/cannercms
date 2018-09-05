@@ -5,6 +5,7 @@ import NumberFilter from './number';
 import TextFilter from './text';
 import styled from 'styled-components';
 import {Icon} from 'antd';
+import debounce from 'lodash/debounce';
 // import DateRangeFilter from './dateRange';
 import isEmpty from 'lodash/isEmpty';
 // import {FormattedMessage} from 'react-intl';
@@ -16,9 +17,9 @@ type Props = {
   deleteFilter: number => void,
   displayedFilters: Array<number>,
   filters: Array<{
-    field?: string,
+    field: string,
     type: string,
-    options?: Array<{
+    options: Array<{
       text: string,
       condition: Object,
     }>,
@@ -83,23 +84,43 @@ export default class FilterGroup extends React.Component<Props, State> {
     }
   }
 
+  deleteFilter = (index: number) => {
+    const {deleteFilter, filters} = this.props;
+    const filter = filters[index];
+    if (filter.type === 'select') {
+      const allField = filter.options.reduce((result: Object, option: Object) => {
+        Object.keys(option.condition).forEach(key => {
+          if (!(key in result)) {
+            result[key] = undefined;
+          }
+        });
+        return result;
+      }, {});
+      this.onChange(allField);
+    } else {
+      this.onChange({[filter.field]: undefined});
+    }
+    deleteFilter(index);
+  }
+
   render() {
-    const {filters = [], displayedFilters, where, deleteFilter} = this.props;
+    const {filters = [], displayedFilters, where} = this.props;
     if (!filters || !filters.length) {
       return null;
     }
+    const debounceChange = debounce(this.onChange, 500);
     const renderFilter = (filter) => {
       switch (filter.type) {
         case 'select':
-          return <SelectFilter onChange={this.onChange} options={filter.options} where={where}/>;
+          return <SelectFilter onChange={debounceChange} options={filter.options} where={where}/>;
         case 'number':
-          return <NumberFilter onChange={this.onChange} name={filter.field} where={where}/>;
+          return <NumberFilter onChange={debounceChange} name={filter.field} where={where}/>;
         /*
         case 'dateRange':
-          return <DateRangeFilter onChange={this.onChange} schema={{[filter.field]: filter}}/>
+          return <DateRangeFilter onChange={debounceChange} schema={{[filter.field]: filter}}/>
         */
         case 'text':
-          return <TextFilter onChange={this.onChange} name={filter.field} where={where}/>;
+          return <TextFilter onChange={debounceChange} name={filter.field} where={where}/>;
         default:
           return null;
       }
@@ -111,7 +132,7 @@ export default class FilterGroup extends React.Component<Props, State> {
             <FilterWrapper key={index}>
               <h5>{filters[index].label}</h5>
               {renderFilter(filters[index])}
-              <Icon type="close-circle-o" onClick={() => deleteFilter(index)} />
+              <Icon type="close-circle-o" onClick={() => this.deleteFilter(index)} />
             </FilterWrapper>
             
           ))
