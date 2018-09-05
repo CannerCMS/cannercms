@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Select, Icon} from 'antd';
 const Option = Select.Option;
 import styled from 'styled-components';
+import {FormattedMessage} from 'react-intl';
 
 const Selector = styled(Select)`
   width: 150px;
@@ -78,7 +79,9 @@ export default class Sort extends Component<Props, State> {
     const {key, order} = this.state;
     return (
       <div style={{display: 'flex'}}>
-        <Selector onChange={this.onChange} value={key} defaultValue={defaultField} allowClear>
+        <Selector onChange={this.onChange} value={key} defaultValue={defaultField} allowClear
+            placeholder={<FormattedMessage id="query.sort.placeholder"/>}
+        >
           {(sort || []).map((cond, i) => <Option key={i} value={cond.field}>{cond.label}</Option>)}
         </Selector>
         <OrderSwitch onClick={this.changeOrder}>
