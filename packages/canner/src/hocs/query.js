@@ -56,32 +56,26 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     subscribe = () => {
-      const {subscribe, refId} = this.props;
-      const subscription = subscribe(this.key, (newOriginRootValue) => {
-        // const {originRootValue} = this.state
-        // if (shouldUpdate(originRootValue, newOriginRootValue)) {
-          this.setState({
-            originRootValue: newOriginRootValue,
-            rootValue: parseConnectionToNormal(newOriginRootValue),
-            value: getValue(newOriginRootValue, refId.getPathArr()),
-          });
-        // }
-      });
+      const {subscribe} = this.props;
+      const subscription = subscribe(this.key, this.updateData);
       this.subscription = subscription;
     }
 
     queryData = (props?: HOCProps): Promise<*> => {
-      const {refId, fetch} = props || this.props;
+      const {fetch} = props || this.props;
       this.setState({
         isFetching: true
       });
-      return fetch(this.key).then(data => {
-        this.setState({
-          originRootValue: data,
-          rootValue: parseConnectionToNormal(data),
-          value: getValue(data, refId.getPathArr()),
-          isFetching: false
-        });
+      return fetch(this.key).then(this.updateData);
+    }
+
+    updateData = (data: Object) => {
+      const {refId} = this.props;
+      this.setState({
+        originRootValue: data,
+        rootValue: parseConnectionToNormal(data),
+        value: getValue(data, refId.getPathArr()),
+        isFetching: false
       });
     }
 

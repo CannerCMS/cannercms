@@ -2,9 +2,13 @@
 
 exports[`toolbar method should render 1`] = `
 <ToolbarLayout
+  Actions={<div />}
   Filter={
-    <Styled(FilterGroup)
+    <FilterGroup
+      async={true}
       changeFilter={[Function]}
+      deleteFilter={[Function]}
+      displayedFilters={Array []}
       items={
         Object {
           "like": Object {
@@ -23,34 +27,39 @@ exports[`toolbar method should render 1`] = `
   }
   Pagination={
     <PaginationPlugin
+      async={true}
+      changePage={[Function]}
       changeSize={[Function]}
+      current={1}
       hasNextPage={true}
       hasPreviousPage={true}
       nextPage={[Function]}
       prevPage={[Function]}
+      total={0}
     />
   }
-  Sort={
-    <Sort
-      changeOrder={[Function]}
-      items={
-        Object {
-          "like": Object {
-            "type": "number",
-          },
-          "share": Object {
-            "type": "number",
-          },
-          "title": Object {
-            "type": "string",
-          },
-        }
-      }
-      orderField={null}
-      orderType="ASC"
-    />
-  }
+  Sort={null}
 >
-  <div />
+  <div
+    rootValue={
+      Object {
+        "posts": Array [
+          Object {
+            "id": "0",
+            "title": "posts1",
+          },
+        ],
+      }
+    }
+    showPagination={false}
+    value={
+      Array [
+        Object {
+          "id": "0",
+          "title": "posts1",
+        },
+      ]
+    }
+  />
 </ToolbarLayout>
 `;
