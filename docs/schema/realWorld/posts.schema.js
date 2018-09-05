@@ -22,9 +22,6 @@ const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="po
     ui="singleSelect"
     required
   >
-    <toolbar>
-      <pagination />
-    </toolbar>
   </relation>
 </array>
 

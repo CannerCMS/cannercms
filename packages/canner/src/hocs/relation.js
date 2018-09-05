@@ -3,10 +3,10 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import RefId from 'canner-ref-id';
-import Toolbar, { parseWhere } from './components/toolbar';
+import Toolbar from './components/toolbar';
 import {mapValues} from 'lodash';
 import type {HOCProps} from './types';
-import {parseConnectionToNormal, getValue, defaultValue, filterByWhere, paginate} from './utils';
+import {parseConnectionToNormal, getValue, defaultValue} from './utils';
 import {withApollo} from 'react-apollo';
 import gql from 'graphql-tag';
 import {Query} from '../query';
@@ -48,6 +48,12 @@ export default function withQuery(Com: React.ComponentType<*>) {
       let args = this.getArgs();
       if (toolbar && toolbar.async) {
         args = {...args, first: 10}
+      }
+      if (!toolbar || !toolbar.async) {
+        args.first = 9999;
+        delete args.last;
+        delete args.after;
+        delete args.before;
       }
       if (toolbar && toolbar.filter && toolbar.filter.permanentFilter) {
         args = {...args, where: toolbar.filter.permanentFilter};       
@@ -107,7 +113,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     render() {
-      let {originRootValue, isFetching, current} = this.state;
+      let {originRootValue, isFetching} = this.state;
       const {toolbar, relation, schema, refId} = this.props;
       if (!relation) {
         return <Com {...this.props}/>;
