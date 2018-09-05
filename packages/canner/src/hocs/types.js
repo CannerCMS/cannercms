@@ -38,6 +38,12 @@ export type Toolbar = {
     component?: React.ComponentType<*>,
     [string]: *
   },
+  actions?: {
+    component?: React.ComponentType<*>,
+    filterButton: ?boolean,
+    importButton: ?boolean,
+    exportButton: ?boolean,
+  },
   async: boolean
 };
 
