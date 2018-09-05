@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Input} from 'antd';
 import get from 'lodash/get';
+import set from 'lodash/set';
 
 export default class TextFilter extends Component {
   static propTypes = {
@@ -16,11 +17,7 @@ export default class TextFilter extends Component {
     if (!value) {
       onChange();
     } else {
-      onChange({
-        [name]: {
-          eq: value
-        }
-      });
+      onChange(set({}, `${name}.eq`,  value));
     }
   }
 
@@ -31,7 +28,7 @@ export default class TextFilter extends Component {
         style={{width: 140}}
         placeholder={label}
         onChange={this.onInput}
-        defaultValue={get(where, [name, 'eq'], '')}
+        defaultValue={get(where, `${name}.eq`, '')}
       />
     );
   }

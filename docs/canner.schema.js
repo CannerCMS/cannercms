@@ -50,6 +50,9 @@ const postColumns = [{
   title: 'User',
   dataIndex: 'author.name',
   sorter: (a, b) => a.author.name > b.author.name
+}, {
+  title: 'Clicks',
+  dataIndex: 'clicks'
 }];
 
 export default <root connector={connector}>
