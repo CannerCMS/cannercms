@@ -1,6 +1,7 @@
 // @flow
 import React, {Component} from 'react';
 import {Button, Icon, Dropdown, Menu} from 'antd';
+import {FormattedMessage} from 'react-intl';
 
 type Props = {
   exportButton: boolean,
@@ -43,13 +44,15 @@ export default class Sort extends Component<Props, State> {
       <Button.Group>
         {exportButton && (
           <Button>
-            <Icon type="download" />Export
+            <Icon type="download" />
+            <FormattedMessage id="query.actions.export"/>
           </Button>
         )}
         {
           importButton && (
             <Button>
-              <Icon type="upload" />Import
+              <Icon type="upload" />
+              <FormattedMessage id="query.actions.import"/>
             </Button>
           )
         }
@@ -57,7 +60,8 @@ export default class Sort extends Component<Props, State> {
           filterButton && (
             <Dropdown overlay={menu}>
               <Button>
-                <Icon type="filter" /> Add Filter
+                <Icon type="filter" />
+                <FormattedMessage id="query.actions.filter"/>
               </Button>
             </Dropdown>
           )
