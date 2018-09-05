@@ -52,6 +52,35 @@ const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="po
     ui="singleSelect"
     required
   >
+    <toolbar>
+      <actions filterButton importButton exportButton />
+      <pagination />
+      <sorter
+        sort={[{
+          field: 'age',
+          label: 'Age'
+        }]}
+        defaultField="age"
+      />
+      <filter>
+        <textFilter label="Name" field="name"/>
+        <numberFilter label="Age" field="age"/>
+        <selectFilter label="Status" options={[{
+          text: 'Draft',
+          condition: {
+            status: {
+              draft: {
+                eq: true
+              }
+            }
+          }
+        }, {
+          text: 'All',
+          condition: {
+          }
+        }]}/>
+      </filter>
+    </toolbar>
   </relation>
 </array>
 
