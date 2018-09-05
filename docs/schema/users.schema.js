@@ -1,11 +1,37 @@
 /** @jsx builder */
 
 import builder from 'canner-script';
+import {renderImages, renderPosts} from '../utils';
 
-const Users = ({attributes}) => (
+const userColumns = [{
+  title: 'Name',
+  dataIndex: 'name'
+}, {
+  title: 'Email',
+  dataIndex: 'email',
+}, {
+  title: 'Age',
+  dataIndex: 'age'
+}, {
+  title: 'Login',
+  dataIndex: 'isLogin'
+}, {
+  title: 'Images',
+  dataIndex: 'images',
+  render: renderImages
+}, {
+  title: 'Hobbies',
+  dataIndex: 'hobbies'
+}, {
+  title: 'Posts',
+  dataIndex: 'posts',
+  render: renderPosts
+}];
+
+const Users = () => (
   <array keyName="users" title="users"
     ui="table" uiParams={{
-      columns: attributes.columns
+      columns: userColumns
     }}
   >
     <toolbar async>

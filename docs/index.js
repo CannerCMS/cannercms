@@ -7,7 +7,6 @@ import Canner from 'packages/canner/src';
 import Container, {transformSchemaToMenuConfig} from 'packages/canner-container/src';
 import R from 'packages/history-router/src';
 import schema from './canner.schema';
-import Graphql from './components/graphql';
 import styled from 'styled-components';
 // eslint-disable-next-line
 export const Logo = styled.img`
@@ -72,7 +71,6 @@ class CMSExample extends React.Component {
               </Container>
             );
           }}/>
-          <Route path="/graphql" component={Graphql}/>
         </div>
       </Router>
     );

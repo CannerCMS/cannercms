@@ -2,8 +2,21 @@
 
 import builder from 'canner-script';
 
-const Posts = ({attributes}) => <array keyName="posts" ui="tableRoute" title="posts" uiParams={{
-  columns: attributes.columns
+const postColumns = [{
+  title: 'Title',
+  dataIndex: 'title',
+  sorter: (a, b) => a.title > b.title
+}, {
+  title: 'User',
+  dataIndex: 'author.name',
+  sorter: (a, b) => a.author.name > b.author.name
+}, {
+  title: 'Clicks',
+  dataIndex: 'clicks'
+}];
+
+const Posts = () => <array keyName="posts" ui="tableRoute" title="posts" uiParams={{
+  columns: postColumns
 }}>
   <toolbar>
     <actions filterButton importButton exportButton />
