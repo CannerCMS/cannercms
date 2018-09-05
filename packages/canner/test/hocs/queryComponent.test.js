@@ -1,4 +1,5 @@
 import Toolbar, {parseOrder, parsePagination, parseWhere} from '../../src/hocs/components/toolbar';
+import {getValue, parseConnectionToNormal, defaultValue} from '../../src/hocs/utils';
 import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
@@ -102,7 +103,7 @@ describe('parse where', () => {
 });
 
 describe('toolbar method', () => {
-  let props, query, refId, items, value, toolbar, updateQuery;
+  let props, query, refId, items, originRootValue, toolbar, updateQuery;
 
   beforeEach(() => {
     const schema = {
@@ -129,21 +130,24 @@ describe('toolbar method', () => {
     });
     updateQuery = jest.fn();
     refId = new RefId('posts');
-    value = {
-      edges: [{
-        cursor: "0",
-        node: {
-          id: "0",
-          title: "posts1"
+    originRootValue = {
+      posts: {
+        edges: [{
+          cursor: "0",
+          node: {
+            id: "0",
+            title: "posts1"
+          }
+        }],
+        pageInfo: {
+          hasNextPage: true,
+          hasPreviousPage: true,
         }
-      }],
-      pageInfo: {
-        hasNextPage: true,
-        hasPreviousPage: true,
       }
     };
     items = schema.posts.items.items;
     toolbar = {
+      async: true,
       sort: {},
       pagination: {},
       filter: {}
@@ -152,9 +156,13 @@ describe('toolbar method', () => {
       items,
       refId,
       query,
-      value,
+      originRootValue,
       toolbar,
       updateQuery,
+      getValue,
+      keyName: 'posts',
+      parseConnectionToNormal,
+      defaultValue,
       args: mapValues(query.getQueries(refId.getPathArr()).args, v => query.getVairables()[v]),
     };
   });
@@ -229,19 +237,20 @@ describe('toolbar method', () => {
     });
   });
 
-  it('should changeSize', () => {
-    const wrapper = shallow(<Toolbar {...props}>
-      <div></div>
-    </Toolbar>);
-    wrapper.instance().changeSize(20);
-    expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
-    expect(updateQuery.mock.calls[0][1]).toEqual({
-      orderBy: undefined,
-      first: undefined,
-      after: undefined,
-      before: "0",
-      last: 20,
-      where: undefined
-    });
-  });
+  // not suport for now
+  // it('should changeSize', () => {
+  //   const wrapper = shallow(<Toolbar {...props}>
+  //     <div></div>
+  //   </Toolbar>);
+  //   wrapper.instance().changeSize(20);
+  //   expect(updateQuery.mock.calls[0][0]).toEqual(['posts']);
+  //   expect(updateQuery.mock.calls[0][1]).toEqual({
+  //     orderBy: undefined,
+  //     first: undefined,
+  //     after: undefined,
+  //     before: "0",
+  //     last: 20,
+  //     where: undefined
+  //   });
+  // });
 });
