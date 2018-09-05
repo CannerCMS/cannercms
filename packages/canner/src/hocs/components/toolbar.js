@@ -243,14 +243,14 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const rootValue = parseConnectionToNormal(originRootValue);
     const value = getValue(originRootValue, refId.getPathArr());
     return <ToolbarLayout
-      Actions={actions ? <ActionsComponent
+      Actions={actions && toolbar.async ? <ActionsComponent
         {...actions}
         async={toolbar.async}
         filters={filter && filter.filters || []}
         displayedFilters={displayedFilterIndexs}
         addFilter={this.addFilter}
       /> : <div />}
-      Sort={sorter ? <SortComponent
+      Sort={sorter && toolbar.async ? <SortComponent
         {...sorter}
         async={toolbar.async}
         defaultField={sorter.defaultField}
@@ -273,7 +273,7 @@ export default class Toolbar extends React.PureComponent<Props, State> {
         changePage={this.changePage}
         total={total}
       /> : null}
-      Filter={filter ? <FilterComponent
+      Filter={filter && toolbar.async ? <FilterComponent
         async={toolbar.async}
         {...filter}
         displayedFilters={displayedFilterIndexs}
