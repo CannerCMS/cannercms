@@ -83,10 +83,10 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
 }), (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"withCannerConfigInPackageJson\\",
   ui: \\"table\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-table\\",
+  \\"packageName\\": \\"/Users/siou/projects/antd-cms-components/packages/antd-array-table\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-table\\"));
+      resolve(require(\\"/Users/siou/projects/antd-cms-components/packages/antd-array-table\\"));
     });
   }),
   \\"builder\\": null,
@@ -102,10 +102,10 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
       dataIndex: 'name'
     }]
   },
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-table\\",
+  \\"packageName\\": \\"/Users/siou/projects/antd-cms-components/packages/antd-array-table\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-table\\"));
+      resolve(require(\\"/Users/siou/projects/antd-cms-components/packages/antd-array-table\\"));
     });
   }),
   \\"builder\\": null,
@@ -114,10 +114,10 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
   \\"type\\": \\"array\\"
 }, (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"nested\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-table\\",
+  \\"packageName\\": \\"/Users/siou/projects/antd-cms-components/packages/antd-array-table\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-table\\"));
+      resolve(require(\\"/Users/siou/projects/antd-cms-components/packages/antd-array-table\\"));
     });
   }),
   \\"builder\\": null,
