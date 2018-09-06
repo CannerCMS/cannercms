@@ -82,6 +82,7 @@ export const componentMap = {
     },
     enum: {
       select: '@canner/antd-string-select',
+      radio: '@canner/antd-string-radio',
       default: '@canner/antd-string-select'
     }
   },
