@@ -8,6 +8,7 @@ export type CannerSchema = {
 
 export type LoadedSchema = {
   schema: CannerSchema,
+  pageSchema: CannerSchema,
   sidebar: Sidebar,
   visitors: Array<Object>,
   client: ApolloClient,
@@ -63,7 +64,6 @@ export type CMSProps = {
 
 export type GeneratorProps = {
   componentTree: ComponentTree,
-  hocs: Array<{[string]: React.ComponentType<*>}>,
   layouts: {[string]: React.ComponentType<*>},
   storages: Object,
 

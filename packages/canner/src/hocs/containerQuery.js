@@ -77,17 +77,8 @@ export default function withContainerRouter(Com: React.ComponentType<*>) {
     }
 
     render() {
-      const {routes, renderChildren, refId} = this.props;
       const {value, recordValue} = this.state;
-      return <Context.Provider
-        value={{
-          renderChildren,
-          routes,
-          refId
-        }}
-      >
-        <Com {...this.props} value={value} recordValue={recordValue}/>
-      </Context.Provider>;
+      return <Com {...this.props} value={value} recordValue={recordValue}/>;
     }
   };
 }

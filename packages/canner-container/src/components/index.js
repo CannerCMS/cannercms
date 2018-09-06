@@ -16,13 +16,15 @@ type State = {
 class CannerContainer extends React.Component<CannerContainerProps, State> {
   cannerRef: React.ElementRef<any>;
   menuConfig: MenuConfig | boolean;
+  mergedSchema: Object;
 
   constructor(props: CannerContainerProps) {
     super(props);
     const {sidebarConfig, schema} = props;
+    this.mergedSchema = {...schema.pageSchema, ...schema.schema};
 
     if (sidebarConfig.menuConfig === true) {
-      this.menuConfig = transformSchemaToMenuConfig(schema.schema);
+      this.menuConfig = transformSchemaToMenuConfig(this.mergedSchema);
     } else {
       this.menuConfig = sidebarConfig.menuConfig;
     }
@@ -78,14 +80,15 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
           WebkitBoxDirection: 'normal',
           WebkitFlexDirection: 'row',
           MsFlexDirection: 'row',
-          flexDirection: 'row'
+          flexDirection: 'row',
+          minHeight: '100vh'
         }}>
           <Sidebar
             dataChanged={dataChanged}
             goTo={router.goTo}
             reset={this.cannerRef.current && this.cannerRef.current.reset}
             routes={routes}
-            schema={schema.schema}
+            schema={this.mergedSchema}
             {...sidebarConfig}
             menuConfig={this.menuConfig}
           />

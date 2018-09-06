@@ -72,6 +72,9 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
       },
       'component.array': {
         exit: visitor
+      },
+      'page.page': {
+        exit: visitor
       }
       // [`component.${lastChild.type}`]: {
       //   exit: path => {

@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
-import hocs from '../hocs';
 import {notification} from 'antd';
 import {createEmptyData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
@@ -52,8 +51,12 @@ class CannerCMS extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const {schema, visitors} = props.schema;
-    this.componentTree = compile(schema, visitors);
+    const {schema, visitors, pageSchema} = props.schema;
+    const mergedSchema = {
+      ...pageSchema,
+      ...schema
+    }
+    this.componentTree = compile(mergedSchema, visitors);
     this.schema = Object.keys(schema).reduce((result: any, key: string) => {
       let v = {...schema[key]};
       if (v.type === 'array') {
@@ -132,7 +135,6 @@ class CannerCMS extends React.Component<Props, State> {
             storages={storages}
             schema={this.schema}
             componentTree={this.componentTree || {}}
-            hocs={hocs}
             goTo={goTo}
             baseUrl={baseUrl}
             routes={routes}

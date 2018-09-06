@@ -80,7 +80,8 @@ export const componentMap = {
       bar: '@canner/vega-chart-bar',
       pie: '@canner/vega-chart-pie',
       scatter: '@canner/vega-chart-scatter',
-      default: '@canner/vega-chart-line'
+      vega: '@canner/vega-chart-default',
+      default: '@canner/vega-chart-default',
     },
     indicator: {
       list: '@canner/antd-indicator-list',
@@ -190,4 +191,11 @@ export function getIntlMessage(attributes: Object, key: string) {
     />;
   }
   return value;
+}
+
+export function genStorages(attrs: Object, children: Array<*>) {
+  return children.reduce((result: Object, child: Object): Object => {
+    result[child.keyName] = child.storage ||attrs.storage || {};
+    return result;
+  }, {});
 }

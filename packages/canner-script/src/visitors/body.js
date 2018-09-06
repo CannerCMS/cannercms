@@ -48,7 +48,22 @@ const objectBody = {
     },
   },
 };
-
+const pageBody = {
+  'page.page': {
+    exit: function(path: Path) {
+      const routeMap = genRouteMap('', path.node);
+      const componentInBody = {
+        nodeType: 'layout.body',
+        ui: "body",
+        children: [path.node],
+        routeMap,
+      };
+      // remove title description to body container
+      path.node.hideTitle = true;
+      path.tree.setNode(path.route, componentInBody);
+    },
+  },
+};
 type RouteMap = {
   [route: string]: {
     title: string,
@@ -84,4 +99,4 @@ function genRouteMap(currentRoute: string, node: Node): RouteMap {
   return routeMap;
 }
 
-export default [arrayBody, objectBody];
+export default [arrayBody, objectBody, pageBody];

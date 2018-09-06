@@ -6,11 +6,12 @@ import request from './request';
 import deploy from './deploy';
 import id from './id';
 import title from './title';
-import containerRouter from './containerRouter';
+import containerQuery from './containerQuery';
 import onDeploy from './onDeploy';
 import context from './connectContext';
 import errorCatch from './errorCatch';
 import validation from './validation';
+import graphqlQuery from './graphqlQuery';
 
 export default {
   errorCatch,
@@ -23,8 +24,9 @@ export default {
   // validator,
   id,
   title,
-  containerRouter,
+  containerQuery,
   onDeploy,
   context,
-  validation
+  validation,
+  graphqlQuery
 };

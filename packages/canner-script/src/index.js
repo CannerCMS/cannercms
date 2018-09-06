@@ -23,9 +23,7 @@ import {createLayoutVisitor, CANNER_KEY} from './layout';
 import visitorManager from './visitorManager';
 import validator from './validator';
 import configuration from './configure';
-import {parseConnector, parseConnectors, parseGraphqlClient,
-  parseGraphqlClients, parseResolvers, getIntlMessage
-} from './utils';
+import {getIntlMessage} from './utils';
 
 // layout
 export const Layout = 'Layout';
@@ -85,37 +83,8 @@ export default function builder(tag: string | Function, attributes: Object, ...c
       return new createJSON(EnumModel, [attributes, children]);
     case 'page':
       return new PageModel(attributes, children).toJson();
-    case 'root': {
-      const schema = new RootModel(attributes, children).toJson();
-      const schemaKeys = Object.keys(schema);
-      // $FlowFixMe
-      const pageSchema = (schemaKeys.length > 0  && schema[schemaKeys[0]].type === 'page') ? schema[schemaKeys[0]] : {};
-      const renderView = {
-        dict: attributes.dict || {},
-        schema: schema,
-        pageSchema: pageSchema,
-        visitors: visitorManager.getAllVisitors(),
-        storages: genStorages(attributes, children),
-        connector: parseConnector(attributes, children) || parseConnectors(attributes, children),
-        resolvers: parseResolvers(attributes, children),
-        graphqlClient: parseGraphqlClient(attributes, children) || parseGraphqlClients(attributes, children)
-      };
-      if (typeof window === 'undefined') { 
-        // support SSR
-        return renderView;
-      } else if (window && !window.document) {
-        // CLI node env
-        return {
-          entry: children.map(child => child.keyName),
-          storages: genStorages(attributes, children),
-          resolvers: parseResolvers(attributes, children),
-          connector: parseConnector(attributes, children) || parseConnectors(attributes, children),
-          graphqlClient: parseGraphqlClient(attributes, children) || parseGraphqlClients(attributes, children)
-        };
-      } else {
-        return renderView;
-      }
-    }
+    case 'root':
+      return new RootModel(attributes, children).toJson();
     case 'toolbar': {
       return children.reduce((result, child) => {
         result[child.type] = {
@@ -203,11 +172,4 @@ function createJSON(Model: any, args: Array<*>) {
   let json = new Model(...args).toJson();
   validator.validate(json);
   return json;
-}
-
-function genStorages(attrs: Object, children: Array<*>) {
-  return children.reduce((result: Object, child: Object): Object => {
-    result[child.keyName] = child.storage ||attrs.storage || {};
-    return result;
-  }, {});
 }

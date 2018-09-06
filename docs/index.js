@@ -14,7 +14,8 @@ export const Logo = styled.img`
   padding: 20px;
   margin-left: -20px;
   width: 200px;
-`
+`;
+
 class CMSExample extends React.Component {
   constructor(props) {
     super(props);
@@ -41,7 +42,7 @@ class CMSExample extends React.Component {
                       },
                       icon: 'left'
                     },
-                    ...transformSchemaToMenuConfig(schema.schema)
+                    ...transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema})
                   ]
                 }}
                 navbarConfig={{

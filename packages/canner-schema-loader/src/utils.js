@@ -73,7 +73,8 @@ export const componentMap = {
       bar: '@canner/vega-chart-bar',
       pie: '@canner/vega-chart-pie',
       scatter: '@canner/vega-chart-scatter',
-      default: '@canner/vega-chart-line'
+      vega: '@canner/vega-chart-default',
+      default: '@canner/vega-chart-default',
     },
     indicator: {
       list: '@canner/antd-indicator-list',

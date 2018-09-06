@@ -5,8 +5,9 @@ import type {CannerSchema} from '../flow-types';
 export default class PageModel {
   items: CannerSchema | {[string]: CannerSchema};
   keyName: string;
+  title: string;
 
-  constructor({ keyName }: {keyName: string}, children: Array<CannerSchema>) {
+  constructor({ keyName, title }: {keyName: string, title: string}, children: Array<CannerSchema>) {
     if (!keyName) {
       throw new Error('The keyName of <page /> is required');
     }
@@ -20,13 +21,15 @@ export default class PageModel {
         return result;
       }, {});
     }
+    this.title = title;
   }
 
   toJson() {
     return {
       keyName: this.keyName,
       type: 'page',
-      items: this.items
+      items: this.items,
+      title: this.title
     };
   }
 }

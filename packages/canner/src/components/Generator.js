@@ -13,12 +13,14 @@
 
 import * as React from 'react';
 import Loadable from 'react-loadable';
-import {Item} from 'canner-helpers';
 import get from 'lodash/get';
 import isUndefined from 'lodash/isUndefined';
 import mapValues from 'lodash/mapValues';
 import RefId from 'canner-ref-id';
 import Layouts from 'canner-layouts';
+import {Alert} from 'antd';
+import {Item, Context} from 'canner-helpers';
+import hocs from '../hocs';
 import type {GeneratorProps, ComponentTree, ComponentNode} from './types';
 
 function defaultHoc(Component) {
@@ -37,9 +39,22 @@ function isFieldset(node) {
   return node.packageName === '@canner/antd-object-fieldset';
 }
 
+function isPage(node) {
+  return node.nodeType && node.nodeType.startsWith('page');
+}
+
+function isPageRoot (node) {
+  return node.nodeType === 'page.page.default';
+}
+
 function Loading(props: any) {
   if (props.error) {
-    return <div>Error! <button onClick={ props.retry }>Retry</button></div>;
+    return <Alert
+      message="Something went wrong."
+      description={props.error}
+      type="error"
+      closable
+    />
   } else {
     return <div>Loading...</div>;
   }
@@ -106,8 +121,7 @@ export default class Generator extends React.PureComponent<Props, State> {
 
   static defaultProps = {
     componentTree: {},
-    layouts: {},
-    hocs: {}
+    layouts: {}
   }
 
   // wrap the plugin with hoc if it has
@@ -120,7 +134,7 @@ export default class Generator extends React.PureComponent<Props, State> {
         if (!copyNode.component) {
         copyNode.component = Layouts[copyNode.ui];
       }
-      component = this.wrapByHOC(copyNode.component, copyNode.hocs || ['containerRouter', 'context']);
+      component = this.wrapByHOC(copyNode.component, copyNode.ui === 'condition' ? ['containerQuery', 'context'] : ['context']);
     } else if (isComponent(copyNode)) {
 
       if (isFieldset(copyNode)) {
@@ -132,6 +146,16 @@ export default class Generator extends React.PureComponent<Props, State> {
         });
       }
       component = this.wrapByHOC(component, ['title', 'onDeploy', 'validation', 'deploy', 'request', 'relation', 'query', 'cache', 'route', 'id', 'context', 'errorCatch']);
+    } else if (isPage(copyNode)) {
+      if (isPageRoot(copyNode)) {
+        component = () => this.renderChildren(copyNode, {refId: new RefId(copyNode.keyName)});
+      } else {
+        component = Loadable({
+          loader: () => copyNode.loader || Promise.reject(`There is no loader in ${copyNode.path}`),
+          loading: Loading,
+        });
+        component = this.wrapByHOC(component, ['graphqlQuery']);
+      }
     }
 
     if (!component) {
@@ -150,7 +174,6 @@ export default class Generator extends React.PureComponent<Props, State> {
 
   wrapByHOC = (component: React.ComponentType<*>, hocNames: Array<string>): React.ComponentType<*> => {
     // find hocs and wrap the component
-    const {hocs} = this.props;
     while (hocNames.length) {
       const hocName = hocNames.shift();
       const hoc = get(hocs, hocName, defaultHoc);
@@ -169,26 +192,35 @@ export default class Generator extends React.PureComponent<Props, State> {
 
     const {component, ...restNodeData} = node;
     const {routerParams = {}, goTo, routes, storages, onDeploy, removeOnDeploy, hideButtons, schema} = this.props;
+    const renderChildren = props => this.renderChildren(node, props);
     if (node.hidden || props.hidden) {
       return null;
     }
 
     if (component) {
-      return <node.component
-        hideButtons={hideButtons}
-        {...restNodeData}
-        routes={routes}
-        key={index}
-        imageServiceConfig={(storages || {})[routes[0]]}
-        renderChildren={(props) => this.renderChildren(node, props)}
-        renderComponent={this.renderComponent}
-        routerParams={routerParams}
-        onDeploy={onDeploy}
-        removeOnDeploy={removeOnDeploy}
-        schema={schema}
-        goTo={goTo}
-        {...props}
-      />;
+      return <Context.Provider
+        value={{
+          renderChildren,
+          routes,
+          refId: props.refId
+        }}
+      >
+        <node.component
+          hideButtons={hideButtons}
+          {...restNodeData}
+          routes={routes}
+          key={index}
+          imageServiceConfig={(storages || {})[routes[0]]}
+          renderChildren={(props) => this.renderChildren(node, props)}
+          renderComponent={this.renderComponent}
+          routerParams={routerParams}
+          onDeploy={onDeploy}
+          removeOnDeploy={removeOnDeploy}
+          schema={schema}
+          goTo={goTo}
+          {...props}
+        />
+      </Context.Provider>;
     }
     return null;
   }
