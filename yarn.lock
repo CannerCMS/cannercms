@@ -979,7 +979,7 @@
 
 "@canner/antd-object-variants@^0.4.0-beta.27":
   version "0.4.0-beta.26"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-variants/-/antd-object-variants-0.4.0-beta.26.tgz#242671293d193574890eaf251eea849f6a6a7816"
+  resolved "https://registry.npmjs.org/@canner/antd-object-variants/-/antd-object-variants-0.4.0-beta.26.tgz#242671293d193574890eaf251eea849f6a6a7816"
   dependencies:
     styled-components "^3.2.6"
 
