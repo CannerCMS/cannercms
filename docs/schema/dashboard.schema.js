@@ -1,11 +1,31 @@
 /** @jsx builder */
 
-import builder, {Block, Row, Col, Default} from 'canner-script';
+import builder, {Block, Col, Default} from 'canner-script';
 import {postDashboardUIParams, userDashboardUIParams} from '../utils';
 const dashboard = () => (
   <page keyName="dashboard" title="Dashboard">
     <Default style={{display: 'flex', justifyContent: 'space-around'}}>
-      <Col span={11}>
+      <Col span={7}>
+        <Block title="user-pie">
+          <chart ui="pie"
+            keyName="user-pie"
+            graphql={
+              `
+                query users {
+                  users(first: 10) {name age}
+                }
+              `
+            }
+            uiParams={{
+              field: 'age',
+              color: {
+                field: 'name'
+              }
+            }}
+          />
+        </Block>
+      </Col>
+      <Col span={7}>
         <Block title="posts">
           <indicator ui="list"
             keyName="posts"
@@ -20,7 +40,7 @@ const dashboard = () => (
           />
         </Block>
       </Col>
-      <Col span={11}>
+      <Col span={7}>
         <Block title="users">
           <indicator ui="list"
             keyName="users"
