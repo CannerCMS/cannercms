@@ -1,6 +1,6 @@
 {
   "name": "@canner/router",
-  "version": "1.5.0-canary.25",
+  "version": "1.5.0-canary.27",
   "description": "Provide a simple router for canner without using react-router",
   "main": "lib/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "author": "Canner",
   "license": "Apache-2.0",
   "dependencies": {
-    "@canner/history-router": "^1.5.0-canary.25"
+    "@canner/history-router": "^1.5.0-canary.27"
   },
   "peerDependencies": {
     "react": ">=16.3",
