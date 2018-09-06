@@ -3,7 +3,7 @@ import React from 'react';
 import {FirebaseClientService} from '@canner/image-service-config';
 import firebase from 'firebase';
 import {FirebaseRtdbClientConnector, PrismaClient} from 'packages/canner-graphql-interface';
-
+import {Avatar} from 'antd';
 
 firebase.initializeApp({
   apiKey: FIREBASE_API_KEY,
@@ -49,10 +49,40 @@ function renderPosts(values) {
   );
 }
 
+export const postDashboardUIParams = {
+  // eslint-disable-next-line
+  avatar: value => (
+    <Avatar
+      src={value.image && value.image.url}
+      style={{color: '#f56a00', backgroundColor: '#fde3cf'}}
+    >
+      {value.title}
+    </Avatar>
+  ),
+  title: value => value.title,
+  description: () => null,
+  content: () => null
+};
+
+export const userDashboardUIParams = {
+  // eslint-disable-next-line
+  avatar: value => (
+    <Avatar
+      style={{color: '#f56a00', backgroundColor: '#fde3cf'}}
+    >
+      {value.name}
+    </Avatar>
+  ),
+  title: value => value.name,
+  description: value => value.email,
+  content: () => null
+};
+
+
 export default {
   renderPosts,
   renderImages,
   storage,
   connector,
-  graphClient: new PrismaClient()
+  graphClient: new PrismaClient(),
 }
