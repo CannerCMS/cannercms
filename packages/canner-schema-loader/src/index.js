@@ -50,7 +50,11 @@ export default function loader(source) {
       if (typeNode.isStringLiteral() && propsNode.isObjectExpression()) {
         type = typeNode.node.value;
         const properties = getProperties(propsNode);
-        packageName = componentMap.get(type, properties.ui);
+        if ('packageName' in properties) {
+          packageName = properties.packageName;
+        } else {
+          packageName = componentMap.get(type, properties.ui);
+        }
         if (!packageName) {
           return;
         }

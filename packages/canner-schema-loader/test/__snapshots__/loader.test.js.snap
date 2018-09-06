@@ -136,13 +136,15 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
 }))), (0, _cannerScript.default)(\\"string\\", {
   keyName: \\"packageName\\",
   packageName: \\"./fake-string-component\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-string-input\\",
+  \\"packageName\\": \\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-string-input\\"));
+      resolve(require(\\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component\\"));
     });
   }),
-  \\"builder\\": null
+  \\"builder\\": require(\\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\").default ? require(\\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\").default : require(\\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\"),
+  \\"type\\": \\"string\\",
+  \\"cacheActions\\": true
 })));
 
 exports.default = _default;"
