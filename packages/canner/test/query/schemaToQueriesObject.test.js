@@ -33,6 +33,14 @@ describe('schema to queries object', () => {
                 to: 'users',
                 typename: 'User'
               }
+            },
+            images: {
+              keyName: 'images',
+              path: 'posts/images',
+              type: 'array',
+              items: {
+                type: 'image'
+              }
             }
           }
         }

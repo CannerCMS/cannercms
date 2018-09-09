@@ -11,8 +11,12 @@ Object {
       "id": "1",
       "images": Array [
         Object {
-          "id": "0",
+          "__typename": null,
+          "contentType": null,
+          "name": null,
+          "size": null,
           "url": "url",
+          Symbol(id): "User:1.images.0",
         },
       ],
       "name": "user1",

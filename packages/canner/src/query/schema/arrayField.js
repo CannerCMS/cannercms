@@ -54,13 +54,11 @@ export default class ArrayField implements Field {
   }
 
   forEach(visitor: Function) {
-    if (!this.schema ||
-      !this.schema.items ||
-      !this.schema.items.items
-    ) {
+    if (isCompositeType(this.schema.items.type)) {
+      const child = createField('', this.rootSchema, this.schema.items);
+      child.forEach(visitor);
       return;
     }
-
     forEach(this.schema.items.items, (item, key) => {
       const field = createField(key, this.rootSchema, this.schema.items.items[key]);
       visitor(field);

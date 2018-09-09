@@ -22,15 +22,38 @@ Object {
           "fields": Object {
             "email": null,
             "id": null,
-            "images": Object {},
+            "images": Object {
+              "fields": Object {
+                "contentType": null,
+                "name": null,
+                "size": null,
+                "url": null,
+              },
+            },
             "name": null,
             "variants": null,
           },
         },
         "id": null,
+        "images": Object {
+          "fields": Object {
+            "contentType": null,
+            "name": null,
+            "size": null,
+            "url": null,
+          },
+        },
         "staredPosts": Object {
           "fields": Object {
             "id": null,
+            "images": Object {
+              "fields": Object {
+                "contentType": null,
+                "name": null,
+                "size": null,
+                "url": null,
+              },
+            },
             "title": null,
           },
         },
@@ -55,11 +78,26 @@ Object {
       "fields": Object {
         "email": null,
         "id": null,
-        "images": Object {},
+        "images": Object {
+          "fields": Object {
+            "contentType": null,
+            "name": null,
+            "size": null,
+            "url": null,
+          },
+        },
         "name": null,
         "posts": Object {
           "fields": Object {
             "id": null,
+            "images": Object {
+              "fields": Object {
+                "contentType": null,
+                "name": null,
+                "size": null,
+                "url": null,
+              },
+            },
             "title": null,
           },
         },
