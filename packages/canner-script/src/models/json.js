@@ -16,7 +16,7 @@ export default class JsonModal extends BasicModel {
     
     if (typeof builder === 'function') {
       // $FlowFixMe
-      this.toJson = () => builder({attributes: {...attrs, builder: undefined}, children});
+      this.toJson = () => builder({attributes: {...attrs, builder: undefined, type: 'json'}, children});
       return this;
     }
     

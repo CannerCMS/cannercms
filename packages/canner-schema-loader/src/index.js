@@ -42,7 +42,7 @@ export default function loader(source) {
             t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)),
             t.objectProperty(t.stringLiteral('loader'), buildLoader(packageName)),
             t.objectProperty(t.stringLiteral('builder'), buildBuilder(packageName)),
-            ...builderCannerConfig(packageName)
+            ...builderCannerConfig(packageName, type)
           ])
         );
       }
@@ -62,7 +62,7 @@ export default function loader(source) {
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)));
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('loader'), buildLoader(packageName)));
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('builder'), buildBuilder(packageName)));
-        propsNode.node.properties = propsNode.node.properties.concat(builderCannerConfig(packageName));
+        propsNode.node.properties = propsNode.node.properties.concat(builderCannerConfig(packageName, type));
       }
     }
   });
@@ -125,7 +125,7 @@ function buildBuilder(packageName) {
   return builder;
 }
 
-function builderCannerConfig(packageName) {
+function builderCannerConfig(packageName, type) {
   let canner = {}, properties = [];
   try {
     canner = require(`${packageName}/package.json`).canner || {};
@@ -134,7 +134,9 @@ function builderCannerConfig(packageName) {
   }
   Object.keys(canner).forEach(key => {
     if (key === 'cannerDataType') {
-      properties.push(t.objectProperty(t.stringLiteral('type'), t.stringLiteral(canner[key])));
+      if (type !== 'json') { // the component of json type is same as object, but the type can't be changed
+        properties.push(t.objectProperty(t.stringLiteral('type'), t.stringLiteral(canner[key])));
+      }
     } else if (typeof canner[key] === 'string'){
       properties.push(t.objectProperty(t.stringLiteral(key), t.stringLiteral(canner[key])));
     } else if (typeof canner[key] === 'number'){
