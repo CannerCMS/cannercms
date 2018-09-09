@@ -3,7 +3,7 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import {createEmptyData} from 'canner-helpers';
-import {get, update, mapValues} from 'lodash';
+import {get, update, mapValues, merge} from 'lodash';
 import {List} from 'react-content-loader';
 
 import type {HOCProps, Args} from './types';
@@ -49,7 +49,7 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     UNSAFE_componentWillReceiveProps(props: HOCProps) {
-      const {routerParams: {operator}, pattern, items, keyName, routes, updateQuery} = props;
+      const {routerParams: {operator, payload}, pattern, items, keyName, routes, updateQuery} = props;
       if (operator === 'create' && this.props.routerParams.operator === 'update' && pattern ==='array') {
         // posts => posts?op=create
         let value = createEmptyData(items);
@@ -58,6 +58,9 @@ export default function connectId(Com: React.ComponentType<*>) {
         this.setState({
           canRender: false
         });
+        if (payload) {
+          value = merge(value, payload);
+        }
         this.createArray(keyName, value);
       }
 
@@ -99,6 +102,9 @@ export default function connectId(Com: React.ComponentType<*>) {
         let value = createEmptyData(items);
         update(value, 'id', id => id || randomId());
         update(value, '__typename', typename => typename || null);
+        if (routerParams.payload) {
+          value = merge(value, routerParams.payload);
+        }
         this.createArray(keyName, value);
       } else if (pattern === 'array' && routes.length > 1) {
         // posts/<postId>/title
