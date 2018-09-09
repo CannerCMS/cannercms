@@ -65,6 +65,18 @@ describe('schema to queries object', () => {
                 type: 'toMany',
                 to: 'posts'
               }
+            },
+            variants: {
+              path: 'users/variants',
+              type: 'json',
+              items: {
+                options: {
+                  type: 'array'
+                },
+                variants: {
+                  type: 'array'
+                }
+              }
             }
           }
         }

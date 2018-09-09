@@ -110,6 +110,7 @@ export function fieldToQueriesObject(field: any): any {
     case types.INT:
     case types.ID:
     case types.STRING:
+    case types.JSON:
     default:
       queriesObj = null;
       break;
