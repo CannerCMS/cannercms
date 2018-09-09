@@ -4,6 +4,7 @@ type ObjectSchema = {
   items: SchemaMap;
   type: 'object';
   ui: string;
+  __typename: string;
 }
 
 type ArraySchema = {
