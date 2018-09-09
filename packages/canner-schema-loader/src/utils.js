@@ -41,6 +41,13 @@ export const componentMap = {
       fieldset: '', // no package
       default: '' // no package
     },
+    json: {
+      variants: '@canner/antd-object-variants',
+      options: '@canner/antd-object-options',
+      editor: '@canner/antd-object-editor',
+      fieldset: '', // no package
+      default: '' // no package
+    },
     relation: {
       singleSelect: '@canner/antd-relation-single_select',
       multipleSelect: '@canner/antd-relation-multiple_select',
