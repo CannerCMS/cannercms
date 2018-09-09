@@ -16,7 +16,8 @@ import {
   ChartModel,
   IndicatorModel,
   EnumModel,
-  PageModel
+  PageModel,
+  JsonModel
 } from './models';
 import type {CannerSchema, Props} from './flow-types';
 import {createLayoutVisitor, CANNER_KEY} from './layout';
@@ -75,6 +76,8 @@ export default function builder(tag: string | Function, attributes: Object, ...c
       return createJSON(ImageModel, [attributes, children]);
     case 'relation':
       return createJSON(RelationModel, [attributes, children]);
+    case 'json':
+      return createJSON(JsonModel, [attributes, children]);
     case 'chart':
       return createJSON(ChartModel, [attributes, children]);
     case 'indicator':

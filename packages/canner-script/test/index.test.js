@@ -344,6 +344,15 @@ describe('builder', () => {
     });
   });
 
+  describe('json', () => {
+    it('should work', () => {
+      expect(<json keyName="variants"/>).toMatchObject({
+        type: 'json',
+        keyName: 'variants'
+      });
+    });
+  });
+
   describe('image', () => {
     it('should work', () => {
       expect(<image keyName="image"/>).toMatchObject({

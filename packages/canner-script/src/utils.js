@@ -48,6 +48,13 @@ export const componentMap = {
       fieldset: '@canner/antd-object-fieldset',
       default: '@canner/antd-object-fieldset'
     },
+    json: {
+      variants: '@canner/antd-object-variants',
+      options: '@canner/antd-object-options',
+      editor: '@canner/antd-object-editor',
+      fieldset: '@canner/antd-object-fieldset',
+      default: '@canner/antd-object-fieldset'
+    },
     relation: {
       singleSelect: '@canner/antd-relation-single_select',
       multipleSelect: '@canner/antd-relation-multiple_select',
