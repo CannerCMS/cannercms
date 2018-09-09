@@ -464,14 +464,16 @@ describe('builder', () => {
         </page>
       </root>
       expect(root.pageSchema).toMatchObject({
-        keyName: 'overview',
-        type: 'page',
-        items: {
-            line: {
-                type: 'chart',
-                ui: 'line',
-                keyName: 'line'
-            }
+        overview: {
+          keyName: 'overview',
+          type: 'page',
+          items: {
+              line: {
+                  type: 'chart',
+                  ui: 'line',
+                  keyName: 'line'
+              }
+          }
         }
       });
     });
