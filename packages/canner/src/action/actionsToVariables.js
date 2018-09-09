@@ -19,7 +19,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
     switch(action.type) {
       case 'CREATE_ARRAY': {
         // remove null relation
-        const ensureValue = pickBy(value, (v, k) => v !== null && k !== '__typename' && relationField.indexOf(k) === -1);
+        const ensureValue = pickBy(value, (v, k) => v !== null && relationField.indexOf(k) === -1);
         merge(variables.payload, ensureValue);
         break;
       }
@@ -27,7 +27,6 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
       case 'UPDATE_OBJECT': {
         merge(variables.payload, value);
         merge(variables.where, {id});
-        variables.payload = removeTypename(variables.payload);
         break;
       }
       case 'CONNECT': {
@@ -87,6 +86,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
         break;
     }
   });
+  variables.payload = removeTypename(variables.payload);
   if (isPlainObject(variables.payload)) {
     delete variables.payload.id;
   }
