@@ -346,9 +346,17 @@ describe('builder', () => {
 
   describe('json', () => {
     it('should work', () => {
-      expect(<json keyName="variants"/>).toMatchObject({
+      expect(<json keyName="variants">
+        <string keyName="test" />
+      </json>).toMatchObject({
         type: 'json',
-        keyName: 'variants'
+        keyName: 'variants',
+        items: {
+          test: {
+            type: 'string',
+            keyName: 'test'
+          }
+        }
       });
     });
   });
