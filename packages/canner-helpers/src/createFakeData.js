@@ -36,16 +36,21 @@ function loop(schema: Schema, listLength: number) {
 
   switch (schema.type) {
     case 'object':
-      result = mapSchema(schema.items, loop);
+      result = mapSchema(schema.items, (schema: Schema) => loop(schema, listLength));
       result.__typename = result.__typename || null;
+      if (schema.keyName) {
+        result = {
+          [schema.keyName]: result
+        };
+      }
       break;
     case 'array':
       result = [];
       for (let i = 0; i < listLength; ++i) {
         if (schema.items && schema.items.items) {
-          result.push(mapSchema(schema.items.items, loop));
+          result.push(mapSchema(schema.items.items, (schema: Schema) => loop(schema, listLength)));
         } else {
-          result.push(loop(schema.items, 1));
+          result.push(loop(schema.items, listLength));
         }
       }
       break;
