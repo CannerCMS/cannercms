@@ -157,6 +157,25 @@ describe('create object data', () => {
     expect(typeof data.boolean).toBe('boolean');
     expect(typeof data.number).toBe('number');
   });
+
+  it('should return array of object', () => {
+    const data = createFakeData({
+      type: 'object',
+      keyName: 'info',
+      items: {
+        hobbies: {
+          type: 'array',
+          items: {
+            type: 'string'
+          }
+        }
+      }
+    }, 5);
+    expect(data.info).toBeDefined();
+    expect(Array.isArray(data.info.hobbies)).toBe(true);
+    expect(data.info.hobbies.length).toBe(5);
+    expect(typeof data.info.hobbies[0]).toBe('string');
+  });
 });
 
 describe('create an array data', () => {
