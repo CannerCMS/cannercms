@@ -58,6 +58,25 @@ export default class Parser {
     };
   }
 
+  parseJson(key: string, schema: Schema, state: State): ParentNode {
+    let children = {};
+    if (schema.type !== 'json') {
+      throw new Error(`${key} is not a json schema`);
+    }
+
+    children = schema.items || {};
+    const ui = schema.ui || getDefaultUI(schema.type);
+    return {
+      ...schema,
+      name: key,
+      nodeType: generateNodeType(schema),
+      children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
+      pattern: state.pattern,
+      path: state.path,
+      ui: ui,
+    };
+  }
+
   parsePage(key: string, schema: Schema, state: State): ParentNode {
     let children = {};
     if (schema.type !== 'page') {
@@ -109,6 +128,13 @@ export default class Parser {
     if (schema.type === 'object') {
       return this.parseObject(key, schema, {
         pattern: `${pattern}.object`,
+        path: `${path}/${key}`,
+      });
+    }
+
+    if (schema.type === 'json') {
+      return this.parseJson(key, schema, {
+        pattern: `${pattern}.json`,
         path: `${path}/${key}`,
       });
     }

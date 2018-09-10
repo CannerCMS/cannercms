@@ -34,10 +34,9 @@ export default function connectId(Com: React.ComponentType<*>) {
       } else if (pattern === 'array' && routes.length > 1) {
         // in this case,
         // this hoc will fetch data with query {where: {id: id}} in componentDidMount
-        // so the index in refId must be 0
         this.state = {
           canRender: false,
-          refId: refId.child(`${keyName}/0`)
+          refId: null
         };
       } else {
         myRefId = myRefId ? myRefId.child(keyName) : new RefId(keyName);
@@ -74,7 +73,7 @@ export default function connectId(Com: React.ComponentType<*>) {
       if (pattern === 'array' && routes.length > 1 && this.props.routes.length === 1) {
         // posts => posts/<postId>
         this.setState({
-          refId: new RefId(`${keyName}/0`)
+          canRender: false
         });
         this.fetchById(routes[1], 400);
       }
@@ -117,24 +116,25 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     fetchById = (id: string, timeIntervale?: number) => {
-      const {query, keyName, updateQuery} = this.props;
+      const {query, keyName, updateQuery, fetch} = this.props;
       const paths = [keyName];
       const queries = query.getQueries(paths).args || {pagination: {first: 10}};
       const variables = query.getVairables();
       // get current args
       this.args = mapValues(queries, v => variables[v.substr(1)]);
-      updateQuery(paths, {
-        ...this.args,
-        where: {id: id},
-      });
       this.setState({
         canRender: false
       })
-      fetch(keyName)
-        .then(() => {
+      updateQuery(paths, {
+        ...this.args,
+        where: {id: id},
+      }).then(() => fetch(keyName))
+        .then(result => {
+          const index = result[keyName].edges.findIndex(edge => edge.cursor === id);
           setTimeout(() => {
             this.setState({
-              canRender: true
+              canRender: true,
+              refId: new RefId(`${keyName}/${index}`)
             });
           }, timeIntervale || 0)
         });

@@ -13,7 +13,6 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
   actions.forEach(action => {
     let {path = '', value, id, relation, key} = action.payload;
     const relationField = genRelationField(schema, key);
-   
     value = parseArrayToSet(value, relationField);
     
     switch(action.type) {
