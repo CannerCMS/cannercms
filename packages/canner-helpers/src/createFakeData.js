@@ -42,27 +42,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
         }
         break;
       case 'array':
-        result = [];
-        for (let i = 0; i < listLength; ++i) {
-          let item;
-          if (schema.items && schema.items.items) {
-            item = mapSchema(schema.items.items, loop);
-          } else {
-            item = schema.items.hasOwnProperty('type') ? loop(schema.items, schema.items.keyName): mapSchema(schema.items, loop);
-          }
-          if (typeof item === 'object' && key) {
-            item = {
-              ...item,
-              id: `${key}${i+1}`
-            };
-          } else if (schema.keyName) {
-            item = {
-              [key]: item,
-              id: `${key}${i+1}`
-            }
-          }
-          result.push(item);
-        }
+        result = getArrayData(schema, key, listLength, loop);
         break;
       case 'number':
         result = faker.random.number();
@@ -123,6 +103,33 @@ function getFirstLevelKeys(root: Schema | SchemaMap) {
     return root.items ? Object.keys(root.items) : {};
   }
   return Object.keys(root);
+}
+
+function getArrayData(schema: Schema, key: string, listLength: number, loop: Function) {
+  const result = [];
+  for (let i = 0; i < listLength; ++i) {
+    let item;
+    if (schema.items && schema.items.items) {
+      item = mapSchema(schema.items.items, loop);
+    } else {
+      item = schema.items.hasOwnProperty('type') ? loop(schema.items, schema.items.keyName): mapSchema(schema.items, loop);
+
+      if (schema.items.keyName) {
+        item = {
+          [schema.items.keyName]: item
+        }
+      }
+    }
+
+    if (typeof item === 'object' && key) {
+      item = {
+        ...item,
+        id: `${key}${i+1}`
+      };
+    }
+    result.push(item);
+  }
+  return result;
 }
 
 function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
