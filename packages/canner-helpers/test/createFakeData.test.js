@@ -235,12 +235,99 @@ describe('create relation empty data', () => {
     })).toBe(null);
   });
 
-  it('should return []', () => {
+  it('should return toOne relation data with null', () => {
+    expect(createFakeData({
+      posts: {
+        keyName: 'posts',
+        type: 'array',
+        items: {
+          author: {
+             type: 'relation',
+             relation: {
+               to: 'users',
+               type: 'toOne' 
+             } 
+          }
+        }
+      }
+    }, 2)).toEqual({"posts": [{"author": null, "id": "posts1"}, {"author": null, "id": "posts2"}]});
+  });
+
+  it('should return toOne relation data ', () => {
+    expect(createFakeData({
+      posts: {
+        keyName: 'posts',
+        type: 'array',
+        items: {
+          author: {
+             type: 'relation',
+             relation: {
+               to: 'users',
+               type: 'toOne' 
+             } 
+          }
+        }
+      },
+      users: {
+        type: 'array',
+        items: {
+          keyName: 'name',
+          type: 'string'
+        }
+      }
+    }, 2).posts[0].author).not.toBe(null);
+  });
+
+  it('should return {}', () => {
     expect(createFakeData({
       type: 'relation',
       relation: {
         type: 'toMany'
       }
-    })).toEqual([]);
+    })).toEqual({});
+  });
+
+  it('should return toMany relation data', () => {
+    expect(createFakeData({
+      posts: {
+        keyName: 'posts',
+        type: 'array',
+        items: {
+          authors: {
+             type: 'relation',
+             relation: {
+               to: 'users',
+               type: 'toMany' 
+             } 
+          }
+        }
+      }
+    }, 2)).toEqual({"posts": [{"authors": {}, "id": "posts1"}, {"authors": {}, "id": "posts2"}]});
+  });
+
+  it('should return toMany relation data', () => {
+    const data = createFakeData({
+      posts: {
+        keyName: 'posts',
+        type: 'array',
+        items: {
+          authors: {
+             type: 'relation',
+             relation: {
+               to: 'users',
+               type: 'toMany' 
+             } 
+          }
+        }
+      },
+      users: {
+        type: 'array',
+        items: {
+          keyName: 'name',
+          type: 'string'
+        }
+      }
+    }, 2).posts[0].authors;
+    expect(Object.keys(data)).toEqual(['users0', 'users1']);
   });
 })
