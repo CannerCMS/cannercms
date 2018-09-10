@@ -15,7 +15,8 @@ const SelfRelation = () => <array keyName="selfRelation" title="Self Relation"
       columns: [{
         title: 'Name',
         dataIndex: 'name'
-      }]
+      }],
+      relationField: 'toOneSelfRelation'
     }}
   >
     <toolbar>
