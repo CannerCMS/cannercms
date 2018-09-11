@@ -49,9 +49,9 @@ const Posts = () => <array keyName="posts" ui="tableRoute" title="posts" uiParam
   </toolbar>
   <string keyName="title" title="title" />
   <number keyName="clicks" title="Clicks" />
-  {/* <json keyName="variants" ui="variants" title="Clicks" >
+  <json keyName="variants" ui="variants" title="Clicks" >
     <string keyName="title" />
-  </json> */}
+  </json>
   <array keyName="notes" title="Notes">
     <string keyName="text" title="Text" />
   </array>
