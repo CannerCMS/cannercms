@@ -226,7 +226,6 @@ export default class Generator extends React.PureComponent<Props, State> {
   }
 
   static findNode = (pathArr: Array<string>, node: ComponentNode): ?Node => {
-    console.log(pathArr, node);
     if (isComponent(node) && node.keyName === pathArr[0]) {
       pathArr = pathArr.slice(1);
       if (!pathArr.length) {

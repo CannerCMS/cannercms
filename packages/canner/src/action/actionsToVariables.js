@@ -13,7 +13,10 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
   actions.forEach(action => {
     let {path = '', value, id, relation, key} = action.payload;
     const relationField = genRelationField(schema, key);
-    value = parseArrayToSet(value, relationField);
+    const schemaWithPath = addPath(schema[key], '');
+    const jsonPath = findSchema(schemaWithPath, s => s.type === 'json')
+      .map(v => v.path);
+    value = parseArrayToSet(value, relationField, jsonPath, path ? `${key}/${path}` : key);
     
     switch(action.type) {
       case 'CREATE_ARRAY': {
@@ -140,16 +143,68 @@ export function addTypename(payload: any): any {
  * } 
  *
  */
-export function parseArrayToSet(payload: any, relationField: Array<string>, key?: string): any {
-  if (isArray(payload) && relationField.indexOf(key) === -1) {
+export function parseArrayToSet(payload: any, relationField: Array<string>, jsonPath: Array<string>, path: string): any {
+  if (jsonPath.indexOf(path) >= 0) {
+    return payload;
+  }
+
+  if (isArray(payload) && relationField.indexOf(path) === -1) {
     return {
-      set: payload.map(v => parseArrayToSet(v, relationField))
+      set: payload.map(v => parseArrayToSet(v, relationField, jsonPath, path))
     };
   } else if (isPlainObject(payload)) {
-    return mapValues(payload, (v, k) => parseArrayToSet(v, relationField, k));
+    return mapValues(payload, (v, k) => parseArrayToSet(v, relationField, jsonPath, path ? `${path}/${k}` : k));
   } else {
     return payload
   }
+}
+
+export function genJsonPath(schema: Object, key: string): any {
+  const keySchema = schema[key];
+  let items = {};
+  if (keySchema.type === 'object') {
+    items = keySchema.items;
+  } else if (keySchema.type === 'array') {
+    items = keySchema.items.items
+  } else {
+    return [];
+  }
+
+  return Object.keys(items).filter((field: string) => items[field].type === 'relation');
+}
+
+export function findSchema(schema: Object, filter: Function): Array<Object> {
+  let copy = [];
+
+  if (filter(schema)) {
+    copy.push(schema);
+  }
+  const {items} = schema;
+  if (items) {
+    if (typeof items.type === 'string') {
+      copy = copy.concat(findSchema(items, filter));
+    } else {
+      Object.keys(items).forEach(key => copy = copy.concat(findSchema(items[key], filter)));
+    }
+  }
+  return copy;
+}
+
+export function addPath(schema: Object, path: string) {
+  const {items, keyName} = schema;
+  let schemaPath = path;
+  if (keyName) {
+    schemaPath = path ? `${path}/${keyName}` : keyName;
+  }
+  schema.path = schemaPath;
+  if (items) {
+    if (typeof items.type !== 'string') {
+      Object.keys(items).forEach(key => addPath(schema.items[key], schema.path));
+    } else {
+      addPath(items, schema.path);
+    }
+  }
+  return schema;
 }
 
 /**

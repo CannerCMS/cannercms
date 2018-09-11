@@ -1,19 +1,36 @@
-import actionsToVariables from '../../src/action/actionsToVariables';
+import actionsToVariables, { findSchema, addPath } from '../../src/action/actionsToVariables';
 
 const schema = {
   posts: {
     type: 'array',
+    keyName: 'posts',
+    path: 'posts',
     items: {
       items: {}
     }
   },
   info: {
     type: 'object',
+    keyName: 'info',
     items: {
+      jsonField: {
+        keyName: 'jsonField',
+        type: 'json',
+        items: {
+          images: {
+            keyName: 'images',
+            type: 'array',
+            items: {
+              type: 'string'
+            }
+          }
+        }
+      }
     }
   },
   authors: {
     type: 'array',
+    keyName: 'authors',
     items: {
       items: {}
     }
@@ -74,6 +91,18 @@ const updateObjectAction = {
     key: 'info',
     value: {
       name: '321'
+    }
+  }
+}
+
+const updateJSONWithNestedArrayAction = {
+  type: 'UPDATE_OBJECT',
+  payload: {
+    key: 'info',
+    value: {
+      jsonField: {
+        images: []
+      }
     }
   }
 }
@@ -255,6 +284,15 @@ describe('single action to variable', () => {
       });
   });
 
+  test('update nested array in json field should not use `set`', () => {
+    const value = updateJSONWithNestedArrayAction.payload.value;
+    expect(actionsToVariables([updateJSONWithNestedArrayAction], schema))
+      .toMatchObject({
+        payload: value,
+        where: {id: updateObjectWithNestedArrayAction.payload.id}
+      });
+  });
+
   test('update nested array in object', () => {
     const value = updateObjectWithNestedArrayAction.payload.value;
     expect(actionsToVariables([updateObjectWithNestedArrayAction], schema))
@@ -421,3 +459,106 @@ describe('multiple actions to variables', () => {
   });
 });
 
+describe('find schema', () => {
+  const schema = {
+    type: 'array',
+    keyName: 'posts',
+    items: {
+      type: 'object',
+      items: {
+        images: {
+          type: 'array',
+          items: {
+            type: 'object',
+            items: {
+              image: {
+                type: 'image'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  it('should find 2 array', () => {
+    expect(findSchema(schema, schema => schema.type === 'array').length).toBe(2);
+  });
+
+  it('should find 2 object', () => {
+    expect(findSchema(schema, schema => schema.type === 'object').length).toBe(2);
+  });
+
+  it('should find 1 image', () => {
+    expect(findSchema(schema, schema => schema.type === 'image').length).toBe(1);
+  });
+});
+
+describe('addPath', () => {
+  it('should add path in every field', () => {
+    const schema = {
+      keyName: 'posts',
+      type: 'array',
+      items: {
+        type: 'object',
+        items: {
+          title: {
+            keyName: 'title',
+            type: 'string'
+          },
+          content: {
+            keyName: 'content',
+            type: 'editor'
+          },
+          images: {
+            keyName: 'images',
+            type: 'array',
+            items: {
+              type: 'object',
+              items: {
+                image: {
+                  keyName: 'image',
+                  type: 'image'
+                }
+              }
+            }
+          }
+        }
+      }
+    };
+    expect(addPath(schema, '')).toMatchObject({
+      keyName: 'posts',
+      type: 'array',
+      path: 'posts',
+      items: {
+        type: 'object',
+        items: {
+          title: {
+            path: 'posts/title',
+            keyName: 'title',
+            type: 'string'
+          },
+          content: {
+            path: 'posts/content',
+            keyName: 'content',
+            type: 'editor'
+          },
+          images: {
+            path: 'posts/images',
+            type: 'array',
+            keyName: 'images',
+            items: {
+              type: 'object',
+              items: {
+                image: {
+                  path: 'posts/images/image',
+                  type: 'image'
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+  });
+})
