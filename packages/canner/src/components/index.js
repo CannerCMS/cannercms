@@ -12,7 +12,7 @@ import {isEmpty, isPlainObject} from 'lodash';
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 import {IntlProvider, addLocaleData} from 'react-intl';
-import hocsLocales from '../hocs/components/locale';
+import cannerLocales from './locale';
 import componentLocales from '@canner/antd-locales';
 addLocaleData([...en, ...zh]);
 
@@ -117,7 +117,7 @@ class CannerCMS extends React.Component<Props, State> {
         defaultLocale={intl.defaultLocale || currentLocale}
         messages={{
           ...(componentLocales[currentLocale] || {}),
-          ...(hocsLocales[currentLocale] || {}),
+          ...(cannerLocales[currentLocale] || {}),
           ...(dict[currentLocale] || {}),
           ...((intl.messages || {})[currentLocale] || {})
         }}

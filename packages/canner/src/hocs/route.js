@@ -2,7 +2,9 @@
 import * as React from 'react';
 import {Button, Icon, Spin, Modal} from 'antd';
 import styled from 'styled-components';
+import {injectIntl} from 'react-intl';
 import type {HOCProps} from './types';
+import type Intl from 'react-intl';
 
 const confirm = Modal.confirm;
 
@@ -18,18 +20,27 @@ type State = {
   loadingTip: string
 }
 
+type Props = HOCProps & {
+  intl: Intl
+}
+
+@injectIntl
 export default function withRoute(Com: React.ComponentType<*>) {
-  return class ComWithRoute extends React.Component<HOCProps, State> {
-    state = {
-      loading: false,
-      loadingTip: 'loading...'
-    };
+  return class ComWithRoute extends React.Component<Props, State> {
+    constructor(props: Props) {
+      super(props);
+      const {intl} = props;
+      this.state = {
+        loading: false,
+        loadingTip: intl.formatMessage({id: 'hocs.route.loadingTip'})
+      }
+    }
   
     deploy = () => {
-      const {refId, deploy} = this.props;
+      const {refId, deploy, intl} = this.props;
       this.setState({
         loading: true,
-        loadingTip: 'deploying...',
+        loadingTip: intl.formatMessage({id: 'hocs.route.deployingTip'}),
       });
       deploy(refId.getPathArr()[0])
         .then(this.success)
@@ -37,10 +48,10 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     reset = () => {
-      const {refId, reset} = this.props;
+      const {refId, reset, intl} = this.props;
       this.setState({
         loading: true,
-        loadingTip: 'reseting...',
+        loadingTip: intl.formatMessage({id: 'hocs.route.resetingTip'}),
       });
       reset(refId.getPathArr()[0])
         .then(this.success)
@@ -65,7 +76,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     discard = () => {
-      const {goTo, routes, routerParams, reset, refId, dataChanged} = this.props;
+      const {goTo, routes, routerParams, reset, refId, dataChanged, intl} = this.props;
 
       const resetCondFn = () => {
         if (routerParams.operator === 'create') {
@@ -76,10 +87,10 @@ export default function withRoute(Com: React.ComponentType<*>) {
       }
       if (dataChanged && Object.keys(dataChanged).length > 0) {
         confirm({
-          title: 'Do you want to reset all changes?',
-          content: <div>Leaving without deployment will reset all changes.</div>,
-          okText: 'Yes',
-          cancelText: 'No',
+          title: intl.formatMessage({id: 'hocs.route.confirm.title'}),
+          content: intl.formatMessage({id: 'hocs.route.confirm.content'}),
+          okText: intl.formatMessage({id: 'hocs.route.confirm.okText'}),
+          cancelText: intl.formatMessage({id: 'hocs.route.confirm.cancelText'}),
           onOk: () => {
             return new Promise(resolve => {
               setTimeout(resolve, 1000);
@@ -98,7 +109,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
 
     render() {
       const {loading, loadingTip} = this.state;
-      let {routes, pattern,  path, routerParams, refId, renderChildren, hideButtons, uiParams} = this.props;
+      let {routes, pattern,  path, intl, routerParams, refId, renderChildren, hideButtons, uiParams} = this.props;
       const renderType = getRenderType({
         pattern,
         routes,
@@ -118,7 +129,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
           // need to find a stable way to control route
           (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))) &&
             <Button onClick={this.discard} style={{marginBottom: 16}}>
-              <Icon type="arrow-left" /> Back
+              <Icon type="arrow-left" /> {intl.formatMessage({id: 'hocs.route.backText'})}
             </Button>
         }
         {
@@ -134,8 +145,12 @@ export default function withRoute(Com: React.ComponentType<*>) {
           // need to find a stable way to control route
           (renderType === RENDER_CHILDREN  && pattern === 'array' && !hideButtons && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))) &&
             <ButtonWrapper>
-              <Button style={{marginRight: 16}} type="primary" onClick={this.deploy}>Confirm</Button>
-              <Button onClick={this.reset}>Reset</Button>
+              <Button style={{marginRight: 16}} type="primary" onClick={this.deploy}>
+                {intl.formatMessage({id: 'hocs.route.confirmText'})}
+              </Button>
+              <Button onClick={this.reset}>
+                {intl.formatMessage({id: 'hocs.route.resetText'})}
+              </Button>
             </ButtonWrapper>
         }
         {
