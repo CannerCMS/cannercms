@@ -113,12 +113,6 @@ function getArrayData(schema: Schema, key: string, listLength: number, loop: Fun
       item = mapSchema(schema.items.items, loop);
     } else {
       item = schema.items.hasOwnProperty('type') ? loop(schema.items, schema.items.keyName): mapSchema(schema.items, loop);
-
-      if (schema.items.keyName) {
-        item = {
-          [schema.items.keyName]: item
-        }
-      }
     }
 
     if (typeof item === 'object' && key) {

@@ -254,7 +254,7 @@ describe('create relation empty data', () => {
   });
 
   it('should return toOne relation data ', () => {
-    expect(createFakeData({
+    expect(typeof createFakeData({
       posts: {
         keyName: 'posts',
         type: 'array',
@@ -275,7 +275,7 @@ describe('create relation empty data', () => {
           type: 'string'
         }
       }
-    }, 2).posts[0].author).not.toBe(null);
+    }, 2).posts[0].author).toBe('string');
   });
 
   it('should return {}', () => {
