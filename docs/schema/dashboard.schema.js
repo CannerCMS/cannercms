@@ -17,6 +17,7 @@ const dashboard = () => (
               `
             }
             uiParams={{
+              width: 200,
               field: 'age',
               color: {
                 field: 'name'
@@ -25,7 +26,61 @@ const dashboard = () => (
           />
         </Block>
       </Col>
-      <Col span={8} style={{maxHeight: 300}}>
+      <Col span={8}>
+        <Block title="user-bar">
+          <chart ui="bar"
+            keyName="user-bar"
+            graphql={
+              `
+                query users {
+                  users(first: 10) {name age}
+                }
+              `
+            }
+            uiParams={{
+              height: 150,
+              width: 200,
+              color: {
+                field: 'name'
+              },
+              x: {
+                field: 'name'
+              },
+              y: {
+                field: 'age'
+              }
+            }}
+          />
+        </Block>
+      </Col>
+      <Col span={8}>
+        <Block title="user-line">
+          <chart ui="line"
+            keyName="user-line"
+            graphql={
+              `
+                query users {
+                  users(first: 10) {name age}
+                }
+              `
+            }
+            uiParams={{
+              height: 150,
+              width: 200,
+              color: {
+                field: 'name'
+              },
+              x: {
+                field: 'name'
+              },
+              y: {
+                field: 'age'
+              }
+            }}
+          />
+        </Block>
+      </Col>
+      <Col span={12} style={{maxHeight: 300}}>
         <Block title="posts">
           <indicator ui="list"
             keyName="posts"
@@ -40,7 +95,7 @@ const dashboard = () => (
           />
         </Block>
       </Col>
-      <Col span={8}>
+      <Col span={12}>
         <Block title="users">
           <indicator ui="list"
             keyName="users"
