@@ -8,7 +8,7 @@ import {createSchema} from './schema/utils';
 import {types} from './schema/types';
 
 const DEFAULT_FIRST = 10;
-const MAX = 999999999;
+const MAX = undefined;
 
 export function fieldToQueriesObject(field: any): any {
   let queriesObj = {};
@@ -54,14 +54,13 @@ export function fieldToQueriesObject(field: any): any {
         const permanentFilter = toolbar && toolbar.filter && toolbar.filter.permanentFilter;
         if (asyncToolbar) {
           variables[firstKey] = DEFAULT_FIRST;
+          if (permanentFilter) {
+            variables[whereKey] = permanentFilter;
+          }
+          if (defaultSortField) {
+            variables[orderByKey] = `${defaultSortField}_ASC`
+          }
         }
-        if (permanentFilter) {
-          variables[whereKey] = permanentFilter;
-        }
-        if (defaultSortField) {
-          variables[orderByKey] = `${defaultSortField}_ASC`
-        }
-        
       }
       break;
     }
