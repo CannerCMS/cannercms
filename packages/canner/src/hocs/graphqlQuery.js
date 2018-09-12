@@ -5,10 +5,10 @@ import {Query} from 'react-apollo';
 export default function withQuery(Com) {
   return class ComWithQuery extends React.Component {
     render() {
-      const {graphql, getValue, ...restProps} = this.props;
+      const {graphql, variables, getValue, ...restProps} = this.props;
       return (
-        <Query query={gql`${graphql}`} >
-          {({loading, error, data}) => {
+        <Query query={gql`${graphql}`} variables={variables}>
+          {({loading, error, data, ...graphqlProps}) => {
             if (loading) return null;
             if (error) return `Error!: ${error}`;
             const key = Object.keys(data)[0];
@@ -21,7 +21,7 @@ export default function withQuery(Com) {
               value = getValue(value);
             }
             return (
-              <Com value={value} {...restProps} />
+              <Com value={value} {...restProps} {...graphqlProps} />
             );
           }}
         </Query>
