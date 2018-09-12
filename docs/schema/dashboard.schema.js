@@ -1,11 +1,11 @@
 /** @jsx builder */
 
-import builder, {Block, Col, Default} from 'canner-script';
+import builder, {Block, Col, Default, Row} from 'canner-script';
 import {postDashboardUIParams, userDashboardUIParams} from '../utils';
 const dashboard = () => (
   <page keyName="dashboard" title="Dashboard">
-    <Default style={{display: 'flex', justifyContent: 'space-around'}}>
-      <Col span={7}>
+    <Row type="flex" gutter={16}>
+      <Col span={8}>
         <Block title="user-pie">
           <chart ui="pie"
             keyName="user-pie"
@@ -25,7 +25,7 @@ const dashboard = () => (
           />
         </Block>
       </Col>
-      <Col span={7}>
+      <Col span={8} style={{maxHeight: 300}}>
         <Block title="posts">
           <indicator ui="list"
             keyName="posts"
@@ -40,7 +40,7 @@ const dashboard = () => (
           />
         </Block>
       </Col>
-      <Col span={7}>
+      <Col span={8}>
         <Block title="users">
           <indicator ui="list"
             keyName="users"
@@ -55,7 +55,7 @@ const dashboard = () => (
           />
         </Block>
       </Col>
-    </Default>
+    </Row>
   </page>
 )
 

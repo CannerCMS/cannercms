@@ -58,6 +58,7 @@
     "testURL": "http://localhost"
   },
   "devDependencies": {
+    "enzyme-adapter-react-16.3": "^1.2.0",
     "flow-bin": "^0.78.0"
   }
 }
