@@ -57,6 +57,21 @@ const Posts = () => <array keyName="posts" ui="tableRoute" title="posts" uiParam
   </array>
   <image keyName="image" />
   <array keyName="images" ui="gallery"/>
+  <object keyName="test" title="testes">
+  <relation ui="singleSelectTree" keyName="categories" title="Categories" relation={{type: 'toOne', to: 'selfRelation'}}
+    uiParams={{
+      textCol: 'name',
+      columns: [{
+        title: 'Name',
+        dataIndex: 'name'
+      }],
+      relationField: 'toOneSelfRelation'
+    }}
+  >
+    <toolbar>
+    </toolbar>
+  </relation>
+  </object>
   <relation keyName="author" title="author" relation={{type: 'toOne', to: 'users'}}
     uiParams={{
       textCol: 'name',

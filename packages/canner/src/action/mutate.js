@@ -1,6 +1,6 @@
 // @flow
 import produce from 'immer';
-import {findIndex, remove, isArray} from 'lodash';
+import {get, set, findIndex, remove, isArray} from 'lodash';
 
 import type {Action, ActionType} from './types';
 
@@ -60,7 +60,8 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
         if (id) {
           // array connect
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
-          let relationValue = draft[key].edges[index].node[path] || [];
+          // $FlowFixMe
+          let relationValue = get(draft, [key, 'edges', index, 'node'].concat(path.split('/')), []);
           if (relation && relation.type === 'toOne') {
             relationValue = {...value, __typename: null};
           } else {
@@ -68,13 +69,19 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
               relationValue.push({...value, __typename: null});
             }
           }
-          draft[key].edges[index].node[path] = relationValue;
+          // $FlowFixMe
+          set(draft, [key, 'edges', index, 'node'].concat(path.split('/')), relationValue);
         } else {
           if (relation && relation.type === 'toOne') {
-            draft[key][path] = {...value, __typename: null};
+            // $FlowFixMe
+            set(draft, [key].concat(path.split('/')), {...value, __typename: null});
           } else {
-            draft[key][path] = draft[key][path] || [];
-            draft[key][path].push({...value, __typename: null});
+            // $FlowFixMe
+            const relationValue = get(draft, [key].concat(path.split('/')), []);
+            relationValue.push({...value, __typename: null});
+            // $FlowFixMe
+            set(draft, [key].concat(path.split('/')), relationValue);
+
           }
         }
         break;
@@ -83,18 +90,24 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
       case 'DISCONNECT': {
         if (id) {
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
+          // $FlowFixMe
+          const paths = [key, 'edges', index, 'node'].concat(path.split('/'));
           if (relation && relation.type === 'toOne') {
-            draft[key].edges[index].node[path] = null;
+            set(draft, paths, null);
           } else {
-            draft[key].edges[index].node[path] = draft[key].edges[index].node[path] || [];
-            draft[key].edges[index].node[path] = draft[key].edges[index].node[path].filter(item => item.id !== value.id);
+            let relationValue = get(draft, paths, []);
+            relationValue = relationValue.filter(item => item.id !== value.id);
+            set(draft, paths, relationValue);
           }
         } else {
+          // $FlowFixMe
+          const paths = [key].concat(path.split('/'));
           if (relation && relation.type === 'toOne') {
-            draft[key][path] = null;
+            set(draft, paths, null);
           } else {
-            draft[key][path] = draft[key][path] || [];
-            draft[key][path] = draft[key][path].filter(item => item.id !== value.id);
+            let relationValue = get(draft, paths, []);
+            relationValue = relationValue.filter(item => item.id !== value.id);
+            set(draft, paths, relationValue);
           }
         }
         break;
