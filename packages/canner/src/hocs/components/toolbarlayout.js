@@ -17,7 +17,6 @@ export default class ToolbarLayout extends React.PureComponent<Props> {
       
       <React.Fragment>
         <div style={{
-          marginBottom: 24,
           flexWrap: 'wrap',
         }}>
           <div style={{
@@ -28,7 +27,6 @@ export default class ToolbarLayout extends React.PureComponent<Props> {
             {Sort}
           </div>
           <div style={{
-            marginTop: 16,
             display: 'flex',
             flexWrap: 'wrap'
           }}>

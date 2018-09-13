@@ -126,7 +126,7 @@ export default class FilterGroup extends React.Component<Props, State> {
       }
     }
     return (
-      <React.Fragment>
+      <div style={{marginTop: 16}}>
         {
           displayedFilters.map(index => (
             <FilterWrapper key={index}>
@@ -137,7 +137,7 @@ export default class FilterGroup extends React.Component<Props, State> {
             
           ))
         }
-      </React.Fragment>
+      </div>
     );
   }
 }
