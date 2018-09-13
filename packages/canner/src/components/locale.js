@@ -14,7 +14,9 @@ export default {
     "hocs.route.confirm.cancelText": "Cancel",
     "hocs.route.backText": 'Back',
     "hocs.route.confirmText": 'Confirm',
-    "hocs.route.resetText": 'Reset'
+    "hocs.route.resetText": 'Reset',
+    "hocs.errorCatch.message": "Error: Please report the error to dev team",
+    "hocs.errorCatch.refresh": "Refresh"
   },
   zh: {
     "query.filter.search": "搜尋",
@@ -31,6 +33,8 @@ export default {
     "hocs.route.confirm.cancelText": "取消",
     "hocs.route.backText": '返回',
     "hocs.route.confirmText": "確認",
-    "hocs.route.resetText": "取消更改"
+    "hocs.route.resetText": "取消更改",
+    "hocs.errorCatch.message": "發生錯誤，請聯絡工程團隊。",
+    "hocs.errorCatch.refresh": "重新整理"
   }
 };
