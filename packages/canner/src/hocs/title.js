@@ -89,7 +89,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           }
           {
             (!hideTitle && layout !== 'horizontal') && <div style={{
-              margin: '16px 0 0'
+              margin: '0 0 24px'
             }}>
               <div style={{
                 display: 'flex',
