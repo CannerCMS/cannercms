@@ -74,6 +74,11 @@ class CannerCMS extends React.Component<Props, State> {
     }
   }
 
+  componentDidCatch(error) {
+    const {errorHandler} = this.props;
+    errorHandler && errorHandler(error);
+  }
+
   dataDidChange = (dataChanged: Object) => {
     const {dataDidChange} = this.props;
     if (dataDidChange) {
