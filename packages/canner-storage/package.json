@@ -1,0 +1,34 @@
+{
+  "name": "canner-storage",
+  "version": "1.5.0-canary.31",
+  "description": "The storage APIs of canner CMS",
+  "author": "Canner",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "keywords": [
+    "storage",
+    "canner",
+    "CMS"
+  ],
+  "devDependencies": {
+    "flow-bin": "^0.78.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "scripts": {
+    "test": "../../node_modules/.bin/jest --coverage",
+    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "repository": "Canner/canner-storage",
+  "peerDependencies": {
+    "react": ">=16.3.x",
+    "react-dom": ">=16.3.x"
+  },
+  "license": "Apache-2.0"
+}
