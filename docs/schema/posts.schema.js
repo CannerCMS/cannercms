@@ -94,7 +94,7 @@ const Posts = () => <array keyName="posts" ui="tableRoute" title="posts" uiParam
         }]}
         defaultField="age"
       />
-      <filter>
+      <filter permanentFilter={{name: {eq: 'hi'}}}>
         <textFilter label="Name" field="name"/>
         <numberFilter label="Age" field="age"/>
         <selectFilter label="Status" options={[{

@@ -50,12 +50,12 @@ export default function withQuery(Com: React.ComponentType<*>) {
         args = {...args, first: 10}
       }
       if (!toolbar || !toolbar.async) {
-        args.first = 9999;
+        args.first = undefined;
         delete args.last;
         delete args.after;
         delete args.before;
       }
-      if (toolbar && toolbar.filter && toolbar.filter.permanentFilter) {
+      if (toolbar && toolbar.async && toolbar.filter && toolbar.filter.permanentFilter) {
         args = {...args, where: toolbar.filter.permanentFilter};       
       }
       // this method will also query data

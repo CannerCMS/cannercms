@@ -81,7 +81,7 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const {args, originRootValue} = props;
     this.async = props.toolbar && props.toolbar.async;
     // $FlowFixMe
-    const permanentFilter = (props.toolbar.filter && props.toolbar.filter.permanentFilter) || {};
+    const permanentFilter = (props.toolbar && props.toolbar.filter && props.toolbar.filter.permanentFilter) || {};
     this.state = {
       originRootValue,
       sort: parseOrder(args.orderBy),
