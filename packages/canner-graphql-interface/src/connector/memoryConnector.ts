@@ -24,10 +24,19 @@ const recursivePayload = ({data, schema}: {data: any, schema: Field}) => {
   });
 };
 
+interface Hooks {
+  afterListResolveByUnique?: (key: string, row: any) => void;
+  afterListResolveQuery?: (key: string, rows: any) => void;
+  afterResolveToOne?: (to: string, id: string, row: any) => void;
+}
+
 export default class MemoryConnector implements Connector {
   private db: any;
-  constructor({defaultData}: {defaultData?: any}) {
+  private hooks: Hooks;
+
+  constructor({defaultData, hooks}: {defaultData?: any, hooks?: Hooks}) {
     const adapter = new Memory();
+    this.hooks = hooks || {};
     this.db = low(adapter);
     if (defaultData) {
       this.db.defaults(defaultData).write();
@@ -37,7 +46,11 @@ export default class MemoryConnector implements Connector {
   public async listResolveByUnique(
     { key, field, schema }: { key: string; field: { [key: string]: any; }; schema: Field }): Promise<any> {
     this.setDefault(key, schema);
-    return this.db.get(key).find(field).value();
+    const row = this.db.get(key).find(field).value();
+    if (this.hooks.afterListResolveByUnique) {
+      this.hooks.afterListResolveByUnique(key, row);
+    }
+    return row;
   }
 
   public async listResolveQuery(
@@ -65,6 +78,9 @@ export default class MemoryConnector implements Connector {
       });
     }
     rows = filter({data: rows, where, order});
+    if (this.hooks.afterListResolveQuery) {
+      this.hooks.afterListResolveQuery(key, rows);
+    }
     const result = await paginator(rows, pagination);
     return result;
   }
@@ -79,7 +95,11 @@ export default class MemoryConnector implements Connector {
       return null;
     }
     this.setDefault(to, schema);
-    return this.db.get(to).find({id}).value();
+    const row = this.db.get(to).find({id}).value();
+    if (this.hooks.afterResolveToOne) {
+      this.hooks.afterResolveToOne(to, id, row);
+    }
+    return row;
   }
 
   public async resolveToMany(

@@ -13,6 +13,7 @@ import { addTypenameToDocument, getMainDefinition } from 'apollo-utilities';
 import { graphql } from 'graphql-anywhere/lib/async';
 import { createSchemaForResolver } from './utils';
 import mapValues from 'lodash/mapValues';
+import DataLoaderConnector from './connector/dataLoaderConnector';
 
 const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -39,13 +40,8 @@ export const createLink = (
   if (graphqlClient) {
     return graphqlClient.createLink();
   }
-
-  const connectors = multiConnectors || mapValues(schema, (value, key) => {
-    return singleConnector;
-  });
-
+  const schemaKeys = Object.keys(schema);
   const resolver = new Resolver({
-    connectors,
     resolvers: customizeResolvers,
     schema: createSchemaForResolver(schema)
   });
@@ -84,12 +80,20 @@ export const createLink = (
       };
 
       const queryWithTypename = addTypenameToDocument(query);
+      const connectors = multiConnectors
+        ? mapValues(multiConnectors, connector => {
+          return new DataLoaderConnector({keys: schemaKeys, connector});
+        })
+        : mapValues(schema, (value, key) => {
+          return new DataLoaderConnector({keys: schemaKeys, connector: singleConnector});
+        });
+
       return new Observable(observer => {
         graphql(
           graphqlResolver,
           queryWithTypename,
           {},
-          {document: queryWithTypename},
+          {document: queryWithTypename, connectors},
           operation.variables
         )
         .then(data => {

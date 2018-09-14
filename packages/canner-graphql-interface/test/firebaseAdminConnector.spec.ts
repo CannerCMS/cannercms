@@ -1,4 +1,5 @@
 // tslint:disable:no-unused-expression
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 import { execute, makePromise, ApolloLink } from 'apollo-link';
 import MemoryConnector from '../src/connector/memoryConnector';
 import Resolver from '../src/resolver';
