@@ -12,6 +12,12 @@ let originValue = {
       node: {
         id: 'post1',
         title: 'post1',
+        nested: {
+          author:  [{
+            id: 'author1',
+            name: 'author1'
+          }]
+        },
         author: [{
           id: 'author1',
           name: 'author1'
@@ -113,6 +119,40 @@ describe('mutate', () => {
     expect(mutate(originValue, action).posts.edges[0].node.author[1]).toMatchObject({
       id: 'author2',
       name: 'author2'
+    });
+  });
+
+  test('connect in nested', () => {
+    const action = {
+      type: 'CONNECT',
+      payload: {
+        key: 'posts',
+        id: 'post1',
+        path: 'nested/author',
+        value: {
+          id: 'author2',
+          name: 'author2'
+        },
+        relation: {
+          type: 'toMany'
+        }
+      }
+    };
+    expect(mutate(originValue, action).posts.edges[0].node).toMatchObject({
+      title: 'post1',
+      author: [{
+        id: 'author1',
+        name: 'author1'
+      }],
+      nested: {
+        author: [{
+          id: 'author1',
+          name: 'author1'
+        }, {
+          id: 'author2',
+          name: 'author2'
+        }]
+      }
     });
   });
 

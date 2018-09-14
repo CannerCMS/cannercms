@@ -1291,7 +1291,7 @@ exports[`withTitleAndDescription should render vertical by default 1`] = `
   <div
     style={
       Object {
-        "margin": "16px 0 0",
+        "margin": "0 0 24px",
       }
     }
   >
