@@ -29,7 +29,7 @@ describe('ImgurStorage', () => {
     const storage = new ImgurStorage(arg);
 
     const result = await storage.getUploadUrl();
-    expect(result).toBe('https://imgur-apiv3.p.mashape.com/3/image');
+    expect(result.url).toBe('https://imgur-apiv3.p.mashape.com/3/image');
   });
 
   it('should get IMGUR_IMAGE_API', async () => {
@@ -37,6 +37,6 @@ describe('ImgurStorage', () => {
     const storage = new ImgurStorage(arg);
 
     const result = await storage.getUploadUrl();
-    expect(result).toBe('https://api.imgur.com/3/image/');
+    expect(result.url).toBe('https://api.imgur.com/3/image/');
   });
 });
