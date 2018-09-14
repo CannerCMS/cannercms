@@ -98,6 +98,7 @@ export default class Provider extends React.PureComponent<Props, State> {
 
   // path: posts/name args: {where, pagination, sort}
   fetch = (key: string): Promise.resolve<*> => {
+    const {errorHandler} = this.props;
     const observabale = this.observableQueryMap[key];
     const currentResult = observabale.currentResult();
     const {loading, error} = currentResult;
@@ -110,6 +111,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     } else if (error) {
       const lastResult = observabale.getLastResult();
       this.log('fetch', 'error', key, lastResult);
+      errorHandler && errorHandler(error);
       return Promise.resolve(lastResult.data);
     } else {
       this.log('fetch', 'loaded', key, currentResult);
