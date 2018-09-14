@@ -1,6 +1,6 @@
 {
   "name": "canner-layouts",
-  "version": "1.5.0-canary.31",
+  "version": "1.5.0-canary.32",
   "description": "Layouts for Canner",
   "files": [
     "lib"
@@ -14,7 +14,7 @@
     "lint"
   ],
   "dependencies": {
-    "canner-helpers": "^1.5.0-canary.31"
+    "canner-helpers": "^1.5.0-canary.32"
   },
   "peerDependencies": {
     "antd": "^3.2.3",
