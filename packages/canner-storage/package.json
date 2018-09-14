@@ -16,7 +16,8 @@
     "flow-bin": "^0.78.0"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "promise-polyfill": "^8.1.0"
   },
   "scripts": {
     "test": "../../node_modules/.bin/jest --coverage",

@@ -1,5 +1,5 @@
 // @flow
-
+import Promise from 'promise-polyfill';
 import type {UploadOptions, OnProgressType} from './types';
 
 export default class FirebaseClientStorage {
