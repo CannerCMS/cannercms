@@ -17,11 +17,9 @@ export default class ImgurStorage {
   }
 
   getUploadUrl() {
-    if (this.mashapeKey)  {
-      return MASHAPE_API;
-    } else {
-      return IMGUR_IMAGE_API;
-    }
+    return {
+      url: this.mashapeKey ? MASHAPE_API : IMGUR_IMAGE_API
+    };
   }
 
   upload(file: File, options: UploadOptions, onProgress: OnProgressType) {
