@@ -41,24 +41,26 @@ export interface CustomizeResolver {
   };
 }
 
+interface Context {
+  document: any;
+  connectors: Record<string, Connector>;
+}
+
 export default class Resolver {
-  private connectors: {[key: string]: Connector};
   private resolvers: {[key: string]: CustomizeResolver};
   private fieldMap: {[key: string]: Field};
 
-  constructor({connectors, resolvers, schema}:
+  constructor({resolvers, schema}:
     {
-      connectors: {[key: string]: Connector},
       resolvers: {[key: string]: CustomizeResolver},
       schema: {[key: string]: Item}
     }) {
-    this.connectors = connectors;
     this.resolvers = resolvers;
     this.fieldMap = createSchema(schema);
   }
 
-  public listQueryById = (key, typename) => (obj, args, {document}) => {
-    return this.connectors[key].listResolveByUnique({
+  public listQueryById = (key, typename) => (obj, args, {document, connectors}: Context) => {
+    return connectors[key].listResolveByUnique({
       key,
       field: args.where,
       document,
@@ -76,9 +78,9 @@ export default class Resolver {
     });
   }
 
-  public listQuery = (key, typename, connection = false) => (obj, args, {document}) => {
+  public listQuery = (key, typename, connection = false) => (obj, args, {document, connectors}: Context) => {
     const pagination = this.argsToPagination(args);
-    return this.connectors[key].listResolveQuery({
+    return connectors[key].listResolveQuery({
       key,
       where: args && args.where ? this.parseWhere(args.where, this.fieldMap[key]) : null,
       order: args && args.orderBy ? this.parseOrder(args.orderBy) : null,
@@ -93,7 +95,8 @@ export default class Resolver {
   }
 
   public toOneResolver =
-    ({from, to, key, typename}: {from: string, to: string, key: string, typename: string}) => obj => {
+    ({from, to, key, typename}: {from: string, to: string, key: string, typename: string}) =>
+    (obj, args, {connectors}: Context) => {
     const data = obj[key];
     // when query with toOne field, data will be inserted
     if (isPlainObject(data)) {
@@ -103,7 +106,7 @@ export default class Resolver {
       };
     }
 
-    return this.connectors[to].resolveToOne({from, to, id: data, schema: this.fieldMap[to]})
+    return connectors[to].resolveToOne({from, to, id: data, schema: this.fieldMap[to]})
     .then(row => {
       if (this.resolvers && this.resolvers[key] && this.resolvers[key].Fields) {
         row = this.mergeWithCustomizeFieldResolvers(row, this.resolvers[to].Fields);
@@ -120,10 +123,10 @@ export default class Resolver {
       from, to, key, typename, connection = false
     }: {
       from: string, to: string, key: string, typename: string, connection?: boolean
-    }) => async (obj, args) => {
+    }) => async (obj, args, {connectors}: Context) => {
     const pagination = this.argsToPagination(args);
     const fieldResolvers = this.resolvers && this.resolvers[to] && this.resolvers[to].Fields;
-    return this.connectors[to].resolveToMany({
+    return connectors[to].resolveToMany({
       from,
       to,
       ids: obj[key],
@@ -133,8 +136,8 @@ export default class Resolver {
     .then(response => this.parseConnection(response, connection, typename, fieldResolvers));
   }
 
-  public mapQuery = (key: string, typename: string) => obj => {
-    return this.connectors[key].mapResolve(key, this.fieldMap[key])
+  public mapQuery = (key: string, typename: string) => (obj, args, {connectors}: Context) => {
+    return connectors[key].mapResolve(key, this.fieldMap[key])
     .then(data => {
       if (this.resolvers && this.resolvers[key] && this.resolvers[key].Fields) {
         data = this.mergeWithCustomizeFieldResolvers(data, this.resolvers[key].Fields);
@@ -146,7 +149,7 @@ export default class Resolver {
     });
   }
 
-  public listCreateMutation = (key: string, typename: string) => async (obj, args) => {
+  public listCreateMutation = (key: string, typename: string) => async (obj, args, {connectors}: Context) => {
     // relation might have create and connect
     // nested array have three operations
     const field = this.fieldMap[key];
@@ -175,17 +178,17 @@ export default class Resolver {
     // preResolve
     await Promise.all(
       values(fieldResolvers).map(
-        (mutationField: MutationField<any>) => mutationField.preResolveCreate(this.connectors[key])));
+        (mutationField: MutationField<any>) => mutationField.preResolveCreate(connectors[key])));
     // resolve
     const resolvedValues = mapValues(fieldResolvers, (mutationField: MutationField<any>) => mutationField.resolve());
     let merged: any = {...normalFields, ...resolvedValues};
     if (this.resolvers && this.resolvers[key] && this.resolvers[key].Fields) {
       merged = this.mergeWithCustomizeCreate(merged, this.resolvers[key].Fields, field);
     }
-    return this.connectors[key].listCreate(key, merged, field);
+    return connectors[key].listCreate(key, merged, field);
   }
 
-  public listUpdateMutation = (key: string, typename: string) => async (obj, args) => {
+  public listUpdateMutation = (key: string, typename: string) => async (obj, args, {connectors}: Context) => {
     // relation might have create and connect
     // nested array have three operations
     const field = this.fieldMap[key];
@@ -214,17 +217,17 @@ export default class Resolver {
     // preResolve
     await Promise.all(
       values(fieldResolvers).map(
-        (mutationField: MutationField<any>) => mutationField.preResolveUpdate(where.id, this.connectors[key])));
+        (mutationField: MutationField<any>) => mutationField.preResolveUpdate(where.id, connectors[key])));
     // resolve
     const resolvedValues = mapValues(fieldResolvers, (mutationField: MutationField<any>) => mutationField.resolve());
     let merged: any = {...normalFields, ...resolvedValues};
     if (this.resolvers && this.resolvers[key] && this.resolvers[key].Fields) {
       merged = this.mergeWithCustomizeUpdate(merged, this.resolvers[key].Fields, field);
     }
-    return this.connectors[key].listUpdate(key, where, merged, field);
+    return connectors[key].listUpdate(key, where, merged, field);
   }
 
-  public listDeleteMutation = (key: string, typename: string) => async (obj, args) => {
+  public listDeleteMutation = (key: string, typename: string) => async (obj, args, {connectors}: Context) => {
     // relation might have create and connect
     // nested array have three operations
     const field = this.fieldMap[key];
@@ -247,9 +250,9 @@ export default class Resolver {
     // preResolve
     await Promise.all(
       values(fieldResolvers).map(
-        (mutationField: MutationField<any>) => mutationField.preResolveDelete(where.id, this.connectors[key])));
+        (mutationField: MutationField<any>) => mutationField.preResolveDelete(where.id, connectors[key])));
 
-    return this.connectors[key].listDelete(key, where, field)
+    return connectors[key].listDelete(key, where, field)
     .then(data => {
       return {
         ...data,
@@ -258,7 +261,7 @@ export default class Resolver {
     });
   }
 
-  public mapUpdateMutation = (key: string, typename: string) => async (obj, args) => {
+  public mapUpdateMutation = (key: string, typename: string) => async (obj, args, {connectors}: Context) => {
     // relation might have create and connect
     // nested array have three operations
     const field = this.fieldMap[key];
@@ -286,14 +289,14 @@ export default class Resolver {
     // preResolve
     await Promise.all(
       values(fieldResolvers).map(
-        (mutationField: MutationField<any>) => mutationField.preResolveMapUpdate(this.connectors[key])));
+        (mutationField: MutationField<any>) => mutationField.preResolveMapUpdate(connectors[key])));
     // resolve
     const resolvedValues = mapValues(fieldResolvers, (mutationField: MutationField<any>) => mutationField.resolve());
     let merged: any = {...normalFields, ...resolvedValues};
     if (this.resolvers && this.resolvers[key] && this.resolvers[key].Fields) {
       merged = this.mergeWithCustomizeFieldResolvers(merged, this.resolvers[key].Fields);
     }
-    return this.connectors[key].mapUpdate(key, merged, field);
+    return connectors[key].mapUpdate(key, merged, field);
   }
 
   public typeResolver(field: Field, modelKey: string) {
