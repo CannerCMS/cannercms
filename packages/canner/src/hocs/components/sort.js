@@ -27,9 +27,10 @@ const DownIcon = styled(Icon)`
 type Props = {
   orderField: ?string,
   items: Object,
-  sort: Array<{
+  options: Array<{
     field: string,
-    label: string
+    label: string,
+    defaultOrder: 'ASC' | 'DESC'
   }>,
   orderType: 'ASC' | 'DESC',
   changeOrder: ({
@@ -75,14 +76,14 @@ export default class Sort extends Component<Props, State> {
   }
 
   render() {
-    const {sort, defaultField} = this.props;
+    const {options, defaultField} = this.props;
     const {key, order} = this.state;
     return (
       <div style={{display: 'flex'}}>
         <Selector onChange={this.onChange} value={key} defaultValue={defaultField} allowClear
             placeholder={<FormattedMessage id="query.sort.placeholder"/>}
         >
-          {(sort || []).map((cond, i) => <Option key={i} value={cond.field}>{cond.label}</Option>)}
+          {(options || []).map((option, i) => <Option key={i} value={option.field}>{option.label}</Option>)}
         </Selector>
         <OrderSwitch onClick={this.changeOrder}>
           <UpIcon order={order} type="caret-up" />

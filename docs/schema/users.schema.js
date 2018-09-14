@@ -38,9 +38,10 @@ const Users = () => (
       <actions filterButton importButton exportButton />
       <pagination />
       <sorter
-        sort={[{
+        options={[{
           field: 'age',
-          label: 'Age'
+          label: 'Age',
+          defaultOrder: 'desc'
         }]}
         defaultField="age"
       />

@@ -58,7 +58,9 @@ export function fieldToQueriesObject(field: any): any {
             variables[whereKey] = permanentFilter;
           }
           if (defaultSortField) {
-            variables[orderByKey] = `${defaultSortField}_ASC`
+            const field = (toolbar.sorter.options || []).find(option => option.field === defaultSortField);
+            const defaultOrder = field && field.defaultOrder ? field.defaultOrder.toUpperCase() : 'ASC';
+            variables[orderByKey] = `${defaultSortField}_${defaultOrder}`
           }
         }
       }

@@ -22,13 +22,14 @@ const Posts = () => <array keyName="posts" ui="tableRoute" title="posts" uiParam
     <actions filterButton importButton exportButton />
     <pagination />
     <sorter
-      sort={[{
+      options={[{
         field: 'clicks',
-        label: 'Clicks'
+        label: 'Clicks',
+        defaultOrder: 'DESC'
       }]}
       defaultField="clicks"
     />
-    <filter>
+    <filter permanentFilter={{title: {contains: 'd'}}}>
       <textFilter label="title" field="title"/>
       <textFilter label="Author Name" field="author.name"/>
       <selectFilter label="Author Name" options={[{
