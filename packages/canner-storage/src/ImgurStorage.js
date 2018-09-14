@@ -23,7 +23,6 @@ export default class ImgurStorage {
   }
 
   upload(file: File, options: UploadOptions, onProgress: OnProgressType) {
-    let UPLOAD_API = IMGUR_IMAGE_API;
     const headers: any = {
       Authorization: `Client-ID ${this.clientId}`,
       "X-Requested-With": null // https://github.com/react-component/upload/issues/33
@@ -31,7 +30,6 @@ export default class ImgurStorage {
     
     if (this.mashapeKey) {
       headers['X-Mashape-Key'] = this.mashapeKey;
-      UPLOAD_API = MASHAPE_API;
     }
 
     const form = new FormData();
@@ -39,7 +37,7 @@ export default class ImgurStorage {
     form.append('name', options.filename);
 
     return axios
-      .post(UPLOAD_API, form, {
+      .post(this.getUploadUrl(), form, {
         headers,
         onUploadProgress: e => (onProgress({ percent: getUploadPercent(e) }))
       })

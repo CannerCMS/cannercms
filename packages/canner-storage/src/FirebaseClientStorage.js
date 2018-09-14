@@ -10,13 +10,12 @@ export default class FirebaseClientStorage {
       throw new Error("firebase client instance is required.");
     }
     this.firebase = firebase;
-    this.dir = '';
   }
 
   upload(file: File, options: UploadOptions, onProgress: OnProgressType) {
     const images = this.firebase
       .storage()
-      .ref(this.dir)
+      .ref()
       .child(options.filename);
 
     const uploadTask = images.put(file);
