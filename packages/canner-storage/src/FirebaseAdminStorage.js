@@ -1,6 +1,7 @@
 // @flow
 
 import axios from 'axios';
+import Promise from 'promise-polyfill';
 import {getUploadPercent} from './utils';
 import type {UploadOptions, OnProgressType} from './types';
 
