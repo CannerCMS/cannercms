@@ -129,7 +129,10 @@ export default class Provider extends React.PureComponent<Props, State> {
         if (!loading && !errors && data && !isEmpty(data)) {
           callback(data);
         }
-      } 
+      },
+      error: () => {
+        // ignore the error here since in fetch method, the error should be handled
+      }
     });
   }
 
