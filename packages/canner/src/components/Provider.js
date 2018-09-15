@@ -107,6 +107,8 @@ export default class Provider extends React.PureComponent<Props, State> {
         .then(result => {
           this.log('fetch', 'loading', key, result);
           return result.data;
+        }).catch(e => {
+          errorHandler && errorHandler(e);
         })
     } else if (error) {
       const lastResult = observabale.getLastResult();
