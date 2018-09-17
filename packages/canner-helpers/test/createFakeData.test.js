@@ -61,6 +61,7 @@ describe('create geoPoint data', () => {
     });
     expect(typeof geoPoint.lat).toBe('string');
     expect(typeof geoPoint.lng).toBe('string');
+    expect(typeof geoPoint.address).toBe('string');
     expect(typeof geoPoint.placeId).toBe('string');
   });
 

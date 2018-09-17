@@ -32,13 +32,14 @@ describe('create number empty data', () => {
 });
 
 describe('create geoPoint empty data', () => {
-  it('should return object {lat:0, lng:0, placeId: \'\', _typename: null}', () => {
+  it('should return object {lat:0, lng:0, placeId: \'\', address: \'\', _typename: null}', () => {
     expect(createEmptyData({
       type: 'geoPoint'
     })).toEqual({
       __typename: null,
       lat: 0,
       lng: 0,
+      address: '',
       placeId: ''
     });
   });

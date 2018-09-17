@@ -40,6 +40,7 @@ function loop(schema: Schema) {
         __typename: null,
         lat: 0,
         lng: 0,
+        address: '',
         placeId: ''
       };
       break;

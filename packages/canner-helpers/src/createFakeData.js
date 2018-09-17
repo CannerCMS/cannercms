@@ -52,6 +52,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
           __typename: null,
           lat: faker.address.latitude(),
           lng: faker.address.longitude(),
+          address: faker.address.city(),
           placeId: faker.random.uuid()
         };
         break;
