@@ -5,6 +5,44 @@ import {postDashboardUIParams, userDashboardUIParams} from '../utils';
 const dashboard = () => (
   <page keyName="dashboard" title="Dashboard">
     <Row type="flex" gutter={16}>
+      <Col span={12}>
+        <Block>
+          <indicator ui="amount"
+            keyName="totalUsers"
+            graphql={
+              `
+                query users {
+                  users {name age}
+                }
+              `
+            }
+            title="Total users"
+            uiParams={{
+              formatter: v => `${v}`
+            }}
+            getValue={v => v.length}
+          />
+        </Block>
+      </Col>
+      <Col span={12}>
+        <Block>
+          <indicator ui="amount"
+            keyName="totalPosts"
+            graphql={
+              `
+                query posts {
+                  posts {id}
+                }
+              `
+            }
+            title="Total posts"
+            uiParams={{
+              formatter: v => `${v}`
+            }}
+            getValue={v => v.length}
+          />
+        </Block>
+      </Col>
       <Col span={8}>
         <Block title="user-pie">
           <chart ui="pie"
