@@ -4,7 +4,13 @@ exports[`builder blog schema 1`] = `
 Object {
   "connector": undefined,
   "dict": Object {},
+  "fileStorages": Object {
+    "posts": Object {},
+  },
   "graphqlClient": undefined,
+  "imageStorages": Object {
+    "posts": Object {},
+  },
   "pageSchema": Object {},
   "resolvers": Object {},
   "schema": Object {
@@ -151,9 +157,6 @@ Object {
       "ui": "table",
       "uiParams": Object {},
     },
-  },
-  "storages": Object {
-    "posts": Object {},
   },
   "visitors": Array [],
 }
