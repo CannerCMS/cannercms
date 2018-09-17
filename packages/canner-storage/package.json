@@ -1,6 +1,6 @@
 {
   "name": "canner-storage",
-  "version": "1.5.0-canary.31",
+  "version": "1.5.0-canary.39",
   "description": "The storage APIs of canner CMS",
   "author": "Canner",
   "files": [
