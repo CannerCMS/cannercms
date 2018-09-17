@@ -200,9 +200,9 @@ export function getIntlMessage(attributes: Object, key: string) {
   return value;
 }
 
-export function genStorages(attrs: Object, children: Array<*>) {
+export function genStorages(attrs: Object, children: Array<*>, storageKey: string = 'fileStorages') {
   return children.reduce((result: Object, child: Object): Object => {
-    result[child.keyName] = child.storage ||attrs.storage || {};
+    result[child.keyName] = child[storageKey] || attrs[storageKey] || {};
     return result;
   }, {});
 }

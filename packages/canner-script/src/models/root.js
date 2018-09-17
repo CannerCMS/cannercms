@@ -16,7 +16,8 @@ export default class RootModel {
   resolvers: Object;
   visitors: Array<any>;
   entry: Array<any>;
-  storages: Object;
+  imageStorages: Object;
+  fileStorages: Object;
   graphqlClient: any;
 
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
@@ -49,7 +50,8 @@ export default class RootModel {
     } else {
       this.entry = children.map(child => child.keyName);
     }
-    this.storages = genStorages(attrs, children);
+    this.imageStorages = genStorages(attrs, children, 'imageStorage');
+    this.fileStorages = genStorages(attrs, children, 'fileStorage');
     this.resolvers = parseResolvers(attrs, children);
     this.connector = parseConnector(attrs, children) || parseConnector(attrs, children);
     this.graphqlClient = parseGraphqlClient(attrs, children) || parseGraphqlClients(attrs, children);
@@ -62,7 +64,8 @@ export default class RootModel {
       schema: this.schema,
       pageSchema: this.pageSchema,
       visitors: this.visitors,
-      storages: this.storages,
+      imageStorages: this.imageStorages,
+      fileStorages: this.fileStorages,
       resolvers: this.resolvers,
       connector: this.connector,
       graphqlClient: this.graphqlClient
@@ -74,7 +77,8 @@ export default class RootModel {
       // CLI node env
       return {
         entry: this.entry,
-        storages: this.storages,
+        imageStorages: this.imageStorages,
+        fileStorages: this.fileStorages,
         resolvers: this.resolvers,
         connector: this.connector,
         graphqlClient: this.graphqlClient
