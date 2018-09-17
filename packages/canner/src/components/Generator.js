@@ -191,7 +191,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {routerParams = {}, goTo, routes, storages, onDeploy, removeOnDeploy, hideButtons, schema} = this.props;
+    const {routerParams = {}, goTo, routes, imageStorages, fileStorages, onDeploy, removeOnDeploy, hideButtons, schema} = this.props;
     const renderChildren = props => this.renderChildren(node, props);
     if (node.hidden || props.hidden) {
       return null;
@@ -210,7 +210,8 @@ export default class Generator extends React.PureComponent<Props, State> {
           {...restNodeData}
           routes={routes}
           key={index}
-          imageServiceConfig={(storages || {})[routes[0]]}
+          imageStorage={(imageStorages || {})[routes[0]]}
+          fileStorage={(fileStorages || {})[routes[0]]}
           renderChildren={(props) => this.renderChildren(node, props)}
           renderComponent={this.renderComponent}
           routerParams={routerParams}
