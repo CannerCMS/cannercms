@@ -42,8 +42,8 @@
   "peerDependencies": {
     "@canner/antd-components": ">=0.2.0",
     "antd": ">=3.2.3",
-    "canner-graphql-interface": ">=1.16.0",
-    "canner-helpers": ">=0.1.15",
+    "canner-graphql-interface": ">=1.0.0",
+    "canner-helpers": ">=0.1.0",
     "react": ">=16.3",
     "react-dom": ">=16.3"
   },
