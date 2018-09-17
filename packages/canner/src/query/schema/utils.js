@@ -43,13 +43,14 @@ export const createField = (key: string, rootSchema: any, schema: any, isEntity?
     }
 
     /**
-     * GeoPoint {lat: , lng: string, placeId: string}
+     * GeoPoint {lat: , lng: string, placeId: string, address: string}
      */
     case types.GEOPOINT: {
       const childFields = {
         lat: {type: 'string'},
         lng: {type: 'string'},
-        placeId: {type: 'string'}
+        placeId: {type: 'string'},
+        address: {type: 'string'}
       };
       return new CompositeField({key, type, rootSchema, childFields});
     }
