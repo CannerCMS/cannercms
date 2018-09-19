@@ -113,7 +113,7 @@ class CannerCMS extends React.Component<Props, State> {
       intl = {},
       hideButtons,
       errorHandler,
-      schema: {storages, dict = {}}
+      schema: {imageStorages, fileStorages, dict = {}}
     } = this.props;
     const currentLocale = intl.locale || 'en';
     return (
@@ -137,7 +137,8 @@ class CannerCMS extends React.Component<Props, State> {
           errorHandler={errorHandler || defaultErrorHandler}
         >
           <Generator
-            storages={storages}
+            imageStorages={imageStorages}
+            fileStorages={fileStorages}
             schema={this.schema}
             componentTree={this.componentTree || {}}
             goTo={goTo}

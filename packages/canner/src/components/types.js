@@ -16,7 +16,8 @@ export type LoadedSchema = {
   connector: any,
   resolvers: {[string]: any},
   graphqlClient: any,
-  storages: {[key: string]: any},
+  imageStorages: {[key: string]: any},
+  fileStorages: {[key: string]: any},
   dict: Object
 };
 export type ComponentNode = any;
@@ -65,7 +66,8 @@ export type CMSProps = {
 export type GeneratorProps = {
   componentTree: ComponentTree,
   layouts: {[string]: React.ComponentType<*>},
-  storages: Object,
+  imageStorages: Object,
+  fileStorages: Object,
 
   goTo: Object => void,
   baseUrl: string,
