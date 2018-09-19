@@ -4,6 +4,7 @@ import {FirebaseClientService} from '@canner/image-service-config';
 import firebase from 'firebase';
 import {FirebaseRtdbClientConnector, PrismaClient} from 'packages/canner-graphql-interface';
 import {Avatar} from 'antd';
+import {FirebaseClientStorage} from 'packages/canner-storage';
 
 firebase.initializeApp({
   apiKey: FIREBASE_API_KEY,
@@ -13,6 +14,7 @@ firebase.initializeApp({
   storageBucket: "test-new-qa.appspot.com",
   messagingSenderId: "983887338585"
 });
+firebase.auth().signInAnonymously();
 
 const defaultApp = firebase.app();
 const connector = new FirebaseRtdbClientConnector({
@@ -26,6 +28,10 @@ const storage = new FirebaseClientService({
   filename: "filename", // rename file without extension
   hash: true, // if true, the filename will add a hash string, e.g.: `filename-${hash}.jpg`
 }).getServiceConfig();
+
+const imageStorage = new FirebaseClientStorage({
+  firebase
+});
 
 function renderImages(values) {
   return (
@@ -85,4 +91,5 @@ export default {
   storage,
   connector,
   graphClient: new PrismaClient(),
+  imageStorage
 }
