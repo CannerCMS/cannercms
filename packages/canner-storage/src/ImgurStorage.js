@@ -24,8 +24,7 @@ export default class ImgurStorage {
 
   upload(file: File, options: UploadOptions, onProgress: OnProgressType) {
     const headers: any = {
-      Authorization: `Client-ID ${this.clientId}`,
-      "X-Requested-With": null // https://github.com/react-component/upload/issues/33
+      Authorization: `Client-ID ${this.clientId}`
     };
     
     if (this.mashapeKey) {
@@ -37,13 +36,13 @@ export default class ImgurStorage {
     form.append('name', options.filename);
 
     return axios
-      .post(this.getUploadUrl(), form, {
+      .post(this.getUploadUrl().url, form, {
         headers,
         onUploadProgress: e => (onProgress({ percent: getUploadPercent(e) }))
       })
-      .then(({link}) => {
+      .then(data => {
         return {
-          link
+          link: data.data.data.link
         };
       });
   }
