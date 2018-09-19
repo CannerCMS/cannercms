@@ -30,7 +30,9 @@ export default class FirebaseClientStorage {
           reject(e);
         },
         function() {
-          resolve({ link: uploadTask.snapshot.downloadURL });
+          uploadTask.snapshot.ref.getDownloadURL().then(link => {
+            resolve({link})
+          });
         }
       );
     });
