@@ -87,7 +87,9 @@ export function createAction({
         value = emptyData;
       }
     }
-    update(value, 'id', id => id || randomId());
+    if (typeof id === 'string' && id.split('/').length === 1) {
+      update(value, 'id', id => id || randomId());
+    }
   }
   value = addTypename(value)
   return generateAction({
@@ -134,6 +136,10 @@ export function loop(schema: Object, paths: Array<string>, pattern: string): any
 
   if (!schema.type) { // in items of object
     return loop(schema[paths[0]], paths.slice(1), `${pattern}/${schema[paths[0]].type}`);
+  }
+
+  if (schema.type === 'json') {
+    return {};
   }
 
   if (schema.type === 'array') {
