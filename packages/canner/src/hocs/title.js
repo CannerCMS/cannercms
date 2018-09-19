@@ -23,7 +23,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
       const {title, layout, description, hideTitle,
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
-        refId, routes, updateQuery, type, imageServiceConfig,
+        refId, routes, updateQuery, type, imageStorage, fileStorage,
         onDeploy, removeOnDeploy, required, dataChanged
       } = this.props;
       // $FlowFixMe: default funcitons in HOCContext only throw error, so they don't have any arguments
@@ -76,7 +76,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 }
               </div>
               {
-                (type === 'image' && isEmpty(imageServiceConfig)) && (
+                (type === 'image' && isEmpty(imageStorage)) && (
                   <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
                 )
               }
@@ -108,7 +108,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 
               </div>
               {
-                (type === 'image' && isEmpty(imageServiceConfig)) && (
+                (type === 'image' && isEmpty(imageStorage)) && (
                   <Alert style={{margin: '16px 0'}} message={<p>There is no storage config so you can not upload image. Checkout the <a href="https://www.canner.io/docs/guides-image-upload.html" target="_blank" rel="noreferrer noopener" >storage section</a> to know more</p>} type="warning" />
                 )
               }

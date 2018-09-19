@@ -196,7 +196,6 @@ export default class Generator extends React.PureComponent<Props, State> {
     if (node.hidden || props.hidden) {
       return null;
     }
-
     if (component) {
       return <Context.Provider
         value={{
