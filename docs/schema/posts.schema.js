@@ -56,8 +56,8 @@ const Posts = () => <array keyName="posts" ui="tableRoute" title="posts" uiParam
   <array keyName="notes" title="Notes">
     <string keyName="text" title="Text" />
   </array>
-  <image keyName="image" />
-  <array keyName="images" ui="gallery"/>
+  <image keyName="image" title="image" uiParams={{dirname: 'testing', filename: 'testing', limitSize: 2000000}}/>
+  <array keyName="images" ui="gallery" uiParams={{dirname: 'testing', limitSize: 20000000}}/>
   <object keyName="test" title="testes">
   <relation ui="singleSelectTree" keyName="categories" title="Categories" relation={{type: 'toOne', to: 'selfRelation'}}
     uiParams={{

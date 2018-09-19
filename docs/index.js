@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import {Menu} from 'antd';
+import {Menu, notification} from 'antd';
 const SubMenu = Menu.SubMenu;
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Canner from 'packages/canner/src';
@@ -68,7 +68,19 @@ class CMSExample extends React.Component {
                   baseUrl
                 })}
               >
-                <Canner/>
+                <Canner
+                  afterDeploy={() => {
+                    notification.success({
+                      message: 'Deployed!'
+                    })
+                  }}
+                  errorHandler={e => {
+                    console.error(e);
+                    notification.error({
+                      message: 'Error'
+                    });
+                  }}
+                />
               </Container>
             );
           }}/>
