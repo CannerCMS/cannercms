@@ -219,12 +219,12 @@ describe('delete action', () => {
   });
 
   it('delete array item in object', () => {
+    const newUser = {...rootValue.user};
     const action = generateAction({
       id: 'user/info/phone/1',
       updateType: 'delete',
       rootValue,
     });
-    const newUser = {...rootValue.user};
     newUser.info.phone.splice(1, 1);
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',

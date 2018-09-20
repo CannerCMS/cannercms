@@ -107,7 +107,10 @@ export function generateAction(arg: {
     const prePaths = paths.slice(0, -1);
     const deleteIndex = paths.slice(-1)[0];
     const item = get(arg.rootValue, [key, index]);
-    update(item, prePaths, arr => arr.splice(deleteIndex, 1));
+    update(item, prePaths, arr => {
+      arr.splice(deleteIndex, 1);
+      return arr;
+    });
 
     return {
       type: 'UPDATE_ARRAY',
@@ -124,7 +127,10 @@ export function generateAction(arg: {
     const prePaths = paths.slice(0, -1);
     const deleteIndex = paths.slice(-1)[0];
     const item = get(arg.rootValue, [key]);
-    update(item, prePaths, arr => arr.splice(deleteIndex, 1));
+    update(item, prePaths, arr => {
+      arr.splice(deleteIndex, 1);
+      return arr;
+    });
 
     return {
       type: 'UPDATE_OBJECT',
