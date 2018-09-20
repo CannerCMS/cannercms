@@ -91,7 +91,6 @@ export function createAction({
       update(value, 'id', id => id || randomId());
     }
   }
-  value = addTypename(value)
   return generateAction({
     id,
     updateType: type,
@@ -103,16 +102,6 @@ export function createAction({
 
 function randomId() {
   return Math.random().toString(36).substr(2, 12);
-}
-
-function addTypename(value) {
-  if (isPlainObject(value)) {
-    update(value, '__typename', typename => typename || null);
-    value = mapValues(value, child => addTypename(child));
-  } else if (isArray(value)) {
-    value = value.map(child => addTypename(child));
-  }
-  return value;
 }
 
 export function findSchemaByRefId(schema: Object, refId: any) {
