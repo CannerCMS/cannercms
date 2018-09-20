@@ -90,10 +90,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
     render() {
       const {error, errorInfo} = this.state;
       return <React.Fragment>
-        <Com {...this.props}/>
-        {
-          error && <span style={{color: 'red'}}>{errorInfo[0].message}</span>
-        }
+        <Com {...this.props} error={error} errorInfo={errorInfo || []}/>
       </React.Fragment>
   }
   };

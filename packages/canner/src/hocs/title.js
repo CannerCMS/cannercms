@@ -16,6 +16,11 @@ const Title = styled.div`
   }
 `;
 
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 14px;
+`
+
 // $FlowFixMe
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
   return class ComponentWithTitleAndDescription extends React.Component<HOCProps> {
@@ -24,7 +29,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
         refId, routes, updateQuery, type, imageStorage, fileStorage,
-        onDeploy, removeOnDeploy, required, dataChanged
+        onDeploy, removeOnDeploy, required, dataChanged, error, errorInfo
       } = this.props;
       // $FlowFixMe: default funcitons in HOCContext only throw error, so they don't have any arguments
       return <HOCContext.Provider
@@ -76,6 +81,13 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                 }
               </div>
               {
+                error && (
+                  <ErrorMessage>
+                    {errorInfo[0].message}
+                  </ErrorMessage>
+                )
+              }
+              {
                 (type === 'image' && isEmpty(imageStorage)) && (
                   <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
                 )
@@ -110,6 +122,13 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
               {
                 (type === 'image' && isEmpty(imageStorage)) && (
                   <Alert style={{margin: '16px 0'}} message={<p>There is no storage config so you can not upload image. Checkout the <a href="https://www.canner.io/docs/guides-image-upload.html" target="_blank" rel="noreferrer noopener" >storage section</a> to know more</p>} type="warning" />
+                )
+              }
+              {
+                error && (
+                  <ErrorMessage>
+                    {errorInfo[0].message}
+                  </ErrorMessage>
                 )
               }
               <div style={{
