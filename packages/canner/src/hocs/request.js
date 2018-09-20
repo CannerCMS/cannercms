@@ -40,7 +40,7 @@ export default function withRequest(Com: React.ComponentType<*>) {
         type,
         value: delta,
         config,
-        rootValue,
+        rootValue: {...rootValue},
         items,
         pattern
       });

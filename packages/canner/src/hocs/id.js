@@ -115,6 +115,19 @@ export default function connectId(Com: React.ComponentType<*>) {
       }
     }
 
+    componentWillUnmount() {
+      const {updateQuery, keyName, pattern} = this.props;
+      
+      if (pattern === 'array' && this.args) {
+        updateQuery([keyName], this.args)
+          .then(() => {
+            this.setState({
+              canRender: true
+            });
+          });
+      }
+    }
+
     fetchById = (id: string, timeIntervale?: number) => {
       const {query, keyName, updateQuery, fetch} = this.props;
       const paths = [keyName];

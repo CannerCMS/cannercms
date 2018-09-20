@@ -26,7 +26,7 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
           draft[key].edges = draft[key].edges.map(item => {
             return item.cursor === id ?
               {
-                __typename: null,
+                __typename: item.__typename,
                 cursor: id,
                 node: {...item.node, ...value}
               }:
