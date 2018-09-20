@@ -119,12 +119,7 @@ export default function connectId(Com: React.ComponentType<*>) {
       const {updateQuery, keyName, pattern} = this.props;
       
       if (pattern === 'array' && this.args) {
-        updateQuery([keyName], this.args)
-          .then(() => {
-            this.setState({
-              canRender: true
-            });
-          });
+        updateQuery([keyName], this.args);
       }
     }
 
