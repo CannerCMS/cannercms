@@ -312,6 +312,23 @@ describe('builder', () => {
         filterButton: true
       }});
     });
+    it('should child tag work', () => {
+      expect(<toolbar>
+        <actions>
+          <export fields={['test']} />
+          <import test/>
+          <filter />
+        </actions>
+      </toolbar>).toMatchObject({actions: {
+        export: {
+          fields: ['test']
+        },
+        import: {
+          test: true
+        },
+        filter: {}
+      }});
+    });
   });
 
   describe('geoPoint', () => {
