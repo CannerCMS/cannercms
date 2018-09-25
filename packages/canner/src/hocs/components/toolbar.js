@@ -220,7 +220,7 @@ export default class Toolbar extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {children, toolbar = {}, args, refId, items, defaultValue, parseConnectionToNormal, getValue} = this.props;
+    const {children, toolbar = {}, args, refId, items, defaultValue, parseConnectionToNormal, getValue, query, keyName} = this.props;
     let {originRootValue, current, displayedFilterIndexs} = this.state;
     const {sorter, pagination, filter, toolbarLayout, actions} = toolbar;
     const ToolbarLayout = toolbarLayout && toolbarLayout.component ? toolbarLayout.component : DefaultToolbarLayout;
@@ -249,6 +249,8 @@ export default class Toolbar extends React.PureComponent<Props, State> {
         filters={filter && filter.filters || []}
         displayedFilters={displayedFilterIndexs}
         addFilter={this.addFilter}
+        query={query}
+        keyName={keyName}
       /> : <div />}
       Sort={sorter && toolbar.async ? <SortComponent
         {...sorter}
