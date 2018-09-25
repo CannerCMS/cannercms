@@ -5,9 +5,7 @@ import historyRouter from '@canner/history-router';
 
 export default class Router extends historyRouter {
   constructor({baseUrl = '/'}: {baseUrl: string}) {
-    const history = createHistory({
-      basename: baseUrl,
-    })
+    const history = createHistory();
     super({baseUrl, history})
   }
 }
