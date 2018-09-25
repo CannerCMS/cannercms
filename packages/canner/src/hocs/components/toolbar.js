@@ -34,9 +34,13 @@ type Props = {
     async: boolean,
     actions?: {
       component?: React.ComponentType<*>,
-      exportButton?: boolean,
-      importButton?: boolean,
-      filterButton?: boolean,
+      export?: {
+        fields?: Array<Object>,
+        title?: string,
+        filename?: string
+      },
+      import?: {},
+      filter?: {}
     },
     sorter?: {
       component?: React.ComponentType<*>,
@@ -251,6 +255,8 @@ export default class Toolbar extends React.PureComponent<Props, State> {
         addFilter={this.addFilter}
         query={query}
         keyName={keyName}
+        value={rootValue[keyName]}
+        items={items.items}
       /> : <div />}
       Sort={sorter && toolbar.async ? <SortComponent
         {...sorter}

@@ -26,6 +26,10 @@ type Props = {
   keyName: string
 }
 
+type State = {
+  downloading: boolean
+}
+
 const ALL = 'ALL';
 const THIS_PAGE = 'THIS_PAGE';
 const SELECTED = 'SElECTED';
@@ -35,7 +39,11 @@ const DOWNLOAD = 'DOWNLOAD';
 @injectIntl
 @withApollo
 @Form.create()
-export default class ExportModal extends React.Component<Props> {
+export default class ExportModal extends React.Component<Props, State> {
+  state = {
+    downloading: false
+  };
+
   handleSubmit = (e: Event) => {
     e.preventDefault();
     const {
@@ -46,25 +54,28 @@ export default class ExportModal extends React.Component<Props> {
       triggerModal,
       fields,
       client,
-      query
+      query,
+      keyName
     } = this.props;
     form.validateFields((err, values) => {
       if (!err) {
-        const {exportData, exportFieldKeys, exportWay, keyName} = values;
+        const {exportData, exportFieldKeys, exportWay} = values;
         let getData = Promise.resolve([]);
         if (exportData === ALL) {
           // have to fetch data without pagination data
-          const queries = query.getQueries(keyName).args;
+          const queries = query.getQueries([keyName]).args;
           const variables = query.getVairables();
           delete variables[queries.first.substr(1)];
           delete variables[queries.after.substr(1)];
           delete variables[queries.last.substr(1)];
           delete variables[queries.before.substr(1)];
-  
+          
           getData = client.query({
-            query: gql.toGQL(keyName),
+            query: gql`${query.toGQL(keyName)}`,
             // remove pagination field
             variables
+          }).then(result => {
+            return result.data[keyName].edges.map(edge => edge.node);
           })
         } else if (exportData === THIS_PAGE) {
           getData = Promise.resolve(value);
@@ -73,16 +84,23 @@ export default class ExportModal extends React.Component<Props> {
         }
         const fieldsData = fields.filter(field => exportFieldKeys.find(key => key === field.keyName));
         if (exportWay === DOWNLOAD) {
-          getData.then((data: Array<Object>) => {
-            const csv = genCSV(data, fieldsData);
-            download(fileName, csv);
-          })
+          this.setState({
+            downloading: true
+          });
+          getData
+            .then((data: Array<Object>) => {
+              const csv = genCSV(data, fieldsData);
+              download(fileName, csv);
+            }).then(() => {
+              this.setState({
+                downloading: false
+              }, triggerModal);
+            });
         } else {
           // not support other exportWay for now
         }
       }
     });
-    triggerModal();
   }
 
   handleCancel = () => {
@@ -91,6 +109,7 @@ export default class ExportModal extends React.Component<Props> {
 
   render() {
     const {selectedValue, visible, fields, form: {getFieldDecorator}, title, intl} = this.props;
+    const {downloading} = this.state;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -141,7 +160,7 @@ export default class ExportModal extends React.Component<Props> {
           <FormItem
             {...formItemLayout}
             label={
-              <FormattedMessage id="actions.exprot.way.label" />
+              <FormattedMessage id="actions.export.way.label" />
             }
           >
             {getFieldDecorator('exportWay', {
@@ -181,7 +200,7 @@ export default class ExportModal extends React.Component<Props> {
             wrapperCol={{ span: 12, offset: 5 }}
           >
             <Button htmlType="button" onClick={this.handleCancel}>取消</Button>
-            <Button type="primary" htmlType="submit" style={{ marginLeft: 24 }}>匯出</Button>
+            <Button loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }}>匯出</Button>
           </FormItem>
         </Form>
       </Modal>

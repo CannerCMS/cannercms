@@ -5,21 +5,22 @@ import {FormattedMessage} from 'react-intl';
 import ExportModal from './exportModal';
 
 type Props = {
-  importButton: boolean,
-  filterButton: boolean,
   async: boolean,
   filters: Array<Object>,
   addFilter: Function,
   displayedFilters: Array<number>,
-  export: {
+  export?: {
     title: string,
     filename: string,
     fields: Array<Object>
   },
+  import?: Object,
+  filter?: Object,
   value: Array<Object>,
   selectedValue: Array<Object>,
   query: Object,
-  keyName: string
+  keyName: string,
+  items: Object
 }
 
 type State = {
@@ -53,9 +54,11 @@ export default class Actions extends Component<Props, State> {
       value,
       selectedValue,
       query,
-      keyName
+      keyName,
+      items
     } = this.props;
     const exp = this.props.export || {};
+    const fields = exp.fields || Object.keys(items).map(keyName => items[keyName]);
     const {exportModalVisible} = this.state;
     const menu = (
       <Menu onClick={this.addFilter}>
@@ -72,7 +75,7 @@ export default class Actions extends Component<Props, State> {
       <React.Fragment>
         <Button.Group>
           {this.props.export && (
-            <Button>
+            <Button onClick={this.triggerExportModal}>
               <Icon type="download" />
               <FormattedMessage id="query.actions.export"/>
             </Button>
@@ -103,7 +106,7 @@ export default class Actions extends Component<Props, State> {
           title={exp.title || ''}
           value={value || []}
           selectedValue={selectedValue || []}
-          fields={exp.fields || []}
+          fields={fields || []}
           fileName={exp.filename || exp.title || 'export'}
           query={query}
           keyName={keyName}
