@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Button, Icon, Dropdown, Menu} from 'antd';
 import {FormattedMessage} from 'react-intl';
 import ExportModal from './exportModal';
+import ImportModal from './importModal';
 
 type Props = {
   async: boolean,
@@ -24,12 +25,14 @@ type Props = {
 }
 
 type State = {
-  exportModalVisible: boolean
+  exportModalVisible: boolean,
+  importModalVisible: boolean
 }
 
 export default class Actions extends Component<Props, State> {
   state = {
     exportModalVisible: false,
+    importModalVisible: false
   }
 
   triggerExportModal = () => {
@@ -37,6 +40,13 @@ export default class Actions extends Component<Props, State> {
       exportModalVisible: !this.state.exportModalVisible
     });
   }
+
+  triggerImportModal = () => {
+    this.setState({
+      importModalVisible: !this.state.importModalVisible
+    });
+  }
+
 
   addFilter = (e: Object) => {
     const {displayedFilters, addFilter} = this.props;
@@ -48,18 +58,18 @@ export default class Actions extends Component<Props, State> {
 
   render() {
     const {
-      importButton,
-      filterButton,
       filters,
       value,
       selectedValue,
       query,
       keyName,
-      items
+      items,
+      filter
     } = this.props;
     const exp = this.props.export || {};
-    const fields = exp.fields || Object.keys(items).map(keyName => items[keyName]);
-    const {exportModalVisible} = this.state;
+    const imp = this.props.import || {};
+    const exportFields = exp.fields || Object.keys(items).map(keyName => items[keyName]);
+    const {exportModalVisible, importModalVisible} = this.state;
     const menu = (
       <Menu onClick={this.addFilter}>
         {
@@ -74,22 +84,24 @@ export default class Actions extends Component<Props, State> {
     return (
       <React.Fragment>
         <Button.Group>
-          {this.props.export && (
-            <Button onClick={this.triggerExportModal}>
-              <Icon type="download" />
-              <FormattedMessage id="query.actions.export"/>
-            </Button>
-          )}
           {
-            importButton && (
-              <Button>
+            this.props.export && (
+              <Button onClick={this.triggerExportModal}>
+                <Icon type="download" />
+                <FormattedMessage id="query.actions.export"/>
+              </Button>
+            )
+          }
+          {
+            this.props.import && (
+              <Button onClick={this.triggerImportModal}>
                 <Icon type="upload" />
                 <FormattedMessage id="query.actions.import"/>
               </Button>
             )
           }
           {
-            filterButton && (
+            filter && (
               <Dropdown overlay={menu}>
                 <Button>
                   <Icon type="filter" />
@@ -106,8 +118,18 @@ export default class Actions extends Component<Props, State> {
           title={exp.title || ''}
           value={value || []}
           selectedValue={selectedValue || []}
-          fields={fields || []}
+          fields={exportFields || []}
           fileName={exp.filename || exp.title || 'export'}
+          query={query}
+          keyName={keyName}
+        />
+        <ImportModal
+          visible={importModalVisible}
+          triggerModal={this.triggerImportModal}
+          title={imp.title || ''}
+
+          fields={importFields || []}
+          fileName={imp.filename || imp.title || 'export'}
           query={query}
           keyName={keyName}
         />
