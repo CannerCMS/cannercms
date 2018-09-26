@@ -60,6 +60,6 @@
   "peerDependencies": {
     "firebase": "^5.0.4"
   },
-  "repository": "Canner/canner-graphql-interface",
+  "repository": "Canner/canner",
   "license": "MIT"
 }

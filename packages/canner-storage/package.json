@@ -1,5 +1,5 @@
 {
-  "name": "canner-storage",
+  "name": "@canner/storage",
   "version": "1.5.0-canary.47",
   "description": "The storage APIs of canner CMS",
   "author": "Canner",
@@ -26,7 +26,7 @@
   "pre-commit": [
     "lint"
   ],
-  "repository": "Canner/canner-storage",
+  "repository": "Canner/canner",
   "peerDependencies": {
     "react": ">=16.3.x",
     "react-dom": ">=16.3.x"

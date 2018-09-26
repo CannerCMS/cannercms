@@ -21,7 +21,7 @@
   "pre-commit": [
     "lint"
   ],
-  "repository": "Canner/react-cms-simulator",
+  "repository": "Canner/canner",
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0 || 16.x",
     "react-dom": "^0.14.0 || ^15.0.0 || 16.x"

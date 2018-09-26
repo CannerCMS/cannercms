@@ -40,6 +40,6 @@
     "tslint": "^5.9.1",
     "typescript": "^2.7.2"
   },
-  "repository": "Canner/canner-graphql-utils",
+  "repository": "Canner/canner",
   "license": "MIT"
 }
