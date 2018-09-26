@@ -120,6 +120,23 @@ describe('withValidation', () => {
     })
   });
 
+  it('should pass ajv validation if empty', () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
+      validation={{pattern: '^http://[.]+'}}
+    />);
+    expect(wrapper.state()).toMatchObject({
+      error: false,
+      errorInfo: []
+    })
+  });
+
   it('should use custom validation', () => {
     const result = {
       data: {

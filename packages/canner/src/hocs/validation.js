@@ -52,7 +52,8 @@ export default function withValidation(Com: React.ComponentType<*>) {
       const validatorResult = validator && validator(value, reject);
   
       let customValid = !(validatorResult && validatorResult.error);
-      if (customValid && isRequiredValid && validate(value)) {
+      // if value is empty, should not validate with ajv
+      if (customValid && isRequiredValid && (!value || validate(value))) {
         this.setState({
           error: false,
           errorInfo: []
