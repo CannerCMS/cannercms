@@ -64,11 +64,16 @@ export default class Actions extends Component<Props, State> {
       query,
       keyName,
       items,
-      filter
+      filter,
+      request,
+      deploy
     } = this.props;
     const exp = this.props.export || {};
     const imp = this.props.import || {};
     const exportFields = exp.fields || Object.keys(items).map(keyName => items[keyName]);
+    let importFields = exp.fields || Object.keys(items).map(keyName => items[keyName]);
+    // in csv format, it's difficult to write array or object type
+    importFields = importFields.filter(item => ['string', 'number', 'boolean'].indexOf(item.type) >= 0)
     const {exportModalVisible, importModalVisible} = this.state;
     const menu = (
       <Menu onClick={this.addFilter}>
@@ -123,14 +128,17 @@ export default class Actions extends Component<Props, State> {
           query={query}
           keyName={keyName}
         />
+        {/* $FlowFixMe */}
         <ImportModal
           visible={importModalVisible}
           triggerModal={this.triggerImportModal}
           title={imp.title || ''}
-
+          request={request}
+          deploy={deploy}
           fields={importFields || []}
-          fileName={imp.filename || imp.title || 'export'}
+          fileName={imp.filename || imp.title || 'import'}
           query={query}
+          items={items}
           keyName={keyName}
         />
       </React.Fragment>

@@ -1,20 +1,19 @@
 // @flow
 
 import React from 'react';
-import { Modal, Form, Radio, Select, Button } from 'antd';
-import get from 'lodash/get';
+import {createEmptyData} from 'canner-helpers';
+import { Alert, Modal, Form, Button, Upload, Icon } from 'antd';
+import {
+  get,
+  set
+} from 'lodash';
 import { withApollo } from 'react-apollo';
 import {FormattedMessage, injectIntl} from 'react-intl';
-import gql from 'graphql-tag';
 
-const FormItem = Form.Item;
-const RadioGroup = Radio.Group;
-const Option = Select.Option;
+const Dragger = Upload.Dragger;
 
 type Props = {
   form: Object,
-  value: Array<Object>,
-  selectedValue: Array<Object>,
   fileName: string,
   triggerModal: Function,
   fields: Array<Object>,
@@ -23,189 +22,202 @@ type Props = {
   title: string,
   visible: boolean,
   query: Object,
-  keyName: string
+  keyName: string,
+  items: Object,
+  deploy: Function,
+  request: Function
 }
 
 type State = {
-  downloading: boolean
+  success: boolean,
+  error: boolean,
+  errorMessage: ?string,
+  list: Array<Array<string>>
 }
-
-const ALL = 'ALL';
-const THIS_PAGE = 'THIS_PAGE';
-const SELECTED = 'SElECTED';
-const DOWNLOAD = 'DOWNLOAD';
 
 // $FlowFixMe
 @injectIntl
 @withApollo
 @Form.create()
-export default class ExportModal extends React.Component<Props, State> {
+export default class ImportModal extends React.Component<Props, State> {
   state = {
-    downloading: false
+    success: false,
+    error: false,
+    errorMessage: '',
+    list: []
   };
-
-  handleSubmit = (e: Event) => {
+  
+  download = (e: Event) => {
     e.preventDefault();
     const {
-      form,
-      value,
-      selectedValue,
       fileName,
       triggerModal,
       fields,
-      client,
-      query,
-      keyName
     } = this.props;
-    form.validateFields((err, values) => {
-      if (!err) {
-        const {exportData, exportFieldKeys, exportWay} = values;
-        let getData = Promise.resolve([]);
-        if (exportData === ALL) {
-          // have to fetch data without pagination data
-          const queries = query.getQueries([keyName]).args;
-          const variables = query.getVairables();
-          delete variables[queries.first.substr(1)];
-          delete variables[queries.after.substr(1)];
-          delete variables[queries.last.substr(1)];
-          delete variables[queries.before.substr(1)];
-          
-          getData = client.query({
-            query: gql`${query.toGQL(keyName)}`,
-            // remove pagination field
-            variables
-          }).then(result => {
-            return result.data[keyName].edges.map(edge => edge.node);
-          })
-        } else if (exportData === THIS_PAGE) {
-          getData = Promise.resolve(value);
-        } else if (exportData === SELECTED) {
-          getData = Promise.resolve(selectedValue);
-        }
-        const fieldsData = fields.filter(field => exportFieldKeys.find(key => key === field.keyName));
-        if (exportWay === DOWNLOAD) {
-          this.setState({
-            downloading: true
-          });
-          getData
-            .then((data: Array<Object>) => {
-              const csv = genCSV(data, fieldsData);
-              download(fileName, csv);
-            }).then(() => {
-              this.setState({
-                downloading: false
-              }, triggerModal);
-            });
-        } else {
-          // not support other exportWay for now
-        }
+    const csv = genCSV([], fields);
+    download(fileName, csv);
+    triggerModal();
+  }
+  
+  handleCancel = () => {
+    this.props.triggerModal();
+  }
+  
+  customRequest = ({
+    onSuccess,
+    onError,
+    file
+  }: Object) => {
+    const {deploy, keyName} = this.props;
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = (e) => {
+      const csv = parseCSV(e.target.result, '\n', ',');
+      this.setState({
+        list: csv.slice(1)
+      });
+      this.request(csv)
+        .then(() => deploy(keyName))
+        .then(() => {
+          onSuccess('done');
+        })
+        .catch(e => {
+          onError(e);
+        });
+    };
+  }
+
+  request = (csv: Array<Array<string>>) => {
+    const {request, fields, keyName, items} = this.props;
+    const fieldsLength = fields.length;
+    return new Promise((resolve, reject) => {
+      try {
+        csv.slice(1).reduce((preRequest, values) => {
+          const payload = fields.reduce((result, field, index) => {
+            let value = values[index];
+            if (field.type === 'number') {
+              value = Number(value);
+            } else if (field.type === 'boolean') {
+              value = Boolean(value);
+            }
+            set(result, field.keyName, value);
+            return result;
+          }, {});
+          if (values.length !== fieldsLength) {
+            throw new Error('Incorrect format!');
+          }
+          const tmpId = Math.random().toString(36).substr(2, 12);
+          return preRequest.then(() => request({
+            type: 'CREATE_ARRAY',
+            payload: {
+              key: keyName,
+              id: tmpId,
+              value: {...createEmptyData(items), ...payload, id: tmpId, __typename: null}
+            }
+          }).catch(e => e));
+        }, Promise.resolve()).then(resolve);
+      } catch (e) {
+        reject(e);
       }
     });
   }
 
-  handleCancel = () => {
-    this.props.triggerModal();
+  uploadChange = (info: Object) => {
+    const {file} = info;
+    if (file.status === 'done') {
+      this.setState({
+        success: true
+      });
+    } else if (file.status === 'error') {
+      this.setState({
+        success: false,
+        error: true,
+        errorMessage: file.error.message,
+      });
+    } else {
+      this.setState({
+        success: false,
+        error: false
+      });
+    }
   }
 
   render() {
-    const {selectedValue, visible, fields, form: {getFieldDecorator}, title, intl} = this.props;
-    const {downloading} = this.state;
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-      },
-    };
+    const {visible, title, keyName } = this.props;
+    const {success, list, error, errorMessage} = this.state;
     return (
       <Modal
         title={<FormattedMessage id="actions.export.modal.title" />}
         visible={visible}
         footer={null}
+        closable
+        maskClosable
+        onCancel={this.handleCancel}
       >
-        <Form
-          onSubmit={this.handleSubmit}
-        >
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="actions.export.data.label" />}
+        <React.Fragment>
+          <div style={{marginBottom: 24}}>
+            <span>get the template csv: </span>
+            <Button onClick={this.download}>
+              <Icon type="download" />
+              download
+            </Button>
+          </div>
+          <Dragger
+            name="file"
+            customRequest={this.customRequest}
+            accept="text/csv"
+            onChange={this.uploadChange}
           >
-            {getFieldDecorator('exportData', {
-              initialValue: selectedValue.length ? 'SELECTED' : 'ALL',
-            })(
-              <RadioGroup>
-                <Radio value={ALL}>
-                  <FormattedMessage id="actions.export.data.all" />
-                  {title}
-                </Radio>
-                <Radio value={THIS_PAGE}>
-                  <FormattedMessage id="actions.export.data.thisPage" />
-                </Radio>
-                <Radio value="SELECTED" disabled={!selectedValue.length}>
-                  <FormattedMessage
-                    id="actions.export.data.selected"
-                    values={{
-                      length: selectedValue.length,
-                      title
-                    }}
-                  />
-                </Radio>
-              </RadioGroup>
-            )}
-          </FormItem>
-          
-          <FormItem
-            {...formItemLayout}
-            label={
-              <FormattedMessage id="actions.export.way.label" />
-            }
-          >
-            {getFieldDecorator('exportWay', {
-              initialValue: DOWNLOAD,
-            })(
-              <RadioGroup disabled={true}>
-                <Radio value={DOWNLOAD}>
-                  <FormattedMessage id="actions.export.way.csv" />
-                </Radio>
-              </RadioGroup>
-            )}
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <FormattedMessage id="actions.export.fields.label" />
-            }
-          >
-            {getFieldDecorator('exportFieldKeys', {
-              initialValue: fields.map(field => field.keyName),
-            })(
-              <Select
-                mode="multiple"
-                placeholder={intl.formatMessage({
-                  id: "actions.export.fields.placeholder"
-                })}
-              >
-                {
-                  fields.map(field => (
-                    <Option value={field.keyName} key={field.keyName}>{field.title || field.keyName}</Option>
-                  ))
+            <p className="ant-upload-drag-icon">
+              <Icon type="inbox" />
+            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+          </Dragger>
+          {
+            success && (
+              <Alert
+                message={
+                  <span>Import {list.length} {title || keyName} successfully!</span>
                 }
-              </Select>
-            )}
-          </FormItem>
-          <FormItem
-            wrapperCol={{ span: 12, offset: 5 }}
-          >
-            <Button htmlType="button" onClick={this.handleCancel}>取消</Button>
-            <Button loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }}>匯出</Button>
-          </FormItem>
-        </Form>
+                type="success"
+              />
+              
+            )
+          }
+          {
+            error && (
+              <Alert
+                message={errorMessage}
+                type="error"
+              />
+              
+            )
+          }
+        </React.Fragment>
       </Modal>
     );
   }
+}
+
+function parseCSV(text, lineTerminator, cellTerminator) {
+  const rows = [];
+  //break the lines apart
+  var lines = text.split(lineTerminator);
+  for(var j = 0; j<lines.length; j++){
+    const values = [];
+    if(lines[j] != ""){
+      //create a table row 
+      //split the rows at the cellTerminator character
+      var information = lines[j].split(cellTerminator);
+      for(var k = 0; k < information.length; k++){
+        //append the cell to the row
+        values.push(information[k]);
+      }
+    }
+    rows.push(values);
+  }
+  return rows;
 }
 
 function genCSV(data: Array<Object>, fields: Array<Object>) {
@@ -237,6 +249,6 @@ function download(fileName, csvContent) {
   link.setAttribute('download', `${fileName}.csv`);
   link.innerHTML = '';
   document.body && document.body.appendChild(link); // Required for FF
-
+  
   link.click();
 }

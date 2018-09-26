@@ -95,7 +95,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching, rootValue, originRootValue} = this.state;
-      const {toolbar, query, refId, items, type, path, relation, pattern, keyName} = this.props;
+      const {toolbar, query, refId, items, type, path, relation, pattern, keyName, request, deploy} = this.props;
       if (!originRootValue) {
         return <List style={{maxWidth: '600px'}}/>;
       }
@@ -115,6 +115,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
             getValue={getValue}
             defaultValue={defaultValue}
             updateQuery={this.updateQuery}
+            request={request}
+            deploy={deploy}
           >
             <SpinWrapper isFetching={isFetching}>
               <Com {...this.props} showPagination={toolbar && !toolbar.async} />

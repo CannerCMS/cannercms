@@ -125,6 +125,9 @@ export default class ExportModal extends React.Component<Props, State> {
         title={<FormattedMessage id="actions.export.modal.title" />}
         visible={visible}
         footer={null}
+        closable
+        maskClosable
+        onCancel={this.handleCancel}
       >
         <Form
           onSubmit={this.handleSubmit}
@@ -217,6 +220,9 @@ function genCSV(data: Array<Object>, fields: Array<Object>) {
       let value = get(datum, field.keyName);
       if (field.render) {
         value = field.render(value);
+      }
+      if (Array.isArray(value)) {
+        value = value.join(';');
       }
       values.push(value);
     });
