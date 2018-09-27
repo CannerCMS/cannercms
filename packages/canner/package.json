@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "../../node_modules/.bin/jest --coverage",
-    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
+    "test:watch": "../../node_modules/.bin/jest --watch --coverage --verbose false"
   },
   "keywords": [
     "canner",

@@ -35,7 +35,13 @@ const Users = () => (
     }}
   >
     <toolbar async>
-      <actions filterButton importButton exportButton />
+      <actions>
+        <export
+          title="Users"
+        />
+        <import />
+        <filter />
+      </actions>
       <pagination />
       <sorter
         options={[{

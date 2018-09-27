@@ -34,9 +34,13 @@ type Props = {
     async: boolean,
     actions?: {
       component?: React.ComponentType<*>,
-      exportButton?: boolean,
-      importButton?: boolean,
-      filterButton?: boolean,
+      export?: {
+        fields?: Array<Object>,
+        title?: string,
+        filename?: string
+      },
+      import?: {},
+      filter?: {}
     },
     sorter?: {
       component?: React.ComponentType<*>,
@@ -220,7 +224,20 @@ export default class Toolbar extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {children, toolbar = {}, args, refId, items, defaultValue, parseConnectionToNormal, getValue} = this.props;
+    const {
+      children,
+      toolbar = {},
+      args,
+      refId,
+      items,
+      defaultValue,
+      parseConnectionToNormal,
+      getValue,
+      query,
+      keyName,
+      request,
+      deploy
+    } = this.props;
     let {originRootValue, current, displayedFilterIndexs} = this.state;
     const {sorter, pagination, filter, toolbarLayout, actions} = toolbar;
     const ToolbarLayout = toolbarLayout && toolbarLayout.component ? toolbarLayout.component : DefaultToolbarLayout;
@@ -249,6 +266,12 @@ export default class Toolbar extends React.PureComponent<Props, State> {
         filters={filter && filter.filters || []}
         displayedFilters={displayedFilterIndexs}
         addFilter={this.addFilter}
+        query={query}
+        keyName={keyName}
+        value={rootValue[keyName]}
+        items={items.items}
+        request={request}
+        deploy={deploy}
       /> : <div />}
       Sort={sorter && toolbar.async ? <SortComponent
         {...sorter}

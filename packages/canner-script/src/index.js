@@ -151,7 +151,23 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     case 'actions': {
       return {
         ...attributes,
+        ...children.reduce((result, child) => {
+          result[child.type] = child;
+          return result;
+        }, {}),
         type: 'actions'
+      };
+    }
+    case 'export': {
+      return {
+        ...attributes,
+        type: 'export'
+      };
+    }
+    case 'import': {
+      return {
+        ...attributes,
+        type: 'import'
       };
     }
     case 'Layout': {
