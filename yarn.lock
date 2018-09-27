@@ -1453,35 +1453,47 @@
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@canner/slate-util-what/-/slate-util-what-1.5.0.tgz#7d016d8aefe4b478c6e768f63266f47b0e425987"
 
-"@canner/vega-chart-bar@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@canner/vega-chart-bar/-/vega-chart-bar-0.0.3.tgz#4f843a934462714f1f4198a21efe7b9797496a02"
-
-"@canner/vega-chart-default@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@canner/vega-chart-default/-/vega-chart-default-0.0.3.tgz#96f42a542d6e09475aba06ac3982415cca05263f"
-
-"@canner/vega-chart-line@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@canner/vega-chart-line/-/vega-chart-line-0.0.3.tgz#95df38976c14cda784bddadc785bf7195e3a6e2d"
-
-"@canner/vega-chart-pie@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@canner/vega-chart-pie/-/vega-chart-pie-0.0.3.tgz#2cf90306a0f8a75f727ac8ec3df18b0b5c44e209"
-
-"@canner/vega-chart-scatter@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@canner/vega-chart-scatter/-/vega-chart-scatter-0.0.3.tgz#d275f5529a31c380d126d67f8957ce468a481dbd"
-
-"@canner/vega-charts@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@canner/vega-charts/-/vega-charts-0.0.3.tgz#ce1efb2f1c21dad845d4fb1b8529f5198602a586"
+"@canner/vega-chart-bar@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@canner/vega-chart-bar/-/vega-chart-bar-0.0.7.tgz#852919c37f08558189b54a63be0f3c653ea9d5ce"
   dependencies:
-    "@canner/vega-chart-bar" "^0.0.3"
-    "@canner/vega-chart-default" "^0.0.3"
-    "@canner/vega-chart-line" "^0.0.3"
-    "@canner/vega-chart-pie" "^0.0.3"
-    "@canner/vega-chart-scatter" "^0.0.3"
+    "@canner/vega-charts-utils" "^0.0.7"
+
+"@canner/vega-chart-default@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@canner/vega-chart-default/-/vega-chart-default-0.0.7.tgz#7ccfcb24b5b3f190fc5340dc042cb1e3a8b7d3d6"
+
+"@canner/vega-chart-line@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@canner/vega-chart-line/-/vega-chart-line-0.0.7.tgz#eefd62cd67626dddee2b9b4eef987e7eda443af0"
+  dependencies:
+    "@canner/vega-charts-utils" "^0.0.7"
+
+"@canner/vega-chart-pie@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@canner/vega-chart-pie/-/vega-chart-pie-0.0.7.tgz#9eeb587d9afdc454f30d84392a616df2a9b038e7"
+  dependencies:
+    "@canner/vega-charts-utils" "^0.0.7"
+
+"@canner/vega-chart-scatter@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@canner/vega-chart-scatter/-/vega-chart-scatter-0.0.7.tgz#7ed2be1c4b0913fc054523062b5813a40bd18c8a"
+  dependencies:
+    "@canner/vega-charts-utils" "^0.0.7"
+
+"@canner/vega-charts-utils@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@canner/vega-charts-utils/-/vega-charts-utils-0.0.7.tgz#3d7d23ebd32b50117ccf37c76beb721c859c574f"
+
+"@canner/vega-charts@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@canner/vega-charts/-/vega-charts-0.0.7.tgz#caad8f9748af80863d820d9d88eb4e83496356d4"
+  dependencies:
+    "@canner/vega-chart-bar" "^0.0.7"
+    "@canner/vega-chart-default" "^0.0.7"
+    "@canner/vega-chart-line" "^0.0.7"
+    "@canner/vega-chart-pie" "^0.0.7"
+    "@canner/vega-chart-scatter" "^0.0.7"
 
 "@firebase/app-types@0.3.2":
   version "0.3.2"
@@ -12437,6 +12449,12 @@ vega-statistics@^1.2.1:
   resolved "https://registry.yarnpkg.com/vega-statistics/-/vega-statistics-1.2.1.tgz#a35b3fc3d0039f8bb0a8ba1381d42a1df79ecb34"
   dependencies:
     d3-array "1"
+
+vega-tooltip@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/vega-tooltip/-/vega-tooltip-0.13.0.tgz#008d06a1c8f94ba3f23f52bb2498661b21dbf5e6"
+  dependencies:
+    vega-util "^1.7.0"
 
 vega-transforms@^2.2.0:
   version "2.2.0"
