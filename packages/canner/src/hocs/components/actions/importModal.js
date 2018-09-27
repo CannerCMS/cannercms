@@ -88,7 +88,7 @@ export default class ImportModal extends React.Component<Props, State> {
   }
 
   request = (csv: Array<Array<string>>) => {
-    const {request, fields, keyName, items} = this.props;
+    const {request, fields, keyName, items, intl} = this.props;
     const fieldsLength = fields.length;
     return new Promise((resolve, reject) => {
       try {
@@ -104,7 +104,9 @@ export default class ImportModal extends React.Component<Props, State> {
             return result;
           }, {});
           if (values.length !== fieldsLength) {
-            throw new Error('Incorrect format!');
+            throw new Error(intl.formatMessage({
+              id: 'actions.import.error.invalidFormat'
+            }));
           }
           const tmpId = Math.random().toString(36).substr(2, 12);
           return preRequest.then(() => request({
@@ -147,7 +149,7 @@ export default class ImportModal extends React.Component<Props, State> {
     const {success, list, error, errorMessage} = this.state;
     return (
       <Modal
-        title={<FormattedMessage id="actions.export.modal.title" />}
+        title={<FormattedMessage id="actions.import.modal.title" />}
         visible={visible}
         footer={null}
         closable
@@ -156,12 +158,13 @@ export default class ImportModal extends React.Component<Props, State> {
       >
         <React.Fragment>
           <div style={{marginBottom: 24}}>
-            <span>get the template csv: </span>
+            <FormattedMessage id="actions.import.step1" tagName="div" />
             <Button onClick={this.download}>
               <Icon type="download" />
-              download
+              <FormattedMessage id="actions.import.download" />
             </Button>
           </div>
+          <FormattedMessage id="actions.import.step2" tagName="div" />
           <Dragger
             name="file"
             customRequest={this.customRequest}
@@ -171,14 +174,23 @@ export default class ImportModal extends React.Component<Props, State> {
             <p className="ant-upload-drag-icon">
               <Icon type="inbox" />
             </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files</p>
+            <FormattedMessage id="actions.import.upload.hint">
+              {text => (
+                <p className="ant-upload-text">{text}</p>
+              )}
+            </FormattedMessage>
           </Dragger>
           {
             success && (
               <Alert
                 message={
-                  <span>Import {list.length} {title || keyName} successfully!</span>
+                  <FormattedMessage
+                    id="actions.import.upload.success"
+                    values={{
+                      length: list.length,
+                      title: title || keyName
+                    }}
+                  />
                 }
                 type="success"
               />
