@@ -6,6 +6,7 @@ import { CustomizeResolver } from './resolver';
 import { GraphqlClient } from './graphqlClient/types';
 import FirebaseRtdbClientConnector from './connector/firebaseConnector';
 import MemoryConnector from './connector/memoryConnector';
+import LocalStorageConnector from './connector/localStorageConnector';
 import CannerPlatformConnector from './connector/cannerPlatformConnector';
 import PrismaClient from './graphqlClient/prismaClient';
 import GraphqlClientImpl from './graphqlClient/graphqlClient';
@@ -45,6 +46,7 @@ const createClient = ({
 export {
   createClient,
   MemoryConnector,
+  LocalStorageConnector,
   FirebaseRtdbAdminConnector,
   FirebaseRtdbClientConnector,
   PrismaClient,
