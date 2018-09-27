@@ -10,15 +10,15 @@ const orders = () => (
   <array
     keyName="orders"
     ui="tableRoute"
-    title="訂單 - 列表"
+    title="${orders.title}"
     uiParams={{
       columns: [
         {
-          title: "訂單編號",
+          title: "${orders.no}",
           dataIndex: "no"
         },
         {
-          title: "訂單狀態",
+          title: "${orders.orderStatus}",
           dataIndex: "orderStatus",
           filters: [
             { text: "新訂單", value: "new" },
@@ -46,21 +46,11 @@ const orders = () => (
           }
         },
         {
-          title: "訂單日期",
+          title: "${orders.createDate}",
           dataIndex: "createDate"
         },
         {
-          title: "卡片",
-          dataIndex: "orderInfo.cardStyle",
-          render: text => {
-            if (!text || !text.id) {
-              return "🚫";
-            }
-            return "✔";
-          }
-        },
-        {
-          title: "付款狀態",
+          title: "${orders.payStatus}",
           dataIndex: "payStatus",
           filters: [
             { text: "未付款", value: "not" },
@@ -88,7 +78,7 @@ const orders = () => (
           }
         },
         {
-          title: "運送狀態",
+          title: "${orders.shipStatus}",
           dataIndex: "shipStatus",
           filters: [
             { text: "未運送", value: "not" },
@@ -122,15 +112,15 @@ const orders = () => (
           }
         },
         {
-          title: "購買人",
+          title: "${orderStatus.orderInfo.buyerName}",
           dataIndex: "orderInfo.buyerName"
         },
         {
-          title: "購買人電話",
+          title: "${orderStatus.orderInfo.buyerPhone}",
           dataIndex: "orderInfo.buyerPhone"
         },
         {
-          title: "email",
+          title: "${orderStatus.orderInfo.buyerEmail}",
           dataIndex: "orderInfo.buyerEmail"
         }
       ]
@@ -151,42 +141,41 @@ const orders = () => (
           placeholder="輸入訂購人"
         />
         <textFilter
-          label="搜尋訂單編號"
+          label="搜尋${orders.no}"
           field="no"
-          placeholder="搜尋訂單編號"
+          placeholder="搜尋${orders.no}"
         />
       </filter>
       <pagination />
     </toolbar>
-    <Block title="訂購資訊">
+    <Block title="${orders.orderInfo.layoutTitle}">
       <string
         keyName="no"
-        title="訂單編號"
+        title="${orders.no}"
         disabled
         defaultValue={() => shortId.generate()}
       />
       <dateTime
         keyName="createDate"
-        title="訂單成立時間"
+        title="${orders.createDate}"
         defaultValue={() => moment().toISOString()}
         disabled
         required
       />
       <object keyName="orderInfo">
-        <string keyName="buyerName" title="購買人姓名" required />
-        <string keyName="buyerPhone" title="購買人電話" required />
-        <string keyName="buyerEmail" title="購買人 Email" />
-        <string keyName="receiverName" title="收件人姓名" required />
-        <string keyName="receiverPhone" title="收件人電話" required />
-        <dateTime keyName="receiveDate" title="收件日期" required />
+        <string keyName="buyerName" title="${orders.orderInfo.buyerName}" required />
+        <string keyName="buyerPhone" title="${orders.orderInfo.buyerPhone}" required />
+        <string keyName="buyerEmail" title="${orders.orderInfo.buyerEmail}" />
+        <string keyName="receiverName" title="${orders.orderInfo.receiverName}" required />
+        <string keyName="receiverPhone" title="${orders.orderInfo.receiverPhone}" required />
+        <dateTime keyName="receiveTime" title="${orders.orderInfo.receiveTime}" required />
         <Condition match={data => data.shipmentWay !== "person"}>
-          <string keyName="receiverAddress" title="收件人地址" />
-          <boolean keyName="haveAdmin" title="是否有櫃檯或管理員可以幫忙代收" />
+          <string keyName="receiverAddress" title="${orders.orderInfo.receiverAddress}" />
         </Condition>
         <string
           keyName="shipmentWay"
           ui="select"
-          title="運送方式"
+          title="${orders.orderInfo.shipmentWay}"
           uiParams={{
             options: [
               { value: "person", text: "自取" },
@@ -195,99 +184,64 @@ const orders = () => (
             ]
           }}
         />
-        <string
-          title="收件時間"
-          keyName="receiveTime"
-          ui="select"
-          uiParams={{
-            blackCatOptions: [
-              {
-                text: "不指定時間",
-                value: "不指定時間"
-              },
-              {
-                text: "13:00 以前",
-                value: "13:00 以前"
-              },
-              {
-                text: "13:00 - 18:00",
-                value: "13:00 - 18:00"
-              }
-            ],
-            otherOptions: [
-              {
-                text: "不指定時間",
-                value: "不指定時間"
-              },
-              {
-                text: "12:30 - 17:00",
-                value: "12:30 - 17:00"
-              },
-              {
-                text: "17:00 - 21:30",
-                value: "17:00 - 21:30"
-              }
-            ]
-          }}
-        />
-        <Block title="卡片資訊">
-          <string keyName="cardReceiverName" title="卡片收件人姓名" />
-          <string ui="textarea" keyName="cardContext" title="卡片內容" />
-          <string keyName="senderName" title="寄送人姓名" />
-          <string ui="textarea" keyName="comment" title="備註" />
+        <Block title="${orders.card.title}">
+          <string keyName="cardReceiverName" title="${orders.card.receiverName}" />
+          <string ui="textarea" keyName="cardContent" title="${orders.card.content}" />
+          <string keyName="senderName" title="${orders.card.senderName}" />
+          <string ui="textarea" keyName="comment" title="${orders.card.comment}" />
         </Block>
       </object>
 
     </Block>
     <array
       keyName="detail"
-      title="購買清單"
+      title="${orders.detail.title}"
       uiParams={{
         columns: [
           {
-            title: "商品編號",
+            title: "${products.no}",
             dataIndex: "no"
           },
           {
-            title: "圖",
+            title: "${products.photos}",
             dataIndex: "photos"
           },
           {
-            title: "商品名稱",
+            title: "${products.name}",
             dataIndex: "name"
           },
           {
-            title: "原價",
+            title: "${products.price}",
             dataIndex: "price"
           },
           {
-            title: "優惠價",
+            title: "${products.promo}",
             dataIndex: "promo"
           },
           {
-            title: "數量",
+            title: "${orders.count}",
             dataIndex: "count"
           }
         ],
         relationColumns: [
           {
-            title: "商品編號",
+            title: "${products.no}",
             dataIndex: "no"
           },
           {
-            title: "圖",
+            title: "${products.photos}",
             dataIndex: "photos"
           },
           {
-            title: "名稱",
+            title: "${products.name}",
             dataIndex: "name"
           },
           {
-            title: "原價",
+            title: "${products.price}",
             dataIndex: "price"
           },
           {
-            title: "優惠價",
+            title: "${products.promo}",
             dataIndex: "promo"
           }
         ],
@@ -295,22 +249,22 @@ const orders = () => (
         copyFields: ["no", "name", "price", "promo", "count", "photos"]
       }}
     >
-      <string keyName="no" title="商品編號" />
-      <string keyName="name" title="名稱" />
+      <string keyName="no" title="${products.no}" />
+      <string keyName="name" title="${products.name}" />
       <array
         keyName="photos"
         ui="gallery"
-        title="圖"
+        title="${products.photos}"
         uiParams={galleryUIParams}
       />
-      <number keyName="price" title="原價" />
-      <number keyName="promo" title="優惠價" />
-      <number keyName="count" title="數量" />
+      <number keyName="price" title="${products.price}" />
+      <number keyName="promo" title="${products.promo}" />
+      <number keyName="count" title="${products.count}" />
     </array>
-    <Block title="訂單狀態">
+    <Block title="${orders.orderStatus}">
       <string
         keyName="orderStatus"
-        title="訂單狀態"
+        title="${orders.orderStatus}"
         ui="select"
         uiParams={{
           options: [
@@ -327,7 +281,7 @@ const orders = () => (
       />
       <string
         keyName="paymentType"
-        title="付款方式"
+        title="${orders.paymentWay}"
         ui="select"
         uiParams={{
           options: [
@@ -344,7 +298,7 @@ const orders = () => (
       />
       <string
         keyName="payStatus"
-        title="付款狀態"
+        title="${orders.payStatus}"
         ui="select"
         uiParams={{
           options: [
@@ -361,7 +315,7 @@ const orders = () => (
       />
       <string
         keyName="shipStatus"
-        title="運送狀態"
+        title="${orders.shipStatus}"
         ui="select"
         uiParams={{
           options: [
@@ -381,11 +335,11 @@ const orders = () => (
         }}
       />
     </Block>
-    <Block title="其他資訊">
-      <boolean keyName="isHightPrice" title="是否達到滿額優惠" />
-      <number keyName="discount" title="總折扣" />
-      <number keyName="shipFee" title="運費" />
-      <number keyName="result" title="結算金額" />
+    <Block title="${orders.otherInfo}">
+      <boolean keyName="isHighPrice" title="${orders.isHighPrice}" />
+      <number keyName="discount" title="${orders.discount}" />
+      <number keyName="shipFee" title="${orders.shipFee}" />
+      <number keyName="amount" title="${orders.amount}" />
     </Block>
   </array>
 );

@@ -5,39 +5,28 @@ import { galleryValidation } from "./utils";
 const Products = () => (
   <array
     keyName="products"
-    title="產品 - 列表"
+    title="${products.title}"
     ui="tableRoute"
     uiParams={{
       columns: [
         {
-          title: "圖片",
+          title: "${products.photos}",
           dataIndex: "photos"
         },
         {
-          title: "編號",
+          title: "${products.no}",
           dataIndex: "no"
         },
         {
-          title: "品牌",
-          dataIndex: "brand",
-          filters: [
-            { text: "Hanata", value: "HANATA" },
-            { text: "Suss", value: "SUSS" }
-          ],
-          onFilter: (value, record) => {
-            return record.brand === value;
-          }
-        },
-        {
-          title: "名稱",
+          title: "${products.name}",
           dataIndex: "name"
         },
         {
-          title: "價格",
+          title: "${products.price}",
           dataIndex: "price"
         },
         {
-          title: "優惠價",
+          title: "${products.promo}",
           dataIndex: "promo"
         }
       ]
@@ -46,59 +35,20 @@ const Products = () => (
     <toolbar>
       <actions filterButton />
       <filter>
-        <textFilter label="產品編號" field="no" placeholder="輸入產品編號" />
-        <textFilter label="產品名稱" field="name" placeholder="輸入產品名稱" />
-        <selectFilter
-          label="品牌"
-          options={[
-            {
-              text: "Hanata",
-              condition: {
-                brand: {
-                  eq: "HANATA"
-                }
-              }
-            },
-            {
-              text: "SUSS",
-              condition: {
-                brand: {
-                  eq: "SUSS"
-                }
-              }
-            }
-          ]}
-        />
+        <textFilter label="${products.filter.no.label}" field="no" placeholder="products.filter.no.label" />
+        <textFilter label="${products.filter.no.placeholder}" field="name" placeholder="products.filter.no.placeholder" />
       </filter>
       <pagination />
     </toolbar>
-    <Block title="基本設定">
-      <string
-        keyName="brand"
-        ui="select"
-        uiParams={{
-          options: [
-            {
-              text: "SUSS",
-              value: "SUSS"
-            },
-            {
-              text: "HANATA",
-              value: "HANATA"
-            }
-          ]
-        }}
-        title="品牌"
-        required
-      />
-      <string keyName="no" title="商品編號" required />
-      <string keyName="name" title="商品名稱" required />
-      <object keyName="description" ui="editor" title="產品內容描述" />
-      <number keyName="price" title="價格" uiParams={{ unit: "元" }} required />
-      <number keyName="promo" title="優惠價" uiParams={{ unit: "元" }} />
+    <Block title="${products.basicSetting}">
+      <string keyName="no" title="${products.no}" required />
+      <string keyName="name" title="${products.name}" required />
+      <object keyName="description" ui="editor" title="${products.description}" />
+      <number keyName="price" title="${products.price}" uiParams={{ unit: "元" }} required />
+      <number keyName="promo" title="${products.promo}" uiParams={{ unit: "元" }} />
       <relation
         ui="multipleSelect"
-        keyName="addBuy"
+        keyName="addPurchase"
         relation={{
           type: "toMany",
           to: "products"
@@ -107,47 +57,29 @@ const Products = () => (
           textCol: "name",
           columns: [
             {
-              title: "No",
+              title: "${products.no}",
               dataIndex: "no"
             },
             {
-              title: "名稱",
+              title: "${products.name}",
               dataIndex: "name"
             }
           ]
         }}
-        title="加購商品"
+        title="${products.addPurchase}"
       >
         <toolbar>
           <actions filterButton />
           <filter>
             <textFilter
-              label="搜尋訂單編號"
+              label="${products.filter.no.label}"
               field="no"
-              placeholder="搜尋訂單編號"
+              placeholder="${products.filter.no.placeholder}"
             />
           </filter>
           <pagination />
         </toolbar>
       </relation>
-      <relation
-        ui="multipleSelect"
-        keyName="unSupportShipment"
-        uiParams={{
-          textCol: "name",
-          columns: [
-            {
-              title: "名稱",
-              dataIndex: "name"
-            }
-          ]
-        }}
-        relation={{
-          type: "toMany",
-          to: "shipments"
-        }}
-        title="不支援的運送方式"
-      />
       <relation
         keyName="category"
         ui="singleSelectTree"
@@ -168,16 +100,16 @@ const Products = () => (
         }}
       />
     </Block>
-    <Block title="存貨設定">
+    <Block title="${products.storage.layoutTitle}">
       <object keyName="storage">
-        <number keyName="count" title="數量" />
-        <boolean keyName="limited" title="是否開啟存貨設定" />
+        <number keyName="count" title="${products.storage.count}" />
+        <boolean keyName="enabled" title="${products.storage.enabled}" />
       </object>
     </Block>
     <Block>
       <array
         keyName="photos"
-        title="產品照片集"
+        title="${products.photos}"
         ui="gallery"
         required
         validation={galleryValidation}
