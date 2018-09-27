@@ -55,7 +55,8 @@ const dashboard = () => (
               `
             }
             uiParams={{
-              width: 200,
+              height: 150,
+              width: '50%',
               field: 'age',
               color: {
                 field: 'name'
@@ -77,7 +78,6 @@ const dashboard = () => (
             }
             uiParams={{
               height: 150,
-              width: 200,
               color: {
                 field: 'name'
               },
@@ -98,21 +98,35 @@ const dashboard = () => (
             graphql={
               `
                 query users {
-                  users(first: 10) {name age}
+                  users(first: 10) {id}
                 }
               `
             }
+            getValue={() => [{
+              date: new Date('2018-09-20'),
+              number: '12'
+            }, {
+              date: new Date('2018-09-21'),
+              number: '42'
+            }, {
+              date: new Date('2018-09-22'),
+              number: '62'
+            }, {
+              date: new Date('2018-09-23'),
+              number: '72'
+            },{
+              date: new Date('2018-09-24'),
+              number: '62'
+            }]}
             uiParams={{
               height: 150,
-              width: 200,
-              color: {
-                field: 'name'
-              },
+              width: '100%',
               x: {
-                field: 'name'
+                field: 'date',
+                scale: 'utc'
               },
               y: {
-                field: 'age'
+                field: 'number'
               }
             }}
           />
