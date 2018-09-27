@@ -1,21 +1,21 @@
 /** @jsx builder */
 
 import builder from 'canner-script';
-import Posts from './schema/posts.schema';
-import Users from './schema/users.schema';
+import Dashboard from './schema/Dashboard.schema';
+import Customers from './schema/customers.schema';
 import Home from './schema/home.schema';
-import Condition from './schema/condition.schema';
-import SelfRelation from './schema/selfRelation.schema';
-import RowAndCol from './schema/rowAndCol.schema';
-import Dashboard from './schema/dashboard.schema';
+import Orders from './schema/orders.schema';
+import Categories from './schema/categories.schema';
+import Products from './schema/products.schema';
 import utils from './utils';
+import dict from './schema/locale';
+
 const {connector, imageStorage} = utils;
-export default <root connector={connector} imageStorage={imageStorage}>
+export default <root connector={connector} imageStorage={imageStorage} dict={dict}>
   <Dashboard />
   <Home />
-  <Posts/>
-  <Users/>
-  <SelfRelation />
-  <Condition />
-  <RowAndCol />
+  <Products />
+  <Categories />
+  <Orders />
+  <Customers />
 </root>

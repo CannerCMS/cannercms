@@ -1,62 +1,67 @@
 /** @jsx c */
-import c, {Block} from 'canner-script';
-import {renderPosts, renderImages} from '../utils';
+import c, { Block } from "canner-script";
 
-const postColumns = [{
-  title: 'Title',
-  dataIndex: 'title',
-  sorter: (a, b) => a.title > b.title
-}, {
-  title: 'User',
-  dataIndex: 'author.name',
-  sorter: (a, b) => a.author.name > b.author.name
-}, {
-  title: 'Clicks',
-  dataIndex: 'clicks'
-}];
-
-const userColumns = [{
-  title: 'Name',
-  dataIndex: 'name'
-}, {
-  title: 'Email',
-  dataIndex: 'email',
-}, {
-  title: 'Age',
-  dataIndex: 'age'
-}, {
-  title: 'Login',
-  dataIndex: 'isLogin'
-}, {
-  title: 'Images',
-  dataIndex: 'images',
-  render: renderImages
-}, {
-  title: 'Hobbies',
-  dataIndex: 'hobbies'
-}, {
-  title: 'Posts',
-  dataIndex: 'posts',
-  render: renderPosts
-}];
-const home = () => <object keyName="home" title="Home" description="t to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of L ">
-  <Block title="Basic">
-    <number keyName="count" title="Count"/>
-    <relation ui="multipleSelect" title="StaredPosts" description="Ref to Posts" keyName="staredPosts" relation={{to: 'posts', type: 'toMany'}} uiParams={{textCol: 'title', columns: postColumns}}/>
-    <relation ui="singleSelect" title="BestAuthor" description="Ref to Users" keyName="bestAuthor" relation={{to: 'users', type: 'toOne'}} uiParams={{textCol: 'name', columns: userColumns}}/>
-  </Block>
-  <Block title="Header">
-    <object keyName="header">
-      <string keyName="title" title="Title" validation={{maxLength: 4}}/>
-      <string keyName="subTitle" title="Subtitle"/>
-      <object keyName="desc" title="Description" ui="editor"/>
-    </object>
-  </Block>
-  <Block title="Navs">
-    <array keyName="navs">
-      <string keyName="text" />
-    </array>
-  </Block>
-</object>;
-
-export default home;
+export default () => (
+  <object
+    keyName="home"
+    title="${home.title}"
+    description="${home.description}"
+  >
+    <Block title="進場畫面">
+      <object keyName="entry">
+        <array
+          keyName="bannerBg"
+          ui="gallery"
+          title="背景圖"
+        />
+        <string keyName="title" title="標題" />
+        <string keyName="slogan" title="網站口號" />
+      </object>
+    </Block>
+    <Block title="頁首">
+      <object keyName="header">
+        <Block>
+          <array keyName="topLine" title="跑馬燈" ui="tab">
+            <object>
+              <string keyName="text" title="文字" />
+            </object>
+          </array>
+        </Block>
+        <Block title="SUSS 選單設定">
+          <object keyName="sussMenu">
+            <image keyName="logo" title="Logo" />
+          </object>
+        </Block>
+        <Block title="Hanata 選單設定">
+          <object keyName="hanataMenu">
+            <image keyName="logo" title="Logo" />
+          </object>
+        </Block>
+      </object>
+    </Block>
+    <Block title="頁尾">
+      <object keyName="footer">
+        <Block title="SUSS 設定">
+          <object keyName="sussInfo">
+            <image keyName="logo" title="Logo" />
+            <string keyName="fb" ui="link" title="FB 連結" />
+            <string keyName="ig" ui="link" title="IG 連結" />
+            <string keyName="email" ui="link" title="Email 連結" />
+            {/* <string keyName="line" ui="link" title="Line 連結" />
+            <string keyName="homepage" ui="link" title="首頁連結" /> */}
+          </object>
+        </Block>
+        <Block title="Hanata 設定">
+          <object keyName="hanataInfo">
+            <image keyName="logo" />
+            <string keyName="fb" ui="link" title="FB 連結" />
+            <string keyName="ig" ui="link" title="IG 連結" />
+            <string keyName="email" ui="link" title="Email 連結" />
+            {/* <string keyName="line" ui="link" title="Line 連結" />
+            <string keyName="homepage" ui="link" title="首頁連結" /> */}
+          </object>
+        </Block>
+      </object>
+    </Block>
+  </object>
+);

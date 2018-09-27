@@ -70,6 +70,7 @@
     "react-test-renderer": "^16.2.0",
     "react-vega": "^4.0.2",
     "sass-loader": "^6.0.7",
+    "shortid": "^2.2.13",
     "style-loader": "^0.20.2",
     "ts-loader": "^4.4.2",
     "typescript": "^3.0.1",

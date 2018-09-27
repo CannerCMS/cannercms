@@ -23,6 +23,7 @@ module.exports = {
   ],
   "rules": {
     "react/prop-types": 0,
+    "react/display-name": 0,
     "no-implicit-coercion": 0,
     "max-len": 0
   },
