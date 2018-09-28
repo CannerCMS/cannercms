@@ -75,6 +75,7 @@ class CMSExample extends React.Component {
                     })
                   }}
                   errorHandler={e => {
+                    // eslint-disable-next-line
                     console.error(e);
                     notification.error({
                       message: 'Error'

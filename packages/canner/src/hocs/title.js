@@ -28,7 +28,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
       const {title, layout, description, hideTitle,
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
-        refId, routes, updateQuery, type, imageStorage, fileStorage,
+        refId, routes, updateQuery, type, imageStorage,
         onDeploy, removeOnDeploy, required, dataChanged, error, errorInfo
       } = this.props;
       // $FlowFixMe: default funcitons in HOCContext only throw error, so they don't have any arguments

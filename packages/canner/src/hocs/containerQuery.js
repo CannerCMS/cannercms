@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import {Context} from 'canner-helpers';
 import {mapValues, get, isPlainObject, isArray} from 'lodash';
 import type {HOCProps} from './types';
 
