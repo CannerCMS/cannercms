@@ -27,7 +27,7 @@
     "apollo-link": "^1.2.2",
     "apollo-link-http": "^1.5.4",
     "apollo-utilities": "^1.0.11",
-    "canner-graphql-utils": "1.5.0-canary.47",
+    "canner-graphql-utils": "1.5.0-canary.51",
     "dataloader": "^1.4.0",
     "graphql": "0.13.0",
     "graphql-anywhere": "^4.1.6",
