@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import {Menu, notification, Select} from 'antd';
-import {IntlProvider, addLocaleData} from 'react-intl';
+import {Menu, notification, Select, message} from 'antd';
+import {IntlProvider, addLocaleData, FormattedMessage} from 'react-intl';
 import Canner from 'packages/canner/src';
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -20,14 +20,12 @@ export const Logo = styled.img`
 `;
 
 const Option = Select.Option;
-
 const menuConfig = [
   {
     pathname: '__back',
-    title: 'Back to Dashboard',
+    title: <FormattedMessage id="dashboard.menu" />,
     onClick: () => {
-      // eslint-disable-next-line
-      console.log('back to dashboard');
+      message.success('Back to dashboard');
     },
     icon: 'left'
   },
@@ -40,8 +38,9 @@ class CMSExample extends React.Component {
   });
 
   state = {
-    locale: 'zh'
+    locale: 'en'
   };
+
 
   componentDidMount() {
     this.unlisten = this.router.history.listen(() => this.forceUpdate());
@@ -57,6 +56,11 @@ class CMSExample extends React.Component {
     });
   }
 
+  reset = () => {
+    localStorage.clear();
+    message.success('Reset data.', 1, () => location.reload());
+  }
+
   render() {
     const {locale} = this.state;
     const customHeaderMenu = (
@@ -67,12 +71,16 @@ class CMSExample extends React.Component {
               中文
             </Option>
             <Option value="en">
-              英文
+              English
             </Option>
           </Select>
         </Menu.Item>
+        <Menu.Item onClick={this.reset}>
+          <span>Reset</span>
+        </Menu.Item>
       </Menu>
-    )
+    );
+
     return (
       <IntlProvider locale={locale} key={locale} messages={schema.dict[locale]}>
         <Container
@@ -88,6 +96,7 @@ class CMSExample extends React.Component {
           router={this.router}
         >
           <Canner
+            ref={this.cms}
             afterDeploy={() => {
               notification.success({
                 message: 'Deployed!'

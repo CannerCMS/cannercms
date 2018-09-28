@@ -31,7 +31,7 @@ const categories = () => (
         disabled: (data, treeKey) => {
           return treeKey.indexOf("-") !== -1;
         },
-        textCol: data => `${data.name} - (${data.brand})`,
+        textCol: data => data.name,
         relationField: "category"
       }}
     >

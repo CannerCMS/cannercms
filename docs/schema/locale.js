@@ -6,6 +6,8 @@ export default {
       title: 'Title'
     },
     dashboard: {
+      menu: 'Back to dashboard',
+      message: 'Back to dashboard',
       title: 'Dashboard',
       products: 'Total Products',
       orders: 'Total Orders',
@@ -143,6 +145,8 @@ export default {
       title: '標題'
     },
     dashboard: {
+      menu: '返回總覽',
+      message: '返回總覽頁面',
       title: '總覽',
       products: '總產品數',
       orders: '總訂單數',
