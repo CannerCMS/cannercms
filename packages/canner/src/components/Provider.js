@@ -259,7 +259,6 @@ export default class Provider extends React.PureComponent<Props, State> {
     const query = gql`${this.query.toGQL(actions[0].payload.key)}`;
     const data = client.readQuery({query, variables});
     const mutatedData = actions.reduce((result: Object, ac: any) => mutate(result, ac), data);
-    console.log(mutatedData);
     client.writeQuery({
       query,
       variables,
