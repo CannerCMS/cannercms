@@ -31,11 +31,12 @@ interface Hooks {
 }
 
 export default class LocalStorageConnector implements Connector {
+  public static readonly CANNER_LOCAL_STORAGE_KEY: string = 'CANNER_LOCAL_STORAGE_KEY';
   private db: any;
   private hooks: Hooks;
 
   constructor({defaultData, hooks}: {defaultData?: any, hooks?: Hooks}) {
-    const adapter = new LocalStorage();
+    const adapter = new LocalStorage(LocalStorageConnector.CANNER_LOCAL_STORAGE_KEY);
     this.hooks = hooks || {};
     this.db = low(adapter);
     if (defaultData) {
