@@ -60,6 +60,7 @@ export default {
       no: 'Order Number',
       orderStatus: 'Order Status',
       createDate: 'Create Date',
+      paymentType: 'Payment Type',
       payStatus: 'Payment Status',
       shipStatus: 'Shipment Status',
       orderInfo: {
@@ -79,17 +80,24 @@ export default {
           senderName: 'Sender Name',
           comment: 'Comment'
         },
-        detail: {
-          title: 'Product List',
-          count: 'Count'
-        },
-        otherInfo: 'Other Info',
-        isHighPrice: 'Is High Price',
-        discount: 'Discount',
-        shipFee: 'Shipment Fee',
-        amount: 'Amount'
       },
-      
+      detail: {
+        title: 'Product List',
+        count: 'Count'
+      },
+      otherInfo: 'Other Info',
+      isHighPrice: 'Is High Price',
+      discount: 'Discount',
+      shipFee: 'Shipment Fee',
+      amount: 'Amount'
+    },
+    customers: {
+      title: 'Customers',
+      name: 'Name',
+      phone: 'Phone',
+      email: 'Email',
+      address: 'Address',
+      consignees: 'Consignees',
     }
   }),
   zh: flatten({

@@ -3,16 +3,16 @@ import builder from 'canner-script';
 
 const exportFields = [{
   keyName: 'name',
-  title: '姓名',
+  title: '${customers.name}',
 }, {
   keyName: 'phone',
-  title: '電話',
+  title: '${customers.phone}',
 }, {
   keyName: 'email',
-  title: 'Email',
+  title: '${customers.email}',
 }, {
   keyName: 'consignees',
-  title: '收件人歷史紀錄',
+  title: '${customers.consignees}',
   render: consignees => consignees.reduce((result, consignee) => `${result}${result ? ';' : result}${consignee.name}`, '') || '無',
 }];
 
@@ -22,11 +22,11 @@ export default () => (
     ui="tableRoute"
     uiParams={{
       columns: [{
-        title: '姓名',
+        title: '${customers.name}',
         key: 'name',
         dataIndex: 'name',
       }, {
-        title: '電話',
+        title: '${customers.phone}',
         key: 'phone',
         dataIndex: 'phone',
       }, {
@@ -36,7 +36,7 @@ export default () => (
       }],
       createKeys: [],
     }}
-    title="訂購人管理"
+    title="${customers.title}"
   >
     <toolbar>
       <actions>
@@ -47,24 +47,24 @@ export default () => (
         <filter />
       </actions>
       <filter>
-        <textFilter label="搜尋訂購人姓名" field="name" placeholder="輸入訂購人姓名" />
-        <textFilter label="搜尋訂購人電話" field="phone" placeholder="輸入訂購人電話" />
+        <textFilter label="搜尋訂購人${customers.name}" field="name" placeholder="輸入訂購人${customers.name}" />
+        <textFilter label="搜尋訂購人${customers.phone}" field="phone" placeholder="輸入訂購人${customers.phone}" />
       </filter>
       <pagination />
     </toolbar>
-    <string keyName="name" title="姓名" />
+    <string keyName="name" title="${customers.name}" />
     <string keyName="email" title="Email" />
-    <string keyName="phone" title="電話號碼" />
+    <string keyName="phone" title="${customers.phone}號碼" />
     <array
       keyName="consignees"
       ui="table"
       uiParams={{
         columns: [{
-          title: '姓名',
+          title: '${customers.name}',
           key: 'name',
           dataIndex: 'name',
         }, {
-          title: '電話',
+          title: '${customers.phone}',
           key: 'phone',
           dataIndex: 'phone',
         }, {
@@ -74,12 +74,12 @@ export default () => (
         }],
         createKeys: [],
       }}
-      title="收件人歷史記錄"
+      title="${customers.consignees}"
     >
-      <string keyName="name" title="姓名" />
-      <string keyName="email" title="Email" />
-      <string keyName="phone" title="電話號碼" />
-      <string keyName="shipAddress" title="地址" />
+      <string keyName="name" title="${customers.name}" />
+      <string keyName="email" title="${customers.email}" />
+      <string keyName="phone" title="${customers.phone}" />
+      <string keyName="address" title="${customers.address}" />
     </array>
   </array>
 );

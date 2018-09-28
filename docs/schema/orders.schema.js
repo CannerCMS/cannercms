@@ -112,15 +112,15 @@ const orders = () => (
           }
         },
         {
-          title: "${orderStatus.orderInfo.buyerName}",
+          title: "${orders.orderInfo.buyerName}",
           dataIndex: "orderInfo.buyerName"
         },
         {
-          title: "${orderStatus.orderInfo.buyerPhone}",
+          title: "${orders.orderInfo.buyerPhone}",
           dataIndex: "orderInfo.buyerPhone"
         },
         {
-          title: "${orderStatus.orderInfo.buyerEmail}",
+          title: "${orders.orderInfo.buyerEmail}",
           dataIndex: "orderInfo.buyerEmail"
         }
       ]
@@ -184,11 +184,11 @@ const orders = () => (
             ]
           }}
         />
-        <Block title="${orders.card.title}">
-          <string keyName="cardReceiverName" title="${orders.card.receiverName}" />
-          <string ui="textarea" keyName="cardContent" title="${orders.card.content}" />
-          <string keyName="senderName" title="${orders.card.senderName}" />
-          <string ui="textarea" keyName="comment" title="${orders.card.comment}" />
+        <Block title="${orders.orderInfo.card.title}">
+          <string keyName="cardReceiverName" title="${orders.orderInfo.card.receiverName}" />
+          <string ui="textarea" keyName="cardContent" title="${orders.orderInfo.card.content}" />
+          <string keyName="senderName" title="${orders.orderInfo.card.senderName}" />
+          <string ui="textarea" keyName="comment" title="${orders.orderInfo.card.comment}" />
         </Block>
       </object>
 
@@ -219,7 +219,7 @@ const orders = () => (
             dataIndex: "promo"
           },
           {
-            title: "${orders.count}",
+            title: "${orders.detail.count}",
             dataIndex: "count"
           }
         ],
@@ -281,7 +281,7 @@ const orders = () => (
       />
       <string
         keyName="paymentType"
-        title="${orders.paymentWay}"
+        title="${orders.paymentType}"
         ui="select"
         uiParams={{
           options: [
