@@ -1,12 +1,16 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import {Menu, notification, Select} from 'antd';
-import {IntlProvider} from 'react-intl';
+import {IntlProvider, addLocaleData} from 'react-intl';
 import Canner from 'packages/canner/src';
+import en from 'react-intl/locale-data/en';
+import zh from 'react-intl/locale-data/zh';
 import Container, {transformSchemaToMenuConfig} from 'packages/canner-container/src';
 import R from 'packages/router/src';
 import schema from './canner.schema';
 import styled from 'styled-components';
+addLocaleData([...en, ...zh]);
+
 // eslint-disable-next-line
 export const Logo = styled.img`
   background-color: #283050;
@@ -36,7 +40,7 @@ class CMSExample extends React.Component {
   });
 
   state = {
-    locale: 'en'
+    locale: 'zh'
   };
 
   componentDidMount() {
@@ -70,7 +74,7 @@ class CMSExample extends React.Component {
       </Menu>
     )
     return (
-      <IntlProvider locale={locale} messages={schema.dict[locale]}>
+      <IntlProvider locale={locale} key={locale} messages={schema.dict[locale]}>
         <Container
           schema={schema}
           sidebarConfig={{

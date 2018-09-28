@@ -44,8 +44,8 @@ const Products = () => (
       <string keyName="no" title="${products.no}" required />
       <string keyName="name" title="${products.name}" required />
       <object keyName="description" ui="editor" title="${products.description}" />
-      <number keyName="price" title="${products.price}" uiParams={{ unit: "${products.unit}" }} required />
-      <number keyName="promo" title="${products.promo}" uiParams={{ unit: "${products.unit}" }} />
+      <number keyName="price" title="${products.price}" required />
+      <number keyName="promo" title="${products.promo}" />
       <relation
         ui="multipleSelect"
         keyName="addPurchase"

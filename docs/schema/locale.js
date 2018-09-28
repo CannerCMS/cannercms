@@ -138,6 +138,139 @@ export default {
     }
   }),
   zh: flatten({
-
+    share: {
+      logo: '商標',
+      title: '標題'
+    },
+    dashboard: {
+      title: '總覽',
+      products: '總產品數',
+      orders: '總訂單數',
+      customers: '總顧客數'
+    },
+    home: {
+      title: '首頁設定',
+      description: '在這裡設定你的首頁。',
+      entry: {
+        layoutTitle: '進場頁面',
+        title: '網站標題',
+        slogan: '網站標語',
+        bannerBg: '背景圖'
+      },
+      header: {
+        layoutTitle: '頁首',
+      },
+      footer: {
+        layoutTitle: '頁尾',
+        fb: 'Facebook 連結',
+        ig: 'Instagram 連結',
+        email: 'Email'
+      }
+    },
+    products: {
+      title: '商品設定',
+      basicSetting: '基本設定',
+      no: '商品編號',
+      name: '商品名',
+      description: '商品描述',
+      price: '原價',
+      unit: '元',
+      promo: '優惠價',
+      addPurchase: '加價商品',
+      storage: {
+        layoutTitle: '庫存設定',
+        count: '剩餘個數',
+        enabled: '是否啟用'
+      },
+      photos: '商品圖片',
+      filter: {
+        no: {
+          label: '搜尋商品編號',
+          placeholder: '輸入商品編號'
+        },
+        name: {
+          label: '搜尋商品名',
+          placeholder: '輸入商品名'
+        }
+      }
+    },
+    categories: {
+      title: '類別設定',
+      name: '類別名稱',
+      parent: '母類別'
+    },
+    orders: {
+      title: '訂單',
+      no: '訂單編號',
+      orderStatus: '訂單狀態',
+      createDate: '建立日期',
+      paymentType: '付款方式',
+      payStatus: '付款狀態',
+      shipStatus: '運送狀態',
+      newOrder: "新訂單",
+      oldOrder: "舊訂單",
+      notPaid: "尚未付款",
+      paid: '已付款',
+      'paymentType.credit': '信用卡',
+      'unshipped': '未出貨',
+      'shipping': '已出貨',
+      'delivered': '已送達',
+      orderInfo: {
+        layoutTitle: '訂單資訊',
+        buyerName: '購買人姓名',
+        buyerPhone: '購買人電話',
+        buyerEmail: '購買人 Email',
+        receiverName: '收件人姓名',
+        receiverPhone: '收件人電話',
+        receiverAddress: '收件人地址',
+        shipmentWay: '運送方式',
+        'shipmentWay.person': '自取',
+        'shipmentWay.home': '宅配',
+        receiveTime: '預計送達時間',
+        card: {
+          title: '卡片資訊',
+          receiverName: '收件人姓名',
+          content: '卡片內容',
+          senderName: '寄件人姓名',
+          comment: '備註'
+        },
+      },
+      detail: {
+        title: '購買清單',
+        count: '數量'
+      },
+      otherInfo: '其他資訊',
+      discount: '折扣',
+      shipFee: '運費',
+      amount: '結算金額',
+      filter: {
+        buyerName: {
+          label: '搜尋購買人姓名',
+          placeholder: '輸入購買人姓名'
+        },
+        no: {
+          label: '搜尋購買人編號',
+          placeholder: '輸入購買人編號'
+        }
+      }
+    },
+    customers: {
+      title: '顧客',
+      name: '姓名',
+      phone: '電話',
+      email: 'Email',
+      address: '住址',
+      consignees: '歷史收件紀錄',
+      filter: {
+        name: {
+          label: '搜尋顧客姓名',
+          placeholder: '輸入顧客姓名',
+        },
+        phone: {
+          label: '搜尋顧客電話',
+          placeholder: '輸入顧客電話'
+        }
+      }
+    }
   })
 }
