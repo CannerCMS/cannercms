@@ -21,8 +21,8 @@ const orders = () => (
           title: "${orders.orderStatus}",
           dataIndex: "orderStatus",
           filters: [
-            { text: "新訂單", value: "new" },
-            { text: "已處理", value: "old" }
+            { text: "${orders.newOrder}", value: "new" },
+            { text: "${orders.oldOrder}", value: "old" }
           ],
           onFilter: (value, record) => record.orderStatus === value,
           render: (text, data, props) => {
@@ -31,12 +31,12 @@ const orders = () => (
               options: [
                 {
                   value: "new",
-                  title: "新訂單",
+                  title: "${orders.newOrder}",
                   color: "red"
                 },
                 {
                   value: "old",
-                  title: "已處理",
+                  title: "${orders.oldOrder}",
                   color: "green"
                 }
               ],
@@ -53,8 +53,8 @@ const orders = () => (
           title: "${orders.payStatus}",
           dataIndex: "payStatus",
           filters: [
-            { text: "未付款", value: "not" },
-            { text: "已付款", value: "paid" }
+            { text: "${orders.notPaid}", value: "not" },
+            { text: "${orders.paid}", value: "paid" }
           ],
           onFilter: (value, record) => record.payStatus === value,
           render: (text, data, props) => {
@@ -63,12 +63,12 @@ const orders = () => (
               options: [
                 {
                   value: "not",
-                  title: "未付款",
+                  title: "${orders.notPaid}",
                   color: "red"
                 },
                 {
                   value: "paid",
-                  title: "已付款",
+                  title: "${orders.paid}",
                   color: "green"
                 }
               ],
@@ -81,9 +81,9 @@ const orders = () => (
           title: "${orders.shipStatus}",
           dataIndex: "shipStatus",
           filters: [
-            { text: "未運送", value: "not" },
-            { text: "運送中", value: "shipping" },
-            { text: "已送達", value: "shipped" }
+            { text: "${orders.unshipped}", value: "not" },
+            { text: "${orders.shipping}", value: "shipping" },
+            { text: "${orders.delivered}", value: "delivered" }
           ],
           onFilter: (value, record) => record.shipStatus === value,
           render: (text, data, props) => {
@@ -92,17 +92,17 @@ const orders = () => (
               options: [
                 {
                   value: "not",
-                  title: "未運送",
+                  title: "${orders.unshipped}",
                   color: "red"
                 },
                 {
                   value: "shipping",
-                  title: "運送中",
+                  title: "${orders.shipping}",
                   color: "orange"
                 },
                 {
-                  value: "shipped",
-                  title: "已送達",
+                  value: "delivered",
+                  title: "${orders.delivered}",
                   color: "green"
                 }
               ],
@@ -131,19 +131,19 @@ const orders = () => (
       <sorter
         defaultField="createDate"
         options={[
-          { label: "創立時間", field: "createDate", defaultOrder: "desc" }
+          { label: "${orders.createDate}", field: "createDate", defaultOrder: "desc" }
         ]}
       />
       <filter>
         <textFilter
-          label="搜尋訂購人"
+          label="${orders.filter.buyerName.label}"
           field="orderInfo.buyerName"
-          placeholder="輸入訂購人"
+          placeholder="${orders.filter.buyerName.placeholder}"
         />
         <textFilter
-          label="搜尋${orders.no}"
+          label="${orders.filter.no.label}"
           field="no"
-          placeholder="搜尋${orders.no}"
+          placeholder="${orders.filter.no.placeholder}"
         />
       </filter>
       <pagination />
@@ -169,7 +169,7 @@ const orders = () => (
         <string keyName="receiverName" title="${orders.orderInfo.receiverName}" required />
         <string keyName="receiverPhone" title="${orders.orderInfo.receiverPhone}" required />
         <dateTime keyName="receiveTime" title="${orders.orderInfo.receiveTime}" required />
-        <Condition match={data => data.shipmentWay !== "person"}>
+        <Condition match={data => data.shipmentWay !== "PERSON"}>
           <string keyName="receiverAddress" title="${orders.orderInfo.receiverAddress}" />
         </Condition>
         <string
@@ -178,9 +178,8 @@ const orders = () => (
           title="${orders.orderInfo.shipmentWay}"
           uiParams={{
             options: [
-              { value: "person", text: "自取" },
-              { value: "car", text: "雙北市 專人配送" },
-              { value: "blackCat", text: "宅配" }
+              { value: "PERSON", text: "${orders.orderInfo.shipmentWay.person}" },
+              { value: "HOME", text: "${orders.orderInfo.shipmentWay.home}" }
             ]
           }}
         />
@@ -259,7 +258,7 @@ const orders = () => (
       />
       <number keyName="price" title="${products.price}" />
       <number keyName="promo" title="${products.promo}" />
-      <number keyName="count" title="${products.count}" />
+      <number keyName="count" title="${orders.detail.count}" />
     </array>
     <Block title="${orders.orderStatus}">
       <string
@@ -269,11 +268,11 @@ const orders = () => (
         uiParams={{
           options: [
             {
-              text: "新訂單",
+              text: "${orders.newOrder}",
               value: "new"
             },
             {
-              text: "已處理",
+              text: "${orders.oldOrder}",
               value: "old"
             }
           ]
@@ -290,7 +289,7 @@ const orders = () => (
               value: "ATM"
             },
             {
-              text: "信用卡付款",
+              text: "${orders.paymentType.credit}",
               value: "CREDIT"
             }
           ]
@@ -303,11 +302,11 @@ const orders = () => (
         uiParams={{
           options: [
             {
-              text: "未付款",
+              text: "${orders.notPaid}",
               value: "not"
             },
             {
-              text: "已付款",
+              text: "${orders.paid}",
               value: "paid"
             }
           ]
@@ -320,16 +319,16 @@ const orders = () => (
         uiParams={{
           options: [
             {
-              text: "未運送",
+              text: "${orders.unshipped}",
               value: "not"
             },
             {
-              text: "運送中",
+              text: "${orders.shipping}",
               value: "shipping"
             },
             {
-              text: "已送達",
-              value: "shipped"
+              text: "${orders.delivered}",
+              value: "delivered"
             }
           ]
         }}

@@ -5,6 +5,12 @@ export default {
       logo: 'Logo',
       title: 'Title'
     },
+    dashboard: {
+      title: 'Dashboard',
+      products: 'Total Products',
+      orders: 'Total Orders',
+      customers: 'Total Customers'
+    },
     home: {
       title: 'Home Page',
       description: 'Your home page configuration.',
@@ -31,6 +37,7 @@ export default {
       name: 'Product Name',
       description: 'Product Description',
       price: 'Price',
+      unit: 'dollars',
       promo: 'Promo Price',
       addPurchase: 'Additional Purchase',
       storage: {
@@ -63,6 +70,14 @@ export default {
       paymentType: 'Payment Type',
       payStatus: 'Payment Status',
       shipStatus: 'Shipment Status',
+      newOrder: "New Order",
+      oldOrder: "Old Order",
+      notPaid: "Not Paid",
+      paid: 'Paid',
+      'paymentType.credit': 'Credit Card',
+      'unshipped': 'Unshipped',
+      'shipping': 'Shipping',
+      'delivered': 'Delivered',
       orderInfo: {
         layoutTitle: 'Order Info',
         buyerName: 'Buyer Name',
@@ -72,6 +87,8 @@ export default {
         receiverPhone: 'Receiver Phone',
         receiverAddress: 'Receiver Address',
         shipmentWay: 'Shipment Way',
+        'shipmentWay.person': 'In Person',
+        'shipmentWay.home': 'Home',
         receiveTime: 'Receive Time',
         card: {
           title: 'Card Info',
@@ -89,7 +106,17 @@ export default {
       isHighPrice: 'Is High Price',
       discount: 'Discount',
       shipFee: 'Shipment Fee',
-      amount: 'Amount'
+      amount: 'Amount',
+      filter: {
+        buyerName: {
+          label: 'Search Buyer Name',
+          placeholder: 'Enter Buyer Name'
+        },
+        no: {
+          label: 'Search Order No.',
+          placeholder: 'Enter Order No.'
+        }
+      }
     },
     customers: {
       title: 'Customers',
@@ -98,6 +125,16 @@ export default {
       email: 'Email',
       address: 'Address',
       consignees: 'Consignees',
+      filter: {
+        name: {
+          label: 'Search Customer Name',
+          placeholder: 'Enter Customer Name',
+        },
+        phone: {
+          label: 'Search Customer Phone',
+          placeholder: 'Enter Customer Phone'
+        }
+      }
     }
   }),
   zh: flatten({

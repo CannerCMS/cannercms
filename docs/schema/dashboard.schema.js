@@ -3,13 +3,13 @@
 import builder, {Block, Row, Col} from 'canner-script';
 
 export default () => (
-  <page keyName="dashboard" title="Dashboard">
+  <page keyName="dashboard" title="${dashboard.title}">
     <Block>
       <Row>
         <Col span={8}>
           <indicator
             keyName="products-indicator"
-            title="Total Products"
+            title="${dashboard.products}"
             graphql={`
               query products {
                 products {id}
@@ -23,7 +23,7 @@ export default () => (
         </Col>
         <Col span={8}>
           <indicator
-            title="Total Orders"
+            title="${dashboard.orders}"
             keyName="orders-indicator"
             graphql={`
               query orders {
@@ -38,7 +38,7 @@ export default () => (
         </Col>
         <Col span={8}>
           <indicator
-            title="Total Customers"
+            title="${dashboard.customers}"
             keyName="customers-indicator"
             graphql={`
               query customers {

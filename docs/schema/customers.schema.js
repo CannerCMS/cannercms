@@ -47,14 +47,14 @@ export default () => (
         <filter />
       </actions>
       <filter>
-        <textFilter label="搜尋訂購人${customers.name}" field="name" placeholder="輸入訂購人${customers.name}" />
-        <textFilter label="搜尋訂購人${customers.phone}" field="phone" placeholder="輸入訂購人${customers.phone}" />
+        <textFilter label="${customers.filter.name.label}" field="name" placeholder="${customers.filter.name.placeholder}" />
+        <textFilter label="${customers.filter.phone.label}" field="phone" placeholder="${customers.filter.phone.placeholder}" />
       </filter>
       <pagination />
     </toolbar>
     <string keyName="name" title="${customers.name}" />
     <string keyName="email" title="Email" />
-    <string keyName="phone" title="${customers.phone}號碼" />
+    <string keyName="phone" title="${customers.phone}" />
     <array
       keyName="consignees"
       ui="table"

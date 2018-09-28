@@ -44,8 +44,8 @@ const Products = () => (
       <string keyName="no" title="${products.no}" required />
       <string keyName="name" title="${products.name}" required />
       <object keyName="description" ui="editor" title="${products.description}" />
-      <number keyName="price" title="${products.price}" uiParams={{ unit: "元" }} required />
-      <number keyName="promo" title="${products.promo}" uiParams={{ unit: "元" }} />
+      <number keyName="price" title="${products.price}" uiParams={{ unit: "${products.unit}" }} required />
+      <number keyName="promo" title="${products.promo}" uiParams={{ unit: "${products.unit}" }} />
       <relation
         ui="multipleSelect"
         keyName="addPurchase"
@@ -87,12 +87,12 @@ const Products = () => (
           type: "toOne",
           to: "categories"
         }}
-        title="類別"
+        title="${categories.title}"
         uiParams={{
           textCol: "name",
           columns: [
             {
-              title: "類別名稱",
+              title: "${categories.name}",
               dataIndex: "name"
             }
           ],

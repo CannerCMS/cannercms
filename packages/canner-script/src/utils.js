@@ -199,19 +199,14 @@ function formatMessage(value) {
   }
   return value;
 }
-export function getIntlMessage(obj: any) {
-  if (!isPlainObject(obj)) {
-    return formatMessage(obj);
+export function getIntlMessage(value: any) {
+  if (isPlainObject(value)) {
+    return mapValues(value, getIntlMessage);
+  } else if (Array.isArray(value)) {
+    return value.map(item => getIntlMessage(item));
+  } else {
+    return formatMessage(value);
   }
-  return mapValues(obj, v => {
-    if (isPlainObject(v)) {
-      return getIntlMessage(v);
-    } else if (Array.isArray(v)) {
-      return v.map(item => getIntlMessage(item));
-    } else {
-      return formatMessage(v);
-    }
-  })
 }
 
 export function genStorages(attrs: Object, children: Array<*>, storageKey: string = 'fileStorages') {
