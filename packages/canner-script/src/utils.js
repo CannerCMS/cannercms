@@ -2,7 +2,8 @@
 import objectPath from 'object-path';
 import {RootModel} from './models';
 import * as React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedHTMLMessage} from 'react-intl';
+import {isPlainObject, mapValues} from 'lodash';
 
 // this componentMap is the default component in CannerCMS
 export const componentMap = {
@@ -188,16 +189,29 @@ export function parseSchema(attributes: Object, children: Array<Object>) {
   return root.toJson();
 }
 
-export function getIntlMessage(attributes: Object, key: string) {
-  const value = attributes[key];
-  const matched = typeof value === 'string' && value.match(/\$\{(.*)\}/);
-  if (matched) {
-    return <FormattedMessage
-      id={matched[1]}
-      defaultMessage={value}
-    />;
+function isI18nFormat(str) {
+  return typeof str === 'string' && str.match(/\$\{(.*)\}/);
+}
+function formatMessage(value) {
+  const match = isI18nFormat(value);
+  if (match) {
+    return <FormattedHTMLMessage id={match[1]} />;
   }
   return value;
+}
+export function getIntlMessage(obj: any) {
+  if (!isPlainObject(obj)) {
+    return formatMessage(obj);
+  }
+  return mapValues(obj, v => {
+    if (isPlainObject(v)) {
+      return getIntlMessage(v);
+    } else if (Array.isArray(v)) {
+      return v.map(item => getIntlMessage(item));
+    } else {
+      return formatMessage(v);
+    }
+  })
 }
 
 export function genStorages(attrs: Object, children: Array<*>, storageKey: string = 'fileStorages') {
