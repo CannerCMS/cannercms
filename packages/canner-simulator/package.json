@@ -1,6 +1,6 @@
 {
   "name": "canner-simulator",
-  "version": "0.0.2",
+  "version": "1.5.0-canary.48",
   "description": "Testing tool for Canner ",
   "homepage": "",
   "author": "Canner",
@@ -35,7 +35,7 @@
   "dependencies": {
     "antd": "^3.4.1",
     "canner-helpers": "^0.0.1",
-    "canner-ref-id": "^0.1.2",
+    "canner-ref-id": "1.5.0-canary.48",
     "immutable": "^3.8.2"
   }
 }
