@@ -3,9 +3,16 @@
 import React from 'react'
 import {Layout, Menu, Modal, Icon} from 'antd';
 import type {SidebarProps, MenuParams} from './types';
+import Error from './Error';
 const confirm = Modal.confirm;
 
-export default class Sidebar extends React.Component<SidebarProps> {
+type State = {
+  hasError: boolean
+}
+
+export default class Sidebar extends React.Component<SidebarProps, State> {
+  state = {hasError: false}
+
   siderMenuOnClick = (menuItem: {key: string, params: MenuParams}) => {
     const {goTo, dataChanged, reset, routes, schema} = this.props;
     const {key, params} = menuItem;
@@ -35,8 +42,22 @@ export default class Sidebar extends React.Component<SidebarProps> {
     }
   }
 
+  componentDidCatch(error: Error, info: Object) {
+    // Display fallback UI
+    this.setState({ hasError: true });
+    // eslint-disable-next-line
+    console.log(error, info);
+  }
+
   render() {
     const {menuConfig, routes} = this.props;
+    const {hasError} = this.state;
+
+    // if user's customize Menu is has error, display error messages
+    if (hasError) {
+      return <Error />;
+    }
+
     if (!menuConfig) {
       return null;
     }
