@@ -5,7 +5,7 @@ import {generateAction} from '../action';
 import {createEmptyData} from 'canner-helpers';
 import RefId from 'canner-ref-id';
 import type {HOCProps} from './types';
-import {update, merge, isArray, isPlainObject, mapValues} from 'lodash';
+import {update, merge, isArray, isPlainObject} from 'lodash';
 
 type changeQueue = Array<{RefId: RefId | {firstRefId: RefId, secondRefId: RefId}, type: any, value: any}>;
 

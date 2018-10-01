@@ -15,7 +15,7 @@ export const getConfig = () => {
     case 'development':
     default:
       return {
-        baseUrl: 'https://local.host:1234'
+        baseUrl: 'http://local.host:1234'
       };
   }
 };
