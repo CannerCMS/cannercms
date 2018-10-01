@@ -134,10 +134,12 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
 
   switch (type) {
     case 'toMany':
-      result = {};
+      result = [];
       if (isInFirstLevel) {
         for(let i = 0; i < listLength; ++i) {
-          result[`${to}${i}`] = Math.random() >= 0.5;
+          if (Math.random() > 0.5) {
+            result.push(`${to}${i + 1}`);
+          }
         }
       }
       break;
