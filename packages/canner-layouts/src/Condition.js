@@ -16,7 +16,9 @@ type Props = {
   routerParams: {
     operator: 'create' | 'update',
   },
-  refId: CannerRefId
+  refId: CannerRefId,
+  hidden: boolean,
+  disabled: boolean,
 };
 
 export default class Condition extends React.Component<Props> {
@@ -26,11 +28,13 @@ export default class Condition extends React.Component<Props> {
 
   render() {
     // eslint-disable-next-line no-unused-vars
-    const {title, description, recordValue, match, defaultMode, routerParams: {operator}, refId} = this.props;
+    const {title, description, recordValue, match, defaultMode, routerParams: {operator}, refId, disabled, hidden} = this.props;
+    const matchHidden = defaultMode === 'hidden' ? match(recordValue, operator) : true;
+    const matchDisabled = defaultMode === 'disabled' ? !match(recordValue, operator) : false;
     return (
       <Item
-        filter={() => defaultMode === 'hidden' ? match(recordValue, operator) : true}
-        disabled={defaultMode === 'disabled' ? !match(recordValue, operator) : false}
+        filter={() => !hidden && matchHidden}
+        disabled={disabled || matchDisabled}
       />
     );
   }
