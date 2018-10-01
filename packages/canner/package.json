@@ -19,7 +19,7 @@
     "apollo-boost": "^0.1.4",
     "bson-objectid": "^1.2.2",
     "canner-compiler": "^1.5.0-canary.54",
-    "canner-graphql-interface": "1.5.0-canary.49",
+    "canner-graphql-interface": "^1.5.0-canary.54",
     "canner-helpers": "^1.5.0-canary.54",
     "canner-layouts": "^1.5.0-canary.54",
     "canner-ref-id": "^1.5.0-canary.54",
@@ -42,8 +42,11 @@
   "peerDependencies": {
     "@canner/antd-components": ">=0.2.0",
     "antd": ">=3.2.3",
-    "canner-graphql-interface": ">=1.0.0",
-    "canner-helpers": ">=0.1.0",
+    "canner-compiler": "*",
+    "canner-graphql-interface": "*",
+    "canner-helpers": "*",
+    "canner-layouts": "*",
+    "canner-ref-id": "*",
     "react": ">=16.3",
     "react-dom": ">=16.3"
   },
