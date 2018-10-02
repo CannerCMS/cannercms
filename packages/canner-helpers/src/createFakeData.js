@@ -35,11 +35,6 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
       case 'object':
         result = mapSchema(schema.items, loop);
         result.__typename = result.__typename || null;
-        if (schema.keyName) {
-          result = {
-            [schema.keyName]: result
-          };
-        }
         break;
       case 'array':
         result = getArrayData(schema, key, listLength, loop);
