@@ -11,12 +11,14 @@ export default class PrismaClient implements GraphqlClient {
   private secret: string;
   private appId: string;
   private token: string;
+  private env: string;
   private rootSchema: any;
 
-  public async prepare({secret, appId, schema}: {secret: string, appId: string, schema}) {
+  public async prepare({secret, appId, env, schema}: {secret: string, appId: string, env: string, schema: any}) {
     this.secret = secret;
     this.appId = appId;
     this.rootSchema = schema;
+    this.env = env;
     this.token = await this.getToken();
   }
 
@@ -25,6 +27,7 @@ export default class PrismaClient implements GraphqlClient {
       fetch: (uri, options) => {
         const body = {
           schema: this.rootSchema,
+          env: this.env,
           ...JSON.parse(options.body as string)
         };
         options.body = JSON.stringify(body);
