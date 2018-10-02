@@ -6,9 +6,8 @@ import Canner from 'packages/canner/src';
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 import Container, {transformSchemaToMenuConfig} from 'packages/canner-container/src';
-import {createFakeData} from 'packages/canner-helpers/src';
 import R from 'packages/router/src';
-import {LocalStorageConnector} from 'packages/canner-graphql-interface/src';
+
 import schema from './canner.schema';
 import styled from 'styled-components';
 addLocaleData([...en, ...zh]);
@@ -41,10 +40,6 @@ class CMSExample extends React.Component {
   state = {
     locale: 'en'
   };
-
-  schema = {...schema, connector: new LocalStorageConnector({
-    defaultData: createFakeData(schema.schema, 5)
-  })};
 
   componentDidMount() {
     this.unlisten = this.router.history.listen(() => this.forceUpdate());
@@ -88,7 +83,7 @@ class CMSExample extends React.Component {
     return (
       <IntlProvider locale={locale} key={locale} messages={schema.dict[locale]}>
         <Container
-          schema={this.schema}
+          schema={schema}
           sidebarConfig={{
             menuConfig
           }}
