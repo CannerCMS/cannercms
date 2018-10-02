@@ -802,202 +802,202 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@canner/antd-array-gallery@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-gallery/-/antd-array-gallery-0.4.2-alpha.13.tgz#95616b4e7aef5f70cbe74a64469712928d5310c3"
+"@canner/antd-array-gallery@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-gallery/-/antd-array-gallery-0.4.2-alpha.18.tgz#c5c6e55d25704ffef2d882681ee825924149cd30"
   dependencies:
     "@canner/image-service-config" "^0.3.0"
-    "@canner/image-upload" "^0.13.2"
-    canner-image-gallery "^0.3.0"
+    "@canner/image-upload" "^0.13.4"
+    canner-image-gallery "^0.3.4"
 
-"@canner/antd-array-panel@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-panel/-/antd-array-panel-0.4.2-alpha.13.tgz#a2419d54ad63e72ca52821587f864bc3aaaf788a"
+"@canner/antd-array-panel@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-panel/-/antd-array-panel-0.4.2-alpha.18.tgz#c11ed912cdcba172fad16fa81baa1735622fa32a"
   dependencies:
     react-intl "^2.4.0"
 
-"@canner/antd-array-slider@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-slider/-/antd-array-slider-0.4.2-alpha.13.tgz#f133a9605900b8e42e91b73b420f998c28e3f1ba"
+"@canner/antd-array-slider@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-slider/-/antd-array-slider-0.4.2-alpha.18.tgz#96fd5f183fb086f78cba11dc1ab52a76fcb3b0d4"
 
-"@canner/antd-array-tab_bottom@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_bottom/-/antd-array-tab_bottom-0.4.2-alpha.13.tgz#7d0b34d3caf25de0c99ede0d979ab3d7328cbc1b"
+"@canner/antd-array-tab_bottom@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_bottom/-/antd-array-tab_bottom-0.4.2-alpha.18.tgz#b48d2627ee6f2e2d97445c235378ed144e34348e"
   dependencies:
-    "@canner/antd-array-tabs" "^0.4.2-alpha.13"
+    "@canner/antd-array-tabs" "^0.4.2-alpha.18"
 
-"@canner/antd-array-tab_left@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_left/-/antd-array-tab_left-0.4.2-alpha.13.tgz#f1f6ea3bccee7a0ca58d55119fb4af0f64dc6bce"
+"@canner/antd-array-tab_left@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_left/-/antd-array-tab_left-0.4.2-alpha.18.tgz#0eeaee744a18163561f52094d0cef4119823084e"
   dependencies:
-    "@canner/antd-array-tabs" "^0.4.2-alpha.13"
+    "@canner/antd-array-tabs" "^0.4.2-alpha.18"
 
-"@canner/antd-array-tab_right@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_right/-/antd-array-tab_right-0.4.2-alpha.13.tgz#0c453e222bbc5612569f4808c8f0ac919cb9fecf"
+"@canner/antd-array-tab_right@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_right/-/antd-array-tab_right-0.4.2-alpha.18.tgz#7f66f2aca34283ee0336546022ffeb0485b22f1e"
   dependencies:
-    "@canner/antd-array-tabs" "^0.4.2-alpha.13"
+    "@canner/antd-array-tabs" "^0.4.2-alpha.18"
 
-"@canner/antd-array-tab_top@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_top/-/antd-array-tab_top-0.4.2-alpha.13.tgz#9f6475b7cf2a288e7daa32f4489573992854bccc"
+"@canner/antd-array-tab_top@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tab_top/-/antd-array-tab_top-0.4.2-alpha.18.tgz#7da55d3a24532238f30781fcac19a83d57860fa7"
   dependencies:
-    "@canner/antd-array-tabs" "^0.4.2-alpha.13"
+    "@canner/antd-array-tabs" "^0.4.2-alpha.18"
 
-"@canner/antd-array-table@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-table/-/antd-array-table-0.4.2-alpha.13.tgz#20b0bb4a845c08a0e62574b5f4728e652139b08e"
+"@canner/antd-array-table@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-table/-/antd-array-table-0.4.2-alpha.18.tgz#bc9c2f537da30d45d4a329ad6b89550ce963d3ec"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
-    "@canner/antd-share-toolbar" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
+    "@canner/antd-share-toolbar" "^0.4.2-alpha.18"
     prop-types "^15.6.0"
     styled-components "^3.4.6"
 
-"@canner/antd-array-table_route@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-table_route/-/antd-array-table_route-0.4.2-alpha.13.tgz#d5377a0933fcea1c091bd3bb7267d8818679d0c5"
+"@canner/antd-array-table_route@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-table_route/-/antd-array-table_route-0.4.2-alpha.18.tgz#2b5a311a3143745db2958a36b59b690afa48bdd7"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
-    "@canner/antd-share-toolbar" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
+    "@canner/antd-share-toolbar" "^0.4.2-alpha.18"
     styled-components "^3.4.6"
 
-"@canner/antd-array-tabs@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tabs/-/antd-array-tabs-0.4.2-alpha.13.tgz#2bd90a4194cb2a16db832be46e1e778842cc2060"
+"@canner/antd-array-tabs@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tabs/-/antd-array-tabs-0.4.2-alpha.18.tgz#a9a7e993e9a9004d1ba388ed6b28d3274a117bc7"
   dependencies:
     "@canner/rc-tabs" "^9.2.7"
     react-sortablejs "^1.3.6"
     sortablejs "^1.7.0"
 
-"@canner/antd-array-tag@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tag/-/antd-array-tag-0.4.2-alpha.13.tgz#671cf8698f8a0397fda9ee08b55f867e873559cb"
+"@canner/antd-array-tag@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tag/-/antd-array-tag-0.4.2-alpha.18.tgz#3c8ab763a8b5e270f028deb98792b357daeef899"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
 
-"@canner/antd-array-tree@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-tree/-/antd-array-tree-0.4.2-alpha.13.tgz#b6e6e3e02668e0d580535f88a5ff004d2a3c073b"
+"@canner/antd-array-tree@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-tree/-/antd-array-tree-0.4.2-alpha.18.tgz#3894ddd67e095673e15dc66106b6c1cdb3ab8286"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
 
-"@canner/antd-boolean-card@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-boolean-card/-/antd-boolean-card-0.4.2-alpha.13.tgz#f5ab3b9e18727940ba50b544c6a9ec7011e91be3"
+"@canner/antd-boolean-card@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-boolean-card/-/antd-boolean-card-0.4.2-alpha.18.tgz#73a9704b3f7850768fb411b9a76459a8494a7547"
   dependencies:
-    "@canner/antd-share-card" "^0.4.2-alpha.13"
+    "@canner/antd-share-card" "^0.4.2-alpha.18"
 
-"@canner/antd-boolean-switch@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-boolean-switch/-/antd-boolean-switch-0.4.2-alpha.13.tgz#6d96c6646a74258028fb5291e9d631d82147a43c"
+"@canner/antd-boolean-switch@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-boolean-switch/-/antd-boolean-switch-0.4.2-alpha.18.tgz#f27b5008ce0f946fda79516572dbcb4cd97f01ba"
   dependencies:
     react-intl "^2.4.0"
 
-"@canner/antd-components@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-components/-/antd-components-0.4.2-alpha.13.tgz#2c24dae5610143869540450e651464a777cfd07a"
+"@canner/antd-components@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-components/-/antd-components-0.4.2-alpha.18.tgz#f93a191ecbc9da4c5d4c67a22cb8d8155358d0c9"
   dependencies:
-    "@canner/antd-array-gallery" "^0.4.2-alpha.13"
-    "@canner/antd-array-panel" "^0.4.2-alpha.13"
-    "@canner/antd-array-slider" "^0.4.2-alpha.13"
-    "@canner/antd-array-tab_bottom" "^0.4.2-alpha.13"
-    "@canner/antd-array-tab_left" "^0.4.2-alpha.13"
-    "@canner/antd-array-tab_right" "^0.4.2-alpha.13"
-    "@canner/antd-array-tab_top" "^0.4.2-alpha.13"
-    "@canner/antd-array-table" "^0.4.2-alpha.13"
-    "@canner/antd-array-table_route" "^0.4.2-alpha.13"
-    "@canner/antd-array-tabs" "^0.4.2-alpha.13"
-    "@canner/antd-array-tag" "^0.4.2-alpha.13"
-    "@canner/antd-array-tree" "^0.4.2-alpha.13"
-    "@canner/antd-boolean-card" "^0.4.2-alpha.13"
-    "@canner/antd-boolean-switch" "^0.4.2-alpha.13"
-    "@canner/antd-indicator-amount" "^0.4.2-alpha.13"
-    "@canner/antd-indicator-list" "^0.4.2-alpha.13"
-    "@canner/antd-locales" "^0.4.2-alpha.13"
-    "@canner/antd-number-input" "^0.4.2-alpha.13"
-    "@canner/antd-number-rate" "^0.4.2-alpha.13"
-    "@canner/antd-number-slider" "^0.4.2-alpha.13"
-    "@canner/antd-object-editor" "^0.4.2-alpha.13"
-    "@canner/antd-object-image" "^0.4.2-alpha.13"
-    "@canner/antd-object-map" "^0.4.2-alpha.13"
-    "@canner/antd-object-options" "^0.4.2-alpha.13"
-    "@canner/antd-object-slate_editor" "^0.4.2-alpha.13"
-    "@canner/antd-object-variants" "^0.4.2-alpha.13"
-    "@canner/antd-relation-multiple_select" "^0.4.2-alpha.13"
-    "@canner/antd-relation-multiple_select_tree" "^0.4.2-alpha.13"
-    "@canner/antd-relation-single_select" "^0.4.2-alpha.13"
-    "@canner/antd-relation-single_select_tree" "^0.4.2-alpha.13"
-    "@canner/antd-share-card" "^0.4.2-alpha.13"
-    "@canner/antd-share-relation" "^0.4.2-alpha.13"
-    "@canner/antd-share-toolbar" "^0.4.2-alpha.13"
-    "@canner/antd-string-card" "^0.4.2-alpha.13"
-    "@canner/antd-string-date_time_picker" "^0.4.2-alpha.13"
-    "@canner/antd-string-input" "^0.4.2-alpha.13"
-    "@canner/antd-string-link" "^0.4.2-alpha.13"
-    "@canner/antd-string-radio" "^0.4.2-alpha.13"
-    "@canner/antd-string-select" "^0.4.2-alpha.13"
-    "@canner/antd-string-textarea" "^0.4.2-alpha.13"
-    "@canner/antd-string-time_picker" "^0.4.2-alpha.13"
+    "@canner/antd-array-gallery" "^0.4.2-alpha.18"
+    "@canner/antd-array-panel" "^0.4.2-alpha.18"
+    "@canner/antd-array-slider" "^0.4.2-alpha.18"
+    "@canner/antd-array-tab_bottom" "^0.4.2-alpha.18"
+    "@canner/antd-array-tab_left" "^0.4.2-alpha.18"
+    "@canner/antd-array-tab_right" "^0.4.2-alpha.18"
+    "@canner/antd-array-tab_top" "^0.4.2-alpha.18"
+    "@canner/antd-array-table" "^0.4.2-alpha.18"
+    "@canner/antd-array-table_route" "^0.4.2-alpha.18"
+    "@canner/antd-array-tabs" "^0.4.2-alpha.18"
+    "@canner/antd-array-tag" "^0.4.2-alpha.18"
+    "@canner/antd-array-tree" "^0.4.2-alpha.18"
+    "@canner/antd-boolean-card" "^0.4.2-alpha.18"
+    "@canner/antd-boolean-switch" "^0.4.2-alpha.18"
+    "@canner/antd-indicator-amount" "^0.4.2-alpha.18"
+    "@canner/antd-indicator-list" "^0.4.2-alpha.18"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
+    "@canner/antd-number-input" "^0.4.2-alpha.18"
+    "@canner/antd-number-rate" "^0.4.2-alpha.18"
+    "@canner/antd-number-slider" "^0.4.2-alpha.18"
+    "@canner/antd-object-editor" "^0.4.2-alpha.18"
+    "@canner/antd-object-image" "^0.4.2-alpha.18"
+    "@canner/antd-object-map" "^0.4.2-alpha.18"
+    "@canner/antd-object-options" "^0.4.2-alpha.18"
+    "@canner/antd-object-slate_editor" "^0.4.2-alpha.18"
+    "@canner/antd-object-variants" "^0.4.2-alpha.18"
+    "@canner/antd-relation-multiple_select" "^0.4.2-alpha.18"
+    "@canner/antd-relation-multiple_select_tree" "^0.4.2-alpha.18"
+    "@canner/antd-relation-single_select" "^0.4.2-alpha.18"
+    "@canner/antd-relation-single_select_tree" "^0.4.2-alpha.18"
+    "@canner/antd-share-card" "^0.4.2-alpha.18"
+    "@canner/antd-share-relation" "^0.4.2-alpha.18"
+    "@canner/antd-share-toolbar" "^0.4.2-alpha.18"
+    "@canner/antd-string-card" "^0.4.2-alpha.18"
+    "@canner/antd-string-date_time_picker" "^0.4.2-alpha.18"
+    "@canner/antd-string-input" "^0.4.2-alpha.18"
+    "@canner/antd-string-link" "^0.4.2-alpha.18"
+    "@canner/antd-string-radio" "^0.4.2-alpha.18"
+    "@canner/antd-string-select" "^0.4.2-alpha.18"
+    "@canner/antd-string-textarea" "^0.4.2-alpha.18"
+    "@canner/antd-string-time_picker" "^0.4.2-alpha.18"
 
-"@canner/antd-indicator-amount@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-indicator-amount/-/antd-indicator-amount-0.4.2-alpha.13.tgz#cb5c174904c55d561c4d49027504a68d6ac44abc"
+"@canner/antd-indicator-amount@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-indicator-amount/-/antd-indicator-amount-0.4.2-alpha.18.tgz#8814cf1183e0ffaab6fab9bbaf7a2783d7ffc990"
 
-"@canner/antd-indicator-list@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-indicator-list/-/antd-indicator-list-0.4.2-alpha.13.tgz#31f20f621331653073c3f62579cc635fc1bcebc1"
+"@canner/antd-indicator-list@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-indicator-list/-/antd-indicator-list-0.4.2-alpha.18.tgz#48dd6ee0c9b8cd5120e23ed3bf215d4c615d2548"
 
-"@canner/antd-locales@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-locales/-/antd-locales-0.4.2-alpha.13.tgz#823ee305ff0b5d0d6bc2e6d04994580e0ba6eed0"
+"@canner/antd-locales@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-locales/-/antd-locales-0.4.2-alpha.18.tgz#d90f289b29243f5953cebc39d995f90fc1dff6ee"
   dependencies:
     dayjs "^1.7.4"
 
-"@canner/antd-number-input@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-number-input/-/antd-number-input-0.4.2-alpha.13.tgz#d23cb35b8f831552fa491b54238587fdb2d8d4e9"
+"@canner/antd-number-input@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-number-input/-/antd-number-input-0.4.2-alpha.18.tgz#f6fd059e9603c8415aecffd65d059969c543361a"
 
-"@canner/antd-number-rate@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-number-rate/-/antd-number-rate-0.4.2-alpha.13.tgz#73f7bd3796823ac10ca341917eed85937a975329"
+"@canner/antd-number-rate@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-number-rate/-/antd-number-rate-0.4.2-alpha.18.tgz#b6a5b969213d7d72ddc2afc0ebc2f434b2fbfee4"
 
-"@canner/antd-number-slider@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-number-slider/-/antd-number-slider-0.4.2-alpha.13.tgz#b168b7d18cf819d7fc348f4fc27aaf0f709838b5"
+"@canner/antd-number-slider@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-number-slider/-/antd-number-slider-0.4.2-alpha.18.tgz#cb22c6fd917f9c591b6ae20c5172a1d3ee5643c1"
 
-"@canner/antd-object-editor@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-editor/-/antd-object-editor-0.4.2-alpha.13.tgz#0bc67d87eed351d10c14512804ca83907154c33a"
+"@canner/antd-object-editor@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-editor/-/antd-object-editor-0.4.2-alpha.18.tgz#0d8a74fa4444894c8505bd6a05651c9b6a0c2446"
   dependencies:
     quill-image-drop-module "^1.0.3"
     quill-image-resize-module "^3.0.0"
     react-no-ssr "^1.1.0"
     react-quill "^1.3.1"
 
-"@canner/antd-object-image@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-image/-/antd-object-image-0.4.2-alpha.13.tgz#9709f13a8acfb453b7f1abb340e7dc282e27b1b8"
+"@canner/antd-object-image@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-image/-/antd-object-image-0.4.2-alpha.18.tgz#d0b255ea23a6821d5551fa9832a357e13203c75c"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
     "@canner/image-service-config" "^0.3.0"
-    "@canner/image-upload" "^0.13.2"
+    "@canner/image-upload" "^0.13.4"
     react-loading-image "^0.4.1"
 
-"@canner/antd-object-map@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-map/-/antd-object-map-0.4.2-alpha.13.tgz#c0387171ef29180cdc9307f84357286efc86a796"
+"@canner/antd-object-map@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-map/-/antd-object-map-0.4.2-alpha.18.tgz#7e20782d39f247d9bf6dd8411c1dc0d1fb81b493"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
     antd-geosuggest "^0.3.2"
     react-google-maps "^9.4.5"
 
-"@canner/antd-object-options@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-options/-/antd-object-options-0.4.2-alpha.13.tgz#7dfb7fe5320d715c2bdb4db726693c595c0ff9ea"
+"@canner/antd-object-options@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-options/-/antd-object-options-0.4.2-alpha.18.tgz#25e65b4a6d81c1503e19ed553533c8899e513208"
 
-"@canner/antd-object-slate_editor@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-slate_editor/-/antd-object-slate_editor-0.4.2-alpha.13.tgz#5ec783652df2a60b939a618bfe1d995ce777ae8f"
+"@canner/antd-object-slate_editor@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-slate_editor/-/antd-object-slate_editor-0.4.2-alpha.18.tgz#6b17c9642768b88b631bb6a7d58c8d263dfe1eb7"
   dependencies:
     canner-slate-editor "^1.5.4"
     immutable "^3.8.2"
@@ -1006,108 +1006,108 @@
     slate-html-serializer "^0.5.8"
     slate-react "^0.12.0"
 
-"@canner/antd-object-variants@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-object-variants/-/antd-object-variants-0.4.2-alpha.13.tgz#25965d8b08a87f66ac9f0ebf3822f5517de58cf4"
+"@canner/antd-object-variants@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-object-variants/-/antd-object-variants-0.4.2-alpha.18.tgz#1f508c1e77dc6374817eda51960d8d06bc424928"
   dependencies:
     styled-components "^3.2.6"
 
-"@canner/antd-relation-multiple_select@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-relation-multiple_select/-/antd-relation-multiple_select-0.4.2-alpha.13.tgz#fffe9af5d06e7923d03f2529c0564e476d973a5e"
+"@canner/antd-relation-multiple_select@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-relation-multiple_select/-/antd-relation-multiple_select-0.4.2-alpha.18.tgz#e745b66afb20956d90c500da1477ad829d39f3ed"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
-    "@canner/antd-share-relation" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
+    "@canner/antd-share-relation" "^0.4.2-alpha.18"
     lodash.difference "*"
 
-"@canner/antd-relation-multiple_select_tree@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-relation-multiple_select_tree/-/antd-relation-multiple_select_tree-0.4.2-alpha.13.tgz#530fadbd39dd923042650f01631ea60d6466477a"
+"@canner/antd-relation-multiple_select_tree@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-relation-multiple_select_tree/-/antd-relation-multiple_select_tree-0.4.2-alpha.18.tgz#27fb7122af96517b6529875ce6d89eeee8456ef7"
   dependencies:
     lodash.template "^4.4.0"
     react-content-loader "^3.1.2"
     styled-components "^3.2.6"
 
-"@canner/antd-relation-single_select@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select/-/antd-relation-single_select-0.4.2-alpha.13.tgz#10660cde0c37eb967c855e6ed8e848703e2e041e"
+"@canner/antd-relation-single_select@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select/-/antd-relation-single_select-0.4.2-alpha.18.tgz#1e5ddd49f76f78092a2fdc69ee72dd7a62425429"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
-    "@canner/antd-share-relation" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
+    "@canner/antd-share-relation" "^0.4.2-alpha.18"
     lodash.template "^4.4.0"
     styled-components "^3.2.6"
 
-"@canner/antd-relation-single_select_tree@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select_tree/-/antd-relation-single_select_tree-0.4.2-alpha.13.tgz#16833098c3e1325af80a1dea025602656cd3d964"
+"@canner/antd-relation-single_select_tree@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select_tree/-/antd-relation-single_select_tree-0.4.2-alpha.18.tgz#09b98f1076805eb05216ae0ed2931a11e7fc8f30"
   dependencies:
     lodash.template "^4.4.0"
     react-content-loader "^3.1.2"
     styled-components "^3.2.6"
 
-"@canner/antd-share-card@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-share-card/-/antd-share-card-0.4.2-alpha.13.tgz#005fb08a8e346814ca574e5b2a333ffd0204db8c"
+"@canner/antd-share-card@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-share-card/-/antd-share-card-0.4.2-alpha.18.tgz#aa1f0333319cde1d8f64ddf6789c1aa504c2c665"
 
-"@canner/antd-share-relation@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-share-relation/-/antd-share-relation-0.4.2-alpha.13.tgz#299334d3b63aa3841162d58c39d58d9d41080ed0"
+"@canner/antd-share-relation@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-share-relation/-/antd-share-relation-0.4.2-alpha.18.tgz#3322423cea303c8d73770a5d79afdaadefc04d7d"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
-    "@canner/antd-share-toolbar" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
+    "@canner/antd-share-toolbar" "^0.4.2-alpha.18"
 
-"@canner/antd-share-toolbar@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-share-toolbar/-/antd-share-toolbar-0.4.2-alpha.13.tgz#387537ce5226a72e160e9e61714dc890fed724f6"
+"@canner/antd-share-toolbar@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-share-toolbar/-/antd-share-toolbar-0.4.2-alpha.18.tgz#94903bdf1a8fafa66ba7597c84965ed6dc3d4cec"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
 
-"@canner/antd-string-card@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-card/-/antd-string-card-0.4.2-alpha.13.tgz#f1a64cea3ba3281f9b3b628df810dc8b5ddca230"
+"@canner/antd-string-card@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-card/-/antd-string-card-0.4.2-alpha.18.tgz#3efb58fb4b64c914c17c523ffd2824f5b644f267"
   dependencies:
-    "@canner/antd-share-card" "^0.4.2-alpha.13"
+    "@canner/antd-share-card" "^0.4.2-alpha.18"
 
-"@canner/antd-string-date_time_picker@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-date_time_picker/-/antd-string-date_time_picker-0.4.2-alpha.13.tgz#5a63220b990772273c25f2fa3635bcd2fb7de5c1"
+"@canner/antd-string-date_time_picker@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-date_time_picker/-/antd-string-date_time_picker-0.4.2-alpha.18.tgz#432443bb561c197d9df1e4c4609e7f0ea0c72cb4"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
     moment "^2.20.1"
     moment-timezone "^0.5.14"
     react-intl "^2.4.0"
 
-"@canner/antd-string-input@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-input/-/antd-string-input-0.4.2-alpha.13.tgz#10bd58c26df0d9ec09cc3f19c95af428f62a5151"
+"@canner/antd-string-input@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-input/-/antd-string-input-0.4.2-alpha.18.tgz#dfcf5b09a74e9e9a3ed80a31064f741cb6df4e52"
 
-"@canner/antd-string-link@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-link/-/antd-string-link-0.4.2-alpha.13.tgz#6172bb41f208253a4bd3ac4cf61128c191303196"
+"@canner/antd-string-link@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-link/-/antd-string-link-0.4.2-alpha.18.tgz#1c8660418cb331537f2a8a849178615699970db3"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
-    "@canner/antd-string-input" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
+    "@canner/antd-string-input" "^0.4.2-alpha.18"
     react-intl "^2.4.0"
 
-"@canner/antd-string-radio@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-radio/-/antd-string-radio-0.4.2-alpha.13.tgz#68857bd1e12282b022ccf7cb471cf124f0a6700f"
+"@canner/antd-string-radio@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-radio/-/antd-string-radio-0.4.2-alpha.18.tgz#111ff37f0f05a9f1cb9d829f115311673e1df50a"
 
-"@canner/antd-string-select@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-select/-/antd-string-select-0.4.2-alpha.13.tgz#c85b73bcc53e58cc403ba1a0fd0928f98b802095"
+"@canner/antd-string-select@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-select/-/antd-string-select-0.4.2-alpha.18.tgz#a419cdf50491440986f0a28f91e29841e311d0f5"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
 
-"@canner/antd-string-textarea@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-textarea/-/antd-string-textarea-0.4.2-alpha.13.tgz#c5b2241bdd66a5027f5ba51d7e0038b8e89d1cc7"
+"@canner/antd-string-textarea@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-textarea/-/antd-string-textarea-0.4.2-alpha.18.tgz#83569fc79d871640248f6df0350c116de1eda751"
 
-"@canner/antd-string-time_picker@^0.4.2-alpha.13":
-  version "0.4.2-alpha.13"
-  resolved "https://registry.yarnpkg.com/@canner/antd-string-time_picker/-/antd-string-time_picker-0.4.2-alpha.13.tgz#53f69e4911f3f3912a9232164e1fa7e78eb6d668"
+"@canner/antd-string-time_picker@^0.4.2-alpha.18":
+  version "0.4.2-alpha.18"
+  resolved "https://registry.yarnpkg.com/@canner/antd-string-time_picker/-/antd-string-time_picker-0.4.2-alpha.18.tgz#d128179b351937a3020d148d5341ef933c57569a"
   dependencies:
-    "@canner/antd-locales" "^0.4.2-alpha.13"
+    "@canner/antd-locales" "^0.4.2-alpha.18"
     moment-timezone "^0.5.14"
 
 "@canner/image-service-config@^0.3.0":
@@ -1126,20 +1126,20 @@
     react-loading-image "^0.3.0"
     styled-components "^3.2.0"
 
-"@canner/image-upload@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@canner/image-upload/-/image-upload-0.12.0.tgz#344281b635ed9a5d29f0d9dd5788366ea74c7f42"
-  dependencies:
-    react-intl "^2.4.0"
-    react-loading-image "^0.4.1"
-    styled-components "^3.2.0"
-
-"@canner/image-upload@^0.13.1", "@canner/image-upload@^0.13.2":
+"@canner/image-upload@^0.13.1":
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/@canner/image-upload/-/image-upload-0.13.2.tgz#202363b08671603eb85249937d974a149575fb11"
   dependencies:
     react-intl "^2.4.0"
     react-loading-image "^0.4.1"
+    styled-components "^3.2.0"
+
+"@canner/image-upload@^0.13.4":
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/@canner/image-upload/-/image-upload-0.13.4.tgz#a154d39486aee60f7562ff9ed506d9eb007f6cc1"
+  dependencies:
+    react-intl "^2.4.0"
+    react-loading-image "^0.5.0"
     styled-components "^3.2.0"
 
 "@canner/rc-tabs@^9.2.7":
@@ -3312,12 +3312,11 @@ caniuse-lite@^1.0.30000844:
   version "1.0.30000877"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000877.tgz#f189673b86ecc06436520e3e391de6a13ca923b4"
 
-canner-image-gallery@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.npmjs.org/canner-image-gallery/-/canner-image-gallery-0.3.0.tgz#b67113c0443c2a0891dd63a2e570d0c4116aae84"
+canner-image-gallery@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/canner-image-gallery/-/canner-image-gallery-0.3.4.tgz#c06b00281822cd018e8a0eb5c02ae3498e7c86c6"
   dependencies:
-    "@canner/image-service-config" "^0.3.0"
-    "@canner/image-upload" "^0.12.0"
+    "@canner/image-upload" "^0.13.4"
     grid-breakpoint "^1.7.0"
     grid-draggable "3.3.0"
     react-loading-image "^0.4.1"
