@@ -3,8 +3,8 @@ import fetch from 'isomorphic-fetch';
 import { createHttpLink } from 'apollo-link-http';
 import { getConfig } from '../config';
 const {baseUrl} = getConfig();
-const graphqlUrl = (appId: string) => `${baseUrl}/graphql/${appId}/resolve`;
-const getTokenUrl = (appId: string) => `${baseUrl}/graphql/${appId}/token`;
+const graphqlUrl = (appId: string, env: string = 'default') => `${baseUrl}/graphql/${appId}/resolve/${env}`;
+const getTokenUrl = (appId: string, env: string = 'default') => `${baseUrl}/graphql/${appId}/token/${env}`;
 import { ApolloLink } from 'apollo-link';
 
 export default class PrismaClient implements GraphqlClient {
@@ -27,7 +27,6 @@ export default class PrismaClient implements GraphqlClient {
       fetch: (uri, options) => {
         const body = {
           schema: this.rootSchema,
-          env: this.env,
           ...JSON.parse(options.body as string)
         };
         options.body = JSON.stringify(body);
@@ -35,13 +34,13 @@ export default class PrismaClient implements GraphqlClient {
           Authorization: `Bearer ${this.token}`,
           ...options.headers || {}
         };
-        return fetch(graphqlUrl(this.appId), options);
+        return fetch(graphqlUrl(this.appId, this.env), options);
       }
     });
   }
 
   private getToken = async () => {
-    return fetch(getTokenUrl(this.appId), {
+    return fetch(getTokenUrl(this.appId, this.env), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
