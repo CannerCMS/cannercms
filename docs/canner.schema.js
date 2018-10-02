@@ -1,21 +1,35 @@
 /** @jsx builder */
 
 import builder from 'canner-script';
-import Posts from './schema/posts.schema';
-import Users from './schema/users.schema';
+import {LocalStorageConnector} from 'packages/canner-graphql-interface/src';
+import {createFakeData} from 'packages/canner-helpers/src';
+import Dashboard from './schema/Dashboard.schema';
+import Customers from './schema/customers.schema';
 import Home from './schema/home.schema';
-import Condition from './schema/condition.schema';
-import SelfRelation from './schema/selfRelation.schema';
-import RowAndCol from './schema/rowAndCol.schema';
-import Dashboard from './schema/dashboard.schema';
-import utils from './utils';
-const {connector, imageStorage} = utils;
-export default <root connector={connector} imageStorage={imageStorage}>
+import Orders from './schema/orders.schema';
+import Categories from './schema/categories.schema';
+import Products from './schema/products.schema';
+import {ImgurStorage} from 'packages/canner-storage/src';
+import dict from './schema/locale';
+
+const imageStorage = new ImgurStorage({
+  clientId: process.env.IMGUR_DEV_CLIENT_ID
+});
+
+const schema = <root imageStorage={imageStorage} dict={dict}>
   <Dashboard />
   <Home />
-  <Posts/>
-  <Users/>
-  <SelfRelation />
-  <Condition />
-  <RowAndCol />
-</root>
+  <Products />
+  <Categories />
+  <Orders />
+  <Customers />
+</root>;
+const fakeData = createFakeData(schema.schema, 5);
+const connector = new LocalStorageConnector({
+  defaultData: fakeData
+});
+console.log(fakeData);
+export default {
+  ...schema,
+  connector: connector
+}

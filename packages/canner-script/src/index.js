@@ -53,8 +53,12 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     });
   }
   attributes = attributes || {};
-  attributes.title = getIntlMessage(attributes, 'title');
-  attributes.description = getIntlMessage(attributes, 'description');
+  attributes.title = getIntlMessage(attributes.title);
+  attributes.description = getIntlMessage(attributes.description);
+  attributes.uiParams = getIntlMessage(attributes.uiParams);
+  attributes.label = getIntlMessage(attributes.label);
+  attributes.options = getIntlMessage(attributes.options);
+  attributes.placeholder = getIntlMessage(attributes.placeholder);
   switch(tag) {
     case 'string':
       return createJSON(StringModel, [attributes, children]);

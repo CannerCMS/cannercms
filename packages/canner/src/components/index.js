@@ -119,6 +119,7 @@ class CannerCMS extends React.Component<Props, State> {
     return (
       <IntlProvider
         locale={currentLocale}
+        key={currentLocale}
         defaultLocale={intl.defaultLocale || currentLocale}
         messages={{
           ...(componentLocales[currentLocale] || {}),

@@ -161,17 +161,20 @@ describe('create object data', () => {
 
   it('should return array of object', () => {
     const data = createFakeData({
-      type: 'object',
-      keyName: 'info',
-      items: {
-        hobbies: {
-          type: 'array',
-          items: {
-            type: 'string'
+      info: {
+        type: 'object',
+        keyName: 'info',
+        items: {
+          hobbies: {
+            type: 'array',
+            items: {
+              type: 'string'
+            }
           }
         }
       }
     }, 5);
+
     expect(data.info).toBeDefined();
     expect(Array.isArray(data.info.hobbies)).toBe(true);
     expect(data.info.hobbies.length).toBe(5);
@@ -285,7 +288,7 @@ describe('create relation empty data', () => {
       relation: {
         type: 'toMany'
       }
-    })).toEqual({});
+    })).toEqual([]);
   });
 
   it('should return toMany relation data', () => {
@@ -303,7 +306,7 @@ describe('create relation empty data', () => {
           }
         }
       }
-    }, 2)).toEqual({"posts": [{"authors": {}, "id": "posts1"}, {"authors": {}, "id": "posts2"}]});
+    }, 2)).toEqual({"posts": [{"authors": [], "id": "posts1"}, {"authors": [], "id": "posts2"}]});
   });
 
   it('should return toMany relation data', () => {
@@ -329,6 +332,6 @@ describe('create relation empty data', () => {
         }
       }
     }, 2).posts[0].authors;
-    expect(Object.keys(data)).toEqual(['users0', 'users1']);
+    expect(Object.keys(data)).toEqual(["0"]);
   });
 })
