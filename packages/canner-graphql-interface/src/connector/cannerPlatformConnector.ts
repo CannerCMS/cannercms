@@ -25,12 +25,14 @@ export default class CannerPlatformConnector implements Connector {
   protected connectorName: string;
   protected connectorParams: any;
   private secret: string;
+  private env: string;
   private appId: string;
   private rootSchema: any;
 
-  public async prepare({secret, appId, schema}: {secret: string, appId: string, schema}) {
+  public async prepare({secret, appId, env, schema}: {secret: string, appId: string, env: string, schema: any}) {
     this.appId = appId;
     this.secret = secret;
+    this.env = env;
     this.rootSchema = schema;
   }
 
@@ -134,6 +136,7 @@ export default class CannerPlatformConnector implements Connector {
     const merged = {
       ...body,
       appId: this.appId,
+      env: this.env,
       service: this.service,
       resourceId: this.resourceId,
       connectorName: this.connectorName,
