@@ -6,6 +6,7 @@ export type CannerSchema = {
 };
 
 export type LoadedSchema = {
+  pageSchema: CannerSchema,
   schema: CannerSchema,
   visitors: Array<Object>,
   client: ApolloClient,
@@ -64,12 +65,10 @@ export type Router = {
 
 export type CannerContainerProps = {
   schema: LoadedSchema,
-  goTo: string => void,
-  routes: Array<string>,
-  navbarConfig?: NavbarConfig,
   sidebarConfig: SidebarConfig,
   children: React.Element<any>,
   router: Router,
+  navbarConfig?: NavbarConfig,
   dataDidChange?: Function
 };
 
