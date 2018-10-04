@@ -1,4 +1,7 @@
 {
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "test": "lerna exec --ignore *graphql*  -- jest --coverage",
     "test:watch": "lerna --ignore *graphql*  exec -- jest --watch --coverage",
