@@ -157,6 +157,17 @@ Canner advocate a new CMS structure called ***Adaptive CMS*** that is a novel CM
 
 > Learn more [Why Adaptive CMS?](http://www.canner.io/docs/why-adaptive-cms.html)
 
+## Develop
+
+Install all dependencies.
+
+We are using yarn workspace to manage all repos, learn more about [Yarn workspace](https://yarnpkg.com/blog/2017/08/02/introducing-workspaces/)
+
+To install packages
+
+```
+yarn
+```
 
 
 ## License
