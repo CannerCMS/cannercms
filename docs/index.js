@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import {Menu, notification, Select, message} from 'antd';
-import {IntlProvider, addLocaleData, FormattedMessage} from 'react-intl';
+import {IntlProvider, addLocaleData} from 'react-intl';
 import Canner from 'packages/canner/src';
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -22,17 +22,15 @@ export const Logo = styled.img`
 
 const Option = Select.Option;
 const menuConfig = [
-  {
-    pathname: '__back',
-    title: <FormattedMessage id="dashboard.menu" />,
-    onClick: () => {
-      message.success('Back to dashboard');
-    },
-    icon: 'left'
-  },
   ...transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema})
 ]
 class CMSExample extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.unlisten = this.router.history.listen(() => this.forceUpdate());
+  }
+
   router = new R({
     baseUrl: "/docs"
   });
@@ -40,10 +38,6 @@ class CMSExample extends React.Component {
   state = {
     locale: 'en'
   };
-
-  componentDidMount() {
-    this.unlisten = this.router.history.listen(() => this.forceUpdate());
-  }
 
   componentWillUnmount() {
     this.unlisten();

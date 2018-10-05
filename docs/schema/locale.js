@@ -6,10 +6,9 @@ export default {
       title: 'Title'
     },
     dashboard: {
-      menu: 'Back to dashboard',
-      message: 'Back to dashboard',
       title: 'Dashboard',
-      products: 'Total Products',
+      desc: 'Canner is also supporting indicators, charts, and filters to help you build extendable administrator console for your datasets and APIs.',
+      last7daysVisitor: 'Visitors last 7 days',
       orders: 'Total Orders',
       customers: 'Total Customers'
     },
@@ -145,8 +144,6 @@ export default {
       title: '標題'
     },
     dashboard: {
-      menu: '返回總覽',
-      message: '返回總覽頁面',
       title: '總覽',
       products: '總產品數',
       orders: '總訂單數',

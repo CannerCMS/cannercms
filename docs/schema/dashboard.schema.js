@@ -3,25 +3,43 @@
 import builder, {Block, Row, Col} from 'canner-script';
 
 export default () => (
-  <page keyName="dashboard" title="${dashboard.title}">
+  <page
+    keyName="dashboard"
+    title="${dashboard.title}"
+    description="${dashboard.desc}">
     <Block>
       <Row>
         <Col span={8}>
           <indicator
-            keyName="products-indicator"
-            title="${dashboard.products}"
+            keyName="last7days-visitor-indicator"
+            title="${dashboard.last7daysVisitor}"
             graphql={`
-              query products {
-                products {id}
+              query {
+                chart {
+                  visitData(last: 7) {
+                    x
+                    y
+                  }
+                }
               }
             `}
             uiParams={{
-              formatter: v => v
+              formatter: v => {
+                return `${v.total}`;
+              }
             }}
-            getValue={v => v.length}
+            getValue={({visitData})=> {
+              const total = visitData.reduce((acc, daily) => acc + daily.y, 0);
+
+              return {
+                total,
+                firstDay: visitData[0].x,
+                lastDay: visitData[visitData.length - 1].x
+              }
+            }}
           />
         </Col>
-        <Col span={8}>
+        {/* <Col span={8}>
           <indicator
             title="${dashboard.orders}"
             keyName="orders-indicator"
@@ -50,7 +68,7 @@ export default () => (
             }}
             getValue={v => v.length}
           />
-        </Col>
+        </Col> */}
       </Row>
     </Block>
   </page>
