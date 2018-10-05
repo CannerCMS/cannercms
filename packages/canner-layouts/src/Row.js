@@ -31,10 +31,11 @@ export default class RowLayout extends React.Component<Props> {
       style={style}
     >
       {
-        children.map(child => {
+        children.map((child, index) => {
           const {offset, order, pull, push, span, xs, sm, md, lg, xl, xxl, style} =child;
           if (child.nodeType === 'layout.col') {
             return <Col
+              key={index}
               offset={offset}
               order={order}
               pull={pull}
@@ -51,7 +52,7 @@ export default class RowLayout extends React.Component<Props> {
               {
                 renderChildren(node => ({
                   refId,
-                  hidden: child !== node
+                  hidden: child !== node,
                 }))
               }
             </Col>

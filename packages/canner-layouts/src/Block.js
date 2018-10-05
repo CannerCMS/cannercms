@@ -5,13 +5,31 @@ import {Item} from 'canner-helpers';
 import {Card} from 'antd';
 
 type Props = {
-  style: Object
+  style: Object,
+  headStyle: Object,
+  bodyStyle: Object,
+  bordered: boolean,
+  cover: React.Node,
+  extra: string | React.Node,
+  hoverable: boolean,
+  title: string,
+  type: string
 };
 
 export default class Block extends React.Component<Props> {
   render() {
-    const {style, ...rest} = this.props
-    return <Card {...rest} style={{marginBottom: 16, ...style}}>
+    const {style, headStyle, bodyStyle, bordered, cover, extra, hoverable, title, type} = this.props
+    return <Card
+      headStyle={headStyle}
+      bodyStyle={bodyStyle}
+      bordered={bordered}
+      cover={cover}
+      extra={extra}
+      hoverable={hoverable}
+      title={title}
+      type={type}
+      style={{marginBottom: 16, ...style}}
+    >
       <Item />
     </Card>;
   }

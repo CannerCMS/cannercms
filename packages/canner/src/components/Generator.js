@@ -198,6 +198,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
     if (component) {
       return <Context.Provider
+        key={index}
         value={{
           renderChildren,
           routes,
@@ -258,7 +259,7 @@ export default class Generator extends React.PureComponent<Props, State> {
     if (!node) {
       throw new Error(`Can't find the node at refId ${refId.toString()}`);
     }
-    return this.renderNode(node, 0, {refId: refId.remove(1), keyName: refId.getPathArr().slice(-1)[0],...props});
+    return this.renderNode(node, 0, {refId: refId.remove(1), keyName: refId.getPathArr().slice(-1)[0], ...props});
   }
 
   renderChildren = (node: ComponentNode, props: childrenProps | Node => childrenProps): React.Node => {
