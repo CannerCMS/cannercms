@@ -20,12 +20,12 @@ const imageStorage = new ImgurStorage({
 const schema = (
   <root imageStorage={imageStorage} dict={dict}>
     <Dashboard />
-    <object keyName="chart">
+    <objectType keyName="chart">
       <array keyName="visitData">
         <number keyName="x"/>
         <number keyName="y"/>
       </array>
-    </object>
+    </objectType>
     
     {/* <Products />
     <Categories /> */}

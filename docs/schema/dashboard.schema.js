@@ -26,11 +26,13 @@ export default () => (
             uiParams={{
               formatter: v => {
                 return `${v.total}`;
+              },
+              note: v => {
+                return `(${v.firstDay} ~ ${v.lastDay})`;
               }
             }}
             getValue={({visitData})=> {
               const total = visitData.reduce((acc, daily) => acc + daily.y, 0);
-
               return {
                 total,
                 firstDay: visitData[0].x,
