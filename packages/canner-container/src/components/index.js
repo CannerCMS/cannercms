@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import {Layout} from 'antd';
-
+import {pickBy} from 'lodash';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 
@@ -16,15 +16,15 @@ type State = {
 class CannerContainer extends React.Component<CannerContainerProps, State> {
   cannerRef: React.ElementRef<any>;
   menuConfig: MenuConfig | boolean;
-  mergedSchema: Object;
+  uiSchema: Object;
 
   constructor(props: CannerContainerProps) {
     super(props);
     const {sidebarConfig, schema} = props;
-    this.mergedSchema = {...schema.pageSchema, ...schema.schema};
+    this.uiSchema = {...schema.pageSchema, ...pickBy(schema.schema, v => !v.defOnly)};
 
     if (sidebarConfig.menuConfig === true) {
-      this.menuConfig = transformSchemaToMenuConfig(this.mergedSchema);
+      this.menuConfig = transformSchemaToMenuConfig(this.uiSchema);
     } else {
       this.menuConfig = sidebarConfig.menuConfig;
     }
@@ -88,7 +88,7 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
             goTo={router.goTo}
             reset={this.cannerRef.current && this.cannerRef.current.reset}
             routes={routes}
-            schema={this.mergedSchema}
+            schema={this.uiSchema}
             {...sidebarConfig}
             menuConfig={this.menuConfig}
           />
@@ -111,10 +111,12 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
 }
 
 export function transformSchemaToMenuConfig(schema: Object): MenuConfig {
-  return Object.keys(schema).map(key => ({
-    title: schema[key].title,
-    pathname: `/${schema[key].keyName}`
-  }));
+  return Object.keys(schema)
+    .filter(key => !schema[key].defOnly)
+    .map(key => ({
+      title: schema[key].title,
+      pathname: `/${schema[key].keyName}`
+    }));
 }
 
 export default CannerContainer;

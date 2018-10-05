@@ -579,6 +579,50 @@ describe('builder', () => {
     });
   });
 
+  describe('Define type only', () => {
+    it('objectType', () => {
+      const schema = <objectType keyName="info">
+        <string keyName="title" />
+      </objectType>;
+  
+      expect(schema.schema).toMatchObject({
+        posts: {
+          keyName: 'info',
+          type: 'object',
+          defOnly: true,
+          items: {
+            title: {
+              type: 'string'
+            }
+          }
+        }
+      });
+    });
+  
+    it('arrayType', () => {
+      const schema = <arrayType keyName="posts">
+        <string keyName="title" />
+      </arrayType>;
+  
+      expect(schema.schema).toMatchObject({
+        posts: {
+          keyName: 'posts',
+          type: 'array',
+          defOnly: true,
+          items: {
+            type: 'object',
+            items: {
+              title: {
+                type: 'string'
+              }
+            }
+          }
+        }
+      });
+    });
+  
+  })
+
   it('blog schema', () => {
     const blog = require('./blog');
     expect(blog).toMatchSnapshot();
