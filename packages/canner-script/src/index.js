@@ -70,6 +70,10 @@ export default function builder(tag: string | Function, attributes: Object, ...c
       return createJSON(ArrayModel, [attributes, children]);
     case 'object':
       return createJSON(ObjectModel, [attributes, children]);
+    case 'arrayType':
+      return createJSON(ArrayModel, [{...attributes, defOnly: true}, children]);
+    case 'objectType':
+      return createJSON(ObjectModel, [{...attributes, defOnly: true}, children]);
     case 'geoPoint':
       return createJSON(GeoPointModel, [attributes, children]);
     case 'dateTime':

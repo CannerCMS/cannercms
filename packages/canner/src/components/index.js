@@ -7,7 +7,7 @@ import {notification} from 'antd';
 import {createEmptyData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
 import {createClient, MemoryConnector} from 'canner-graphql-interface';
-import {isEmpty, isPlainObject} from 'lodash';
+import {isEmpty, isPlainObject, pickBy} from 'lodash';
 // i18n
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -52,11 +52,11 @@ class CannerCMS extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     const {schema, visitors, pageSchema} = props.schema;
-    const mergedSchema = {
+    const uiSchema = {
       ...pageSchema,
-      ...schema
+      ...pickBy(schema, v => !v.defOnly)
     }
-    this.componentTree = compile(mergedSchema, visitors);
+    this.componentTree = compile(uiSchema, visitors);
     this.schema = Object.keys(schema).reduce((result: any, key: string) => {
       let v = {...schema[key]};
       if (v.type === 'array') {
