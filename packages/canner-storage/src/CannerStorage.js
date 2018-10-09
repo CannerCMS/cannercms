@@ -31,6 +31,11 @@ export default class CannerStorage {
         env: this.env,
         contentType: file.type,
         filePath: filename
+      }, {
+        headers: {
+          Accept: "application/json",
+          Authentication: `Bearer ${this.apiToken || ''}`,
+        }
       });
   }
   
@@ -41,7 +46,6 @@ export default class CannerStorage {
           .put(uploadUrl, file, {
             onUploadProgress: e => (onProgress({ percent: getUploadPercent(e) })),
             headers: {
-              "Authentication": `Bearer ${this.apiToken || ''}`,
               "Content-Type": file.type,
               "X-Upload-Content-Type": file.type,
               "X-Upload-Content-Length": file.size
