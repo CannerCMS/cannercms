@@ -9,10 +9,12 @@ export default class CannerS3Storage extends CannerStorage {
   getEndpoint = () => {
     switch (process.env.NODE_ENV) {
       case 'development':
-        return '/storage/s3/uploadUrl';
+        return 'https://localhost:1234/storage/s3/uploadUrl';
+      case 'development:http':
+        return 'http://localhost:1234/storage/s3/uploadUrl';
       case 'production':
       default:
-        return '/storage/s3/uploadUrl';
+        return 'https://backend.canner.io/storage/s3/uploadUrl';
     }
   }
 }
