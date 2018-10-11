@@ -17,7 +17,7 @@
 
 ![Canner flow](./docs/structure.png)
 
-[***GET STARTED NOW***](https://www.canner.io/docs/start-quick-intro.html)
+[🔥 ***GET STARTED NOW*** 🔥](https://www.canner.io/docs/start-quick-intro.html)
 
 ## Features
 
