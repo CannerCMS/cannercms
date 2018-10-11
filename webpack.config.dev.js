@@ -118,6 +118,19 @@ module.exports = {
         }, {
             loader: "css-loader" // translates CSS into CommonJS
         }]
+      },
+      {
+        test: /\.less$/,
+        use: [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader'
+        }, {
+          loader: 'less-loader',
+          options: {
+            javascriptEnabled: true,
+          }
+        }]
       }
     ],
   },
