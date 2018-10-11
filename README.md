@@ -1,4 +1,4 @@
-![logo](./docs/logo-word-alpha.svg)
+![logo](./docs/logo-word-beta.svg)
 
 [![npm version](https://badge.fury.io/js/canner.svg)](https://badge.fury.io/js/canner)
 [![npm download](https://img.shields.io/npm/dm/canner.svg)](https://www.npmjs.com/package/canner)
@@ -15,9 +15,30 @@
 
 > Canner make CMS simple.  Canner is a universal Content Management System (CMS) framework, which build CMS ultra fast and effortless with GraphQL, Prisma, Firebase and Restful APIs.
 
-**NOTE: Canner BETA is planning to release in Oct 2018 😍**
-
 ![Canner flow](./docs/structure.png)
+
+[🔥 ***GET STARTED NOW*** 🔥](https://www.canner.io/docs/start-quick-intro.html)
+
+## Features
+
+### CMS features
+
+- [x] [30+ CMS components](https://www.canner.io/component)
+- [x] [Support Layouts](https://www.canner.io/docs/schema-layout-tags)
+- [x] [Support Queries](https://www.canner.io/docs/schema-toolbar-tags)
+- [x] [Support Chart](https://www.canner.io/docs/schema-page-tags)
+- [x] [Support i18n](https://www.canner.io/docs/guides-internationalization)
+- [x] [Support Validation](https://www.canner.io/docs/guides-validation)
+- [x] [Support Condition](https://www.canner.io/docs/guides-condition-fields)
+- [x] [Support Customization](https://www.canner.io/docs/guides-customized-component)
+
+### Sources and API
+
+- [x] [Connect to multiple sources](https://www.canner.io/docs/credential-intro)
+  * [Firebase](https://www.canner.io/docs/credential-firebase)
+  * [Prisma](https://www.canner.io/docs/credential-prisma)
+- [x] [Customize resolver](https://www.canner.io/docs/guides-resolver)
+- [x] [Storage API support](https://www.canner.io/docs/guides-storage)
 
 ## Benefits and advantages
 
@@ -85,7 +106,7 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 ***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)***
 
 - Visit Canner official site to learn more: https://www.canner.io
-- Canner documentation: https://www.canner.io/docs/guides-community-intro.html
+- Canner documentation: https://www.canner.io/docs/start-quick-intro
 
 ## 🔥🔥 Only 3 commands to start 🔥🔥
 
@@ -133,8 +154,8 @@ Wonder why we use JSX? [read here](https://www.canner.io/docs/why-jsx)
 
 ## Get started
 
-- Firebase - realtime database: https://www.canner.io/docs/start-quick-firebase.html
-- Prisma: https://www.canner.io/docs/start-quick-prisma.html
+- Firebase - realtime database: https://www.canner.io/docs/tutorial-connect-to-firebase
+- Prisma: https://www.canner.io/docs/tutorial-connect-to-prisma
 
 
 ## Demo
@@ -146,8 +167,8 @@ Wonder why we use JSX? [read here](https://www.canner.io/docs/why-jsx)
 
 **Posts**
 
-- Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up.html
-- Why Firebase CMS: https://www.canner.io/docs/why-firebase-cms.html
+- Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up
+- Why Firebase CMS: https://www.canner.io/docs/why-firebase-cms
 
 ## Introducing Adaptive CMS Framework
 
@@ -155,7 +176,7 @@ Canner advocate a new CMS structure called ***Adaptive CMS*** that is a novel CM
 
 ![overview](http://www.canner.io/docs/assets/revolution.png)
 
-> Learn more [Why Adaptive CMS?](http://www.canner.io/docs/why-adaptive-cms.html)
+> Learn more [Why Adaptive CMS?](https://www.canner.io/docs/why-adaptive-cms)
 
 ## Develop
 
