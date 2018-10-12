@@ -131,9 +131,6 @@ export default () => (
             ui="bar"
             keyName="sales-offline-bar"
             spec={{
-              axes: {
-                grid: true
-              },
               scales: [
                 {
                   name: 'xscale',
@@ -181,43 +178,60 @@ export default () => (
         </Block>
       </Col>
       <Col span={8}>
-        <Block title="Offline Sales">
+        <Block title="Offline and Online Sales">
           <chart
-            ui="bar"
             keyName="sales-offline-online-stack-bar"
-            spec={{
-              axes: {
-                grid: true
-              },
-              scales: [
-                {
-                  name: 'xscale',
-                  type: 'band',
-                  domain: {data: 'table', field: "x"},
-                  range: 'width',
-                  padding: 0.4,
-                  round: true
-                },
-                {
-                  name: 'yscale',
-                  type: 'linear',
-                  domain: {data: 'table', field: "y"},
-                  nice: true,
-                  range: 'height'
-                },
-              ]
-            }}
             uiParams={{
-              x: {
-                field: "x",
-                title: "Types"
-              },
-              y: {
-                field: "y",
-                title: "Total Amount"
-              },
-              height: 200,
-              width: "100%"
+              spec: {
+                "scales": [
+                  {
+                    "name": "x",
+                    "type": "band",
+                    "range": "width",
+                    "domain": {"data": "table", "field": "x"}
+                  },
+                  {
+                    "name": "y",
+                    "type": "linear",
+                    "range": "height",
+                    "nice": true, "zero": true,
+                    "domain": {"data": "table", "field": "y1"}
+                  },
+                  {
+                    "name": "color",
+                    "type": "ordinal",
+                    "range": "category",
+                    "domain": {"data": "table", "field": "c"}
+                  }
+                ],
+
+                "axes": [
+                  {"orient": "bottom", "scale": "x", "zindex": 1},
+                  {"orient": "left", "scale": "y", "zindex": 1}
+                ],
+
+                "marks": [
+                  {
+                    "type": "rect",
+                    "from": {"data": "table"},
+                    "encode": {
+                      "enter": {
+                        "x": {"scale": "x", "field": "x"},
+                        "width": {"scale": "x", "band": 1, "offset": -1},
+                        "y": {"scale": "y", "field": "y0"},
+                        "y2": {"scale": "y", "field": "y1"},
+                        "fill": {"scale": "color", "field": "c"}
+                      },
+                      "update": {
+                        "fillOpacity": {"value": 1}
+                      },
+                      "hover": {
+                        "fillOpacity": {"value": 0.5}
+                      }
+                    }
+                  }
+                ]
+              }
             }}
             getValue={({salesTypeDataOffline}) => {
               return salesTypeDataOffline;
