@@ -6,7 +6,7 @@ import {List} from 'react-content-loader';
 export default function withQuery(Com) {
   return class ComWithQuery extends React.Component {
     render() {
-      const {graphql, variables, getValue, ...restProps} = this.props;
+      const {graphql, variables, transformData, ...restProps} = this.props;
       return (
         <Query query={gql`${graphql}`} variables={variables}>
           {({loading, error, data, ...graphqlProps}) => {
@@ -18,8 +18,8 @@ export default function withQuery(Com) {
               // delete symbol in every item to let vega works
               value = value.map(v => ({...v}));
             }
-            if (getValue) {
-              value = getValue(value);
+            if (transformData) {
+              value = transformData(value);
             }
             return (
               <Com value={value} {...restProps} {...graphqlProps} />
