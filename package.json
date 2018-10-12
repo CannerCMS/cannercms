@@ -37,8 +37,8 @@
     "@babel/preset-env": "^7.0.0-rc.1",
     "@babel/preset-flow": "^7.0.0-rc.1",
     "@babel/preset-react": "^7.0.0-rc.1",
-    "@canner/antd-components": "^0.4.2-alpha.21",
-    "@canner/vega-charts": "^0.0.7",
+    "@canner/antd-components": "^0.5.1",
+    "@canner/vega-charts": "^0.1.1",
     "antd": "^3.9.2",
     "apollo-link": "^1.2.2",
     "babel-core": "^7.0.0-bridge.0",
@@ -86,6 +86,7 @@
   },
   "private": true,
   "dependencies": {
+    "canner-antd-theme": "^1.0.0",
     "flat": "^4.1.0"
   }
 }

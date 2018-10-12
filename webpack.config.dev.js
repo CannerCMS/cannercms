@@ -1,6 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const fs = require('fs');
+const antdTheme = require('canner-antd-theme');
+
+
 module.exports = {
   devServer: {
     historyApiFallback: {
@@ -128,6 +131,7 @@ module.exports = {
         }, {
           loader: 'less-loader',
           options: {
+            modifyVars: antdTheme,
             javascriptEnabled: true,
           }
         }]

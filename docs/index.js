@@ -14,7 +14,6 @@ addLocaleData([...en, ...zh]);
 
 // eslint-disable-next-line
 export const Logo = styled.img`
-  background-color: #283050;
   padding: 20px;
   margin-left: -20px;
   width: 200px;
@@ -82,7 +81,7 @@ class CMSExample extends React.Component {
             menuConfig
           }}
           navbarConfig={{
-            logo: <Logo src="https://cdn.canner.io/cms-page/d89f77c19e5d3aa366ba1498dddd64ef.svg" />,
+            logo: <Logo src="https://cdn.canner.io/images/logo/logo-white-word-beta.svg" />,
             showSaveButton: true,
             renderMenu: () => customHeaderMenu
           }}

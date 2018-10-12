@@ -67,50 +67,50 @@ const salesTypeData = [
 
 const salesTypeDataOnline = [
   {
-    x: '家用电器',
+    x: 'Electronic',
     y: 244,
   },
   {
-    x: '食用酒水',
+    x: 'Food',
     y: 321,
   },
   {
-    x: '个护健康',
+    x: 'Health',
     y: 311,
   },
   {
-    x: '服饰箱包',
+    x: 'Apparel',
     y: 41,
   },
   {
-    x: '母婴产品',
+    x: 'Maternal',
     y: 121,
   },
   {
-    x: '其他',
+    x: 'Others',
     y: 111,
   },
 ];
 
 const salesTypeDataOffline = [
   {
-    x: '家用电器',
+    x: 'Electronic',
     y: 99,
   },
   {
-    x: '食用酒水',
+    x: 'Food',
     y: 188,
   },
   {
-    x: '个护健康',
+    x: 'Health',
     y: 344,
   },
   {
-    x: '服饰箱包',
+    x: 'Apparel',
     y: 255,
   },
   {
-    x: '其他',
+    x: 'Others',
     y: 65,
   },
 ];

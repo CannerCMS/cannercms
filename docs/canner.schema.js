@@ -13,20 +13,27 @@ import {ImgurStorage} from 'packages/canner-storage/src';
 import dict from './schema/locale';
 import fakeData from './schema/fake-data';
 
-const imageStorage = new ImgurStorage({
-  clientId: process.env.IMGUR_DEV_CLIENT_ID
-});
-
 const schema = (
-  <root imageStorage={imageStorage} dict={dict}>
+  <root dict={dict}>
     <Dashboard />
     <objectType keyName="chart">
       <array keyName="visitData">
         <number keyName="x"/>
         <number keyName="y"/>
       </array>
+      <array keyName="salesData">
+        <number keyName="x"/>
+        <number keyName="y"/>
+      </array>
+      <array keyName="salesTypeDataOnline">
+        <string keyName="x"/>
+        <number keyName="y"/>
+      </array>
+      <array keyName="salesTypeDataOffline">
+        <string keyName="x"/>
+        <number keyName="y"/>
+      </array>
     </objectType>
-    
     {/* <Products />
     <Categories /> */}
     {/* <Home />
@@ -34,8 +41,6 @@ const schema = (
     <Customers /> */}
   </root>
 );
-
-console.log(fakeData)
 
 const connector = new LocalStorageConnector({
   defaultData: fakeData
