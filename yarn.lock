@@ -1327,10 +1327,10 @@
     "@canner/vega-charts-utils" "^0.1.1"
     lodash.merge "^4.6.1"
 
-"@canner/vega-chart-default@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@canner/vega-chart-default/-/vega-chart-default-0.1.1.tgz#d11853643491cfa44e8e23961e200b2f6f25b0d2"
-  integrity sha512-4HiKtoOASTdoZd6XhCFupfNfkmMLFU+seodsHk1CHUcJlx+B4WRrUbL9EnRe/FtBNGcr4dOZREb7hNeoI3LdFw==
+"@canner/vega-chart-default@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@canner/vega-chart-default/-/vega-chart-default-0.1.2.tgz#3bf0e0c73627d42c088b4bb3b4d1dc16806b6ec5"
+  integrity sha512-K4cn74LckNDxvtVK/7/9kk66n4s1t56rSGo2MHyZGHTdTv3cpLSUBLTOisE2oCbWkT4rU6GEoNkVwRittHJn0g==
 
 "@canner/vega-chart-line@^0.1.1":
   version "0.1.1"
@@ -1361,13 +1361,13 @@
   resolved "https://registry.yarnpkg.com/@canner/vega-charts-utils/-/vega-charts-utils-0.1.1.tgz#b1655551defa6d2d57aac1e868d1571b774bfcd5"
   integrity sha512-1dXTY/8U2RtEPM+wpcb/UoOCWZ178zDknjHEXFls8OTnFy0pIyfFgpFDOlF3b8l9TSNduK8xBJk4AzsEhF0JJw==
 
-"@canner/vega-charts@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@canner/vega-charts/-/vega-charts-0.1.1.tgz#f56d02150af513c5d6e2fe4a1c6905ac46f58c9d"
-  integrity sha512-MXW7WU4WGKUYlok6iD/pUo4KWeCnR7wZtMhLYTcVoLhzxEFSL6hq99ASgYzyHcG446otGERQWG3yBNNDu24i5w==
+"@canner/vega-charts@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@canner/vega-charts/-/vega-charts-0.1.2.tgz#197ec69f90bc5322360a030216140a08fa62249d"
+  integrity sha512-lD7H6+utOXCW97EJwf2oV3LMqsBt43ASKHw76Bo5DXAk8MLck/jYCNh6E4TQfHvBci/4Fer1Vv/WUrfiAThcwg==
   dependencies:
     "@canner/vega-chart-bar" "^0.1.1"
-    "@canner/vega-chart-default" "^0.1.1"
+    "@canner/vega-chart-default" "^0.1.2"
     "@canner/vega-chart-line" "^0.1.1"
     "@canner/vega-chart-pie" "^0.1.1"
     "@canner/vega-chart-scatter" "^0.1.1"
