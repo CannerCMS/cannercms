@@ -14,7 +14,7 @@ export interface Connector {
   listResolveQuery(
     {key, where, order, pagination, document, schema}:
     {key: string, where?: any, order?: any; pagination?: Pagination, document?: any, schema?: any}): Promise<any>;
-  hasNextPage({key, id}: {key: string, id: string}): Promise<any>;
+  hasNextPage?({key, id}: {key: string, id: string}): Promise<any>;
 
   // relation
   resolveToOne({from, to, id, schema}: {from: string, to: string, id: string, schema: Field}): Promise<any>;
