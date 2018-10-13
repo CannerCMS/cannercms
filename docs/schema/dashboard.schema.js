@@ -32,7 +32,7 @@ export default () => (
                 return `(${v.firstDay} ~ ${v.lastDay})`;
               }
             }}
-            getValue={({visitData})=> {
+            transformData={({visitData})=> {
               const total = visitData.reduce((acc, daily) => acc + daily.y, 0);
               return {
                 total,
@@ -61,7 +61,7 @@ export default () => (
                 return `${v.total}`;
               }
             }}
-            getValue={({salesData})=> {
+            transformData={({salesData})=> {
               const total = salesData.reduce((acc, monthly) => acc + monthly.y, 0);
               return {
                 total
@@ -109,7 +109,7 @@ export default () => (
               height: 200,
               width: "100%"
             }}
-            getValue={({salesTypeDataOnline}) => {
+            transformData={({salesTypeDataOnline}) => {
               return salesTypeDataOnline;
             }}
             graphql={`
@@ -161,7 +161,7 @@ export default () => (
               height: 200,
               width: "100%"
             }}
-            getValue={({salesTypeDataOffline}) => {
+            transformData={({salesTypeDataOffline}) => {
               return salesTypeDataOffline;
             }}
             graphql={`
@@ -181,64 +181,95 @@ export default () => (
         <Block title="Offline and Online Sales">
           <chart
             keyName="sales-offline-online-stack-bar"
-            uiParams={{
-              spec: {
-                "scales": [
-                  {
-                    "name": "x",
-                    "type": "band",
-                    "range": "width",
-                    "domain": {"data": "table", "field": "x"}
-                  },
-                  {
-                    "name": "y",
-                    "type": "linear",
-                    "range": "height",
-                    "nice": true, "zero": true,
-                    "domain": {"data": "table", "field": "y1"}
-                  },
-                  {
-                    "name": "color",
-                    "type": "ordinal",
-                    "range": "category",
-                    "domain": {"data": "table", "field": "c"}
-                  }
-                ],
+            spec={{
+              "height": 200,
+              "width": "100%",
+              "scales": [
+                {
+                  "name": "x",
+                  "type": "band",
+                  "range": "width",
+                  "domain": {"data": "table", "field": "x"}
+                },
+                {
+                  "name": "y",
+                  "type": "linear",
+                  "range": "height",
+                  "nice": true,
+                  "zero": true,
+                  "domain": {"data": "table", "field": "y1"}
+                },
+                {
+                  "name": "color",
+                  "type": "ordinal",
+                  "range": "category",
+                  "domain": {"data": "table", "field": "c"}
+                }
+              ],
 
-                "axes": [
-                  {"orient": "bottom", "scale": "x", "zindex": 1},
-                  {"orient": "left", "scale": "y", "zindex": 1}
-                ],
-
-                "marks": [
+              "data": [{
+                "name": "table",
+                "transform": [
                   {
-                    "type": "rect",
-                    "from": {"data": "table"},
-                    "encode": {
-                      "enter": {
-                        "x": {"scale": "x", "field": "x"},
-                        "width": {"scale": "x", "band": 1, "offset": -1},
-                        "y": {"scale": "y", "field": "y0"},
-                        "y2": {"scale": "y", "field": "y1"},
-                        "fill": {"scale": "color", "field": "c"}
-                      },
-                      "update": {
-                        "fillOpacity": {"value": 1}
-                      },
-                      "hover": {
-                        "fillOpacity": {"value": 0.5}
-                      }
-                    }
+                    "type": "stack",
+                    "groupby": ["x"],
+                    "sort": {"field": "c"},
+                    "field": "y"
                   }
                 ]
-              }
+              }],
+
+              "axes": [
+                {"orient": "bottom", "scale": "x", "zindex": 1},
+                {"orient": "left", "scale": "y", "zindex": 1}
+              ],
+
+              "marks": [
+                {
+                  "type": "rect",
+                  "from": {"data": "table"},
+                  "encode": {
+                    "enter": {
+                      "x": {"scale": "x", "field": "x"},
+                      "width": {"scale": "x", "band": 1, "offset": -1},
+                      "y": {"scale": "y", "field": "y0"},
+                      "y2": {"scale": "y", "field": "y1"},
+                      "fill": {"scale": "color", "field": "c"}
+                    },
+                    "update": {
+                      "fillOpacity": {"value": 1}
+                    },
+                    "hover": {
+                      "fillOpacity": {"value": 0.5}
+                    }
+                  }
+                }
+              ]
             }}
-            getValue={({salesTypeDataOffline}) => {
-              return salesTypeDataOffline;
+            transformData={({salesTypeDataOffline, salesTypeDataOnline}) => {
+              const salesTypeDataOfflineAddColor = salesTypeDataOffline.map(d => {
+                d.c = 0;
+                return d;
+              });
+
+              const salesTypeDataOnlineAddColor = salesTypeDataOnline.map(d => {
+                d.c = 1;
+                return d;
+              })
+
+              console.log(salesTypeDataOfflineAddColor)
+
+              return {
+                table: salesTypeDataOfflineAddColor.concat(salesTypeDataOnlineAddColor)
+              };
             }}
             graphql={`
               query {
                 chart {
+                  salesTypeDataOnline {
+                    x
+                    y
+                  }
                   salesTypeDataOffline {
                     x
                     y

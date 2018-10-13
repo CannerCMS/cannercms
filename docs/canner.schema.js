@@ -48,5 +48,5 @@ const connector = new LocalStorageConnector({
 
 export default {
   ...schema,
-  connector: connector
+  connector
 }
