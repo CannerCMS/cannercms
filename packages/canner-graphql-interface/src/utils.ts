@@ -19,12 +19,12 @@ export const createDefaultData = (schema: any) => {
 // fill in typename for relation
 export const createSchemaForResolver = (schema: any) => {
   return mapValues(schema, item => {
-    if (item.items) {
+    if (item && item.items) {
       item.items = createSchemaForResolver(item.items);
       return item;
     }
 
-    if (item.relation) {
+    if (item && item.relation) {
       item.relation.typename = capitalizeFirstLetter(pluralize.singular(item.relation.to));
     }
     return item;
