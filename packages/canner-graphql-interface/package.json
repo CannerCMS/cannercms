@@ -13,8 +13,8 @@
   "typings": "./lib/index.d.ts",
   "scripts": {
     "lint": "tslint -c tslint.json src/**/*.ts",
-    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
-    "test:grep": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit",
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --require ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
+    "test:grep": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --require ts-node/register --recursive --exit",
     "clean": "rimraf lib dist",
     "prebuild": "npm run clean",
     "build": "tsc -p ./tsconfig.release.json --pretty",
