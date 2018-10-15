@@ -1,4 +1,5 @@
 <div align="center">
+
 ![logo](./docs/logo-word-beta.svg)
 
 [![npm version](https://badge.fury.io/js/canner.svg)](https://badge.fury.io/js/canner)
@@ -15,7 +16,7 @@
 
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/canner)
 
-> Canner make CMS simple, a CMS for **APIs and Clouds**.  Canner is a universal Content Management System (CMS) framework, which build CMS ultra fast and effortless with GraphQL, Prisma, Firebase and Restful APIs.
+> Canner, a CMS for **APIs and Clouds**.  Canner is a universal Content Management System (CMS) framework, which build CMS ultra fast and effortless with GraphQL, Prisma, Firebase and Restful APIs.
 
 ![Canner flow](./docs/structure.png)
 
