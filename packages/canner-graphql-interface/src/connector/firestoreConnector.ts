@@ -232,7 +232,8 @@ export default class FirestoreConnector implements Connector {
         });
     }));
 
-    const dataMap: any = reduce(joinedData, (map, {key, snapshot}) => {
+    const dataMap: { [key: string]: firebase.firestore.QuerySnapshot } = reduce(
+      joinedData, (map, {key, snapshot}) => {
       map[key] = snapshot;
       return map;
     }, {});
@@ -241,7 +242,12 @@ export default class FirestoreConnector implements Connector {
       return {
         ...row,
         ...mapValues(fields, (to: string, field: string) => {
-          const child = dataMap[to].child(row[field]);
+          let child: firebase.firestore.QueryDocumentSnapshot;
+          dataMap[to].forEach((snapshot: firebase.firestore.QueryDocumentSnapshot) => {
+            if (snapshot.id === row[field]) {
+              child = snapshot;
+            }
+          });
           return {id: child.id, ...child.data()};
         })
       };
