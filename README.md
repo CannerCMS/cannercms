@@ -1,6 +1,9 @@
-<div align="center">
+<p align="center">
+  <a href="#"><img src="./docs/logo-word-beta.png" /></a>
+</p>
 
-![logo](./docs/logo-word-beta.png)
+<div>
+
 [![npm version](https://badge.fury.io/js/canner.svg)](https://badge.fury.io/js/canner)
 [![npm download](https://img.shields.io/npm/dm/canner.svg)](https://www.npmjs.com/package/canner)
 [![CircleCI branch](https://img.shields.io/circleci/project/github/Canner/canner/master.svg)](https://circleci.com/gh/Canner/canner)
