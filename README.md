@@ -2,7 +2,7 @@
   <a href="#"><img src="./docs/logo-word-beta.png" /></a>
 </p>
 
-<div>
+<div align="center">
 
 [![npm version](https://badge.fury.io/js/canner.svg)](https://badge.fury.io/js/canner)
 [![npm download](https://img.shields.io/npm/dm/canner.svg)](https://www.npmjs.com/package/canner)
