@@ -1,10 +1,12 @@
 <div align="center">
+
 ![logo](./docs/logo-word-beta.png)
 [![npm version](https://badge.fury.io/js/canner.svg)](https://badge.fury.io/js/canner)
 [![npm download](https://img.shields.io/npm/dm/canner.svg)](https://www.npmjs.com/package/canner)
 [![CircleCI branch](https://img.shields.io/circleci/project/github/Canner/canner/master.svg)](https://circleci.com/gh/Canner/canner)
 [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Universal%20CMS%20framework%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
+
 </div>
 
 <br/><br/>
