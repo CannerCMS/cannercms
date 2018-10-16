@@ -9,7 +9,7 @@ import { createLink } from '../src/link';
 import { pick, mapValues, isArray, reduce, omit } from 'lodash';
 import * as chai from 'chai';
 import gql from 'graphql-tag';
-import { FirebaseRtdbAdminConnector } from '../src';
+import FirestoreAdminConnector from '../src/connector/firestoreAdminConnector';
 const expect = chai.expect;
 const TEST_NAMESPACE = '__test__';
 import { queryOne, listQuery, mapQuery, listMutation, mapMutation, emptyData } from './testsuit';
@@ -67,21 +67,20 @@ try {
   firebase.app();
 } catch (e) {
   firebase.initializeApp({
-    apiKey: 'AIzaSyAwzjZJD7SUCRC42mL7A9sw4VPIvodQH98',
-    authDomain: 'apollo-test-2c6af.firebaseapp.com',
-    databaseURL: 'https://apollo-test-2c6af.firebaseio.com',
-    projectId: 'apollo-test-2c6af',
+    apiKey: 'AIzaSyDbZQp686CV4Sl7d4kV7GU4-05MWlj0aqk',
+    authDomain: 'canner-test-632ac.firebaseapp.com',
+    databaseURL: 'https://canner-test-632ac.firebaseio.com',
+    projectId: 'canner-test-632ac',
     storageBucket: '',
-    messagingSenderId: '84103499922'
+    messagingSenderId: '854494897315'
   });
 }
 
-describe('firebaseAdmin connector', () => {
+describe('firestoreAdmin connector', () => {
   const defaultApp = firebase.app();
-  const connector = new FirebaseRtdbAdminConnector({
-    namespace: TEST_NAMESPACE,
-    databaseURL: 'https://apollo-test-2c6af.firebaseio.com',
-    projectId: 'apollo-test-2c6af'
+  const connector = new FirestoreAdminConnector({
+    databaseURL: 'https://canner-test-632ac.firebaseio.com',
+    projectId: 'canner-test-632ac'
   });
   const link = createLink({
     schema,
@@ -101,18 +100,51 @@ describe('firebaseAdmin connector', () => {
   before(async () => {
     // setup data
     await anonLogin();
-    await defaultApp.database().ref(TEST_NAMESPACE).set(defaultDataForFirebase);
     await connector.prepare({
       // tslint:disable-next-line:max-line-length
-      secret: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJtaXNzaW9uIjoiYXBpIiwidiI6MSwiaWF0IjoxNTI3MDQ3MDQ4LCJleHAiOjE1Mjk2MzkwNDh9.-YU7Ykhw0rN1-Ah-jZJN4GeaKTrM3zHMGlyXTltUgh8',
-      appId: '5b02829a18c84830440aace1',
+      secret: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1YmM0OTRjZGVlYWZjMjdiZjRkNWNhODQiLCJ1c2VyTmFtZSI6ImZyYW5rIiwidXNlckVtYWlsIjoieWFuZ3BvYW5AZ21haWwuY29tIiwidXNlclRodW1iIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvYWMzOWEwODVmMmMyNmJkZWFmZGE0MTc2MmNjOWNiYWY_cz01MCZkPWlkZW50aWNvbiIsImlhdCI6MTUzOTYwOTgwNX0.MlhjbJW20RJRTnYDmzHdw2lGzto9hdKtuFkjneflymQ',
+      appId: '5bc494faeeafc27bf4d5ca85',
       schema
     });
+    // clear data
+    const posts = await defaultApp.firestore().collection('posts').get();
+    posts.forEach(async post => {
+      await defaultApp.firestore().doc(`posts/${post.id}`).delete();
+    });
+
+    const users = await defaultApp.firestore().collection('users').get();
+    users.forEach(async user => {
+      await defaultApp.firestore().doc(`users/${user.id}`).delete();
+    });
+
+    const cannerObjects = await defaultApp.firestore().collection('canner-object').get();
+    cannerObjects.forEach(async cannerObject => {
+      await defaultApp.firestore().doc(`canner-object/${cannerObject.id}`).delete();
+    });
+    // setup data
+    await defaultApp.firestore().collection('posts').doc('1').set(defaultDataForFirebase.posts['1']);
+    await defaultApp.firestore().collection('posts').doc('2').set(defaultDataForFirebase.posts['2']);
+    await defaultApp.firestore().collection('users').doc('1').set(defaultDataForFirebase.users['1']);
+    await defaultApp.firestore().collection('users').doc('2').set(defaultDataForFirebase.users['2']);
+    await defaultApp.firestore().collection('canner-object').doc('home').set(defaultDataForFirebase.home);
   });
 
   after(async () => {
-    // await defaultApp.database().ref(TEST_NAMESPACE).remove();
-    // return defaultApp.delete();
+    // clear data
+    const posts = await defaultApp.firestore().collection('posts').get();
+    posts.forEach(async post => {
+      await defaultApp.firestore().doc(`posts/${post.id}`).delete();
+    });
+
+    const users = await defaultApp.firestore().collection('users').get();
+    users.forEach(async user => {
+      await defaultApp.firestore().doc(`users/${user.id}`).delete();
+    });
+
+    const cannerObjects = await defaultApp.firestore().collection('canner-object').get();
+    cannerObjects.forEach(async cannerObject => {
+      await defaultApp.firestore().doc(`canner-object/${cannerObject.id}`).delete();
+    });
   });
 
   queryOne({graphqlResolve});
