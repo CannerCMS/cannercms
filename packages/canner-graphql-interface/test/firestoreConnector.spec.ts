@@ -80,8 +80,23 @@ describe('firestore connector', () => {
   };
 
   before(async () => {
-    // setup data
     await connector.prepare();
+    // clear data
+    const posts = await defaultApp.firestore().collection('posts').get();
+    posts.forEach(async post => {
+      await defaultApp.firestore().doc(`posts/${post.id}`).delete();
+    });
+
+    const users = await defaultApp.firestore().collection('users').get();
+    users.forEach(async user => {
+      await defaultApp.firestore().doc(`users/${user.id}`).delete();
+    });
+
+    const cannerObjects = await defaultApp.firestore().collection('canner-object').get();
+    cannerObjects.forEach(async cannerObject => {
+      await defaultApp.firestore().doc(`canner-object/${cannerObject.id}`).delete();
+    });
+    // setup data
     await defaultApp.firestore().collection('posts').doc('1').set(defaultDataForFirebase.posts['1']);
     await defaultApp.firestore().collection('posts').doc('2').set(defaultDataForFirebase.posts['2']);
     await defaultApp.firestore().collection('users').doc('1').set(defaultDataForFirebase.users['1']);
@@ -90,6 +105,7 @@ describe('firestore connector', () => {
   });
 
   after(async () => {
+    // clear data
     const posts = await defaultApp.firestore().collection('posts').get();
     posts.forEach(async post => {
       await defaultApp.firestore().doc(`posts/${post.id}`).delete();
