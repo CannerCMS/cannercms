@@ -21,7 +21,7 @@ export type UIParams = Object;
 export type Relation = Object;
 export type RenderChildren = any => React.Node
 export type Toolbar = {
-  sort?: {
+  sorter?: {
     component?: React.ComponentType<*>,
     [string]: *
   },
@@ -40,9 +40,13 @@ export type Toolbar = {
   },
   actions?: {
     component?: React.ComponentType<*>,
-    filterButton: ?boolean,
-    importButton: ?boolean,
-    exportButton: ?boolean,
+    export?: {
+      fields?: Array<Object>,
+      title?: string,
+      filename?: string
+    },
+    import?: {},
+    filter?: {}
   },
   async: boolean
 };
@@ -91,5 +95,6 @@ export type HOCProps = {
   renderCancelButton: Object => React.Node,
   dataChanged: Object,
   fileStorage: any,
-  imageStorage: any
+  imageStorage: any,
+  nullable: boolean,
 }

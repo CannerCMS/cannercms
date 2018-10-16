@@ -29,7 +29,10 @@ export function parseConnectionToNormal(value: any) {
   }
 }
 
-export function defaultValue(type: string, relation: any) {
+export function defaultValue(type: string, relation: any, nullable?: boolean) {
+  if (nullable) {
+    return null;
+  }
   switch (type) {
     case 'connection': {
       return {

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { List } from 'react-content-loader';
 import Toolbar from './components/toolbar';
 import {Icon, Spin} from 'antd';
-import {mapValues} from 'lodash';
+import {mapValues, isNil} from 'lodash';
 import {parseConnectionToNormal, getValue, defaultValue} from './utils';
 import type {HOCProps} from './types';
 type State = {
@@ -95,7 +95,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     render() {
       const {value, isFetching, rootValue, originRootValue} = this.state;
-      const {toolbar, query, refId, items, type, path, relation, pattern, keyName, request, deploy} = this.props;
+      const {toolbar, query, refId, items, type, path, relation, pattern, keyName, request, deploy, nullable} = this.props;
       if (!originRootValue) {
         return <List style={{maxWidth: '600px'}}/>;
       }
@@ -127,10 +127,10 @@ export default function withQuery(Com: React.ComponentType<*>) {
         return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.id) ? value : defaultValue(type, relation)} />;
       } else if (type === 'relation' && relation.type === 'toMany') {
         return (
-          <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue('array')}/>
+          <Com {...this.props} showPagination={true} rootValue={rootValue} value={isNil(value) ? defaultValue('array', undefined, nullable) : value}/>
         );
       }
-      return <Com {...this.props} showPagination={true} rootValue={rootValue} value={value || defaultValue(type, relation)} />;
+      return <Com {...this.props} showPagination={true} rootValue={rootValue} value={isNil(value) ? defaultValue(type, relation, nullable) : value} />;
     }
   };
 }
