@@ -5,7 +5,8 @@ import BasicModel from './basic';
 import saferEval from 'safer-eval';
 
 export default class ObjectModel extends BasicModel {
-  attributes: Object;
+  // https://github.com/babel/babel/issues/8417
+  /*:: attributes: Object; */
 
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
     super('object', attrs);

@@ -5,8 +5,10 @@ import BasicModel from './basic';
 import saferEval from 'safer-eval';
 
 export default class ArrayModel extends BasicModel {
+  // https://github.com/babel/babel/issues/8417
+  /*::
   attributes: Object;
-  keyName: string;
+  keyName: string = ''; */
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
     super('array', attrs);
     let {builder} = this.attributes;
