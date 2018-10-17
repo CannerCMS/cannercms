@@ -5,7 +5,6 @@ const { execSync } = require("child_process");
 const sourcemaps = require("gulp-sourcemaps");
 const ts = require("gulp-typescript");
 const {existsSync} = require('fs');
-const chalk = require('chalk');
 const listPkg = execSync("lerna ls --p", { encoding: "utf8" })
   .split("\n")
   .filter(d => d.length > 0);
