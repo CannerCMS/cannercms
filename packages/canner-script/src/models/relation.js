@@ -4,7 +4,10 @@ import BasicModel from './basic';
 import type {CannerSchema} from '../flow-types';
 
 export default class RelationModel extends BasicModel {
+  // https://github.com/babel/babel/issues/8417
+  /*::
   attributes: Object;
+  */
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
     super('relation', attrs);
     if (children && children.length) {

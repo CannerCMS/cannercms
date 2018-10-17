@@ -3,10 +3,12 @@
 import type {CannerSchema} from '../flow-types';
 
 export default class PageModel {
+  // babel bug
+  /*::
   items: CannerSchema | {[string]: CannerSchema};
   keyName: string;
   title: string;
-
+  */
   constructor({ keyName, title }: {keyName: string, title: string}, children: Array<CannerSchema>) {
     if (!keyName) {
       throw new Error('The keyName of <page /> is required');

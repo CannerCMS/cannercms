@@ -6,13 +6,12 @@ import saferEval from 'safer-eval';
 
 export default class ArrayModel extends BasicModel {
   // https://github.com/babel/babel/issues/8417
-  /*::
-  attributes: Object;
-  keyName: string = ''; */
+  /*:: attributes: Object; */
+  /*:: keyName: string = ''; */
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
     super('array', attrs);
+    console.log(this.attributes);
     let {builder} = this.attributes;
-    
     if (typeof builder === 'string') {
       builder = saferEval(builder);
     }

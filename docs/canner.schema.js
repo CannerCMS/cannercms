@@ -34,8 +34,8 @@ const schema = (
         <number keyName="y"/>
       </array>
     </objectType>
-    {/* <Products />
-    <Categories /> */}
+    <Products />
+   {/*  <Categories /> */}
     {/* <Home />
     <Orders />
     <Customers /> */}
