@@ -36,14 +36,6 @@
     "safer-eval": "^1.2.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.2",
-    "babel-jest": "^23.4.2",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.1.8",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-stage-0": "^6.24.1",
     "canner-compiler": "2.0.0",
     "flow-bin": "^0.78.0",
     "jest": "^23.5.0",
