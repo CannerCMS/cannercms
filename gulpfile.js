@@ -14,7 +14,8 @@ const tsPkgs = listPkg.filter(pkg => isTs(pkg));
 
 // generate js task
 jsPkgs.forEach(pkg => {
-  gulp.task(pkg, () => gulp
+  const pkgName = getPkgName(pkg);
+  gulp.task(pkgName, () => gulp
     .src([`${pkg}/src/**/*.js`])
     .pipe(sourcemaps.init())
     .pipe(babel(babelrc))
@@ -23,16 +24,17 @@ jsPkgs.forEach(pkg => {
     // eslint-disable-next-line no-console
     .pipe(gulp.dest(`${pkg}/lib`))
   );
-  gulp.task(`${pkg}:watch`, () => gulp
-    .watch(`${pkg}/src/**/*.js`, gulp.parallel(pkg))
+  gulp.task(`${pkgName}:watch`, () => gulp
+    .watch(`${pkg}/src/**/*.js`, gulp.parallel(pkgName))
   );
 });
 
 
 // generate ts task
 tsPkgs.forEach(pkg => {
+  const pkgName = getPkgName(pkg);
   const tsProject = ts.createProject('./tsconfig.json');
-  gulp.task(pkg, () => gulp
+  gulp.task(pkgName, () => gulp
     .src([`${pkg}/src/**/*.ts`])
     .pipe(sourcemaps.init())
     .pipe(tsProject())
@@ -41,20 +43,18 @@ tsPkgs.forEach(pkg => {
     // eslint-disable-next-line no-console
     .pipe(gulp.dest(`${pkg}/lib`))
   );
-  gulp.task(`${pkg}:watch`, () => gulp
-    .watch(`${pkg}/src/**/*.ts`, gulp.parallel(pkg))
+  gulp.task(`${pkgName}:watch`, () => gulp
+    .watch(`${pkg}/src/**/*.ts`, gulp.parallel(pkgName))
   );
 });
 
-gulp.task("js", gulp.parallel(...jsPkgs));
-// canner-graphql-utils must be compiled before canner-graphql-interface
-gulp.task("ts", gulp.series(...tsPkgs));
-
-
+gulp.task("js", gulp.parallel(...jsPkgs.map(getPkgName)));
+gulp.task("ts", gulp.series(...tsPkgs.map(getPkgName)));
 gulp.task("default", gulp.parallel('js', 'ts'));
-gulp.task("js:watch", gulp.parallel(...jsPkgs.map(pkg => `${pkg}:watch`)));
-gulp.task("ts:watch", gulp.parallel(...tsPkgs.map(pkg => `${pkg}:watch`)));
-gulp.task("watch", gulp.parallel("js:watch", "ts:watch"));
+
+gulp.task("js:watch", gulp.parallel(...jsPkgs.map(pkg => `${getPkgName(pkg)}:watch`)));
+gulp.task("ts:watch", gulp.parallel(...tsPkgs.map(pkg => `${getPkgName(pkg)}:watch`)));
+gulp.task("watch", gulp.series('default', gulp.parallel("js:watch", "ts:watch")));
 
 function isTs(pkgPath) {
   try {
@@ -62,4 +62,8 @@ function isTs(pkgPath) {
   } catch (e) {
     return false;
   }
+}
+
+function getPkgName(pkgPath) {
+  return pkgPath.split('/').slice(-1)[0];
 }
