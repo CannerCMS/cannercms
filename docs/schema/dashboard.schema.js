@@ -257,8 +257,6 @@ export default () => (
                 return d;
               })
 
-              console.log(salesTypeDataOfflineAddColor)
-
               return {
                 table: salesTypeDataOfflineAddColor.concat(salesTypeDataOnlineAddColor)
               };
