@@ -5,6 +5,8 @@ import { Connector } from './connector/types';
 import { CustomizeResolver } from './resolver';
 import { GraphqlClient } from './graphqlClient/types';
 import FirebaseRtdbClientConnector from './connector/firebaseConnector';
+import FirestoreClientConnector from './connector/firestoreConnector';
+import FirestoreAdminConnector from './connector/firestoreAdminConnector';
 import MemoryConnector from './connector/memoryConnector';
 import LocalStorageConnector from './connector/localStorageConnector';
 import CannerPlatformConnector from './connector/cannerPlatformConnector';
@@ -49,6 +51,8 @@ export {
   LocalStorageConnector,
   FirebaseRtdbAdminConnector,
   FirebaseRtdbClientConnector,
+  FirestoreAdminConnector,
+  FirestoreClientConnector,
   PrismaClient,
   GraphqlClientImpl as GraphqlClient
 };
