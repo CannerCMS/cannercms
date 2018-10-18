@@ -9,8 +9,7 @@ const listPkg = execSync("lerna ls --p", { encoding: "utf8" })
   .split("\n")
   .filter(d => d.length > 0);
 const jsPkgs = listPkg.filter(pkg => !isTs(pkg));
-const tsPkgs = listPkg.filter(pkg => isTs(pkg));
-
+const tsPkgs = listPkg.filter(pkg => !isTs(pkg)).sort(a => a.match(/canner-graphql-utils/) ? -1 : 1);
 // generate js task
 jsPkgs.forEach(pkg => {
   const pkgName = getPkgName(pkg);
