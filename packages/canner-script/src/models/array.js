@@ -10,7 +10,6 @@ export default class ArrayModel extends BasicModel {
   /*:: keyName: string = ''; */
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
     super('array', attrs);
-    console.log(this.attributes);
     let {builder} = this.attributes;
     if (typeof builder === 'string') {
       builder = saferEval(builder);
