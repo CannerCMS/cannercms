@@ -1,6 +1,6 @@
 {
   "name": "canner-graphql-interface",
-  "version": "2.0.2",
+  "version": "2.0.4",
   "description": "canner graphql interface",
   "author": {
     "name": "wwwy3y3",
@@ -27,7 +27,7 @@
     "apollo-link": "^1.2.2",
     "apollo-link-http": "^1.5.4",
     "apollo-utilities": "^1.0.11",
-    "canner-graphql-utils": "2.0.2",
+    "canner-graphql-utils": "2.0.4",
     "dataloader": "^1.4.0",
     "graphql": "0.13.0",
     "graphql-anywhere": "^4.1.6",
