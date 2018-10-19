@@ -35,15 +35,17 @@ const schema = (
       </array>
     </objectType>
     <Products />
-   {/*  <Categories /> */}
-    {/* <Home />
+    <Categories />
+    <Home />
     <Orders />
-    <Customers /> */}
+    <Customers />
   </root>
 );
 
+const fD = createFakeData(schema.schema, 10);
+
 const connector = new LocalStorageConnector({
-  defaultData: fakeData
+  defaultData: {...fD, ...fakeData}
 });
 
 export default {

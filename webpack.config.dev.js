@@ -70,7 +70,6 @@ module.exports = {
           }
         }
       },
-      
       {
         test: /(\.schema\.js|canner\.def\.js)$/,
         use: [{

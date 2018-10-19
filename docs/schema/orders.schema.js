@@ -3,7 +3,7 @@ import * as React from "react";
 import c, { Block, Condition } from "canner-script";
 import moment from "moment";
 import shortId from "shortid";
-import TableSelectColumn from "./customize-components/table-select-column";
+import TableSelectColumn from "./customize-columns/select";
 import { galleryUIParams } from "./utils";
 
 const orders = () => (

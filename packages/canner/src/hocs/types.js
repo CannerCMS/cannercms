@@ -97,4 +97,8 @@ export type HOCProps = {
   fileStorage: any,
   imageStorage: any,
   nullable: boolean,
+  error: boolean,
+  errorInfo: Array<{message: string}>,
+  itemCol: Object,
+  labelCol: Object,
 }

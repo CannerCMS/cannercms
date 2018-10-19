@@ -132,7 +132,7 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
       result = [];
       if (isInFirstLevel) {
         for(let i = 0; i < listLength; ++i) {
-          if (Math.random() > 0.5) {
+          if (Math.random() > 0.5 && to !== schema.keyName) {
             result.push(`${to}${i + 1}`);
           }
         }
@@ -140,7 +140,7 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
       break;
     case 'toOne':
     default:
-      if (isInFirstLevel) {
+      if (isInFirstLevel && to !== schema.keyName) {
         result = `${to}${Math.floor(Math.random() * listLength) + 1}`;
       } else {
         result = null;

@@ -173,12 +173,23 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     }
     case 'Layout': {
       const {visitor, cannerKey} = createLayoutVisitor(attributes, children);
+      let injectLayout;
+      if (attributes.injectValue) {
+        injectLayout = createLayoutVisitor({...attributes, layoutType: 'injection'}, children);
+      }
       visitorManager.addVisitor(visitor);
+      if (injectLayout) {
+        visitorManager.addVisitor(injectLayout.visitor);
+      }
       return children.map(child => {
         if (child[CANNER_KEY]) {
           child[CANNER_KEY].push(cannerKey);
         } else {
           child[CANNER_KEY] = [cannerKey];
+        }
+
+        if (injectLayout) {
+          child[CANNER_KEY].push(injectLayout.cannerKey);
         }
         return child;
       });
