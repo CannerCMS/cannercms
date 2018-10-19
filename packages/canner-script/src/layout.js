@@ -33,16 +33,20 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
     
     if (!children) return;
     
+    // we use cannerKey to find the children should put into the new layout component
     const childrenOfLayout = children.filter(child => {
       return child[CANNER_KEY] && child[CANNER_KEY].indexOf(cannerKey) !== -1;
     });
+
+    // if there is any children is the layout, the component tree don't have to be changed
     if (!childrenOfLayout.length) {
       return;
     }
+
+    // create a layout node with its children
     const layout = {
       ...attrs,
       nodeType: `layout.${attrs.ui}`,
-      name: childrenOfLayout[0].keyName,
       childrenName: childrenOfLayout.map(child => child.keyName),
       title: title,
       description: description,
@@ -50,11 +54,17 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
       [CANNER_KEY]: childrenOfLayout.reduce(((result, child) => result.concat(child[CANNER_KEY] || [])), []),
     }
     let meetChildOfLayout = false;
+    
+    // change the children of the node
+    // they should become a layout node and others children node that is not included in the layout node.
     const newChildren = children.reduce((result, child) => {
+      // find those excluded children
       if (!child[CANNER_KEY] || child[CANNER_KEY].indexOf(cannerKey) === -1) {
         result.push(child);
       }
 
+      // add the layout node into children and ignore those children including the layout node
+      // meetChildOfLayout is used to replace the first included child node with the layout node
       if (!meetChildOfLayout && child[CANNER_KEY] && child[CANNER_KEY].indexOf(cannerKey) !== -1) {
         meetChildOfLayout = true;
         result.push(layout);
@@ -63,6 +73,7 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
       return result;
     }, []);
 
+    // update children
     path.tree.setChildren(path.route, newChildren);
   };
   return {
@@ -76,30 +87,6 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
       'page.page': {
         exit: visitor
       }
-      // [`component.${lastChild.type}`]: {
-      //   exit: path => {
-      //     if (path.route.split('.').length <= 1 || path.node.keyName !== lastChild.keyName || !path.node[CANNER_KEY] || path.node[CANNER_KEY].indexOf(cannerKey) === -1) {
-      //       return;
-      //     }
-      //     const currentNode = path.tree.getNode(path.route);
-      //     const siblingsObj = path.tree.getSiblingNodes(path.route);
-      //     const siblingsBecomeChildren = siblingsObj.top.filter(node => node[CANNER_KEY] && node[CANNER_KEY].indexOf(cannerKey) !== -1);
-      //     const leftSiblings = siblingsObj.top.filter(node => !node[CANNER_KEY] || node[CANNER_KEY].indexOf(cannerKey) === -1);
-      //     const newChildren = [...siblingsBecomeChildren, currentNode];
-      //     const componentInLayout = [...leftSiblings, {
-      //       nodeType: 'layout',
-      //       name: newChildren[0].keyName,
-      //       component: name,
-      //       childrenName: newChildren.map(child => child.keyName),
-      //       title: title || newChildren[0].title,
-      //       description: description || newChildren[0].description,
-      //       children: newChildren,
-      //       hocs: ['containerRouter'],
-      //       [CANNER_KEY]: newChildren.reduce(((result, child) => result.concat(child[CANNER_KEY] || [])), []),
-      //     }, ...siblingsObj.down];
-      //     path.tree.setChildren(path.route.split('.').slice(0, -1).join('.'), componentInLayout);
-      //   }
-      // }
     },
     cannerKey
   }
@@ -110,16 +97,11 @@ export function createInjectionLayout(attrs: Object, children: Array<CannerSchem
     throw new Error('Layout required one child at least');
   }
 
-  const {name, injectValue} = attrs;
-
-  if (!name) {
-    throw new Error('Layout required a name');
-  }
+  const {injectValue} = attrs;
 
   if (!injectValue) {
     throw new Error('Injection Layout need a injectValue');
   }
-
 
   const cannerKey = getCannerKey();
   const visitor = function(path) {
