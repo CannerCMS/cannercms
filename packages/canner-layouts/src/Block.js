@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import {Item} from 'canner-helpers';
-import {Card} from 'antd';
+import {Card, Tooltip, Icon} from 'antd';
 
 type Props = {
   style: Object,
@@ -13,12 +13,20 @@ type Props = {
   extra: string | React.Node,
   hoverable: boolean,
   title: string,
-  type: string
+  type: string,
+  description: string,
 };
 
 export default class Block extends React.Component<Props> {
   render() {
-    const {style, headStyle, bodyStyle, bordered, cover, extra, hoverable, title, type} = this.props
+    const {style, headStyle, bodyStyle, bordered, cover, hoverable, title, type, description} = this.props
+    const extra = this.props.extra || (
+      description && (
+        <Tooltip placement="top" title={description}>
+          <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
+        </Tooltip>
+      )
+    )
     return <Card
       headStyle={headStyle}
       bodyStyle={bodyStyle}
