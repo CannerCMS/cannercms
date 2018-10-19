@@ -72,6 +72,112 @@ export default () => (
         </Col>
       </Row>
     </Block>
+
+    <Row gutter={16}>
+      <Col xs={24} sm={24} md={8} lg={8} xl={8} >
+        <Block title="Online Visitors">
+          <component
+            packageName="@canner/victory-line"
+            keyName="victory-online-visitors"
+            container={{
+              height: 300
+            }}
+            xAxis={{
+              tickCount: 5,
+              style: { tickLabels: { 
+                angle: -30,
+                textAnchor: "middle"
+              } }
+            }}
+            transformData={({visitData}) => {
+              return visitData;
+            }}
+            graphql={`
+              query {
+                chart {
+                  visitData {
+                    x
+                    y
+                  }
+                }
+              }
+            `}
+            />
+        </Block>
+      </Col>
+      <Col xs={24} sm={24} md={8} lg={8} xl={8} >
+        <Block title="Offline Visitors">
+          <component
+            packageName="@canner/victory-area"
+            keyName="victory-offline-visitor"
+            container={{
+              height: 300
+            }}
+            xAxis={{
+              tickCount: 5,
+              style: { tickLabels: { 
+                angle: -30,
+                textAnchor: "middle"
+              } }
+            }}
+            transformData={({visitData2}) => {
+              return visitData2;
+            }}
+            graphql={`
+              query {
+                chart {
+                  visitData2 {
+                    x
+                    y
+                  }
+                }
+              }
+            `}
+            />
+        </Block>
+      </Col>
+      <Col xs={24} sm={24} md={8} lg={8} xl={8} >
+        <Block title="Offline and Online Visitors" description="test">
+        <component
+          packageName="@canner/victory-area-stack"
+          keyName="victory-offline-online-visitors"
+          container={{
+            height: 300
+          }}
+          legend={{
+            data: [{name: 'Online'}, {name: 'Offline'}],
+          }}
+          xAxis={{
+            tickCount: 5,
+            style: { tickLabels: { 
+              angle: -30,
+              textAnchor: "middle"
+            } }
+          }}
+          transformData={({visitData, visitData2}) => {
+            return [
+              visitData,
+              visitData2
+            ];
+          }}
+          graphql={`
+            query {
+              chart {
+                visitData {
+                  x
+                  y
+                }
+                visitData2 {
+                  x
+                  y
+                }
+              }
+            }
+          `}
+          />
+        </Block>
+      </Col>
+    </Row>
     <Row gutter={16}>
       <Col xs={24} sm={24} md={8} lg={8} xl={8} >
         <Block title="Online Sales">

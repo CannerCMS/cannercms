@@ -9,7 +9,6 @@ import Home from './schema/home.schema';
 import Orders from './schema/orders.schema';
 import Categories from './schema/categories.schema';
 import Products from './schema/products.schema';
-import {ImgurStorage} from 'packages/canner-storage/src';
 import dict from './schema/locale';
 import fakeData from './schema/fake-data';
 

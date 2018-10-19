@@ -83,12 +83,8 @@ const salesTypeDataOnline = [
     y: 41,
   },
   {
-    x: 'Maternal',
-    y: 121,
-  },
-  {
     x: 'Others',
-    y: 111,
+    y: 50,
   },
 ];
 
@@ -113,6 +109,10 @@ const salesTypeDataOffline = [
     x: 'Others',
     y: 65,
   },
+  {
+    x: 'Maternal',
+    y: 121,
+  }
 ];
 
 const offlineData = [];
