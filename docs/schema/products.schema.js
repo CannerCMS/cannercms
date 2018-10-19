@@ -25,6 +25,7 @@ const Products = () => (
         {
           title: "${products.price}",
           dataIndex: "price",
+          sorter: (a, b) => a.price - b.price,
         },
         {
           title: "${products.promo}",

@@ -42,8 +42,10 @@ const schema = (
   </root>
 );
 
+const fD = createFakeData(schema.schema, 10);
+
 const connector = new LocalStorageConnector({
-  defaultData: fakeData
+  defaultData: {...fD, ...fakeData}
 });
 
 export default {
