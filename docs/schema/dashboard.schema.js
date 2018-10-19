@@ -9,8 +9,8 @@ export default () => (
     title="${dashboard.title}"
     description="${dashboard.desc}">
     <Block>
-      <Row>
-        <Col span={8}>
+      <Row type="flex">
+        <Col sm={8} xs={24}>
           <indicator
             keyName="last7days-visitor-indicator"
             title="${dashboard.last7daysVisitor}"
@@ -42,7 +42,7 @@ export default () => (
             }}
           />
         </Col>
-        <Col span={8}>
+        <Col sm={8} xs={24}>
           <indicator
             title="${dashboard.last6monthOrders}"
             keyName="last6month-orders-indicator"
@@ -72,7 +72,7 @@ export default () => (
       </Row>
     </Block>
     <Row gutter={16}>
-      <Col span={8}>
+      <Col sm={8} xs={24}>
         <Block title="Online Sales">
           <chart
             ui="bar"
@@ -125,7 +125,7 @@ export default () => (
             />
         </Block>
       </Col>
-      <Col span={8}>
+      <Col sm={8} xs={24}>
         <Block title="Offline Sales">
           <chart
             ui="bar"
@@ -177,13 +177,27 @@ export default () => (
             />
         </Block>
       </Col>
-      <Col span={8}>
+      <Col sm={8} xs={24}>
         <Block title="Offline and Online Sales">
           <chart
             keyName="sales-offline-online-stack-bar"
             spec={{
               "height": 200,
-              "width": "100%",
+              "signals": [
+                {
+                  name: "width",
+                  value: "",
+                  on: [
+                    {
+                      events: "window:resize,window:click",
+                      update: `containerSize()[0]`
+                    }
+                  ]
+                }
+              ],
+              autosize: {
+                type: 'fit',
+              },
               "scales": [
                 {
                   "name": "x",
@@ -221,7 +235,7 @@ export default () => (
 
               "axes": [
                 {"orient": "bottom", "scale": "x", "zindex": 1},
-                {"orient": "left", "scale": "y", "zindex": 1}
+                {"orient": "left", "scale": "y", "zindex": 1, tickCount: {signal: 'height / 25'}}
               ],
 
               "marks": [
@@ -237,6 +251,10 @@ export default () => (
                       "fill": {"scale": "color", "field": "c"}
                     },
                     "update": {
+                      "x": {"scale": "x", "field": "x"},
+                      "width": {"scale": "x", "band": 1, "offset": -1},
+                      "y": {"scale": "y", "field": "y0"},
+                      "y2": {"scale": "y", "field": "y1"},
                       "fillOpacity": {"value": 1}
                     },
                     "hover": {
@@ -256,8 +274,6 @@ export default () => (
                 d.c = 1;
                 return d;
               })
-
-              console.log(salesTypeDataOfflineAddColor)
 
               return {
                 table: salesTypeDataOfflineAddColor.concat(salesTypeDataOnlineAddColor)

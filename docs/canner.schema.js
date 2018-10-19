@@ -35,10 +35,10 @@ const schema = (
       </array>
     </objectType>
     <Products />
-   {/*  <Categories /> */}
-    {/* <Home />
+    <Categories />
+    <Home />
     <Orders />
-    <Customers /> */}
+    <Customers />
   </root>
 );
 

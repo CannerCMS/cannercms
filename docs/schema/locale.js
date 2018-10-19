@@ -49,7 +49,7 @@ export default {
       photos: 'Photos',
       filter: {
         no: {
-          label: 'NO',
+          label: 'Product Number',
           placeholder: 'Enter a Product Number'
         },
         name: {

@@ -11,7 +11,8 @@ const Products = () => (
       columns: [
         {
           title: "${products.photos}",
-          dataIndex: "photos"
+          dataIndex: "photos",
+          fixed: 'left'
         },
         {
           title: "${products.no}",
@@ -23,11 +24,11 @@ const Products = () => (
         },
         {
           title: "${products.price}",
-          dataIndex: "price"
+          dataIndex: "price",
         },
         {
           title: "${products.promo}",
-          dataIndex: "promo"
+          dataIndex: "promo",
         }
       ]
     }}
