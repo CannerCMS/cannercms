@@ -11,7 +11,6 @@ export default class ObjectModel extends BasicModel {
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
     super('object', attrs);
     let {builder} = this.attributes;
-    
     if (typeof builder === 'string') {
       builder = saferEval(builder);
     }

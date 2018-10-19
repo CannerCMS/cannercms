@@ -13,8 +13,7 @@ import {
   RootModel,
   RelationModel,
   ImageModel,
-  ChartModel,
-  IndicatorModel,
+  ComponentModel,
   EnumModel,
   PageModel,
   JsonModel
@@ -53,12 +52,8 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     });
   }
   attributes = attributes || {};
-  attributes.title = getIntlMessage(attributes.title);
-  attributes.description = getIntlMessage(attributes.description);
-  attributes.uiParams = getIntlMessage(attributes.uiParams);
-  attributes.label = getIntlMessage(attributes.label);
-  attributes.options = getIntlMessage(attributes.options);
-  attributes.placeholder = getIntlMessage(attributes.placeholder);
+  // transform some value to react intl component
+  i18n(attributes);
   switch(tag) {
     case 'string':
       return createJSON(StringModel, [attributes, children]);
@@ -86,10 +81,8 @@ export default function builder(tag: string | Function, attributes: Object, ...c
       return createJSON(RelationModel, [attributes, children]);
     case 'json':
       return createJSON(JsonModel, [attributes, children]);
-    case 'chart':
-      return createJSON(ChartModel, [attributes, children]);
-    case 'indicator':
-      return createJSON(IndicatorModel, [attributes, children]);
+    case 'component':
+      return createJSON(ComponentModel, [attributes, children]);
     case 'enum':
       return new createJSON(EnumModel, [attributes, children]);
     case 'page':
@@ -199,4 +192,12 @@ function createJSON(Model: any, args: Array<*>) {
   let json = new Model(...args).toJson();
   validator.validate(json);
   return json;
+}
+
+function i18n(attrs: Object) {
+  ['title', 'description', 'uiParams', 'label', 'options', 'placeholder'].forEach(key => {
+    if (key in attrs) {
+      attrs[key] = getIntlMessage(attrs[key]);
+    }
+  });
 }

@@ -388,26 +388,26 @@ describe('builder', () => {
     });
   });
 
-  describe('chart', () => {
+  describe('component', () => {
     it('should work', () => {
-      expect(<chart keyName="chart"/>).toMatchObject({
-        type: 'chart',
-        ui: 'line',
-        keyName: 'chart'
+      expect(<component keyName="component"/>).toMatchObject({
+        type: 'component',
+        ui: 'default',
+        keyName: 'component'
       });
     });
 
     it('should work with children', () => {
       expect(
-        <chart keyName="chart">
+        <component keyName="component">
            <toolbar>
               <filter />
           </toolbar>
-        </chart>
+        </component>
       ).toMatchObject({
-        type: 'chart',
-        ui: 'line',
-        keyName: 'chart',
+        type: 'component',
+        ui: 'default',
+        keyName: 'component',
         toolbar: {
           filter: {
             "type": "filter"
@@ -417,40 +417,7 @@ describe('builder', () => {
     });
 
     it('should have keyName', () => {
-      expect(<chart />).toHaveProperty('keyName');
-    });
-  });
-
-  describe('indicator', () => {
-    it('should work', () => {
-      expect(<indicator keyName="indicator"/>).toMatchObject({
-        type: 'indicator',
-        ui: 'amount',
-        keyName: 'indicator'
-      });
-    });
-
-    it('should work with children', () => {
-      expect(
-        <indicator keyName="amount">
-           <toolbar>
-              <filter />
-          </toolbar>
-        </indicator>
-      ).toMatchObject({
-        type: 'indicator',
-        ui: 'amount',
-        keyName: 'amount',
-        toolbar: {
-          filter: {
-            "type": "filter"
-          }
-        }
-      });
-    });
-
-    it('should have keyName', () => {
-      expect(<indicator />).toHaveProperty('keyName');
+      expect(<component />).toHaveProperty('keyName');
     });
   });
 
@@ -497,7 +464,7 @@ describe('builder', () => {
     it('should work with <page>child', () => {
       const root = <root>
         <page keyName="overview">
-          <chart keyName="line" ui="line" />
+          <component keyName="line" />
         </page>
       </root>
       expect(root.pageSchema).toMatchObject({
@@ -506,8 +473,7 @@ describe('builder', () => {
           type: 'page',
           items: {
               line: {
-                  type: 'chart',
-                  ui: 'line',
+                  type: 'component',
                   keyName: 'line'
               }
           }
@@ -520,28 +486,16 @@ describe('builder', () => {
   describe('page', () => {
     it('should work', () => {
       const page = <page keyName="overview">
-        <indicator ui="amount" keyName="key1"/>
-        <indicator ui="list" keyName="key2"/>
-        <chart ui="bar" keyName="key3"/>
+        <component keyName="key"/>
       </page>
       expect(page).toMatchObject({
         keyName: 'overview',
         type: 'page',
         items: {
-          key1: {
-              type: 'indicator',
-              ui: 'amount',
-              keyName: 'key1'
-          },
-          key2: {
-              type: 'indicator',
-              ui: 'list',
-              keyName: 'key2'
-          },
-          key3: {
-              type: 'chart',
-              ui: 'bar',
-              keyName: 'key3'
+          key: {
+              type: 'component',
+              ui: 'default',
+              keyName: 'key'
           }
         }
       });
@@ -581,12 +535,14 @@ describe('builder', () => {
 
   describe('Define type only', () => {
     it('objectType', () => {
-      const schema = <objectType keyName="info">
-        <string keyName="title" />
-      </objectType>;
+      const schema = <root>
+        <objectType keyName="info">
+          <string keyName="title" />
+        </objectType>
+      </root>;
   
       expect(schema.schema).toMatchObject({
-        posts: {
+        info: {
           keyName: 'info',
           type: 'object',
           defOnly: true,
@@ -600,9 +556,11 @@ describe('builder', () => {
     });
   
     it('arrayType', () => {
-      const schema = <arrayType keyName="posts">
-        <string keyName="title" />
-      </arrayType>;
+      const schema = <root>
+        <arrayType keyName="posts">
+          <string keyName="title" />
+        </arrayType>
+      </root>;
   
       expect(schema.schema).toMatchObject({
         posts: {

@@ -83,23 +83,13 @@ export const componentMap = {
       dateTime: '@canner/antd-string-date_time_picker', 
       default: '@canner/antd-string-date_time_picker'
     },
-    chart: {
-      line: '@canner/vega-chart-line',
-      bar: '@canner/vega-chart-bar',
-      pie: '@canner/vega-chart-pie',
-      scatter: '@canner/vega-chart-scatter',
-      vega: '@canner/vega-chart-default',
-      default: '@canner/vega-chart-default',
-    },
-    indicator: {
-      list: '@canner/antd-indicator-list',
-      amount: '@canner/antd-indicator-amount',
-      default: '@canner/antd-indicator-amount'
-    },
     enum: {
       select: '@canner/antd-string-select',
       radio: '@canner/antd-string-radio',
       default: '@canner/antd-string-select'
+    },
+    component: {
+      default: '@canner/antd-string-input'
     }
   },
   get: function(type: string, ui: string = 'default') {

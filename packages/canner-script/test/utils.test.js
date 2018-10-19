@@ -27,19 +27,13 @@ describe('componentMap', function() {
 });
 
 describe('getIntlMessage', () => {
-  it('should be string, if not match /\$\{(,*)\}/', () => {
-    const attrs = {
-      title: 'title'
-    };
-    const message = getIntlMessage(attrs, 'title');
+  it('should be string, if not match /${(,*)}/', () => {
+    const message = getIntlMessage('title');
     expect(message).toBe('title');
   });
 
   it('should be a react component', () => {
-    const attrs = {
-      title: '${title}'
-    };
-    const message = getIntlMessage(attrs, 'title');
+    const message = getIntlMessage('${title}');
     function Intl() {
       return (
         <IntlProvider locale="en" messages={{title: 'Title'}}>

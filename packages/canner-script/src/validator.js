@@ -1,7 +1,7 @@
 // @flow
 import type {CannerSchema} from './flow-types';
 import {componentMap} from './utils';
-const TYPES = ['string', 'number', 'boolean', 'array', 'object', 'relation', 'json', 'chart', 'indicator'];
+const TYPES = ['string', 'number', 'boolean', 'array', 'object', 'relation', 'json', 'component'];
 const CANNER_DATA_TYPES = Object.keys(componentMap._map);
 
 type ValidatorConfig = {

@@ -7,9 +7,7 @@ describe('packageName', () => {
     expect(validator.validatePackageName('antd-boolean')).toBe(true);
     expect(validator.validatePackageName('antd-array')).toBe(true);
     expect(validator.validatePackageName('antd-object')).toBe(true);
-    expect(validator.validatePackageName('antd-indicator')).toBe(true);
     expect(validator.validatePackageName('path/to/antd-object')).toBe(true);
-    expect(validator.validatePackageName('vega-chart')).toBe(true);
   });
 
   it('should throw error', () => {
@@ -29,8 +27,7 @@ describe('cannerDataType', () => {
     expect(validator.validateCannerDataType('geoPoint')).toBe(true);
     expect(validator.validateCannerDataType('file')).toBe(true);
     expect(validator.validateCannerDataType('image')).toBe(true);
-    expect(validator.validateCannerDataType('chart')).toBe(true);
-    expect(validator.validateCannerDataType('indicator')).toBe(true);
+    expect(validator.validateCannerDataType('component')).toBe(true);
   });
 
   it('should throw error', () => {
