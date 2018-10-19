@@ -10,7 +10,7 @@ export default () => (
     description="${dashboard.desc}">
     <Block>
       <Row type="flex">
-        <Col sm={8} xs={24}>
+        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
           <indicator
             keyName="last7days-visitor-indicator"
             title="${dashboard.last7daysVisitor}"
@@ -42,7 +42,7 @@ export default () => (
             }}
           />
         </Col>
-        <Col sm={8} xs={24}>
+        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
           <indicator
             title="${dashboard.last6monthOrders}"
             keyName="last6month-orders-indicator"
