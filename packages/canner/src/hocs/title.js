@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {Tooltip, Icon, Alert} from 'antd';
+import {Tooltip, Icon, Alert, Row, Col} from 'antd';
 import {HOCContext} from './context';
 import {Context} from 'canner-helpers';
 import styled from 'styled-components';
@@ -8,9 +8,7 @@ import {isEmpty} from 'lodash';
 import type {HOCProps} from './types';
 
 const Title = styled.div`
-  font-size: 18px;
-  font-weight: 400;
-  &:after {
+  & > span:after {
     content: ${props => props.required ? '"*"' : '""'};
     color: red;
   }
@@ -19,7 +17,35 @@ const Title = styled.div`
 const ErrorMessage = styled.div`
   color: red;
   font-size: 14px;
-`
+`;
+
+function Label({
+  required,
+  type,
+  imageStorage,
+  description,
+  title,
+}) {
+  return (
+    <div>
+      <Title required={required}>
+        <span>{title}</span>
+        {
+          description && (
+            <Tooltip placement="top" title={description}>
+              <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
+            </Tooltip>
+          )
+        }
+      </Title>
+      {
+        (type === 'image' && isEmpty(imageStorage)) && (
+          <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
+        )
+      }
+    </div>
+  )
+}
 
 // $FlowFixMe
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
@@ -31,6 +57,15 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         refId, routes, updateQuery, type, imageStorage,
         onDeploy, removeOnDeploy, required, dataChanged, error, errorInfo
       } = this.props;
+
+      const labelCol = layout === 'horizontal' ? this.props.labelCol || {
+        span: 6
+      } : null;
+
+      const itemCol = layout === 'horizontal' ?  this.props.itemCol || {
+        span: 14
+      } : null;
+
       // $FlowFixMe: default funcitons in HOCContext only throw error, so they don't have any arguments
       return <HOCContext.Provider
         value={{
@@ -54,32 +89,21 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           refId,
           routes
         }}>
-          {
-            hideTitle && <Com {...this.props} />
-          }
-          {
-            (!hideTitle && layout === 'horizontal') && <div style={{
-              display: 'flex',
-              margin: '16px 0',
-              alignItems: 'center'
-            }}>
-              <div style={{
-                marginRight: 8,
-                display: 'flex',
-                flex: 1,
-                flexDirection: 'row'
-              }}>
-                <Title required={required}>
-                  {title}
-                </Title>
-                {
-                  description && (
-                    <Tooltip placement="top" title={description}>
-                      <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
-                    </Tooltip>
-                  )
-                }
-              </div>
+          <Row
+            type={layout === 'horizantal' ? 'flex' : ''}
+            style={{marginTop: 16}}
+          >
+            <Col {...labelCol}>
+              <Label
+                required={required}
+                type={type}
+                imageStorage={imageStorage}
+                description={description}
+                title={hideTitle ? '' : title}
+              />
+            </Col>
+            <Col {...itemCol}>
+              <Com {...this.props} />
               {
                 error && (
                   <ErrorMessage>
@@ -87,57 +111,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
                   </ErrorMessage>
                 )
               }
-              {
-                (type === 'image' && isEmpty(imageStorage)) && (
-                  <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
-                )
-              }
-              <div style={{
-                flex: 2
-              }}>
-                <Com {...this.props} />
-              </div>
-            </div>
-          }
-          {
-            (!hideTitle && layout !== 'horizontal') && <div style={{
-              margin: '0 0 24px'
-            }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center'
-              }}>
-                <Title required={required}>
-                  {title}
-                </Title>
-                {
-                  description && (
-                    <Tooltip placement="top" title={description}>
-                      <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
-                    </Tooltip>
-                  )
-                }
-                
-              </div>
-              {
-                (type === 'image' && isEmpty(imageStorage)) && (
-                  <Alert style={{margin: '16px 0'}} message={<p>There is no storage config so you can not upload image. Checkout the <a href="https://www.canner.io/docs/guides-image-upload.html" target="_blank" rel="noreferrer noopener" >storage section</a> to know more</p>} type="warning" />
-                )
-              }
-              {
-                error && (
-                  <ErrorMessage>
-                    {errorInfo[0].message}
-                  </ErrorMessage>
-                )
-              }
-              <div style={{
-                marginBottom: 8
-              }}>
-                <Com {...this.props} />
-              </div>
-            </div>
-          }
+            </Col>
+          </Row>
         </Context.Provider>
       </HOCContext.Provider>
     }

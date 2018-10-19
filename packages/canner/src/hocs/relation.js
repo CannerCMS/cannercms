@@ -56,7 +56,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         delete args.before;
       }
       if (toolbar && toolbar.async && toolbar.filter && toolbar.filter.permanentFilter) {
-        args = {...args, where: toolbar.filter.permanentFilter};       
+        args = {...args, where: toolbar.filter.permanentFilter};
       }
       // this method will also query data
       this.updateQuery([relation.to], args);
@@ -124,13 +124,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const args = this.getArgs();
       const removeSelfRootValue = {[relation.to]: removeSelf(originRootValue[relation.to], refId, relation.to)};
       let parsedRootValue = removeSelfRootValue;
-      if (toolbar && !toolbar.async) {
-        // TODO
-        // parsedRootValue = filterByWhere(removeSelfRootValue, relation.to, parseWhere(args.where));
-        // if (toolbar.pagination) {
-        //   parsedRootValue = paginate(removeSelfRootValue, relation.to, current, 10);
-        // }
-      }
       const tb = ({children, ...restProps}) => <Toolbar
         {...restProps}
         items={schema[relation.to].items.items}

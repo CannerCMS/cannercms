@@ -47,13 +47,13 @@ const Products = () => (
     <toolbar>
       <pagination />
     </toolbar>
-    <Block title="${products.basicSetting}" type="inner" injectValue={{layout: "horizontal"}} >
-      <string keyName="no" title="${products.no}" required/>
+    <Block title="${products.basicSetting}" type="inner" injectValue={{layout: 'horizontal'}} >
+      <string keyName="no" title="${products.no}" description="Unique Number of the Product" required/>
       <string keyName="name" title="${products.name}" required />
       <object keyName="description" ui="editor" title="${products.description}" />
       <number keyName="price" title="${products.price}" required />
       <number keyName="promo" title="${products.promo}" />
-      <relation
+      {/* <relation
         ui="multipleSelect"
         keyName="addPurchase"
         relation={{
@@ -86,7 +86,7 @@ const Products = () => (
           </filter>
           <pagination />
         </toolbar>
-      </relation>
+      </relation> */}
       <relation
         keyName="category"
         ui="singleSelectTree"
