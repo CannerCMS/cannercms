@@ -1,7 +1,10 @@
 /** @jsx c */
 import c, { Block } from "canner-script";
+import TextFilter from "./customize-column/textFilter";
 import { galleryValidation } from "./utils";
 
+const noFilter = new TextFilter('no');
+const nameFilter = new TextFilter('name');
 const Products = () => (
   <array
     keyName="products"
@@ -16,11 +19,17 @@ const Products = () => (
         },
         {
           title: "${products.no}",
-          dataIndex: "no"
+          dataIndex: "no",
+          filterDropdown: noFilter.renderFilter,
+          onFilter: noFilter.onFilter,
+          render: noFilter.render
         },
         {
           title: "${products.name}",
-          dataIndex: "name"
+          dataIndex: "name",
+          filterDropdown: nameFilter.renderFilter,
+          onFilter: nameFilter.onFilter,
+          render: nameFilter.render
         },
         {
           title: "${products.price}",
@@ -30,20 +39,16 @@ const Products = () => (
         {
           title: "${products.promo}",
           dataIndex: "promo",
+          sorter: (a, b) => a.promo - b.promo,
         }
       ]
     }}
   >
     <toolbar>
-      <actions filterButton />
-      <filter>
-        <textFilter label="${products.filter.no.label}" field="no" placeholder="products.filter.no.label" />
-        <textFilter label="${products.filter.no.placeholder}" field="name" placeholder="products.filter.no.placeholder" />
-      </filter>
       <pagination />
     </toolbar>
-    <Block title="${products.basicSetting}">
-      <string keyName="no" title="${products.no}" required />
+    <Block title="${products.basicSetting}" type="inner" layout="horizontal" >
+      <string keyName="no" title="${products.no}" required/>
       <string keyName="name" title="${products.name}" required />
       <object keyName="description" ui="editor" title="${products.description}" />
       <number keyName="price" title="${products.price}" required />
