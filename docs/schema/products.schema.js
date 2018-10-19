@@ -1,6 +1,6 @@
 /** @jsx c */
 import c, { Block } from "canner-script";
-import TextFilter from "./customize-column/textFilter";
+import TextFilter from "./customize-columns/textFilter";
 import { galleryValidation } from "./utils";
 
 const noFilter = new TextFilter('no');
@@ -47,7 +47,7 @@ const Products = () => (
     <toolbar>
       <pagination />
     </toolbar>
-    <Block title="${products.basicSetting}" type="inner" layout="horizontal" >
+    <Block title="${products.basicSetting}" type="inner" injectValue={{layout: "horizontal"}} >
       <string keyName="no" title="${products.no}" required/>
       <string keyName="name" title="${products.name}" required />
       <object keyName="description" ui="editor" title="${products.description}" />
