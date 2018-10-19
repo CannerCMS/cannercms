@@ -72,7 +72,7 @@ export default () => (
       </Row>
     </Block>
     <Row gutter={16}>
-      <Col sm={8} xs={24}>
+      <Col xs={24} sm={24} md={8} lg={8} xl={8} >
         <Block title="Online Sales">
           <chart
             ui="bar"
@@ -125,7 +125,7 @@ export default () => (
             />
         </Block>
       </Col>
-      <Col sm={8} xs={24}>
+      <Col xs={24} sm={24} md={8} lg={8} xl={8} >
         <Block title="Offline Sales">
           <chart
             ui="bar"
@@ -177,7 +177,7 @@ export default () => (
             />
         </Block>
       </Col>
-      <Col sm={8} xs={24}>
+      <Col xs={24} sm={24} md={8} lg={8} xl={8} >
         <Block title="Offline and Online Sales">
           <chart
             keyName="sales-offline-online-stack-bar"
