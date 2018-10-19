@@ -42,8 +42,8 @@ export default {
       promo: 'Promo Price',
       addPurchase: 'Additional Purchase',
       storage: {
-        layoutTitle: 'TODO',
-        count: 'TODO',
+        layoutTitle: 'Storage',
+        count: 'Count',
         enabled: 'Enable'
       },
       photos: 'Photos',

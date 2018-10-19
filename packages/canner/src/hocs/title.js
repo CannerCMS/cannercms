@@ -9,7 +9,7 @@ import type {HOCProps} from './types';
 
 const Title = styled.div`
   & > span:after {
-    content: ${props => props.required ? '"*"' : '""'};
+    content: ${props => props.required && props.title ? '"*"' : '""'};
     color: red;
   }
 `;
@@ -28,10 +28,10 @@ function Label({
 }) {
   return (
     <div>
-      <Title required={required}>
+      <Title required={required} title={title} >
         <span>{title}</span>
         {
-          description && (
+          title && description && (
             <Tooltip placement="top" title={description}>
               <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
             </Tooltip>
