@@ -1,7 +1,6 @@
 /** @jsx builder */
 
 import builder, {Block, Row, Col} from 'canner-script';
-import chart from 'canner-script/lib/models/chart';
 
 export default () => (
   <page
@@ -11,7 +10,8 @@ export default () => (
     <Block>
       <Row type="flex">
         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-          <indicator
+          <component
+            packageName="@canner/antd-indicator-amount"
             keyName="last7days-visitor-indicator"
             title="${dashboard.last7daysVisitor}"
             graphql={`
@@ -43,7 +43,8 @@ export default () => (
           />
         </Col>
         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-          <indicator
+          <component
+            packageName="@canner/antd-indicator-amount"
             title="${dashboard.last6monthOrders}"
             keyName="last6month-orders-indicator"
             graphql={`
@@ -74,8 +75,8 @@ export default () => (
     <Row gutter={16}>
       <Col xs={24} sm={24} md={8} lg={8} xl={8} >
         <Block title="Online Sales">
-          <chart
-            ui="bar"
+          <component
+            packageName="@canner/vega-chart-bar"
             keyName="sales-online-bar"
             spec={{
               scales: [
@@ -127,8 +128,8 @@ export default () => (
       </Col>
       <Col xs={24} sm={24} md={8} lg={8} xl={8} >
         <Block title="Offline Sales">
-          <chart
-            ui="bar"
+          <component
+            packageName="@canner/vega-chart-bar"
             keyName="sales-offline-bar"
             spec={{
               scales: [
@@ -179,7 +180,8 @@ export default () => (
       </Col>
       <Col xs={24} sm={24} md={8} lg={8} xl={8} >
         <Block title="Offline and Online Sales">
-          <chart
+          <component
+            packageName="@canner/vega-chart-default"
             keyName="sales-offline-online-stack-bar"
             spec={{
               "height": 200,
