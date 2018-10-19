@@ -35,6 +35,10 @@ class Validator {
 
   validate = (json: {type: string, packageName: string} & CannerSchema) => {
     const {packageName, type} = json;
+    if (type === 'component') {
+      return true;
+    }
+
     if (packageName === '@canner/antd-object-fieldset') {
       return true;
     }

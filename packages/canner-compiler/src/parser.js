@@ -181,7 +181,7 @@ function getDefaultUI(type: string) {
 function generateNodeType(schema: Schema) {
   const ui = schema.ui || getDefaultUI(schema.type);
   let nodetype = 'component';
-  if (['page', 'indicator', 'chart'].indexOf(schema.type) !== -1) {
+  if (['page', 'component'].indexOf(schema.type) !== -1) {
     nodetype = 'page';
   }
   return `${nodetype}.${schema.type}.${ui}`;
