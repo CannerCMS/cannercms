@@ -91,7 +91,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         }}>
           <Row
             type={layout === 'horizantal' ? 'flex' : ''}
-            style={{marginTop: 16}}
+            style={{marginBottom: 16}}
           >
             <Col {...labelCol}>
               <Label
