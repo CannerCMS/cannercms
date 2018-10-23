@@ -296,7 +296,6 @@ export default class Generator extends React.PureComponent<Props, State> {
     }
     return (
       <div>
-        {/* {this.renderComponent(new RefId(routes.join('/')), {refId: new RefId(routes.slice(1).join('/')), routes, params})} */}
         {this.renderNode(componentTree, 0, {refId: new RefId(''), routes, routerParams})}
       </div>
     );

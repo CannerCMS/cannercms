@@ -48,7 +48,7 @@ export default class Body extends React.Component<Props> {
       <div style={{
         background: '#fff',
         borderBottom: '1px solid #eee',
-        padding: '16px 48px 32px'
+        padding: '16px 24px'
       }}>
         <div style={{
           marginBottom: 24
