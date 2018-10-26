@@ -206,7 +206,7 @@ function createJSON(Model: any, args: Array<*>) {
 }
 
 function i18n(attrs: Object) {
-  ['title', 'description', 'uiParams', 'label', 'options', 'placeholder'].forEach(key => {
+  ['title', 'description', 'uiParams', 'label', 'options', 'placeholder', 'fields'].forEach(key => {
     if (key in attrs) {
       attrs[key] = getIntlMessage(attrs[key]);
     }
