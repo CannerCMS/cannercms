@@ -1,7 +1,7 @@
 import {componentMap, getIntlMessage} from '../src/utils';
 import TestRenderer from 'react-test-renderer';
 import * as React from 'react';
-import { IntlProvider, FormattedMessage } from 'react-intl';
+import { IntlProvider, FormattedHTMLMessage } from 'react-intl';
 
 describe('componentMap', function() {
   it('should get a name if has one', function() {
@@ -42,6 +42,6 @@ describe('getIntlMessage', () => {
       )
     }
     const testInstance = TestRenderer.create(<Intl />).root;
-    expect(testInstance.findByType(FormattedMessage).props.id).toBe('title');
+    expect(testInstance.findByType(FormattedHTMLMessage).props.id).toBe('title');
   });
 });
