@@ -14,11 +14,9 @@ const MenuText = styled.span`
 
 const LogoContainer = styled.div`
   width: 150px;
-  float: left;
 `;
 
 const HeaderMenu = styled.div`
-  float: right;
 `;
 
 
@@ -71,7 +69,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
     const hasChanged = dataChanged && Object.keys(dataChanged).length;
     const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
     return (
-      <Header className="header" style={{padding: "0 20px"}}>
+      <Header className="header" style={{padding: "0 20px", display: 'flex', justifyContent: 'space-between'}}>
           {
             typeof logo === 'string' ?
               <LogoContainer>
