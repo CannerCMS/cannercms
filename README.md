@@ -21,7 +21,7 @@
 
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/canner)
 
-> Canner, a Content Management System for **APIs and Clouds**.  Canner is a universal Content Management System (CMS) framework, which build CMS ultra fast and effortless with GraphQL, Prisma, Firebase and Restful APIs.
+> Canner, an agile Content Management System for **APIs and Clouds**.  Canner is a universal Content Management System (CMS) framework, which build CMS ultra fast and effortless with GraphQL, Prisma, Firebase and Restful APIs.
 
 ![Canner flow](./docs/structure.png)
 
@@ -50,21 +50,21 @@
 
 ## Benefits and advantages
 
-### 🌍 One Framework
+### 🌍 Simpler, One Framework
 
 Canner is flexible and agnostic, that you can ***learn once and create any form of CMS for many different databases.***
 
-### ⚡️ Ultra Fast
+### ⚡️ Agile, Move Faster
 
 By defining a Canner schema in JSX, you can determine how the CMS stores data in your databases and the appearance of the CMS UI/UX.
 
 ![schema](./docs/schema.png)
 
-### 💪 Effortless
+### 💪 Flexible, Effortless
 
 With different connectors, you are able to create a CMS to interact with ***Firebase, MySQL, PostgreSQL, GraphQL with the same schema***.
 
-### 💸 Lower cost
+### 💸 Cheaper, Fewer Human Resources
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
