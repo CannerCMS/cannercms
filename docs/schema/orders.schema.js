@@ -5,6 +5,7 @@ import moment from "moment";
 import shortId from "shortid";
 import TableSelectColumn from "./customize-columns/select";
 import { galleryUIParams } from "./utils";
+import { Inline } from './utils.schema';
 
 const orders = () => (
   <array
@@ -149,52 +150,51 @@ const orders = () => (
       <pagination />
     </toolbar>
     <Block title="${orders.orderInfo.layoutTitle}" >
-      <string
-        keyName="no"
-        title="${orders.no}"
-        disabled
-        defaultValue={() => shortId.generate()}
-        layout="horizontal"
-      />
-      <dateTime
-        keyName="createDate"
-        title="${orders.createDate}"
-        defaultValue={() => moment().toISOString()}
-        disabled
-        required
-        layout="horizontal"
-      />
-      <object keyName="orderInfo">
-        <Default injectValue={{layout: 'horizontal'}}>
-          <string keyName="buyerName" title="${orders.orderInfo.buyerName}" required />
-          <string keyName="buyerPhone" title="${orders.orderInfo.buyerPhone}" required />
-          <string keyName="buyerEmail" title="${orders.orderInfo.buyerEmail}" />
-          <string keyName="receiverName" title="${orders.orderInfo.receiverName}" required />
-          <string keyName="receiverPhone" title="${orders.orderInfo.receiverPhone}" required />
-          <dateTime keyName="receiveTime" title="${orders.orderInfo.receiveTime}" required />
-          <Condition match={data => data.shipmentWay !== "PERSON"}>
-            <string keyName="receiverAddress" title="${orders.orderInfo.receiverAddress}" />
-          </Condition>
-          <string
-            keyName="shipmentWay"
-            ui="select"
-            title="${orders.orderInfo.shipmentWay}"
-            uiParams={{
-              options: [
-                { value: "PERSON", text: "${orders.orderInfo.shipmentWay.person}" },
-                { value: "HOME", text: "${orders.orderInfo.shipmentWay.home}" }
-              ]
-            }}
-          />
-          <Block title="${orders.orderInfo.card.title}" type="inner">
-            <string keyName="cardReceiverName" title="${orders.orderInfo.card.receiverName}" />
-            <string ui="textarea" keyName="cardContent" title="${orders.orderInfo.card.content}" />
-            <string keyName="senderName" title="${orders.orderInfo.card.senderName}" />
-            <string ui="textarea" keyName="comment" title="${orders.orderInfo.card.comment}" />
-          </Block>
-        </Default>
-      </object>
-
+      <Inline>
+        <string
+          keyName="no"
+          title="${orders.no}"
+          disabled
+          defaultValue={() => shortId.generate()}
+        />
+        <dateTime
+          keyName="createDate"
+          title="${orders.createDate}"
+          defaultValue={() => moment().toISOString()}
+          disabled
+          required
+        />
+        <string keyName="buyerName" title="${orders.orderInfo.buyerName}" required />
+        <string keyName="buyerPhone" title="${orders.orderInfo.buyerPhone}" required />
+      </Inline>
+      <Inline>
+        <string keyName="buyerEmail" title="${orders.orderInfo.buyerEmail}" />
+        <string keyName="receiverName" title="${orders.orderInfo.receiverName}" required />
+        <string keyName="receiverPhone" title="${orders.orderInfo.receiverPhone}" required />
+        <dateTime keyName="receiveTime" title="${orders.orderInfo.receiveTime}" required />
+      </Inline>
+      <Inline>
+        <Condition match={data => data.shipmentWay !== "PERSON"}>
+          <string keyName="receiverAddress" title="${orders.orderInfo.receiverAddress}" />
+        </Condition>
+        <string
+          keyName="shipmentWay"
+          ui="select"
+          title="${orders.orderInfo.shipmentWay}"
+          uiParams={{
+            options: [
+              { value: "PERSON", text: "${orders.orderInfo.shipmentWay.person}" },
+              { value: "HOME", text: "${orders.orderInfo.shipmentWay.home}" }
+            ]
+          }}
+        />
+      </Inline>
+      <Block title="${orders.orderInfo.card.title}" type="inner">
+        <string keyName="cardReceiverName" title="${orders.orderInfo.card.receiverName}" />
+        <string ui="textarea" keyName="cardContent" title="${orders.orderInfo.card.content}" />
+        <string keyName="senderName" title="${orders.orderInfo.card.senderName}" />
+        <string ui="textarea" keyName="comment" title="${orders.orderInfo.card.comment}" />
+      </Block>
     </Block>
     <Block title="${orders.detail.title}">
       <array
