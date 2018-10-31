@@ -28,6 +28,16 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
   }
 
   let cannerKey = getCannerKey();
+
+  // add cannerKey in the children of layout
+  children.forEach(child => {
+    if (child[CANNER_KEY]) {
+      child[CANNER_KEY].push(cannerKey);
+    } else {
+      child[CANNER_KEY] = [cannerKey];
+    }
+  })
+
   const visitor = (path: Path) => {
     const {children} = path.node;
     
@@ -104,6 +114,16 @@ export function createInjectionLayout(attrs: Object, children: Array<CannerSchem
   }
 
   const cannerKey = getCannerKey();
+
+  // add cannerKey in the children of layout
+  children.forEach(child => {
+    if (child[CANNER_KEY]) {
+      child[CANNER_KEY].push(cannerKey);
+    } else {
+      child[CANNER_KEY] = [cannerKey];
+    }
+  })
+
   const visitor = function(path) {
     if (!path.node[CANNER_KEY] || path.node[CANNER_KEY].indexOf(cannerKey) === -1) {
       return ;

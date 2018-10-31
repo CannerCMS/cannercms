@@ -1,6 +1,6 @@
 /** @jsx builder */
 
-import builder from 'canner-script';
+import builder, {Default} from 'canner-script';
 import {LocalStorageConnector} from 'packages/canner-graphql-interface/src';
 import {createFakeData} from 'packages/canner-helpers/src';
 import Dashboard from './schema/Dashboard.schema';
@@ -14,7 +14,9 @@ import fakeData from './schema/fake-data';
 
 const schema = (
   <root dict={dict}>
-    <Dashboard />
+    <Default>
+      <Dashboard />
+    </Default>
     <objectType keyName="chart">
       <array keyName="visitData">
         <number keyName="x"/>
