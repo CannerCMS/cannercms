@@ -19,7 +19,7 @@ import {
   JsonModel
 } from './models';
 import type {CannerSchema, Props} from './flow-types';
-import {createLayoutVisitor, CANNER_KEY} from './layout';
+import {createLayoutVisitor} from './layout';
 import visitorManager from './visitorManager';
 import validator from './validator';
 import configuration from './configure';
@@ -35,6 +35,7 @@ export const Focus = ({attributes, children}: Props) => <Layout ui="focus" {...a
 export const Condition = ({attributes, children}: Props) => <Layout ui="condition" {...attributes}>{children}</Layout>;
 export const Row = ({attributes, children}: Props) => <Layout ui="row" {...attributes}>{children}</Layout>;
 export const Col = ({attributes, children}: Props) => <Layout ui="col" {...attributes}>{children}</Layout>;
+export const Body = ({attributes, children}: Props) => <Layout ui="body" {...attributes}>{children}</Layout>;
 
 // validator config
 export const configure = configuration.configure;
