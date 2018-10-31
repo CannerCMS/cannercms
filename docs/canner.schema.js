@@ -14,6 +14,7 @@ import fakeData from './schema/fake-data';
 import DashboardBody from './components/layouts/dashboardBody';
 import ProductsBody from './components/layouts/productsBody';
 import HomeBody from './components/layouts/homeBody';
+import OrderBody from './components/layouts/orderBody';
 
 const schema = (
   <root dict={dict}>
@@ -45,7 +46,9 @@ const schema = (
     <Body component={HomeBody}>
       <Home />
     </Body>
-    <Orders />
+    <Body component={OrderBody}>
+      <Orders />
+    </Body>
     <Customers />
   </root>
 );
