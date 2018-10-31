@@ -21,7 +21,7 @@
 
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/canner)
 
-> Canner, an agile Content Management System for **APIs and Clouds**.  Canner is a universal Content Management System (CMS) framework, which build CMS ultra fast and effortless with GraphQL, Prisma, Firebase and Restful APIs.
+> Canner, an agile Content Management System for APIs and Clouds. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
 
 ![Canner flow](./docs/structure.png)
 
