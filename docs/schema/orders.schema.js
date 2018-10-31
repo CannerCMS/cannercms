@@ -138,12 +138,12 @@ const orders = () => (
         <textFilter
           label="${orders.filter.buyerName.label}"
           field="orderInfo.buyerName"
-          placeholder="${orders.filter.buyerName.placeholder}"
+          placeholder="Enter a buyer name"
         />
         <textFilter
           label="${orders.filter.no.label}"
           field="no"
-          placeholder="${orders.filter.no.placeholder}"
+          placeholder="Enter a order number"
         />
       </filter>
       <pagination />
