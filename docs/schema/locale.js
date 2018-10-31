@@ -50,11 +50,9 @@ export default {
       filter: {
         no: {
           label: 'Product Number',
-          placeholder: 'Enter a Product Number'
         },
         name: {
           label: 'Name',
-          placeholder: 'Enter a Product Name'
         }
       }
     },
@@ -111,11 +109,9 @@ export default {
       filter: {
         buyerName: {
           label: 'Search Buyer Name',
-          placeholder: 'Enter Buyer Name'
         },
         no: {
           label: 'Search Order No.',
-          placeholder: 'Enter Order No.'
         }
       }
     },
@@ -129,11 +125,9 @@ export default {
       filter: {
         name: {
           label: 'Search Customer Name',
-          placeholder: 'Enter Customer Name',
         },
         phone: {
           label: 'Search Customer Phone',
-          placeholder: 'Enter Customer Phone'
         }
       }
     }
@@ -187,11 +181,9 @@ export default {
       filter: {
         no: {
           label: '搜尋商品編號',
-          placeholder: '輸入商品編號'
         },
         name: {
           label: '搜尋商品名',
-          placeholder: '輸入商品名'
         }
       }
     },
@@ -247,11 +239,9 @@ export default {
       filter: {
         buyerName: {
           label: '搜尋購買人姓名',
-          placeholder: '輸入購買人姓名'
         },
         no: {
           label: '搜尋購買人編號',
-          placeholder: '輸入購買人編號'
         }
       }
     },
@@ -265,11 +255,9 @@ export default {
       filter: {
         name: {
           label: '搜尋顧客姓名',
-          placeholder: '輸入顧客姓名',
         },
         phone: {
           label: '搜尋顧客電話',
-          placeholder: '輸入顧客電話'
         }
       }
     }

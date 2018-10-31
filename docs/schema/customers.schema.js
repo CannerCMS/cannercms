@@ -47,8 +47,8 @@ export default () => (
         <filter />
       </actions>
       <filter>
-        <textFilter label="${customers.filter.name.label}" field="name" placeholder="${customers.filter.name.placeholder}" />
-        <textFilter label="${customers.filter.phone.label}" field="phone" placeholder="${customers.filter.phone.placeholder}" />
+        <textFilter label="${customers.filter.name.label}" field="name" placeholder="Enter a name" />
+        <textFilter label="${customers.filter.phone.label}" field="phone" placeholder="Enter a phone" />
       </filter>
       <pagination />
     </toolbar>
