@@ -1,8 +1,8 @@
 
 //@flow
+import {genRouteMap} from './utils';
 import type {CannerSchema, Path} from './flow-types';
 export const CANNER_KEY = '__CANNER_KEY__';
-
 
 export function createLayoutVisitor(attrs: Object, children: Array<CannerSchema>, getCannerKey: () => string = getRandomKey) {
   const {layoutType} = attrs;
@@ -43,6 +43,21 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
     
     if (!children) return;
     
+    if (ui === 'body' && CANNER_KEY in path.node && path.node[CANNER_KEY].indexOf(cannerKey) > -1) {
+      const routeMap = genRouteMap('', path.node);
+      const layout = {
+        ...attrs,
+        nodeType: 'layout.body',
+        ui: "body",
+        children: [path.node],
+        routeMap
+      };
+      path.node.hideTitle = true;
+      path.node.inBody = true;
+      path.tree.setNode(path.route, layout);
+      return;
+    }
+
     // we use cannerKey to find the children should put into the new layout component
     const childrenOfLayout = children.filter(child => {
       return child[CANNER_KEY] && child[CANNER_KEY].indexOf(cannerKey) !== -1;
@@ -61,6 +76,7 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
       title: title,
       description: description,
       children: childrenOfLayout,
+      // concatenate the cannerKeys of children to make this layout can be wrapped by other layouts.
       [CANNER_KEY]: childrenOfLayout.reduce(((result, child) => result.concat(child[CANNER_KEY] || [])), []),
     }
     let meetChildOfLayout = false;
