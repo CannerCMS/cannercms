@@ -208,37 +208,3 @@ export function genStorages(attrs: Object, children: Array<*>, storageKey: strin
   }, {});
 }
 
-type RouteMap = {
-  [route: string]: {
-    title: string,
-    description: string
-  }
-};
-
-export function genRouteMap(currentRoute: string, node: Node): RouteMap {
-  let routeMap = {};
-
-  if (node.nodeType.indexOf('layout') === -1) {
-    currentRoute = `${currentRoute ? currentRoute + '/' : ''}${node.name || ''}`;
-    routeMap[currentRoute] = {
-      title: node.title,
-      description: node.description,
-    };
-  }
-
-  // ARRAY_TYPE_PLACEHOLDER may be a index or index
-  if (node.type === 'array' && (node.ui === 'tab' || node.ui === 'popup' || node.ui === 'breadcrumb')) {
-    currentRoute = `${currentRoute}/[^/]*`;
-    routeMap[currentRoute] = {
-      title: '編輯',
-      description: '',
-    };
-  }
-
-  (node.children || []).forEach((child) => {
-    const childMap = genRouteMap(currentRoute, child);
-    routeMap = {...routeMap, ...childMap};
-  });
-
-  return routeMap;
-}

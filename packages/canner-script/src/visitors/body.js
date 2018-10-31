@@ -14,7 +14,6 @@ const arrayBody = {
         return;
       }
       if (path.node.pattern === 'array') {
-        const routeMap = genRouteMap('', path.node);
         const componentInBody = {
           nodeType: 'layout.body',
           ui: "body",
@@ -23,7 +22,6 @@ const arrayBody = {
             ui: "block",
             children: [path.node],
           }],
-          routeMap,
         };
         // remove title description to body container
         path.node.hideTitle = true;
@@ -40,7 +38,6 @@ const objectBody = {
         return;
       }
       if (path.node.pattern === 'object') {
-        const routeMap = genRouteMap('', path.node);
         const componentInBody = {
           nodeType: 'layout.body',
           ui: 'body',
@@ -49,7 +46,6 @@ const objectBody = {
             ui: "block",
             children: [path.node],
           }],
-          routeMap,
         };
         // hide first layer title decsription to body container
         path.node.hideTitle = true;
@@ -65,12 +61,10 @@ const pageBody = {
         // already has body layout
         return;
       }
-      const routeMap = genRouteMap('', path.node);
       const componentInBody = {
         nodeType: 'layout.body',
         ui: "body",
         children: [path.node],
-        routeMap,
       };
       // remove title description to body container
       path.node.hideTitle = true;
