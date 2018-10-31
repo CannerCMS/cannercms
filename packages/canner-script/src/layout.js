@@ -1,6 +1,5 @@
 
 //@flow
-import {genRouteMap} from './utils';
 import type {CannerSchema, Path} from './flow-types';
 export const CANNER_KEY = '__CANNER_KEY__';
 
@@ -44,13 +43,11 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
     if (!children) return;
     
     if (ui === 'body' && CANNER_KEY in path.node && path.node[CANNER_KEY].indexOf(cannerKey) > -1) {
-      const routeMap = genRouteMap('', path.node);
       const layout = {
         ...attrs,
         nodeType: 'layout.body',
         ui: "body",
-        children: [path.node],
-        routeMap
+        children: [path.node]
       };
       path.node.hideTitle = true;
       path.node.inBody = true;
