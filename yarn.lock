@@ -4002,9 +4002,9 @@ caniuse-lite@^1.0.30000890:
   version "1.0.30000892"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000892.tgz#344d2b51ee3ff5977537da4aa449c90eec40b759"
 
-canner-antd-theme@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/canner-antd-theme/-/canner-antd-theme-1.0.0.tgz#8031a8214f89d4b6e14d8e84b70c2ca396b99110"
+canner-antd-theme@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/canner-antd-theme/-/canner-antd-theme-1.0.2.tgz#8825dab5dd7c142a8ad76a6eb9813f2e52c93383"
 
 canner-helpers@^0.0.1:
   version "0.0.1"

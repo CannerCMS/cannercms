@@ -96,7 +96,7 @@
   },
   "private": true,
   "dependencies": {
-    "canner-antd-theme": "^1.0.0",
+    "canner-antd-theme": "^1.0.2",
     "flat": "^4.1.0"
   }
 }
