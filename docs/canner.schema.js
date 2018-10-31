@@ -13,6 +13,8 @@ import dict from './schema/locale';
 import fakeData from './schema/fake-data';
 import DashboardBody from './components/layouts/dashboardBody';
 import ProductsBody from './components/layouts/productsBody';
+import HomeBody from './components/layouts/homeBody';
+
 const schema = (
   <root dict={dict}>
     <Body component={DashboardBody}>
@@ -40,7 +42,9 @@ const schema = (
       <Products />
     </Body>
     <Categories />
-    <Home />
+    <Body component={HomeBody}>
+      <Home />
+    </Body>
     <Orders />
     <Customers />
   </root>
