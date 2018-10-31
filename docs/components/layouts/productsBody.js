@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Breadcrumb, Icon} from 'antd';
+import {Breadcrumb, Icon, Card} from 'antd';
 import {Item} from 'canner-helpers';
 
 type Props = {
@@ -49,14 +49,40 @@ export default class Body extends React.Component<Props> {
             </div>
           )
         }
+        <Links />
       </div>
       <div style={{
         padding: '16px',
         background: '#f0f2f5',
         minHeight: '100vh'
       }}>
-        <Item />
+        <Card>
+          <Item />
+        </Card>
       </div>
     </div>;
   }
+}
+
+function Link({icon, name}) {
+  return (
+    <a href="#" style={{marginRight: 16}}>
+      <Icon type={icon} theme="twoTone"
+        style={{padding: 4, border: '1px solid', borderRadius: '50%', marginRight: 8}}
+      />
+      {name}
+    </a>
+  );
+}
+
+function Links() {
+  return (
+    <div
+      style={{marginTop: 24, fontSize: '18px', fontWeight: 100}}
+    >
+      <Link icon="rocket" name="Link1" />
+      <Link icon="bulb" name="Link1" />
+      <Link icon="compass" name="Link1" />
+    </div>
+  )
 }
