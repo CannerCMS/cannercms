@@ -21,6 +21,7 @@ export default () => (
     keyName="customers"
     ui="tableRoute"
     uiParams={{
+      size: 'middle',
       columns: [{
         title: '${customers.name}',
         key: 'name',
@@ -58,7 +59,11 @@ export default () => (
     <array
       keyName="consignees"
       ui="table"
+      disabled={{
+        create: true
+      }}
       uiParams={{
+        size: 'small',
         columns: [{
           title: '${customers.name}',
           key: 'name',
@@ -71,8 +76,7 @@ export default () => (
           title: 'Email',
           key: 'email',
           dataIndex: 'email',
-        }],
-        createKeys: [],
+        }]
       }}
       title="${customers.consignees}"
     >

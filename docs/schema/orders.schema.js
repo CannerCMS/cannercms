@@ -5,12 +5,44 @@ import shortId from "shortid";
 import { galleryUIParams, renderBuyer, renderOrderSelect, renderPaySelect, renderShipSelect } from "./utils";
 import { Inline } from './utils.schema';
 
+const exportFields = [{
+  keyName: 'no',
+  title: 'NO.',
+}, {
+  keyName: 'createDate',
+  title: 'Create Date',
+  render: createDate => moment(createDate).format('YYYY/MM/DD HH:mm')
+}, {
+  keyName: 'buyerName',
+  title: 'Buyer Name',
+}, {
+  keyName: 'buyerPhone',
+  title: 'Buyer Phone',
+}, {
+  keyName: 'buyerEmail',
+  title: 'Buyer Email',
+}, {
+  keyName: 'receiverName',
+  title: 'Receiver Name',
+}, {
+  keyName: 'receiverPhone',
+  title: 'Receiver Phone',
+}, {
+  keyName: 'receiveTime',
+  title: 'Receive Time',
+  render: time => moment(time).format('YYYY/MM/DD HH:mm')
+}, {
+  keyName: 'receiverAddress',
+  title: 'Receiver Address'
+}];
+
 const orders = () => (
   <array
     keyName="orders"
     ui="tableRoute"
     title="${orders.title}"
     uiParams={{
+      size: 'middle',
       columns: [
         {
           title: "${orders.no}",
@@ -60,13 +92,13 @@ const orders = () => (
     }}
   >
     <toolbar>
-      <actions filterButton />
-      <sorter
-        defaultField="createDate"
-        options={[
-          { label: "${orders.createDate}", field: "createDate", defaultOrder: "desc" }
-        ]}
-      />
+      <actions>
+        <export
+          fields={exportFields}
+          title="Orders"
+        />
+        <filter />
+      </actions>
       <filter>
         <textFilter
           label="${orders.filter.buyerName.label}"

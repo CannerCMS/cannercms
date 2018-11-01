@@ -16,8 +16,6 @@ const categories = () => (
       ]
     }}
   >
-    <toolbar>
-    </toolbar>
     <string keyName="name" title="${categories.name}" required />
     <relation
       keyName="category"
