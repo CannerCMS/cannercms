@@ -9,6 +9,7 @@ const Products = () => (
   <array
     keyName="products"
     title="${products.title}"
+    description="${products.description}"
     ui="tableRoute"
     disabled={{
       delete: true

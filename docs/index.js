@@ -71,7 +71,7 @@ class CMSExample extends React.Component {
     const customHeaderMenu = (
       <Menu theme="dark" mode="horizontal" selectedKeys={[]} style={{ lineHeight: '64px', display: 'inline-block' }}>
         <Menu.Item>
-          <Select value={locale} onChange={this.changeLocale}>
+          <Select style={{width: 120}} value={locale} onChange={this.changeLocale}>
             <Option value="zh">
               中文
             </Option>
