@@ -13,8 +13,8 @@ export const galleryValidation = {
 export function renderBuyer(buyerName, record) {
   const title = (
     <div>
-      <p>{record.email}</p>
-      <p>{record.phone}</p>
+      <div>Email: {record.buyerEmail}</div>
+      <div>Phone: {record.buyerPhone}</div>
     </div>
   )
   return (

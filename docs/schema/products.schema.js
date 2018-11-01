@@ -10,7 +10,11 @@ const Products = () => (
     keyName="products"
     title="${products.title}"
     ui="tableRoute"
+    disabled={{
+      delete: true
+    }}
     uiParams={{
+      size: 'small',
       columns: [
         {
           title: "${products.photos}",

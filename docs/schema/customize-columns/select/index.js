@@ -19,7 +19,7 @@ export default class TableSelectColumn extends React.Component {
     return (
       <Select
         value={value}
-        style={{ color: findOpt && findOpt.color }}
+        style={{ color: findOpt ? findOpt.color : 'red' }}
         onSelect={this.handleSelect}
       >
         {options.map(opt => {
