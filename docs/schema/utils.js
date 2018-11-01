@@ -1,6 +1,6 @@
 import React from 'react';
 import {Tooltip} from 'antd';
-import TableSelectColumn from "./customize-columns/select";
+import TableSelectColumn from "../components/columns/select";
 
 export const galleryValidation = {
   validator: (content, reject) => {

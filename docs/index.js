@@ -22,7 +22,20 @@ export const Logo = styled.img`
 const Option = Select.Option;
 const menuConfig = [
   ...transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema})
-]
+].map(item => {
+  item.icon = getIcon(item.pathname);
+  return item;
+});
+
+function getIcon(pathname) {
+  switch (pathname) {
+    case '/dashboard':
+      return 'dashboard'
+    default:
+      return 'folder';
+  }
+}
+
 class CMSExample extends React.Component {
   constructor(props) {
     super(props);
