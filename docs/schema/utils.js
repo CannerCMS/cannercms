@@ -1,3 +1,7 @@
+import React from 'react';
+import {Tooltip} from 'antd';
+import TableSelectColumn from "./customize-columns/select";
+
 export const galleryValidation = {
   validator: (content, reject) => {
     if (content.length === 0) {
@@ -5,3 +9,70 @@ export const galleryValidation = {
     }
   }
 };
+
+export function renderBuyer(buyerName, record) {
+  const title = (
+    <div>
+      <p>{record.email}</p>
+      <p>{record.phone}</p>
+    </div>
+  )
+  return (
+    <Tooltip title={title}>
+      {buyerName}
+    </Tooltip>
+  )
+}
+
+export const renderSelect = (options, keyName) => (value, record, cannerProps) => (
+  <TableSelectColumn
+    value={value}
+    options={options}
+    dataKeyRefId={cannerProps.refId.child(`${record.__index}/${keyName}`)}
+    cannerProps={cannerProps}
+  />
+)
+
+export const renderOrderSelect = renderSelect([
+  {
+    value: "new",
+    title: "New order",
+    color: "red"
+  },
+  {
+    value: "old",
+    title: "Old order",
+    color: "green"
+  }
+], 'orderStatus');
+
+export const renderPaySelect = renderSelect([
+    {
+      value: "not",
+      title: "Not paid",
+      color: "red"
+    },
+    {
+      value: "paid",
+      title: "Paid",
+      color: "green"
+    }
+], 'payStatus');
+
+export const renderShipSelect = renderSelect([
+  {
+    value: "not",
+    title: "Unshipped",
+    color: "red"
+  },
+  {
+    value: "shipping",
+    title: "Shipping",
+    color: "orange"
+  },
+  {
+    value: "delivered",
+    title: "Delivered",
+    color: "green"
+  }
+], 'shipStatus');
