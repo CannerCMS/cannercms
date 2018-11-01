@@ -1,10 +1,8 @@
 /** @jsx c */
-import * as React from "react";
-import c, { Block, Condition, Default, Row, Col } from "canner-script";
+import c, { Block, Condition, Row, Col } from "canner-script";
 import moment from "moment";
 import shortId from "shortid";
-import TableSelectColumn from "./customize-columns/select";
-import { galleryUIParams } from "./utils";
+import { galleryUIParams, renderBuyer, renderOrderSelect, renderPaySelect, renderShipSelect } from "./utils";
 import { Inline } from './utils.schema';
 
 const orders = () => (
@@ -26,25 +24,7 @@ const orders = () => (
             { text: "${orders.oldOrder}", value: "old" }
           ],
           onFilter: (value, record) => record.orderStatus === value,
-          render: (text, data, props) => {
-            return React.createElement(TableSelectColumn, {
-              value: text,
-              options: [
-                {
-                  value: "new",
-                  title: "${orders.newOrder}",
-                  color: "red"
-                },
-                {
-                  value: "old",
-                  title: "${orders.oldOrder}",
-                  color: "green"
-                }
-              ],
-              dataKeyRefId: props.refId.child(`${data.__index}/orderStatus`),
-              cannerProps: props
-            });
-          }
+          render: renderOrderSelect
         },
         {
           title: "${orders.createDate}",
@@ -58,25 +38,7 @@ const orders = () => (
             { text: "${orders.paid}", value: "paid" }
           ],
           onFilter: (value, record) => record.payStatus === value,
-          render: (text, data, props) => {
-            return React.createElement(TableSelectColumn, {
-              value: text,
-              options: [
-                {
-                  value: "not",
-                  title: "${orders.notPaid}",
-                  color: "red"
-                },
-                {
-                  value: "paid",
-                  title: "${orders.paid}",
-                  color: "green"
-                }
-              ],
-              dataKeyRefId: props.refId.child(`${data.__index}/payStatus`),
-              cannerProps: props
-            });
-          }
+          render: renderPaySelect
         },
         {
           title: "${orders.shipStatus}",
@@ -87,42 +49,12 @@ const orders = () => (
             { text: "${orders.delivered}", value: "delivered" }
           ],
           onFilter: (value, record) => record.shipStatus === value,
-          render: (text, data, props) => {
-            return React.createElement(TableSelectColumn, {
-              value: text,
-              options: [
-                {
-                  value: "not",
-                  title: "${orders.unshipped}",
-                  color: "red"
-                },
-                {
-                  value: "shipping",
-                  title: "${orders.shipping}",
-                  color: "orange"
-                },
-                {
-                  value: "delivered",
-                  title: "${orders.delivered}",
-                  color: "green"
-                }
-              ],
-              dataKeyRefId: props.refId.child(`${data.__index}/shipStatus`),
-              cannerProps: props
-            });
-          }
+          render: renderShipSelect
         },
         {
           title: "${orders.orderInfo.buyerName}",
-          dataIndex: "orderInfo.buyerName"
-        },
-        {
-          title: "${orders.orderInfo.buyerPhone}",
-          dataIndex: "orderInfo.buyerPhone"
-        },
-        {
-          title: "${orders.orderInfo.buyerEmail}",
-          dataIndex: "orderInfo.buyerEmail"
+          dataIndex: "buyerName",
+          render: renderBuyer
         }
       ]
     }}
