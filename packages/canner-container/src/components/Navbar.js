@@ -78,7 +78,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
               (logo || null)
           }
         <HeaderMenu>
-          { renderMenu() }
+          { renderMenu && renderMenu() }
           <Menu
             mode="horizontal"
             style={{ lineHeight: '64px', display: 'inline-block', background: 'transparent' }}
