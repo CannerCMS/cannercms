@@ -75,7 +75,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
               <LogoContainer>
                 <img src={logo} width={150}/>
               </LogoContainer> :
-              (logo || null)
+              (logo || <div></div>) // render emptry div instead of null to make space-between works
           }
         <HeaderMenu>
           { renderMenu && renderMenu() }
