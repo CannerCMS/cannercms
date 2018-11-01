@@ -105,9 +105,9 @@ module.exports = {
           loader: 'less-loader',
           options: {
             modifyVars: {
-              "menu-dark-bg": "#373d62",
+              "menu-dark-bg": "#283050",
               "layout-sider-background": "#373d62",
-              "layout-header-background": "#373d62",
+              "layout-header-background": "#283050",
               "layout-trigger-background": "#373d62",
               "primary-color": "#f2b173",
               "btn-primary-bg": "#6bbcbc",

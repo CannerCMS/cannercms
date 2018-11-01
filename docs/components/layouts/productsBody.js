@@ -32,7 +32,8 @@ export default class Body extends React.Component<Props> {
       <div style={{
         background: '#fff',
         borderBottom: '1px solid #eee',
-        padding: '16px 24px'
+        padding: '16px 24px',
+        position: 'relative'
       }}>
         <div style={{
           marginBottom: 24
@@ -50,6 +51,14 @@ export default class Body extends React.Component<Props> {
           )
         }
         <Links />
+        <img src="https://cdn.canner.io/images/innerPages/banner.png"
+          height="80%"
+          style={{
+            position: 'absolute',
+            right: '10%',
+            bottom: '10px'
+          }}
+        />
       </div>
       <div style={{
         padding: '16px',
@@ -66,7 +75,7 @@ export default class Body extends React.Component<Props> {
 
 function Link({icon, name}) {
   return (
-    <a href="#" style={{marginRight: 16}}>
+    <a href="#" style={{marginRight: 36}}>
       <Icon type={icon} theme="outlined"
         style={{padding: 4, border: '1px solid', borderRadius: '50%', marginRight: 8}}
       />
@@ -78,7 +87,7 @@ function Link({icon, name}) {
 function Links() {
   return (
     <div
-      style={{marginTop: 24, fontSize: '18px', fontWeight: 100}}
+      style={{marginTop: 24, fontSize: 18, fontWeight: 100}}
     >
       <Link icon="rocket" name="Link1"/>
       <Link icon="bulb" name="Link1" />
