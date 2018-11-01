@@ -67,7 +67,7 @@ export default class Body extends React.Component<Props> {
 function Link({icon, name}) {
   return (
     <a href="#" style={{marginRight: 16}}>
-      <Icon type={icon} theme="twoTone"
+      <Icon type={icon} theme="outlined"
         style={{padding: 4, border: '1px solid', borderRadius: '50%', marginRight: 8}}
       />
       {name}
@@ -80,7 +80,7 @@ function Links() {
     <div
       style={{marginTop: 24, fontSize: '18px', fontWeight: 100}}
     >
-      <Link icon="rocket" name="Link1" />
+      <Link icon="rocket" name="Link1"/>
       <Link icon="bulb" name="Link1" />
       <Link icon="compass" name="Link1" />
     </div>

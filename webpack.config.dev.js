@@ -1,8 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const fs = require('fs');
-const antdTheme = require('canner-antd-theme');
-
 
 module.exports = {
   devServer: {
@@ -32,6 +29,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
     alias: {
+      // aliasing canner-script and canner-helpers is for symlink when developing
       'canner-script': path.resolve(__dirname, 'packages', 'canner-script'),
       'canner-helpers': path.resolve(__dirname, 'packages', 'canner-helpers'),
       'styled-components': path.resolve(__dirname, 'node_modules', 'styled-components'),
@@ -106,7 +104,20 @@ module.exports = {
         }, {
           loader: 'less-loader',
           options: {
-            modifyVars: antdTheme,
+            modifyVars: {
+              "menu-dark-bg": "#373d62",
+              "layout-sider-background": "#373d62",
+              "layout-header-background": "#373d62",
+              "layout-trigger-background": "#373d62",
+              "primary-color": "#f2b173",
+              "btn-primary-bg": "#6bbcbc",
+              "progress-default-color": "#6bbcbc",
+              "menu-dark-item-selected-bg": "#283050",
+              "menu-dark-item-active-bg": "#283050",
+              "item-active-bg": "rgba(242, 177, 115, 0.1)",
+              "item-hover-bg": "rgba(242, 177, 115, 0.3)",
+              "font-size-base": "14px"
+            },
             javascriptEnabled: true,
           }
         }]

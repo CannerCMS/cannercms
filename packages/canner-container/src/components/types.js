@@ -25,12 +25,14 @@ export type MenuParams = {
 
 export type MenuItemConfig = {
   title: string,
+  icon?: string | React.Node,
   pathname: string,
   params?: MenuParams
 };
 
 export type SubmenuConfig = {
   title: string,
+  icon?: string | React.Node,
   items: Array<MenuItemConfig>
 };
 

@@ -1,6 +1,6 @@
 /** @jsx c */
 import c, { Default, Tabs } from "canner-script";
-import TextFilter from "./customize-columns/textFilter";
+import TextFilter from "../components/columns/textFilter";
 import { galleryValidation } from "./utils";
 
 const noFilter = new TextFilter('no');
