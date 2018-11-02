@@ -37,6 +37,7 @@ export default {
       no: 'Product Number',
       name: 'Product Name',
       description: 'You can implement sort and filter in each column with <a href="https://ant.design/components/table/#Column">antd column configuration</a> and customize your page header with <code>&lt;Body&gt;</code> tag. </br> Click the links below to see the source codes.',
+      'prod.description': 'Product Description',
       price: 'Price',
       unit: 'dollars',
       promo: 'Promo Price',
