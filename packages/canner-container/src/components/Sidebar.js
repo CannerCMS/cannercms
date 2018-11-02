@@ -62,7 +62,7 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
       return null;
     }
     return (
-      <Layout.Sider breakpoint="sm" collapsedWidth={0}>
+      <Layout.Sider breakpoint="sm" collapsedWidth={0} style={{zIndex: 1}}>
         <Menu
           onClick={this.siderMenuOnClick}
           selectedKeys={[`/${routes[0]}`]}
