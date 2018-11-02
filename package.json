@@ -20,7 +20,7 @@
     "start": "webpack-dev-server --mode development",
     "build:docs": "webpack --mode production",
     "gh-pages": "gh-pages -d docs/dist",
-    "deploy": "npm run build:docs && npm run deploy",
+    "deploy": "npm run build:docs && npm run gh-pages",
     "validate": "npm ls"
   },
   "devDependencies": {
