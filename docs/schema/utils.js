@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tooltip} from 'antd';
+import {Tooltip, Icon} from 'antd';
 import TableSelectColumn from "../components/columns/select";
 
 export const galleryValidation = {
@@ -76,3 +76,12 @@ export const renderShipSelect = renderSelect([
     color: "green"
   }
 ], 'shipStatus');
+
+
+export const visitorIcon = (
+  <Icon type="user" theme="outlined" style={{color: "#e3f7ff"}} />
+);
+
+export const orderIcon = (
+  <Icon type="dollar" theme="twoTone" />
+)

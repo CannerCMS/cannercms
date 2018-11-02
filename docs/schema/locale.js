@@ -8,8 +8,8 @@ export default {
     dashboard: {
       title: 'Dashboard',
       desc: 'Canner is also supporting indicators, charts, and filters to help you build extendable administrator console for your datasets and APIs.',
-      last7daysVisitor: 'Visitors last 7 days',
-      last6monthOrders: 'Last 6 months orders',
+      last7daysVisitor: 'Visitors',
+      last6monthOrders: 'Orders',
       customers: 'Total Customers'
     },
     home: {
