@@ -35,11 +35,11 @@ export default () => (
         key: 'email',
         dataIndex: 'email',
       }],
-      createKeys: [],
     }}
     title="${customers.title}"
+    description="${customers.description}"
   >
-    <toolbar>
+    <toolbar async>
       <actions>
         <export
           fields={exportFields}

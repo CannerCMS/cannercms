@@ -59,40 +59,6 @@ const Products = () => (
         <object keyName="description" ui="editor" title="${products.description}" />
         <number keyName="price" title="${products.price}" required />
         <number keyName="promo" title="${products.promo}" />
-        {/* <relation
-          ui="multipleSelect"
-          keyName="addPurchase"
-          relation={{
-            type: "toMany",
-            to: "products"
-          }}
-          uiParams={{
-            textCol: "name",
-            columns: [
-              {
-                title: "${products.no}",
-                dataIndex: "no"
-              },
-              {
-                title: "${products.name}",
-                dataIndex: "name"
-              }
-            ]
-          }}
-          title="${products.addPurchase}"
-        >
-          <toolbar>
-            <actions filterButton />
-            <filter>
-              <textFilter
-                label="${products.filter.no.label}"
-                field="no"
-                placeholder="${products.filter.no.placeholder}"
-              />
-            </filter>
-            <pagination />
-          </toolbar>
-        </relation> */}
         <relation
           keyName="category"
           ui="singleSelectTree"
