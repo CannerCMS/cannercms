@@ -30,8 +30,16 @@
 Code lives in [here ./docs folder](./docs)
 
 ![CMS preivew1](./docs/preview1.png)
+
+> Charts and Indicators
+
 ![CMS preivew1](./docs/preview2.png)
+
+> Inline updates, tables, sorters, filters, etc...
+
 ![CMS preivew1](./docs/preview3.png)
+
+> Import & export data, multiple selection, etc...
 
 ## Features
 
