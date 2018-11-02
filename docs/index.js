@@ -54,7 +54,7 @@ class CMSExample extends React.Component {
   }
 
   router = new R({
-    baseUrl: "/canner"
+    baseUrl: "/demo"
   });
 
   state = {

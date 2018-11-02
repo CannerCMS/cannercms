@@ -10,7 +10,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'docs/dist'),
     filename: 'bundle.js',
-    publicPath: '/canner/'
+    publicPath: '/demo/'
   },
   resolve: {
     extensions: [".ts", ".js"],
@@ -26,11 +26,11 @@ module.exports = {
   devServer: {
     historyApiFallback: {
       rewrites: [
-        { from: /.*/, to: '/canner/index.html' },
+        { from: /.*/, to: '/demo/index.html' },
       ]
     },
     contentBase: path.join(__dirname, 'docs/dist'),
-    publicPath: '/canner/'
+    publicPath: '/demo/'
   },
   module: {
     rules: [
