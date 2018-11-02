@@ -22,7 +22,30 @@ export const Logo = styled.img`
 const Option = Select.Option;
 const menuConfig = [
   ...transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema})
-]
+].map(item => {
+  item.icon = getIcon(item.pathname);
+  return item;
+});
+
+function getIcon(pathname) {
+  switch (pathname) {
+    case '/dashboard':
+      return 'dashboard';
+    case '/products':
+      return 'shopping-cart';
+    case '/categories':
+      return 'tags';
+    case '/home':
+      return 'home';
+    case '/orders':
+      return 'solution';
+    case '/customers':
+      return 'team';
+    default:
+      return 'folder';
+  }
+}
+
 class CMSExample extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +54,7 @@ class CMSExample extends React.Component {
   }
 
   router = new R({
-    baseUrl: "/docs"
+    baseUrl: "/canner"
   });
 
   state = {
@@ -58,7 +81,7 @@ class CMSExample extends React.Component {
     const customHeaderMenu = (
       <Menu theme="dark" mode="horizontal" selectedKeys={[]} style={{ lineHeight: '64px', display: 'inline-block' }}>
         <Menu.Item>
-          <Select value={locale} onChange={this.changeLocale}>
+          <Select style={{width: 120}} value={locale} onChange={this.changeLocale}>
             <Option value="zh">
               中文
             </Option>

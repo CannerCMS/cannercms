@@ -6,3 +6,4 @@ lib
 _gh-pages
 *.log
 .cache
+dist

@@ -7,6 +7,11 @@ export default function withQuery(Com) {
   return class ComWithQuery extends React.Component {
     render() {
       const {graphql, variables, transformData, ...restProps} = this.props;
+      if (!graphql) {
+        return (
+          <Com {...restProps}/>
+        );
+      }
       return (
         <Query query={gql`${graphql}`} variables={variables}>
           {({loading, error, data, ...graphqlProps}) => {

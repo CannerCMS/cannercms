@@ -21,29 +21,20 @@ const ErrorMessage = styled.div`
 
 function Label({
   required,
-  type,
-  imageStorage,
   description,
   title,
 }) {
   return (
-    <div>
-      <Title required={required} title={title} >
-        <span>{title}</span>
-        {
-          title && description && (
-            <Tooltip placement="top" title={description}>
-              <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
-            </Tooltip>
-          )
-        }
-      </Title>
+    <Title required={required} title={title} >
+      <span>{title}</span>
       {
-        (type === 'image' && isEmpty(imageStorage)) && (
-          <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
+        title && description && (
+          <Tooltip placement="top" title={description}>
+            <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
+          </Tooltip>
         )
       }
-    </div>
+    </Title>
   )
 }
 
@@ -97,12 +88,16 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
               <Label
                 required={required}
                 type={type}
-                imageStorage={imageStorage}
                 description={description}
                 title={hideTitle ? '' : title}
               />
             </Col>
             <Col {...itemCol}>
+              {
+                (type === 'image' && isEmpty(imageStorage)) && (
+                  <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
+                )
+              }
               <Com {...this.props} />
               {
                 error && (

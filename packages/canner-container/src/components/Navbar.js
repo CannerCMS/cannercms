@@ -69,20 +69,19 @@ export default class Navbar extends React.Component<NavbarProps, State> {
     const hasChanged = dataChanged && Object.keys(dataChanged).length;
     const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
     return (
-      <Header className="header" style={{padding: "0 20px", display: 'flex', justifyContent: 'space-between'}}>
+      <Header style={{padding: "0 20px", display: 'flex', justifyContent: 'space-between'}}>
           {
             typeof logo === 'string' ?
               <LogoContainer>
                 <img src={logo} width={150}/>
               </LogoContainer> :
-              (logo || null)
+              (logo || <div></div>) // render emptry div instead of null to make space-between works
           }
         <HeaderMenu>
-          { renderMenu() }
+          { renderMenu && renderMenu() }
           <Menu
-            theme="dark"
             mode="horizontal"
-            style={{ lineHeight: '64px', display: 'inline-block' }}
+            style={{ lineHeight: '64px', display: 'inline-block', background: 'transparent' }}
             selectedKeys={[]}
             onClick={this.headerMenuOnClick}
           >
