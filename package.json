@@ -18,7 +18,7 @@
     "release:next": "npm run clean && npm run build && lerna publish --exact --npm-tag next",
     "check:src": "npm run lint",
     "start": "webpack-dev-server --mode development",
-    "build:docs": "webpack --mode production",
+    "build:docs": "rm -r docs/dist && webpack --mode production",
     "gh-pages": "gh-pages -d docs/dist",
     "deploy": "npm run build:docs && npm run gh-pages",
     "validate": "npm ls"
