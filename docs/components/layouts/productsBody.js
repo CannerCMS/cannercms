@@ -44,7 +44,8 @@ export default class Body extends React.Component<Props> {
         {
           (item.description || description) && (
             <div style={{
-              marginTop: 8
+              marginTop: 8,
+              width: '60%'
             }}>
               {item.description || description}
             </div>
@@ -75,9 +76,9 @@ export default class Body extends React.Component<Props> {
 
 function Link({icon, name}) {
   return (
-    <a href="#" style={{marginRight: 36}}>
+    <a href="javascript:;" style={{marginRight: 36}}>
       <Icon type={icon} theme="outlined"
-        style={{padding: 4, border: '1px solid', borderRadius: '50%', marginRight: 8}}
+        style={{padding: 8, border: '1px solid', borderRadius: '50%', marginRight: 8}}
       />
       {name}
     </a>
@@ -87,11 +88,10 @@ function Link({icon, name}) {
 function Links() {
   return (
     <div
-      style={{marginTop: 24, fontSize: 18, fontWeight: 100}}
+      style={{marginTop: 24, fontSize: 16, fontWeight: 100}}
     >
-      <Link icon="rocket" name="Link1"/>
-      <Link icon="bulb" name="Link1" />
-      <Link icon="compass" name="Link1" />
+      <Link icon="file-text" name="Schema" link="https://github.com/Canner/canner/blob/canary/docs/schema/products.schema.js"/>
+      <Link icon="code" name="Customized Body" link="https://github.com/Canner/canner/blob/canary/docs/components/layouts/productsBody"/>
     </div>
   )
 }

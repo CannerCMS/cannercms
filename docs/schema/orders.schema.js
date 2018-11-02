@@ -41,6 +41,7 @@ const orders = () => (
     keyName="orders"
     ui="tableRoute"
     title="${orders.title}"
+    description="${orders.description}"
     uiParams={{
       size: 'middle',
       columns: [

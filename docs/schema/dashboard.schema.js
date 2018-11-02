@@ -1,19 +1,26 @@
 /** @jsx builder */
 
-import builder, {Block, Row, Col} from 'canner-script';
+import builder, {Block} from 'canner-script';
 import {visitorIcon, orderIcon} from './utils';
 import {Inline} from './utils.schema';
 export default () => (
   <page
     keyName="dashboard"
     title="${dashboard.title}"
-    description="${dashboard.desc}">
+    description="${dashboard.desc}"
+  >
+    <component
+      packageName="../components/dashboard/banner"
+      keyName="banner"
+      title="${dashboard.title}"
+      description="${dashboard.desc}"
+    />
     <Inline>
       <Block>
         <component
           packageName="../components/dashboard/amount"
           keyName="last7days-visitor-indicator"
-          title="${dashboard.last7daysVisitor}"
+          title="${dashboard.visitors}"
           icon={visitorIcon}
           graphql={`
             query {
@@ -46,7 +53,7 @@ export default () => (
       <Block>
         <component
           packageName="../components/dashboard/amount"
-          title="${dashboard.last6monthOrders}"
+          title="${dashboard.orders}"
           keyName="last6month-orders-indicator"
           icon={orderIcon}
           graphql={`
