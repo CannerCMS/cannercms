@@ -1,10 +1,6 @@
 /** @jsx builder */
 
-<<<<<<< HEAD
-import builder, {Default} from 'canner-script';
-=======
 import builder, {Body} from 'canner-script';
->>>>>>> 5322cd80f0a3dda5907817131d4d452aaebf0fd1
 import {LocalStorageConnector} from 'packages/canner-graphql-interface/src';
 import {createFakeData} from 'packages/canner-helpers/src';
 import Dashboard from './schema/Dashboard.schema';
@@ -22,15 +18,9 @@ import OrderBody from './components/layouts/orderBody';
 
 const schema = (
   <root dict={dict}>
-<<<<<<< HEAD
-    <Default>
-      <Dashboard />
-    </Default>
-=======
     <Body component={DashboardBody}>
       <Dashboard />
     </Body>
->>>>>>> 5322cd80f0a3dda5907817131d4d452aaebf0fd1
     <objectType keyName="chart">
       <array keyName="visitData">
         <number keyName="x"/>
@@ -40,7 +30,7 @@ const schema = (
         <number keyName="x"/>
         <number keyName="y"/>
       </array>
-      <array keyName="salesTypeDataOnline">
+      <array keyName="salesTy dpeDataOnline">
         <string keyName="x"/>
         <number keyName="y"/>
       </array>
