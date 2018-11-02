@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'docs/dist'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/canner/'
   },
   resolve: {
     extensions: [".ts", ".js"],
@@ -25,9 +25,13 @@ module.exports = {
     }
   },
   devServer: {
-    historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [
+        { from: /.*/, to: '/canner/index.html' },
+      ]
+    },
     contentBase: path.join(__dirname, 'docs/dist'),
-    publicPath: '/'
+    publicPath: '/canner/'
   },
   module: {
     rules: [
