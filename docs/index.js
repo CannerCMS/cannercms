@@ -30,7 +30,17 @@ const menuConfig = [
 function getIcon(pathname) {
   switch (pathname) {
     case '/dashboard':
-      return 'dashboard'
+      return 'dashboard';
+    case '/products':
+      return 'shopping-cart';
+    case '/categories':
+      return 'tags';
+    case '/home':
+      return 'home';
+    case '/orders':
+      return 'solution';
+    case '/customers':
+      return 'team';
     default:
       return 'folder';
   }

@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const antdTheme = require('./package.json').theme;
 
 module.exports = {
   externals: {
@@ -59,16 +60,6 @@ module.exports = {
         }],
       },
       {
-        test: /\.scss$/,
-        use: [{
-          loader: "style-loader" // creates style nodes from JS strings
-        }, {
-          loader: "css-loader", // translates CSS into CommonJS
-        }, {
-          loader: "sass-loader" // compiles Sass to CSS
-        }]
-      },
-      {
         test: /\.css$/,
         use: [{
           loader: "style-loader" // creates style nodes from JS strings
@@ -83,7 +74,11 @@ module.exports = {
         }, {
           loader: "css-loader" // translates CSS into CommonJS
         }, {
-          loader: "less-loader" // translates Less into CSS
+          loader: "less-loader", // translates Less into CSS
+          options: {
+            modifyVars: antdTheme,
+            javascriptEnabled: true,
+          }
         }]
       }
     ],
