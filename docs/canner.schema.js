@@ -30,7 +30,7 @@ const schema = (
         <number keyName="x"/>
         <number keyName="y"/>
       </array>
-      <array keyName="salesTy dpeDataOnline">
+      <array keyName="salesTypeDataOnline">
         <string keyName="x"/>
         <number keyName="y"/>
       </array>
