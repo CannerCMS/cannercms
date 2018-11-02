@@ -23,9 +23,15 @@
 
 > Canner, an agile Content Management System for APIs and Clouds. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
 
-![Canner flow](./docs/structure.png)
+## Preview and demo
 
-[🔥 ***GET STARTED NOW*** 🔥](https://www.canner.io/docs/start-quick-intro.html)
+***Live demo here: https://www.canner.io/demo***
+
+Code lives in [here ./docs folder](./docs)
+
+![CMS preivew1](./docs/preview1.png)
+![CMS preivew1](./docs/preview2.png)
+![CMS preivew1](./docs/preview3.png)
 
 ## Features
 
@@ -48,6 +54,7 @@
 - [x] [Customize resolver](https://www.canner.io/docs/guides-resolver)
 - [x] [Storage API support](https://www.canner.io/docs/guides-storage)
 
+
 ## Benefits and advantages
 
 ### 🌍 Simpler, One Framework
@@ -68,6 +75,10 @@ With different connectors, you are able to create a CMS to interact with ***Fire
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
+
+![Canner flow](./docs/structure.png)
+
+[🔥 ***GET STARTED NOW*** 🔥](https://www.canner.io/docs/start-quick-intro.html)
 
 ## 🙌 Why create Canner?
 
@@ -141,10 +152,6 @@ If that sounds familiar, you might like ***Canner***. Which motivates us to solv
 # 3. Serve your CMS with Livereload in local, while you update your schema the dev server will automatically reload open http://localhost:9090
 ➜ $ canner script:serve
 ```
-
-## Preview and demo
-
-![CMS preivew](./docs/cms-preview.png)
 
 ### CMS schema
 
