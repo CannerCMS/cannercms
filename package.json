@@ -37,7 +37,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@canner/antd-components": "^0.5.9",
+    "@canner/antd-components": "^0.5.10",
     "@canner/vega-charts": "^0.1.3",
     "@canner/victory-area": "^0.2.0",
     "@canner/victory-area-stack": "^0.2.0",
@@ -93,6 +93,20 @@
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.10",
     "webpack-dev-server": "^3.1.0"
+  },
+  "theme": {
+    "menu-dark-bg": "#373d62",
+    "layout-sider-background": "#373d62",
+    "layout-header-background": "#373d62",
+    "layout-trigger-background": "#373d62",
+    "primary-color": "#f2b173",
+    "btn-primary-bg": "#6bbcbc",
+    "progress-default-color": "#6bbcbc",
+    "menu-dark-item-selected-bg": "#283050",
+    "menu-dark-item-active-bg": "#283050",
+    "item-active-bg": "rgba(242, 177, 115, 0.1)",
+    "item-hover-bg": "rgba(242, 177, 115, 0.3)",
+    "font-size-base": "14px"
   },
   "private": true,
   "dependencies": {

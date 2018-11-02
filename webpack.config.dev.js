@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const antdTheme = require('./package.json').theme;
 
 module.exports = {
   devServer: {
@@ -104,20 +105,7 @@ module.exports = {
         }, {
           loader: 'less-loader',
           options: {
-            modifyVars: {
-              "menu-dark-bg": "#283050",
-              "layout-sider-background": "#373d62",
-              "layout-header-background": "#283050",
-              "layout-trigger-background": "#373d62",
-              "primary-color": "#f2b173",
-              "btn-primary-bg": "#6bbcbc",
-              "progress-default-color": "#6bbcbc",
-              "menu-dark-item-selected-bg": "#283050",
-              "menu-dark-item-active-bg": "#283050",
-              "item-active-bg": "rgba(242, 177, 115, 0.1)",
-              "item-hover-bg": "rgba(242, 177, 115, 0.3)",
-              "font-size-base": "14px"
-            },
+            modifyVars: antdTheme,
             javascriptEnabled: true,
           }
         }]
