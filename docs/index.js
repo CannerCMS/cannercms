@@ -78,8 +78,8 @@ class CMSExample extends React.Component {
 
   render() {
     const {locale} = this.state;
-    const customHeaderMenu = (
-      <Menu theme="dark" mode="horizontal" selectedKeys={[]} style={{ lineHeight: '64px', display: 'inline-block' }}>
+    const renderCustomHeaderMenu = ({mode}) => (
+      <Menu theme="dark" mode={mode} selectedKeys={[]} style={{ lineHeight: '64px', display: mode === 'horizontal' ? 'inline-block' : 'block' }}>
         <Menu.Item>
           <Select style={{width: 120}} value={locale} onChange={this.changeLocale}>
             <Option value="zh">
@@ -106,7 +106,7 @@ class CMSExample extends React.Component {
           navbarConfig={{
             logo: <Logo src="https://cdn.canner.io/images/logo/logo-white-word-beta.svg" />,
             showSaveButton: true,
-            renderMenu: () => customHeaderMenu
+            renderMenu: renderCustomHeaderMenu
           }}
           router={this.router}
         >

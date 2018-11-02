@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import {Layout, Menu, Badge, Icon, notification} from 'antd';
+import {Button, Layout, Menu, Badge, Icon, notification, Drawer} from 'antd';
 import type {NavbarProps} from './types';
 import styled from 'styled-components';
 const {Header} = Layout;
@@ -17,16 +17,33 @@ const LogoContainer = styled.div`
 `;
 
 const HeaderMenu = styled.div`
+  @media (max-width: 576px) {
+    display: none;
+  }
+`;
+
+const DrawerMenu = styled.div`
+  @media (min-width: 576px) {
+    display: none;
+  }
 `;
 
 
 type State = {
-  deploying: boolean
+  deploying: boolean,
+  drawerVisible: boolean
 };
 
 export default class Navbar extends React.Component<NavbarProps, State> {
   state = {
     deploying: false,
+    drawerVisible: false
+  }
+
+  triggerDrawer = () => {
+    this.setState({
+      drawerVisible: !this.state.drawerVisible
+    });
   }
 
   deploy = () => {
@@ -64,53 +81,89 @@ export default class Navbar extends React.Component<NavbarProps, State> {
   }
 
   render() {
-    const {dataChanged, logo, renderMenu, showSaveButton} = this.props;
+    const {dataChanged, logo, renderMenu, showSaveButton, theme = "dark"} = this.props;
+    const {drawerVisible} = this.state;
     const {deploying} = this.state;
     const hasChanged = dataChanged && Object.keys(dataChanged).length;
     const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+    const Logo = typeof logo === 'string' ?
+      <LogoContainer>
+        <img src={logo} width={150}/>
+      </LogoContainer> :
+      (logo || <div></div>) // render emptry div instead of null to make space-between works
+    const renderNav = ({
+      mode
+    }) => (
+      <React.Fragment>
+        {
+          mode === 'inline' && (
+            <Menu
+              mode={mode}
+              theme={theme}
+              selectedKeys={[]}
+              onClick={this.headerMenuOnClick}
+              style={{paddingBottom: 16}}
+            >
+              <Menu.Item key="__logo">
+              {Logo}
+              </Menu.Item>
+            </Menu>
+          )
+        }
+        { renderMenu && renderMenu({mode, theme}) }
+        <Menu
+          mode={mode}
+          theme={theme}
+          style={{ lineHeight: '64px', display: mode === 'horizontal' ? 'inline-block' : 'block' }}
+          selectedKeys={[]}
+          onClick={this.headerMenuOnClick}
+        >
+          {
+            showSaveButton && deploying && (
+              <Menu.Item key="loading">
+                {spinIcon}
+              </Menu.Item>
+            )
+          }
+          {
+            showSaveButton && !deploying && (
+              hasChanged ?
+              <Menu.Item key="deploy">
+                <Badge dot>
+                  <MenuText>
+                    Save
+                  </MenuText>
+                </Badge>
+              </Menu.Item> :
+              <Menu.Item key="saved">
+                <MenuText>
+                  Saved
+                </MenuText>
+              </Menu.Item>
+            )
+          }
+        </Menu>
+      </React.Fragment>
+    );
     return (
       <Header style={{padding: "0 20px", display: 'flex', justifyContent: 'space-between'}}>
-          {
-            typeof logo === 'string' ?
-              <LogoContainer>
-                <img src={logo} width={150}/>
-              </LogoContainer> :
-              (logo || <div></div>) // render emptry div instead of null to make space-between works
-          }
+        {Logo}
         <HeaderMenu>
-          { renderMenu && renderMenu() }
-          <Menu
-            mode="horizontal"
-            style={{ lineHeight: '64px', display: 'inline-block', background: 'transparent' }}
-            selectedKeys={[]}
-            onClick={this.headerMenuOnClick}
-          >
-            {
-              showSaveButton && deploying && (
-                <Menu.Item key="loading">
-                  {spinIcon}
-                </Menu.Item>
-              )
-            }
-            {
-              showSaveButton && !deploying && (
-                hasChanged ?
-                <Menu.Item key="deploy">
-                  <Badge dot>
-                    <MenuText>
-                      Save
-                    </MenuText>
-                  </Badge>
-                </Menu.Item> :
-                <Menu.Item key="saved">
-                  <MenuText>
-                    Saved
-                  </MenuText>
-                </Menu.Item>
-              )
-            }
-          </Menu>
+          {renderNav({mode: 'horizontal'})}
         </HeaderMenu>
+        <DrawerMenu>
+          <Button icon="setting" shape="circle" ghost onClick={this.triggerDrawer} style={{border: 0}}/>
+          <Drawer
+            height="auto"
+            style={{padding: 0, height: 'auto'}}
+            placement={"top"}
+            closable={false}
+            visible={drawerVisible}
+            onClose={this.triggerDrawer}
+          >
+          {renderNav({mode: 'inline'})}
+          </Drawer>
+        </DrawerMenu>
       </Header>
     );
   }

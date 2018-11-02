@@ -44,8 +44,9 @@ export type SidebarConfig = {
 
 export type NavbarConfig = {
   logo: string, // img url
-  renderMenu: () => React.Node,
-  showSaveButton: boolean
+  renderMenu: any => React.Node,
+  showSaveButton: boolean,
+  theme?: 'light' | 'dark'
 }
 
 export type Router = {
