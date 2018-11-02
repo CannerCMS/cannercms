@@ -74,9 +74,9 @@ export default class Body extends React.Component<Props> {
   }
 }
 
-function Link({icon, name}) {
+function Link({icon, name, link}) {
   return (
-    <a href="javascript:;" style={{marginRight: 36}}>
+    <a href={link} target="__blank" style={{marginRight: 36}}>
       <Icon type={icon} theme="outlined"
         style={{padding: 8, border: '1px solid', borderRadius: '50%', marginRight: 8}}
       />
@@ -91,7 +91,7 @@ function Links() {
       style={{marginTop: 24, fontSize: 16, fontWeight: 100}}
     >
       <Link icon="file-text" name="Schema" link="https://github.com/Canner/canner/blob/canary/docs/schema/products.schema.js"/>
-      <Link icon="code" name="Customized Body" link="https://github.com/Canner/canner/blob/canary/docs/components/layouts/productsBody"/>
+      <Link icon="code" name="Customized Body" link="https://github.com/Canner/canner/blob/canary/docs/components/layouts/productsBody.js"/>
     </div>
   )
 }
