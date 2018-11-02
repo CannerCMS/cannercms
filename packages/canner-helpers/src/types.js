@@ -21,6 +21,13 @@ type StringSchema = {
   keyName?: string;
 }
 
+type EnumSchema = {
+  type: 'enum';
+  ui: string;
+  keyName?: string;
+  values: Array<string>
+}
+
 type NumberSchema = {
   type: 'number';
   ui: string;
@@ -64,7 +71,7 @@ type ImageScheme = {
 }
 
 export type Schema = ArraySchema | ObjectSchema | StringSchema | BooleanSchema | NumberSchema | RelationSchema
-  | GeoPointSchema | DateTimeSchema | FileSchema | ImageScheme;
+  | GeoPointSchema | DateTimeSchema | FileSchema | ImageScheme | EnumSchema;
 
 export type SchemaMap = {
   [string]: Schema;

@@ -30,6 +30,23 @@ describe('create string data', () => {
   });
 });
 
+
+describe('create enum data', () => {
+  it('should return a string', () => {
+    expect(typeof createFakeData({
+      type: 'enum',
+      values: ['a', 'b']
+    })).toBe('string');
+  });
+
+  it('should be one of values', () => {
+    expect(['a', 'b'].includes(createFakeData({
+      type: 'enum',
+      values: ['a', 'b']
+    }))).toBe(true);
+  });
+});
+
 describe('create boolean data', () => {
   it('should return a boolean value', () => {
     expect(typeof createFakeData({

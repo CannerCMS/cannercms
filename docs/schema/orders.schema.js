@@ -233,7 +233,8 @@ const orders = () => (
     <Row type="flex" gutter={16}>
       <Col xs={24} sm={12} md={12}>
         <Block title="${orders.orderStatus}">
-          <string
+          <enum
+            values={['new', 'old']}
             keyName="orderStatus"
             title="${orders.orderStatus}"
             ui="select"
@@ -250,7 +251,8 @@ const orders = () => (
               ]
             }}
           />
-          <string
+          <enum
+            values={['ATM', 'CREDIT']}
             keyName="paymentType"
             title="${orders.paymentType}"
             ui="select"
@@ -267,8 +269,9 @@ const orders = () => (
               ]
             }}
           />
-          <string
+          <enum
             keyName="payStatus"
+            values={['not', 'paid']}
             title="${orders.payStatus}"
             ui="select"
             uiParams={{
@@ -284,8 +287,9 @@ const orders = () => (
               ]
             }}
           />
-          <string
+          <enum
             keyName="shipStatus"
+            values={['not', 'shipping', 'delivered']}
             title="${orders.shipStatus}"
             ui="select"
             uiParams={{

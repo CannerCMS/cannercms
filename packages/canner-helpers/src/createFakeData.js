@@ -78,6 +78,14 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
       case 'string':
         result = faker.random.word();
         break;
+      case 'enum': {
+        if (schema.values) {
+          result = schema.values[getRandomNumber(schema.values.length)];
+        } else {
+          throw new Error('Enum type should have a values property.');
+        }
+        break;
+      }
       case 'relation': {
         result = getRelation(schema, firstLevelKeys, listLength);
         break;
@@ -141,11 +149,16 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
     case 'toOne':
     default:
       if (isInFirstLevel && to !== schema.keyName) {
-        result = `${to}${Math.floor(Math.random() * listLength) + 1}`;
+        result = `${to}${getRandomNumber(listLength) + 1}`;
       } else {
         result = null;
       }
       break;
   }
   return result;
+}
+
+
+function getRandomNumber(length) {
+  return Math.floor(Math.random() * length);
 }
