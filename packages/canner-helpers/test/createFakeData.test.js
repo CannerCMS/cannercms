@@ -28,6 +28,20 @@ describe('create string data', () => {
       type: 'string'
     }));
   });
+
+  it('should gen email format', () => {
+    expect(createFakeData({
+      type: 'string',
+      keyName: 'userEmail'
+    }).indexOf('@') > -1).toBe(true);
+  });
+
+  it('should gen phone format', () => {
+    expect(createFakeData({
+      type: 'string',
+      keyName: 'userPhone'
+    }).match(/\d/)).toBeDefined();
+  });
 });
 
 

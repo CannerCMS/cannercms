@@ -69,15 +69,23 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
           contentType: 'image/jpeg',
           size: faker.random.number(),
           name: faker.system.commonFileName(),
-          url: faker.image.imageUrl()
+          url: faker.random.image()
         };
         break;
       case 'boolean':
         result = faker.random.boolean();
         break;
-      case 'string':
-        result = faker.random.word();
+      case 'string': {
+        const lowerKeyName = schema.keyName && schema.keyName.toLowerCase() || '';
+        if (lowerKeyName.indexOf('email') > -1) {
+          result = faker.internet.email();
+        } else if (lowerKeyName.indexOf('phone') > -1) {
+          result = faker.phone.phoneNumber();
+        } else {
+          result = faker.random.word();
+        }
         break;
+      }
       case 'enum': {
         if (schema.values) {
           result = schema.values[getRandomNumber(schema.values.length)];
