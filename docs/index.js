@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import {Menu, notification, Select, message} from 'antd';
+import {Menu, notification, Select, message, Alert} from 'antd';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import Canner from 'packages/canner/src';
 import en from 'react-intl/locale-data/en';
@@ -97,39 +97,51 @@ class CMSExample extends React.Component {
     );
 
     return (
-      <IntlProvider locale={locale} key={locale} messages={schema.dict[locale]}>
-        <Container
-          schema={schema}
-          sidebarConfig={{
-            menuConfig
-          }}
-          navbarConfig={{
-            logo: <Logo src="https://cdn.canner.io/images/logo/logo-white-word-beta.svg" />,
-            showSaveButton: true,
-            renderMenu: renderCustomHeaderMenu
-          }}
-          router={this.router}
-        >
-          <Canner
-            ref={this.cms}
-            afterDeploy={() => {
-              notification.success({
-                message: 'Deployed!'
-              })
+      <React.Fragment>
+        <Alert
+          message={
+            <div>
+              This is a demo version. Please visit <a href="/">our homepage</a>. 
+            </div>
+          }
+          banner
+          type="info"
+        />
+        <IntlProvider locale={locale} key={locale} messages={schema.dict[locale]}>
+        
+          <Container
+            schema={schema}
+            sidebarConfig={{
+              menuConfig
             }}
-            errorHandler={e => {
-              // eslint-disable-next-line no-console
-              console.error(e);
-              notification.error({
-                message: 'Error'
-              });
+            navbarConfig={{
+              logo: <Logo src="https://cdn.canner.io/images/logo/logo-white-word-beta.svg" />,
+              showSaveButton: true,
+              renderMenu: renderCustomHeaderMenu
             }}
-            intl={{
-              locale
-            }}
-          />
-        </Container>
-      </IntlProvider>
+            router={this.router}
+          >
+            <Canner
+              ref={this.cms}
+              afterDeploy={() => {
+                notification.success({
+                  message: 'Deployed!'
+                })
+              }}
+              errorHandler={e => {
+                // eslint-disable-next-line no-console
+                console.error(e);
+                notification.error({
+                  message: 'Error'
+                });
+              }}
+              intl={{
+                locale
+              }}
+            />
+          </Container>
+        </IntlProvider>
+      </React.Fragment>
     );
   }
 }
