@@ -18,10 +18,6 @@
 
 ## Benefits and advantages
 
-> ***Why create Canner?*** See [here](https://www.canner.io/docs/why-canner)
-
-> ***Our mission at Canner.*** See [here](https://www.canner.io/docs/why-mission.html)
-
 ### 🌍 Simpler, One Framework
 
 Canner is flexible and agnostic, that you can ***learn once and create any form of CMS for many different databases.***
@@ -114,6 +110,12 @@ Code lives in [here ./docs folder](./docs)
 
 ***👉👉 START USING CANNER: https://www.canner.io***
 
+### Learn more about Canner.
+
+> ***Why create Canner?*** See [here](https://www.canner.io/docs/why-canner)
+
+> ***Our mission at Canner.*** See [here](https://www.canner.io/docs/why-mission.html)
+
 
 ## Demo
 
@@ -128,11 +130,11 @@ CMS with Canner and Firestore, and deploy to Firebase hosting https://github.com
 
 **More demo visit [/examples folder](./examples) & [canner-demo](https://github.com/Canner/canner-demo) and  [canner.io](https://www.canner.io/)**
 
-**Other resources**
+### Instructions
 - Firebase - realtime database: https://www.canner.io/docs/tutorial-connect-to-firebase
 - Prisma: https://www.canner.io/docs/tutorial-connect-to-prisma
 
-**Blog Posts**
+### Blog posts
 
 - Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up
 - Why Firebase CMS: https://www.canner.io/docs/why-firebase-cms
