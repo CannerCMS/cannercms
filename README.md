@@ -16,14 +16,6 @@
 > Canner, an agile Content Management System for APIs and Clouds. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
 
 
-## Community chat
-
-- English: [![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-- Chinese: [![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS-chinese?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/canner)
-
-
 ## Benefits and advantages
 
 > ***Why create Canner?*** See [here](https://www.canner.io/docs/why-canner)
@@ -144,6 +136,13 @@ CMS with Canner and Firestore, and deploy to Firebase hosting https://github.com
 
 - Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up
 - Why Firebase CMS: https://www.canner.io/docs/why-firebase-cms
+
+## Community chat
+
+- English: [![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+- Chinese: [![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS-chinese?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+
+[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/canner)
 
 ## Develop
 
