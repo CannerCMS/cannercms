@@ -18,7 +18,7 @@
 > Canner, an agile Content Management System for APIs and Clouds. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
 
 
-## Benefits and advantages
+## Benefits and advantages (S.A.F.E)
 
 ### 🌍 Simpler, One Framework
 
@@ -32,7 +32,7 @@ By defining a Canner schema in JSX, you can determine how the CMS stores data in
 
 With different connectors, you are able to create a CMS to interact with ***Firebase, MySQL, PostgreSQL, GraphQL with the same schema***.
 
-### 💸 Cheaper, Fewer Human Resources
+### 💸 Efficient, Fewer Human Resources
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
