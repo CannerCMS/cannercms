@@ -18,7 +18,7 @@
 > Canner, an agile Content Management System for APIs and Clouds. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
 
 
-## Benefits and advantages (S.A.F.E)
+## Benefits and advantages (Simpler. Agile. Flexible. Efficient - SAFE)
 
 ### 🌍 Simpler, One Framework
 
