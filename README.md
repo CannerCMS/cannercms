@@ -13,6 +13,8 @@
 </div>
 
 <br/><br/>
+> Canner, an agile Content Management System for APIs and Clouds. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
+
 
 ## Community chat
 
@@ -21,7 +23,6 @@
 
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/canner)
 
-> Canner, an agile Content Management System for APIs and Clouds. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
 
 ## Benefits and advantages
 
