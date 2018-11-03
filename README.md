@@ -112,9 +112,9 @@ Code lives in [here ./docs folder](./docs)
 
 ### Learn more about Canner.
 
-> ***Why create Canner?*** See [here](https://www.canner.io/docs/why-canner)
+* ***Why create Canner?*** See [here](https://www.canner.io/docs/why-canner)
 
-> ***Our mission at Canner.*** See [here](https://www.canner.io/docs/why-mission.html)
+* ***Our mission at Canner:*** See [here](https://www.canner.io/docs/why-mission.html)
 
 
 ## Demo
