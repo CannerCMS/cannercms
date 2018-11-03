@@ -36,6 +36,8 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 
 ## Why Canner is different?
 
+The biggest different about Adaptive CMS is that it decouples both view and data layer. It builds data interfaces to connect to single or multiple data sources.
+
 > ***Adaptive CMS?*** Learn more [here](https://www.canner.io/docs/why-adaptive-cms)
 
 ![overview](http://www.canner.io/docs/assets/revolution.png)
@@ -77,6 +79,7 @@ Code lives in [here ./docs folder](./docs)
 
 - [x] [Connect to multiple sources](https://www.canner.io/docs/credential-intro)
   * [Firebase](https://www.canner.io/docs/credential-firebase)
+  * [Firestore](https://www.canner.io/docs/credential-firestore)
   * [Prisma](https://www.canner.io/docs/credential-prisma)
 - [x] [Customize resolver](https://www.canner.io/docs/guides-resolver)
 - [x] [Storage API support](https://www.canner.io/docs/guides-storage)
