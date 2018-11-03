@@ -66,6 +66,7 @@ Code lives in [here ./docs folder](./docs)
 ## Benefits and advantages
 
 > ***Why create Canner?*** See [here](https://www.canner.io/docs/why-canner)
+
 > ***Our mission at Canner.*** See [here](https://www.canner.io/docs/why-mission.html)
 
 ### 🌍 Simpler, One Framework
@@ -84,14 +85,11 @@ With different connectors, you are able to create a CMS to interact with ***Fire
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
-## Why Canner different
+## Why Canner is different?
 
 > ***Adaptive CMS?*** Learn more [here](https://www.canner.io/docs/why-adaptive-cms)
 
 ![overview](http://www.canner.io/docs/assets/revolution.png)
-
-
-[🔥 ***GET STARTED NOW*** 🔥](https://www.canner.io/docs/start-quick-intro.html)
 
 ***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)***
 
@@ -123,11 +121,6 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 
 ***👉👉 START USING CANNER: https://www.canner.io***
 
-## Get started
-
-- Firebase - realtime database: https://www.canner.io/docs/tutorial-connect-to-firebase
-- Prisma: https://www.canner.io/docs/tutorial-connect-to-prisma
-
 
 ## Demo
 
@@ -141,6 +134,10 @@ CMS with Canner and Firestore, and deploy to Firebase hosting https://github.com
 
 
 **More demo visit [/examples folder](./examples) & [canner-demo](https://github.com/Canner/canner-demo) and  [canner.io](https://www.canner.io/)**
+
+**Other resources**
+- Firebase - realtime database: https://www.canner.io/docs/tutorial-connect-to-firebase
+- Prisma: https://www.canner.io/docs/tutorial-connect-to-prisma
 
 **Blog Posts**
 
