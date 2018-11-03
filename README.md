@@ -23,29 +23,29 @@
 
 > Canner, an agile Content Management System for APIs and Clouds. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
 
-# Benefits and advantages
+## Benefits and advantages
 
 > ***Why create Canner?*** See [here](https://www.canner.io/docs/why-canner)
 
 > ***Our mission at Canner.*** See [here](https://www.canner.io/docs/why-mission.html)
 
-## 🌍 Simpler, One Framework
+### 🌍 Simpler, One Framework
 
 Canner is flexible and agnostic, that you can ***learn once and create any form of CMS for many different databases.***
 
-## ⚡️ Agile, Move Faster
+### ⚡️ Agile, Move Faster
 
 By defining a Canner schema in JSX, you can determine how the CMS stores data in your databases and the appearance of the CMS UI/UX.
 
-## 💪 Flexible, any Data Sources
+### 💪 Flexible, any Data Sources
 
 With different connectors, you are able to create a CMS to interact with ***Firebase, MySQL, PostgreSQL, GraphQL with the same schema***.
 
-## 💸 Cheaper, Fewer Human Resources
+### 💸 Cheaper, Fewer Human Resources
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
-# Why Canner is different?
+## Why Canner is different?
 
 > ***Adaptive CMS?*** Learn more [here](https://www.canner.io/docs/why-adaptive-cms)
 
@@ -53,7 +53,7 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 
 ***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)***
 
-# Preview and demo
+## Preview and demo
 
 ***Live demo here: https://www.canner.io/demo***
 
@@ -71,9 +71,9 @@ Code lives in [here ./docs folder](./docs)
 
 > Import & export data, multiple selection, etc...
 
-# Features
+## Features
 
-## CMS features
+### CMS features
 
 - [x] [30+ CMS components](https://www.canner.io/component)
 - [x] [Support Layouts](https://www.canner.io/docs/schema-layout-tags)
@@ -84,7 +84,7 @@ Code lives in [here ./docs folder](./docs)
 - [x] [Support Condition](https://www.canner.io/docs/guides-condition-fields)
 - [x] [Support Customization](https://www.canner.io/docs/guides-customized-component)
 
-## Sources and API
+### Sources and API
 
 - [x] [Connect to multiple sources](https://www.canner.io/docs/credential-intro)
   * [Firebase](https://www.canner.io/docs/credential-firebase)
@@ -93,7 +93,7 @@ Code lives in [here ./docs folder](./docs)
 - [x] [Storage API support](https://www.canner.io/docs/guides-storage)
 
 
-# 🔥 Only 3 commands to start 🔥
+## 🔥🔥 Only 3 commands to start 🔥🔥
 
 ```sh
 # 1. Download Canner CLI tool
@@ -122,13 +122,13 @@ Code lives in [here ./docs folder](./docs)
 ***👉👉 START USING CANNER: https://www.canner.io***
 
 
-# Demo
+## Demo
 
-## Canner connect to Firebase
+### Canner connect to Firebase
 
 CMS for Firebase with SSR supported (NextJS) https://github.com/Canner/canner-firebase-cms
 
-## Canner connect to Firestore
+### Canner connect to Firestore
 
 CMS with Canner and Firestore, and deploy to Firebase hosting https://github.com/Canner/canner-firebase-cms
 
@@ -144,7 +144,7 @@ CMS with Canner and Firestore, and deploy to Firebase hosting https://github.com
 - Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up
 - Why Firebase CMS: https://www.canner.io/docs/why-firebase-cms
 
-# Develop
+## Develop
 
 Install all dependencies.
 
@@ -157,7 +157,7 @@ yarn
 ```
 
 
-# License
+## License
 
 Apache-2.0
 
