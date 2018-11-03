@@ -38,7 +38,7 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 
 ## Why Canner is different?
 
-The biggest different about Adaptive CMS is that it decouples both view and data layer. It builds data interfaces to connect to single or multiple data sources.
+Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is different from traditional CMS and headless CMS. The biggest different about Adaptive CMS is that it decouples both view and data layer. It builds data interfaces to connect to single or multiple data sources.
 
 > ***Adaptive CMS?*** Learn more [here](https://www.canner.io/docs/why-adaptive-cms)
 
