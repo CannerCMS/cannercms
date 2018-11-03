@@ -54,6 +54,30 @@ const schema = (
 );
 
 const fD = createFakeData(schema.schema, 10);
+// rewrite fakeimage url because the default image service of faker.js is not stable
+fD.products = fD.products.map(product => {
+  return {
+    ...product,
+    photos: product.photos.map(photo => {
+      return fakeImage(photo)
+    })
+  };
+});
+
+// rewrite fakeimage url because the default image service of faker.js is not stable
+fD.orders = fD.orders.map(order => {
+  return {
+    ...order,
+    detail: order.detail.map(item => {
+      return {
+        ...item,
+        photos: item.photos.map(photo => {
+          return fakeImage(photo)
+        })
+      }
+    })
+  };
+});
 
 const connector = new LocalStorageConnector({
   defaultData: {...fD, ...fakeData}
@@ -62,4 +86,27 @@ const connector = new LocalStorageConnector({
 export default {
   ...schema,
   connector
+}
+
+function fakeImage(gallery) {
+  const newImage = {
+    ...gallery.image,
+    url: `https://placeimg.com/${getRandomWidth()}/${getRandomHeight()}/any`
+  }
+  return {
+    ...gallery,
+    image: newImage
+  };
+}
+
+function getRandomHeight() {
+  return genRandomNumber(250, 350)
+}
+
+function getRandomWidth() {
+  return genRandomNumber(350, 450)
+}
+
+function genRandomNumber(min, max) {
+  return Math.floor(Math.random() * max) + min;
 }
