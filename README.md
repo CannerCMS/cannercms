@@ -32,7 +32,7 @@ By defining a Canner schema in JSX, you can determine how the CMS stores data in
 
 With different connectors, you are able to create a CMS to interact with ***Firebase, MySQL, PostgreSQL, GraphQL with the same schema***.
 
-### 💸 Efficient, Fewer Human Resources
+### 💸 Efficient, Less is More
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
