@@ -5,7 +5,9 @@ describe('FirebaseClientStorage', () => {
   it('should call getUploadUrl and return link', async () => {
     const firebase = {
       snapshot: {
-        downloadURL: 'downloadUrl'
+        ref: {
+          getDownloadURL: () => Promise.resolve('downloadUrl')
+        }
       }
     };
     firebase.storage = jest.fn().mockReturnValue(firebase);
@@ -23,6 +25,7 @@ describe('FirebaseClientStorage', () => {
       type: "image/jpeg",
     });
     const result = await storage.upload(file, options, onProgress);
-    expect(result.link).toBe(firebase.snapshot.downloadURL);
+    const url = await firebase.snapshot.ref.getDownloadURL();
+    expect(result.link).toBe(url);
   });
 });

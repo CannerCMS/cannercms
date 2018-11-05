@@ -1,6 +1,10 @@
 jest.mock('axios', () => {
   const data = {
-    link: 'test'
+    data: {
+      data: {
+        link: 'test'
+      }
+    }
   };
   const request = {
     post: jest.fn().mockImplementation(() => Promise.resolve(data))

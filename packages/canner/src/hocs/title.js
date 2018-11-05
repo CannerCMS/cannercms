@@ -19,10 +19,14 @@ const ErrorMessage = styled.div`
   font-size: 14px;
 `;
 
-function Label({
+export function Label({
   required,
   description,
   title,
+}: {
+  required: boolean,
+  description: string,
+  title: string
 }) {
   return (
     <Title required={required} title={title} >
@@ -81,7 +85,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           routes
         }}>
           <Row
-            type={layout === 'horizantal' ? 'flex' : ''}
+            type={layout === 'horizontal' ? 'flex' : ''}
             style={{marginBottom: 16}}
           >
             <Col {...labelCol}>

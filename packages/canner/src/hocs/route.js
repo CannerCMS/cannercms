@@ -8,9 +8,9 @@ import type Intl from 'react-intl';
 
 const confirm = Modal.confirm;
 
-const RENDER_CHILDREN = 0;
-const RENDER_COMPONENT = 1;
-const RENDER_NULL = 2;
+export const RENDER_CHILDREN = 0;
+export const RENDER_COMPONENT = 1;
+export const RENDER_NULL = 2;
 
 const ButtonWrapper = styled.div`
   text-align: right;
@@ -161,11 +161,16 @@ export default function withRoute(Com: React.ComponentType<*>) {
   }
 }
 
-function getRenderType({
+export function getRenderType({
   routes,
   path,
   pattern,
   routerParams
+}: {
+  routes: Array<string>,
+  path: string,
+  pattern: string,
+  routerParams: Object
 }) {
   const paths = genPaths(path, pattern);
   const pathsLength = paths.length;

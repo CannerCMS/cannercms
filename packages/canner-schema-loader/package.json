@@ -21,9 +21,6 @@
     "loader-utils": "^1.1.0",
     "object-path": "^0.11.4"
   },
-  "jest": {
-    "testEnvironment": "node"
-  },
   "devDependencies": {
     "canner-script": "2.0.8",
     "flow-bin": "^0.78.0",

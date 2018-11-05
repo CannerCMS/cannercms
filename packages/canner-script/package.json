@@ -19,14 +19,6 @@
     "build:watch": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --watch",
     "build": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files"
   },
-  "jest": {
-    "browser": true,
-    "moduleNameMapper": {
-      "\\.(css|less)$": "./__test__/__mocks__/styleMock.js",
-      "@canner/antd": "./__test__/__mocks__/componentMock.js"
-    },
-    "testURL": "http://localhost"
-  },
   "keywords": [],
   "dependencies": {
     "eval": "^0.1.2",

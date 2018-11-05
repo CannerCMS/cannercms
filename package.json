@@ -3,8 +3,8 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "lerna exec --ignore *graphql*  -- jest --coverage",
-    "test:watch": "lerna --ignore *graphql*  exec -- jest --watch --coverage",
+    "test": "jest --coverage --verbose false",
+    "test:watch": "jest --watch --verbose false",
     "lint": "eslint ./packages/*/src/**/*.js",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna exec --parallel -- rimraf lib dist",

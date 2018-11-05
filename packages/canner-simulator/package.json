@@ -26,11 +26,6 @@
     "react": "^0.14.0 || ^15.0.0 || 16.x",
     "react-dom": "^0.14.0 || ^15.0.0 || 16.x"
   },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(css|less)$": "./test/__mocks__/styleMock.js"
-    }
-  },
   "license": "Apache-2.0",
   "dependencies": {
     "antd": "^3.4.1",

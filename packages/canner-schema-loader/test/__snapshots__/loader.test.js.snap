@@ -33,60 +33,60 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
   keyName: \\"test\\"
 }, (0, _cannerScript.default)(\\"string\\", {
   keyName: \\"defaultUI\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-string-input\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-string-input\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-string-input\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-string-input\\"));
     });
   }),
   \\"builder\\": null
 }), (0, _cannerScript.default)(\\"string\\", {
   keyName: \\"withUI\\",
   ui: \\"textarea\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-string-textarea\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-string-textarea\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-string-textarea\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-string-textarea\\"));
     });
   }),
   \\"builder\\": null
 }), (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"withBuilder\\",
   ui: \\"tag\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-tag\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-tag\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-tag\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-tag\\"));
     });
   }),
-  \\"builder\\": require(\\"IGNORED_PATH/node_modules/@canner/antd-array-tag/canner.def.js\\").default ? require(\\"IGNORED_PATH/node_modules/@canner/antd-array-tag/canner.def.js\\").default : require(\\"IGNORED_PATH/node_modules/@canner/antd-array-tag/canner.def.js\\")
+  \\"builder\\": require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-tag/canner.def.js\\").default ? require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-tag/canner.def.js\\").default : require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-tag/canner.def.js\\")
 }), (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"withBuilder2\\",
   ui: \\"gallery\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-gallery\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-gallery\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-gallery\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-gallery\\"));
     });
   }),
-  \\"builder\\": require(\\"IGNORED_PATH/node_modules/@canner/antd-array-gallery/canner.def.js\\").default ? require(\\"IGNORED_PATH/node_modules/@canner/antd-array-gallery/canner.def.js\\").default : require(\\"IGNORED_PATH/node_modules/@canner/antd-array-gallery/canner.def.js\\")
+  \\"builder\\": require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-gallery/canner.def.js\\").default ? require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-gallery/canner.def.js\\").default : require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-gallery/canner.def.js\\")
 }), (0, _cannerScript.default)(\\"object\\", {
   keyName: \\"withBuilder3\\",
   ui: \\"variants\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-object-variants\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-object-variants\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-object-variants\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-object-variants\\"));
     });
   }),
-  \\"builder\\": require(\\"IGNORED_PATH/node_modules/@canner/antd-object-variants/canner.def.js\\").default ? require(\\"IGNORED_PATH/node_modules/@canner/antd-object-variants/canner.def.js\\").default : require(\\"IGNORED_PATH/node_modules/@canner/antd-object-variants/canner.def.js\\")
+  \\"builder\\": require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-object-variants/canner.def.js\\").default ? require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-object-variants/canner.def.js\\").default : require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-object-variants/canner.def.js\\")
 }), (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"withCannerConfigInPackageJson\\",
   ui: \\"table\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-table\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-table\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-table\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-table\\"));
     });
   }),
   \\"builder\\": null,
@@ -102,10 +102,10 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
       dataIndex: 'name'
     }]
   },
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-table\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-table\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-table\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-table\\"));
     });
   }),
   \\"builder\\": null,
@@ -114,10 +114,10 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
   \\"type\\": \\"array\\"
 }, (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"nested\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-table\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-table\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-table\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-array-table\\"));
     });
   }),
   \\"builder\\": null,
@@ -126,23 +126,23 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
   \\"type\\": \\"array\\"
 }, (0, _cannerScript.default)(\\"string\\", {
   keyName: \\"string\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-string-input\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-string-input\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-string-input\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/node_modules/@canner/antd-string-input\\"));
     });
   }),
   \\"builder\\": null
 }))), (0, _cannerScript.default)(\\"string\\", {
   keyName: \\"packageName\\",
   packageName: \\"./fake-string-component\\",
-  \\"packageName\\": \\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component\\",
+  \\"packageName\\": \\"IGNORED_PATH/projects/canner/packages/canner-schema-loader/test/fake-string-component\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
-      resolve(require(\\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component\\"));
+      resolve(require(\\"IGNORED_PATH/projects/canner/packages/canner-schema-loader/test/fake-string-component\\"));
     });
   }),
-  \\"builder\\": require(\\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\").default ? require(\\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\").default : require(\\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\"),
+  \\"builder\\": require(\\"IGNORED_PATH/projects/canner/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\").default ? require(\\"IGNORED_PATH/projects/canner/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\").default : require(\\"IGNORED_PATH/projects/canner/packages/canner-schema-loader/test/fake-string-component/canner.def.js\\"),
   \\"type\\": \\"string\\",
   \\"cacheActions\\": true
 })));

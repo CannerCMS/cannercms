@@ -1,10 +1,9 @@
 import * as React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import Enzyme, { shallow } from 'enzyme';
 import Adapter from '../react163Adapter';
-import withTitleAndDescription from '../../src/hocs/title';
+import withTitleAndDescription, {Label} from '../../src/hocs/title';
 import RefId from 'canner-ref-id';
-import {Item} from 'canner-helpers';
+import {Row} from 'antd';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -24,49 +23,27 @@ describe('withTitleAndDescription', () => {
   });
 
   it('should render vertical by default', () => {
-    const wrapper = mount(<WrapperComponent
+    const wrapper = shallow(<WrapperComponent
       {...props}
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find(Label).length).toBe(1);
+    expect(wrapper.find(Row).prop('type')).toBe('');
   });
 
   it('should render horizontal', () => {
-    const wrapper = mount(<WrapperComponent
+    const wrapper = shallow(<WrapperComponent
       {...props}
       layout="horizontal"
     />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-  });
-
-  it('should render horizontal', () => {
-    const wrapper = mount(<WrapperComponent
-      {...props}
-      layout="horizontal"
-    />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find(Label).length).toBe(1);
+    expect(wrapper.find(Row).prop('type')).toBe('flex');
   });
 
   it('should render only Component if hideTitle', () => {
-    const wrapper = mount(<WrapperComponent
+    const wrapper = shallow(<WrapperComponent
       {...props}
       hideTitle
     />);
-    expect(wrapper.html()).toBe("<div>Component</div>");
-  });
-
-  it('should pass the context to Children', () => {
-    const WrapperComponent = withTitleAndDescription(() => <div><Item /></div>);
-    const mockRenderChildren = jest.fn().mockImplementation(() => <div>children</div>);
-    const wrapper = mount(<WrapperComponent
-      renderChildren={mockRenderChildren}
-      refId="refId"
-      routes={[]}
-      hideTitle
-    />);
-    expect(wrapper.html()).toBe("<div><div>children</div></div>")
-    expect(mockRenderChildren).toHaveBeenCalledWith({
-      refId: "refId",
-      routes: []
-    });
+    expect(wrapper.find(Label).prop('title')).toBe('');
   });
 });
