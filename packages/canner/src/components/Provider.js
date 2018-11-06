@@ -88,7 +88,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         query: gql`${gqlStr}`,
         variables
       });
-      this.log('updateQuery', variables, args);
+      this.log('updateQuery rewatch', variables, args);
       return Promise.resolve(reWatchQuery);
     } else {
       this.log('updateQuery', variables, args);
@@ -116,7 +116,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       errorHandler && errorHandler(error);
       return Promise.resolve(lastResult.data);
     } else {
-      this.log('fetch', 'loaded', key, currentResult);
+      this.log('fetch', 'loaded', key, currentResult, this.query.getVairables());
       return Promise.resolve(currentResult.data);
     }
   }

@@ -249,16 +249,20 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const where = parseWhere(args.where || {});
     const {first, last} = parsePagination(args);
     let total = 0;
-    if (!toolbar.async) {
-      // TODO
-      // originRootValue = filterByWhere(originRootValue, keyName, this.state.filter);
-      // total = originRootValue[keyName].edges.length;
-      // if (pagination) {
-      //   originRootValue = paginate(originRootValue, keyName, current, 10);
-      // }
-    }
     const rootValue = parseConnectionToNormal(originRootValue);
     const value = getValue(originRootValue, refId.getPathArr());
+
+    if (!toolbar.async) {
+      return (
+        <React.Fragment>
+          {React.cloneElement(children, {
+            rootValue,
+            value: value || defaultValue('array')
+          })}
+        </React.Fragment>
+      )
+    }
+
     return <ToolbarLayout
       Actions={actions && toolbar.async ? <ActionsComponent
         {...actions}

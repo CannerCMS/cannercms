@@ -48,6 +48,14 @@ const Products = () => (
         }
       ]
     }}
+    graphql={`
+      query {
+        products(where: $productsWhere) {
+          id
+          name
+        }
+      }
+    `}
   >
     <toolbar>
       <pagination />

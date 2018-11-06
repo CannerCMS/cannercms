@@ -6,6 +6,8 @@ import Toolbar from './components/toolbar';
 import {Icon, Spin} from 'antd';
 import {mapValues, isNil} from 'lodash';
 import {parseConnectionToNormal, getValue, defaultValue} from './utils';
+import {withApollo} from 'react-apollo';
+import gql from 'graphql-tag';
 import type {HOCProps} from './types';
 type State = {
   value: any,
@@ -14,6 +16,7 @@ type State = {
   isFetching: boolean,
 }
 
+@withApollo
 export default function withQuery(Com: React.ComponentType<*>) {
   // this hoc will fetch data;
   return class ComponentWithQuery extends React.PureComponent<HOCProps, State> {
@@ -62,10 +65,21 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     queryData = (props?: HOCProps): Promise<*> => {
-      const {fetch} = props || this.props;
+      const {fetch, graphql, client, variables, query} = props || this.props;
       this.setState({
         isFetching: true
       });
+      if (graphql) {
+        return client.query({
+          query: gql`${graphql}`,
+          variables: variables || query.getVairables()
+        }).then(({data, error, errors}) => {
+          if (error) {
+            throw new Error(errors);
+          }
+          return data
+        }).then(this.updateData);
+      }
       return fetch(this.key).then(this.updateData);
     }
 
@@ -119,7 +133,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
             deploy={deploy}
           >
             <SpinWrapper isFetching={isFetching}>
-              <Com {...this.props} showPagination={toolbar && !toolbar.async} />
+              <Com {...this.props} />
             </SpinWrapper>
           </Toolbar>
         );
