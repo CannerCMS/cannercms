@@ -48,14 +48,20 @@ describe('query', () => {
     query.updateQueries(['posts'], 'args', {
       orderBy: 'title_DESC'
     });
-    expect(query.variables.$RANDOM_KEY).toEqual('title_DESC');
+    expect(query.variables.$postsOrderBy).toEqual('title_DESC');
   });
 
-  it('should get root gql', () => {
-    expect(query.toGQL()).toEqual(`query($RANDOM_KEY: PostOrderByInput){posts: postsConnection(first: $RANDOM_KEY,after: $RANDOM_KEY,last: $RANDOM_KEY,before: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
+  it('should get gql when toolbar sync', () => {
+    expect(query.toGQL('posts')).toEqual(`query($postsWhere: PostWhereInput){posts: posts(where: $postsWhere){title id}}`);
   });
 
-  it('should get posts gql', () => {
-    expect(query.toGQL('posts')).toEqual(`query($RANDOM_KEY: PostOrderByInput){posts: postsConnection(first: $RANDOM_KEY,after: $RANDOM_KEY,last: $RANDOM_KEY,before: $RANDOM_KEY,where: $RANDOM_KEY,orderBy: $RANDOM_KEY){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
+  it('should get gql when toolbar async', () => {
+    schema.posts.toolbar = {
+      async: true
+    }
+    query = new Query({
+      schema
+    });
+    expect(query.toGQL('posts')).toEqual(`query($postsFirst: Int,$postsWhere: PostWhereInput){posts: postsConnection(first: $postsFirst,where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
   });
 });

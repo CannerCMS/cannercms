@@ -43,7 +43,6 @@ export function fieldToQueriesObject(field: any): any {
         };
         queriesObj.args = args;
         queriesObj.isPlural = true;
-        queriesObj.connection = true;
         queriesObj.alias = field.getKey();
         set(queriesObj, ['fields', 'id'], null);
         variables[firstKey] = MAX;
@@ -53,6 +52,7 @@ export function fieldToQueriesObject(field: any): any {
         const defaultSortField = toolbar && toolbar.sorter && toolbar.sorter.defaultField;
         const permanentFilter = toolbar && toolbar.filter && toolbar.filter.permanentFilter;
         if (asyncToolbar) {
+          queriesObj.connection = true;
           variables[firstKey] = DEFAULT_FIRST;
           if (permanentFilter) {
             variables[whereKey] = permanentFilter;
@@ -125,14 +125,12 @@ export function fieldToQueriesObject(field: any): any {
 
 export function genQuery(field: Field) {
   const key = field.getKey();
-  const isEntity = 'isEntity' in field;
-  const entity = isEntity ? 'Entity' : '';
-  const firstKey = `$${key}${entity}First`;
-  const afterKey = `$${key}${entity}After`;
-  const lastKey = `$${key}${entity}Last`;
-  const beforeKey = `$${key}${entity}Before`;
-  const whereKey = `$${key}${entity}Where`;
-  const orderByKey = `$${key}${entity}Order`;
+  const firstKey = `$${key}First`;
+  const afterKey = `$${key}After`;
+  const lastKey = `$${key}Last`;
+  const beforeKey = `$${key}Before`;
+  const whereKey = `$${key}Where`;
+  const orderByKey = `$${key}OrderBy`;
   const args = {
     first: firstKey,
     after: afterKey,
