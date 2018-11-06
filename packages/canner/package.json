@@ -3,10 +3,6 @@
   "version": "2.0.7",
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
-  "scripts": {
-    "test": "../../node_modules/.bin/jest --coverage",
-    "test:watch": "../../node_modules/.bin/jest --watch --coverage --verbose false"
-  },
   "keywords": [
     "canner",
     "cms",
