@@ -5,7 +5,7 @@ import lowerFirst from 'lodash/lowerFirst';
 import upperFirst from 'lodash/upperFirst';
 import {merge, mapValues, set} from 'lodash';
 import {createSchema} from './schema/utils';
-import {types} from './schema/types';
+import {types, Field} from './schema/types';
 
 const DEFAULT_FIRST = 10;
 const MAX = undefined;
@@ -31,7 +31,7 @@ export function fieldToQueriesObject(field: any): any {
         merge(variableTypes, qlo.variableTypes);
       });
       if (field.isEntity) {
-        const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery();
+        const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery(field);
         queriesObj.declareArgs = {
           ...variableTypes,
           [firstKey]: 'Int',
@@ -123,13 +123,16 @@ export function fieldToQueriesObject(field: any): any {
   };
 }
 
-export function genQuery() {
-  const firstKey = randomKey();
-  const afterKey = randomKey();
-  const lastKey = randomKey();
-  const beforeKey = randomKey();
-  const whereKey = randomKey();
-  const orderByKey = randomKey();
+export function genQuery(field: Field) {
+  const key = field.getKey();
+  const isEntity = 'isEntity' in field;
+  const entity = isEntity ? 'Entity' : '';
+  const firstKey = `$${key}${entity}First`;
+  const afterKey = `$${key}${entity}After`;
+  const lastKey = `$${key}${entity}Last`;
+  const beforeKey = `$${key}${entity}Before`;
+  const whereKey = `$${key}${entity}Where`;
+  const orderByKey = `$${key}${entity}Order`;
   const args = {
     first: firstKey,
     after: afterKey,
@@ -258,13 +261,6 @@ function genDeclareArgs(args, variables) {
       const argValue = args[key];
       return `${key}: ${argValue}`
     }).join(',');
-}
-
-function randomKey () {
-  if (process.env.NODE_ENV === 'test') {
-    return `$RANDOM_KEY`;
-  }
-  return `$KEY${Math.random().toString(36).substr(2, 7)}`
 }
 
 function typeKey(key) {
