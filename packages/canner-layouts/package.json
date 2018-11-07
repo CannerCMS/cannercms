@@ -6,10 +6,6 @@
     "lib"
   ],
   "main": "./lib/index.js",
-  "scripts": {
-    "test": "../../node_modules/.bin/jest --coverage",
-    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
-  },
   "pre-commit": [
     "lint"
   ],

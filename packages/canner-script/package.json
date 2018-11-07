@@ -13,12 +13,6 @@
     "lib",
     "index.js"
   ],
-  "scripts": {
-    "test": "jest --coverage",
-    "test:watch": "jest --watch --coverage",
-    "build:watch": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files --watch",
-    "build": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files"
-  },
   "keywords": [],
   "dependencies": {
     "eval": "^0.1.2",

@@ -3,10 +3,6 @@
   "version": "2.0.9",
   "description": "The container renders sidebar, navbar and pass some properties to canner",
   "main": "lib/index.js",
-  "scripts": {
-    "test": "../../node_modules/.bin/jest --coverage",
-    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
-  },
   "keywords": [
     "canner",
     "container"

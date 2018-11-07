@@ -3,10 +3,6 @@
   "version": "2.0.5",
   "description": "Provide a simple router for canner without using react-router",
   "main": "lib/index.js",
-  "scripts": {
-    "test": "../../node_modules/.bin/jest --coverage",
-    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
-  },
   "keywords": [
     "canner",
     "router"

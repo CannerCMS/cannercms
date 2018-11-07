@@ -18,10 +18,6 @@
   "devDependencies": {
     "flow-bin": "^0.78.0"
   },
-  "scripts": {
-    "test": "../../node_modules/.bin/jest --coverage",
-    "test:watch": "../../node_modules/.bin/jest --watch --coverage"
-  },
   "pre-commit": [
     "lint"
   ],

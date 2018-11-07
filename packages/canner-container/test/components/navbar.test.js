@@ -3,7 +3,6 @@ import * as React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import {Layout, Menu, Badge} from 'antd';
-
 import Navbar from  '../../src/components/Navbar';
 const {Header} = Layout;
 
