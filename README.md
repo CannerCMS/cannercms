@@ -46,6 +46,14 @@ Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is 
 
 ***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)***
 
+## Return on Investment
+
+![roi](./docs/roi.png)
+
+> Canner can reduce up to 80% of your current CMS solutions.
+
+You only need to upload a configuration file in JSX(easy to learn) syntax, to create any kind and form of applications. Our CMS has built CMS for websites, mobile apps, and even chatbot applications. **Amazingly, you can building a blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner.** See what you can accomplish within 1500 lines of code, see [this demo](https://www.canner.io/demo) ([Source code](https://github.com/Canner/canner/tree/canary/docs)) .
+
 ## Preview and demo
 
 ***Live demo here: https://www.canner.io/demo***
