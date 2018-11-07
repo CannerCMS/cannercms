@@ -49,7 +49,7 @@ const Products = () => (
       ]
     }}
     graphql={`
-      query {
+      query($productsWhere: ProductWhereInput) {
         products: productsConnection(where: $productsWhere) {
           edges {
             cursor
@@ -58,7 +58,11 @@ const Products = () => (
               id
               name
               no
-              photos
+              photos {
+                image {
+                  url
+                }
+              }
               price
               promo
             }
