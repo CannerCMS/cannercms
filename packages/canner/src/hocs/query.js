@@ -35,8 +35,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     componentDidMount() {
-      this.queryData();
-      this.subscribe();
+      this.queryData().then(() => {
+        this.subscribe();
+      });
     }
 
     componentWillUnmount() {
@@ -48,8 +49,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (refId.toString() !== this.props.refId.toString()) {
         // refetch when route change
         this.unsubscribe();
-        this.queryData(this.props);
-        this.subscribe();
+        this.queryData(this.props).then(() => {
+          this.subscribe();
+        });
       }
     }
 
@@ -111,9 +113,6 @@ export default function withQuery(Com: React.ComponentType<*>) {
     render() {
       const {value, isFetching, rootValue, originRootValue} = this.state;
       const {toolbar, query, refId, items, type, path, relation, pattern, keyName, request, deploy, nullable} = this.props;
-      if (keyName==='description') {
-        console.log(value);
-      }
       if (!originRootValue) {
         return <List style={{maxWidth: '600px'}}/>;
       }
