@@ -3,7 +3,7 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "jest --coverage --verbose false",
+    "test": "jest --coverage --verbose false --maxWorkers=2",
     "test:watch": "jest --watch --verbose false",
     "lint": "eslint ./packages/*/src/**/*.js",
     "bootstrap": "lerna bootstrap",
@@ -36,6 +36,7 @@
     "@babel/plugin-proposal-throw-expressions": "7.0.0",
     "@babel/plugin-syntax-dynamic-import": "7.0.0",
     "@babel/plugin-syntax-import-meta": "7.0.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.1.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
@@ -95,8 +96,8 @@
     "vega-lib": "^4.2.0",
     "vega-tooltip": "^0.13.0",
     "victory": "^30.5.1",
-    "webpack": "^4.0.1",
-    "webpack-cli": "^2.0.10",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.0"
   },
   "theme": {

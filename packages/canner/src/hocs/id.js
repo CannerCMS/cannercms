@@ -81,15 +81,9 @@ export default function connectId(Com: React.ComponentType<*>) {
       if (pattern === 'array' && routes.length === 1 && this.args && this.props.routes.length > 1) {
         // posts/<postId> => posts
         this.setState({
-          refId: new RefId(`${keyName}`),
-          canRender: false
+          refId: new RefId(`${keyName}`)
         });
-        updateQuery([keyName], this.args)
-          .then(() => {
-            this.setState({
-              canRender: true
-            });
-          });
+        updateQuery([keyName], this.args);
         delete this.args;
       }
     }
@@ -136,13 +130,12 @@ export default function connectId(Com: React.ComponentType<*>) {
       updateQuery(paths, {
         ...this.args,
         where: {id: id},
-      }).then(() => fetch(keyName))
-        .then(result => {
-          const index = result[keyName].edges.findIndex(edge => edge.cursor === id);
+      }).then(() => {
+          // fetch with id index must be zero
           setTimeout(() => {
             this.setState({
               canRender: true,
-              refId: new RefId(`${keyName}/${index}`)
+              refId: new RefId(`${keyName}/0`)
             });
           }, timeIntervale || 0)
         });
