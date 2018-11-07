@@ -1,21 +1,21 @@
 // @flow
 
 import * as React from 'react';
-import {Breadcrumb, Icon} from 'antd';
+import {Breadcrumb, Icon, Card} from 'antd';
 import {Item} from 'canner-helpers';
 
 type Props = {
   id: string,
   title: string,
   description: string,
-
+  routerParams: Object,
   schema: Object,
   routes: Array<string>
 };
 
 export default class Body extends React.Component<Props> {
   render() {
-    const {title, description, schema, routes} = this.props;
+    const {title, description, schema, routes, routerParams} = this.props;
     const key = routes[0];
     const item = schema[key];
     const breadcrumbs = [{
@@ -55,7 +55,13 @@ export default class Body extends React.Component<Props> {
         background: '#f0f2f5',
         minHeight: '100vh'
       }}>
-        <Item />
+        {
+          routes.length === 1 && routerParams.operator !== 'create' ? (
+            <Card>
+              <Item />
+            </Card>
+          ) : <Item />
+        }
       </div>
     </div>;
   }

@@ -23,6 +23,6 @@ describe('absPackageName', () => {
       context: './'
     };
     const sourcePackageName = '@canner/antd-string-input';
-    expect(absPackageName(sourcePackageName, context)).toBe(path.resolve('../../node_modules/@canner/antd-string-input'));
+    expect(absPackageName(sourcePackageName, context)).toBe(path.resolve(require.resolve('@canner/antd-string-input'), '../../'));
   });
 });

@@ -6,6 +6,7 @@ const categories = () => (
     keyName="categories"
     ui="tree"
     title="${categories.title}"
+    description="${categories.description}"
     uiParams={{
       relationField: "category",
       columns: [
@@ -16,8 +17,6 @@ const categories = () => (
       ]
     }}
   >
-    <toolbar>
-    </toolbar>
     <string keyName="name" title="${categories.name}" required />
     <relation
       keyName="category"

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import {Menu, notification, Select, message} from 'antd';
+import {Menu, notification, Select, message, Alert} from 'antd';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import Canner from 'packages/canner/src';
 import en from 'react-intl/locale-data/en';
@@ -22,7 +22,30 @@ export const Logo = styled.img`
 const Option = Select.Option;
 const menuConfig = [
   ...transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema})
-]
+].map(item => {
+  item.icon = getIcon(item.pathname);
+  return item;
+});
+
+function getIcon(pathname) {
+  switch (pathname) {
+    case '/dashboard':
+      return 'dashboard';
+    case '/products':
+      return 'shopping-cart';
+    case '/categories':
+      return 'tags';
+    case '/home':
+      return 'home';
+    case '/orders':
+      return 'solution';
+    case '/customers':
+      return 'team';
+    default:
+      return 'folder';
+  }
+}
+
 class CMSExample extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +54,7 @@ class CMSExample extends React.Component {
   }
 
   router = new R({
-    baseUrl: "/docs"
+    baseUrl: "/demo"
   });
 
   state = {
@@ -55,10 +78,10 @@ class CMSExample extends React.Component {
 
   render() {
     const {locale} = this.state;
-    const customHeaderMenu = (
-      <Menu theme="dark" mode="horizontal" selectedKeys={[]} style={{ lineHeight: '64px', display: 'inline-block' }}>
+    const renderCustomHeaderMenu = ({mode}) => (
+      <Menu theme="dark" mode={mode} selectedKeys={[]} style={{ lineHeight: '64px', display: mode === 'horizontal' ? 'inline-block' : 'block' }}>
         <Menu.Item>
-          <Select value={locale} onChange={this.changeLocale}>
+          <Select style={{width: 120}} value={locale} onChange={this.changeLocale}>
             <Option value="zh">
               中文
             </Option>
@@ -74,39 +97,51 @@ class CMSExample extends React.Component {
     );
 
     return (
-      <IntlProvider locale={locale} key={locale} messages={schema.dict[locale]}>
-        <Container
-          schema={schema}
-          sidebarConfig={{
-            menuConfig
-          }}
-          navbarConfig={{
-            logo: <Logo src="https://cdn.canner.io/images/logo/logo-white-word-beta.svg" />,
-            showSaveButton: true,
-            renderMenu: () => customHeaderMenu
-          }}
-          router={this.router}
-        >
-          <Canner
-            ref={this.cms}
-            afterDeploy={() => {
-              notification.success({
-                message: 'Deployed!'
-              })
+      <React.Fragment>
+        <Alert
+          message={
+            <div>
+              This is a demo version. Please visit <a href="/">our homepage</a>. 
+            </div>
+          }
+          banner
+          type="info"
+        />
+        <IntlProvider locale={locale} key={locale} messages={schema.dict[locale]}>
+        
+          <Container
+            schema={schema}
+            sidebarConfig={{
+              menuConfig
             }}
-            errorHandler={e => {
-              // eslint-disable-next-line no-console
-              console.error(e);
-              notification.error({
-                message: 'Error'
-              });
+            navbarConfig={{
+              logo: <Logo src="https://cdn.canner.io/images/logo/logo-white-word-beta.svg" />,
+              showSaveButton: true,
+              renderMenu: renderCustomHeaderMenu
             }}
-            intl={{
-              locale
-            }}
-          />
-        </Container>
-      </IntlProvider>
+            router={this.router}
+          >
+            <Canner
+              ref={this.cms}
+              afterDeploy={() => {
+                notification.success({
+                  message: 'Deployed!'
+                })
+              }}
+              errorHandler={e => {
+                // eslint-disable-next-line no-console
+                console.error(e);
+                notification.error({
+                  message: 'Error'
+                });
+              }}
+              intl={{
+                locale
+              }}
+            />
+          </Container>
+        </IntlProvider>
+      </React.Fragment>
     );
   }
 }

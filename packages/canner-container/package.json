@@ -1,6 +1,6 @@
 {
   "name": "@canner/container",
-  "version": "2.0.5",
+  "version": "2.0.9",
   "description": "The container renders sidebar, navbar and pass some properties to canner",
   "main": "lib/index.js",
   "scripts": {
@@ -23,13 +23,6 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    },
-    "testURL": "http://localhost"
   },
   "devDependencies": {
     "flow-bin": "^0.78.0"

@@ -21,35 +21,30 @@ export default class RootModel {
   graphqlClient: any;
 
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
-    if (window && window.document) {
-      // onbrowser
-      const schema = children.slice()
-        .filter(child => child.type === 'object' || child.type === 'array')
-        .reduce((result: Object, child: Object) => {
-          if (child.keyName in result) {
-            throw new Error(`duplicated name in children of ${this.keyName}`);
+    const dataSchema = children.slice()
+      .filter(child => child.type === 'object' || child.type === 'array')
+      .reduce((result: Object, child: Object) => {
+        if (child.keyName in result) {
+          throw new Error(`Schema Error: duplicated name in children of ${this.keyName}`);
+        }
+        if (child.type === 'array' && !child.toolbar) {
+          // default pagination in first array
+          child.toolbar = {
+            pagination: {}
           }
-          if (child.type === 'array' && !child.toolbar) {
-            child.toolbar = {
-              pagination: {}
-            }
-          }
-          delete child.endpoint;
-          result[child.keyName] = child;
-          return result;
-        }, {});
-      const pageSchema = children.filter(child => child.type === 'page')
-        .reduce((result: Object, child: Object) => {
-          result[child.keyName] = child;
-          return result;
-        }, {});
-      this.dict = attrs.dict || {};
-      this.schema = schema;
-      this.pageSchema = pageSchema;
-      this.visitors = visitorManager.getAllVisitors();
-    } else {
-      this.entry = children.map(child => child.keyName);
-    }
+        }
+        result[child.keyName] = child;
+        return result;
+      }, {});
+    const pageSchema = children.filter(child => child.type === 'page')
+      .reduce((result: Object, child: Object) => {
+        result[child.keyName] = child;
+        return result;
+      }, {});
+    this.dict = attrs.dict || {};
+    this.schema = dataSchema;
+    this.pageSchema = pageSchema;
+    this.visitors = visitorManager.getAllVisitors();
     this.imageStorages = genStorages(attrs, children, 'imageStorage');
     this.fileStorages = genStorages(attrs, children, 'fileStorage');
     this.resolvers = parseResolvers(attrs, children);
@@ -58,8 +53,7 @@ export default class RootModel {
   }
 
   toJson() {
-    // $FlowFixMe
-    const renderView = {
+    return {
       dict: this.dict,
       schema: this.schema,
       pageSchema: this.pageSchema,
@@ -70,21 +64,5 @@ export default class RootModel {
       connector: this.connector,
       graphqlClient: this.graphqlClient
     };
-    if (typeof window === 'undefined') { 
-      // support SSR
-      return renderView;
-    } else if (window && !window.document) {
-      // CLI node env
-      return {
-        entry: this.entry,
-        imageStorages: this.imageStorages,
-        fileStorages: this.fileStorages,
-        resolvers: this.resolvers,
-        connector: this.connector,
-        graphqlClient: this.graphqlClient
-      };
-    } else {
-      return renderView;
-    }
   }
 }

@@ -1,12 +1,4 @@
-import * as React from 'react';
-import Enzyme, {shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16.3';
-import RefId from 'canner-ref-id';
-import withHOC, {isCompleteContain, genPaths} from '../../src/hocs/route';
-import {IntlProvider} from 'react-intl';
-import toJson from 'enzyme-to-json';
-
-Enzyme.configure({ adapter: new Adapter() });
+import {isCompleteContain, genPaths, getRenderType, RENDER_CHILDREN, RENDER_COMPONENT, RENDER_NULL} from '../../src/hocs/route';
 
 describe('genPaths', () => {
   it('should works', () => {
@@ -30,121 +22,103 @@ describe('isCompelete', () => {
   });
 });
 
-describe('withRoute', () => {
-  let WrapperComponent, props, MockComponent, mockRenderChildren;
-
-  beforeEach(() => {
-    MockComponent = function MockComponent() {
-      return (<div>Component</div>);
-    }
-    mockRenderChildren = jest.fn().mockImplementation(() => <div>childre</div>);
-    props = {
-      refId: new RefId('posts'),
-      renderChildren: mockRenderChildren
-    }
-    WrapperComponent = withHOC(MockComponent);
+describe('getRenderType', () => {
+  it('object, should render component', () => {
+    expect(getRenderType({
+      path: 'info',
+      routes: ['info'],
+      pattern: 'object',
+      routerParams: {
+        operator: 'update'
+      }
+    })).toBe(RENDER_COMPONENT);
   });
 
-  it('should not render 1', () => {
-    const routes = ['info'];
-    const path = 'posts';
-    const wrapper = shallow(
-      <IntlProvider locale="en">
-        <WrapperComponent
-          {...props}
-          routes={routes}
-          path={path}
-          pattern="object"
-          routerParams={{}}
-        />
-      </IntlProvider>
-    );
-    expect(wrapper.find(MockComponent).length).toBe(0);
+  it('object, should render component', () => {
+    expect(getRenderType({
+      path: 'info/name',
+      routes: ['info'],
+      pattern: 'object.string',
+      routerParams: {
+        operator: 'update'
+      }
+    })).toBe(RENDER_COMPONENT);
   });
 
-  it('should not render 2', () => {
-    const routes = ['info', 'name'];
-    const path = 'info/nickname';
-    const wrapper = shallow(
-      <IntlProvider>
-        <WrapperComponent
-          {...props}
-          routes={routes}
-          path={path}
-          pattern="object.string"
-          routerParams={{}}
-        />
-      </IntlProvider>
-    );
-    expect(wrapper.find(MockComponent).length).toBe(0);
+  it('object, should render null', () => {
+    expect(getRenderType({
+      path: 'info',
+      routes: ['info'],
+      pattern: 'object',
+      routerParams: {
+        operator: 'update'
+      }
+    })).toBe(RENDER_COMPONENT);
   });
 
-  it('should not render 3', () => {
-    const routes = ['posts', 'id1', 'name'];
-    const path = 'posts/nickname';
-    const wrapper = shallow(
-      <IntlProvider>
-        <WrapperComponent
-          {...props}
-          routes={routes}
-          path={path}
-          pattern="array.string"
-          routerParams={{}}
-        />
-      </IntlProvider>
-    );
-    expect(wrapper.find(MockComponent).length).toBe(0);
+  it('array, should render component 1', () => {
+    expect(getRenderType({
+      path: 'posts/title',
+      routes: ['posts', 'id1'],
+      pattern: 'array.string',
+      routerParams: {
+        operator: 'update'
+      }
+    })).toBe(RENDER_COMPONENT);
   });
 
-  it('should render 1', () => {
-    const routes = ['info'];
-    const path = 'info';
-    const wrapper = shallow(
-      <IntlProvider>
-        <WrapperComponent
-          {...props}
-          routes={routes}
-          path={path}
-          pattern="object"
-          routerParams={{}}
-        />
-      </IntlProvider>
-    );
-    expect(wrapper.find(MockComponent).length).toBe(1);
+  it('array, should render children', () => {
+    expect(getRenderType({
+      path: 'posts',
+      routes: ['posts', 'id1'],
+      pattern: 'array',
+      routerParams: {
+        operator: 'update'
+      }
+    })).toBe(RENDER_CHILDREN);
   });
 
-  it('should render 2', () => {
-    const routes = ['posts'];
-    const path = 'posts';
-    const wrapper = shallow(
-      <IntlProvider>
-        <WrapperComponent
-          {...props}
-          routes={routes}
-          path={path}
-          pattern="array"
-          routerParams={{}}
-        />
-      </IntlProvider>
-    );
-    expect(wrapper.find(MockComponent).length).toBe(1);
+  it('array, should render children', () => {
+    expect(getRenderType({
+      path: 'posts',
+      routes: ['posts'],
+      pattern: 'array',
+      routerParams: {
+        operator: 'create'
+      }
+    })).toBe(RENDER_CHILDREN);
   });
 
-  it('should render children 1', () => {
-    const routes = ['posts', 'id1'];
-    const path = 'posts';
-    const wrapper = shallow(
-      <IntlProvider>
-        <WrapperComponent
-          {...props}
-          routes={routes}
-          path={path}
-          pattern="array"
-          routerParams={{}}
-        />
-      </IntlProvider>
-    );
-    expect(wrapper.find(MockComponent).length).toBe(0);
-    expect(mockRenderChildren).toHaveBeenCalledTimes(1);
+  it('array, should render null', () => {
+    expect(getRenderType({
+      path: 'products/title',
+      routes: ['posts', 'id1'],
+      pattern: 'array.string',
+      routerParams: {
+        operator: 'update'
+      }
+    })).toBe(RENDER_NULL);
+  });
+
+  it('array, should render component 2', () => {
+    expect(getRenderType({
+      path: 'posts',
+      routes: ['posts'],
+      pattern: 'array',
+      routerParams: {
+        operator: 'update'
+      }
+    })).toBe(RENDER_COMPONENT);
+  });
+
+  it('array, should render component 3', () => {
+    expect(getRenderType({
+      path: 'posts/title',
+      routes: ['posts'],
+      pattern: 'array.string',
+      routerParams: {
+        operator: 'update'
+      }
+    })).toBe(RENDER_COMPONENT);
   });
 });

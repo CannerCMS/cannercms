@@ -8,13 +8,13 @@ export default {
     dashboard: {
       title: 'Dashboard',
       desc: 'Canner is also supporting indicators, charts, and filters to help you build extendable administrator console for your datasets and APIs.',
-      last7daysVisitor: 'Visitors last 7 days',
-      last6monthOrders: 'Last 6 months orders',
+      visitors: 'Visitors',
+      orders: 'Orders',
       customers: 'Total Customers'
     },
     home: {
       title: 'Home Page',
-      description: 'Your home page configuration.',
+      description: '<a href="https://www.canner.io/docs/schema-layout-tags">&lt;Layout /&gt; tags </a> are used to create grids, containers, and blocks in CMS. And allows you to create customized design layouts and visual design for your CMS.',
       entry: {
         layoutTitle: 'Entry Page',
         title: 'Website Title',
@@ -36,7 +36,8 @@ export default {
       basicSetting: 'Basic Setting',
       no: 'Product Number',
       name: 'Product Name',
-      description: 'Product Description',
+      description: 'You can implement sort and filter in each column with <a href="https://ant.design/components/table/#Column">antd column configuration</a> and customize your page header with <code>&lt;Body&gt;</code> tag. </br> Click the links below to see the source codes.',
+      'prod.description': 'Product Description',
       price: 'Price',
       unit: 'dollars',
       promo: 'Promo Price',
@@ -50,21 +51,21 @@ export default {
       filter: {
         no: {
           label: 'Product Number',
-          placeholder: 'Enter a Product Number'
         },
         name: {
           label: 'Name',
-          placeholder: 'Enter a Product Name'
         }
       }
     },
     categories: {
       title: 'Categories',
+      description: 'Dealing with relationship data is annoying, but in Canner, it\'s just a few tags and properties. </br> See <a href="https://github.com/Canner/canner/blob/canary/docs/schema/categories.schema.js">source schema</a> or <a href="https://www.canner.io/docs/schema-data-type-tags#lt-relation-gt">tags document</a> to learn more.',
       name: 'Category Name',
       parent: 'Parent Category'
     },
     orders: {
       title: 'Orders',
+      description: 'Canner provide several features for developers to build a powerful CMS, see <a href="https://www.canner.io/docs/schema-toolbar-tags">&lt;toolbar/> tags </a> and <a href="https://github.com/Canner/canner/blob/canary/docs/schema/orders.schema.js">source schema</a> to know how to do that.',
       no: 'Order Number',
       orderStatus: 'Order Status',
       createDate: 'Create Date',
@@ -111,16 +112,15 @@ export default {
       filter: {
         buyerName: {
           label: 'Search Buyer Name',
-          placeholder: 'Enter Buyer Name'
         },
         no: {
           label: 'Search Order No.',
-          placeholder: 'Enter Order No.'
         }
       }
     },
     customers: {
       title: 'Customers',
+      description: 'Canner fetches array data without any query by default which means all the filter, sort, pagination are done at the client side. But if you want to do these query at the server side, you can change the fetch policy to <a href="https://www.canner.io/docs/schema-toolbar-tags#fetch-policy">async</a>.',
       name: 'Name',
       phone: 'Phone',
       email: 'Email',
@@ -129,11 +129,9 @@ export default {
       filter: {
         name: {
           label: 'Search Customer Name',
-          placeholder: 'Enter Customer Name',
         },
         phone: {
           label: 'Search Customer Phone',
-          placeholder: 'Enter Customer Phone'
         }
       }
     }
@@ -145,9 +143,10 @@ export default {
     },
     dashboard: {
       title: '總覽',
-      products: '總產品數',
-      orders: '總訂單數',
-      customers: '總顧客數'
+      desc: 'Canner 也支援讓你自訂頁面以及提供多種圖表使用。',
+      visitor: '訪客數',
+      orders: '訂單數',
+      customers: '顧客數'
     },
     home: {
       title: '首頁設定',
@@ -187,11 +186,9 @@ export default {
       filter: {
         no: {
           label: '搜尋商品編號',
-          placeholder: '輸入商品編號'
         },
         name: {
           label: '搜尋商品名',
-          placeholder: '輸入商品名'
         }
       }
     },
@@ -247,11 +244,9 @@ export default {
       filter: {
         buyerName: {
           label: '搜尋購買人姓名',
-          placeholder: '輸入購買人姓名'
         },
         no: {
           label: '搜尋購買人編號',
-          placeholder: '輸入購買人編號'
         }
       }
     },
@@ -265,11 +260,9 @@ export default {
       filter: {
         name: {
           label: '搜尋顧客姓名',
-          placeholder: '輸入顧客姓名',
         },
         phone: {
           label: '搜尋顧客電話',
-          placeholder: '輸入顧客電話'
         }
       }
     }

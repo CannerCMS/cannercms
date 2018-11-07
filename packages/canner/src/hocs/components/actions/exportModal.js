@@ -202,8 +202,12 @@ export default class ExportModal extends React.Component<Props, State> {
           <FormItem
             wrapperCol={{ span: 12, offset: 5 }}
           >
-            <Button htmlType="button" onClick={this.handleCancel}>取消</Button>
-            <Button loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }}>匯出</Button>
+            <Button htmlType="button" onClick={this.handleCancel}>
+              <FormattedMessage id="actions.export.modal.cancelButton" />
+            </Button>
+            <Button loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }}>
+              <FormattedMessage id="actions.export.modal.confirmButton" />
+            </Button>
           </FormItem>
         </Form>
       </Modal>

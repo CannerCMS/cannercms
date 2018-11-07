@@ -14,7 +14,8 @@
   "author": "Canner",
   "license": "Apache-2.0",
   "dependencies": {
-    "@canner/history-router": "^2.0.5"
+    "@canner/history-router": "^2.0.5",
+    "history": "^4.7.2"
   },
   "peerDependencies": {
     "react": ">=16.3",
@@ -22,12 +23,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    },
-    "testURL": "http://localhost"
   }
 }

@@ -21,6 +21,7 @@ export default () => (
     keyName="customers"
     ui="tableRoute"
     uiParams={{
+      size: 'middle',
       columns: [{
         title: '${customers.name}',
         key: 'name',
@@ -34,11 +35,11 @@ export default () => (
         key: 'email',
         dataIndex: 'email',
       }],
-      createKeys: [],
     }}
     title="${customers.title}"
+    description="${customers.description}"
   >
-    <toolbar>
+    <toolbar async>
       <actions>
         <export
           fields={exportFields}
@@ -47,8 +48,8 @@ export default () => (
         <filter />
       </actions>
       <filter>
-        <textFilter label="${customers.filter.name.label}" field="name" placeholder="${customers.filter.name.placeholder}" />
-        <textFilter label="${customers.filter.phone.label}" field="phone" placeholder="${customers.filter.phone.placeholder}" />
+        <textFilter label="${customers.filter.name.label}" field="name" placeholder="Enter a name" />
+        <textFilter label="${customers.filter.phone.label}" field="phone" placeholder="Enter a phone" />
       </filter>
       <pagination />
     </toolbar>
@@ -58,7 +59,11 @@ export default () => (
     <array
       keyName="consignees"
       ui="table"
+      disabled={{
+        create: true
+      }}
       uiParams={{
+        size: 'small',
         columns: [{
           title: '${customers.name}',
           key: 'name',
@@ -71,8 +76,7 @@ export default () => (
           title: 'Email',
           key: 'email',
           dataIndex: 'email',
-        }],
-        createKeys: [],
+        }]
       }}
       title="${customers.consignees}"
     >

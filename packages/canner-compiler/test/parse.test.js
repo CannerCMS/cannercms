@@ -155,12 +155,12 @@ describe('parser', function() {
         items: {
           highestPrice: {
             keyName: 'highestPrice',
-            type: 'indicator',
+            type: 'component',
             ui: 'amount'
           },
           lineChart: {
             keyName: 'lineChart',
-            type: 'chart',
+            type: 'component',
             ui: 'line'
           }
         }
@@ -174,28 +174,28 @@ describe('parser', function() {
         items: {
           highestPrice: {
             keyName: 'highestPrice',
-            type: 'indicator',
+            type: 'component',
             ui: 'amount'
           },
           lineChart: {
             keyName: 'lineChart',
-            type: 'chart',
+            type: 'component',
             ui: 'line'
           }
         },
         children: [ {
           keyName: 'highestPrice',
-          type: 'indicator',
+          type: 'component',
           ui: 'amount',
-          nodeType: 'page.indicator.amount',
-          pattern: 'page.indicator',
+          nodeType: 'page.component.amount',
+          pattern: 'page.component',
           path: 'overview/highestPrice'
         }, {
           keyName: 'lineChart',
-          type: 'chart',
+          type: 'component',
           ui: 'line',
-          nodeType: 'page.chart.line',
-          pattern: 'page.chart',
+          nodeType: 'page.component.line',
+          pattern: 'page.component',
           path: 'overview/lineChart'
         }]
       }

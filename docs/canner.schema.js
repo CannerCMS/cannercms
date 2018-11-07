@@ -1,6 +1,6 @@
 /** @jsx builder */
 
-import builder from 'canner-script';
+import builder, {Body} from 'canner-script';
 import {LocalStorageConnector} from 'packages/canner-graphql-interface/src';
 import {createFakeData} from 'packages/canner-helpers/src';
 import Dashboard from './schema/Dashboard.schema';
@@ -11,10 +11,16 @@ import Categories from './schema/categories.schema';
 import Products from './schema/products.schema';
 import dict from './schema/locale';
 import fakeData from './schema/fake-data';
+import DashboardBody from './components/layouts/dashboardBody';
+import ProductsBody from './components/layouts/productsBody';
+import HomeBody from './components/layouts/homeBody';
+import OrderBody from './components/layouts/orderBody';
 
 const schema = (
   <root dict={dict}>
-    <Dashboard />
+    <Body component={DashboardBody}>
+      <Dashboard />
+    </Body>
     <objectType keyName="chart">
       <array keyName="visitData">
         <number keyName="x"/>
@@ -33,15 +39,45 @@ const schema = (
         <number keyName="y"/>
       </array>
     </objectType>
-    <Products />
+    <Body component={ProductsBody}>
+      <Products />
+    </Body>
     <Categories />
-    <Home />
-    <Orders />
+    <Body component={HomeBody}>
+      <Home />
+    </Body>
+    <Body component={OrderBody}>
+      <Orders />
+    </Body>
     <Customers />
   </root>
 );
 
 const fD = createFakeData(schema.schema, 10);
+// rewrite fakeimage url because the default image service of faker.js is not stable
+fD.products = fD.products.map(product => {
+  return {
+    ...product,
+    photos: product.photos.map(photo => {
+      return fakeImage(photo)
+    })
+  };
+});
+
+// rewrite fakeimage url because the default image service of faker.js is not stable
+fD.orders = fD.orders.map(order => {
+  return {
+    ...order,
+    detail: order.detail.map(item => {
+      return {
+        ...item,
+        photos: item.photos.map(photo => {
+          return fakeImage(photo)
+        })
+      }
+    })
+  };
+});
 
 const connector = new LocalStorageConnector({
   defaultData: {...fD, ...fakeData}
@@ -50,4 +86,27 @@ const connector = new LocalStorageConnector({
 export default {
   ...schema,
   connector
+}
+
+function fakeImage(gallery) {
+  const newImage = {
+    ...gallery.image,
+    url: `https://placeimg.com/${getRandomWidth()}/${getRandomHeight()}/any`
+  }
+  return {
+    ...gallery,
+    image: newImage
+  };
+}
+
+function getRandomHeight() {
+  return genRandomNumber(250, 350)
+}
+
+function getRandomWidth() {
+  return genRandomNumber(350, 450)
+}
+
+function genRandomNumber(min, max) {
+  return Math.floor(Math.random() * max) + min;
 }

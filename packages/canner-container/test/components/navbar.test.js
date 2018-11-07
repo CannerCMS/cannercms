@@ -35,19 +35,19 @@ describe('<Navbar>', () => {
     expect(wrapper.find(Header).length).toBe(1);
   });
 
-  it('should render a Menu', () => {
+  it('should render three Menu', () => {
     const wrapper = renderComponent();
-    expect(wrapper.find(Menu).length).toBe(1);
+    expect(wrapper.find(Menu).length).toBe(3);
   });
 
   it('should render a Menu.Item', () => {
     const wrapper = renderComponent();
-    expect(wrapper.find(Menu.Item).length).toBe(1);
+    expect(wrapper.find(Menu.Item).length).toBe(3);
   });
 
   it('should render a Badge', () => {
     const wrapper = renderComponent({ dataChanged: { 'key': true } });
-    expect(wrapper.find(Badge).length).toBe(1);
+    expect(wrapper.find(Badge).length).toBe(2);
   });
 
 
@@ -56,7 +56,7 @@ describe('<Navbar>', () => {
       .mockReturnValueOnce(Promise.resolve());
     const wrapper = renderComponent({ deploy });
     const menuItem = { key: 'deploy', params: {}};
-    wrapper.find(Menu).simulate('click', menuItem);
+    wrapper.find(Menu).first().simulate('click', menuItem);
     expect(deploy).toBeCalled();
   });
 });

@@ -28,6 +28,37 @@ describe('create string data', () => {
       type: 'string'
     }));
   });
+
+  it('should gen email format', () => {
+    expect(createFakeData({
+      type: 'string',
+      keyName: 'userEmail'
+    }).indexOf('@') > -1).toBe(true);
+  });
+
+  it('should gen phone format', () => {
+    expect(createFakeData({
+      type: 'string',
+      keyName: 'userPhone'
+    }).match(/\d/)).toBeDefined();
+  });
+});
+
+
+describe('create enum data', () => {
+  it('should return a string', () => {
+    expect(typeof createFakeData({
+      type: 'enum',
+      values: ['a', 'b']
+    })).toBe('string');
+  });
+
+  it('should be one of values', () => {
+    expect(['a', 'b'].includes(createFakeData({
+      type: 'enum',
+      values: ['a', 'b']
+    }))).toBe(true);
+  });
 });
 
 describe('create boolean data', () => {
@@ -332,6 +363,6 @@ describe('create relation empty data', () => {
         }
       }
     }, 2).posts[0].authors;
-    expect(Object.keys(data)).toEqual(["0"]);
+    expect(Object.keys(data)).toBeDefined();
   });
 })

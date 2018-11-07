@@ -19,7 +19,7 @@ import {
   JsonModel
 } from './models';
 import type {CannerSchema, Props} from './flow-types';
-import {createLayoutVisitor, CANNER_KEY} from './layout';
+import {createLayoutVisitor} from './layout';
 import visitorManager from './visitorManager';
 import validator from './validator';
 import configuration from './configure';
@@ -35,6 +35,7 @@ export const Focus = ({attributes, children}: Props) => <Layout ui="focus" {...a
 export const Condition = ({attributes, children}: Props) => <Layout ui="condition" {...attributes}>{children}</Layout>;
 export const Row = ({attributes, children}: Props) => <Layout ui="row" {...attributes}>{children}</Layout>;
 export const Col = ({attributes, children}: Props) => <Layout ui="col" {...attributes}>{children}</Layout>;
+export const Body = ({attributes, children}: Props) => <Layout ui="body" {...attributes}>{children}</Layout>;
 
 // validator config
 export const configure = configuration.configure;
@@ -172,27 +173,13 @@ export default function builder(tag: string | Function, attributes: Object, ...c
       };
     }
     case 'Layout': {
-      const {visitor, cannerKey} = createLayoutVisitor(attributes, children);
-      let injectLayout;
+      const insertionVistor = createLayoutVisitor(attributes, children).visitor;
+      visitorManager.addVisitor(insertionVistor);
       if (attributes.injectValue) {
-        injectLayout = createLayoutVisitor({...attributes, layoutType: 'injection'}, children);
+        const injectVistor = createLayoutVisitor({...attributes, layoutType: 'injection'}, children).visitor;
+        visitorManager.addVisitor(injectVistor);
       }
-      visitorManager.addVisitor(visitor);
-      if (injectLayout) {
-        visitorManager.addVisitor(injectLayout.visitor);
-      }
-      return children.map(child => {
-        if (child[CANNER_KEY]) {
-          child[CANNER_KEY].push(cannerKey);
-        } else {
-          child[CANNER_KEY] = [cannerKey];
-        }
-
-        if (injectLayout) {
-          child[CANNER_KEY].push(injectLayout.cannerKey);
-        }
-        return child;
-      });
+      return children;
     }
     default:
       throw new Error(`unsupported type '${tag}'`);
@@ -206,7 +193,7 @@ function createJSON(Model: any, args: Array<*>) {
 }
 
 function i18n(attrs: Object) {
-  ['title', 'description', 'uiParams', 'label', 'options', 'placeholder'].forEach(key => {
+  ['title', 'description', 'uiParams', 'label', 'options', 'placeholder', 'fields'].forEach(key => {
     if (key in attrs) {
       attrs[key] = getIntlMessage(attrs[key]);
     }

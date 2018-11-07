@@ -1,6 +1,6 @@
 /** @jsx c */
 import c, { Default, Tabs } from "canner-script";
-import TextFilter from "./customize-columns/textFilter";
+import TextFilter from "../components/columns/textFilter";
 import { galleryValidation } from "./utils";
 
 const noFilter = new TextFilter('no');
@@ -9,8 +9,13 @@ const Products = () => (
   <array
     keyName="products"
     title="${products.title}"
+    description="${products.description}"
     ui="tableRoute"
+    disabled={{
+      delete: true
+    }}
     uiParams={{
+      size: 'small',
       columns: [
         {
           title: "${products.photos}",
@@ -51,43 +56,9 @@ const Products = () => (
       <Default keyName="basicSetting" title="${products.basicSetting}" type="inner" injectValue={{layout: 'horizontal'}} >
         <string keyName="no" title="${products.no}" description="Unique Number of the Product" required/>
         <string keyName="name" title="${products.name}" required />
-        <object keyName="description" ui="editor" title="${products.description}" />
+        <object keyName="description" ui="editor" title="${products.prod.description}" />
         <number keyName="price" title="${products.price}" required />
         <number keyName="promo" title="${products.promo}" />
-        {/* <relation
-          ui="multipleSelect"
-          keyName="addPurchase"
-          relation={{
-            type: "toMany",
-            to: "products"
-          }}
-          uiParams={{
-            textCol: "name",
-            columns: [
-              {
-                title: "${products.no}",
-                dataIndex: "no"
-              },
-              {
-                title: "${products.name}",
-                dataIndex: "name"
-              }
-            ]
-          }}
-          title="${products.addPurchase}"
-        >
-          <toolbar>
-            <actions filterButton />
-            <filter>
-              <textFilter
-                label="${products.filter.no.label}"
-                field="no"
-                placeholder="${products.filter.no.placeholder}"
-              />
-            </filter>
-            <pagination />
-          </toolbar>
-        </relation> */}
         <relation
           keyName="category"
           ui="singleSelectTree"

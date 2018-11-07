@@ -69,15 +69,31 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
           contentType: 'image/jpeg',
           size: faker.random.number(),
           name: faker.system.commonFileName(),
-          url: faker.image.imageUrl()
+          url: faker.random.image()
         };
         break;
       case 'boolean':
         result = faker.random.boolean();
         break;
-      case 'string':
-        result = faker.random.word();
+      case 'string': {
+        const lowerKeyName = schema.keyName && schema.keyName.toLowerCase() || '';
+        if (lowerKeyName.indexOf('email') > -1) {
+          result = faker.internet.email();
+        } else if (lowerKeyName.indexOf('phone') > -1) {
+          result = faker.phone.phoneNumber();
+        } else {
+          result = faker.random.word();
+        }
         break;
+      }
+      case 'enum': {
+        if (schema.values) {
+          result = schema.values[getRandomNumber(schema.values.length)];
+        } else {
+          throw new Error('Enum type should have a values property.');
+        }
+        break;
+      }
       case 'relation': {
         result = getRelation(schema, firstLevelKeys, listLength);
         break;
@@ -141,11 +157,16 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
     case 'toOne':
     default:
       if (isInFirstLevel && to !== schema.keyName) {
-        result = `${to}${Math.floor(Math.random() * listLength) + 1}`;
+        result = `${to}${getRandomNumber(listLength) + 1}`;
       } else {
         result = null;
       }
       break;
   }
   return result;
+}
+
+
+function getRandomNumber(length) {
+  return Math.floor(Math.random() * length);
 }
