@@ -130,18 +130,12 @@ export default function connectId(Com: React.ComponentType<*>) {
       updateQuery(paths, {
         ...this.args,
         where: {id: id},
-      }).then(() => fetch(keyName))
-        .then(result => {
-          let index = 0;
-          if (result[keyName].edges) {
-            index = result[keyName].edges.findIndex(edge => edge.cursor === id);
-          } else {
-            index = result[keyName].findIndex(item => item.id === id);
-          }
+      }).then(() => {
+          // fetch with id index must be zero
           setTimeout(() => {
             this.setState({
               canRender: true,
-              refId: new RefId(`${keyName}/${index}`)
+              refId: new RefId(`${keyName}/0`)
             });
           }, timeIntervale || 0)
         });

@@ -47,6 +47,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const {refId} = this.props;
       if (refId.toString() !== props.refId.toString()) {
         // refetch when route change
+        this.unsubscribe();
         this.queryData(props);
         this.subscribe();
       }
