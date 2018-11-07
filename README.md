@@ -36,6 +36,29 @@ With different connectors, you are able to create a CMS to interact with ***Fire
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
+## Features
+
+### CMS features
+
+- [x] [30+ CMS components](https://www.canner.io/component)
+- [x] [Support Layouts](https://www.canner.io/docs/schema-layout-tags)
+- [x] [Support Queries](https://www.canner.io/docs/schema-toolbar-tags)
+- [x] [Support Chart](https://www.canner.io/docs/schema-page-tags)
+- [x] [Support i18n](https://www.canner.io/docs/guides-internationalization)
+- [x] [Support Validation](https://www.canner.io/docs/guides-validation)
+- [x] [Support Condition](https://www.canner.io/docs/guides-condition-fields)
+- [x] [Support Customization](https://www.canner.io/docs/guides-customized-component)
+
+### Sources and API
+
+- [x] [Connect to multiple sources](https://www.canner.io/docs/credential-intro)
+  * [Firebase](https://www.canner.io/docs/credential-firebase)
+  * [Firestore](https://www.canner.io/docs/credential-firestore)
+  * [Prisma](https://www.canner.io/docs/credential-prisma)
+- [x] [Customize resolver](https://www.canner.io/docs/guides-resolver)
+- [x] [Storage API support](https://www.canner.io/docs/guides-storage)
+
+
 ## Why Canner is different?
 
 Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is different from traditional CMS and headless CMS. The biggest different about Adaptive CMS is that it decouples both view and data layer. It builds data interfaces to connect to single or multiple data sources.
@@ -71,28 +94,6 @@ Code lives in [here ./docs folder](./docs)
 ![CMS preivew1](./docs/preview3.png)
 
 > Import & export data, multiple selection, etc...
-
-## Features
-
-### CMS features
-
-- [x] [30+ CMS components](https://www.canner.io/component)
-- [x] [Support Layouts](https://www.canner.io/docs/schema-layout-tags)
-- [x] [Support Queries](https://www.canner.io/docs/schema-toolbar-tags)
-- [x] [Support Chart](https://www.canner.io/docs/schema-page-tags)
-- [x] [Support i18n](https://www.canner.io/docs/guides-internationalization)
-- [x] [Support Validation](https://www.canner.io/docs/guides-validation)
-- [x] [Support Condition](https://www.canner.io/docs/guides-condition-fields)
-- [x] [Support Customization](https://www.canner.io/docs/guides-customized-component)
-
-### Sources and API
-
-- [x] [Connect to multiple sources](https://www.canner.io/docs/credential-intro)
-  * [Firebase](https://www.canner.io/docs/credential-firebase)
-  * [Firestore](https://www.canner.io/docs/credential-firestore)
-  * [Prisma](https://www.canner.io/docs/credential-prisma)
-- [x] [Customize resolver](https://www.canner.io/docs/guides-resolver)
-- [x] [Storage API support](https://www.canner.io/docs/guides-storage)
 
 
 ## 🔥🔥 Only 3 commands to start 🔥🔥
