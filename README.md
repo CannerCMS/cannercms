@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="#"><img src="./docs/logo-word-beta.png" /></a>
+  <a href="#"><img src="./docs/logo-word.png" /></a>
 </p>
 
 <div align="center">
