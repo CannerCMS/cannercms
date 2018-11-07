@@ -43,12 +43,12 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.unsubscribe();
     }
 
-    UNSAFE_componentWillReceiveProps(props: HOCProps) {
-      const {refId} = this.props;
-      if (refId.toString() !== props.refId.toString()) {
+    componentDidUpdate(prevProps: HOCProps) {
+      const {refId} = prevProps;
+      if (refId.toString() !== this.props.refId.toString()) {
         // refetch when route change
         this.unsubscribe();
-        this.queryData(props);
+        this.queryData(this.props);
         this.subscribe();
       }
     }
@@ -111,6 +111,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
     render() {
       const {value, isFetching, rootValue, originRootValue} = this.state;
       const {toolbar, query, refId, items, type, path, relation, pattern, keyName, request, deploy, nullable} = this.props;
+      if (keyName==='description') {
+        console.log(value);
+      }
       if (!originRootValue) {
         return <List style={{maxWidth: '600px'}}/>;
       }
@@ -139,13 +142,18 @@ export default function withQuery(Com: React.ComponentType<*>) {
           </Toolbar>
         );
       } else if (type === 'relation' && relation.type === 'toOne') {
-        return <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.id) ? value : defaultValue(type, relation)} />;
+        return (
+            <Com {...this.props} showPagination={true} rootValue={rootValue} value={(value && value.id) ? value : defaultValue(type, relation)} />
+        );
       } else if (type === 'relation' && relation.type === 'toMany') {
         return (
-          <Com {...this.props} showPagination={true} rootValue={rootValue} value={isNil(value) ? defaultValue('array', undefined, nullable) : value}/>
+            <Com {...this.props} showPagination={true} rootValue={rootValue} value={isNil(value) ? defaultValue('array', undefined, nullable) : value}/>
         );
       }
-      return <Com {...this.props} showPagination={true} rootValue={rootValue} value={isNil(value) ? defaultValue(type, relation, nullable) : value} />;
+
+      return (
+        <Com {...this.props} showPagination={true} rootValue={rootValue} value={isNil(value) ? defaultValue(type, relation, nullable) : value} />
+      );
     }
   };
 }
