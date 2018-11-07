@@ -101,7 +101,7 @@ class CMSExample extends React.Component {
         <Alert
           message={
             <div>
-              This is a demo version. Please visit <a href="/">our homepage</a>. 
+              In less than 1500 lines of code you can build this demo (<a href="https://github.com/Canner/canner/tree/canary/docs" target="_blank">Code source</a>). Please visit <a href="/">our homepage</a>. 
             </div>
           }
           banner
