@@ -18,7 +18,7 @@
     "release:next": "npm run clean && npm run build && lerna publish --exact --npm-tag next",
     "check:src": "npm run lint",
     "start": "webpack-dev-server --mode development",
-    "build:docs": "rm -r docs/dist && webpack --mode production",
+    "build:docs": "rm -rf docs/dist && webpack --mode production",
     "gh-pages": "gh-pages -d docs/dist",
     "deploy": "npm run build:docs && npm run gh-pages",
     "validate": "npm ls"
@@ -36,6 +36,7 @@
     "@babel/plugin-proposal-throw-expressions": "7.0.0",
     "@babel/plugin-syntax-dynamic-import": "7.0.0",
     "@babel/plugin-syntax-import-meta": "7.0.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.1.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
@@ -95,8 +96,8 @@
     "vega-lib": "^4.2.0",
     "vega-tooltip": "^0.13.0",
     "victory": "^30.5.1",
-    "webpack": "^4.0.1",
-    "webpack-cli": "^2.0.10",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.0"
   },
   "theme": {

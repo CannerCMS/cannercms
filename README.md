@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="#"><img src="./docs/logo-word-beta.png" /></a>
+  <a href="#"><img src="./docs/logo-word.png" /></a>
 </p>
 
 <div align="center">
@@ -36,34 +36,6 @@ With different connectors, you are able to create a CMS to interact with ***Fire
 
 Since Canner schema ***is only a JSX (XML-like) language without any logistic code***, in other words, you can maintain your code in a configuration file and easy to maintain using version controls.
 
-## Why Canner is different?
-
-Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is different from traditional CMS and headless CMS. The biggest different about Adaptive CMS is that it decouples both view and data layer. It builds data interfaces to connect to single or multiple data sources.
-
-> ***Adaptive CMS?*** Learn more [here](https://www.canner.io/docs/why-adaptive-cms)
-
-![overview](http://www.canner.io/docs/assets/revolution.png)
-
-***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)***
-
-## Preview and demo
-
-***Live demo here: https://www.canner.io/demo***
-
-Code lives in [here ./docs folder](./docs)
-
-![CMS preivew1](./docs/preview1.png)
-
-> Charts and Indicators
-
-![CMS preivew1](./docs/preview2.png)
-
-> Inline updates, tables, sorters, filters, etc...
-
-![CMS preivew1](./docs/preview3.png)
-
-> Import & export data, multiple selection, etc...
-
 ## Features
 
 ### CMS features
@@ -85,6 +57,43 @@ Code lives in [here ./docs folder](./docs)
   * [Prisma](https://www.canner.io/docs/credential-prisma)
 - [x] [Customize resolver](https://www.canner.io/docs/guides-resolver)
 - [x] [Storage API support](https://www.canner.io/docs/guides-storage)
+
+
+## Why Canner is different?
+
+Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is different from traditional CMS and headless CMS. The biggest different about Adaptive CMS is that it decouples both view and data layer. It builds data interfaces to connect to single or multiple data sources.
+
+> ***Adaptive CMS?*** Learn more [here](https://www.canner.io/docs/why-adaptive-cms)
+
+![overview](http://www.canner.io/docs/assets/revolution.png)
+
+***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)***
+
+## Return on Investment
+
+![roi](./docs/roi.png)
+
+> Canner can reduce up to 80% of your current CMS solutions.
+
+You only need to upload a configuration file in JSX(easy to learn) syntax, to create any kind and form of applications. Our CMS has built CMS for websites, mobile apps, and even chatbot applications. ***Amazingly, you can building a blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner. See what you can accomplish within 1500 lines of code, see [this demo](https://www.canner.io/demo) ([Source code](https://github.com/Canner/canner/tree/canary/docs/schema))*** .
+
+## Preview and demo
+
+***Live demo here: https://www.canner.io/demo***
+
+Code lives in [here ./docs folder](./docs)
+
+![CMS preivew1](./docs/preview1.png)
+
+> Charts and Indicators
+
+![CMS preivew1](./docs/preview2.png)
+
+> Inline updates, tables, sorters, filters, etc...
+
+![CMS preivew1](./docs/preview3.png)
+
+> Import & export data, multiple selection, etc...
 
 
 ## 🔥🔥 Only 3 commands to start 🔥🔥
