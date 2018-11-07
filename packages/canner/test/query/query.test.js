@@ -52,7 +52,7 @@ describe('query', () => {
   });
 
   it('should get gql when toolbar sync', () => {
-    expect(query.toGQL('posts')).toEqual(`query($postsWhere: PostWhereInput){posts: posts(where: $postsWhere){title id}}`);
+    expect(query.toGQL('posts')).toEqual(`query($postsWhere: PostWhereInput){posts: postsConnection(where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
   });
 
   it('should get gql when toolbar async', () => {

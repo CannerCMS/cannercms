@@ -13,6 +13,7 @@ Object {
         "orderBy": "$postsOrderBy",
         "where": "$postsWhere",
       },
+      "connection": true,
       "declareArgs": Object {
         "$postsAfter": "String",
         "$postsBefore": "String",
@@ -75,6 +76,7 @@ Object {
         "orderBy": "$usersOrderBy",
         "where": "$usersWhere",
       },
+      "connection": true,
       "declareArgs": Object {
         "$usersAfter": "String",
         "$usersBefore": "String",
