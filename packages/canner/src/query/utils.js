@@ -41,6 +41,7 @@ export function fieldToQueriesObject(field: any): any {
           [whereKey]: `${typeKey(field.getKey())}WhereInput`,
           [orderByKey]: `${typeKey(field.getKey())}OrderByInput`
         };
+        queriesObj.connection = true;
         queriesObj.args = args;
         queriesObj.isPlural = true;
         queriesObj.alias = field.getKey();
@@ -52,7 +53,6 @@ export function fieldToQueriesObject(field: any): any {
         const defaultSortField = toolbar && toolbar.sorter && toolbar.sorter.defaultField;
         const permanentFilter = toolbar && toolbar.filter && toolbar.filter.permanentFilter;
         if (asyncToolbar) {
-          queriesObj.connection = true;
           variables[firstKey] = DEFAULT_FIRST;
           if (permanentFilter) {
             variables[whereKey] = permanentFilter;

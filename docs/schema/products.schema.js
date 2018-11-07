@@ -50,9 +50,19 @@ const Products = () => (
     }}
     graphql={`
       query {
-        products(where: $productsWhere) {
-          id
-          name
+        products: productsConnection(where: $productsWhere) {
+          edges {
+            cursor
+            node {
+              product
+              id
+              name
+              no
+              photos
+              price
+              promo
+            }
+          }
         }
       }
     `}

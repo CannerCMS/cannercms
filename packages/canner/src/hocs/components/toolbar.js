@@ -252,17 +252,6 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const rootValue = parseConnectionToNormal(originRootValue);
     const value = getValue(originRootValue, refId.getPathArr());
 
-    if (!toolbar.async) {
-      return (
-        <React.Fragment>
-          {React.cloneElement(children, {
-            rootValue,
-            value: value || defaultValue('array')
-          })}
-        </React.Fragment>
-      )
-    }
-
     return <ToolbarLayout
       Actions={actions && toolbar.async ? <ActionsComponent
         {...actions}
