@@ -3,7 +3,7 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "jest --coverage --verbose false",
+    "test": "jest --coverage --verbose false --maxWorkers=2",
     "test:watch": "jest --watch --verbose false",
     "lint": "eslint ./packages/*/src/**/*.js",
     "bootstrap": "lerna bootstrap",
