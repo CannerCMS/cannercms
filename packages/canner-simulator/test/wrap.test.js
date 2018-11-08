@@ -1,7 +1,7 @@
 import React from 'react';
 import {store, wrap} from '../src';
 import Enzyme, { mount } from 'enzyme';
-import Adapter from './react163Adapter';
+import Adapter from 'enzyme-adapter-react-16';
 import RefId from 'canner-ref-id';
 import {Item, LiteCMS} from 'canner-helpers';
 

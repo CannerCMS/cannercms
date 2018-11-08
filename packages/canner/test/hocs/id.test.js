@@ -8,7 +8,7 @@
 import * as React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import Adapter from '../react163Adapter';
+import Adapter from 'enzyme-adapter-react-16';
 import withConnectContext from '../../src/hocs/connectContext';
 import {HOCContext as Context} from '../../src/hocs/context';
 

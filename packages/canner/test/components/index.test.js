@@ -1,7 +1,7 @@
 // import React from 'react';
 // import toJson from 'enzyme-to-json';
 // import Enzyme, {mount} from 'enzyme';
-// import Adapter from '../react163Adapter';
+// import Adapter from 'enzyme-adapter-react-16';
 // import {CMS} from '../../src/components';
 
 // Enzyme.configure({ adapter: new Adapter() });

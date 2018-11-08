@@ -16,29 +16,24 @@ Object {
           "name": null,
           "size": null,
           "url": "url",
-          Symbol(id): "User:1.images.0",
         },
       ],
       "name": "user1",
-      Symbol(id): "User:1",
     },
     "count": 10,
     "header": Object {
       "__typename": null,
       "subTitle": "subTitle",
       "title": "largeTitle",
-      Symbol(id): "$ROOT_QUERY.home.header",
     },
     "navs": Array [
       Object {
         "__typename": null,
         "text": "nav1",
-        Symbol(id): "$ROOT_QUERY.home.navs.0",
       },
       Object {
         "__typename": null,
         "text": "nav2",
-        Symbol(id): "$ROOT_QUERY.home.navs.1",
       },
     ],
     "staredPosts": Array [
@@ -49,16 +44,13 @@ Object {
           Object {
             "__typename": null,
             "text": "note1",
-            Symbol(id): "Post:1.notes.0",
           },
           Object {
             "__typename": null,
             "text": "note2",
-            Symbol(id): "Post:1.notes.1",
           },
         ],
         "title": "123",
-        Symbol(id): "Post:1",
       },
       Object {
         "__typename": "Post",
@@ -67,20 +59,15 @@ Object {
           Object {
             "__typename": null,
             "text": "note3",
-            Symbol(id): "Post:2.notes.0",
           },
           Object {
             "__typename": null,
             "text": "note4",
-            Symbol(id): "Post:2.notes.1",
           },
         ],
         "title": "123",
-        Symbol(id): "Post:2",
       },
     ],
-    Symbol(id): "$ROOT_QUERY.home",
   },
-  Symbol(id): "ROOT_QUERY",
 }
 `;

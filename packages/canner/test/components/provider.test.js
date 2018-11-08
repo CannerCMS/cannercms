@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
-import Adapter from '../react163Adapter';
+import Adapter from 'enzyme-adapter-react-16';
 import {schema, defaultData} from './data';
 import Provider from '../../src/components/Provider';
 import {createClient, MemoryConnector} from 'canner-graphql-interface';
