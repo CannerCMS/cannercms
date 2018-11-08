@@ -86,6 +86,22 @@ describe('create number data', () => {
   });
 });
 
+describe('create editor data', () => {
+  it('should return a valid html string in an object', () => {
+    const editor = createFakeData({
+      type: 'object',
+      ui: 'editor',
+      items: {
+        html: {
+          type: 'string'
+        }
+      }
+    });
+    expect(editor.html.startsWith('<p>')).toBe(true);
+    expect(editor.html.endsWith('</p>')).toBe(true);
+  })
+})
+
 describe('create geoPoint data', () => {
   it('should return a geo object', () => {
     const geoPoint = createFakeData({
