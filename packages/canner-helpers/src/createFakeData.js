@@ -32,10 +32,17 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
     let result: any;
 
     switch (schema.type) {
-      case 'object':
+      case 'object': {
+        if (schema.ui === 'editor') {
+          result = {
+            html: `<p>${faker.lorem.paragraphs()}</p>`
+          }
+          break;
+        }
         result = mapSchema(schema.items, loop);
         result.__typename = result.__typename || null;
         break;
+      }
       case 'array':
         result = getArrayData(schema, key, listLength, loop);
         break;
@@ -81,6 +88,8 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
           result = faker.internet.email();
         } else if (lowerKeyName.indexOf('phone') > -1) {
           result = faker.phone.phoneNumber();
+        } else if (schema.ui === "textarea") {
+          result = faker.lorem.paragraphs();
         } else {
           result = faker.random.word();
         }
