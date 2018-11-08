@@ -1,4 +1,5 @@
 import { GraphqlClient } from './types';
+import { ApolloLink } from 'apollo-link';
 export default class GraphqlClientImpl implements GraphqlClient {
     private uri;
     private headers;
@@ -16,5 +17,5 @@ export default class GraphqlClientImpl implements GraphqlClient {
         fetchOptions?: any;
         useGETForQueries?: boolean;
     });
-    createLink: () => import("apollo-link-http/node_modules/apollo-link/lib/link").ApolloLink;
+    createLink: () => ApolloLink;
 }

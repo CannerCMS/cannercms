@@ -1,4 +1,5 @@
 import { GraphqlClient } from './types';
+import { ApolloLink } from 'apollo-link';
 export default class PrismaClient implements GraphqlClient {
     private secret;
     private appId;
@@ -11,6 +12,6 @@ export default class PrismaClient implements GraphqlClient {
         env: string;
         schema: any;
     }): Promise<void>;
-    createLink: () => import("apollo-link-http/node_modules/apollo-link/lib/link").ApolloLink;
+    createLink: () => ApolloLink;
     private getToken;
 }
