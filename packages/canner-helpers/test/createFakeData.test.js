@@ -1,4 +1,5 @@
 import {createFakeData} from '../src';
+import {getRandomNumber, randomImg} from '../src/createFakeData';
 
 describe('null', () => {
   it('should return null', () => {
@@ -366,3 +367,32 @@ describe('create relation empty data', () => {
     expect(Object.keys(data)).toBeDefined();
   });
 })
+
+describe('getRandomNumber', () => {
+  it.each`
+    min | max
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+  `('should get number between $min and $max', ({min, max}) => {
+    const number = getRandomNumber(min, max);
+    expect(number <= max).toBe(true);
+    expect(number >= min).toBe(true);
+  })
+});
+
+describe('randomImg', () => {
+  test('should get valid placimg url', () => {
+    expect(randomImg()).toMatch(/https:\/\/placeimg.com\/\d+\/\d+\/any/);
+  })
+});
