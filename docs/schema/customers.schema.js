@@ -1,5 +1,5 @@
 /** @jsx builder */
-import builder from 'canner-script';
+import builder, {Block} from 'canner-script';
 
 const exportFields = [{
   keyName: 'name',
@@ -53,37 +53,48 @@ export default () => (
       </filter>
       <pagination />
     </toolbar>
-    <string keyName="name" title="${customers.name}" />
-    <string keyName="email" title="Email" />
-    <string keyName="phone" title="${customers.phone}" />
-    <array
-      keyName="consignees"
-      ui="table"
-      disabled={{
-        create: true
-      }}
-      uiParams={{
-        size: 'small',
-        columns: [{
-          title: '${customers.name}',
-          key: 'name',
-          dataIndex: 'name',
-        }, {
-          title: '${customers.phone}',
-          key: 'phone',
-          dataIndex: 'phone',
-        }, {
-          title: 'Email',
-          key: 'email',
-          dataIndex: 'email',
-        }]
-      }}
-      title="${customers.consignees}"
-    >
+    <Block keyName="customerInfo" title="Customer Info">
       <string keyName="name" title="${customers.name}" />
-      <string keyName="email" title="${customers.email}" />
+      <string keyName="email" title="Email" />
       <string keyName="phone" title="${customers.phone}" />
-      <string keyName="address" title="${customers.address}" />
-    </array>
+      <array
+        keyName="consignees"
+        ui="table"
+        disabled={{
+          create: true
+        }}
+        uiParams={{
+          size: 'small',
+          columns: [{
+            title: '${customers.name}',
+            key: 'name',
+            dataIndex: 'name',
+          }, {
+            title: '${customers.phone}',
+            key: 'phone',
+            dataIndex: 'phone',
+          }, {
+            title: 'Email',
+            key: 'email',
+            dataIndex: 'email',
+          }]
+        }}
+        title="${customers.consignees}"
+      >
+        <string keyName="name" title="${customers.name}" />
+        <string keyName="email" title="${customers.email}" />
+        <string keyName="phone" title="${customers.phone}" />
+        <string keyName="address" title="${customers.address}" />
+      </array>
+    </Block>
+    <Block title="Contact Customer">
+      {/* using component tag in data will not change the data schema
+        so you can use it to add any component you need.
+      */}
+      <component
+        keyName="connectCustomer"
+        packageName="../components/wildcards/emailForm"
+      />
+    </Block>
   </array>
 );

@@ -47,6 +47,10 @@ function isPageRoot (node) {
   return node.nodeType === 'page.page.default';
 }
 
+function inPage (node) {
+  return node.pattern.startsWith('page');
+}
+
 function Loading(props: any) {
   if (props.error) {
     return <Alert
@@ -149,12 +153,18 @@ export default class Generator extends React.PureComponent<Props, State> {
     } else if (isPage(copyNode)) {
       if (isPageRoot(copyNode)) {
         component = () => this.renderChildren(copyNode, {refId: new RefId(copyNode.keyName)});
-      } else {
+      } else if (inPage(copyNode)) {
         component = Loadable({
           loader: () => copyNode.loader || Promise.reject(`There is no loader in ${copyNode.path}`),
           loading: Loading,
         });
         component = this.wrapByHOC(component, ['graphqlQuery']);
+      } else {
+        component = Loadable({
+          loader: () => copyNode.loader || Promise.reject(`There is no loader in ${copyNode.path}`),
+          loading: Loading,
+        });
+        component = this.wrapByHOC(component, ['title', 'onDeploy', 'validation', 'deploy', 'request', 'relation', 'query', 'cache', 'route', 'id', 'context', 'errorCatch']);
       }
     }
 
