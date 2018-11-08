@@ -69,7 +69,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
           contentType: 'image/jpeg',
           size: faker.random.number(),
           name: faker.system.commonFileName(),
-          url: faker.random.image()
+          url: randomImg()
         };
         break;
       case 'boolean':
@@ -88,7 +88,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
       }
       case 'enum': {
         if (schema.values) {
-          result = schema.values[getRandomNumber(schema.values.length)];
+          result = schema.values[getRandomNumber(0, schema.values.length - 1)];
         } else {
           throw new Error('Enum type should have a values property.');
         }
@@ -157,7 +157,7 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
     case 'toOne':
     default:
       if (isInFirstLevel && to !== schema.keyName) {
-        result = `${to}${getRandomNumber(listLength) + 1}`;
+        result = `${to}${getRandomNumber(1, listLength)}`;
       } else {
         result = null;
       }
@@ -167,6 +167,10 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
 }
 
 
-function getRandomNumber(length) {
-  return Math.floor(Math.random() * length);
+export function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+export function randomImg() {
+  return `https://placeimg.com/${getRandomNumber(250, 350)}/${getRandomNumber(300, 400)}/any`
 }
