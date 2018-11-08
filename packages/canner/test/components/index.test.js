@@ -1,30 +1,118 @@
-// import React from 'react';
-// import toJson from 'enzyme-to-json';
-// import Enzyme, {mount} from 'enzyme';
-// import Adapter from 'enzyme-adapter-react-16';
-// import {CMS} from '../../src/components';
+import React from 'react';
+import Enzyme, {mount} from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import Canner from '../../src/components';
 
-// Enzyme.configure({ adapter: new Adapter() });
+function MockPosts({renderChildren, refId}) {
+  return (
+    <div className="posts">
+      {renderChildren({refId})}
+    </div>
+  )
+}
 
-// import compiler from '../compiler';
-// import path from 'path';
+function MockInfo({renderChildren, refId}) {
+  return (
+    <div className="info">
+      {renderChildren({refId})}
+    </div>
+  )
+}
 
-/**
- * not works 
- */
+function MockComponnet() {
+  return (
+    <div className="component"></div>
+  );
+}
 
-it('this test is emptry', () => {
-  expect(true).toBe(true);
-});
+Enzyme.configure({ adapter: new Adapter() });
 
-// test('Should render', async () => {
-//   const stats = await compiler(path.resolve(__dirname, 'schema.js'));
-//   const output = stats.toJson().modules[0].source;
-//   const json = eval(output);
-//   const wrapper = mount(
-//     <CMS
-//       schema={json}
-//     />
-//   );
-//   expect(toJson(wrapper)).toMatchSnapshot();
-// });
+const schema = {
+  schema: {
+    posts: {
+      type: 'array',
+      items: {
+        type: 'object',
+        items: {
+          title: {
+            type: 'string',
+            loader: new Promise(resolve => resolve(MockComponnet))
+          }
+        }
+      },
+      toolbar: {
+        pagination: true
+      },
+      keyName: 'posts',
+      loader: new Promise(resolve => resolve(MockPosts))
+    },
+    info: {
+      type: 'object',
+      items: {
+        name: {
+          type: 'string',
+          loader: new Promise(resolve => resolve(MockComponnet))
+        }
+      },
+      keyName: 'info',
+      component: MockInfo,
+      loader: new Promise(resolve => resolve(MockInfo))
+    }
+  },
+  visitors: []
+}
+
+
+
+describe('<Canner>', () => {
+  let wrapper;
+  beforeEach(async () => {
+    wrapper = mount(
+      <Canner
+        schema={schema}
+        routes={['posts']}
+      />
+    );
+    // waiting the async fetching
+    await wait();
+  });
+
+  test('Should render', async () => {
+    const render = wrapper.render();
+    expect(render.find('.component').length).toBe(1);
+    expect(render.find('.posts').length).toBe(1);
+    expect(render.find('.info').length).toBe(0);
+  });
+
+  test('Should change UI when routes change', async () => {
+    wrapper.setProps({
+      schema,
+      routes: ['info']
+    });
+    await wait();
+    const render = wrapper.render();
+    expect(render.find('.component').length).toBe(1);
+    expect(render.find('.posts').length).toBe(0);
+    expect(render.find('.info').length).toBe(1);
+  });
+
+  test('Should render children when create form', async () => {
+    wrapper.setProps({
+      schema,
+      routes: ['posts'],
+      routerParams: {
+        operator: 'create'
+      }
+    });
+    await wait();
+    const render = wrapper.render();
+    expect(render.find('.component').length).toBe(1);
+    expect(render.find('.posts').length).toBe(0);
+    expect(render.find('.info').length).toBe(0);
+  });
+})
+
+
+async function wait(ms = 300) {
+  await new Promise(resolve => setTimeout(resolve, ms));  
+}
