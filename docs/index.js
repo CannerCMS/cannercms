@@ -21,9 +21,15 @@ export const Logo = styled.img`
 
 const Option = Select.Option;
 const menuConfig = [
+  {
+    title: 'Back to Canner',
+    pathname: '__back',
+    icon: 'left',
+    onClick: () => location.href = 'https://www.canner.io/',
+  },
   ...transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema})
 ].map(item => {
-  item.icon = getIcon(item.pathname);
+  item.icon = item.icon || getIcon(item.pathname);
   return item;
 });
 
@@ -115,7 +121,11 @@ class CMSExample extends React.Component {
               menuConfig
             }}
             navbarConfig={{
-              logo: <Logo src="https://cdn.canner.io/images/logo/logo-white-word-beta.svg" />,
+              logo: (
+                <a href="https://www.canner.io/">
+                  <Logo src="https://cdn.canner.io/images/logo/logo-white-word-beta.svg" />
+                </a>
+              ),
               showSaveButton: true,
               renderMenu: renderCustomHeaderMenu
             }}
