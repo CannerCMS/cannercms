@@ -38,7 +38,7 @@ const FilterWrapper = styled.div`
   position: relative;
   text-align: left;
   padding: 8px;
-
+  margin: 16px 0;
   &:hover {
     background-color: #f3f3f3;
 
