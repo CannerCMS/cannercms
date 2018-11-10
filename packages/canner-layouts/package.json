@@ -1,6 +1,6 @@
 {
   "name": "canner-layouts",
-  "version": "2.0.7",
+  "version": "2.0.10",
   "description": "Layouts for Canner",
   "files": [
     "lib"
@@ -10,7 +10,7 @@
     "lint"
   ],
   "dependencies": {
-    "canner-helpers": "2.0.6"
+    "canner-helpers": "2.0.10"
   },
   "peerDependencies": {
     "antd": "^3.2.3",
