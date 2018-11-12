@@ -106,6 +106,9 @@ export function fieldToQueriesObject(field: any): any {
       });
       break;
     }
+    case types.COMPONENT:
+      queriesObj = undefined;
+      break;
     case types.BOOLEAN:
     case types.NUMBER:
     case types.INT:
@@ -164,8 +167,10 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
   const result = Object.keys(o).map(key => {
     let query = `${key}`;
     let element = o[key];
-    if (!element) {
+    if (element === null) {
       return `${query}`;
+    } else if (!element) {
+      return '';
     }
 
     if (element.declareArgs) {

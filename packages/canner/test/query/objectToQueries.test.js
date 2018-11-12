@@ -23,7 +23,8 @@ describe('object to quries', () => {
         },
         fields: {
           id: null,
-          title: null
+          title: null,
+          wildcard: undefined
         }
       }
     }

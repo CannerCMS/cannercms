@@ -41,6 +41,11 @@ describe('schema to queries object', () => {
               items: {
                 type: 'image'
               }
+            },
+            wildCard: {
+              keyName: 'wildCard',
+              path: 'posts/wildCard',
+              type: 'component'
             }
           }
         }
