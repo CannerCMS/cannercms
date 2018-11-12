@@ -13,7 +13,7 @@ export default class EmailForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.record = get(props.rootValue, props.refId.getPathArr().slice(0, -1));
+    this.record = get(props.rootValue, props.refId.getPathArr().slice(0, -1), {});
   }
 
   handleSubmit = (e) => {

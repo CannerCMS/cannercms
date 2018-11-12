@@ -38,6 +38,25 @@ export default () => (
     }}
     title="${customers.title}"
     description="${customers.description}"
+    graphql={`
+    query($customersBefore: String, $customersAfter: String, $customersLast: Int, $customersFirst: Int,$customersWhere: CustomerWhereInput) {
+      customers: customersConnection(before: $customersBefore, after: $customersAfter, last: $customersLast, first: $customersFirst,where: $customersWhere) {
+        edges {
+          cursor
+          node {
+            id
+            name
+            email
+            phone
+          }
+        }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+    `}
   >
     <toolbar async>
       <actions>
