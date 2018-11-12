@@ -1,6 +1,6 @@
 {
   "name": "canner-compiler",
-  "version": "2.0.10",
+  "version": "2.0.11-alpha.0",
   "description": "Compiler for Canner CMS schema",
   "author": "Canner",
   "files": [
