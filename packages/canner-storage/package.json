@@ -1,6 +1,6 @@
 {
   "name": "@canner/storage",
-  "version": "2.0.11-alpha.0",
+  "version": "2.0.11-alpha.1",
   "description": "The storage APIs of canner CMS",
   "author": "Canner",
   "files": [
