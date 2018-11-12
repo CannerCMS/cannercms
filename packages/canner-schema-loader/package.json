@@ -21,5 +21,6 @@
     "canner-script": "2.0.11-alpha.0",
     "flow-bin": "^0.78.0",
     "memory-fs": "^0.4.1"
-  }
+  },
+  "gitHead": "61f8cfa5b91b92753c83aef591cb408c2a0d2afc"
 }

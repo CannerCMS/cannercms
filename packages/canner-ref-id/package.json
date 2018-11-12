@@ -22,5 +22,6 @@
     "lint"
   ],
   "repository": "Canner/canner",
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "61f8cfa5b91b92753c83aef591cb408c2a0d2afc"
 }

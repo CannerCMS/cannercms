@@ -118,7 +118,7 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     fetchById = (id: string, timeIntervale?: number) => {
-      const {query, keyName, updateQuery, fetch} = this.props;
+      const {query, keyName, updateQuery} = this.props;
       const paths = [keyName];
       const queries = query.getQueries(paths).args || {pagination: {first: 10}};
       const variables = query.getVairables();

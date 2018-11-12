@@ -30,5 +30,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "gitHead": "61f8cfa5b91b92753c83aef591cb408c2a0d2afc"
 }

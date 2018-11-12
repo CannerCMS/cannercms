@@ -1,6 +1,5 @@
 //@flow
 import type {Path} from '../flow-types';
-import {genRouteMap} from '../utils';
 
 /**
   these vistors handles the body layout that all first level components will move into
