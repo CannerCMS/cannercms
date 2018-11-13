@@ -21,6 +21,7 @@ import Layouts from 'canner-layouts';
 import {Alert} from 'antd';
 import {Item, Context} from 'canner-helpers';
 import hocs from '../hocs';
+import { List } from 'react-content-loader';
 import type {GeneratorProps, ComponentTree, ComponentNode} from './types';
 
 function defaultHoc(Component) {
@@ -60,7 +61,7 @@ function Loading(props: any) {
       closable
     />
   } else {
-    return <div>Loading...</div>;
+    return <List style={{maxWidth: '600px'}}/>;
   }
 }
 

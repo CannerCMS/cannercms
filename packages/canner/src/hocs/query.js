@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { List } from 'react-content-loader';
+import {List} from 'react-content-loader';
 import Toolbar from '../components/toolbar/index';
 import {Icon, Spin} from 'antd';
 import {mapValues, isNil} from 'lodash';
