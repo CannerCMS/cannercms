@@ -15,6 +15,7 @@ import gql from 'graphql-tag';
 import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
 import {groupBy, difference} from 'lodash';
+import log from '../utils/log';
 import type {ProviderProps} from './types';
 import type {Action, ActionType} from '../action/types';
 
@@ -52,7 +53,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     const variables = this.query && this.query.getVairables();
     this.observableQueryMap = mapValues(schema, (v, key) => {
       const gqlStr = this.query.toGQL(key);
-      this.log('gqlstr', gqlStr, variables);
+      log('gqlstr', gqlStr, variables);
       return client.watchQuery({
         query: gql`${gqlStr}`,
         variables
@@ -88,10 +89,10 @@ export default class Provider extends React.PureComponent<Props, State> {
         query: gql`${gqlStr}`,
         variables
       });
-      this.log('updateQuery rewatch', variables, args);
+      log('updateQuery rewatch', variables, args);
       return Promise.resolve(reWatchQuery);
     } else {
-      this.log('updateQuery', variables, args);
+      log('updateQuery', variables, args);
       return this.observableQueryMap[paths[0]].setVariables(variables).then(() => false);
     }
   }
@@ -105,18 +106,18 @@ export default class Provider extends React.PureComponent<Props, State> {
     if (loading) {
       return observabale.result()
         .then(result => {
-          this.log('fetch', 'loading', key, result);
+          log('fetch', 'loading', key, result);
           return result.data;
         }).catch(e => {
           errorHandler && errorHandler(e);
         })
     } else if (error) {
       const lastResult = observabale.getLastResult();
-      this.log('fetch', 'error', key, lastResult);
+      log('fetch', 'error', key, lastResult);
       errorHandler && errorHandler(error);
       return Promise.resolve(lastResult.data);
     } else {
-      this.log('fetch', 'loaded', key, currentResult, this.query.getVairables());
+      log('fetch', 'loaded', key, currentResult, this.query.getVairables());
       return Promise.resolve(currentResult.data);
     }
   }
@@ -173,7 +174,7 @@ export default class Provider extends React.PureComponent<Props, State> {
         });
         client.resetStore();
       }
-      this.log('deploy', key, {
+      log('deploy', key, {
         id,
         result,
         mutation,
@@ -191,7 +192,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       return result;
     }).catch(e => {
       errorHandler && errorHandler(e);
-      this.log('deploy', e, key, {
+      log('deploy', e, key, {
         id,
         mutation,
         variables
@@ -248,7 +249,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.updateDataChanged();
     if (write) {
       const {data, mutatedData} = this.updateCachedData(actions);
-      this.log('request', action, data, mutatedData);
+      log('request', action, data, mutatedData);
     }
     return Promise.resolve();
   }
@@ -265,35 +266,6 @@ export default class Provider extends React.PureComponent<Props, State> {
       data: mutatedData
     });
     return {data, mutatedData};
-  }
-
-  log(type: string, ...payload: any) {
-    if (process.env.NODE_ENV !== 'development') {
-      return;
-    }
-    let color = "black";
-
-    switch (type) {
-      case "request":
-        color = "Green";
-        break;
-      case "fetch":
-        color = "DodgerBlue";
-        break;
-      case "deploy":
-        color = "Red";
-        break;
-      case "subscribe":
-        color = "Orange";
-        break;
-      case 'updateQuery':
-        color = 'Brown';
-        break;
-      default:
-        break;
-    }
-    // eslint-disable-next-line
-    console.log("%c" + type, "color:" + color, ...payload);
   }
 
   render() {

@@ -4,7 +4,7 @@ import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
 import {notification} from 'antd';
-import {createEmptyData} from 'canner-helpers';
+import {createFakeData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
 import {createClient, MemoryConnector} from 'canner-graphql-interface';
 import {isEmpty, isPlainObject, pickBy} from 'lodash';
@@ -20,11 +20,8 @@ addLocaleData([...en, ...zh]);
 import type {CMSProps, LoadedSchema} from './types';
 
 type Props = CMSProps;
-type State = {
-  dataChanged: Object
-};
 
-class CannerCMS extends React.Component<Props, State> {
+class CannerCMS extends React.Component<Props> {
   imageServiceConfigs: Object
   client: Client;
   provider: ?Provider;
@@ -69,12 +66,9 @@ class CannerCMS extends React.Component<Props, State> {
       return result;
     }, {});
     this.client = genClient({...props.schema, schema: schema});
-    this.state = {
-      dataChanged: {}
-    }
   }
 
-  componentDidCatch(error) {
+  componentDidCatch(error: any) {
     const {errorHandler} = this.props;
     errorHandler && errorHandler(error);
   }
@@ -84,9 +78,6 @@ class CannerCMS extends React.Component<Props, State> {
     if (dataDidChange) {
       dataDidChange(dataChanged);
     }
-    this.setState({
-      dataChanged
-    });
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
@@ -198,7 +189,7 @@ export function genClient(schema: LoadedSchema) {
 
   if (isEmpty(connector) && isEmpty(graphqlClient)) {
     options.connector = new MemoryConnector({
-      defaultData: createEmptyData(schema.schema)
+      defaultData: createFakeData(schema.schema, 10)
     });
   }
 
@@ -208,11 +199,11 @@ export function genClient(schema: LoadedSchema) {
   return createClient(options);
 }
 
-export default CannerCMS;
-
 function defaultErrorHandler(e) {
   return notification.error({
     message: e.message,
     placement: 'bottomRight'
   });
 }
+
+export default CannerCMS;
