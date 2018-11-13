@@ -1,4 +1,4 @@
-import Generator from '../../src/components/Generator';
+import {findNode} from '../../src/components/Generator';
 
 describe('renderComponnet', () => {
   it('findNode should work', () => {
@@ -22,7 +22,7 @@ describe('renderComponnet', () => {
       }]
     };
     const pathArr = ['info', 'name'];
-    expect(Generator.findNode(pathArr, node)).toEqual({
+    expect(findNode(pathArr, node)).toEqual({
       nodeType: 'component.string',
       keyName: 'name'
     });

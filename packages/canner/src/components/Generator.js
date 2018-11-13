@@ -50,7 +50,7 @@ export default class Generator extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const {componentTree, routes, goTo} = props;
+    const {componentTree} = props;
     this.state = {
       cacheTree: genCacheTree(componentTree),
       error: null,
@@ -158,7 +158,7 @@ export default class Generator extends React.Component<Props, State> {
     // this method is called by components themselves
     const {children} = node;
     if (children) {
-      return children.map((child, index) => {
+      return children.map(child => {
         const childProps = typeof props === 'function' ? props(child) : props;
         const {refId} = childProps;
 
@@ -316,7 +316,7 @@ function wrapByHOC(component: React.ComponentType<*>, hocNames: Array<string>): 
   }
 
 
- function findNode (pathArr: Array<string>, node: ComponentNode): ?Node {
+ export function findNode (pathArr: Array<string>, node: ComponentNode): ?Node {
     if (isComponent(node) && node.keyName === pathArr[0]) {
       pathArr = pathArr.slice(1);
       if (!pathArr.length) {
