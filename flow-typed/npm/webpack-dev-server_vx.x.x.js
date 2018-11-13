@@ -1,4 +1,4 @@
-// flow-typed signature: daa4c7c87fbf06be5fa9435e3b1d854f
+// flow-typed signature: 92e5d8307b904050294052270801680d
 // flow-typed version: <<STUB>>/webpack-dev-server_v^3.1.0/flow_v0.77.0
 
 /**
@@ -22,6 +22,14 @@ declare module 'webpack-dev-server' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
+declare module 'webpack-dev-server/bin/options' {
+  declare module.exports: any;
+}
+
+declare module 'webpack-dev-server/bin/utils' {
+  declare module.exports: any;
+}
+
 declare module 'webpack-dev-server/bin/webpack-dev-server' {
   declare module.exports: any;
 }
@@ -50,31 +58,33 @@ declare module 'webpack-dev-server/client/sockjs.bundle' {
   declare module.exports: any;
 }
 
-declare module 'webpack-dev-server/lib/createLog' {
-  declare module.exports: any;
-}
-
-declare module 'webpack-dev-server/lib/OptionsValidationError' {
-  declare module.exports: any;
-}
-
-declare module 'webpack-dev-server/lib/polyfills' {
-  declare module.exports: any;
-}
-
 declare module 'webpack-dev-server/lib/Server' {
   declare module.exports: any;
 }
 
-declare module 'webpack-dev-server/lib/util/addDevServerEntrypoints' {
+declare module 'webpack-dev-server/lib/utils/addEntries' {
   declare module.exports: any;
 }
 
-declare module 'webpack-dev-server/lib/util/createDomain' {
+declare module 'webpack-dev-server/lib/utils/createCertificate' {
+  declare module.exports: any;
+}
+
+declare module 'webpack-dev-server/lib/utils/createDomain' {
+  declare module.exports: any;
+}
+
+declare module 'webpack-dev-server/lib/utils/createLogger' {
   declare module.exports: any;
 }
 
 // Filename aliases
+declare module 'webpack-dev-server/bin/options.js' {
+  declare module.exports: $Exports<'webpack-dev-server/bin/options'>;
+}
+declare module 'webpack-dev-server/bin/utils.js' {
+  declare module.exports: $Exports<'webpack-dev-server/bin/utils'>;
+}
 declare module 'webpack-dev-server/bin/webpack-dev-server.js' {
   declare module.exports: $Exports<'webpack-dev-server/bin/webpack-dev-server'>;
 }
@@ -96,21 +106,18 @@ declare module 'webpack-dev-server/client/socket.js' {
 declare module 'webpack-dev-server/client/sockjs.bundle.js' {
   declare module.exports: $Exports<'webpack-dev-server/client/sockjs.bundle'>;
 }
-declare module 'webpack-dev-server/lib/createLog.js' {
-  declare module.exports: $Exports<'webpack-dev-server/lib/createLog'>;
-}
-declare module 'webpack-dev-server/lib/OptionsValidationError.js' {
-  declare module.exports: $Exports<'webpack-dev-server/lib/OptionsValidationError'>;
-}
-declare module 'webpack-dev-server/lib/polyfills.js' {
-  declare module.exports: $Exports<'webpack-dev-server/lib/polyfills'>;
-}
 declare module 'webpack-dev-server/lib/Server.js' {
   declare module.exports: $Exports<'webpack-dev-server/lib/Server'>;
 }
-declare module 'webpack-dev-server/lib/util/addDevServerEntrypoints.js' {
-  declare module.exports: $Exports<'webpack-dev-server/lib/util/addDevServerEntrypoints'>;
+declare module 'webpack-dev-server/lib/utils/addEntries.js' {
+  declare module.exports: $Exports<'webpack-dev-server/lib/utils/addEntries'>;
 }
-declare module 'webpack-dev-server/lib/util/createDomain.js' {
-  declare module.exports: $Exports<'webpack-dev-server/lib/util/createDomain'>;
+declare module 'webpack-dev-server/lib/utils/createCertificate.js' {
+  declare module.exports: $Exports<'webpack-dev-server/lib/utils/createCertificate'>;
+}
+declare module 'webpack-dev-server/lib/utils/createDomain.js' {
+  declare module.exports: $Exports<'webpack-dev-server/lib/utils/createDomain'>;
+}
+declare module 'webpack-dev-server/lib/utils/createLogger.js' {
+  declare module.exports: $Exports<'webpack-dev-server/lib/utils/createLogger'>;
 }
