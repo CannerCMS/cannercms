@@ -88,7 +88,8 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: "./docs/index.html",
-      filename: "./index.html"
+      filename: "./index.html",
+      env: process.env.NODE_ENV
     }),
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',
