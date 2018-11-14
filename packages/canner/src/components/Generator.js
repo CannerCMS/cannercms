@@ -83,7 +83,7 @@ export default class Generator extends React.Component<Props, State> {
     })
   }
 
-  renderNode = (node: ComponentNode, props: childrenProps): React$Node => {
+  renderNode = (node: ComponentNode, props: childrenProps, index: number): React$Node => {
     // take the node.component to render it, and give the component
     // some props it maybe needs such as renderChildren
     // eslint-disable-next-line no-unused-vars
@@ -107,7 +107,7 @@ export default class Generator extends React.Component<Props, State> {
       };
       return (
         <Context.Provider
-          key={props.refId.toString()}
+          key={restNodeData.keyName ? `${props.refId.toString()}/${restNodeData.keyName}` : index}
           value={contextValue}
         >
           <node.component
@@ -150,7 +150,7 @@ export default class Generator extends React.Component<Props, State> {
     if (!node) {
       throw new Error(`Can't find the node at refId ${refId.toString()}`);
     }
-    return this.renderNode(node, {refId: refId.remove(1), keyName: refId.getPathArr().slice(-1)[0], ...props});
+    return this.renderNode(node, {refId: refId.remove(1), keyName: refId.getPathArr().slice(-1)[0], ...props}, 0);
   }
 
   renderChildren = (node: ComponentNode, props: childrenProps | Node => childrenProps): React.Node => {
@@ -158,7 +158,7 @@ export default class Generator extends React.Component<Props, State> {
     // this method is called by components themselves
     const {children} = node;
     if (children) {
-      return children.map(child => {
+      return children.map((child, index) => {
         const childProps = typeof props === 'function' ? props(child) : props;
         const {refId} = childProps;
 
@@ -175,7 +175,7 @@ export default class Generator extends React.Component<Props, State> {
           childProps.mergeNode(node);
         }
 
-        return this.renderNode(child, childProps);
+        return this.renderNode(child, childProps, index);
       });
     }
     return null;
@@ -194,7 +194,7 @@ export default class Generator extends React.Component<Props, State> {
 
     return (
       <div>
-        {this.renderNode(cacheTree[routes[0]], {refId: new RefId(''), routes, routerParams})}
+        {this.renderNode(cacheTree[routes[0]], {refId: new RefId(''), routes, routerParams}, 0)}
       </div>
     );
   }
