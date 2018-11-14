@@ -146,4 +146,12 @@ describe('create component data', () => {
       type: 'component'
     })).toBeUndefined();
   });
+});
+
+describe('create enum data', () => {
+  it('should return empty string', () => {
+    expect(createEmptyData({
+      type: 'enum'
+    })).toBe('');
+  });
 })

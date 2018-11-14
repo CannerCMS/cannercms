@@ -70,8 +70,18 @@ type ImageScheme = {
   keyName?: string;
 }
 
+type JsonSchema = {
+  type: 'json',
+  keyName?: string;
+}
+
+type ComponentSchema = {
+  type: 'component',
+  keyName: 'component'
+}
+
 export type Schema = ArraySchema | ObjectSchema | StringSchema | BooleanSchema | NumberSchema | RelationSchema
-  | GeoPointSchema | DateTimeSchema | FileSchema | ImageScheme | EnumSchema;
+  | GeoPointSchema | DateTimeSchema | FileSchema | ImageScheme | EnumSchema | JsonSchema | ComponentSchema;
 
 export type SchemaMap = {
   [string]: Schema;

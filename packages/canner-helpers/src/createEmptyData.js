@@ -90,6 +90,9 @@ function loop(schema: Schema) {
     case 'component': {
       break;
     }
+    case 'enum':
+      result = '';
+      break;
     default:
       throw new Error(`unsupport type ${schema.type}`);
       break;
