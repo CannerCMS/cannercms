@@ -863,21 +863,21 @@
   dependencies:
     "@canner/antd-array-tabs" "^0.5.6"
 
-"@canner/antd-array-table@^0.5.10":
-  version "0.5.10"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-table/-/antd-array-table-0.5.10.tgz#34d93e5b5a910d372946bf1851cc6893ae07ac02"
+"@canner/antd-array-table@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-table/-/antd-array-table-0.5.13.tgz#024bd7988ae725012ed6b110bd8ee99942b919d3"
   dependencies:
     "@canner/antd-locales" "^0.5.1"
-    "@canner/antd-share-table" "^0.5.10"
+    "@canner/antd-share-table" "^0.5.13"
     prop-types "^15.6.0"
     styled-components "^3.4.6"
 
-"@canner/antd-array-table_route@^0.5.10":
-  version "0.5.10"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-table_route/-/antd-array-table_route-0.5.10.tgz#d83a63310a89f003183dac3c56bea6c9aa92ffa6"
+"@canner/antd-array-table_route@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-table_route/-/antd-array-table_route-0.5.13.tgz#f817a95fe80bc53f18084168acbf73841c0dabb6"
   dependencies:
     "@canner/antd-locales" "^0.5.1"
-    "@canner/antd-share-table" "^0.5.10"
+    "@canner/antd-share-table" "^0.5.13"
     styled-components "^3.4.6"
 
 "@canner/antd-array-tabs@^0.5.6":
@@ -912,9 +912,9 @@
   dependencies:
     react-intl "^2.4.0"
 
-"@canner/antd-components@^0.5.10":
-  version "0.5.10"
-  resolved "https://registry.yarnpkg.com/@canner/antd-components/-/antd-components-0.5.10.tgz#21a515572798a5dfc5df4bb6ec7ba808350a3df5"
+"@canner/antd-components@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@canner/antd-components/-/antd-components-0.5.13.tgz#d9e3d2134a439e3a3d0f982ed9b53a51957b9a5d"
   dependencies:
     "@canner/antd-array-gallery" "^0.5.1"
     "@canner/antd-array-panel" "^0.5.6"
@@ -923,8 +923,8 @@
     "@canner/antd-array-tab_left" "^0.5.6"
     "@canner/antd-array-tab_right" "^0.5.6"
     "@canner/antd-array-tab_top" "^0.5.6"
-    "@canner/antd-array-table" "^0.5.10"
-    "@canner/antd-array-table_route" "^0.5.10"
+    "@canner/antd-array-table" "^0.5.13"
+    "@canner/antd-array-table_route" "^0.5.13"
     "@canner/antd-array-tabs" "^0.5.6"
     "@canner/antd-array-tag" "^0.5.1"
     "@canner/antd-array-tree" "^0.5.8"
@@ -941,13 +941,13 @@
     "@canner/antd-object-map" "^0.5.5"
     "@canner/antd-object-options" "^0.5.1"
     "@canner/antd-object-variants" "^0.5.1"
-    "@canner/antd-relation-multiple_select" "^0.5.9"
+    "@canner/antd-relation-multiple_select" "^0.5.13"
     "@canner/antd-relation-multiple_select_tree" "^0.5.8"
-    "@canner/antd-relation-single_select" "^0.5.9"
+    "@canner/antd-relation-single_select" "^0.5.13"
     "@canner/antd-relation-single_select_tree" "^0.5.8"
     "@canner/antd-share-card" "^0.5.1"
-    "@canner/antd-share-relation" "^0.5.9"
-    "@canner/antd-share-toolbar" "^0.5.9"
+    "@canner/antd-share-relation" "^0.5.13"
+    "@canner/antd-share-toolbar" "^0.5.13"
     "@canner/antd-string-card" "^0.5.1"
     "@canner/antd-string-date_time_picker" "^0.5.1"
     "@canner/antd-string-input" "^0.5.1"
@@ -1019,12 +1019,12 @@
   dependencies:
     styled-components "^3.2.6"
 
-"@canner/antd-relation-multiple_select@^0.5.9":
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/@canner/antd-relation-multiple_select/-/antd-relation-multiple_select-0.5.9.tgz#f69898eaa504907952211a13bea3dd4a3273b858"
+"@canner/antd-relation-multiple_select@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@canner/antd-relation-multiple_select/-/antd-relation-multiple_select-0.5.13.tgz#22415fc732e75bc4ba7981c5c646c2d2e159993b"
   dependencies:
     "@canner/antd-locales" "^0.5.1"
-    "@canner/antd-share-relation" "^0.5.9"
+    "@canner/antd-share-relation" "^0.5.13"
     lodash.difference "*"
 
 "@canner/antd-relation-multiple_select_tree@^0.5.8":
@@ -1035,12 +1035,12 @@
     react-content-loader "^3.1.2"
     styled-components "^3.2.6"
 
-"@canner/antd-relation-single_select@^0.5.9":
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select/-/antd-relation-single_select-0.5.9.tgz#98f51c2f661685c9851e9170e431ed4d02693ac1"
+"@canner/antd-relation-single_select@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@canner/antd-relation-single_select/-/antd-relation-single_select-0.5.13.tgz#09831fe185ac9e43cbdce883de2cb8307b449f98"
   dependencies:
     "@canner/antd-locales" "^0.5.1"
-    "@canner/antd-share-relation" "^0.5.9"
+    "@canner/antd-share-relation" "^0.5.13"
     lodash.template "^4.4.0"
     styled-components "^3.2.6"
 
@@ -1056,25 +1056,25 @@
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/@canner/antd-share-card/-/antd-share-card-0.5.1.tgz#e148588da8d5fc6628003a012311a760165fa5ce"
 
-"@canner/antd-share-relation@^0.5.9":
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/@canner/antd-share-relation/-/antd-share-relation-0.5.9.tgz#041a0bd8074d05928b220397630e51260ce99976"
+"@canner/antd-share-relation@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@canner/antd-share-relation/-/antd-share-relation-0.5.13.tgz#d5dcb87b0cef89a7774e94b8ddaf479fe791c278"
   dependencies:
     "@canner/antd-locales" "^0.5.1"
-    "@canner/antd-share-toolbar" "^0.5.9"
+    "@canner/antd-share-toolbar" "^0.5.13"
 
-"@canner/antd-share-table@^0.5.10":
-  version "0.5.10"
-  resolved "https://registry.yarnpkg.com/@canner/antd-share-table/-/antd-share-table-0.5.10.tgz#4223539d8edd8fcb192eb52cd16ac96d0d55f183"
+"@canner/antd-share-table@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@canner/antd-share-table/-/antd-share-table-0.5.13.tgz#eec000cfb89d7d661ddde1b34a2083725f645932"
   dependencies:
     "@canner/antd-locales" "^0.5.1"
-    "@canner/antd-share-toolbar" "^0.5.9"
+    "@canner/antd-share-toolbar" "^0.5.13"
     prop-types "^15.6.0"
     styled-components "^3.4.6"
 
-"@canner/antd-share-toolbar@^0.5.9":
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/@canner/antd-share-toolbar/-/antd-share-toolbar-0.5.9.tgz#8ab4291f785d2d3f743c7f915284f885dfd19bb3"
+"@canner/antd-share-toolbar@^0.5.13":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@canner/antd-share-toolbar/-/antd-share-toolbar-0.5.13.tgz#5bf24020d404d875b5da0616910062fdecf72a77"
   dependencies:
     "@canner/antd-locales" "^0.5.1"
 
