@@ -1,6 +1,6 @@
 {
   "name": "canner-script",
-  "version": "2.0.11-alpha.1",
+  "version": "2.0.11",
   "description": "Sugar syntax of Canner CMS schema",
   "license": "Apache-2.0",
   "repository": "Canner/canner",
@@ -22,7 +22,7 @@
     "safer-eval": "^1.2.3"
   },
   "devDependencies": {
-    "canner-compiler": "2.0.11-alpha.1",
+    "canner-compiler": "2.0.11",
     "flow-bin": "^0.78.0",
     "jest": "^23.5.0",
     "regenerator-runtime": "^0.12.1"
