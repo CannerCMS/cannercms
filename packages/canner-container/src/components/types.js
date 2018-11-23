@@ -39,7 +39,9 @@ export type SubmenuConfig = {
 export type MenuConfig = Array<SubmenuConfig | MenuItemConfig>
 
 export type SidebarConfig = {
-  menuConfig: MenuConfig | boolean
+  menuConfig: MenuConfig | boolean,
+  theme?: 'light' | 'dark',
+  mode?: 'vertical' | 'horizontal' | 'inline'
 };
 
 export type NavbarConfig = {

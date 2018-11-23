@@ -50,7 +50,7 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
   }
 
   render() {
-    const {menuConfig, routes} = this.props;
+    const {menuConfig, routes, theme = 'dark', mode = 'inline'} = this.props;
     const {hasError} = this.state;
 
     // if user's customize Menu is has error, display error messages
@@ -62,12 +62,12 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
       return null;
     }
     return (
-      <Layout.Sider breakpoint="sm" collapsedWidth={0} style={{zIndex: 1}}>
+      <Layout.Sider breakpoint="sm" collapsedWidth={0} style={{zIndex: 1}} theme={theme}>
         <Menu
           onClick={this.siderMenuOnClick}
           selectedKeys={[`/${routes[0]}`]}
-          mode="inline"
-          theme="dark"
+          mode={mode}
+          theme={theme}
         >
           {
             // $FlowIgnore

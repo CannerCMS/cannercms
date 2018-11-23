@@ -92,7 +92,8 @@ export default class Navbar extends React.Component<NavbarProps, State> {
       </LogoContainer> :
       (logo || <div></div>) // render emptry div instead of null to make space-between works
     const renderNav = ({
-      mode
+      mode,
+      theme
     }) => (
       <React.Fragment>
         {
@@ -149,7 +150,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
       <Header style={{padding: "0 20px", display: 'flex', justifyContent: 'space-between'}}>
         {Logo}
         <HeaderMenu>
-          {renderNav({mode: 'horizontal'})}
+          {renderNav({mode: 'horizontal', theme})}
         </HeaderMenu>
         <DrawerMenu>
           <Button icon="setting" shape="circle" ghost onClick={this.triggerDrawer} style={{border: 0}}/>
@@ -161,7 +162,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
             visible={drawerVisible}
             onClose={this.triggerDrawer}
           >
-          {renderNav({mode: 'inline'})}
+          {renderNav({mode: 'inline', theme})}
           </Drawer>
         </DrawerMenu>
       </Header>
