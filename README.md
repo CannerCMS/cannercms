@@ -18,13 +18,15 @@
 
 ***See what you can accomplish within 1500 lines of code using Canner, see [this demo](https://www.canner.io/demo) ([Source code](https://github.com/Canner/canner/tree/canary/docs/schema))*** .
 
-<div align="center">
-  <h2>🔥 ON AIR - #CMS30 | 30 Day 30 CMSes Challenge 🔥</h2>
+<a href="https://cms30.canner.io" target="_blank">
+  <div align="center">
+    <h2>🔥 ON AIR - #CMS30 | 30 Day 30 CMSes Challenge 🔥</h2>
 
-  <br/>
+    <br/>
 
-![cms30](./docs/cms30.png)
-</div>
+  ![cms30](./docs/cms30.png)
+  </div>
+</a>
 
 ## Benefits and advantages (Simple. Agile. Flexible. Efficient - SAFE)
 
