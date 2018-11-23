@@ -6,9 +6,9 @@ import type {NavbarProps} from './types';
 import styled from 'styled-components';
 const {Header} = Layout;
 const MenuText = styled.span`
-  color: rgba(255, 255, 255, .65);
+  color: ${props => props.theme === 'dark' ? 'rgba(255, 255, 255, .65)' : 'rgba(0, 0, 0, .85)'}
   &:hover {
-    color: #fff;
+    color: ${props => props.theme === 'dark' ? '#fff' : '#333'}
   }
 `;
 
@@ -131,13 +131,13 @@ export default class Navbar extends React.Component<NavbarProps, State> {
               hasChanged ?
               <Menu.Item key="deploy">
                 <Badge dot>
-                  <MenuText>
+                  <MenuText theme={theme}>
                     Save
                   </MenuText>
                 </Badge>
               </Menu.Item> :
               <Menu.Item key="saved">
-                <MenuText>
+                <MenuText theme={theme}>
                   Saved
                 </MenuText>
               </Menu.Item>
