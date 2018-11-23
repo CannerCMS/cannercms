@@ -3,7 +3,7 @@
 import * as React from 'react';
 import {Spin, Icon} from 'antd';
 import RefId from 'canner-ref-id';
-import Toolbar from './components/toolbar';
+import Toolbar from '../components/toolbar/index';
 import {mapValues} from 'lodash';
 import type {HOCProps} from './types';
 import {parseConnectionToNormal, getValue, defaultValue} from './utils';

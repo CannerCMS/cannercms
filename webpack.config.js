@@ -21,7 +21,16 @@ module.exports = {
       react: path.resolve(__dirname, 'node_modules', 'react'),
       'react-dom': path.resolve(__dirname, 'node_modules', 'react-dom'),
       packages: path.resolve(__dirname, "./packages"),
-    }
+    },
+  },
+  externals: {
+    'react': "React",
+    'react-dom': "ReactDOM",
+    'antd': 'antd',
+    'lodash': '_',
+    'firebase': 'firebase',
+    'immutable': 'Immutable',
+    'styled-components': 'styled'
   },
   devServer: {
     historyApiFallback: {
@@ -79,7 +88,8 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: "./docs/index.html",
-      filename: "./index.html"
+      filename: "./index.html",
+      env: process.env.NODE_ENV
     }),
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',

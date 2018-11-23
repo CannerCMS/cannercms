@@ -1,6 +1,6 @@
 {
   "name": "canner-layouts",
-  "version": "2.0.7",
+  "version": "2.0.11",
   "description": "Layouts for Canner",
   "files": [
     "lib"
@@ -10,7 +10,7 @@
     "lint"
   ],
   "dependencies": {
-    "canner-helpers": "2.0.6"
+    "canner-helpers": "2.0.11"
   },
   "peerDependencies": {
     "antd": "^3.2.3",
@@ -22,5 +22,6 @@
   "author": "Canner",
   "devDependencies": {
     "flow-bin": "^0.78.0"
-  }
+  },
+  "gitHead": "61f8cfa5b91b92753c83aef591cb408c2a0d2afc"
 }

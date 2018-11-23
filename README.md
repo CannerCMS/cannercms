@@ -5,10 +5,9 @@
 <div align="center">
 
 [![npm version](https://badge.fury.io/js/canner.svg)](https://badge.fury.io/js/canner)
-[![npm download](https://img.shields.io/npm/dm/canner.svg)](https://www.npmjs.com/package/canner)
+[![npm download](https://img.shields.io/npm/dm/@canner/cli.svg)](https://www.npmjs.com/package/@canner/cli)
 [![CircleCI branch](https://img.shields.io/circleci/project/github/Canner/canner/master.svg)](https://circleci.com/gh/Canner/canner)
 [![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/canner)
 [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Universal%20CMS%20framework%20in%20React%20JSX(XML-like)%20for%20Firebase%2C%20GraphQL%2C%20Restful%20API%2C%20Prisma%20using%20%40cannerIO%2C%20open%20source%20at%3A%20https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
 
@@ -17,13 +16,13 @@
 <br/><br/>
 > Canner, an agile Content Management System for APIs and Clouds. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
 
+***See what you can accomplish within 1500 lines of code using Canner, see [this demo](https://www.canner.io/demo) ([Source code](https://github.com/Canner/canner/tree/canary/docs/schema))*** .
+
 <div align="center">
 ## 🔥 ON AIR - #CMS30 | 30 Day 30 CMSes Challenge 🔥
 
-
 ![cms30](./docs/cms30.png)
 </div>
-
 
 ## Benefits and advantages (Simple. Agile. Flexible. Efficient - SAFE)
 
@@ -76,13 +75,11 @@ Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is 
 
 ***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)***
 
-## Return on Investment
+## Documentation
 
-![roi](./docs/roi.png)
+You only need to upload a configuration file, to create any kind and form of applications. Our CMS has built CMS for websites, mobile apps, and even chatbot applications. ***Amazingly, you can building a blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner. See what you can accomplish within 1500 lines of code, see [this demo](https://www.canner.io/demo) ([Source code](https://github.com/Canner/canner/tree/canary/docs/schema))*** .
 
-> Canner can reduce up to 80% of your current CMS solutions.
-
-You only need to upload a configuration file in JSX(easy to learn) syntax, to create any kind and form of applications. Our CMS has built CMS for websites, mobile apps, and even chatbot applications. ***Amazingly, you can building a blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner. See what you can accomplish within 1500 lines of code, see [this demo](https://www.canner.io/demo) ([Source code](https://github.com/Canner/canner/tree/canary/docs/schema))*** .
+Full documentation: https://www.canner.io/docs
 
 ## Preview and demo
 
@@ -171,6 +168,10 @@ To install packages
 ```
 yarn
 ```
+
+## Roadmap
+
+Interested in our next roadmap to v3? Please follow issue [here](https://github.com/Canner/canner/issues/123).
 
 
 ## License

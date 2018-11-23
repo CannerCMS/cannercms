@@ -6,9 +6,9 @@ import type {NavbarProps} from './types';
 import styled from 'styled-components';
 const {Header} = Layout;
 const MenuText = styled.span`
-  color: rgba(255, 255, 255, .65);
+  color: ${props => props.theme === 'dark' ? 'rgba(255, 255, 255, .65)' : 'rgba(0, 0, 0, .85)'}
   &:hover {
-    color: #fff;
+    color: ${props => props.theme === 'dark' ? '#fff' : '#333'}
   }
 `;
 
@@ -92,7 +92,8 @@ export default class Navbar extends React.Component<NavbarProps, State> {
       </LogoContainer> :
       (logo || <div></div>) // render emptry div instead of null to make space-between works
     const renderNav = ({
-      mode
+      mode,
+      theme
     }) => (
       <React.Fragment>
         {
@@ -130,13 +131,13 @@ export default class Navbar extends React.Component<NavbarProps, State> {
               hasChanged ?
               <Menu.Item key="deploy">
                 <Badge dot>
-                  <MenuText>
+                  <MenuText theme={theme}>
                     Save
                   </MenuText>
                 </Badge>
               </Menu.Item> :
               <Menu.Item key="saved">
-                <MenuText>
+                <MenuText theme={theme}>
                   Saved
                 </MenuText>
               </Menu.Item>
@@ -149,7 +150,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
       <Header style={{padding: "0 20px", display: 'flex', justifyContent: 'space-between'}}>
         {Logo}
         <HeaderMenu>
-          {renderNav({mode: 'horizontal'})}
+          {renderNav({mode: 'horizontal', theme})}
         </HeaderMenu>
         <DrawerMenu>
           <Button icon="setting" shape="circle" ghost onClick={this.triggerDrawer} style={{border: 0}}/>
@@ -161,7 +162,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
             visible={drawerVisible}
             onClose={this.triggerDrawer}
           >
-          {renderNav({mode: 'inline'})}
+          {renderNav({mode: 'inline', theme})}
           </Drawer>
         </DrawerMenu>
       </Header>

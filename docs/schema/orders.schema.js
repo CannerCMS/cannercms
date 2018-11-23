@@ -103,7 +103,7 @@ const orders = () => (
       <filter>
         <textFilter
           label="${orders.filter.buyerName.label}"
-          field="orderInfo.buyerName"
+          field="buyerName"
           placeholder="Enter a buyer name"
         />
         <textFilter

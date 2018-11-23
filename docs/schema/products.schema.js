@@ -48,6 +48,28 @@ const Products = () => (
         }
       ]
     }}
+    graphql={`
+      query($productsWhere: ProductWhereInput) {
+        products: productsConnection(where: $productsWhere) {
+          edges {
+            cursor
+            node {
+              product
+              id
+              name
+              no
+              photos {
+                image {
+                  url
+                }
+              }
+              price
+              promo
+            }
+          }
+        }
+      }
+    `}
   >
     <toolbar>
       <pagination />
@@ -56,7 +78,7 @@ const Products = () => (
       <Default keyName="basicSetting" title="${products.basicSetting}" type="inner" injectValue={{layout: 'horizontal'}} >
         <string keyName="no" title="${products.no}" description="Unique Number of the Product" required/>
         <string keyName="name" title="${products.name}" required />
-        <object keyName="description" ui="editor" title="${products.prod.description}" />
+        {/* <object keyName="description" ui="editor" title="${products.prod.description}" /> */}
         <number keyName="price" title="${products.price}" required />
         <number keyName="promo" title="${products.promo}" />
         <relation

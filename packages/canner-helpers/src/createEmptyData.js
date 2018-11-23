@@ -13,7 +13,6 @@
  * if dateTime => string
  */
 
-import invariant from 'invariant';
 import {mapSchema, genDefaultValue} from './utils';
 import type {Schema, SchemaMap} from './types';
 
@@ -88,8 +87,14 @@ function loop(schema: Schema) {
       result = {};
       break;
     }
+    case 'component': {
+      break;
+    }
+    case 'enum':
+      result = '';
+      break;
     default:
-      invariant(true, `unsupport type ${schema.type}`);
+      throw new Error(`unsupport type ${schema.type}`);
       break;
   }
   return result;

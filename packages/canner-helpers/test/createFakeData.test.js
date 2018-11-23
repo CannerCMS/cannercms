@@ -1,4 +1,5 @@
 import {createFakeData} from '../src';
+import {getRandomNumber, randomImg} from '../src/createFakeData';
 
 describe('null', () => {
   it('should return null', () => {
@@ -84,6 +85,22 @@ describe('create number data', () => {
     }));
   });
 });
+
+describe('create editor data', () => {
+  it('should return a valid html string in an object', () => {
+    const editor = createFakeData({
+      type: 'object',
+      ui: 'editor',
+      items: {
+        html: {
+          type: 'string'
+        }
+      }
+    });
+    expect(editor.html.startsWith('<p>')).toBe(true);
+    expect(editor.html.endsWith('</p>')).toBe(true);
+  })
+})
 
 describe('create geoPoint data', () => {
   it('should return a geo object', () => {
@@ -366,3 +383,32 @@ describe('create relation empty data', () => {
     expect(Object.keys(data)).toBeDefined();
   });
 })
+
+describe('getRandomNumber', () => {
+  it.each`
+    min | max
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+    ${2} | ${5}
+  `('should get number between $min and $max', ({min, max}) => {
+    const number = getRandomNumber(min, max);
+    expect(number <= max).toBe(true);
+    expect(number >= min).toBe(true);
+  })
+});
+
+describe('randomImg', () => {
+  test('should get valid placimg url', () => {
+    expect(randomImg()).toMatch(/https:\/\/placeimg.com\/\d+\/\d+\/any/);
+  })
+});

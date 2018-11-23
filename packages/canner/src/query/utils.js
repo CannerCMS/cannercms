@@ -5,7 +5,7 @@ import lowerFirst from 'lodash/lowerFirst';
 import upperFirst from 'lodash/upperFirst';
 import {merge, mapValues, set} from 'lodash';
 import {createSchema} from './schema/utils';
-import {types} from './schema/types';
+import {types, Field} from './schema/types';
 
 const DEFAULT_FIRST = 10;
 const MAX = undefined;
@@ -31,7 +31,7 @@ export function fieldToQueriesObject(field: any): any {
         merge(variableTypes, qlo.variableTypes);
       });
       if (field.isEntity) {
-        const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery();
+        const {args, firstKey, afterKey, lastKey, beforeKey, whereKey, orderByKey} = genQuery(field);
         queriesObj.declareArgs = {
           ...variableTypes,
           [firstKey]: 'Int',
@@ -41,9 +41,9 @@ export function fieldToQueriesObject(field: any): any {
           [whereKey]: `${typeKey(field.getKey())}WhereInput`,
           [orderByKey]: `${typeKey(field.getKey())}OrderByInput`
         };
+        queriesObj.connection = true;
         queriesObj.args = args;
         queriesObj.isPlural = true;
-        queriesObj.connection = true;
         queriesObj.alias = field.getKey();
         set(queriesObj, ['fields', 'id'], null);
         variables[firstKey] = MAX;
@@ -106,6 +106,9 @@ export function fieldToQueriesObject(field: any): any {
       });
       break;
     }
+    case types.COMPONENT:
+      queriesObj = undefined;
+      break;
     case types.BOOLEAN:
     case types.NUMBER:
     case types.INT:
@@ -123,13 +126,14 @@ export function fieldToQueriesObject(field: any): any {
   };
 }
 
-export function genQuery() {
-  const firstKey = randomKey();
-  const afterKey = randomKey();
-  const lastKey = randomKey();
-  const beforeKey = randomKey();
-  const whereKey = randomKey();
-  const orderByKey = randomKey();
+export function genQuery(field: Field) {
+  const key = field.getKey();
+  const firstKey = `$${key}First`;
+  const afterKey = `$${key}After`;
+  const lastKey = `$${key}Last`;
+  const beforeKey = `$${key}Before`;
+  const whereKey = `$${key}Where`;
+  const orderByKey = `$${key}OrderBy`;
   const args = {
     first: firstKey,
     after: afterKey,
@@ -163,8 +167,10 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
   const result = Object.keys(o).map(key => {
     let query = `${key}`;
     let element = o[key];
-    if (!element) {
+    if (element === null) {
       return `${query}`;
+    } else if (!element) {
+      return '';
     }
 
     if (element.declareArgs) {
@@ -258,13 +264,6 @@ function genDeclareArgs(args, variables) {
       const argValue = args[key];
       return `${key}: ${argValue}`
     }).join(',');
-}
-
-function randomKey () {
-  if (process.env.NODE_ENV === 'test') {
-    return `$RANDOM_KEY`;
-  }
-  return `$KEY${Math.random().toString(36).substr(2, 7)}`
 }
 
 function typeKey(key) {

@@ -1,6 +1,6 @@
 {
   "name": "@canner/container",
-  "version": "2.0.9",
+  "version": "2.0.12",
   "description": "The container renders sidebar, navbar and pass some properties to canner",
   "main": "lib/index.js",
   "keywords": [
@@ -22,5 +22,6 @@
   },
   "devDependencies": {
     "flow-bin": "^0.78.0"
-  }
+  },
+  "gitHead": "61f8cfa5b91b92753c83aef591cb408c2a0d2afc"
 }

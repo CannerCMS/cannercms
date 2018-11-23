@@ -1,5 +1,5 @@
-// flow-typed signature: bd4c7761add4d6aea07aa06f4c2884af
-// flow-typed version: 95161b8a26/firebase_v5.x.x/flow_>=v0.34.x
+// flow-typed signature: dd3937a2dc9f124d12f93d82edaafa2c
+// flow-typed version: bda9fc5659/firebase_v5.x.x/flow_>=v0.34.x
 
 /* @flow */
 /** ** firebase ****/
@@ -128,7 +128,7 @@ declare class $npm$firebase$auth$Auth {
   signInWithEmailAndPassword(
     email: string,
     password: string
-  ): Promise<$npm$firebase$auth$User>;
+  ): Promise<$npm$firebase$auth$UserCredential>;
   signInWithPhoneNumber(
     phoneNumber: string,
     applicationVerifier: $npm$firebase$auth$ApplicationVerifier
@@ -346,7 +346,7 @@ declare class $npm$firebase$database$DataSnapshot {
   child(path?: string): $npm$firebase$database$DataSnapshot;
   exists(): boolean;
   exportVal(): $npm$firebase$database$Value;
-  forEach(action: ($npm$firebase$database$DataSnapshot) => boolean): boolean;
+  forEach(action: ($npm$firebase$database$DataSnapshot) => ?boolean): boolean;
   getPriority(): $npm$firebase$database$Priority;
   hasChild(path: string): boolean;
   hasChildren(): boolean;
@@ -480,6 +480,9 @@ declare class $npm$firebase$firestore$Firestore {
   runTransaction(updateFunction: (transaction: $npm$firebase$firestore$Transaction) => Promise<any>): Promise<mixed>;
   setLogLevel(logLevel: 'debug' | 'error' | 'silent'): void;
   settings(settings: $npm$firebase$firestore$Settings): void;
+  getAll(
+    ...docs: Array<$npm$firebase$firestore$DocumentReference>
+  ): Promise<Array<$npm$firebase$firestore$DocumentSnapshot>>;
 }
 
 declare interface $npm$firebase$firestore$Blob {
@@ -520,7 +523,7 @@ declare class $npm$firebase$firestore$Query {
   ): $npm$firebase$firestore$Query;
   startAfter(snapshotOrVarArgs: $npm$firebase$firestore$DocumentSnapshot | {}): $npm$firebase$firestore$Query;
   startAt(snapshotOrVarArgs: $npm$firebase$firestore$DocumentSnapshot | {}): $npm$firebase$firestore$Query;
-  where(fieldPath: string, opStr: '<' | '<=' | '==' | '>' | '>=', value: any): $npm$firebase$firestore$Query;
+  where(fieldPath: string, opStr: '<' | '<=' | '==' | 'array-contains' | '>' | '>=', value: any): $npm$firebase$firestore$Query;
 }
 
 declare class $npm$firebase$firestore$CollectionReference extends $npm$firebase$firestore$Query {

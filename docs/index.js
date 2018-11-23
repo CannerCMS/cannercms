@@ -21,9 +21,15 @@ export const Logo = styled.img`
 
 const Option = Select.Option;
 const menuConfig = [
+  {
+    title: 'Back to Canner',
+    pathname: '__back',
+    icon: 'left',
+    onClick: () => location.href = 'https://www.canner.io/',
+  },
   ...transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema})
 ].map(item => {
-  item.icon = getIcon(item.pathname);
+  item.icon = item.icon || getIcon(item.pathname);
   return item;
 });
 
@@ -78,8 +84,8 @@ class CMSExample extends React.Component {
 
   render() {
     const {locale} = this.state;
-    const renderCustomHeaderMenu = ({mode}) => (
-      <Menu theme="dark" mode={mode} selectedKeys={[]} style={{ lineHeight: '64px', display: mode === 'horizontal' ? 'inline-block' : 'block' }}>
+    const renderCustomHeaderMenu = ({theme, mode}) => (
+      <Menu theme={theme} mode={mode} selectedKeys={[]} style={{ lineHeight: '64px', display: mode === 'horizontal' ? 'inline-block' : 'block' }}>
         <Menu.Item>
           <Select style={{width: 120}} value={locale} onChange={this.changeLocale}>
             <Option value="zh">
@@ -112,12 +118,18 @@ class CMSExample extends React.Component {
           <Container
             schema={schema}
             sidebarConfig={{
-              menuConfig
+              menuConfig,
+              theme: 'dark'
             }}
             navbarConfig={{
-              logo: <Logo src="https://cdn.canner.io/images/logo/logo-white-word-beta.svg" />,
+              logo: (
+                <a href="https://www.canner.io/">
+                  <Logo src="https://cdn.canner.io/images/logo/logo-word-white.png" />
+                </a>
+              ),
               showSaveButton: true,
-              renderMenu: renderCustomHeaderMenu
+              renderMenu: renderCustomHeaderMenu,
+              theme: 'dark'
             }}
             router={this.router}
           >

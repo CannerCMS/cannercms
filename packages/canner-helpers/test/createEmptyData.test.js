@@ -139,3 +139,19 @@ describe('create relation empty data', () => {
     })).toEqual([]);
   });
 })
+
+describe('create component data', () => {
+  it('should return undefined', () => {
+    expect(createEmptyData({
+      type: 'component'
+    })).toBeUndefined();
+  });
+});
+
+describe('create enum data', () => {
+  it('should return empty string', () => {
+    expect(createEmptyData({
+      type: 'enum'
+    })).toBe('');
+  });
+})

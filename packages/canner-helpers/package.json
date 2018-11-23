@@ -1,6 +1,6 @@
 {
   "name": "canner-helpers",
-  "version": "2.0.6",
+  "version": "2.0.11",
   "description": "the helpers of canner CMS",
   "homepage": "https://www.canner.io",
   "author": "Canner",
@@ -25,5 +25,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "faker": "^4.1.0"
-  }
+  },
+  "gitHead": "61f8cfa5b91b92753c83aef591cb408c2a0d2afc"
 }

@@ -1,4 +1,4 @@
-import Toolbar, {parseOrder, parsePagination, parseWhere} from '../../src/hocs/components/toolbar';
+import Toolbar, {parseOrder, parsePagination, parseWhere} from '../../src/components/toolbar';
 import {getValue, parseConnectionToNormal, defaultValue} from '../../src/hocs/utils';
 import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';

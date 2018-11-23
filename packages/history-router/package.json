@@ -1,6 +1,6 @@
 {
   "name": "@canner/history-router",
-  "version": "2.0.5",
+  "version": "2.0.11",
   "description": "Pass a history object to let canner get the routes, params and gotTo",
   "main": "lib/index.js",
   "keywords": [
@@ -19,5 +19,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "61f8cfa5b91b92753c83aef591cb408c2a0d2afc"
 }

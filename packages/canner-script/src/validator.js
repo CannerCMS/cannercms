@@ -1,6 +1,7 @@
 // @flow
 import type {CannerSchema} from './flow-types';
 import {componentMap} from './utils';
+
 const TYPES = ['string', 'number', 'boolean', 'array', 'object', 'relation', 'json', 'component'];
 const CANNER_DATA_TYPES = Object.keys(componentMap._map);
 
@@ -57,7 +58,7 @@ class Validator {
   }
 
   parseType = (packageName: string) => {
-    return packageName.split('/').slice(-1)[0].split('-')[1];
+    return packageName.replace(/\\/g, '/').split('/').slice(-1)[0].split('-')[1];
   }
 }
 

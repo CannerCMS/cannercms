@@ -1,4 +1,4 @@
-import {flattenItems} from '../../../../src/hocs/components/actions/utils';
+import {flattenItems} from '../../../../src/components/toolbar/actions/utils';
 
 describe('flatten items', () => {
   const items = {

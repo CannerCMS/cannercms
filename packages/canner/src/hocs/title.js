@@ -8,8 +8,11 @@ import {isEmpty} from 'lodash';
 import type {HOCProps} from './types';
 
 const Title = styled.div`
-  & > span:after {
-    content: ${props => props.required && props.title ? '"*"' : '""'};
+  color: rgba(0, 0, 0, 0.85);
+  padding: ${props => props.layout === 'horizontal' ? 0 : '0 0 8px'}
+
+  & > span:before {
+    content: ${props => props.required && props.title ? '"* "' : '""'};
     color: red;
   }
 `;
@@ -23,13 +26,15 @@ export function Label({
   required,
   description,
   title,
+  layout
 }: {
   required: boolean,
   description: string,
-  title: string
+  title: string,
+  layout: string
 }) {
   return (
-    <Title required={required} title={title} >
+    <Title required={required} title={title} layout={layout}>
       <span>{title}</span>
       {
         title && description && (
@@ -86,12 +91,13 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         }}>
           <Row
             type={layout === 'horizontal' ? 'flex' : ''}
-            style={{marginBottom: 16}}
+            style={{marginBottom: 24}}
           >
             <Col {...labelCol}>
               <Label
                 required={required}
                 type={type}
+                layout={layout}
                 description={description}
                 title={hideTitle ? '' : title}
               />

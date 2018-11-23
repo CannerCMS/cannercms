@@ -3,6 +3,7 @@ import type {Action, ActionType} from '../action/types';
 import type {Query} from '../query';
 import type RefId from 'canner-ref-id';
 import * as React from 'react';
+import type {ApolloClient} from 'apollo-boost';
 
 export type Args = Object;
 export type Fetch = (key: string, id: ?string) => Promise<*>
@@ -101,4 +102,7 @@ export type HOCProps = {
   errorInfo: Array<{message: string}>,
   itemCol: Object,
   labelCol: Object,
+  graphql?: string,
+  variables?: Object,
+  client: ApolloClient
 }

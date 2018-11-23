@@ -14,7 +14,8 @@ export const types = {
   GEOPOINT: 'GEOPOINT',
   JSON: 'JSON',
   RELATION: 'RELATION',
-  NULL: null
+  NULL: null,
+  COMPONENT: 'COMPONENT'
 }
 
 export type Types = $Values<typeof types>;

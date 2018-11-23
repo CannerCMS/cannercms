@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
-import Adapter from '../react163Adapter';
+import Adapter from 'enzyme-adapter-react-16';
 import withTitleAndDescription, {Label} from '../../src/hocs/title';
 import RefId from 'canner-ref-id';
 import {Row} from 'antd';
