@@ -81,7 +81,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
   }
 
   render() {
-    const {dataChanged, logo, renderMenu, showSaveButton, theme = "dark"} = this.props;
+    const {dataChanged, logo, renderMenu, showSaveButton, theme = "dark", style = {}, menuStyle = {}, drawerStyle = {}} = this.props;
     const {drawerVisible} = this.state;
     const {deploying} = this.state;
     const hasChanged = dataChanged && Object.keys(dataChanged).length;
@@ -99,7 +99,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
               theme={theme}
               selectedKeys={[]}
               onClick={this.headerMenuOnClick}
-              style={{paddingBottom: 16}}
+              style={{paddingBottom: 16, ...menuStyle}}
             >
               <Menu.Item key="__logo">
               {Logo}
@@ -111,7 +111,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
         <Menu
           mode={mode}
           theme={theme}
-          style={{ lineHeight: '64px', display: mode === 'horizontal' ? 'inline-block' : 'block' }}
+          style={{ lineHeight: '64px', display: mode === 'horizontal' ? 'inline-block' : 'block', ...menuStyle }}
           selectedKeys={[]}
           onClick={this.headerMenuOnClick}
         >
@@ -143,7 +143,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
       </React.Fragment>
     );
     return (
-      <Header style={{padding: "0 20px", display: 'flex', justifyContent: 'space-between'}}>
+      <Header style={{padding: "0 20px", display: 'flex', justifyContent: 'space-between', ...style}}>
         {Logo}
         <HeaderMenu>
           {renderNav({mode: 'horizontal', theme})}
@@ -152,7 +152,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
           <Button icon="setting" shape="circle" ghost onClick={this.triggerDrawer} style={{border: 0}}/>
           <Drawer
             height="auto"
-            style={{padding: 0, height: 'auto'}}
+            style={{padding: 0, height: 'auto', ...drawerStyle}}
             placement={"top"}
             closable={false}
             visible={drawerVisible}

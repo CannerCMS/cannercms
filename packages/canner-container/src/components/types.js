@@ -42,14 +42,19 @@ export type MenuConfig = Array<SubmenuConfig | MenuItemConfig>
 export type SidebarConfig = {
   menuConfig: MenuConfig | boolean,
   theme?: 'light' | 'dark',
-  mode?: 'vertical' | 'horizontal' | 'inline'
+  mode?: 'vertical' | 'horizontal' | 'inline',
+  style?: Object,
+  menuStyle?: Object
 };
 
 export type NavbarConfig = {
   logo: string | {src: string, href: string} | React.Node, // img url
   renderMenu: any => React.Node,
   showSaveButton: boolean,
-  theme?: 'light' | 'dark'
+  theme?: 'light' | 'dark',
+  style?: Object,
+  menuStyle?: Object,
+  drawerStyle?: Object
 }
 
 export type Router = {
