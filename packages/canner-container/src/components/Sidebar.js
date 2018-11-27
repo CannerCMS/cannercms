@@ -85,6 +85,9 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
 }
 
 function renderMenuItem(item: Object) {
+  if (item.href) {
+    item.onClick = () => location.href = item.href;
+  }
   return (
     <Menu.Item key={item.pathname} params={item.params} onClick={item.onClick}>
       {renderIcon(item.icon)}

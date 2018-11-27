@@ -12,7 +12,7 @@ const MenuText = styled.span`
   }
 `;
 
-const LogoContainer = styled.div`
+export const LogoContainer = styled.div`
   width: 150px;
 `;
 
@@ -86,11 +86,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
     const {deploying} = this.state;
     const hasChanged = dataChanged && Object.keys(dataChanged).length;
     const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-    const Logo = typeof logo === 'string' ?
-      <LogoContainer>
-        <img src={logo} width={150}/>
-      </LogoContainer> :
-      (logo || <div></div>) // render emptry div instead of null to make space-between works
+    const Logo = getLogo(logo);
     const renderNav = ({
       mode,
       theme
@@ -168,4 +164,26 @@ export default class Navbar extends React.Component<NavbarProps, State> {
       </Header>
     );
   }
+}
+
+function getLogo(logo) {
+  if (typeof logo === 'string') {
+    return (
+      <LogoContainer>
+        <img src={logo} width={150}/>
+      </LogoContainer> 
+    );
+  }
+
+  if (logo && typeof logo === 'object' && logo.src) {
+    return (
+      <LogoContainer>
+        <a href={logo.href}>
+          <img src={logo.src} width={150} />
+        </a>
+      </LogoContainer> 
+    )
+  }
+
+  return logo || <div></div>; // render emptry div instead of null to make space-between works
 }

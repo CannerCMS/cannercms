@@ -3,32 +3,34 @@ import * as React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import {Layout, Menu, Badge} from 'antd';
-import Navbar from  '../../src/components/Navbar';
+import Navbar, {LogoContainer} from  '../../src/components/Navbar';
 const {Header} = Layout;
 
 Enzyme.configure({ adapter: new Adapter() });
 
 
-const navbarConfig = {
-  logo: 'http://www.img.jpg',
-  showSaveButton: true,
-  renderMenu: jest.fn()
-};
 
-
-const renderComponent = (props) => {
-  return shallow(
-    <Navbar
-      dataChanged={{}}
-      deploy={jest.fn()}
-      {...navbarConfig}
-      {...props}
-    />
-  )
-};
 
 
 describe('<Navbar>', () => {
+  const navbarConfig = {
+    logo: 'http://www.img.jpg',
+    showSaveButton: true,
+    renderMenu: jest.fn()
+  };
+  
+  
+  const renderComponent = (props) => {
+    return shallow(
+      <Navbar
+        dataChanged={{}}
+        deploy={jest.fn()}
+        {...navbarConfig}
+        {...props}
+      />
+    )
+  };
+
   it('should render a Header', () => {
     const wrapper = renderComponent();
     expect(wrapper.find(Header).length).toBe(1);
@@ -57,5 +59,74 @@ describe('<Navbar>', () => {
     const menuItem = { key: 'deploy', params: {}};
     wrapper.find(Menu).first().simulate('click', menuItem);
     expect(deploy).toBeCalled();
+  });
+});
+
+describe('render logo', () => {
+  test('logo can be string', () => {
+    const navbarConfig = {
+      logo: 'http://www.img.jpg',
+      showSaveButton: true,
+      renderMenu: jest.fn()
+    };
+    
+    const renderComponent = (props) => {
+      return shallow(
+        <Navbar
+          dataChanged={{}}
+          deploy={jest.fn()}
+          {...navbarConfig}
+          {...props}
+        />
+      );
+    };
+
+    const wrapper = renderComponent();
+    expect(wrapper.find(LogoContainer).length).toBe(2);
+  });
+
+  test('logo can be object', () => {
+    const navbarConfig = {
+      logo: {src: 'http://www.img.jpg'},
+      showSaveButton: true,
+      renderMenu: jest.fn()
+    };
+    
+    const renderComponent = (props) => {
+      return shallow(
+        <Navbar
+          dataChanged={{}}
+          deploy={jest.fn()}
+          {...navbarConfig}
+          {...props}
+        />
+      );
+    };
+
+    const wrapper = renderComponent();
+    expect(wrapper.find(LogoContainer).length).toBe(2);
+  });
+
+  test('logo can be react element', () => {
+    const Logo = <div className="logo">123</div>;
+    const navbarConfig = {
+      logo: Logo,
+      showSaveButton: true,
+      renderMenu: jest.fn()
+    };
+    
+    const renderComponent = (props) => {
+      return shallow(
+        <Navbar
+          dataChanged={{}}
+          deploy={jest.fn()}
+          {...navbarConfig}
+          {...props}
+        />
+      );
+    };
+
+    const wrapper = renderComponent();
+    expect(wrapper.find('.logo').length).toBe(2);
   });
 });

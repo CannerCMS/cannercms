@@ -27,7 +27,8 @@ export type MenuItemConfig = {
   title: string,
   icon?: string | React.Node,
   pathname: string,
-  params?: MenuParams
+  params?: MenuParams,
+  href?: string,
 };
 
 export type SubmenuConfig = {
@@ -45,7 +46,7 @@ export type SidebarConfig = {
 };
 
 export type NavbarConfig = {
-  logo: string, // img url
+  logo: string | {src: string, href: string} | React.Node, // img url
   renderMenu: any => React.Node,
   showSaveButton: boolean,
   theme?: 'light' | 'dark'
