@@ -134,3 +134,7 @@ export const schema = {
     }
   }
 };
+
+export function getAuthorById(authorId) {
+  return defaultData.users.find(user => user.id === authorId);
+}
