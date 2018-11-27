@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import {schema, defaultData} from './data';
+import {schema, defaultData, getAuthorById} from './data';
 import Provider from '../../src/components/Provider';
 import {createClient, MemoryConnector} from 'canner-graphql-interface';
 import {Query} from '../../src/query';
@@ -41,30 +41,40 @@ describe('provider methods', () => {
   /**
    * the two test below is broken but dont know why
    */
-  // test('fetch array', () => {
-  //   const wrapper = shallow(<Provider
-  //     schema={schema}
-  //     client={client}
-  //   >
-  //     <div>children</div>
-  //   </Provider>)
-  //   return wrapper.instance().fetch('posts').then(d => {
-  //     expect(d).toMatchSnapshot();
-  //   });
-  // });
+  test('fetch array', async () => {
+    const wrapper = shallow(<Provider
+      schema={schema}
+      client={client}
+    >
+      <div>children</div>
+    </Provider>)
+    const data = await wrapper.instance().fetch('posts');
+    function removePost(obj) {
+      delete obj.posts;
+      return obj;
+    }
+    expect(data).toMatchObject({
+      posts: {
+        edges: defaultData.posts.map(post => ({
+          cursor: post.id,
+          node: {...post, author: removePost(getAuthorById(post.author))}
+        }))
+      }
+    });
+  });
 
-  // test('updateQuery', async () => {
-  //   const wrapper = shallow(<Provider
-  //     schema={schema}
-  //     client={client}
-  //   >
-  //     <div>children</div>
-  //   </Provider>)
-  //   const originData = await wrapper.instance().fetch('posts');
-  //   wrapper.instance().updateQuery(['posts'], {where: {author: {name: "user2"}}});
-  //   const newData = await wrapper.instance().fetch('posts');
-  //   expect(originData).not.toEqual(newData);
-  // });
+  test('updateQuery', async () => {
+    const wrapper = shallow(<Provider
+      schema={schema}
+      client={client}
+    >
+      <div>children</div>
+    </Provider>)
+    const originData = await wrapper.instance().fetch('posts');
+    await wrapper.instance().updateQuery(['posts'], {where: {author: {name: "user2"}}});
+    const newData = await wrapper.instance().fetch('posts');
+    expect(originData).not.toEqual(newData);
+  });
 
   test('request', async () => {
     const wrapper = shallow(<Provider
@@ -166,14 +176,36 @@ describe('provider methods', () => {
     };
     await instance.fetch('home');
     instance.request(action, {write: false});
-    return instance.deploy('home').then(data => {
-      expect(data).toMatchObject({updateHome: {__typename: 'HomePayload'}});
-    });
-    // const newData = client.readQuery({
-    //   query: toGQL(schema, 'home')
-    // });
-    // expect(newData).toMatchObject({home: {
-    //   count: 11
-    // }});
+    const data = await instance.deploy('home');
+    expect(data).toMatchObject({updateHome: {__typename: 'HomePayload'}});
   });
+
+  test('afterDeploy', async () => {
+    const afterDeploy = jest.fn();
+    const wrapper = shallow(<Provider
+      schema={schema}
+      client={client}
+      afterDeploy={afterDeploy}
+    >
+      <div>children</div>
+    </Provider>);
+    const instance = wrapper.instance();
+    const action = {
+      type: 'UPDATE_OBJECT',
+      payload: {
+        key: 'home',
+        value: {
+          count: 11,
+        }
+      }
+    };
+    await instance.fetch('home');
+    instance.request(action, {write: false});
+    await instance.deploy('home');
+    expect(afterDeploy.mock.calls[0][0]).toMatchObject({
+      key: 'home',
+      result: {updateHome: {__typename: "HomePayload"}},
+      actions: [action]
+    });
+  })
 });
