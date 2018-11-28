@@ -2,6 +2,7 @@ import { Connector, Pagination } from './types';
 import isEmpty from 'lodash/isEmpty';
 import _last from 'lodash/last';
 import mapValues from 'lodash/mapValues';
+import isPlainObject from 'lodash/isPlainObject';
 import Memory from 'lowdb/adapters/Memory';
 import low from 'lowdb';
 import uuid from 'uuid/v4';
@@ -18,6 +19,14 @@ const recursivePayload = ({data, schema}: {data: any, schema: Field}) => {
       }
 
       return val.set;
+    }
+
+    if (isPlainObject(val)) {
+      // for deep nested array
+      return recursivePayload({
+        data: val,
+        schema: field
+      });
     }
 
     return val;

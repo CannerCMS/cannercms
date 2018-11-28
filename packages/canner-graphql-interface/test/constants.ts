@@ -36,6 +36,17 @@ export const schema = {
               }
             }
           }
+        },
+        attributes: {
+          type: 'object',
+          items: {
+            categories: {
+              type: 'array',
+              items: {
+                type: 'string'
+              }
+            }
+          }
         }
       }
     }

@@ -6,7 +6,7 @@ const expect = chai.expect;
 
 export let defaultData = {
   posts: [
-    {id: '1', title: '123', tags: ['node'], author: '1', notes: [{text: 'note1'}, {text: 'note2'}]},
+    {id: '1', title: '123', tags: ['node'], author: '1', notes: [{text: 'note1'}, {text: 'note2'}], attributes: {categories: ['cate1']}},
     {id: '2', title: '123', author: '2', notes: [{text: 'note3'}, {text: 'note4'}]}
   ],
   users: [
@@ -404,6 +404,9 @@ export const listMutation = ({graphqlResolve}) => {
           name: 'new',
           age: 30
         }
+      },
+      attributes: {
+        categories: {set: ['newCate']}
       }
     };
 
@@ -422,6 +425,9 @@ export const listMutation = ({graphqlResolve}) => {
             id
             name
             age
+          },
+          attributes {
+            categories
           }
         }
       }
@@ -439,6 +445,7 @@ export const listMutation = ({graphqlResolve}) => {
       __typename: 'User',
       ...payload.author.create
     });
+    expect(mutationResult.createPost.attributes.categories).to.be.eql(payload.attributes.categories.set);
 
     const queryResult = await graphqlResolve(gql`
       {
@@ -455,6 +462,9 @@ export const listMutation = ({graphqlResolve}) => {
             id
             name
             age
+          }
+          attributes {
+            categories
           }
         }
       }
