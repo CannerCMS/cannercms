@@ -340,5 +340,5 @@ export function isRoutesChanged(preProps: Props, props: Props) {
   const routes = JSON.stringify(props.routes);
   const preOperator = preProps.routerParams.operator;
   const operator = props.routerParams.operator;
-  return preRoutes !== routes || preOperator !== operator;
+  return preRoutes !== routes || (preOperator === 'create' && operator === 'update');
 }
