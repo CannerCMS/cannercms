@@ -73,6 +73,10 @@ export default class Generator extends React.Component<Props, State> {
         cacheTree: genCacheTree(this.props.componentTree)
       });
     }
+
+    if (isRoutesChanged(prevProps, this.props)) {
+      this.props.reset && this.props.reset();
+    }
   }
 
   componentDidCatch(error: any, errorInfo: Object) {
@@ -289,44 +293,52 @@ function wrapByHOC(component: React.ComponentType<*>, hocNames: Array<string>): 
   return component;
 }
 
-  // wrap the plugin with hoc if it has
-  function prerender (node: ComponentNode): ComponentNode {
-    // add a field `component` in every node.
-    // it's a React Component with all hocs it needs in every node
-    const copyNode = {...node};
-    let component = generateComponent(node);
-    if (!component) {
-      throw new Error(`invalid node, name: ${copyNode.keyName}, nodeType: ${copyNode.nodeType}`);
-    }
-
-    copyNode.component = component;
-    if (copyNode.children) {
-      copyNode.children = copyNode.children.map((child) => {
-        return prerender(child);
-      });
-    }
-    
-    return copyNode;
+// wrap the plugin with hoc if it has
+function prerender (node: ComponentNode): ComponentNode {
+  // add a field `component` in every node.
+  // it's a React Component with all hocs it needs in every node
+  const copyNode = {...node};
+  let component = generateComponent(node);
+  if (!component) {
+    throw new Error(`invalid node, name: ${copyNode.keyName}, nodeType: ${copyNode.nodeType}`);
   }
 
-  function genCacheTree (tree: ComponentTree): ComponentTree {
-    return mapValues(tree, (branch) => {
-      return prerender(branch);
+  copyNode.component = component;
+  if (copyNode.children) {
+    copyNode.children = copyNode.children.map((child) => {
+      return prerender(child);
     });
   }
+  
+  return copyNode;
+}
+
+function genCacheTree (tree: ComponentTree): ComponentTree {
+  return mapValues(tree, (branch) => {
+    return prerender(branch);
+  });
+}
 
 
- export function findNode (pathArr: Array<string>, node: ComponentNode): ?Node {
-    if (isComponent(node) && node.keyName === pathArr[0]) {
-      pathArr = pathArr.slice(1);
-      if (!pathArr.length) {
-        return node;
-      }
-    }
-
-    if (node.children) {
-      return node.children
-        .map(child => findNode(pathArr, child))
-        .find(node => !!node);
+export function findNode (pathArr: Array<string>, node: ComponentNode): ?Node {
+  if (isComponent(node) && node.keyName === pathArr[0]) {
+    pathArr = pathArr.slice(1);
+    if (!pathArr.length) {
+      return node;
     }
   }
+
+  if (node.children) {
+    return node.children
+      .map(child => findNode(pathArr, child))
+      .find(node => !!node);
+  }
+}
+
+export function isRoutesChanged(preProps: Props, props: Props) {
+  const preRoutes = JSON.stringify(preProps.routes);
+  const routes = JSON.stringify(props.routes);
+  const preOperator = preProps.routerParams.operator;
+  const operator = props.routerParams.operator;
+  return preRoutes !== routes || preOperator !== operator;
+}

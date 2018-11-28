@@ -5,7 +5,6 @@ import {Layout} from 'antd';
 import {pickBy} from 'lodash';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-
 // type
 import type {CannerContainerProps, MenuConfig} from './types';
 
