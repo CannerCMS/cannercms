@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "keywords": [
@@ -15,7 +15,7 @@
     "apollo-boost": "^0.1.4",
     "bson-objectid": "^1.2.2",
     "canner-compiler": "2.0.14",
-    "canner-graphql-interface": "^2.0.5",
+    "canner-graphql-interface": "2.0.15",
     "canner-helpers": "2.0.14",
     "canner-layouts": "2.0.14",
     "canner-ref-id": "2.0.14",
