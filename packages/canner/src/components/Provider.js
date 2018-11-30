@@ -237,7 +237,10 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.actionManager.removeActions(key, id);
     this.updateDataChanged();
     const variables = this.query.getVairables();
-    return this.observableQueryMap[key || rootKey].refetch(variables);
+    if (this.observableQueryMap[(key || rootKey)]) {
+      return this.observableQueryMap[key || rootKey].refetch(variables);
+    }
+    return Promise.resolve();
   }
 
   request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {
