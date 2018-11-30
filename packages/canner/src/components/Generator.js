@@ -74,7 +74,7 @@ export default class Generator extends React.Component<Props, State> {
       });
     }
 
-    if (isRoutesChanged(prevProps, this.props)) {
+    if (isToList(prevProps, this.props)) {
       this.props.reset && this.props.reset();
     }
   }
@@ -335,10 +335,10 @@ export function findNode (pathArr: Array<string>, node: ComponentNode): ?Node {
   }
 }
 
-export function isRoutesChanged(preProps: Props, props: Props) {
+export function isToList(preProps: Props, props: Props) {
   const preRoutes = JSON.stringify(preProps.routes);
   const routes = JSON.stringify(props.routes);
   const preOperator = preProps.routerParams.operator;
   const operator = props.routerParams.operator;
-  return preRoutes !== routes || (preOperator === 'create' && operator === 'update');
+  return preRoutes === routes && (preOperator === 'create' && operator === 'update');
 }
