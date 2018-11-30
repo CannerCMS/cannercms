@@ -59,11 +59,11 @@ export default class Generator extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    const {componentTree, routes, goTo} = this.props;
+    const {componentTree, routes, goTo, defaultKey} = this.props;
     let activeKey = routes[0];
     if (!activeKey) {
       activeKey = Object.keys(componentTree)[0];
-      goTo({pathname: activeKey});
+      goTo({pathname: defaultKey || activeKey});
     }
   }
 

@@ -60,7 +60,8 @@ export type CMSProps = {
   routerParams: Object,
   intl: Intl,
   hideButtons: HideButtons,
-  errorHandler: Error => any
+  errorHandler: Error => any,
+  defaultKey?: string
 }
 
 export type GeneratorProps = {
@@ -79,7 +80,8 @@ export type GeneratorProps = {
   onDeploy?: Function,
   removeOnDeploy?: Function,
   hideButtons: boolean,
-  schema: Object
+  schema: Object,
+  defaultKey?: string
 }
 
 export type ProviderProps = {

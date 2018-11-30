@@ -104,7 +104,8 @@ class CannerCMS extends React.Component<Props> {
       intl = {},
       hideButtons,
       errorHandler,
-      schema: {imageStorages, fileStorages, dict = {}}
+      schema: {imageStorages, fileStorages, dict = {}},
+      defaultKey
     } = this.props;
     const currentLocale = intl.locale || 'en';
     return (
@@ -138,6 +139,7 @@ class CannerCMS extends React.Component<Props> {
             routes={routes}
             routerParams={routerParams || {}}
             hideButtons={hideButtons}
+            defaultKey={defaultKey}
           />
         </Provider>
       </IntlProvider>
