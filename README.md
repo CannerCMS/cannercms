@@ -20,7 +20,7 @@
 
 <div align="center">
   
-  <h2><a href="https://cms30.canner.io">🔥 ON AIR - #CMS30 | 30 Day 30 CMSes Challenge 🔥</a></h2>
+  <h2><a href="https://cms30.canner.io">🔥 ON AIR - #CMS30 | 30 Day 30 FREE CMSes 🔥</a></h2>
 
 [![cms30](./docs/cms30.png)](https://cms30.canner.io)
 
