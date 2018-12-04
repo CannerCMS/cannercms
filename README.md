@@ -18,6 +18,8 @@
 
 ***See what you can accomplish within 1500 lines of code using Canner, see [this demo](https://www.canner.io/demo) ([Source code](https://github.com/Canner/canner/tree/canary/docs/schema))*** .
 
+Are you using Canner? Please share with us [here](https://github.com/Canner/canner/issues/133). Once we approve, you will get **one month PREMIUM plan** for your account!
+
 <div align="center">
   
   <h2><a href="https://cms30.canner.io">🔥 ON AIR - #CMS30 | 30 Day 30 FREE CMSes 🔥</a></h2>
