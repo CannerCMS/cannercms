@@ -43,9 +43,11 @@ export default class LocalStorageConnector implements Connector {
   public static readonly CANNER_LOCAL_STORAGE_KEY: string = 'CANNER_LOCAL_STORAGE_KEY';
   private db: any;
   private hooks: Hooks;
+  public localStorageKey: string;
 
   constructor({defaultData, hooks, localStorageKey}: {defaultData?: any, hooks?: Hooks, localStorageKey?: string}) {
-    const adapter = new LocalStorage(localStorageKey || LocalStorageConnector.CANNER_LOCAL_STORAGE_KEY);
+    this.localStorageKey = localStorageKey || LocalStorageConnector.CANNER_LOCAL_STORAGE_KEY;
+    const adapter = new LocalStorage(localStorageKey);
     this.hooks = hooks || {};
     this.db = low(adapter);
     if (defaultData) {
