@@ -16,18 +16,7 @@
 <br/><br/>
 > Canner, a CMS framework built for devlopers. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
 
-***See what you can accomplish within 1500 lines of code using Canner, see [this demo](https://www.canner.io/demo) ([Source code](https://github.com/Canner/canner/tree/canary/docs/schema))*** .
-
 Are you using Canner? Please share with us [here](https://github.com/Canner/canner/issues/133). Once we approve, you will get **one month PREMIUM plan** for your account!
-
-<div align="center">
-  
-  <h2><a href="https://cms30.canner.io">🔥 ON AIR - #CMS30 | 30 Day 30 FREE CMSes 🔥</a></h2>
-
-[![cms30](./docs/cms30.png)](https://cms30.canner.io)
-
-  <h3><a href="https://cms30.canner.io">ENTER HERE</a></h3>
-</div>
 
 ## Benefits and advantages (Simple. Agile. Flexible. Efficient - SAFE)
 
@@ -88,22 +77,7 @@ Full documentation: https://www.canner.io/docs
 
 ## Preview and demo
 
-***Live demo here: https://www.canner.io/demo***
-
-Code lives in [here ./docs folder](./docs)
-
-![CMS preivew1](./docs/preview1.png)
-
-> Charts and Indicators
-
-![CMS preivew1](./docs/preview2.png)
-
-> Inline updates, tables, sorters, filters, etc...
-
-![CMS preivew1](./docs/preview3.png)
-
-> Import & export data, multiple selection, etc...
-
+<b><a href="https://cms30.canner.io">30 CMSes demos using Canner</a></b>
 
 ## 🔥🔥 Only 3 commands to start 🔥🔥
 
