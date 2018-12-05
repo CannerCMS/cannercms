@@ -148,7 +148,7 @@ CMS for Firebase with SSR supported (NextJS) https://github.com/Canner/canner-fi
 
 ### Canner connect to Firestore
 
-CMS with Canner and Firestore, and deploy to Firebase hosting https://github.com/Canner/canner-firebase-cms
+CMS with Canner and Firestore, and deploy to Firebase hosting https://github.com/Canner/canner-firestore-cms
 
 
 **More demo visit [/examples folder](./examples) & [canner-demo](https://github.com/Canner/canner-demo) and  [canner.io](https://www.canner.io/)**
