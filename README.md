@@ -59,19 +59,7 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 - [x] [Storage API support](https://www.canner.io/docs/guides-storage)
 
 
-## Why Canner is different?
-
-Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is different from traditional CMS and headless CMS. The biggest different about Adaptive CMS is that it decouples both view and data layer. It builds data interfaces to connect to single or multiple data sources.
-
-> ***Adaptive CMS?*** Learn more [here](https://www.canner.io/docs/why-adaptive-cms)
-
-![overview](http://www.canner.io/docs/assets/revolution.png)
-
-***LOVE OUR IDEA AND CONCEPT? STAR OUR PROJECT 🌟🌟 AND [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)***
-
 ## Documentation
-
-You only need to upload a configuration file, to create any kind and form of applications. Our CMS has built CMS for websites, mobile apps, and even chatbot applications. ***Amazingly, you can building a blog CMS within 200 lines of code, as for basic E-commerce CMS within 300 lines of code using Canner. See what you can accomplish within 1500 lines of code, see [this demo](https://www.canner.io/demo) ([Source code](https://github.com/Canner/canner/tree/canary/docs/schema))*** .
 
 Full documentation: https://www.canner.io/docs
 
@@ -106,6 +94,15 @@ Full documentation: https://www.canner.io/docs
 ```
 
 ***👉👉 START USING CANNER: https://www.canner.io***
+
+
+## Why Canner is different?
+
+Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is different from traditional CMS and headless CMS. The biggest different about Adaptive CMS is that it decouples both view and data layer. It builds data interfaces to connect to single or multiple data sources.
+
+> ***Adaptive CMS?*** Learn more [here](https://www.canner.io/docs/why-adaptive-cms)
+
+![overview](http://www.canner.io/docs/assets/revolution.png)
 
 ### Learn more about Canner.
 
