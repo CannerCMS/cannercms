@@ -65,7 +65,7 @@ Full documentation: https://www.canner.io/docs
 
 ## Preview and demo
 
-<b><a href="https://cms30.canner.io">30 CMSes demos using Canner</a></b>
+<b><a href="https://cms30.canner.io">30 CMS demos using Canner</a></b>
 
 ## 🔥🔥 Only 3 commands to start 🔥🔥
 
