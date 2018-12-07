@@ -118,7 +118,7 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     fetchById = (id: string, timeIntervale?: number) => {
-      const {query, keyName, updateQuery} = this.props;
+      const {query, keyName, updateQuery, fetch} = this.props;
       const paths = [keyName];
       const queries = query.getQueries(paths).args || {pagination: {first: 10}};
       const variables = query.getVairables();
@@ -130,12 +130,18 @@ export default function connectId(Com: React.ComponentType<*>) {
       updateQuery(paths, {
         ...this.args,
         where: {id: id},
-      }).then(() => {
-          // fetch with id index must be zero
+      }).then(() => fetch(keyName))
+        .then(result => {
+          let index = 0;	
+          if (result[keyName].edges) {	
+            index = result[keyName].edges.findIndex(edge => edge.cursor === id);	
+          } else {	
+            index = result[keyName].findIndex(item => item.id === id);	
+          }
           setTimeout(() => {
             this.setState({
               canRender: true,
-              refId: new RefId(`${keyName}/0`)
+              refId: new RefId(`${keyName}/${index}`)
             });
           }, timeIntervale || 0)
         });
