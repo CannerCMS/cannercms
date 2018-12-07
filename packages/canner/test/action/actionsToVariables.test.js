@@ -354,6 +354,29 @@ describe('single action to variable', () => {
       })
   });
 
+  /* experimental usage */
+  test('connect to many with transformGqlPayload', () => {
+    const action = {...connectToManyAction}
+    action.payload.transformGqlPayload = (originGqlPayload, action) => {
+      return {
+        ...originGqlPayload,
+        name: action.payload.value.name
+      }
+    }
+    expect(actionsToVariables([action], schema))
+      .toMatchObject({
+        payload: {
+          [action.payload.path]: {
+            connect: [{
+              id: action.payload.value.id,
+              name: action.payload.value.name
+            }]
+          }
+        },
+        where: {id: action.payload.id}
+      })
+  });
+
   test('create and connect to one action', () => {
     expect(actionsToVariables([createAndConnectToOneAction], schema))
       .toMatchObject({

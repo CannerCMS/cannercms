@@ -11,7 +11,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
   const variables = {payload: {}, where: {}};
 
   actions.forEach(action => {
-    let {path = '', value, id, relation, key} = action.payload;
+    let {path = '', value, id, relation, key, transformGqlPayload} = action.payload;
     const relationField = genRelationField(schema, key);
     const schemaWithPath = addPath(schema[key], '');
     const jsonPath = findSchema(schemaWithPath, s => s.type === 'json')
@@ -34,16 +34,19 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
       case 'CONNECT': {
         if (relation && relation.type === 'toMany') {
           update(variables.payload, path.split('/'), relationField => {
+            let connectValue = {id: value.id};
+            
+            /* transformGqlPayload is a experimental usage */
+            if (transformGqlPayload) {
+              connectValue = transformGqlPayload(connectValue, action);
+            }
+            
             if (isArray(relationField) || !relationField) {
               return {
-                connect: [{
-                  id: value.id
-                }]
+                connect: [connectValue]
               };
             }
-            relationField.connect.push({
-              id: value.id
-            });
+            relationField.connect.push(connectValue);
             return relationField;
           });
         } else {

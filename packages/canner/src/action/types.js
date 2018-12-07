@@ -15,7 +15,8 @@ export type Action<T> = {
     id?: string,
     path?: string,
     value: any,
-    relation?: Object
+    relation?: Object,
+    transformGqlPayload?: Function
   }
 }
 

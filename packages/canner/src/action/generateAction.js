@@ -34,7 +34,8 @@ export function generateAction(arg: {
   updateType: UpdateType,
   value: any,
   rootValue: any,
-  relation: Object
+  relation: Object,
+  transformGqlPayload?: Function
 }): Action<ActionType> {
   if (isCreateArray(arg)) {
     const {key} = splitId(arg.id, arg.rootValue);
@@ -254,7 +255,8 @@ export function generateAction(arg: {
         id,
         path,
         value: arg.value,
-        relation: arg.relation
+        relation: arg.relation,
+        transformGqlPayload: arg.transformGqlPayload
       }
     };
   }

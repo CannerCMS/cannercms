@@ -12,7 +12,7 @@ type changeQueue = Array<{RefId: RefId | {firstRefId: RefId, secondRefId: RefId}
 export default function withRequest(Com: React.ComponentType<*>) {
   // this hoc will update data;
   return class ComponentWithRequest extends React.Component<HOCProps> {
-    onChange = (refId: RefId | {firstRefId: RefId, secondRefId: RefId} | changeQueue, type: any, delta: any, config: any): Promise<*> => {
+    onChange = (refId: RefId | {firstRefId: RefId, secondRefId: RefId} | changeQueue, type: any, delta: any, config: any, transformGqlPayload?: Function): Promise<*> => {
       let id;
       if (isArray(refId)) { // changeQueue
         const changeQueue = refId;
@@ -42,7 +42,8 @@ export default function withRequest(Com: React.ComponentType<*>) {
         config,
         rootValue: {...rootValue},
         items,
-        pattern
+        pattern,
+        transformGqlPayload
       });
       if (!action) {
         throw new Error('invalid change');
@@ -68,6 +69,7 @@ export function createAction({
   config,
   rootValue,
   items,
+  transformGqlPayload
 }: { 
   relation: any,
   id: {firstId: string, secondId: string} | string,
@@ -76,7 +78,8 @@ export function createAction({
   config: any,
   rootValue: any,
   value: any,
-  items: any
+  items: any,
+  transformGqlPayload?: Function
 }) {
   if (type === 'create') {
     if (!config) {
@@ -96,7 +99,8 @@ export function createAction({
     updateType: type,
     value,
     rootValue,
-    relation
+    relation,
+    transformGqlPayload
   });
 }
 
