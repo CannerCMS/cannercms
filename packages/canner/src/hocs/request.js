@@ -18,8 +18,8 @@ export default function withRequest(Com: React.ComponentType<*>) {
         const changeQueue = refId;
         // $FlowFixMe
         return Promise.all(changeQueue.map(args => {
-          const {refId, type, value} = args;
-          return this.onChange(refId, type, value);
+          const {refId, type, value, config, transformGqlPayload} = args;
+          return this.onChange(refId, type, value, config, transformGqlPayload);
         }));
       } else if (refId instanceof RefId) {
         id = refId.toString();
