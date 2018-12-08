@@ -65,8 +65,11 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
           if (relation && relation.type === 'toOne') {
             relationValue = {...value, __typename: null};
           } else {
-            if(!relationValue.find(v => v.id === value.id)) {
+            const index = relationValue.findIndex(function(v) {return v.id === value.id});
+            if (index === -1) {
               relationValue.push({...value, __typename: null});
+            } else {
+              relationValue[index] = {...value, __typename: null};
             }
           }
           // $FlowFixMe
