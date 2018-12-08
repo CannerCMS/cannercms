@@ -307,12 +307,13 @@ export default class Provider extends React.PureComponent<Props, State> {
 
 function removeIdInCreateArray(actions: Array<Action<ActionType>>) {
   return actions.map(action => {
-    const newAction = JSON.parse(JSON.stringify(action));
-    if (newAction.type === 'CREATE_ARRAY') {
+    if (action.type === 'CREATE_ARRAY') {
+      const newAction = JSON.parse(JSON.stringify(action));
       delete newAction.payload.value.id;
       delete newAction.payload.value.__typename;
+      return newAction;
     }
-    return newAction;
+    return action;
   });
 }
 
