@@ -74,29 +74,51 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     queryData = (props?: Props): Promise<*> => {
-      const {relation, client} = props || this.props;
+      const {relation, client, type, graphql, variables, fetchPolicy} = props || this.props;
       if (!relation) {
         return Promise.resolve();
       }
       this.setState({
         isFetching: true,
       });
+      if (type === 'relation' && graphql) {
+        return client.query({
+          query: gql`${graphql}`,
+          variables: variables || this.query.getVairables(),
+          options: {
+            fetchPolicy
+          }
+        }).then(({data, error, errors}) => {
+          if (error) {
+            throw new Error(errors);
+          }
+          return data
+        }).then(this.updateData);
+      }
       const gqlStr = this.query.toGQL(relation.to);
-      const variables = this.query.getVairables();
+      const gqlVariables = this.query.getVairables();
+
       return client.query({
         query: gql`${gqlStr}`,
-        variables
+        variables: gqlVariables,
+        options: {
+          fetchPolicy
+        }
       }).then(({data}) => {
-          this.setState({
-            originRootValue: data,
-            isFetching: false,
-          });
+          this.updateData(data);
         })
         .catch(() => {
           this.setState({
             isFetching: false
           })
         });
+    }
+
+    updateData = (data: Object) => {
+      this.setState({
+        originRootValue: data,
+        isFetching: false,
+      });
     }
 
     getArgs = () => {

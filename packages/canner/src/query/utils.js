@@ -69,8 +69,9 @@ export function fieldToQueriesObject(field: any): any {
 
     case types.RELATION: {
       set(queriesObj, ['fields', 'id'], null);
+      const relationFields = field.getRelationFields();
       field.forEach(childField => {
-        if (childField.getType() !== types.RELATION) {
+        if (relationFields.includes(childField.getKey()) || (relationFields.length === 0 && childField.getType() !== types.RELATION)) {
           const qlo = fieldToQueriesObject(childField);
           set(queriesObj, ['fields', childField.getKey()], qlo.queriesObj);
           merge(variables, qlo.variables);

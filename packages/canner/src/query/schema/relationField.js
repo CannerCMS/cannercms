@@ -45,6 +45,10 @@ export default class RelationField implements Field {
     return this.schema.relation.to;
   }
 
+  getRelationFields() {
+    return this.schema.relation.fields || [];
+  }
+
   getTypename() {
     return capitalizeFirstLetter(pluralize.singular(this.relationTo()));
   }
