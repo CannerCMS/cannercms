@@ -68,11 +68,11 @@ export default function withQuery(Com: React.ComponentType<*>) {
     }
 
     queryData = (props?: HOCProps): Promise<*> => {
-      const {fetch, graphql, client, variables, query} = props || this.props;
+      const {pattern, fetch, graphql, client, variables, query} = props || this.props;
       this.setState({
         isFetching: true
       });
-      if (graphql) {
+      if (pattern.split('.').length === 1 && graphql) {
         return client.query({
           query: gql`${graphql}`,
           variables: variables || query.getVairables()
