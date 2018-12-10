@@ -12,6 +12,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/demo/'
   },
+  mode: devMode ? 'development' : 'production',
   resolve: {
     extensions: [".ts", ".js"],
     alias: {

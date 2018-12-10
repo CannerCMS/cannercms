@@ -11,9 +11,6 @@ const Products = () => (
     title="${products.title}"
     description="${products.description}"
     ui="tableRoute"
-    disabled={{
-      delete: true
-    }}
     uiParams={{
       size: 'small',
       columns: [
