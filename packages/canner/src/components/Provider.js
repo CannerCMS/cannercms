@@ -43,16 +43,42 @@ export default class Provider extends React.PureComponent<Props, State> {
     this.onDeployManager = new OnDeployManager();
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
+    const {rootKey, routes, schema, client, routerParams} = nextProps;
+    const customizedGQL = schema[rootKey].graphql;
+    const variables = this.query && this.query.getVairables();
+    if (customizedGQL) {
+      if (routes.length === 1 && routerParams.operator === 'update') {
+        this.observableQueryMap[rootKey] = client.watchQuery({
+          query: gql`${customizedGQL}`,
+          variables
+        })
+      } else {
+        const gqlStr = this.query.toGQL(rootKey);
+        this.observableQueryMap[rootKey] = client.watchQuery({
+          query: gql`${gqlStr}`,
+          variables
+        });
+      }
+      
+    }
+  }
+
   genQuery = () => {
     const {schema} = this.props;
     this.query = new Query({schema});
   }
 
   genObservableQueryMap = () => {
-    const {schema, client} = this.props;
+    const {schema, client, routes, routerParams} = this.props;
     const variables = this.query && this.query.getVairables();
     this.observableQueryMap = mapValues(schema, (v, key) => {
-      const gqlStr = this.query.toGQL(key);
+      let gqlStr = '';
+      if (routes.length === 1 && routerParams.operator === 'update' && schema[key].graphql) {
+        gqlStr = schema[key].graphql;
+      } else {
+        gqlStr = this.query.toGQL(key);
+      }
       log('gqlstr', gqlStr, variables);
       return client.watchQuery({
         query: gql`${gqlStr}`,
@@ -93,7 +119,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       return Promise.resolve(reWatchQuery);
     } else {
       log('updateQuery', variables, args);
-      return this.observableQueryMap[paths[0]].setVariables(variables).then(() => false);
+      return this.observableQueryMap[paths[0]].setVariables(variables, false).then(() => false);
     }
   }
 
@@ -145,7 +171,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
-    const {client, afterDeploy, schema, errorHandler} = this.props;
+    const {client, afterDeploy, schema, errorHandler, routes, rootKey, routerParams} = this.props;
     let actions = this.actionManager.getActions(key, id);
     if (!actions || !actions.length) {
       return Promise.resolve();
@@ -154,7 +180,12 @@ export default class Provider extends React.PureComponent<Props, State> {
     const mutation = objectToQueries(actionToMutation(actions[0]), false);
     const variables = actionsToVariables(actions, schema);
     const queryVariables = this.query.getVairables();  
-    const query = gql`${this.query.toGQL(key)}`;
+    let query = null;
+    if (routes.length === 1 && routerParams.operator === 'update' && schema[rootKey].graphql) {
+      query = gql`${schema[rootKey].graphql}`;
+    } else {
+      query = gql`${this.query.toGQL(actions[0].payload.key)}`;
+    }
     const cachedData = client.readQuery({query, variables: queryVariables});
     const mutatedData = cachedData[key];
     const {error} = this.executeOnDeploy(key, mutatedData);
@@ -259,9 +290,14 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   updateCachedData = (actions: Array<Action<ActionType>>) => {
-    const {client} = this.props;
+    const {client, schema, routes, rootKey, routerParams} = this.props;
     const variables = this.query.getVairables();  
-    const query = gql`${this.query.toGQL(actions[0].payload.key)}`;
+    let query = null;
+    if (routes.length === 1 && routerParams.operator === 'update' && schema[rootKey].graphql) {
+      query = gql`${schema[rootKey].graphql}`;
+    } else {
+      query = gql`${this.query.toGQL(actions[0].payload.key)}`;
+    }
     const data = client.readQuery({query, variables});
     const mutatedData = actions.reduce((result: Object, ac: any) => mutate(result, ac), data);
     client.writeQuery({

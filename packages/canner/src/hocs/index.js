@@ -12,6 +12,7 @@ import context from './connectContext';
 import errorCatch from './errorCatch';
 import validation from './validation';
 import graphqlQuery from './graphqlQuery';
+import customizedListQuery from './customizedListQuery';
 
 export default {
   errorCatch,
@@ -28,5 +29,6 @@ export default {
   onDeploy,
   context,
   validation,
-  graphqlQuery
+  graphqlQuery,
+  customizedListQuery
 };

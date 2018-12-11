@@ -7,7 +7,6 @@ import {Icon, Spin} from 'antd';
 import {mapValues, isNil} from 'lodash';
 import {parseConnectionToNormal, getValue, defaultValue} from './utils';
 import {withApollo} from 'react-apollo';
-import gql from 'graphql-tag';
 import type {HOCProps} from './types';
 type State = {
   value: any,
@@ -63,26 +62,17 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     subscribe = () => {
       const {subscribe} = this.props;
-      const subscription = subscribe(this.key, this.updateData);
+      const subscription = subscribe(this.key, data => {
+        this.updateData(data);
+      });
       this.subscription = subscription;
     }
 
     queryData = (props?: HOCProps): Promise<*> => {
-      const {pattern, fetch, graphql, client, variables, query} = props || this.props;
+      const {fetch} = props || this.props;
       this.setState({
         isFetching: true
       });
-      if (pattern.split('.').length === 1 && graphql) {
-        return client.query({
-          query: gql`${graphql}`,
-          variables: variables || query.getVairables()
-        }).then(({data, error, errors}) => {
-          if (error) {
-            throw new Error(errors);
-          }
-          return data
-        }).then(this.updateData);
-      }
       return fetch(this.key).then(this.updateData);
     }
 
@@ -120,6 +110,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
         const variables = query.getVairables();
         const args = mapValues(queries, v => variables[v.substr(1)]);
+
         return (
           <Toolbar items={items}
             toolbar={toolbar}

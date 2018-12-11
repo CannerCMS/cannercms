@@ -127,6 +127,8 @@ class CannerCMS extends React.Component<Props> {
           dataDidChange={this.dataDidChange}
           afterDeploy={afterDeploy}
           rootKey={routes[0]}
+          routes={routes}
+          routerParams={routerParams || {}}
           errorHandler={errorHandler || defaultErrorHandler}
         >
           <Generator

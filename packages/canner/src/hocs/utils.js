@@ -18,7 +18,7 @@ export function getValue(value: any, idPathArr: Array<string>) {
 
 export function parseConnectionToNormal(value: any) {
   if (isPlainObject(value)) {
-    if (value.edges && value.pageInfo) {
+    if (value.edges) {
       return value.edges.map(edge => parseConnectionToNormal(edge.node));
     }
     return mapValues(value, item => parseConnectionToNormal(item));

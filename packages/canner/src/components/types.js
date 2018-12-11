@@ -91,7 +91,9 @@ export type ProviderProps = {
   children: React.Element<*>,
   client: ApolloClient,
   rootKey: string,
-  errorHandler: Error => any
+  errorHandler: Error => any,
+  routes: Array<string>,
+  routerParams: Object
 };
 
 export type Submenu = {
