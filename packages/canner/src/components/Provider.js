@@ -96,7 +96,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     return client.watchQuery({
       query: gql`${gqlStr}`,
       variables,
-      fetchPolicy: routes.length === 1 && operator === 'update' ? 'cache-first' : fetchPolicy
+      fetchPolicy: routes.length > 1 && operator === 'update' ? fetchPolicy : 'cache-first'
     });
   }
 
