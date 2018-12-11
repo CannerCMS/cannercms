@@ -46,15 +46,11 @@ export default class Provider extends React.PureComponent<Props, State> {
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
     const {rootKey, routes, schema, routerParams} = nextProps;
     const customizedGQL = schema[rootKey] && schema[rootKey].graphql;
-    const refetch = schema[rootKey] && schema[rootKey].refetch;
-    if (customizedGQL && routes.length > this.props.routes.length) {
+    if (customizedGQL) {
       this.observableQueryMap[rootKey] = this.getObservable({
         routes: routes,
         operator: routerParams.operator
       });
-      if (refetch) {
-        this.observableQueryMap[rootKey].refetch();
-      }
     }
   }
 
@@ -121,7 +117,7 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   updateQuery = (paths: Array<string>, args: Object) => {
-    const {routerParams} = this.props;
+    const {routerParams, schema, routes} = this.props;
     const originVariables = this.query.getVairables();
     this.query.updateQueries(paths, 'args', args);
     const variables = this.query.getVairables();
@@ -134,8 +130,9 @@ export default class Provider extends React.PureComponent<Props, State> {
       log('updateQuery rewatch', variables, args);
       return Promise.resolve(reWatchQuery);
     } else {
+      const refetch = (routes.length > 1 && schema[paths[0]] && schema[paths[0]].refetch);
       log('updateQuery', variables, args);
-      return this.observableQueryMap[paths[0]].setVariables(variables, false).then(() => false);
+      return this.observableQueryMap[paths[0]].setVariables(variables, refetch || false).then(() => false);
     }
   }
 

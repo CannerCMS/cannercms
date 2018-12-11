@@ -45,6 +45,7 @@ const Products = () => (
         }
       ]
     }}
+    refetch
     graphql={`
       query($productsWhere: ProductWhereInput) {
         products: productsConnection(where: $productsWhere) {

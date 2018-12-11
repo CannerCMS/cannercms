@@ -85,8 +85,10 @@ export default function connectId(Com: React.ComponentType<*>) {
         this.setState({
           refId: new RefId(`${keyName}`)
         });
-        updateQuery([keyName], this.args);
-        delete this.args;
+        updateQuery([keyName], this.args)
+          .then(() => {
+            delete this.args;
+          });
       }
     }
 
