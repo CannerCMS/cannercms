@@ -60,7 +60,6 @@ export default class Provider extends React.PureComponent<Props, State> {
           variables
         });
       }
-      
     }
   }
 

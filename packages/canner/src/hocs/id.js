@@ -148,7 +148,8 @@ export default function connectId(Com: React.ComponentType<*>) {
     }
 
     createArray = (keyName: string, value: any) => {
-      const {fetch, request} = this.props;
+      const {fetch, request, updateQuery} = this.props;
+      updateQuery([keyName], {first: 0});
       fetch(keyName)
         .then(result => {
           const size = get(result, [keyName, 'edges']).length;
