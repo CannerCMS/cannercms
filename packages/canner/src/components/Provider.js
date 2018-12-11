@@ -44,22 +44,13 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
-    const {rootKey, routes, schema, client, routerParams} = nextProps;
+    const {rootKey, routes, schema, routerParams} = nextProps;
     const customizedGQL = schema[rootKey].graphql;
-    const variables = this.query && this.query.getVairables();
     if (customizedGQL) {
-      if (routes.length === 1 && routerParams.operator === 'update') {
-        this.observableQueryMap[rootKey] = client.watchQuery({
-          query: gql`${customizedGQL}`,
-          variables
-        })
-      } else {
-        const gqlStr = this.query.toGQL(rootKey);
-        this.observableQueryMap[rootKey] = client.watchQuery({
-          query: gql`${gqlStr}`,
-          variables
-        });
-      }
+      this.observableQueryMap[rootKey] = this.getObservable({
+        routes: routes,
+        operator: routerParams.operator
+      });
     }
   }
 
@@ -69,20 +60,40 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   genObservableQueryMap = () => {
-    const {schema, client, routes, routerParams} = this.props;
-    const variables = this.query && this.query.getVairables();
+    const {schema, routes, routerParams} = this.props;
     this.observableQueryMap = mapValues(schema, (v, key) => {
-      let gqlStr = '';
-      if (routes.length === 1 && routerParams.operator === 'update' && schema[key].graphql) {
-        gqlStr = schema[key].graphql;
-      } else {
-        gqlStr = this.query.toGQL(key);
+      if (routes[0] === key) {
+        return this.getObservable({
+          routes: routes,
+          operator: routerParams.operator
+        })
       }
-      log('gqlstr', gqlStr, variables);
-      return client.watchQuery({
-        query: gql`${gqlStr}`,
-        variables
+      return this.getObservable({
+        routes: [key],
+        operator: 'update'
       });
+    });
+  }
+
+  getObservable = ({
+    routes,
+    operator
+  }: {
+    routes: Array<string>,
+    operator: string
+  }) => {
+    const {client, schema} = this.props;
+    const key = routes[0];
+    const variables = this.query && this.query.getVairables();
+    let gqlStr = ''
+    if (routes.length === 1 && operator === 'update' && schema[key].graphql) {
+      gqlStr = schema[key].graphql;
+    } else {
+      gqlStr = this.query.toGQL(key);
+    }
+    return client.watchQuery({
+      query: gql`${gqlStr}`,
+      variables
     });
   }
 
@@ -103,16 +114,15 @@ export default class Provider extends React.PureComponent<Props, State> {
   }
 
   updateQuery = (paths: Array<string>, args: Object) => {
-    const {client} = this.props;
+    const {routerParams} = this.props;
     const originVariables = this.query.getVairables();
     this.query.updateQueries(paths, 'args', args);
     const variables = this.query.getVairables();
     const reWatchQuery = compareVariables(originVariables, variables);
     if (reWatchQuery) {
-      const gqlStr = this.query.toGQL(paths[0]);
-      this.observableQueryMap[paths[0]] = client.watchQuery({
-        query: gql`${gqlStr}`,
-        variables
+      this.observableQueryMap[paths[0]] = this.getObservable({
+        routes: paths,
+        operator: routerParams.operator
       });
       log('updateQuery rewatch', variables, args);
       return Promise.resolve(reWatchQuery);

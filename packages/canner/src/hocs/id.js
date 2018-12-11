@@ -62,12 +62,14 @@ export default function connectId(Com: React.ComponentType<*>) {
         }
         this.createArray(keyName, value);
       }
-
       if (operator === 'update' && this.props.routerParams.operator === 'create' && pattern === 'array') {
         // posts?op=create => posts
-        this.setState({
-          refId: new RefId(keyName)
-        });
+        updateQuery([keyName], {first: 10, where: {}})
+          .then(() => {
+            this.setState({
+              refId: new RefId(keyName)
+            });
+          });
       }
 
       if (pattern === 'array' && routes.length > 1 && this.props.routes.length === 1) {
@@ -111,7 +113,7 @@ export default function connectId(Com: React.ComponentType<*>) {
 
     componentWillUnmount() {
       const {updateQuery, keyName, pattern} = this.props;
-      
+
       if (pattern === 'array' && this.args) {
         updateQuery([keyName], this.args);
       }
@@ -147,10 +149,10 @@ export default function connectId(Com: React.ComponentType<*>) {
         });
     }
 
-    createArray = (keyName: string, value: any) => {
+    createArray = async (keyName: string, value: any) => {
       const {fetch, request, updateQuery} = this.props;
-      updateQuery([keyName], {first: 0});
-      fetch(keyName)
+      await updateQuery([keyName], {first: 0})
+      await fetch(keyName)
         .then(result => {
           const size = get(result, [keyName, 'edges']).length;
           // $FlowFixMe
