@@ -85,9 +85,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         return client.query({
           query: gql`${graphql}`,
           variables: variables || this.query.getVairables(),
-          options: {
-            fetchPolicy
-          }
+          fetchPolicy
         }).then(({data, error, errors}) => {
           if (error) {
             throw new Error(errors);
@@ -101,9 +99,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       return client.query({
         query: gql`${gqlStr}`,
         variables: gqlVariables,
-        options: {
-          fetchPolicy
-        }
+        fetchPolicy
       }).then(({data}) => {
           this.updateData(data);
         })
