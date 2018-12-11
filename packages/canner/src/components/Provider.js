@@ -86,7 +86,7 @@ export default class Provider extends React.PureComponent<Props, State> {
     const key = routes[0];
     const variables = this.query && this.query.getVairables();
     const customizedGQL = routes.length === 1 && operator === 'update' && schema[key].graphql;
-    const fetchPolicy = schema[key].graphql;
+    const fetchPolicy = schema[key].fetchPolicy;
     let gqlStr = ''
     if (customizedGQL) {
       gqlStr = schema[key].graphql;
