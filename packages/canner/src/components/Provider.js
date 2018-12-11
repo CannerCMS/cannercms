@@ -132,7 +132,10 @@ export default class Provider extends React.PureComponent<Props, State> {
     } else {
       const refetch = (routes.length > 1 && schema[paths[0]] && schema[paths[0]].refetch);
       log('updateQuery', variables, args);
-      return this.observableQueryMap[paths[0]].setVariables(variables, refetch || false).then(() => false);
+      if (refetch) {
+        return this.observableQueryMap[paths[0]].refetch(variables).then(() => false);
+      }
+      return this.observableQueryMap[paths[0]].setVariables(variables).then(() => false);
     }
   }
 
