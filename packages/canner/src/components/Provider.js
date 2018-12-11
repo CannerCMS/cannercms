@@ -45,7 +45,7 @@ export default class Provider extends React.PureComponent<Props, State> {
 
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
     const {rootKey, routes, schema, routerParams} = nextProps;
-    const customizedGQL = schema[rootKey].graphql;
+    const customizedGQL = schema[rootKey] && schema[rootKey].graphql;
     if (customizedGQL) {
       this.observableQueryMap[rootKey] = this.getObservable({
         routes: routes,
@@ -85,15 +85,20 @@ export default class Provider extends React.PureComponent<Props, State> {
     const {client, schema} = this.props;
     const key = routes[0];
     const variables = this.query && this.query.getVairables();
+    const customizedGQL = routes.length === 1 && operator === 'update' && schema[key].graphql;
+    const fetchPolicy = schema[key].graphql;
     let gqlStr = ''
-    if (routes.length === 1 && operator === 'update' && schema[key].graphql) {
+    if (customizedGQL) {
       gqlStr = schema[key].graphql;
     } else {
       gqlStr = this.query.toGQL(key);
     }
     return client.watchQuery({
       query: gql`${gqlStr}`,
-      variables
+      variables,
+      options: {
+        fetchPolicy: customizedGQL ? fetchPolicy : 'cache-first'
+      }
     });
   }
 
