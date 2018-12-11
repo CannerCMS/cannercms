@@ -97,7 +97,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       query: gql`${gqlStr}`,
       variables,
       options: {
-        fetchPolicy: customizedGQL ? fetchPolicy : 'cache-first'
+        fetchPolicy: routes.length === 1 && operator === 'update' ? 'cache-first' : fetchPolicy
       }
     });
   }
@@ -279,6 +279,9 @@ export default class Provider extends React.PureComponent<Props, State> {
 
   reset = (key?: string, id?: string): Promise<*> => {
     const {rootKey} = this.props;
+    if (this.actionManager.getActions(key, id).length === 0) {
+      return Promise.resolve();
+    }
     this.actionManager.removeActions(key, id);
     this.updateDataChanged();
     const variables = this.query.getVairables();

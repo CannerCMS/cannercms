@@ -93,7 +93,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
           cancelText: intl.formatMessage({id: 'hocs.route.confirm.cancelText'}),
           onOk: () => {
             return new Promise(resolve => {
-              setTimeout(resolve, 1000);
+              setTimeout(resolve, 200);
             }).then()
               .then(() => {
                 resetCondFn();
