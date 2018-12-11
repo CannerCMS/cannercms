@@ -46,11 +46,15 @@ export default class Provider extends React.PureComponent<Props, State> {
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
     const {rootKey, routes, schema, routerParams} = nextProps;
     const customizedGQL = schema[rootKey] && schema[rootKey].graphql;
-    if (customizedGQL) {
+    const refetch = schema[rootKey] && schema[rootKey].refetch;
+    if (customizedGQL && routes.length > this.props.routes.length) {
       this.observableQueryMap[rootKey] = this.getObservable({
         routes: routes,
         operator: routerParams.operator
       });
+      if (refetch) {
+        this.observableQueryMap[rootKey].refetch();
+      }
     }
   }
 
