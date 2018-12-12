@@ -55,7 +55,8 @@ const schema = (
 
 const fD = createFakeData(schema.schema, 10);
 const connector = new LocalStorageConnector({
-  defaultData: {...fD, ...fakeData}
+  defaultData: {...fD, ...fakeData},
+  localStorageKey: 'cannerDEMO'
 });
 
 export default {

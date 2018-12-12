@@ -110,26 +110,28 @@ export default class Generator extends React.Component<Props, State> {
         refId: props.refId
       };
       return (
-        <Context.Provider
-          key={restNodeData.keyName ? `${props.refId.toString()}/${restNodeData.keyName}` : index}
-          value={contextValue}
-        >
-          <node.component
-            hideButtons={hideButtons}
-            routes={routes}
-            imageStorage={(imageStorages || {})[routes[0]]}
-            fileStorage={(fileStorages || {})[routes[0]]}
-            renderChildren={(props) => this.renderChildren(node, props)}
-            renderComponent={this.renderComponent}
-            routerParams={routerParams}
-            onDeploy={onDeploy}
-            removeOnDeploy={removeOnDeploy}
-            schema={schema}
-            goTo={goTo}
-            {...restNodeData}
-            {...props}
-          />
-        </Context.Provider>
+        <div data-testid={node.path}>
+          <Context.Provider
+            key={restNodeData.keyName ? `${props.refId.toString()}/${restNodeData.keyName}` : index}
+            value={contextValue}
+          >
+            <node.component
+              hideButtons={hideButtons}
+              routes={routes}
+              imageStorage={(imageStorages || {})[routes[0]]}
+              fileStorage={(fileStorages || {})[routes[0]]}
+              renderChildren={(props) => this.renderChildren(node, props)}
+              renderComponent={this.renderComponent}
+              routerParams={routerParams}
+              onDeploy={onDeploy}
+              removeOnDeploy={removeOnDeploy}
+              schema={schema}
+              goTo={goTo}
+              {...restNodeData}
+              {...props}
+            />
+          </Context.Provider>
+        </div>
       );
     }
     return null;
