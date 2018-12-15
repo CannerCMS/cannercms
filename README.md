@@ -5,7 +5,7 @@
 <div align="center">
 
 [![npm version](https://badge.fury.io/js/canner.svg)](https://badge.fury.io/js/canner)
-[![npm download](https://img.shields.io/npm/dm/@canner/cli.svg)](https://www.npmjs.com/package/@canner/cli)
+[![npm download](https://img.shields.io/npm/dm/canner.svg)](https://www.npmjs.com/package/canner)
 [![CircleCI branch](https://img.shields.io/circleci/project/github/Canner/canner/master.svg)](https://circleci.com/gh/Canner/canner)
 [![](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Canner/CannerCMS?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)
