@@ -21,7 +21,9 @@ type Props = {
   selectedValue: Array<Object>,
   query: Object,
   keyName: string,
-  items: Object
+  items: Object,
+  request: Function,
+  deploy: Function
 }
 
 type State = {
@@ -91,7 +93,7 @@ export default class Actions extends Component<Props, State> {
         <Button.Group>
           {
             this.props.export && (
-              <Button onClick={this.triggerExportModal}>
+              <Button onClick={this.triggerExportModal} data-testid="actions-export-button">
                 <Icon type="download" />
                 <FormattedMessage id="query.actions.export"/>
               </Button>
@@ -99,7 +101,7 @@ export default class Actions extends Component<Props, State> {
           }
           {
             this.props.import && (
-              <Button onClick={this.triggerImportModal}>
+              <Button onClick={this.triggerImportModal} data-testid="actions-import-button">
                 <Icon type="upload" />
                 <FormattedMessage id="query.actions.import"/>
               </Button>
@@ -107,8 +109,8 @@ export default class Actions extends Component<Props, State> {
           }
           {
             filter && (
-              <Dropdown overlay={menu}>
-                <Button>
+              <Dropdown overlay={menu} data-testid="actions-filter-dropdown">
+                <Button data-testid="actions-filter-button">
                   <Icon type="filter" />
                   <FormattedMessage id="query.actions.filter"/>
                 </Button>

@@ -34,11 +34,11 @@ export default class PaginationPlugin extends Component<Props> {
     return <div style={{display: 'flex', justifyContent: 'flex-end'}}>
       <Wrapper marginTop={16}>
         <ButtonGroup>
-          <Button disabled={!hasPreviousPage} onClick={prevPage}>
+          <Button disabled={!hasPreviousPage} onClick={prevPage} data-testid="pagination-previous-button">
             <Icon type="left" />
             Previous
           </Button>
-          <Button disabled={!hasNextPage} onClick={nextPage}>
+          <Button disabled={!hasNextPage} onClick={nextPage} data-testid="pagination-next-button">
             Next
             <Icon type="right" />
           </Button>
