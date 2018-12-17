@@ -32,56 +32,45 @@ describe('on page load', () => {
   });
 
   test('should change route when click first edit button', async () => {
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click('button[data-testid="edit-button"]')
-    ]);
+    await clickAndWait(page, 'button[data-testid="edit-button"]');
     await page.waitForSelector('div[data-testid="products/no"]'),
     expect(page.url()).toBe('http://localhost:8080/demo/products/products1');
   });
 
   test('should navigate and remove changes after reset', async () => {
-    await page.goto('http://localhost:8080/demo/products/products1');
-    await page.waitForSelector('div[data-testid="products/no"]');
+    await goToProduct(page);
     const previousValue = await getProduct1(page);
-    await page.type('div[data-testid="products/no"] input', 'number');
-    await page.type('div[data-testid="products/name"] input', 'name');
-    await page.type('div[data-testid="products/price"] input', '1000');
-    await page.type('div[data-testid="products/promo"] input', '800');
-
+    await updateProduct1(page, {
+      no: 'number',
+      name: 'name',
+      price: '1000',
+      promo: '800'
+    });
     // click reset
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click('button[data-testid="reset-button"]')
-    ]);
+    await clickAndWait(page, 'button[data-testid="reset-button"]');
     expect(page.url()).toBe('http://localhost:8080/demo/products');
 
     // re-reneter products1
-    await page.goto('http://localhost:8080/demo/products/products1');
-    await page.waitForSelector('div[data-testid="products/no"]');
+    await goToProduct(page);
     const productValue = await getProduct1(page);
     expect(productValue).toMatchObject(previousValue)
   });
 
   test('should navigate and deploy changes after deplot', async () => {
-    await page.goto('http://localhost:8080/demo/products/products1');
-    await page.waitForSelector('div[data-testid="products/no"]');
+    await goToProduct(page);
     const previousValue = await getProduct1(page);
-    await page.type('div[data-testid="products/no"] input', 'number');
-    await page.type('div[data-testid="products/name"] input', 'name');
-    await page.type('div[data-testid="products/price"] input', '1000');
-    await page.type('div[data-testid="products/promo"] input', '800');
-
+    await updateProduct1(page, {
+      no: 'number',
+      name: 'name',
+      price: '1000',
+      promo: '800'
+    });
     // click reset
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click('button[data-testid="confirm-button"]')
-    ]);
+    await clickAndWait(page, 'button[data-testid="confirm-button"]');
     expect(page.url()).toBe('http://localhost:8080/demo/products');
 
     // re-reneter products1
-    await page.goto('http://localhost:8080/demo/products/products1');
-    await page.waitForSelector('div[data-testid="products/no"]');
+    await goToProduct(page);
     const productValue = await getProduct1(page);
     expect(productValue).toMatchObject({
       no: `${previousValue.no}number`,
@@ -92,12 +81,9 @@ describe('on page load', () => {
   });
 
   test('should delete item', async () => {
-    await page.goto('http://localhost:8080/demo/products');
-    await page.waitForSelector('button[data-testid="delete-button"]');
-    page.click('button[data-testid="delete-button"]');
-    await page.waitForSelector('div.ant-popover-buttons');
+    await goToProductList(page);
     const originTrLength = await page.$$eval('div[data-testid="products"] table tr', trs => trs.length);
-    await page.evaluate(() => document.querySelector('div.ant-popover-buttons button.ant-btn-danger').click())
+    await deleteProduct(page);
     const hasDeleted = await page.waitFor(trLength => {
       return document.querySelectorAll('div[data-testid="products"] table tr').length < trLength;
     }, {}, originTrLength);
@@ -105,24 +91,18 @@ describe('on page load', () => {
   });
 
   test('should create item', async () => {
-    await page.waitForSelector('button[data-testid="delete-button"]');
-    page.click('button[data-testid="delete-button"]');
-    await page.waitForSelector('div.ant-popover-buttons');
-    await page.evaluate(() => document.querySelector('div.ant-popover-buttons button.ant-btn-danger').click())
+    await goToProductList(page);
+    await deleteProduct(page);
     const originTrLength = await page.$$eval('div[data-testid="products"] table tr', trs => trs.length);
-    await Promise.all([
-      page.waitForNavigation(),
-      page.click('button[data-testid="add-button"]')
-    ])
+    await clickAndWait(page, 'button[data-testid="add-button"]');
     await page.waitForSelector('div[data-testid="products/no"]');
-    await page.type('div[data-testid="products/no"] input', 'number');
-    await page.type('div[data-testid="products/name"] input', 'name');
-    await page.type('div[data-testid="products/price"] input', '1000');
-    await page.type('div[data-testid="products/promo"] input', '800');
-    await Promise.all([
-      page.waitForNavigation(),
-      await page.click('button[data-testid="confirm-button"]')
-    ])
+    await updateProduct1(page, {
+      no: 'number',
+      name: 'name',
+      price: '1000',
+      promo: '800'
+    })
+    await clickAndWait(page, 'button[data-testid="confirm-button"]');
     await page.waitForSelector('div[data-testid="products"]');
     const hasCreated = await page.waitFor(trLength => {
       return document.querySelectorAll('div[data-testid="products"] table tr').length > trLength;
@@ -140,4 +120,34 @@ async function getProduct1(page) {
       promo: document.querySelector('div[data-testid="products/promo"] input').value,
     }
   });
+}
+
+async function updateProduct1(page, value) {
+  await page.type('div[data-testid="products/no"] input', value.no);
+  await page.type('div[data-testid="products/name"] input', value.name);
+  await page.type('div[data-testid="products/price"] input', value.price);
+  await page.type('div[data-testid="products/promo"] input', value.promo);
+}
+
+async function deleteProduct(page) {
+  page.click('button[data-testid="delete-button"]');
+  await page.waitForSelector('div.ant-popover-buttons');
+  await page.evaluate(() => document.querySelector('div.ant-popover-buttons button.ant-btn-danger').click())
+}
+
+async function clickAndWait(page, selector) {
+  return await Promise.all([
+    page.waitForNavigation(),
+    page.click(selector)
+  ]);
+}
+
+async function goToProductList(page) {
+  await page.goto('http://localhost:8080/demo/products');
+  await page.waitForSelector('div[data-testid="products"]');
+}
+
+async function goToProduct(page) {
+  await page.goto('http://localhost:8080/demo/products/products1');
+  await page.waitForSelector('div[data-testid="products/no"]');
 }
