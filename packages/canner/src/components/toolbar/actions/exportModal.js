@@ -202,10 +202,10 @@ export default class ExportModal extends React.Component<Props, State> {
           <FormItem
             wrapperCol={{ span: 12, offset: 5 }}
           >
-            <Button htmlType="button" onClick={this.handleCancel}>
+            <Button htmlType="button" onClick={this.handleCancel} data-testid="actions-export-cancel-button">
               <FormattedMessage id="actions.export.modal.cancelButton" />
             </Button>
-            <Button loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }}>
+            <Button loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }} data-testid="actions-export-reset-button">
               <FormattedMessage id="actions.export.modal.confirmButton" />
             </Button>
           </FormItem>

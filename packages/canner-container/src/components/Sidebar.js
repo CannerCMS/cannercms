@@ -90,7 +90,7 @@ function renderMenuItem(item: Object) {
     item.onClick = () => location.href = item.href;
   }
   return (
-    <Menu.Item key={item.pathname} params={item.params} onClick={item.onClick}>
+    <Menu.Item key={item.pathname} params={item.params} onClick={item.onClick} data-testid={`sidebar-${item.pathname}`}>
       {renderIcon(item.icon)}
       {item.title || null}
     </Menu.Item>
@@ -99,7 +99,7 @@ function renderMenuItem(item: Object) {
 
 function renderSubMenu(item: Object) {
   return (
-    <Menu.SubMenu key={`submenu-${item.pathname}`} title={item.title}>
+    <Menu.SubMenu key={`submenu-${item.pathname}`} title={item.title} data-testid={`sidebar-${item.pathname}`}>
       {renderIcon(item.icon)}
       {
         item.items.map(i => renderMenuItem(i))

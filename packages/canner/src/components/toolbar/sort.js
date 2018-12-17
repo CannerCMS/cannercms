@@ -82,12 +82,13 @@ export default class Sort extends Component<Props, State> {
       <div style={{display: 'flex'}}>
         <Selector onChange={this.onChange} value={key} defaultValue={defaultField} allowClear
             placeholder={<FormattedMessage id="query.sort.placeholder"/>}
+            data-testid="sorter-select"
         >
           {(options || []).map((option, i) => <Option key={i} value={option.field}>{option.label}</Option>)}
         </Selector>
         <OrderSwitch onClick={this.changeOrder}>
-          <UpIcon order={order} type="caret-up" />
-          <DownIcon order={order} type="caret-down" />
+          <UpIcon order={order} type="caret-up" data-testid="sorter-up" />
+          <DownIcon order={order} type="caret-down" data-testid="sorter-down" />
         </OrderSwitch>
       </div>
     );

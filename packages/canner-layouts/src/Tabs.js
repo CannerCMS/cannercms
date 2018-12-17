@@ -10,7 +10,7 @@ export default class Tab extends React.Component {
       <Tabs>
         {
           children.map((child, i) => (
-            <TabPane key={i} tab={child.title}>
+            <TabPane key={i} tab={child.title} data-testid={`tabs-${child.keyName}`} >
               <Item
                 hideTitle={true}
                 filter={node => node.keyName === child.keyName}

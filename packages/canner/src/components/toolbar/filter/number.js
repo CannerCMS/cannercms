@@ -92,6 +92,7 @@ export default class NumberRangeFilter extends Component {
         <Select style={{width: 60}}
           value={operator}
           onChange={this.changeOperator}
+          data-testid={`number-filter`}
         >
           {
             operators.map((operator) =>

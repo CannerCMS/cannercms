@@ -25,6 +25,7 @@ export default class TextFilter extends Component {
     const {label, where, name} = this.props;
     return (
       <Input
+        data-testid={`text-filter-${name}`}
         style={{width: 140}}
         placeholder={label}
         onChange={this.onInput}

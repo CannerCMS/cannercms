@@ -125,7 +125,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
           {
             showSaveButton && !deploying && (
               hasChanged ?
-              <Menu.Item key="deploy">
+              <Menu.Item key="deploy" data-testid="navbar-deploy-button" >
                 <Badge dot>
                   <MenuText theme={theme}>
                     Save

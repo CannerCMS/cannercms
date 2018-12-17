@@ -33,6 +33,7 @@ export default class SelectFilter extends Component {
     const placeholder = intl.formatMessage({id: 'query.filter.select.placeholder'});
     return (
       <Select
+        data-testid={`select-filter`}
         style={{width: 120}}
         placeholder={placeholder}
         onChange={(val) => this.onSelect(val)}
