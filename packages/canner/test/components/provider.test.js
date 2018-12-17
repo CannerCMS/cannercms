@@ -30,6 +30,7 @@ describe('provider methods', () => {
     const wrapper = shallow(<Provider
       schema={schema}
       client={client}
+      routes={[]}
     >
       <div>children</div>
     </Provider>);
@@ -45,6 +46,7 @@ describe('provider methods', () => {
     const wrapper = shallow(<Provider
       schema={schema}
       client={client}
+      routes={[]}
     >
       <div>children</div>
     </Provider>)
@@ -67,6 +69,7 @@ describe('provider methods', () => {
     const wrapper = shallow(<Provider
       schema={schema}
       client={client}
+      routes={[]}
     >
       <div>children</div>
     </Provider>)
@@ -80,6 +83,7 @@ describe('provider methods', () => {
     const wrapper = shallow(<Provider
       schema={schema}
       client={client}
+      routes={[]}
     >
       <div>children</div>
     </Provider>);
@@ -106,6 +110,7 @@ describe('provider methods', () => {
     const wrapper = shallow(<Provider
       schema={schema}
       client={client}
+      routes={[]}
     >
       <div>children</div>
     </Provider>);
@@ -132,6 +137,7 @@ describe('provider methods', () => {
     const wrapper = shallow(<Provider
       schema={schema}
       client={client}
+      routes={[]}
     >
       <div>children</div>
     </Provider>);
@@ -160,6 +166,7 @@ describe('provider methods', () => {
   test('deploy', async () => {
     const wrapper = shallow(<Provider
       schema={schema}
+      routes={[]}
       client={client}
     >
       <div>children</div>
@@ -186,6 +193,7 @@ describe('provider methods', () => {
       schema={schema}
       client={client}
       afterDeploy={afterDeploy}
+      routes={[]}
     >
       <div>children</div>
     </Provider>);
