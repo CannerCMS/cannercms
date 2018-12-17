@@ -82,14 +82,17 @@ export function genDeployButton(deploy: Function, currentRefId: RefId) {
     // $FlowFixMe
     text = 'Confirm',
     // $FlowFixMe
-    component = Button
+    Component = Button
   }: buttonProps = {}) {
-    return React.createElement(component, {
-      disabled,
-      style,
-      type: "primary",
-      onClick: () => onClick(refId, callback)
-    }, text);
+    return <Component
+      disabled={disabled}
+      style={style}
+      type="primary"
+      onClick={() => onClick(refId, callback)}
+      data-testid="confirm-button"
+    >
+      {text}
+    </Component>;
   };
 }
 
@@ -103,16 +106,18 @@ export function genCancelButton(reset: Function, currentRefId: RefId) {
     // $FlowFixMe
     text = 'Reset',
     // $FlowFixMe
-    component = Button
+    Component = Button
   }: buttonProps = {}) {
-    return React.createElement(component, {
-      disabled,
-      style,
-      onClick: () => onClick(refId, callback)
-    }, text);
+    return <Component
+      disabled={disabled}
+      style={style}
+      onClick={() => onClick(refId, callback)}
+      data-testid="reset-button"
+    >
+      {text}
+    </Component>;
   };
 }
-
 
 function getItemId(rootValue: any, refId: RefId) {
   const [key, index] = refId.getPathArr();

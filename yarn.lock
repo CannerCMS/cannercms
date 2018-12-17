@@ -828,13 +828,13 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@canner/antd-array-gallery@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-gallery/-/antd-array-gallery-0.5.1.tgz#283ce3d435db4857585832397f677cd882ea1199"
+"@canner/antd-array-gallery@^0.5.26":
+  version "0.5.26"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-gallery/-/antd-array-gallery-0.5.26.tgz#43105e7d3fe686e3866c674ed211352dc5309d07"
   dependencies:
     "@canner/image-service-config" "^0.3.0"
-    "@canner/image-upload" "^0.13.4"
-    canner-image-gallery "^0.3.4"
+    "@canner/image-upload" "^0.14.1"
+    canner-image-gallery "^0.5.0"
 
 "@canner/antd-array-panel@^0.5.6":
   version "0.5.6"
@@ -870,21 +870,21 @@
   dependencies:
     "@canner/antd-array-tabs" "^0.5.6"
 
-"@canner/antd-array-table@^0.5.20":
-  version "0.5.20"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-table/-/antd-array-table-0.5.20.tgz#2ae5b77debdbe6d3636408578c125b02e560731a"
+"@canner/antd-array-table@^0.5.28":
+  version "0.5.28"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-table/-/antd-array-table-0.5.28.tgz#f295e3b3ce50f17c13d685944abeec8fa5f7d738"
   dependencies:
     "@canner/antd-locales" "^0.5.20"
-    "@canner/antd-share-table" "^0.5.20"
+    "@canner/antd-share-table" "^0.5.28"
     prop-types "^15.6.0"
     styled-components "^3.4.6"
 
-"@canner/antd-array-table_route@^0.5.20":
-  version "0.5.20"
-  resolved "https://registry.yarnpkg.com/@canner/antd-array-table_route/-/antd-array-table_route-0.5.20.tgz#991aad9524db7d3438c1bb535a619b817f8b235f"
+"@canner/antd-array-table_route@^0.5.28":
+  version "0.5.28"
+  resolved "https://registry.yarnpkg.com/@canner/antd-array-table_route/-/antd-array-table_route-0.5.28.tgz#c68ec819edc77ed748e6af4fc0e040d591f19c4f"
   dependencies:
     "@canner/antd-locales" "^0.5.20"
-    "@canner/antd-share-table" "^0.5.20"
+    "@canner/antd-share-table" "^0.5.28"
     styled-components "^3.4.6"
 
 "@canner/antd-array-tabs@^0.5.6":
@@ -919,19 +919,19 @@
   dependencies:
     react-intl "^2.4.0"
 
-"@canner/antd-components@^0.5.13":
-  version "0.5.21"
-  resolved "https://registry.yarnpkg.com/@canner/antd-components/-/antd-components-0.5.21.tgz#d3c9112a5acf092d558747eb626f9f3c7e069fd0"
+"@canner/antd-components@^0.5.28":
+  version "0.5.28"
+  resolved "https://registry.yarnpkg.com/@canner/antd-components/-/antd-components-0.5.28.tgz#1933cb83ede4c3443b0332dff1e1eb89d420592a"
   dependencies:
-    "@canner/antd-array-gallery" "^0.5.1"
+    "@canner/antd-array-gallery" "^0.5.26"
     "@canner/antd-array-panel" "^0.5.6"
     "@canner/antd-array-slider" "^0.5.1"
     "@canner/antd-array-tab_bottom" "^0.5.6"
     "@canner/antd-array-tab_left" "^0.5.6"
     "@canner/antd-array-tab_right" "^0.5.6"
     "@canner/antd-array-tab_top" "^0.5.6"
-    "@canner/antd-array-table" "^0.5.20"
-    "@canner/antd-array-table_route" "^0.5.20"
+    "@canner/antd-array-table" "^0.5.28"
+    "@canner/antd-array-table_route" "^0.5.28"
     "@canner/antd-array-tabs" "^0.5.6"
     "@canner/antd-array-tag" "^0.5.20"
     "@canner/antd-array-tree" "^0.5.20"
@@ -1071,9 +1071,9 @@
     "@canner/antd-locales" "^0.5.20"
     "@canner/antd-share-toolbar" "^0.5.20"
 
-"@canner/antd-share-table@^0.5.20":
-  version "0.5.20"
-  resolved "https://registry.yarnpkg.com/@canner/antd-share-table/-/antd-share-table-0.5.20.tgz#6cf314ebd83456e34522840ced9fa4c36bb7359b"
+"@canner/antd-share-table@^0.5.28":
+  version "0.5.28"
+  resolved "https://registry.yarnpkg.com/@canner/antd-share-table/-/antd-share-table-0.5.28.tgz#72388fd5bdeecf161e885fee21631a3eb06a8a5f"
   dependencies:
     "@canner/antd-locales" "^0.5.20"
     "@canner/antd-share-toolbar" "^0.5.20"
@@ -1145,6 +1145,14 @@
 "@canner/image-upload@^0.13.4":
   version "0.13.4"
   resolved "https://registry.yarnpkg.com/@canner/image-upload/-/image-upload-0.13.4.tgz#a154d39486aee60f7562ff9ed506d9eb007f6cc1"
+  dependencies:
+    react-intl "^2.4.0"
+    react-loading-image "^0.5.0"
+    styled-components "^3.2.0"
+
+"@canner/image-upload@^0.14.1":
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/@canner/image-upload/-/image-upload-0.14.1.tgz#90ccc5e312f71cb0143ab247c5e48dc5583354bc"
   dependencies:
     react-intl "^2.4.0"
     react-loading-image "^0.5.0"
@@ -3438,9 +3446,9 @@ canner-helpers@^0.0.1:
     immutable "^4.0.0-rc.9"
     lodash "^4.17.5"
 
-canner-image-gallery@^0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/canner-image-gallery/-/canner-image-gallery-0.3.4.tgz#c06b00281822cd018e8a0eb5c02ae3498e7c86c6"
+canner-image-gallery@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/canner-image-gallery/-/canner-image-gallery-0.5.0.tgz#d0db9baa96221bcd99d11d6b45b26fea66a709b4"
   dependencies:
     "@canner/image-upload" "^0.13.4"
     grid-breakpoint "^1.7.0"
