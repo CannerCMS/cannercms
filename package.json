@@ -3,8 +3,9 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "jest --coverage --verbose false --maxWorkers=2",
-    "test:watch": "jest --watch --verbose false",
+    "test": "jest --coverage --verbose false --maxWorkers=2 --testPathIgnorePatterns /node_modules/ e2e",
+    "test:watch": "jest --watch --verbose false --testPathIgnorePatterns /node_modules/ e2e",
+    "test:e2e": "jest e2e --verbose false --testPathIgnorePatterns /node_modules/",
     "lint": "eslint ./packages/*/src/**/*.js",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna exec --parallel -- rimraf lib dist",
