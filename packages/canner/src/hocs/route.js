@@ -128,7 +128,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
           // quick fix for route array's children
           // need to find a stable way to control route
           (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))) &&
-            <Button onClick={this.discard} style={{marginBottom: 16}}>
+            <Button onClick={this.discard} style={{marginBottom: 16}} data-testid="back-button">
               <Icon type="arrow-left" /> {intl.formatMessage({id: 'hocs.route.backText'})}
             </Button>
         }
@@ -145,10 +145,10 @@ export default function withRoute(Com: React.ComponentType<*>) {
           // need to find a stable way to control route
           (renderType === RENDER_CHILDREN  && pattern === 'array' && !hideButtons && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))) &&
             <ButtonWrapper>
-              <Button style={{marginRight: 16}} type="primary" onClick={this.deploy}>
+              <Button style={{marginRight: 16}} type="primary" onClick={this.deploy} data-testid="confirm-button">
                 {intl.formatMessage({id: 'hocs.route.confirmText'})}
               </Button>
-              <Button onClick={this.reset}>
+              <Button onClick={this.reset} data-testid="reset-button">
                 {intl.formatMessage({id: 'hocs.route.resetText'})}
               </Button>
             </ButtonWrapper>

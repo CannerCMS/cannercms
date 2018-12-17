@@ -11,10 +11,10 @@ describe('on page load', () => {
       slowMo: 0,
       devtools: true,
     }) 
-    page = await browser.newPage() 
+    page = (await browser.pages())[0];
     await page.goto('http://localhost:8080/');
     await page.waitForSelector('div[data-testid="dashboard"]');
-    page.setViewport({ width: 500, height: 2400 })
+    page.setViewport({ width: 900, height: 800 })
   });
   
   afterAll(() => {
