@@ -158,7 +158,52 @@ Object {
       "uiParams": Object {},
     },
   },
-  "visitors": Array [],
+  "visitors": Array [
+    Object {
+      "component.array": Object {
+        "exit": [Function],
+      },
+      "component.object.fieldset": Object {
+        "exit": [Function],
+      },
+      "page.page": Object {
+        "exit": [Function],
+      },
+    },
+    Object {
+      "component.array": Object {
+        "exit": [Function],
+      },
+      "component.object.fieldset": Object {
+        "exit": [Function],
+      },
+      "page.page": Object {
+        "exit": [Function],
+      },
+    },
+    Object {
+      "component.array": Object {
+        "exit": [Function],
+      },
+      "component.object.fieldset": Object {
+        "exit": [Function],
+      },
+      "page.page": Object {
+        "exit": [Function],
+      },
+    },
+    Object {
+      "component.array": Object {
+        "exit": [Function],
+      },
+      "component.object.fieldset": Object {
+        "exit": [Function],
+      },
+      "page.page": Object {
+        "exit": [Function],
+      },
+    },
+  ],
 }
 `;
 

@@ -3,6 +3,7 @@
 import type {CannerSchema} from '../flow-types';
 import BasicModel from './basic';
 import saferEval from 'safer-eval';
+import {flatten} from 'lodash';
 
 export default class ArrayModel extends BasicModel {
   // https://github.com/babel/babel/issues/8417
@@ -22,11 +23,12 @@ export default class ArrayModel extends BasicModel {
     }
 
     if (children && children.length) {
-      const toolbar = children.find(item => item.__TOOLBAR__);
+      const flattenChilden = flatten(children);
+      const toolbar = flattenChilden.find(item => item.__TOOLBAR__);
       if (toolbar) {
         this.attributes.toolbar = toolbar;
       }
-      const otherChildren = children.filter(item => !item.__TOOLBAR__);
+      const otherChildren = flattenChilden.filter(item => !item.__TOOLBAR__);
       
       if (otherChildren.length === 1) {
         const child = otherChildren[0];
@@ -43,7 +45,7 @@ export default class ArrayModel extends BasicModel {
       } else {
         this.attributes.items = {
           type: 'object',
-          items: children.reduce((result, child) => {
+          items: flattenChilden.reduce((result, child) => {
             if (child.keyName in result) {
               throw new Error(`duplicated name in children of ${this.keyName}`);
             }

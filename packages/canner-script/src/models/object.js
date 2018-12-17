@@ -3,6 +3,7 @@
 import type {CannerSchema} from '../flow-types';
 import BasicModel from './basic';
 import saferEval from 'safer-eval';
+import {flatten} from 'lodash';
 
 export default class ObjectModel extends BasicModel {
   // https://github.com/babel/babel/issues/8417
@@ -22,7 +23,8 @@ export default class ObjectModel extends BasicModel {
     }
     
     if (children && children.length) {
-      this.attributes.items = children.reduce((result, child) => {
+      const flattenChildren = flatten(children);
+      this.attributes.items = flattenChildren.reduce((result, child) => {
         if (child.keyName in result) {
           throw new Error(`duplicated keyName in children of ${this.attributes.keyName}`);
         }

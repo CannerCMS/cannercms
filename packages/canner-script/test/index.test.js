@@ -1,8 +1,7 @@
 /** @jsx builder */
 
 // eslint-disable-next-line
-import builder, {configure} from '../src'
-import path from 'path';
+import builder, {configure, Block} from '../src'
 import Sorter from './toolbar/sorter';
 import Pagination from './toolbar/pagination';
 import Filter from './toolbar/filter';
@@ -101,6 +100,43 @@ describe('builder', () => {
         ui: 'table',
         items: {
           type: 'string'
+        }
+      });
+    });
+
+    it('should layout works in map function', () => {
+      const configs = ['test1', 'test2'];
+      let schema = (
+        <array keyName="test">
+          <string keyName="top" />
+          {
+            configs.map(keyName => (
+              <Block key={keyName}>
+                <string keyName={keyName}/>
+              </Block>
+            ))
+          }
+        </array>
+      );
+      expect(schema).toMatchObject({
+        keyName: 'test',
+        type: 'array',
+        items: {
+          type: 'object',
+          items: {
+            top: {
+              keyName: 'top',
+              type: 'string'
+            },
+            test1: {
+              keyName: 'test1',
+              type: 'string'
+            },
+            test2: {
+              keyName: 'test2',
+              type: 'string'
+            }
+          }
         }
       });
     });
@@ -209,6 +245,40 @@ describe('builder', () => {
           title: {
             type: 'string',
             keyName: 'title'
+          }
+        }
+      });
+    });
+
+    it('should layout works in map function', () => {
+      const configs = ['test1', 'test2'];
+      let schema = (
+        <object keyName="test">
+          <string keyName="top" />
+          {
+            configs.map(keyName => (
+              <Block key={keyName}>
+                <string keyName={keyName}/>
+              </Block>
+            ))
+          }
+        </object>
+      );
+      expect(schema).toMatchObject({
+        keyName: 'test',
+        type: 'object',
+        items: {
+          top: {
+            keyName: 'top',
+            type: 'string'
+          },
+          test1: {
+            keyName: 'test1',
+            type: 'string'
+          },
+          test2: {
+            keyName: 'test2',
+            type: 'string'
           }
         }
       });

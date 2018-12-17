@@ -272,6 +272,31 @@ describe('script handle layout', () => {
     expect(createSchema).not.toThrow();
   });
 
+  it('should default layout works', () => {
+    let schema = (
+      <object keyName="test">
+        <string keyName="top" />
+        <Block test="321">
+          <string keyName="name"/>
+        </Block>
+      </object>
+    );
+    expect(schema).toMatchObject({
+      keyName: 'test',
+      type: 'object',
+      items: {
+        top: {
+          keyName: 'top',
+          type: 'string'
+        },
+        name: {
+          keyName: 'name',
+          type: 'string'
+        }
+      }
+    });
+  });
+
   it('empty children in layout should throw', () => {
     let createSchema = () => {
       return <Layout test="321" keyName="test">
