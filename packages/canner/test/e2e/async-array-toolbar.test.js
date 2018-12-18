@@ -40,7 +40,7 @@ describe('on page load', () => {
     await page.waitForSelector(testIdSelector('text-filter-0'));
     page.type(testIdSelector('text-filter-0'), firstCustomer.name);
     
-    // wait until tr length is less
+    // wait until tr length is less than origin
     const hasFiltered = await page.waitFor(trLength => {
       return document.querySelectorAll('div[data-testid="customers"] table tr').length < trLength;
     }, {timeout: 5000}, trLength);
