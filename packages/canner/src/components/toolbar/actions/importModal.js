@@ -159,7 +159,7 @@ export default class ImportModal extends React.Component<Props, State> {
         <React.Fragment>
           <div style={{marginBottom: 24}}>
             <FormattedMessage id="actions.import.step1" tagName="div" />
-            <Button onClick={this.download}>
+            <Button onClick={this.download} data-testid="actions-import-download-button">
               <Icon type="download" />
               <FormattedMessage id="actions.import.download" />
             </Button>
@@ -167,6 +167,7 @@ export default class ImportModal extends React.Component<Props, State> {
           <FormattedMessage id="actions.import.step2" tagName="div" />
           <Dragger
             name="file"
+            data-testid="actions-import-dragger"
             customRequest={this.customRequest}
             accept="text/csv"
             onChange={this.uploadChange}
