@@ -1,6 +1,6 @@
 {
   "name": "canner-layouts",
-  "version": "2.0.14",
+  "version": "2.0.37",
   "description": "Layouts for Canner",
   "files": [
     "lib"
