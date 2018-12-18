@@ -46,7 +46,7 @@ describe('with route mini app', () => {
     const renderButton = genDeployButton(() => {}, new RefId(''));
     expect(shallow(<div>
       {renderButton({
-        component: function test({children}) {return <span>{children}</span>;},
+        Component: function test({children}) {return <span>{children}</span>;},
         text: 'yoyo'
       })}
     </div>).html()).toBe("<div><span>yoyo</span></div>");
