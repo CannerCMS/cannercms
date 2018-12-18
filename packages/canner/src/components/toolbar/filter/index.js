@@ -123,7 +123,7 @@ export default class FilterGroup extends React.Component<Props, State> {
               {renderFilter(filters[index], index)}
               {
                 !filters[index].alwaysDisplay && (
-                  <Icon className="filter-cross" type="close-circle" onClick={() => this.deleteFilter(index)} />
+                  <Icon data-testid={`filter-${index}-delete-icon`} className="filter-cross" type="close-circle" onClick={() => this.deleteFilter(index)} />
                 )
               }
             </FilterWrapper>
