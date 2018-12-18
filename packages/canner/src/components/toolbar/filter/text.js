@@ -8,7 +8,8 @@ export default class TextFilter extends Component {
   static propTypes = {
     onChange: PropTypes.func,
     name: PropTypes.string,
-    label: PropTypes.string
+    label: PropTypes.string,
+    index: PropTypes.number
   };
 
   onInput = e => {
@@ -22,10 +23,10 @@ export default class TextFilter extends Component {
   }
 
   render() {
-    const {label, where, name} = this.props;
+    const {label, where, name, index} = this.props;
     return (
       <Input
-        data-testid={`text-filter-${name}`}
+        data-testid={`text-filter-${index}`}
         style={{width: 140}}
         placeholder={label}
         onChange={this.onInput}

@@ -81,7 +81,7 @@ export default class Actions extends Component<Props, State> {
       <Menu onClick={this.addFilter}>
         {
           filters.map((filter, index) => (
-            <Menu.Item key={index}>
+            <Menu.Item key={index} data-testid={`actions-filter-dropdown-menu-${index}`}>
               {filter.label}
             </Menu.Item>
           ))

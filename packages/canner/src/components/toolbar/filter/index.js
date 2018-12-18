@@ -23,6 +23,7 @@ type Props = {
       text: string,
       condition: Object,
     }>,
+    alwaysDisplay: boolean,
     label: string
   }>,
   where: Object
@@ -36,31 +37,19 @@ const FilterWrapper = styled.div`
   transition: 200ms;
   maxWidth: 220px;
   position: relative;
+  display: inline-block;
   text-align: left;
-  padding: 8px;
-  margin: 16px 0;
+  margin: 8px 16px;
   &:hover {
-    background-color: #f3f3f3;
-
-    i {
-      visibility: visible;
-      opacity: 1;
-      position: absolute;
-      right: 0;
-      top: 0;
-      cursor: pointer;
-    }
+    opacity: .8;
   }
-
-  i {
+  i.filter-cross {
     transition: all 200ms;
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
+    left: 8px;
+    position: relative;
+    font-size: 18px;
+    cursor: pointer;
   }
-
   h5 {
     margin-bottom: 0;
   }
@@ -109,18 +98,18 @@ export default class FilterGroup extends React.Component<Props, State> {
       return null;
     }
     const debounceChange = debounce(this.onChange, 500);
-    const renderFilter = (filter) => {
+    const renderFilter = (filter, index) => {
       switch (filter.type) {
         case 'select':
-          return <SelectFilter onChange={debounceChange} options={filter.options} where={where}/>;
+          return <SelectFilter index={index} onChange={debounceChange} options={filter.options} where={where}/>;
         case 'number':
-          return <NumberFilter onChange={debounceChange} name={filter.field} where={where}/>;
+          return <NumberFilter index={index} onChange={debounceChange} name={filter.field} where={where}/>;
         /*
         case 'dateRange':
           return <DateRangeFilter onChange={debounceChange} schema={{[filter.field]: filter}}/>
         */
         case 'text':
-          return <TextFilter onChange={debounceChange} name={filter.field} where={where}/>;
+          return <TextFilter index={index} onChange={debounceChange} name={filter.field} where={where}/>;
         default:
           return null;
       }
@@ -131,8 +120,12 @@ export default class FilterGroup extends React.Component<Props, State> {
           displayedFilters.map(index => (
             <FilterWrapper key={index}>
               <h5>{filters[index].label}</h5>
-              {renderFilter(filters[index])}
-              <Icon type="close-circle-o" onClick={() => this.deleteFilter(index)} />
+              {renderFilter(filters[index], index)}
+              {
+                !filters[index].alwaysDisplay && (
+                  <Icon className="filter-cross" type="close-circle" onClick={() => this.deleteFilter(index)} />
+                )
+              }
             </FilterWrapper>
             
           ))

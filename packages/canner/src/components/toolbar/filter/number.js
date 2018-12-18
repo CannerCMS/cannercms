@@ -21,6 +21,7 @@ export default class NumberRangeFilter extends Component {
     name: PropTypes.string,
     label: PropTypes.string,
     intl: PropTypes.object,
+    index: PropTypes.number
   };
 
   constructor(props) {
@@ -82,7 +83,7 @@ export default class NumberRangeFilter extends Component {
   }
 
   render() {
-    const {intl} = this.props;
+    const {intl, index} = this.props;
     const {operator, input} = this.state;
     const placeholder = intl.formatMessage({
       id: 'query.numberRange.placeholder',
@@ -92,7 +93,7 @@ export default class NumberRangeFilter extends Component {
         <Select style={{width: 60}}
           value={operator}
           onChange={this.changeOperator}
-          data-testid={`number-filter`}
+          data-testid={`number-filter-${index}-select`}
         >
           {
             operators.map((operator) =>
@@ -103,6 +104,7 @@ export default class NumberRangeFilter extends Component {
         </Select>
         <Input
           style={{width: 120}}
+          data-testid={`number-filter-${index}-input`}
           placeholder={placeholder}
           value={input}
           onChange={this.onInput}

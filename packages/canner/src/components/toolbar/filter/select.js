@@ -29,18 +29,18 @@ export default class SelectFilter extends Component {
   }
 
   render() {
-    const {options, intl} = this.props;
+    const {options, intl, index} = this.props;
     const placeholder = intl.formatMessage({id: 'query.filter.select.placeholder'});
     return (
       <Select
-        data-testid={`select-filter`}
+        data-testid={`select-filter-${index}`}
         style={{width: 120}}
         placeholder={placeholder}
         onChange={(val) => this.onSelect(val)}
         allowClear
       >
         {options.map((cond, i) => (
-          <Option value={i} key={i}>
+          <Option value={i} key={i} data-testid={`select-filter-${index}-option-${i}`} >
             {cond.text}
           </Option>
         ))}
