@@ -140,14 +140,14 @@ export default class ExportModal extends React.Component<Props, State> {
               initialValue: selectedValue.length ? 'SELECTED' : 'ALL',
             })(
               <RadioGroup>
-                <Radio value={ALL}>
+                <Radio value={ALL} data-testid={`actions-export-data-all`}>
                   <FormattedMessage id="actions.export.data.all" />
                   {title}
                 </Radio>
-                <Radio value={THIS_PAGE}>
+                <Radio value={THIS_PAGE} data-testid={`actions-export-data-this-page`}>
                   <FormattedMessage id="actions.export.data.thisPage" />
                 </Radio>
-                <Radio value="SELECTED" disabled={!selectedValue.length}>
+                <Radio value="SELECTED" disabled={!selectedValue.length}  data-testid={`actions-export-data-selected`}>
                   <FormattedMessage
                     id="actions.export.data.selected"
                     values={{
@@ -170,7 +170,7 @@ export default class ExportModal extends React.Component<Props, State> {
               initialValue: DOWNLOAD,
             })(
               <RadioGroup disabled={true}>
-                <Radio value={DOWNLOAD}>
+                <Radio value={DOWNLOAD} data-testid={`actions-export-way-csv`}>
                   <FormattedMessage id="actions.export.way.csv" />
                 </Radio>
               </RadioGroup>
@@ -190,10 +190,11 @@ export default class ExportModal extends React.Component<Props, State> {
                 placeholder={intl.formatMessage({
                   id: "actions.export.fields.placeholder"
                 })}
+                data-testid={`actions-export-fields-select`}
               >
                 {
-                  fields.map(field => (
-                    <Option value={field.keyName} key={field.keyName}>{field.title || field.keyName}</Option>
+                  fields.map((field, index) => (
+                    <Option data-testid={`actions-export-fields-option-${index}`} value={field.keyName} key={field.keyName}>{field.title || field.keyName}</Option>
                   ))
                 }
               </Select>
@@ -202,10 +203,10 @@ export default class ExportModal extends React.Component<Props, State> {
           <FormItem
             wrapperCol={{ span: 12, offset: 5 }}
           >
-            <Button htmlType="button" onClick={this.handleCancel} data-testid="actions-export-cancel-button">
+            <Button data-testid={`actions-export-cancel-button`}  htmlType="button" onClick={this.handleCancel}>
               <FormattedMessage id="actions.export.modal.cancelButton" />
             </Button>
-            <Button loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }} data-testid="actions-export-reset-button">
+            <Button data-testid={`actions-export-confirm-button`} loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }}>
               <FormattedMessage id="actions.export.modal.confirmButton" />
             </Button>
           </FormItem>
