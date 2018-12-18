@@ -5,7 +5,7 @@ let browser;
 let page;
 jest.setTimeout(60000);
 
-describe('on page load', () => {
+describe('async array crud', () => {
   beforeAll(async () => { 
     browser = await puppeteer.launch({
       headless: false,
@@ -39,32 +39,36 @@ describe('on page load', () => {
   });
 
   test('should navigate and remove changes after reset', async () => {
+    // update product
     await goToProduct(page);
-    const previousValue = await getProduct1(page);
+    const previousValue = await getProductValue(page);
     const updateValue = createUpdateValue();
     await updateProduct1(page, updateValue);
+
     // click reset
     await clickAndWait(page, 'button[data-testid="reset-button"]');
     expect(page.url()).toBe('http://localhost:8080/demo/customers');
 
-    // re-reneter customers1
+    // re-reneter customers1 and check value
     await goToProduct(page);
-    const productValue = await getProduct1(page);
+    const productValue = await getProductValue(page);
     expect(productValue).toMatchObject(previousValue)
   });
 
-  test('should navigate and deploy changes after deplot', async () => {
+  test('should navigate and deploy changes after deploy', async () => {
+    // update product
     await goToProduct(page);
-    const previousValue = await getProduct1(page);
+    const previousValue = await getProductValue(page);
     const updateValue = createUpdateValue();
     await updateProduct1(page, updateValue);
-    // click reset
+    
+    // click confirm
     await clickAndWait(page, 'button[data-testid="confirm-button"]');
     expect(page.url()).toBe('http://localhost:8080/demo/customers');
 
-    // re-reneter customers1
+    // re-reneter customers1 and check value
     await goToProduct(page);
-    const productValue = await getProduct1(page);
+    const productValue = await getProductValue(page);
     expect(productValue).toMatchObject({
       name: `${previousValue.name}${updateValue.name}`,
       email: `${previousValue.email}${updateValue.email}`,
@@ -73,33 +77,50 @@ describe('on page load', () => {
   });
 
   test('should delete item', async () => {
+    // get origin customers
     await goToProductList(page);
-    const originTrLength = await page.$$eval('div[data-testid="customers"] table tr', trs => trs.length);
+    const customers = await page.evaluate(() => {
+      return JSON.parse(localStorage.getItem('cannerDEMO')).customers;
+    });
+    // delete item
     await deleteProduct(page);
-    const hasDeleted = await page.waitFor(trLength => {
-      return document.querySelectorAll('div[data-testid="customers"] table tr').length < trLength;
-    }, {}, originTrLength);
-    expect(hasDeleted).toBeTruthy();
+    // check customers size
+    await page.waitFor(length => {
+      return JSON.parse(localStorage.getItem('cannerDEMO')).customers.length < length;
+    }, {timeout: 5000}, customers.length);
+    const newCustomersLength = await page.evaluate(() => {
+      return JSON.parse(localStorage.getItem('cannerDEMO')).customers.length;
+    });
+    expect(newCustomersLength).toBe(customers.length - 1);
   });
 
   test('should create item', async () => {
+    // get origin customers
     await goToProductList(page);
-    await deleteProduct(page);
-    const originTrLength = await page.$$eval('div[data-testid="customers"] table tr', trs => trs.length);
+    const customers = await page.evaluate(() => {
+      return JSON.parse(localStorage.getItem('cannerDEMO')).customers;
+    });
+
+    // create item
     await clickAndWait(page, 'button[data-testid="add-button"]');
     await page.waitForSelector('div[data-testid="customers/name"]');
     const updateValue = createUpdateValue();
     await updateProduct1(page, updateValue)
     await clickAndWait(page, 'button[data-testid="confirm-button"]');
     await page.waitForSelector('div[data-testid="customers"]');
-    const hasCreated = await page.waitFor(trLength => {
-      return document.querySelectorAll('div[data-testid="customers"] table tr').length > trLength;
-    }, {}, originTrLength);
-    expect(hasCreated).toBeTruthy();
+
+    // check customers size
+    await page.waitFor(length => {
+      return JSON.parse(localStorage.getItem('cannerDEMO')).customers.length > length;
+    }, {timeout: 5000}, customers.length);
+    const newCustomersLength = await page.evaluate(() => {
+      return JSON.parse(localStorage.getItem('cannerDEMO')).customers.length;
+    });
+    expect(newCustomersLength).toBe(customers.length + 1);
   });
 })
 
-async function getProduct1(page) {
+async function getProductValue(page) {
   return await page.evaluate(() => {
     return {
       name: document.querySelector('div[data-testid="customers/name"] input').value,
