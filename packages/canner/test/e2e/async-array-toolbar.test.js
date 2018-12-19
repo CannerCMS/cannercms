@@ -26,29 +26,96 @@ describe('on page load', () => {
   })
   
   test('should filter only one customers', async () => {
-    const trLength = await page.$$eval('div[data-testid="customers"] table tr', trs => trs.length);
+    const rowLength = await page.$$eval(testIdSelector('edit-button'), buttons => buttons.length);
     
     // get data from localStorage
-    const firstCustomer = await page.evaluate(() => {
-      return JSON.parse(localStorage.getItem('cannerDEMO')).customers[0]
-    });
+    const firstCustomer = await getCustomerFromIndex(page, 0);
     
     // add filter
-    page.hover(testIdSelector('actions-filter-button'));
-    await page.waitForSelector(testIdSelector('actions-filter-dropdown-menu-0'));
-    page.click(testIdSelector('actions-filter-dropdown-menu-0'));
-    await page.waitForSelector(testIdSelector('text-filter-0'));
-    page.type(testIdSelector('text-filter-0'), firstCustomer.name);
+    await addCustomerNameFilter(page, firstCustomer.name);
     
     // wait until tr length is less than origin
-    const hasFiltered = await page.waitFor(trLength => {
-      return document.querySelectorAll('div[data-testid="customers"] table tr').length < trLength;
-    }, {timeout: 5000}, trLength);
+    await page.waitFor((rowLength, selector) => {
+      return document.querySelectorAll(selector).length < rowLength;
+    }, {timeout: 5000}, rowLength, testIdSelector('edit-button'));
     
-    expect(hasFiltered).toBeTruthy();
+    const currentRowLength = await page.$$eval(testIdSelector('edit-button'), buttons => buttons.length);
+
+    expect(currentRowLength).toBe(1);
+
+  });
+
+  test('should persist query after click BACK to list', async () => {
+    await page.goto('http://localhost:8080/demo/customers');
+    await page.waitForSelector(testIdSelector('customers'));
+    const rowLength = await page.$$eval(testIdSelector('edit-button'), buttons => buttons.length);
+    
+    const firstCustomer = await getCustomerFromIndex(page, 0);
+    // add filter
+    await addCustomerNameFilter(page, firstCustomer.name);
+
+    // wait until rowLength is less than origin
+    await page.waitFor((rowLength, selector) => {
+      return document.querySelectorAll(selector).length < rowLength;
+    }, {timeout: 5000}, rowLength, testIdSelector('edit-button'));
+
+    // entering first customer
+    await clickAndWait(page, testIdSelector('edit-button'), testIdSelector('back-button'))
+
+    // [BACK BUTTON] click back button to customer list and the rowLength should be 1 the text filter should exist
+    await clickAndWait(page, testIdSelector('back-button'), testIdSelector('edit-button'))
+    expect(await page.$$eval(testIdSelector('edit-button'), buttons => buttons.length)).toBe(1);
+  });
+
+  test('should persist query after RESET to list', async () => {
+    await page.goto('http://localhost:8080/demo/customers');
+    await page.waitForSelector(testIdSelector('customers'));
+    const rowLength = await page.$$eval(testIdSelector('edit-button'), buttons => buttons.length);
+
+    const firstCustomer = await getCustomerFromIndex(page, 0);
+    // add filter
+    await addCustomerNameFilter(page, firstCustomer.name);
+    // wait until rowLength is less than origin
+    await page.waitFor((rowLength, selector) => {
+      return document.querySelectorAll(selector).length < rowLength;
+    }, {timeout: 5000}, rowLength, testIdSelector('edit-button'));
+
+    // entering first customer
+    await clickAndWait(page, testIdSelector('edit-button'), testIdSelector('reset-button'))
+    
+    // [RESET BUTTON] click reset to customer list and the rowLength should be 1
+    await clickAndWait(page, testIdSelector('reset-button'), testIdSelector('edit-button'))
+    expect(await page.$$eval(testIdSelector('edit-button'), buttons => buttons.length)).toBe(1);
+  });
+
+  test('should persist query after click confirm to list', async () => {
+    await page.goto('http://localhost:8080/demo/customers');
+    await page.waitForSelector(testIdSelector('customers'));
+    const rowLength = await page.$$eval(testIdSelector('edit-button'), buttons => buttons.length);
+
+    const firstCustomer = await getCustomerFromIndex(page, 0);
+    // add filter
+    await addCustomerNameFilter(page, firstCustomer.name);
+
+    // wait until rowLength is less than origin
+    await page.waitFor((rowLength, selector) => {
+      return document.querySelectorAll(selector).length < rowLength;
+    }, {timeout: 5000}, rowLength, testIdSelector('edit-button'));
+
+    // entering first customer
+    await clickAndWait(page, testIdSelector('edit-button'), testIdSelector('customers/name'))
+    
+    // update customer name
+    await page.type(testIdSelector('customers/name'), 'hi');
+
+    // [CONFIRM BUTTON] click confirm to customer list and the rowLength should be 1
+    await clickAndWait(page, testIdSelector('confirm-button'), testIdSelector('edit-button'))
+    expect(await page.$$eval(testIdSelector('edit-button'), buttons => buttons.length)).toBe(1);
   });
 
   test('should fetch origin data after remove filter', async () => {
+    await page.goto('http://localhost:8080/demo/customers');
+    await page.waitForSelector(testIdSelector('customers'));
     const trLength = await page.$$eval('div[data-testid="customers"] table tr', trs => trs.length);
 
     // add filter
@@ -68,3 +135,29 @@ describe('on page load', () => {
     expect(getOriginData).toBeTruthy();
   });
 });
+
+
+async function addCustomerNameFilter(page, name) {
+  // add filter
+  page.hover(testIdSelector('actions-filter-button'));
+  await page.waitForSelector(testIdSelector('actions-filter-dropdown-menu-0'));
+  page.click(testIdSelector('actions-filter-dropdown-menu-0'));
+  await page.waitForSelector(testIdSelector('text-filter-0'));
+  page.type(testIdSelector('text-filter-0'), name);
+}
+
+async function getCustomerFromIndex(page, index) {
+  // get data from localStorage
+  return await page.evaluate((index) => {
+    return JSON.parse(localStorage.getItem('cannerDEMO')).customers[index]
+  }, index);
+}
+
+async function clickAndWait(page, buttonId, selector) {
+  await page.waitFor(500)
+  return await Promise.all([
+    page.waitForNavigation(),
+    page.waitForSelector(selector),
+    page.click(buttonId),
+  ]);
+}
