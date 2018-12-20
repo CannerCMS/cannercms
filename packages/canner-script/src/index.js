@@ -21,7 +21,7 @@ import {
 import type {CannerSchema, Props} from './flow-types';
 import {createLayoutVisitor} from './layout';
 import visitorManager from './visitorManager';
-import validator from './validator';
+import Validator from './validator/validator';
 import configuration from './configure';
 import {getIntlMessage} from './utils';
 
@@ -85,7 +85,7 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     case 'component':
       return createJSON(ComponentModel, [attributes, children]);
     case 'enum':
-      return new createJSON(EnumModel, [attributes, children]);
+      return createJSON(EnumModel, [attributes, children]);
     case 'page':
       return new PageModel(attributes, children).toJson();
     case 'root':
@@ -188,7 +188,11 @@ export default function builder(tag: string | Function, attributes: Object, ...c
 
 function createJSON(Model: any, args: Array<*>) {
   let json = new Model(...args).toJson();
-  validator.validate(json);
+  const validator = new Validator(json);
+  const valid = validator(json).validate();
+  if (!valid) {
+    throw new Error(validator.getError());
+  }
   return json;
 }
 
