@@ -40,6 +40,9 @@ describe('object options', () => {
         options: [{
           title: 'test',
           key: 'test'
+        }, {
+          title: 'test',
+          key: 'test'
         }]
       }
     });
