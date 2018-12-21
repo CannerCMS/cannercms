@@ -21,7 +21,6 @@ import {
 import type {CannerSchema, Props} from './flow-types';
 import {createLayoutVisitor} from './layout';
 import visitorManager from './visitorManager';
-import Validator from './validator/validator';
 import configuration from './configure';
 import {getIntlMessage} from './utils';
 
@@ -37,7 +36,7 @@ export const Row = ({attributes, children}: Props) => <Layout ui="row" {...attri
 export const Col = ({attributes, children}: Props) => <Layout ui="col" {...attributes}>{children}</Layout>;
 export const Body = ({attributes, children}: Props) => <Layout ui="body" {...attributes}>{children}</Layout>;
 
-// validator config
+// config
 export const configure = configuration.configure;
 
 // jsx pragma
@@ -188,11 +187,6 @@ export default function builder(tag: string | Function, attributes: Object, ...c
 
 function createJSON(Model: any, args: Array<*>) {
   let json = new Model(...args).toJson();
-  const validator = new Validator(json);
-  const valid = validator(json).validate();
-  if (!valid) {
-    throw new Error(validator.getError());
-  }
   return json;
 }
 

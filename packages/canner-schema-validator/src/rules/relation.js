@@ -3,6 +3,11 @@ export default {
     type: "object",
     required: ['relation', 'uiParams'],
     properties: {
+      "path": {
+        type: "string",
+        // can only be second level
+        pattern: "([^/]+/[^/]+)"
+      },
       "uiParams": {
         type: "object",
         required: ['textCol', 'columns'],
@@ -26,6 +31,11 @@ export default {
     type: "object",
     required: ['relation', 'uiParams'],
     properties: {
+      "path": {
+        type: "string",
+        // can only be second level
+        pattern: "([^/]+/[^/]+)"
+      },
       "uiParams": {
         type: "object",
         required: ['columns'],
@@ -49,6 +59,11 @@ export default {
     type: "object",
     required: ['relation', 'uiParams'],
     properties: {
+      "path": {
+        type: "string",
+        // can only be second level
+        pattern: "([^/]+/[^/]+)"
+      },
       "uiParams": {
         type: "object",
         required: ['textCol', 'relationField'],
@@ -72,6 +87,11 @@ export default {
     type: "object",
     required: ['relation', 'uiParams'],
     properties: {
+      "path": {
+        type: "string",
+        // can only be second level
+        pattern: "([^/]+/[^/]+)"
+      },
       "uiParams": {
         type: "object",
         required: ['textCol', 'relationField'],

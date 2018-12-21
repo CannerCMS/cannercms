@@ -1,5 +1,4 @@
 // @flow
-import type {CannerSchema} from '../flow-types';
 import rule from './rules';
 import get from 'lodash/get';
 import Ajv from 'ajv';
@@ -9,10 +8,13 @@ export default class Validator {
   throwError = true;
   schema = {};
   rule = {};
+  isRoot = false;
 
-  constructor(schema: CannerSchema, rule: Object) {
+  constructor(schema: Object, options: Object = {}) {
+    const {rule, isRoot} = options;
     this.schema = schema;
-    this.rule = rule || getRule(schema) || {type: 'object'};
+    this.isRoot = isRoot;
+    this.rule = rule || this.getRule() || {type: 'object'};
     this.ajv = new Ajv();
   }
 
@@ -23,8 +25,12 @@ export default class Validator {
   getErrorText = () => {
     return this.ajv.errorsText();
   }
-}
 
-function getRule(schema: CannerSchema) {
-  return get(rule, [schema.type, schema.ui || 'default'], undefined);
+  getRule = () => {
+    const {type, ui} = this.schema;
+    if (this.isRoot) {
+      return get(rule, 'root', undefined);
+    }
+    return get(rule, [type, ui || 'default'], undefined);
+  }
 }

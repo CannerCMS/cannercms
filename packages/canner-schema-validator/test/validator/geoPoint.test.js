@@ -1,4 +1,4 @@
-import Validator from '../../src/validator';
+import Validator from '../../src';
 
 describe('geoPoint default', () => {
   it('should be valid with no other fields', () => {

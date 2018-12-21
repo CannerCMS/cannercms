@@ -27,6 +27,11 @@ export default {
   tableRoute: {
     type: "object",
     properties: {
+      "path": {
+        type: "string",
+        // can only be first level
+        pattern: "([^/]+)"
+      },
       "uiParams": {
         type: "object",
         properties: {
@@ -85,6 +90,11 @@ export default {
     type: "object",
     required: ['uiParams'],
     properties: {
+      "path": {
+        type: "string",
+        // can only be one level
+        pattern: "([^/]+)"
+      },
       "uiParams": {
         type: "object",
         required: ['textCol', 'relationField'],

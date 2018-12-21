@@ -1,5 +1,27 @@
-import Validator from '../../src/validator';
+import Validator from '../../src';
 import pick from 'lodash/pick';
+
+describe('relation', () => {
+  test('relation only can be second level', () => {
+    const validator = new Validator({
+      type: 'relation',
+      path: 'post/test/relation',
+      ui: 'singleSelect',
+      relation: {
+        type: 'toOne',
+        to: 'any'
+      },
+      uiParams: {
+        textCol: 'title',
+        columns: [{
+          title: 'title',
+          dataIndex: 'title'
+        }] 
+      }
+    });
+    expect(validator.validate()).toBe(false);
+  });
+})
 
 describe('relation singleSelect', () => {
   const schema = {

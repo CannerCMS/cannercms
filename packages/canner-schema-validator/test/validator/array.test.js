@@ -1,4 +1,4 @@
-import Validator from '../../src/validator';
+import Validator from '../../src';
 
 describe('array table', () => {
   it('should be valid with no other fields', () => {
@@ -17,6 +17,15 @@ describe('array tableRoute', () => {
       ui: 'tableRoute'
     });
     expect(validator.validate()).toBe(true);
+  });
+
+  test('ui tableRoute only can be one level', () => {
+    const validator = new Validator({
+      type: 'array',
+      ui: 'tableRoute',
+      path: 'info/posts'
+    })
+    expect(validator.validate()).toBe(false);
   });
 });
 
@@ -94,5 +103,14 @@ describe('array tree', () => {
       }
     });
     expect(validator.validate()).toBe(true);
+  });
+
+  test('ui tree only can be one level', () => {
+    const validator = new Validator({
+      type: 'array',
+      ui: 'tree',
+      path: 'info/posts'
+    })
+    expect(validator.validate()).toBe(false);
   });
 });

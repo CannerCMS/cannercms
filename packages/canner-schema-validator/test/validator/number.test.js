@@ -1,4 +1,4 @@
-import Validator from '../../src/validator';
+import Validator from '../../src';
 
 describe('number input', () => {
   it('should be valid with no other fields', () => {

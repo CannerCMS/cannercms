@@ -1,0 +1,19 @@
+{
+  "name": "@canner/schema-validator",
+  "version": "1.0.0",
+  "description": "Used to check canner schema",
+  "main": "lib/index.js",
+  "keywords": [
+    "canner",
+    "schema",
+    "validator"
+  ],
+  "author": "Canner",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "query-string": "^6.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
