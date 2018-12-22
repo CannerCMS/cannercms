@@ -1,6 +1,7 @@
 // @flow
 
 import type {Pattern, Action, ConnectActionType} from '../types';
+import {uniqBy} from 'lodash';
 
 type ConnectAction = Action<ConnectActionType>;
 
@@ -17,7 +18,10 @@ export default class ConnectPattern implements Pattern<ConnectAction> {
   }
 
   mergeConnectAndDisconnectAndDelete = () => {
-    
+    this.actions = uniqBy([...this.actions].reverse(), action => {
+      const {key, id, path} = action.payload;
+      return `${key}.${id}.${path}`;
+    });
   }
 
   mergeAction = (): Array<ConnectAction> => {
