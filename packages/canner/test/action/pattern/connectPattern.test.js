@@ -16,7 +16,7 @@ const connectAction2 = {
   type: 'CONNECT',
   payload: {
     key: 'array',
-    id: 'id2',
+    id: 'id1',
     path: 'category',
     value: {
       id: 2
@@ -40,7 +40,7 @@ const disconnectAction2 = {
   type: 'DISCONNECT',
   payload: {
     key: 'array',
-    id: 'id2',
+    id: 'id1',
     path: 'category',
     value: {
       id: 2
