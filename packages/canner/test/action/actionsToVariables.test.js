@@ -354,6 +354,24 @@ describe('single action to variable', () => {
       })
   });
 
+  test('to many connect multiple', () => {
+    const connectToManyAction2 = {...connectToManyAction};
+    connectToManyAction2.payload.value.id = 'id2';
+    expect(actionsToVariables([connectToManyAction, connectToManyAction2], schema))
+      .toMatchObject({
+        payload: {
+          [connectToManyAction.payload.path]: {
+            connect: [{
+              id: connectToManyAction.payload.value.id
+            }, {
+              id: connectToManyAction2.payload.value.id
+            }]
+          }
+        },
+        where: {id: connectToManyAction.payload.id}
+      })
+  });
+
   /* experimental usage */
   test('connect to many with transformGqlPayload', () => {
     const action = {...connectToManyAction}
@@ -429,6 +447,83 @@ describe('single action to variable', () => {
         },
         where: {id: disconnectToManyAction.payload.id}
       });
+  });
+
+  test('to many disconnect multiple', () => {
+    const disconnectToManyAction2 = {...disconnectToManyAction};
+    disconnectToManyAction2.payload.value.id = 'id2';
+    expect(actionsToVariables([disconnectToManyAction, disconnectToManyAction2], schema))
+      .toMatchObject({
+        payload: {
+          [disconnectToManyAction.payload.path]: {
+            disconnect: [{
+              id: disconnectToManyAction.payload.value.id
+            }, {
+              id: disconnectToManyAction2.payload.value.id
+            }]
+          }
+        },
+        where: {id: disconnectToManyAction.payload.id}
+      })
+  });
+
+  test('to many connect and disconnect multiple', () => {
+    const connectToManyAction2 = {...connectToManyAction};
+    const disconnectToManyAction2 = {...disconnectToManyAction};
+    disconnectToManyAction2.payload.value.id = 'id2';
+    connectToManyAction2.payload.value.id = 'id2';
+    expect(actionsToVariables([connectToManyAction, connectToManyAction2, disconnectToManyAction, disconnectToManyAction2], schema))
+      .toMatchObject({
+        payload: {
+          [connectToManyAction.payload.path]: {
+            disconnect: [{
+              id: disconnectToManyAction.payload.value.id
+            }, {
+              id: disconnectToManyAction2.payload.value.id
+            }]
+          }
+        },
+        where: {id: disconnectToManyAction.payload.id}
+      })
+  });
+
+  test('to many connect and disconnect multiple', () => {
+    const connectToManyAction2 = {...connectToManyAction};
+    const disconnectToManyAction2 = {...disconnectToManyAction};
+    disconnectToManyAction2.payload.value.id = 'id2';
+    connectToManyAction2.payload.value.id = 'id2';
+    expect(actionsToVariables([disconnectToManyAction, disconnectToManyAction2, connectToManyAction, connectToManyAction2], schema))
+      .toMatchObject({
+        payload: {
+          [connectToManyAction.payload.path]: {
+            connect: [{
+              id: connectToManyAction.payload.value.id
+            }, {
+              id: connectToManyAction2.payload.value.id
+            }]
+          }
+        },
+        where: {id: connectToManyAction.payload.id}
+      })
+  });
+
+  test('to many connect and disconnect multiple', () => {
+    const connectToManyAction2 = {...connectToManyAction};
+    connectToManyAction2.payload.value.id = 'id2';
+    expect(actionsToVariables([disconnectToManyAction, connectToManyAction2], schema))
+      .toMatchObject({
+        payload: {
+          [connectToManyAction.payload.path]: {
+            connect: [{
+              id: connectToManyAction.payload.value.id
+            }],
+            disconnect: [{
+              id: disconnectToManyAction.payload.value.id
+            }]
+          }
+        },
+        where: {id: connectToManyAction.payload.id}
+      })
   });
 
   test('disconnect and delete to one', () => {

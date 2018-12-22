@@ -21,7 +21,7 @@ export default class ConnectPattern implements Pattern<ConnectAction> {
     this.actions = uniqBy([...this.actions].reverse(), action => {
       const {key, id, path, value} = action.payload;
       return `${key}.${id}.${path}.${value.id}`;
-    });
+    }).reverse();
   }
 
   mergeAction = (): Array<ConnectAction> => {

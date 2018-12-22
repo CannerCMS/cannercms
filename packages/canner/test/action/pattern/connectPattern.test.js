@@ -94,10 +94,15 @@ describe('connect pattern', () => {
   it('do not merge different id', () => {
     connectPattern.addAction(connectAction1);
     connectPattern.addAction(disconnectAction2);
+    connectPattern.addAction(connectAction2);
+    connectPattern.addAction(createAndConnectAction);
+    connectPattern.addAction(disconnectAndDeleteAction1);
 
-    expect(connectPattern.getActions().length).toBe(2);
-    expect(connectPattern.getActions()[0]).toEqual(disconnectAction2);
-    expect(connectPattern.getActions()[1]).toEqual(connectAction1);
+    expect(connectPattern.getActions().length).toBe(4);
+    expect(connectPattern.getActions()[0]).toEqual(connectAction1);
+    expect(connectPattern.getActions()[1]).toEqual(connectAction2);
+    expect(connectPattern.getActions()[2]).toEqual(createAndConnectAction);
+    expect(connectPattern.getActions()[3]).toEqual(disconnectAndDeleteAction1);
   });
 });
 
