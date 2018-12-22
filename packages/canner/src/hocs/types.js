@@ -104,5 +104,7 @@ export type HOCProps = {
   labelCol: Object,
   graphql?: string,
   variables?: Object,
-  client: ApolloClient
+  client: ApolloClient,
+  hideBackButton?: boolean,
+  fetchPolicy: string,
 }

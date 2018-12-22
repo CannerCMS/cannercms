@@ -109,7 +109,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
 
     render() {
       const {loading, loadingTip} = this.state;
-      let {routes, pattern,  path, intl, routerParams, refId, renderChildren, hideButtons, uiParams} = this.props;
+      let {routes, pattern,  path, intl, routerParams, refId, renderChildren, hideButtons, hideBackButton, uiParams} = this.props;
       const renderType = getRenderType({
         pattern,
         routes,
@@ -127,7 +127,7 @@ export default function withRoute(Com: React.ComponentType<*>) {
         {
           // quick fix for route array's children
           // need to find a stable way to control route
-          (renderType === RENDER_CHILDREN && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))) &&
+          (renderType === RENDER_CHILDREN && !hideBackButton && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))) &&
             <Button onClick={this.discard} style={{marginBottom: 16}} data-testid="back-button">
               <Icon type="arrow-left" /> {intl.formatMessage({id: 'hocs.route.backText'})}
             </Button>
