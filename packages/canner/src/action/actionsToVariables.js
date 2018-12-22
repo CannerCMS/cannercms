@@ -41,7 +41,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
               connectValue = transformGqlPayload(connectValue, action);
             }
             
-            if (!relationField || !isArray(relationField.connector)) {
+            if (!relationField || !isArray(relationField.connect)) {
               return {
                 connect: [connectValue]
               };
