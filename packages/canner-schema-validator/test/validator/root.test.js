@@ -12,8 +12,9 @@ describe('root top level', () => {
       info: {
         type: 'object',
       }
-    }, {isRoot: true})
-    expect(validator.validate()).toBe(true);
+    }, {isRoot: true});
+    const result = validator.validate();
+    expect(result).toBe(true);
   });
 
   test('first level can be array', () => {
