@@ -59,12 +59,12 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     success = () => {
-      const {goTo, routes} = this.props;
+      const {goTo, routes, hideBackButton} = this.props;
       setTimeout(() => {
         this.setState({
           loading: false
         }, () => {
-          goTo({pathname: routes[0]});
+          !hideBackButton && goTo({pathname: routes[0]});
         });
       }, 400);
     }
@@ -76,13 +76,13 @@ export default function withRoute(Com: React.ComponentType<*>) {
     }
 
     discard = () => {
-      const {goTo, routes, routerParams, reset, refId, dataChanged, intl} = this.props;
+      const {goTo, routes, routerParams, reset, refId, dataChanged, intl, hideBackButton} = this.props;
 
       const resetCondFn = () => {
         if (routerParams.operator === 'create') {
-          reset(refId.getPathArr()[0]).then(() => goTo({pathname: routes.join('/')}));
+          reset(refId.getPathArr()[0]).then(() => !hideBackButton && goTo({pathname: routes.join('/')}));
         } else {
-          reset(refId.getPathArr()[0]).then(() => goTo({pathname: routes.slice(0, -1).join('/')}));
+          reset(refId.getPathArr()[0]).then(() => !hideBackButton && goTo({pathname: routes.slice(0, -1).join('/')}));
         }
       }
       if (dataChanged && Object.keys(dataChanged).length > 0) {
