@@ -92,17 +92,12 @@ describe('connect pattern', () => {
   });
 
   it('do not merge different id', () => {
-    // for now, connect pattern doesn't merge
     connectPattern.addAction(connectAction1);
-    connectPattern.addAction(disconnectAction1);
-    connectPattern.addAction(connectAction2);
     connectPattern.addAction(disconnectAction2);
-    connectPattern.addAction(connectAction1);
-    connectPattern.addAction(disconnectAction1);
 
     expect(connectPattern.getActions().length).toBe(2);
-    expect(connectPattern.getActions()[0]).toEqual(disconnectAction1);
-    expect(connectPattern.getActions()[1]).toEqual(disconnectAction2);
+    expect(connectPattern.getActions()[0]).toEqual(disconnectAction2);
+    expect(connectPattern.getActions()[1]).toEqual(connectAction1);
   });
 });
 

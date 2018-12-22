@@ -33,21 +33,16 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
       }
       case 'CONNECT': {
         if (relation && relation.type === 'toMany') {
-          update(variables.payload, path.split('/'), relationField => {
+          update(variables.payload, path.split('/').concat('connect'), arr => {
             let connectValue = {id: value.id};
-            
             /* transformGqlPayload is a experimental usage */
             if (transformGqlPayload) {
               connectValue = transformGqlPayload(connectValue, action);
             }
-            
-            if (!relationField || !isArray(relationField.connect)) {
-              return {
-                connect: [connectValue]
-              };
+            if (!arr.concat) {
+              return [connectValue];
             }
-            relationField.connect.push(connectValue);
-            return relationField;
+            return arr.concat(connectValue);
           });
         } else {
           set(variables.payload, path.split('/').concat('connect'), {id: value.id});
