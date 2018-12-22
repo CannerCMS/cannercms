@@ -39,7 +39,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
             if (transformGqlPayload) {
               connectValue = transformGqlPayload(connectValue, action);
             }
-            if (!arr.concat) {
+            if (!arr || !arr.concat) {
               return [connectValue];
             }
             return arr.concat(connectValue);
