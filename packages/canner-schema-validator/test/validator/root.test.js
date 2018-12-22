@@ -3,7 +3,7 @@ import Validator from '../../src';
 describe('root top level', () => {
   test('schema can be empty', () => {
     const validator = new Validator({
-    })
+    }, {isRoot: true})
     expect(validator.validate()).toBe(true);
   });
 
@@ -12,7 +12,7 @@ describe('root top level', () => {
       info: {
         type: 'object',
       }
-    })
+    }, {isRoot: true})
     expect(validator.validate()).toBe(true);
   });
 
@@ -21,7 +21,7 @@ describe('root top level', () => {
       posts: {
         type: 'array',
       },
-    })
+    }, {isRoot: true})
     expect(validator.validate()).toBe(true);
   });
 
@@ -30,7 +30,7 @@ describe('root top level', () => {
       dashboard: {
         type: 'page',
       },
-    })
+    }, {isRoot: true})
     expect(validator.validate()).toBe(true);
   });
 
@@ -39,7 +39,7 @@ describe('root top level', () => {
       info: {
         type: 'string',
       },
-    })
+    }, {isRoot: true})
     expect(validator.validate()).toBe(false);
   });
 })

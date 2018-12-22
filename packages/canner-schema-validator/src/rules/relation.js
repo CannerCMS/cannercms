@@ -6,7 +6,7 @@ export default {
       "path": {
         type: "string",
         // can only be second level
-        pattern: "([^/]+/[^/]+)"
+        pattern: "^([^/]+/[^/]+)$"
       },
       "uiParams": {
         type: "object",
@@ -34,7 +34,7 @@ export default {
       "path": {
         type: "string",
         // can only be second level
-        pattern: "([^/]+/[^/]+)"
+        pattern: "^([^/]+/[^/]+)$"
       },
       "uiParams": {
         type: "object",
@@ -62,7 +62,7 @@ export default {
       "path": {
         type: "string",
         // can only be second level
-        pattern: "([^/]+/[^/]+)"
+        pattern: "^([^/]+/[^/]+)$"
       },
       "uiParams": {
         type: "object",
@@ -90,7 +90,7 @@ export default {
       "path": {
         type: "string",
         // can only be second level
-        pattern: "([^/]+/[^/]+)"
+        pattern: "^([^/]+/[^/]+)$"
       },
       "uiParams": {
         type: "object",

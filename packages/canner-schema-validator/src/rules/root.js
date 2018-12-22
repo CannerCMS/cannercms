@@ -1,7 +1,7 @@
 export default {
   type: "object",
   patternProperties: {
-    "\\w+": {
+    "^\\w+$": {
       type: "object",
       properties: {
         type: {

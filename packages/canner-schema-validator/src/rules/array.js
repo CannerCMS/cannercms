@@ -30,7 +30,7 @@ export default {
       "path": {
         type: "string",
         // can only be first level
-        pattern: "([^/]+)"
+        pattern: "^([^/]+)$"
       },
       "uiParams": {
         type: "object",
@@ -93,7 +93,7 @@ export default {
       "path": {
         type: "string",
         // can only be one level
-        pattern: "([^/]+)"
+        pattern: "^([^/]+)$"
       },
       "uiParams": {
         type: "object",

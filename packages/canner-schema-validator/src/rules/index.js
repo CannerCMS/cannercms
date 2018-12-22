@@ -7,6 +7,7 @@ import object from './object';
 import relation from './relation';
 import string from './string';
 import array from './array';
+import root from './root';
 
 export default {
   boolean,
@@ -17,5 +18,6 @@ export default {
   object,
   relation,
   string,
-  array
+  array,
+  root
 }
