@@ -7,18 +7,19 @@ import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import createEntryFile from './src/createEntryFile';
 const devMode = process.env.NODE_ENV !== 'production';
-const ENTRY_PATH = './.index.js';
+const ENTRY_PATH = path.join(__dirname, 'src/.index.js');
+const HTML_PATH = path.join(__dirname, 'src/index.html');
 
 // create entry file dynamic so that we can change appPath, schemaPath by CLI
 createEntryFile({
   entryPath: ENTRY_PATH,
-  appPath: path.resolve('./src/app'),
-  schemaPath: path.resolve('./schema/canner.schema.js')
+  appPath: path.join(__dirname, 'src/app'),
+  schemaPath: path.join(__dirname, 'schema/canner.schema')
 });
 
 const config: webpack.Configuration = {
   entry: {
-    index: './index.tsx'
+    index: ENTRY_PATH
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -32,38 +33,88 @@ const config: webpack.Configuration = {
     historyApiFallback: true,
     https: true
   },
+  resolve: {
+    "extensions": [".jsx", ".js", ".ts", ".tsx"]
+  },
+  externals: {
+    antd: "antd",
+    react: "React",
+    "react-dom": "ReactDOM",
+    lodash: "_",
+    moment: 'moment',
+    firebase: "firebase",
+    immutable: "Immutable",
+    "styled-components": "styled",
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
+  },
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
-        options: {
-          transpileOnly: true,
-          compilerOptions: {
-            module: 'es2015'
-          },
-          getCustomTransformers: () => ({
-            before: [tsImportPluginFactory({
-              libraryName: 'antd',
-              style: true,
-            })]
-          }),
-        }
+        oneOf: [{
+          test: /canner\.schema\.tsx?$/,
+          use: [{
+            loader: "canner-schema-loader"
+          }, {
+            loader: 'ts-loader',
+          }]
+        }, {
+          test: /\.tsx?$/,
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+            compilerOptions: {
+              module: 'es2015'
+            },
+            getCustomTransformers: () => ({
+              before: [tsImportPluginFactory({
+                libraryName: 'antd',
+                style: true,
+              })]
+            }),
+          }
+        }]
       },
       {
-        test: /(\.schema\.js|canner\.def\.js)$/,
-        use: [{
-          loader: "canner-schema-loader"
+        oneOf: [{
+          test: /(\.schema\.js|canner\.def\.js)$/,
+          use: [{
+            loader: "canner-schema-loader"
+          }, {
+            loader: "babel-loader",
+            options: {
+              presets: [
+                "@babel/preset-env",
+                [
+                  "@babel/preset-react",
+                  {
+                    "pragma": "CannerScript", // default pragma is React.createElement
+                    "pragmaFrag": "CannerScript.Default", // default is React.Fragment
+                    "throwIfNamespace": false // defaults to true
+                  }
+                ],
+                "@babel/preset-flow"
+              ],
+            }
+          }]
         }, {
-          loader: "babel-loader"
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader"
+          }
         }]
-      }, {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
-      }, {
+      },
+      {
         test: /\.css$/,
         use: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, "css-loader"]
       }, {
@@ -73,8 +124,17 @@ const config: webpack.Configuration = {
         test: /\.(png|jpg|gif|svg)$/,
         use: [
           {
-            loader: 'file-loader',
-            options: {}
+            loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader
+          },
+          {
+            loader: "css-loader" // translates CSS into CommonJS
+          },
+          {
+            loader: "less-loader", // compiles Less to CSS
+            options: {
+              javascriptEnabled: true,
+              modifyVars: {}
+            }
           }
         ]
       }
@@ -82,7 +142,7 @@ const config: webpack.Configuration = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: 'src/index.html'
+      template: HTML_PATH
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new MiniCssExtractPlugin({
@@ -96,3 +156,5 @@ const config: webpack.Configuration = {
     new CompressionPlugin()
   ]
 };
+
+export default config;

@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-export function genInputFile({
+export default function genInputFile({
   schemaPath,
   appPath,
   entryPath

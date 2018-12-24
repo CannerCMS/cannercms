@@ -25,7 +25,9 @@ module.exports = {
     "react/prop-types": 0,
     "react/display-name": 0,
     "no-implicit-coercion": 0,
-    "max-len": 0
+    "max-len": 0,
+    "react/react-in-jsx-scope": 0,
+    "no-unused-vars": ["error", {varsIgnorePattern: "CannerScript"}]
   },
   "globals": {
     "Promise": true

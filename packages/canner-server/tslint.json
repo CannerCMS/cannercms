@@ -1,6 +1,6 @@
 {
   "exclude": ["node_modules", "lib"],
-  "extends": ["tslint:latest"],
+  "extends": ["tslint:latest", "tslint-react"],
   "rules": {
     "ordered-imports": [
       true,
