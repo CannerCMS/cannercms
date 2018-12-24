@@ -1,0 +1,58 @@
+{
+  "name": "@canner/server",
+  "version": "1.0.0",
+  "description": "Build CMS and GraphQL server with CannerCMS and GQLify",
+  "author": "Canner",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "scripts": {
+    "web:build": "TS_NODE_PROJECT=tsconfig-for-webpack-config.json NODE_ENV=production webpack --config web/client/webpack.config.ts",
+    "web:build:dev": "TS_NODE_PROJECT=tsconfig-for-webpack-config.json NODE_ENV=development webpack-dev-server --config web/client/webpack.config.ts",
+    "web:start": "NODE_ENV=development node web/server/lib/bin/www",
+    "web:start:dev": "NODE_ENV=development ts-node web/server/src/bin/www.ts",
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
+    "clean": "rimraf lib dist",
+    "prebuild": "npm run clean",
+    "build": "tsc -p ./tsconfig.release.json --pretty",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "dependencies": {
+    "lodash": "^4.17.5",
+    "lowdb": "^1.0.0",
+    "pluralize": "^7.0.0",
+    "@canner/antd-components": "^0.5.28",
+    "@canner/container": "^2.0.37",
+    "@canner/history-router": "^2.0.11",
+    "@canner/storage": "2.0.11",
+    "canner": "^2.0.45",
+    "styled-components": "^3.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.6",
+    "@types/webpack": "^4.4.22",
+    "@types/webpack-dev-server": "^3.1.1",
+    "@types/lodash": "^4.14.107",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin":"^0.5.0",
+    "compression-webpack-plugin": "^2.0.0",
+    "style-loader": "^0.21.0",
+    "ts-import-plugin": "^1.5.5",
+    "ts-loader": "^4.3.0",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.5",
+    "rimraf": "^2.5.4",
+    "webpack": "^4.20.2",
+    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.0",
+    "ts-node": "^5.0.1",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2"
+  },
+  "repository": "Canner/canner",
+  "license": "MIT"
+}
