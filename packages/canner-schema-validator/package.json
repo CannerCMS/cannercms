@@ -1,7 +1,7 @@
 {
   "name": "@canner/schema-validator",
   "version": "1.0.0",
-  "description": "Used to check canner schema",
+  "description": "Check canner schema",
   "main": "lib/index.js",
   "keywords": [
     "canner",

@@ -26,7 +26,7 @@ export default class Validator {
     if (this.isRoot) {
       const rootRule = this.getRule(this.schema, this.isRoot);
       const rootResult = this.validateSchema(this.schema, rootRule);
-      const schemaResults =mapItems(this.schema,  this.validateSchema);
+      const schemaResults = mapItems(this.schema,  this.validateSchema);
       return rootResult && schemaResults
         .reduce((prev, curr) => prev && curr, true);
     } else {
