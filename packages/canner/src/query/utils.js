@@ -52,11 +52,17 @@ export function fieldToQueriesObject(field: any): any {
         const asyncToolbar = toolbar && toolbar.async;
         const defaultSortField = toolbar && toolbar.sorter && toolbar.sorter.defaultField;
         const permanentFilter = toolbar && toolbar.filter && toolbar.filter.permanentFilter;
+        const defaultFilter = toolbar && toolbar.filter && toolbar.filter.defaultFilter;
         if (asyncToolbar) {
           variables[firstKey] = DEFAULT_FIRST;
           if (permanentFilter) {
             variables[whereKey] = permanentFilter;
           }
+
+          if (defaultFilter) {
+            variables[whereKey] = defaultFilter;
+          }
+
           if (defaultSortField) {
             const field = (toolbar.sorter.options || []).find(option => option.field === defaultSortField);
             const defaultOrder = field && field.defaultOrder ? field.defaultOrder.toUpperCase() : 'ASC';
