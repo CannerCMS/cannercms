@@ -5,33 +5,41 @@ import tsImportPluginFactory from 'ts-import-plugin';
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
-import createEntryFile from './src/createEntryFile';
+import createEntryFile from './src/utils/createEntryFile';
+import createWindowVarsFile from './src/utils/createWindowVarsFile';
 const devMode = process.env.NODE_ENV !== 'production';
-const ENTRY_PATH = path.join(__dirname, 'src/.index.js');
+const ENTRY_PATH = path.join(__dirname, 'index.tsx');
 const HTML_PATH = path.join(__dirname, 'src/index.html');
-
+const WINDOW_VARS_PATH = path.join(__dirname, 'windowVars.ts');
 // create entry file dynamic so that we can change appPath, schemaPath by CLI
 createEntryFile({
   entryPath: ENTRY_PATH,
-  appPath: path.join(__dirname, 'src/app'),
-  schemaPath: path.join(__dirname, 'schema/canner.schema')
+  appPath: path.join(__dirname, 'src/app')
 });
+
+createWindowVarsFile({
+  windowVarsPath: WINDOW_VARS_PATH,
+  schemaPath: path.join(__dirname, 'schema/canner.schema'),
+  cloudPath: path.join(__dirname, 'default.canner.cloud.ts')
+
+})
 
 const config: webpack.Configuration = {
   entry: {
-    index: ENTRY_PATH
+    index: [WINDOW_VARS_PATH, ENTRY_PATH]
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: devMode ? 'https://localhost:8090/' : ''
+    publicPath: devMode ? 'http://localhost:8090/' : ''
   },
   mode: devMode ? 'development' : 'production',
   devServer: {
     port: 8090,
     contentBase: path.join(__dirname, 'dist'),
     historyApiFallback: true,
-    https: true
+    // https://github.com/webpack/webpack-dev-server/issues/1604
+    disableHostCheck: true
   },
   resolve: {
     "extensions": [".jsx", ".js", ".ts", ".tsx"]
@@ -66,15 +74,18 @@ const config: webpack.Configuration = {
             loader: "canner-schema-loader"
           }, {
             loader: 'ts-loader',
+            options: {
+              compilerOptions: {
+                "jsx": "react",
+                "jsxFactory": "CannerScript"
+              }
+            }
           }]
         }, {
           test: /\.tsx?$/,
           loader: 'ts-loader',
           options: {
             transpileOnly: true,
-            compilerOptions: {
-              module: 'es2015'
-            },
             getCustomTransformers: () => ({
               before: [tsImportPluginFactory({
                 libraryName: 'antd',

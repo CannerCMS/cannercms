@@ -5,20 +5,10 @@ import Container, {transformSchemaToMenuConfig} from '@canner/container';
 import R from '@canner/history-router';
 import Error from './components/Error';
 import styled from 'styled-components';
-import {createFakeData, createEmptyData} from 'canner-helpers';
 import {
   LocalStorageConnector,
 } from 'canner-graphql-interface';
 const confirm = Modal.confirm;
-
-// global, defined in webpack
-const {
-  env,
-  appId,
-  apiToken,
-  cloudConfig,
-  listLength 
-} = cannerConfig;
 
 export const Logo = styled.img`
   padding: 20px 0;
@@ -46,13 +36,6 @@ export default class CMSPage extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    if (!env || env === "fake") {
-      this.setState({
-        prepare: true
-      });
-      return;
-    }
-    const { connector, graphqlClient } = schema;
     this.setState({ prepare: true });
   }
 
