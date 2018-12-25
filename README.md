@@ -42,28 +42,28 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 
 ### CMS features
 
-- [x] [30+ CMS components](https://www.canner.io/component)
-- [x] [Support Layouts](https://www.canner.io/docs/schema-layout-tags)
-- [x] [Support Queries](https://www.canner.io/docs/schema-toolbar-tags)
-- [x] [Support Chart](https://www.canner.io/docs/schema-page-tags)
-- [x] [Support i18n](https://www.canner.io/docs/guides-internationalization)
-- [x] [Support Validation](https://www.canner.io/docs/guides-validation)
-- [x] [Support Condition](https://www.canner.io/docs/guides-condition-fields)
-- [x] [Support Customization](https://www.canner.io/docs/guides-customized-component)
+- [x] [30+ CMS components](https://www.cannercms.com/component)
+- [x] [Support Layouts](https://www.cannercms.com/docs/schema-layout-tags)
+- [x] [Support Queries](https://www.cannercms.com/docs/schema-toolbar-tags)
+- [x] [Support Chart](https://www.cannercms.com/docs/schema-page-tags)
+- [x] [Support i18n](https://www.cannercms.com/docs/guides-internationalization)
+- [x] [Support Validation](https://www.cannercms.com/docs/guides-validation)
+- [x] [Support Condition](https://www.cannercms.com/docs/guides-condition-fields)
+- [x] [Support Customization](https://www.cannercms.com/docs/guides-customized-component)
 
 ### Sources and API
 
-- [x] [Connect to multiple sources](https://www.canner.io/docs/credential-intro)
-  * [Firebase](https://www.canner.io/docs/credential-firebase)
-  * [Firestore](https://www.canner.io/docs/credential-firestore)
-  * [Prisma](https://www.canner.io/docs/credential-prisma)
-- [x] [Customize resolver](https://www.canner.io/docs/guides-resolver)
-- [x] [Storage API support](https://www.canner.io/docs/guides-storage)
+- [x] [Connect to multiple sources](https://www.cannercms.com/docs/credential-intro)
+  * [Firebase](https://www.cannercms.com/docs/credential-firebase)
+  * [Firestore](https://www.cannercms.com/docs/credential-firestore)
+  * [Prisma](https://www.cannercms.com/docs/credential-prisma)
+- [x] [Customize resolver](https://www.cannercms.com/docs/guides-resolver)
+- [x] [Storage API support](https://www.cannercms.com/docs/guides-storage)
 
 
 ## Documentation
 
-Full documentation: https://www.canner.io/docs
+Full documentation: https://www.cannercms.com/docs
 
 ## Preview and demo
 
@@ -97,22 +97,94 @@ Full documentation: https://www.canner.io/docs
 ➜ $ canner script:serve
 ```
 
-***👉👉 START USING CANNER: https://www.canner.io***
+***👉👉 START USING CANNER: https://www.cannercms.com***
+
+## Open source vs. CannerCMS cloud
+
+Worrying about hosting, updates, security problems? Use [CannerCMS cloud](https://www.cannercms.com) - Just create CMS schema, we will do the rest.
+
+<table>
+  <tr>
+    <th></th>
+    <th>Open Source Edition</th> 
+    <th>CannerCMS cloud</th>
+  </tr>
+  <tr>
+    <td><b>Authentication Server</b></td>
+    <td>Single User</td> 
+    <td>Pay as you go</td>
+  </tr>
+  <tr>
+    <td><b>CMS server</b></td>
+    <td>Self-host</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>API server</b></td>
+    <td>Self-host</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>Global CDN</b></td>
+    <td>🚫</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>Role permission</b></td>
+    <td>🚫</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>Sandbox testing</b></td>
+    <td>🚫</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>Event logging</b></td>
+    <td>🚫</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>Multiple language</b></td>
+    <td>🚫</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>Deployment logging</b></td>
+    <td>🚫</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>API authentication</b></td>
+    <td>🚫</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>Security check</b></td>
+    <td>🚫</td> 
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td><b>Automatically upgrade</b></td>
+    <td>🚫</td> 
+    <td>✅</td>
+  </tr>
+</table>
 
 
 ## Why Canner is different?
 
 Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is different from traditional CMS and headless CMS. The biggest different about Adaptive CMS is that it decouples both view and data layer. It builds data interfaces to connect to single or multiple data sources.
 
-> ***Adaptive CMS?*** Learn more [here](https://www.canner.io/docs/why-adaptive-cms)
+> ***Adaptive CMS?*** Learn more [here](https://www.cannercms.com/docs/why-adaptive-cms)
 
-![overview](http://www.canner.io/docs/assets/revolution.png)
+![overview](http://www.cannercms.com/docs/assets/revolution.png)
 
 ### Learn more about Canner.
 
-* ***Why create Canner?*** See [here](https://www.canner.io/docs/why-canner)
+* ***Why create Canner?*** See [here](https://www.cannercms.com/docs/why-canner)
 
-* ***Our mission at Canner:*** See [here](https://www.canner.io/docs/why-mission.html)
+* ***Our mission at Canner:*** See [here](https://www.cannercms.com/docs/why-mission.html)
 
 
 ## Demo
@@ -126,16 +198,16 @@ CMS for Firebase with SSR supported (NextJS) https://github.com/Canner/canner-fi
 CMS with Canner and Firestore, and deploy to Firebase hosting https://github.com/Canner/canner-firestore-cms
 
 
-**More demo visit [/examples folder](./examples) & [canner-demo](https://github.com/Canner/canner-demo) and  [canner.io](https://www.canner.io/)**
+**More demo visit [/examples folder](./examples) & [canner-demo](https://github.com/Canner/canner-demo) and  [cannercms.com](https://www.cannercms.com/)**
 
 ### Instructions
-- Firebase - realtime database: https://www.canner.io/docs/tutorial-connect-to-firebase
-- Prisma: https://www.canner.io/docs/tutorial-connect-to-prisma
+- Firebase - realtime database: https://www.cannercms.com/docs/tutorial-connect-to-firebase
+- Prisma: https://www.cannercms.com/docs/tutorial-connect-to-prisma
 
 ### Blog posts
 
-- Step by Step tutorial: https://www.canner.io/docs/start-quick-html5up
-- Why Firebase CMS: https://www.canner.io/docs/why-firebase-cms
+- Step by Step tutorial: https://www.cannercms.com/docs/start-quick-html5up
+- Why Firebase CMS: https://www.cannercms.com/docs/why-firebase-cms
 
 ## Develop
 
