@@ -14,15 +14,17 @@
 </div>
 
 <br/><br/>
-> Canner, a CMS framework built for devlopers. Build CMS faster and simpler with GraphQL, Prisma, Firebase and Restful APIs.
+> CannerCMS lets you build flexible content management systems easy and fast, CMS developers built for CMS developers.
+>
+> Template CMS, Content Management System can build websites fast, but clients often need custom solutions? Well, what CannerCMS do is let creating custom CMS fast and easy with many clouds.
 
-Are you using Canner? Please share with us [here](https://github.com/Canner/canner/issues/133). Once we approve, you will get **one month PREMIUM plan** for your account!
+Are you using CannerCMS? Please share with us [here](https://github.com/Canner/canner/issues/133). Once we approve, you will get **one month PREMIUM plan** for your account!
 
 ## Benefits and advantages (Simple. Agile. Flexible. Efficient - SAFE)
 
 ### 🌍 Simple, One Framework
 
-Canner is flexible and agnostic, that you can ***learn once and create any form of CMS for many different databases.***
+CannerCMS is flexible and agnostic, that you can ***learn once and create any form of CMS for many different databases.***
 
 ### ⚡️ Agile, Move Faster
 
