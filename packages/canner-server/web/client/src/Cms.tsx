@@ -64,7 +64,6 @@ export default class CMSPage extends React.Component<Props, State> {
   render() {
     const { history } = this.props;
     const { prepare, hasError } = this.state;
-    const baseUrl = cannerConfig.baseUrl || '';
     if (hasError) return <Error />;
 
     if (!prepare) return null;
@@ -96,7 +95,7 @@ export default class CMSPage extends React.Component<Props, State> {
           router={
             new R({
               history,
-              baseUrl: baseUrl === '/' ? '' : baseUrl
+              baseUrl: baseUrl === '/' ? '' : (baseUrl || '')
             })
           }
         >

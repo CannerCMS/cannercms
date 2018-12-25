@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.release.json",
-  "compilerOptions": {
-  },
   "include": ["**/src/**/*.ts"],
-  "exclude": ["**/test/**/*.ts"]
+  "exclude": ["**/test/**/*.ts"],
+  "module": "ESNext"
 }

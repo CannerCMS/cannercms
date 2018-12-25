@@ -24,8 +24,8 @@ function removeDoubleSlash(url) {
 
 function getFirstKey() {
   const schemaKeys = Object.keys(schema.pageSchema).concat(Object.keys(schema.schema));
-  if (cannerConfig.cloudConfig.sidebarMenu && cannerConfig.cloudConfig.sidebarMenu.length) {
-    const item = cannerConfig.cloudConfig.sidebarMenu.find(menuItem => {
+  if (cloudConfig.sidebarMenu && cloudConfig.sidebarMenu.length) {
+    const item = cloudConfig.sidebarMenu.find(menuItem => {
       return schemaKeys.indexOf(menuItem.pathname) >= 0
     })
     if (item)

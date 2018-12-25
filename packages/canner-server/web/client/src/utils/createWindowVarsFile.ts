@@ -24,5 +24,6 @@ function generateTemplate(appPath, cloudPath) {
   import cloudConfig from '${toNodePath(cloudPath)}';
   window.schema = schema;
   window.cloudConfig = cloudConfig;
+  window.baseUrl = "/cms";
 `;
 }

@@ -45,7 +45,7 @@ const config: webpack.Configuration = {
     "extensions": [".jsx", ".js", ".ts", ".tsx"]
   },
   externals: {
-    antd: "antd",
+    // antd: "antd",
     react: "React",
     "react-dom": "ReactDOM",
     lodash: "_",
@@ -92,6 +92,9 @@ const config: webpack.Configuration = {
                 style: true,
               })]
             }),
+            compilerOptions: {
+              module: 'es2015'
+            }
           }
         }]
       },
@@ -130,9 +133,6 @@ const config: webpack.Configuration = {
         use: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, "css-loader"]
       }, {
         test: /\.less$/,
-        loader: 'ignore-loader'
-      }, {
-        test: /\.(png|jpg|gif|svg)$/,
         use: [
           {
             loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader
@@ -148,6 +148,9 @@ const config: webpack.Configuration = {
             }
           }
         ]
+      }, {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader'
       }
     ]
   },
