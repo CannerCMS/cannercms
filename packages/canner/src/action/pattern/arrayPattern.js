@@ -1,6 +1,7 @@
 // @flow
 
 import type {Pattern, Action, ArrayActionType} from '../types';
+import {throttle} from 'lodash';
 
 type ArrayAction = Action<ArrayActionType>;
 
@@ -58,13 +59,15 @@ export default class ArrayPattern implements Pattern<ArrayAction> {
     this.mergeAction();
   }
 
-  mergeAction = (): Array<ArrayAction> => {
+  _mergeAction = (): Array<ArrayAction> => {
     this.removeAllActionIfDeleteAfterCreate();
     this.removeAllUpdateBeforeDelete();
     this.mergeAllUpdate();
     this.mergeUpdateAndCreate();
     return this.actions;
   }
+  
+  mergeAction = throttle(this._mergeAction, 150);
 
   getActions = (): Array<ArrayAction> => {
     return this.actions;

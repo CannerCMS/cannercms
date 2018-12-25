@@ -44,25 +44,28 @@ describe('array pattern', () => {
     arrayPattern = new ArrayPattern();
   });
 
-  it('remove action if delete after create', () => {
+  it('remove action if delete after create', async () => {
     arrayPattern.addAction(createAction);
     arrayPattern.addAction(updateAction1);
     arrayPattern.addAction(updateAction2);
     arrayPattern.addAction(deleteAction);
+    await wait(200);
     expect(arrayPattern.getActions().length).toBe(0);
   });
 
-  it('remove update before delete', () => {
+  it('remove update before delete', async () => {
     arrayPattern.addAction(updateAction1);
     arrayPattern.addAction(updateAction2);
     arrayPattern.addAction(deleteAction);
+    await wait(200);
     expect(arrayPattern.getActions().length).toBe(1);
     expect(arrayPattern.getActions()[0]).toEqual(deleteAction);
   });
 
-  it('merge update', () => {
+  it('merge update', async () => {
     arrayPattern.addAction(updateAction1);
     arrayPattern.addAction(updateAction2);
+    await wait(200);
     expect(arrayPattern.getActions().length).toBe(1);
     expect(arrayPattern.getActions()[0].payload.value).toEqual({
       info: {
@@ -72,10 +75,11 @@ describe('array pattern', () => {
     });
   });
 
-  it('merge update and create', () => {
+  it('merge update and create', async () => {
     arrayPattern.addAction(createAction);
     arrayPattern.addAction(updateAction1);
     arrayPattern.addAction(updateAction2);
+    await wait(200);
     expect(arrayPattern.getActions().length).toBe(1);
     expect(arrayPattern.getActions()[0].type).toBe('CREATE_ARRAY');
     expect(arrayPattern.getActions()[0].payload.value).toEqual({
@@ -86,3 +90,10 @@ describe('array pattern', () => {
     });
   });
 });
+
+function wait(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  })
+}
+
