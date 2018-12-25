@@ -32,7 +32,11 @@
     "@canner/storage": "2.0.11",
     "canner": "^2.0.45",
     "antd": "^3.11.5",
-    "styled-components": "^3.2.6"
+    "styled-components": "^3.2.6",
+    "koa": "^2.6.2",
+    "koa-static": "^5.0.0",
+    "koa-router": "^7.4.0",
+    "koa-mount": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^9.4.6",
