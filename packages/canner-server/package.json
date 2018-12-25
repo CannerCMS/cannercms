@@ -9,10 +9,10 @@
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "web:build": "rimraf web/client/dist & NODE_ENV=production webpack --config web/client/webpack.config.ts",
-    "web:build:dev": "NODE_ENV=development webpack-dev-server --config web/client/webpack.config.ts",
-    "web:start": "NODE_ENV=development node web/server/lib/bin/www",
-    "web:start:dev": "NODE_ENV=development ts-node web/server/src/bin/www.ts",
+    "web:statics": "rimraf web/client/dist & NODE_ENV=production webpack --config web/client/webpack.config.ts",
+    "web:statics:dev": "NODE_ENV=development webpack-dev-server --config web/client/webpack.config.ts",
+    "web:server": "NODE_ENV=development node web/server/lib/bin/www",
+    "web:server:dev": "NODE_ENV=development ts-node web/server/src/bin/www.ts",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
     "clean": "rimraf lib dist",
@@ -30,19 +30,16 @@
     "@canner/container": "^2.0.37",
     "@canner/history-router": "^2.0.11",
     "@canner/storage": "2.0.11",
+    "canner-schema-loader": "^2.0.37",
+    "canner-script": "^2.0.36",
     "canner": "^2.0.45",
     "antd": "^3.11.5",
     "styled-components": "^3.2.6",
     "koa": "^2.6.2",
     "koa-static": "^5.0.0",
     "koa-router": "^7.4.0",
-    "koa-mount": "^4.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^9.4.6",
-    "@types/webpack": "^4.4.22",
-    "@types/webpack-dev-server": "^3.1.1",
-    "@types/lodash": "^4.14.107",
+    "koa-mount": "^4.0.0",
+    "koa-views": "^6.1.5",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin":"^0.5.0",
     "compression-webpack-plugin": "^2.0.0",
@@ -59,7 +56,14 @@
     "ignore-loader": "^0.1.2",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.6",
+    "@types/webpack": "^4.4.22",
+    "@types/webpack-dev-server": "^3.1.1",
+    "@types/lodash": "^4.14.107"
   },
   "repository": "Canner/canner",
   "license": "MIT"

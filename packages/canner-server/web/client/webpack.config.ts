@@ -51,7 +51,6 @@ const config: webpack.Configuration = {
     lodash: "_",
     moment: 'moment',
     firebase: "firebase",
-    immutable: "Immutable",
     "styled-components": "styled",
   },
   optimization: {
@@ -61,8 +60,8 @@ const config: webpack.Configuration = {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all'
-        }
-      }
+        },
+      },
     }
   },
   module: {
@@ -160,8 +159,7 @@ const config: webpack.Configuration = {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new MiniCssExtractPlugin({
-      filename: devMode ? '[name].css' : '[name].[hash].css',
-      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+      filename: 'antd.css',
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: devMode ? 'server' : 'disabled',
