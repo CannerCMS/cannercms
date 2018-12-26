@@ -21,8 +21,22 @@ createWindowVarsFile({
   windowVarsPath: WINDOW_VARS_PATH,
   schemaPath: path.join(__dirname, 'schema/canner.schema'),
   cloudPath: path.join(__dirname, 'default.canner.cloud.ts')
+});
 
-})
+const plugins = [
+  [require("@babel/plugin-proposal-decorators"), { "legacy": true }],
+  require("@babel/plugin-proposal-function-sent"),
+  require("@babel/plugin-proposal-export-namespace-from"),
+  require("@babel/plugin-proposal-numeric-separator"),
+  require("@babel/plugin-proposal-throw-expressions"),
+  require("@babel/plugin-proposal-export-default-from"),
+  require("@babel/plugin-syntax-dynamic-import"),
+  require("@babel/plugin-syntax-import-meta"),
+  [require("@babel/plugin-proposal-class-properties"), { "loose": false }],
+  require("@babel/plugin-proposal-json-strings"),
+  require("@babel/plugin-transform-modules-commonjs"),
+  [require('babel-plugin-import'), {libraryName: 'antd', style: true}]
+];
 
 const config: webpack.Configuration = {
   entry: {
@@ -31,7 +45,8 @@ const config: webpack.Configuration = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: devMode ? 'http://localhost:8090/' : ''
+    chunkFilename: '[name].js',
+    publicPath: devMode ? 'http://localhost:8090/' : '/'
   },
   mode: devMode ? 'development' : 'production',
   devServer: {
@@ -56,11 +71,20 @@ const config: webpack.Configuration = {
   optimization: {
     splitChunks: {
       cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all'
+        style: {
+          test: /\.css/,
+          name: 'style',
+          chunks: 'all',
+          enforce: true
         },
+        vendors: {
+          test: (module) => {
+            return module.nameForCondition && /node_modules/.test(module.nameForCondition()) && !(/\.(c|le)ss$/.test(module.type));
+          },
+          name: 'vendors',
+          chunks: 'all',
+          priority: -10
+        }
       },
     }
   },
@@ -105,6 +129,7 @@ const config: webpack.Configuration = {
           }, {
             loader: "babel-loader",
             options: {
+              babelrc: false,
               presets: [
                 "@babel/preset-env",
                 [
@@ -117,13 +142,23 @@ const config: webpack.Configuration = {
                 ],
                 "@babel/preset-flow"
               ],
+              plugins
             }
           }]
         }, {
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
-            loader: "babel-loader"
+            loader: "babel-loader",
+            options: {
+              babelrc: false,
+              presets: [
+                require("@babel/preset-env"),
+                require("@babel/preset-react"),
+                require("@babel/preset-flow")
+              ],
+              plugins
+            }
           }
         }]
       },
@@ -159,7 +194,8 @@ const config: webpack.Configuration = {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new MiniCssExtractPlugin({
-      filename: 'antd.css',
+      filename: 'style.css',
+      chunkFilename: 'style.css'
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: devMode ? 'server' : 'disabled',
