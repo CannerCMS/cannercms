@@ -7,5 +7,5 @@ _gh-pages
 *.log
 .cache
 dist
-packages/canner-server/web/client/index.tsx
-packages/canner-server/web/client/windowVars.ts
+packages/canner-server/src/web/client/index.tsx
+packages/canner-server/src/web/client/windowVars.ts
