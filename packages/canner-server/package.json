@@ -9,6 +9,8 @@
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
+    "web:statics:only-schema": "rimraf web/client/dist & SCHEMA_ONLY=true NODE_ENV=production webpack --config web/client/webpack.config.ts",
+    "web:statics:only-web": "rimraf web/client/dist & WEB_ONLY=true NODE_ENV=production webpack --config web/client/webpack.config.ts",
     "web:statics": "rimraf web/client/dist & NODE_ENV=production webpack --config web/client/webpack.config.ts",
     "web:statics:dev": "NODE_ENV=development webpack-dev-server --config web/client/webpack.config.ts",
     "web:server": "NODE_ENV=development node web/server/lib/bin/www",
