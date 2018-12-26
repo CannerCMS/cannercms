@@ -1,9 +1,7 @@
 import tsImportPluginFactory from 'ts-import-plugin';
 import path from 'path';
 
-export const ENTRY_PATH = path.join(__dirname, 'index.tsx');
 export const HTML_PATH = path.join(__dirname, 'statics/index.html');
-export const WINDOW_VARS_PATH = path.join(__dirname, 'windowVars.ts');
 export const SCHEMA_PATH = path.join(__dirname, 'statics/schema/canner.schema.js');
 export const SCHEMA_OUTPUT_PATH = path.join(__dirname, '../dist');
 export const WEB_OUTPUT_PATH = path.join(__dirname, '../dist');
@@ -25,7 +23,7 @@ const plugins = [
   [require('babel-plugin-import'), {libraryName: 'antd', style: true}]
 ];
 
-export const tsLoader = {
+export const tsLoader: any = {
   oneOf: [{
     test: /canner\.schema\.tsx?$/,
     use: [{
@@ -36,7 +34,8 @@ export const tsLoader = {
         compilerOptions: {
           "jsx": "react",
           "jsxFactory": "CannerScript"
-        }
+        },
+        configFile: path.join(__dirname, '../../../tsconfig.json')
       }
     }]
   }, {
@@ -52,11 +51,11 @@ export const tsLoader = {
       }),
       compilerOptions: {
         module: 'es2015'
-      }
+      },
+      configFile: path.join(__dirname, '../../../tsconfig.json')
     }
   }]
 };
-
 export const babelLoader = {
   oneOf: [{
     test: /(\.schema\.js|canner\.def\.js)$/,

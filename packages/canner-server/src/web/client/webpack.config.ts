@@ -4,21 +4,27 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
+import tmp from 'tmp';
 import createEntryFile from './utils/createEntryFile';
 import createWindowVarsFile from './utils/createWindowVarsFile';
 import {
   tsLoader,
   babelLoader,
-  ENTRY_PATH,
   HTML_PATH,
   SCHEMA_PATH,
-  WINDOW_VARS_PATH,
   SCHEMA_ONLY,
   WEB_ONLY,
   SCHEMA_OUTPUT_PATH,
   WEB_OUTPUT_PATH,
 } from './webpack.common';
 const devMode = process.env.NODE_ENV !== 'production';
+
+// create temp file
+tmp.setGracefulCleanup();
+const entryFile = tmp.fileSync({postfix: '.tsx'});
+const windowVarsFile = tmp.fileSync({postfix: '.ts'});
+const ENTRY_PATH = entryFile.name;
+const WINDOW_VARS_PATH = windowVarsFile.name;
 
 // create entry file dynamic so that we can change appPath, schemaPath by CLI
 createEntryFile({
