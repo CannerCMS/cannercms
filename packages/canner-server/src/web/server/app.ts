@@ -21,8 +21,8 @@ export const createApp = async (): Promise<{app: Koa, config: Config}> => {
   }));
   // serve client static
   const serveClientStatic = config.appPrefix
-    ? koaMount(config.appPrefix, serve(path.resolve(__dirname, '../../client/dist'), {gzip: true, index: false}))
-    : serve(path.resolve(__dirname, '../../client/dist'), {gzip: true, index: false});
+    ? koaMount(config.appPrefix, serve(path.resolve(__dirname, '../dist'), {gzip: true, index: false}))
+    : serve(path.resolve(__dirname, '../dist'), {gzip: true, index: false});
   app.use(serveClientStatic);
 
   // router

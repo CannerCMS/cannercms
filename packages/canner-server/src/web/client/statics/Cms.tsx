@@ -3,7 +3,7 @@ import {Layout, notification, Modal, Button} from 'antd';
 import Canner from 'canner';
 import Container, {transformSchemaToMenuConfig} from '@canner/container';
 import R from '@canner/history-router';
-import Error from './components/Error';
+import Error from './Error';
 import styled from 'styled-components';
 import {
   LocalStorageConnector,

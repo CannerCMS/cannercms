@@ -1,6 +1,10 @@
 {
   "extends": "../../tsconfig.release.json",
-  "include": ["**/src/**/*.ts"],
-  "exclude": ["**/test/**/*.ts"],
-  "module": "ESNext"
+  "include": ["src/**/*.ts"],
+  "exclude": ["test/**/*.ts"],
+  "module": "ESNext",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib"
+  },
 }

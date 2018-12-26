@@ -4,8 +4,8 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
-import createEntryFile from './src/utils/createEntryFile';
-import createWindowVarsFile from './src/utils/createWindowVarsFile';
+import createEntryFile from './utils/createEntryFile';
+import createWindowVarsFile from './utils/createWindowVarsFile';
 import {
   tsLoader,
   babelLoader,
@@ -14,19 +14,21 @@ import {
   SCHEMA_PATH,
   WINDOW_VARS_PATH,
   SCHEMA_ONLY,
-  WEB_ONLY
+  WEB_ONLY,
+  SCHEMA_OUTPUT_PATH,
+  WEB_OUTPUT_PATH,
 } from './webpack.common';
 const devMode = process.env.NODE_ENV !== 'production';
 
 // create entry file dynamic so that we can change appPath, schemaPath by CLI
 createEntryFile({
   entryPath: ENTRY_PATH,
-  appPath: path.join(__dirname, 'src/app')
+  appPath: path.join(__dirname, 'statics/app')
 });
 
 createWindowVarsFile({
   windowVarsPath: WINDOW_VARS_PATH,
-  schemaPath: path.join(__dirname, 'schema/canner.schema'),
+  schemaPath: path.join(__dirname, 'statics/schema/canner.schema'),
   cloudPath: path.join(__dirname, 'default.canner.cloud.ts')
 });
 
@@ -35,7 +37,7 @@ const schemaConfig: webpack.Configuration = {
   target: 'node',
   entry: SCHEMA_PATH,
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: SCHEMA_OUTPUT_PATH,
     filename: 'schema.node.js',
     libraryTarget: 'commonjs'
   },
@@ -66,7 +68,7 @@ const webConfig: webpack.Configuration = {
     index: [WINDOW_VARS_PATH, ENTRY_PATH]
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: WEB_OUTPUT_PATH,
     filename: '[name].js',
     chunkFilename: '[name].js',
     publicPath: devMode ? 'http://localhost:8090/' : '/'
@@ -74,7 +76,7 @@ const webConfig: webpack.Configuration = {
   mode: devMode ? 'development' : 'production',
   devServer: {
     port: 8090,
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: WEB_OUTPUT_PATH,
     historyApiFallback: true,
     // https://github.com/webpack/webpack-dev-server/issues/1604
     disableHostCheck: true
