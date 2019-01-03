@@ -3,6 +3,8 @@
 exports[`Inserts schema and outputs JSONSchema and componentTree 1`] = `
 "\\"use strict\\";
 
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
 Object.defineProperty(exports, \\"__esModule\\", {
   value: true
 });
@@ -10,30 +12,12 @@ exports.default = void 0;
 
 var _cannerScript = _interopRequireWildcard(require(\\"canner-script\\"));
 
-function _interopRequireWildcard(obj) {
-  if (obj && obj.__esModule) {
-    return obj;
-  } else {
-    var newObj = {};if (obj != null) {
-      for (var key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {
-            Object.defineProperty(newObj, key, desc);
-          } else {
-            newObj[key] = obj[key];
-          }
-        }
-      }
-    }newObj.default = obj;return newObj;
-  }
-}
-
 /** @jsx builder */
 var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.default)(\\"object\\", {
   keyName: \\"test\\"
 }, (0, _cannerScript.default)(\\"string\\", {
   keyName: \\"defaultUI\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-string-input/lib/index.js\\",
+  \\"packageName\\": \\"@canner/antd-string-input\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-string-input/lib/index.js\\"));
@@ -43,7 +27,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
 }), (0, _cannerScript.default)(\\"string\\", {
   keyName: \\"withUI\\",
   ui: \\"textarea\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-string-textarea/lib/index.js\\",
+  \\"packageName\\": \\"@canner/antd-string-textarea\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-string-textarea/lib/index.js\\"));
@@ -53,7 +37,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
 }), (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"withBuilder\\",
   ui: \\"tag\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-tag/lib/index.js\\",
+  \\"packageName\\": \\"@canner/antd-array-tag\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-tag/lib/index.js\\"));
@@ -63,7 +47,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
 }), (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"withBuilder2\\",
   ui: \\"gallery\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-gallery/lib/index.js\\",
+  \\"packageName\\": \\"@canner/antd-array-gallery\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-gallery/lib/index.js\\"));
@@ -73,7 +57,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
 }), (0, _cannerScript.default)(\\"object\\", {
   keyName: \\"withBuilder3\\",
   ui: \\"variants\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-object-variants/lib/index.js\\",
+  \\"packageName\\": \\"@canner/antd-object-variants\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-object-variants/lib/index.js\\"));
@@ -83,7 +67,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
 }), (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"withCannerConfigInPackageJson\\",
   ui: \\"table\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-table/lib/index.js\\",
+  \\"packageName\\": \\"@canner/antd-array-table\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-table/lib/index.js\\"));
@@ -102,7 +86,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
       dataIndex: 'name'
     }]
   },
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-table/lib/index.js\\",
+  \\"packageName\\": \\"@canner/antd-array-table\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-table/lib/index.js\\"));
@@ -114,7 +98,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
   \\"type\\": \\"array\\"
 }, (0, _cannerScript.default)(\\"array\\", {
   keyName: \\"nested\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-array-table/lib/index.js\\",
+  \\"packageName\\": \\"@canner/antd-array-table\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-array-table/lib/index.js\\"));
@@ -126,7 +110,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
   \\"type\\": \\"array\\"
 }, (0, _cannerScript.default)(\\"string\\", {
   keyName: \\"string\\",
-  \\"packageName\\": \\"IGNORED_PATH/node_modules/@canner/antd-string-input/lib/index.js\\",
+  \\"packageName\\": \\"@canner/antd-string-input\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/node_modules/@canner/antd-string-input/lib/index.js\\"));
@@ -136,7 +120,7 @@ var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.de
 }))), (0, _cannerScript.default)(\\"string\\", {
   keyName: \\"packageName\\",
   packageName: \\"./fake-string-component\\",
-  \\"packageName\\": \\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component/index.js\\",
+  \\"packageName\\": \\"./fake-string-component\\",
   \\"loader\\": new Promise(resolve => {
     require.ensure([], require => {
       resolve(require(\\"IGNORED_PATH/packages/canner-schema-loader/test/fake-string-component/index.js\\"));

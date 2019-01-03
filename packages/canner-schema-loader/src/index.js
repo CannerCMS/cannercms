@@ -26,15 +26,15 @@ export default function loader(source, map, meta) {
   traverseAst(
     ast,
     ({packageName}) => {
-      promises.push(absPaths(packageName, that));
+      promises.push(generatePaths(packageName, that));
     },
     ({packageName}) => {
-      promises.push(absPaths(packageName, that));
+      promises.push(generatePaths(packageName, that));
     }
   );
   generate(ast, {}, source).code;
 
-  // second traverse, we get the absPaths from the promises array
+  // second traverse, we get the generatePaths from the promises array
   Promise.all(promises).then(paths => {
     const copyPaths = paths.slice();
     traverseAst(
@@ -43,11 +43,12 @@ export default function loader(source, map, meta) {
         const {
           absPackageName,
           absPackageJson,
-          absDefJs
+          absDefJs,
+          packageName
         } = copyPaths.shift();
         path.get('arguments.1').replaceWith(
           t.objectExpression([
-            t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(absPackageName)),
+            t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)),
             t.objectProperty(t.stringLiteral('loader'), buildLoader(absPackageName)),
             t.objectProperty(t.stringLiteral('builder'), buildBuilder(absDefJs, that)),
             ...buildCannerConfig(absPackageJson, type)
@@ -58,9 +59,10 @@ export default function loader(source, map, meta) {
         const {
           absPackageName,
           absPackageJson,
-          absDefJs
+          absDefJs,
+          packageName
         } = copyPaths.shift();
-        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(absPackageName)));
+        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)));
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('loader'), buildLoader(absPackageName)));
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('builder'), buildBuilder(absDefJs, that)));
         propsNode.node.properties = propsNode.node.properties.concat(buildCannerConfig(absPackageJson, type));
@@ -149,7 +151,7 @@ function absPath(path, context) {
   })
 }
 
-export async function absPaths(sourcePkgName, context) {
+export async function generatePaths(sourcePkgName, context) {
   let absPackageName = sourcePkgName;
   let absPackageJson = `${sourcePkgName}/package.json`;
   let absDefJs = `${sourcePkgName}/canner.def.js`;
@@ -159,7 +161,8 @@ export async function absPaths(sourcePkgName, context) {
   return {
     absPackageName,
     absPackageJson,
-    absDefJs
+    absDefJs,
+    packageName: sourcePkgName
   }
 }
 
