@@ -1,13 +1,6 @@
 import tsImportPluginFactory from 'ts-import-plugin';
 import path from 'path';
 
-export const HTML_PATH = path.join(__dirname, 'statics/index.html');
-export const SCHEMA_PATH = path.join(__dirname, 'statics/schema/canner.schema.js');
-export const SCHEMA_OUTPUT_PATH = path.join(__dirname, '../dist');
-export const WEB_OUTPUT_PATH = path.join(__dirname, '../dist');
-export const SCHEMA_ONLY = process.env.SCHEMA_ONLY;
-export const WEB_ONLY = process.env.WEB_ONLY;
-
 const plugins = [
   [require("@babel/plugin-proposal-decorators"), { "legacy": true }],
   require("@babel/plugin-proposal-function-sent"),
@@ -22,7 +15,6 @@ const plugins = [
   require("@babel/plugin-transform-modules-commonjs"),
   [require('babel-plugin-import'), {libraryName: 'antd', style: true}]
 ];
-
 export const tsLoader: any = {
   oneOf: [{
     test: /canner\.schema\.tsx?$/,
@@ -35,7 +27,7 @@ export const tsLoader: any = {
           "jsx": "react",
           "jsxFactory": "CannerScript"
         },
-        configFile: path.join(__dirname, '../../../tsconfig.json')
+        configFile: path.join(__dirname, '../../../../tsconfig.json')
       }
     }]
   }, {
@@ -52,7 +44,7 @@ export const tsLoader: any = {
       compilerOptions: {
         module: 'es2015'
       },
-      configFile: path.join(__dirname, '../../../tsconfig.json')
+      configFile: path.join(__dirname, '../../../../tsconfig.json')
     }
   }]
 };
