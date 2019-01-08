@@ -17,7 +17,7 @@ export const createApp = async (options: ICreateAppOptions = {}): Promise<{app: 
   // Read datamodel
   const schemaPath = path.resolve(process.cwd(), options.schemaPath || 'schema.node.js');
   const cannerSchema = JSON.parse(readFileSync(schemaPath, { encoding: 'utf8' }));
-  const cannerSchemaToGQLifyModel = new CannerSchemaToGQLifyModel(cannerSchema, new MemoryDataSource());
+  const cannerSchemaToGQLifyModel = new CannerSchemaToGQLifyModel(cannerSchema, options.dataSources);
 
   const models: Model[] = Object.values(cannerSchemaToGQLifyModel.models);
   for(const model of models) {
