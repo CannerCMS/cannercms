@@ -12,6 +12,7 @@
     "web:statics:build": "rimraf src/web/dist & NODE_ENV=production ts-node src/web/client/build.ts",
     "web:statics:serve": "NODE_ENV=production ts-node src/web/client/serve.ts",
     "web:server": "NODE_ENV=production ts-node src/web/server/bin/www.ts",
+    "gqlify:server": "NODE_ENV=development ts-node src/gqlify/bin/www.ts",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
     "clean": "rimraf lib dist",
@@ -40,7 +41,7 @@
     "@canner/container": "^2.0.37",
     "@canner/history-router": "^2.0.11",
     "@canner/storage": "2.0.11",
-    "@gqlify/canner-schema-to-gqlify-model": "1.0.3",
+    "@gqlify/canner-schema-to-gqlify-model": "1.0.4",
     "@gqlify/server": "1.1.4",
     "antd": "^3.11.5",
     "apollo-server": "^2.3.1",
@@ -62,6 +63,7 @@
     "lodash": "^4.17.5",
     "lowdb": "^1.0.0",
     "mini-css-extract-plugin": "^0.5.0",
+    "minimist": "^1.2.0",
     "pluralize": "^7.0.0",
     "pug": "^2.0.3",
     "react": "^16.7.0",
@@ -82,9 +84,11 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.107",
+    "@types/minimist": "^1.2.0",
     "@types/node": "^9.4.6",
     "@types/webpack": "^4.4.22",
-    "@types/webpack-dev-server": "^3.1.1"
+    "@types/webpack-dev-server": "^3.1.1",
+    "firebase-admin": "^6.4.0"
   },
   "repository": "Canner/canner",
   "license": "MIT"

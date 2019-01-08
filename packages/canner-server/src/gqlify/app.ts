@@ -1,31 +1,38 @@
+import path from 'path';
+
+import { ServiceAccount } from 'firebase-admin';
 import  { Gqlify, MemoryDataSource } from '@gqlify/server';
-import { ScalarField } from '@gqlify/server/lib/dataModel';
+import { ScalarField, Model } from '@gqlify/server/lib/dataModel';
 import { DataModelType } from '@gqlify/server/lib/dataModel/type';
-import { CannerSchemaToGQLifyModel } from '@gqlify/canner-schema-to-gqlify-model';
+import { CannerSchemaToGQLifyModel, IDataSourceOption } from '@gqlify/canner-schema-to-gqlify-model';
 import  { ApolloServer } from 'apollo-server';
 import { readFileSync } from 'fs';
 
-// Read datamodel
-const cannerSchema = JSON.parse(readFileSync(__dirname + '/canner.schema.js', { encoding: 'utf8' }));
-const cannerSchemaToGQLifyModel = new CannerSchemaToGQLifyModel(cannerSchema, new MemoryDataSource());
-
-const models = Object.values(cannerSchemaToGQLifyModel.models);
-for(const model of models) {
-  const idField = model.getField('id');
-  if (!idField) {
-    model.appendField('id', new ScalarField({ type: DataModelType.ID, nonNull: true, unique: true }))
-  }
+interface ICreateAppOptions {
+  schemaPath?: string;
+  dataSources?: Record<string, IDataSourceOption>;
 }
-// construct gqlify
-const gqlify = new Gqlify({
-  rootNode: cannerSchemaToGQLifyModel.rootNode,
-  models
-});
 
-// GQLify will provide GraphQL apis & resolvers to apollo-server
-const server = new ApolloServer(gqlify.createApolloConfig());
+export const createApp = async (options: ICreateAppOptions = {}): Promise<{app: ApolloServer}> => {
+  // Read datamodel
+  const schemaPath = path.resolve(process.cwd(), options.schemaPath || 'schema.node.js');
+  const cannerSchema = JSON.parse(readFileSync(schemaPath, { encoding: 'utf8' }));
+  const cannerSchemaToGQLifyModel = new CannerSchemaToGQLifyModel(cannerSchema, new MemoryDataSource());
 
-// start server
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+  const models: Model[] = Object.values(cannerSchemaToGQLifyModel.models);
+  for(const model of models) {
+    const idField = model.getField('id');
+    if (!idField) {
+      model.appendField('id', new ScalarField({ type: DataModelType.ID, nonNull: true, unique: true }))
+    }
+  }
+  // construct gqlify
+  const gqlify = new Gqlify({
+    rootNode: cannerSchemaToGQLifyModel.rootNode,
+    models
+  });
+
+  // GQLify will provide GraphQL apis & resolvers to apollo-server
+  const server = new ApolloServer(gqlify.createApolloConfig());
+  return { app: server };
+}
