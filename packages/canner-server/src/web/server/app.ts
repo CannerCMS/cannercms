@@ -8,10 +8,13 @@ import views from 'koa-views';
 // config
 import {createConfig, Config} from './config';
 
+interface ICreateAppOptions {
+  staticsPath?: string;
+}
 
-export const createApp = async (): Promise<{app: Koa, config: Config}> => {
+export const createApp = async (options: ICreateAppOptions = {}): Promise<{app: Koa, config: Config}> => {
   const config = createConfig();
-  const staticPath = config.appPrefix ? `${config.appPrefix}/` : '/';
+  const staticsUrl = config.appPrefix ? `${config.appPrefix}/` : '/';
 
   // koa
   const app = new Koa() as any;
@@ -19,10 +22,11 @@ export const createApp = async (): Promise<{app: Koa, config: Config}> => {
   app.use(views(path.join(__dirname, './views'), {
     extension: 'pug'
   }));
+  const staticsPath = options.staticsPath || config.staticsPath;
   // serve client static
   const serveClientStatic = config.appPrefix
-    ? koaMount(config.appPrefix, serve(path.resolve(__dirname, '../dist'), {gzip: true, index: false}))
-    : serve(path.resolve(__dirname, '../dist'), {gzip: true, index: false});
+    ? koaMount(config.appPrefix, serve(staticsPath, {gzip: true, index: false}))
+    : serve(staticsPath, {gzip: true, index: false});
   app.use(serveClientStatic);
 
   // router
@@ -32,10 +36,10 @@ export const createApp = async (): Promise<{app: Koa, config: Config}> => {
 
   // cms
   rootRouter.get('/cms', async ctx => {
-    await ctx.render('cms', {title: 'Canenr CMS', staticPath});
+    await ctx.render('cms', {title: 'Canenr CMS', staticsUrl});
   });
   rootRouter.get('/cms/*', async ctx => {
-    await ctx.render('cms', {title: 'Canenr CMS', staticPath});
+    await ctx.render('cms', {title: 'Canenr CMS', staticsUrl});
   });
   
 

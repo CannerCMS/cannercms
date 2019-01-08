@@ -1,8 +1,10 @@
 import {isEmpty} from 'lodash';
+import path from 'path';
 
 export interface Config {
   env: string;
   appPrefix: string;
+  staticsPath: string;
 }
 
 const sanitizePath = (path: string) => {
@@ -21,11 +23,13 @@ export const createConfig = (): Config => {
       return {
         env: 'production',
         appPrefix: sanitizePath(process.env.APP_PREFIX),
+        staticsPath: path.join(__dirname, '../dist')
       };
     default:
       return {
         env: 'development',
         appPrefix: sanitizePath(process.env.APP_PREFIX),
+        staticsPath: path.join(__dirname, '../dist')
       };
   }
 }
