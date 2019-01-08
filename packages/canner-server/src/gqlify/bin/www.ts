@@ -3,7 +3,7 @@ import minimist from 'minimist';
 
 const argv = minimist(process.argv.slice(2));
 if (!argv.schema) {
-  console.log('Please use --schema=<path> give canner.schema.js path')
+  console.log('Please use --schema=<path> give schema.node.js path')
 }
 
 createApp({ schemaPath: argv.schema })
