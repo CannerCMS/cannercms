@@ -8,7 +8,7 @@ export function build(options?: CreateConfigArgsType) {
     webpack(config)
       .run((err, stats) => {
         if (err || stats.hasErrors()) {
-          return reject(err);
+          return reject(err || stats.hasErrors());
         }
         resolve(stats);
       });

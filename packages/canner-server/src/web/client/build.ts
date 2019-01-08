@@ -1,8 +1,8 @@
 import {build} from './index';
 build()
   .then(stats => {
-    console.log(stats.toString());
+    console.log('success', stats.toString());
   })
   .catch(err => {
-    console.log(err);
+    console.log('error', err);
   });

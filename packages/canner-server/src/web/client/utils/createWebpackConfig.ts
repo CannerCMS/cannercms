@@ -18,6 +18,7 @@ import {
   SCHEMA_PATH,
   SCHEMA_OUTPUT_PATH,
   WEB_OUTPUT_PATH,
+  CLOUD_PATH
 } from '../config';
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -29,6 +30,8 @@ export type CreateSchemaConfigArgsType = {
 export type CreateWebConfigArgsType = {
   webOutputPath?: string;
   htmlPath?: string;
+  schemaPath?: string;
+  cloudPath?: string;
 }
 
 export type CreateConfigArgsType = {
@@ -38,22 +41,6 @@ export type CreateConfigArgsType = {
 
 // create temp file
 tmp.setGracefulCleanup();
-const entryFile = tmp.fileSync({postfix: '.tsx'});
-const windowVarsFile = tmp.fileSync({postfix: '.ts'});
-const ENTRY_PATH = entryFile.name;
-const WINDOW_VARS_PATH = windowVarsFile.name;
-
-// create entry file dynamic so that we can change appPath, schemaPath by CLI
-createEntryFile({
-  entryPath: ENTRY_PATH,
-  appPath: path.join(__dirname, '../statics/app')
-});
-
-createWindowVarsFile({
-  windowVarsPath: WINDOW_VARS_PATH,
-  schemaPath: path.join(__dirname, '../statics/schema/canner.schema'),
-  cloudPath: path.join(__dirname, '../statics/default.canner.cloud.ts')
-});
 
 export function createSchemaConfig({
   schemaPath = SCHEMA_PATH,
@@ -92,8 +79,27 @@ export function createSchemaConfig({
 
 export function createWebConfig({
   webOutputPath = WEB_OUTPUT_PATH,
-  htmlPath = HTML_PATH
+  htmlPath = HTML_PATH,
+  schemaPath = SCHEMA_PATH,
+  cloudPath = CLOUD_PATH,
 }: CreateWebConfigArgsType): webpack.Configuration {
+  const entryFile = tmp.fileSync({postfix: '.tsx'});
+  const windowVarsFile = tmp.fileSync({postfix: '.ts'});
+  const ENTRY_PATH = entryFile.name;
+  const WINDOW_VARS_PATH = windowVarsFile.name;
+
+  // create entry file dynamic so that we can change appPath, schemaPath by CLI
+  createEntryFile({
+    entryPath: ENTRY_PATH,
+    appPath: path.join(__dirname, '../statics/app')
+  });
+
+  createWindowVarsFile({
+    windowVarsPath: WINDOW_VARS_PATH,
+    schemaPath,
+    cloudPath
+  });
+
   return {
     entry: {
       index: [WINDOW_VARS_PATH, ENTRY_PATH]
@@ -199,14 +205,16 @@ export function createConfig({
   schemaPath = SCHEMA_PATH,
   schemaOutputPath = SCHEMA_OUTPUT_PATH,
   webOutputPath = WEB_OUTPUT_PATH,
-  htmlPath = HTML_PATH
+  htmlPath = HTML_PATH,
+  cloudPath = CLOUD_PATH,
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
-
   if (!schemaOnly) {
     const webConfig = createWebConfig({
       webOutputPath,
-      htmlPath
+      htmlPath,
+      schemaPath,
+      cloudPath,
     });
     config.push(webConfig);
   }

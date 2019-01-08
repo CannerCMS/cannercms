@@ -18,9 +18,9 @@ function toNodePath(p) {
   return p.replace(/\\/g, '/')
 }
 
-function generateTemplate(appPath, cloudPath) {
+function generateTemplate(schemaPath, cloudPath) {
   return `
-  import schema from '${toNodePath(appPath)}';
+  import schema from '${toNodePath(schemaPath)}';
   import cloudConfig from '${toNodePath(cloudPath)}';
   window.schema = schema;
   window.cloudConfig = cloudConfig;
