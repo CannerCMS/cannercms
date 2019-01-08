@@ -66,6 +66,7 @@ Since Canner schema ***is only a JSX (XML-like) language without any logistic co
 
 Full documentation: https://www.cannercms.com/docs
 
+
 ## Preview and demo
 
 ![cms-demo](./docs/cms-demo.png)
@@ -99,6 +100,16 @@ Full documentation: https://www.cannercms.com/docs
 ```
 
 ***👉👉 START USING CANNER: https://www.cannercms.com***
+
+## Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/cannercms#backer)]
+
+<a href="https://opencollective.com/cannercms/backer/0/website" target="_blank"><img src="https://opencollective.com/cannercms/backer/0/avatar.svg"></a>
+
+## Sponsors
+
+[Open Collective sponsors](https://opencollective.com/cannercms#sponsers)
 
 ## Open source vs. CannerCMS cloud
 
@@ -225,14 +236,6 @@ yarn
 ## Roadmap
 
 Interested in our next roadmap to v3? Please follow issue [here](https://github.com/Canner/canner/issues/123).
-
-## Backers
-
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/cannercms#backer)]
-
-## Sponsors
-
-[Open Collective sponsors](https://opencollective.com/cannercms#sponsers)
 
 
 ## License
