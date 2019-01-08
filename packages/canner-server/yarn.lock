@@ -1273,10 +1273,10 @@
     axios "^0.18.0"
     promise-polyfill "^8.1.0"
 
-"@gqlify/canner-schema-to-gqlify-model@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@gqlify/canner-schema-to-gqlify-model/-/canner-schema-to-gqlify-model-1.0.2.tgz#2d0d2f258b263bd86168a01c62d12668bf136698"
-  integrity sha512-9xqfYBw6ry3Ua7pP2aMdsiQBNObHuHl1VoCbxktz5VRR5EFuKzz65yfcpiDSkhKIwgOn0yMGIgslHHFgM6/29Q==
+"@gqlify/canner-schema-to-gqlify-model@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@gqlify/canner-schema-to-gqlify-model/-/canner-schema-to-gqlify-model-1.0.3.tgz#02a2742baf2ce68d9b8e7a3fe2c90eb8f57eb7e6"
+  integrity sha512-LQ/lGMJS8ThSBzBKENtbbPLij6Mc43+xAuErn6kwnvMwbd4kJRbtAkob8W0xy2SouMlP6L0FBmNS/KCfbZvNOA==
   dependencies:
     "@gqlify/server" "1.1.4"
     "@types/graphql" "^14.0.4"
