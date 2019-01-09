@@ -18,13 +18,17 @@ import {
   SCHEMA_PATH,
   SCHEMA_OUTPUT_PATH,
   WEB_OUTPUT_PATH,
-  CLOUD_PATH
+  CLOUD_PATH,
+  RESOLVE_MODULES,
+  RESOLVE_LOADER_MODULES
 } from '../config';
 const devMode = process.env.NODE_ENV !== 'production';
 
 export type CreateSchemaConfigArgsType = {
   schemaPath?: string;
   schemaOutputPath?: string;
+  resolveModules?: Array<string>;
+  resolveLoaderModules?: Array<string>;
 }
 
 export type CreateWebConfigArgsType = {
@@ -32,6 +36,8 @@ export type CreateWebConfigArgsType = {
   htmlPath?: string;
   schemaPath?: string;
   cloudPath?: string;
+  resolveModules?: Array<string>;
+  resolveLoaderModules?: Array<string>;
 }
 
 export type CreateConfigArgsType = {
@@ -44,7 +50,9 @@ tmp.setGracefulCleanup();
 
 export function createSchemaConfig({
   schemaPath = SCHEMA_PATH,
-  schemaOutputPath = SCHEMA_OUTPUT_PATH
+  schemaOutputPath = SCHEMA_OUTPUT_PATH,
+  resolveModules = RESOLVE_MODULES,
+  resolveLoaderModules = RESOLVE_LOADER_MODULES,
 }: CreateSchemaConfigArgsType): webpack.Configuration {
   return {
     target: 'node',
@@ -56,7 +64,11 @@ export function createSchemaConfig({
     },
     mode: devMode ? 'development' : 'production',
     resolve: {
-      "extensions": [".jsx", ".js", ".ts", ".tsx"]
+      "extensions": [".jsx", ".js", ".ts", ".tsx"],
+      modules: resolveModules
+    },
+    resolveLoader: {
+      modules: resolveLoaderModules
     },
     module: {
       rules: [
@@ -82,6 +94,8 @@ export function createWebConfig({
   htmlPath = HTML_PATH,
   schemaPath = SCHEMA_PATH,
   cloudPath = CLOUD_PATH,
+  resolveModules = RESOLVE_MODULES,
+  resolveLoaderModules = RESOLVE_LOADER_MODULES,
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
   const windowVarsFile = tmp.fileSync({postfix: '.ts'});
@@ -119,7 +133,11 @@ export function createWebConfig({
       disableHostCheck: true
     },
     resolve: {
-      "extensions": [".jsx", ".js", ".ts", ".tsx"]
+      "extensions": [".jsx", ".js", ".ts", ".tsx"],
+      modules: resolveModules
+    },
+    resolveLoader: {
+      modules: resolveLoaderModules
     },
     externals: {
       // antd: "antd",
@@ -207,6 +225,8 @@ export function createConfig({
   webOutputPath = WEB_OUTPUT_PATH,
   htmlPath = HTML_PATH,
   cloudPath = CLOUD_PATH,
+  resolveModules = RESOLVE_MODULES,
+  resolveLoaderModules = RESOLVE_LOADER_MODULES,
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {
@@ -215,6 +235,8 @@ export function createConfig({
       htmlPath,
       schemaPath,
       cloudPath,
+      resolveLoaderModules,
+      resolveModules
     });
     config.push(webConfig);
   }
@@ -222,7 +244,9 @@ export function createConfig({
   if (!webOnly) {
     const schemaConfig = createSchemaConfig({
       schemaPath,
-      schemaOutputPath
+      schemaOutputPath,
+      resolveLoaderModules,
+      resolveModules
     });
     config.push(schemaConfig);
   }
