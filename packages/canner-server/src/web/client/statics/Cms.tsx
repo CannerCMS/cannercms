@@ -39,7 +39,7 @@ export default class CMSPage extends React.Component<Props, State> {
 
   async componentDidMount() {
     const token = await window.getAccessToken();
-    setApolloClient(window.schema, token);
+    // setApolloClient(window.schema, token);
     this.setState({ prepare: true });
     
   }
@@ -75,7 +75,7 @@ export default class CMSPage extends React.Component<Props, State> {
     const {
       schema,
       cloudConfig
-    } = window;
+    } = window as any;
 
     const sidebar =
       cloudConfig.sidebarMenu || transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema});
@@ -134,5 +134,7 @@ function setApolloClient(schema: any, token?: string) {
       Authentication: `Bearer ${token}`
     };
   }
-  schema.graphqlClient = createHttpLink(options);
+  schema.graphqlClient = {
+    createLink: () => createHttpLink(options)
+  }
 }
