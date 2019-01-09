@@ -22,7 +22,8 @@ import {
   RESOLVE_MODULES,
   RESOLVE_LOADER_MODULES,
   TS_CONFIG_FILE,
-  APP_PATH
+  APP_PATH,
+  AUTH_PATH
 } from '../config';
 const devMode = process.env.NODE_ENV === 'development';
 
@@ -41,6 +42,7 @@ export type CreateWebConfigArgsType = {
   cloudPath?: string;
   resolveModules?: Array<string>;
   resolveLoaderModules?: Array<string>;
+  authPath?: string;
   tsConfigFile?: string;
   appPath?: string;
 }
@@ -105,7 +107,8 @@ export function createWebConfig({
   resolveModules = RESOLVE_MODULES,
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
   tsConfigFile = TS_CONFIG_FILE,
-  appPath = APP_PATH
+  appPath = APP_PATH,
+  authPath = AUTH_PATH,
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
   const windowVarsFile = tmp.fileSync({postfix: '.ts'});
@@ -121,7 +124,8 @@ export function createWebConfig({
   createWindowVarsFile({
     windowVarsPath: WINDOW_VARS_PATH,
     schemaPath,
-    cloudPath
+    cloudPath,
+    authPath
   });
 
   return {

@@ -8,6 +8,8 @@ import styled from 'styled-components';
 import {
   LocalStorageConnector,
 } from 'canner-graphql-interface';
+import { createHttpLink } from 'apollo-link-http';
+
 const confirm = Modal.confirm;
 
 export const Logo = styled.img`
@@ -36,7 +38,10 @@ export default class CMSPage extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
+    const token = await window.getAccessToken();
+    setApolloClient(window.schema, token);
     this.setState({ prepare: true });
+    
   }
 
   componentDidCatch(error, info) {
@@ -67,6 +72,10 @@ export default class CMSPage extends React.Component<Props, State> {
     if (hasError) return <Error />;
 
     if (!prepare) return null;
+    const {
+      schema,
+      cloudConfig
+    } = window;
 
     const sidebar =
       cloudConfig.sidebarMenu || transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema});
@@ -113,4 +122,17 @@ export default class CMSPage extends React.Component<Props, State> {
       </Layout>
     );
   }
+}
+
+function setApolloClient(schema: any, token?: string) {
+  delete schema.connector;
+  const options: any = {
+    uri: 'http://localhost:1234/graphql',
+  }
+  if (token) {
+    options.headers = {
+      Authentication: `Bearer ${token}`
+    };
+  }
+  schema.graphqlClient = createHttpLink(options);
 }
