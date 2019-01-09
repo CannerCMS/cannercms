@@ -17,7 +17,7 @@
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
     "clean": "rimraf lib dist",
     "prebuild": "npm run clean",
-    "build": "tsc -p ./tsconfig.release.json --pretty",
+    "build": "tsc -p ./tsconfig.release.json --pretty && copyfiles -u 4 \"src/web/client/statics/**/*\" lib/web/client/statics && copyfiles -u 4 \"src/web/server/views/**/*\" lib/web/server/views",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "publishConfig": {
@@ -91,7 +91,8 @@
     "@types/node": "^9.4.6",
     "@types/webpack": "^4.4.22",
     "@types/webpack-dev-server": "^3.1.1",
-    "firebase-admin": "^6.4.0"
+    "firebase-admin": "^6.4.0",
+    "copyfiles": "^2.1.0"
   },
   "repository": "Canner/canner",
   "license": "MIT"

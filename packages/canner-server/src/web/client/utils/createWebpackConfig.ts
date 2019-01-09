@@ -10,7 +10,7 @@ import tmp from 'tmp';
 import createEntryFile from './createEntryFile';
 import createWindowVarsFile from './createWindowVarsFile';
 import {
-  tsLoader,
+  createTsLoader,
   babelLoader,
 } from './webpackCommon';
 import {
@@ -20,15 +20,18 @@ import {
   WEB_OUTPUT_PATH,
   CLOUD_PATH,
   RESOLVE_MODULES,
-  RESOLVE_LOADER_MODULES
+  RESOLVE_LOADER_MODULES,
+  TS_CONFIG_FILE,
+  APP_PATH
 } from '../config';
-const devMode = process.env.NODE_ENV !== 'production';
+const devMode = process.env.NODE_ENV === 'development';
 
 export type CreateSchemaConfigArgsType = {
   schemaPath?: string;
   schemaOutputPath?: string;
   resolveModules?: Array<string>;
   resolveLoaderModules?: Array<string>;
+  tsConfigFile?: string;
 }
 
 export type CreateWebConfigArgsType = {
@@ -38,6 +41,8 @@ export type CreateWebConfigArgsType = {
   cloudPath?: string;
   resolveModules?: Array<string>;
   resolveLoaderModules?: Array<string>;
+  tsConfigFile?: string;
+  appPath?: string;
 }
 
 export type CreateConfigArgsType = {
@@ -53,6 +58,7 @@ export function createSchemaConfig({
   schemaOutputPath = SCHEMA_OUTPUT_PATH,
   resolveModules = RESOLVE_MODULES,
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
+  tsConfigFile = TS_CONFIG_FILE
 }: CreateSchemaConfigArgsType): webpack.Configuration {
   return {
     target: 'node',
@@ -72,7 +78,9 @@ export function createSchemaConfig({
     },
     module: {
       rules: [
-        tsLoader,
+        createTsLoader({
+          configFile: tsConfigFile
+        }),
         babelLoader,
         {
           test: /\.(le|c)ss$/,
@@ -96,6 +104,8 @@ export function createWebConfig({
   cloudPath = CLOUD_PATH,
   resolveModules = RESOLVE_MODULES,
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
+  tsConfigFile = TS_CONFIG_FILE,
+  appPath = APP_PATH
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
   const windowVarsFile = tmp.fileSync({postfix: '.ts'});
@@ -105,7 +115,7 @@ export function createWebConfig({
   // create entry file dynamic so that we can change appPath, schemaPath by CLI
   createEntryFile({
     entryPath: ENTRY_PATH,
-    appPath: path.join(__dirname, '../statics/app')
+    appPath
   });
 
   createWindowVarsFile({
@@ -170,7 +180,9 @@ export function createWebConfig({
     },
     module: {
       rules: [
-        tsLoader,
+        createTsLoader({
+          configFile: tsConfigFile
+        }),
         babelLoader,
         {
           test: /\.css$/,

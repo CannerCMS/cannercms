@@ -15,7 +15,12 @@ const plugins = [
   require("@babel/plugin-transform-modules-commonjs"),
   [require('babel-plugin-import'), {libraryName: 'antd', style: true}]
 ];
-export const tsLoader: any = {
+
+export const createTsLoader: any = ({
+  configFile
+}: {
+  configFile: string
+}) => ({
   oneOf: [{
     test: /canner\.schema\.tsx?$/,
     use: [{
@@ -27,7 +32,7 @@ export const tsLoader: any = {
           "jsx": "react",
           "jsxFactory": "CannerScript"
         },
-        configFile: path.join(__dirname, '../../../../tsconfig.json')
+        configFile
       }
     }]
   }, {
@@ -44,10 +49,10 @@ export const tsLoader: any = {
       compilerOptions: {
         module: 'es2015'
       },
-      configFile: path.join(__dirname, '../../../../tsconfig.json')
+      configFile
     }
   }]
-};
+});
 export const babelLoader = {
   oneOf: [{
     test: /(\.schema\.js|canner\.def\.js)$/,
