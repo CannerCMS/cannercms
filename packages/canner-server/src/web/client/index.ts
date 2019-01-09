@@ -1,7 +1,8 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import {createConfig, CreateConfigArgsType, createWebConfig} from './utils/createWebpackConfig';
-
+import transformSchemaToJson from './utils/transformSchemaToJSON';
+import {SCHEMA_OUTPUT_PATH, SCHEMA_JSON_OUTPUT_PATH} from './config';
 export function build(options?: CreateConfigArgsType) {
   const config = createConfig(options || {});
   return new Promise((resolve, reject) => {
@@ -10,16 +11,18 @@ export function build(options?: CreateConfigArgsType) {
         if (err) {
           console.error(err.stack || err);
           if (err.details) {
-            console.error(err.details);
+            return reject(err.details);
           }
-          return;
         }
       
         const info = stats.toJson();
       
         if (stats.hasErrors()) {
-          console.error(info.errors);
+          return reject(info.errors);
         }
+
+        const schemaPath = `${(options || {}).schemaOutputPath || SCHEMA_OUTPUT_PATH}/schema.node.js`;
+        transformSchemaToJson(schemaPath, SCHEMA_JSON_OUTPUT_PATH);
         resolve(stats);
       });
   });

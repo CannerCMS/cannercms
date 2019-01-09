@@ -10,4 +10,5 @@ export const CLOUD_PATH = path.join(__dirname, './statics/default.canner.cloud.t
 export const AUTH_PATH = path.join(__dirname, './statics/default.canner.auth.ts');
 export const RESOLVE_MODULES = ['node_modules'];
 export const RESOLVE_LOADER_MODULES = ['node_modules'];
-export const TS_CONFIG_FILE = path.join(__dirname, '../../../tsconfig.json')
+export const TS_CONFIG_FILE = path.join(__dirname, '../../../tsconfig.json');
+export const SCHEMA_JSON_OUTPUT_PATH = path.join(process.cwd(), 'canner.schema.json');
