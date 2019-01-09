@@ -6,9 +6,19 @@ export function build(options?: CreateConfigArgsType) {
   const config = createConfig(options || {});
   return new Promise((resolve, reject) => {
     webpack(config)
-      .run((err, stats) => {
-        if (err || stats.hasErrors()) {
-          return reject(err || stats.hasErrors());
+      .run((err: any, stats) => {
+        if (err) {
+          console.error(err.stack || err);
+          if (err.details) {
+            console.error(err.details);
+          }
+          return;
+        }
+      
+        const info = stats.toJson();
+      
+        if (stats.hasErrors()) {
+          console.error(info.errors);
         }
         resolve(stats);
       });
