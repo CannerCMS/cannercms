@@ -23,13 +23,13 @@ export const createConfig = (): Config => {
       return {
         env: 'production',
         appPrefix: sanitizePath(process.env.APP_PREFIX),
-        staticsPath: path.join(__dirname, '../dist')
+        staticsPath: path.join(process.cwd(), '.cms')
       };
     default:
       return {
         env: 'development',
         appPrefix: sanitizePath(process.env.APP_PREFIX),
-        staticsPath: path.join(__dirname, '../dist')
+        staticsPath: path.join(process.cwd(), '.cms')
       };
   }
 }
