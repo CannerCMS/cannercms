@@ -239,6 +239,9 @@ export function createConfig({
   cloudPath = CLOUD_PATH,
   resolveModules = RESOLVE_MODULES,
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
+  tsConfigFile = TS_CONFIG_FILE,
+  appPath = APP_PATH,
+
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {
@@ -248,7 +251,9 @@ export function createConfig({
       schemaPath,
       cloudPath,
       resolveLoaderModules,
-      resolveModules
+      resolveModules,
+      tsConfigFile,
+      appPath
     });
     config.push(webConfig);
   }
@@ -258,7 +263,8 @@ export function createConfig({
       schemaPath,
       schemaOutputPath,
       resolveLoaderModules,
-      resolveModules
+      resolveModules,
+      tsConfigFile
     });
     config.push(schemaConfig);
   }
