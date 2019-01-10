@@ -23,7 +23,8 @@ import {
   RESOLVE_LOADER_MODULES,
   TS_CONFIG_FILE,
   APP_PATH,
-  AUTH_PATH
+  AUTH_PATH,
+  GRAPHQL_PORT
 } from '../config';
 const devMode = process.env.NODE_ENV === 'development';
 
@@ -45,6 +46,7 @@ export type CreateWebConfigArgsType = {
   authPath?: string;
   tsConfigFile?: string;
   appPath?: string;
+  graphqlPort?: number;
 }
 
 export type CreateConfigArgsType = {
@@ -114,6 +116,7 @@ export function createWebConfig({
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
   authPath = AUTH_PATH,
+  graphqlPort = GRAPHQL_PORT
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
   const windowVarsFile = tmp.fileSync({postfix: '.ts'});
@@ -130,7 +133,8 @@ export function createWebConfig({
     windowVarsPath: WINDOW_VARS_PATH,
     schemaPath,
     cloudPath,
-    authPath
+    authPath,
+    graphqlPort
   });
 
   return {
@@ -256,7 +260,7 @@ export function createConfig({
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
-
+  graphqlPort = GRAPHQL_PORT,
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {
@@ -268,7 +272,8 @@ export function createConfig({
       resolveLoaderModules,
       resolveModules,
       tsConfigFile,
-      appPath
+      appPath,
+      graphqlPort
     });
     config.push(webConfig);
   }

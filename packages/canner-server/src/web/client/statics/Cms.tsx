@@ -127,7 +127,7 @@ export default class CMSPage extends React.Component<Props, State> {
 function setApolloClient(schema: any, token?: string) {
   delete schema.connector;
   const options: any = {
-    uri: 'http://localhost:4000',
+    uri: `http://localhost:${graphqlPort}`,
   }
   if (token) {
     options.headers = {
