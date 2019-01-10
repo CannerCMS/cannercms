@@ -1,12 +1,17 @@
 import { createApp } from '../app';
 import minimist from 'minimist';
+import path from 'path';
 
 const argv = minimist(process.argv.slice(2));
 if (!argv.schema) {
-  console.log('Please use --schema=<path> give schema.node.js path')
+  console.log('Please use --schema=<path> give canner.schema.json path')
 }
 
-createApp({ schemaPath: argv.schema })
+if (!argv.dataSources) {
+  console.log('Please use --dataSources=<path> give canner.dataSources.json path')
+}
+
+createApp({ schemaPath: argv.schema, dataSources: require(path.resolve(process.cwd(), argv.dataSources)) })
   .then(({ app }) => {
     return app.listen();
   })

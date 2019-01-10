@@ -3,6 +3,7 @@ import {Layout, notification, Modal, Button} from 'antd';
 import Canner from 'canner';
 import Container, {transformSchemaToMenuConfig} from '@canner/container';
 import R from '@canner/history-router';
+import {GraphqlClient} from 'canner-graphql-interface';
 import Error from './Error';
 import styled from 'styled-components';
 import {
@@ -39,7 +40,7 @@ export default class CMSPage extends React.Component<Props, State> {
 
   async componentDidMount() {
     const token = await window.getAccessToken();
-    // setApolloClient(window.schema, token);
+    setApolloClient(window.schema, token);
     this.setState({ prepare: true });
     
   }
@@ -79,7 +80,6 @@ export default class CMSPage extends React.Component<Props, State> {
 
     const sidebar =
       cloudConfig.sidebarMenu || transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema});
-
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Container
@@ -127,14 +127,12 @@ export default class CMSPage extends React.Component<Props, State> {
 function setApolloClient(schema: any, token?: string) {
   delete schema.connector;
   const options: any = {
-    uri: 'http://localhost:1234/graphql',
+    uri: 'http://localhost:4000',
   }
   if (token) {
     options.headers = {
       Authentication: `Bearer ${token}`
     };
   }
-  schema.graphqlClient = {
-    createLink: () => createHttpLink(options)
-  }
+  schema.graphqlClient = new GraphqlClient(options)
 }

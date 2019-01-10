@@ -12,3 +12,4 @@ export const RESOLVE_MODULES = ['node_modules'];
 export const RESOLVE_LOADER_MODULES = ['node_modules'];
 export const TS_CONFIG_FILE = path.join(__dirname, '../../../tsconfig.json');
 export const SCHEMA_JSON_OUTPUT_PATH = path.join(process.cwd(), 'canner.schema.json');
+export const DATA_SOURCE_PATH = path.join(process.cwd(), 'canner.dataSources.json');
