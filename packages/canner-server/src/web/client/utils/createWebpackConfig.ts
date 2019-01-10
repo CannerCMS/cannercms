@@ -52,6 +52,7 @@ export type CreateWebConfigArgsType = {
 export type CreateConfigArgsType = {
   schemaOnly?: boolean;
   webOnly?: boolean;
+  schemaJsonOutputPath?: string;
 } & CreateSchemaConfigArgsType & CreateWebConfigArgsType
 
 // create temp file
