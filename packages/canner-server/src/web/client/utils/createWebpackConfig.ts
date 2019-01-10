@@ -70,6 +70,9 @@ export function createSchemaConfig({
       filename: 'schema.node.js',
       libraryTarget: 'commonjs'
     },
+    externals: {
+      firebase: "firebase"
+    },
     mode: devMode ? 'development' : 'production',
     resolve: {
       "extensions": [".jsx", ".js", ".ts", ".tsx"],
@@ -131,6 +134,12 @@ export function createWebConfig({
   return {
     entry: {
       index: [WINDOW_VARS_PATH, ENTRY_PATH]
+    },
+    node: {
+      dns: 'mock',
+      fs: 'empty',
+      path: true,
+      url: false
     },
     output: {
       path: webOutputPath,
