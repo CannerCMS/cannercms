@@ -70,9 +70,6 @@ export function createSchemaConfig({
       filename: 'schema.node.js',
       libraryTarget: 'commonjs'
     },
-    externals: {
-      firebase: "firebase"
-    },
     mode: devMode ? 'development' : 'production',
     resolve: {
       "extensions": [".jsx", ".js", ".ts", ".tsx"],
@@ -97,7 +94,12 @@ export function createSchemaConfig({
       // don't generate other chunks
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
-      })
+      }),
+      // mock firebase
+      new webpack.NormalModuleReplacementPlugin(
+        /firebase/,
+        path.resolve(__dirname, 'mock')
+      )
     ]
   };
 }
