@@ -24,7 +24,8 @@ import {
   TS_CONFIG_FILE,
   APP_PATH,
   AUTH_PATH,
-  GRAPHQL_PORT
+  GRAPHQL_PORT,
+  SCHEMA_OUTPUT_FILENAME
 } from '../config';
 const devMode = process.env.NODE_ENV === 'development';
 
@@ -70,7 +71,7 @@ export function createSchemaConfig({
     entry: schemaPath,
     output: {
       path: schemaOutputPath,
-      filename: 'schema.node.js',
+      filename: SCHEMA_OUTPUT_FILENAME,
       libraryTarget: 'commonjs'
     },
     mode: devMode ? 'development' : 'production',
