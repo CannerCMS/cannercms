@@ -1,6 +1,6 @@
 {
   "name": "@canner/server",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Build CMS and GraphQL server with CannerCMS and GQLify",
   "author": "Canner",
   "files": [
