@@ -51,7 +51,11 @@ export function Label({
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
   return class ComponentWithTitleAndDescription extends React.Component<HOCProps> {
     shouldComponentUpdate(nextProps: HOCProps) {
-      if (!isEqual(nextProps.value, this.props.value) || nextProps.error !== this.props.error) {
+      if (
+        !isEqual(nextProps.value, this.props.value) ||
+        nextProps.error !== this.props.error ||
+        nextProps.disabled !== this.props.disabled
+      ) {
         return true;
       }
       return false;
