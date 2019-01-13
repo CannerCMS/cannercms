@@ -1,0 +1,35 @@
+import { level } from './interface';
+
+export class JsonLogger {
+  public log = (levelType: level = level.info, payload?: any) => {
+    console.log(JSON.stringify({
+      time: new Date().toISOString(),
+      level: levelType,
+      ...payload
+    }));
+  }
+
+  public error = (levelType: level = level.error, payload: any) => {
+    console.error(JSON.stringify({
+      time: new Date().toISOString(),
+      level: level.error,
+      ...payload
+    }));
+  };
+  
+  public info = (payload: any) => {
+    this.log(level.info, payload);
+  }
+  
+  public debug = (payload: any) => {
+    this.log(level.debug, payload);
+  }
+  
+  public warn = (payload: any) => {
+    this.log(level.warn, payload);
+  };
+  
+  public fatal = (payload: any) => {
+    this.error(level.fatal, payload);
+  };
+}
