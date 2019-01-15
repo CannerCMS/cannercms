@@ -20,9 +20,10 @@ export function build(options?: CreateConfigArgsType) {
         if (stats.hasErrors()) {
           return reject(info.errors);
         }
-
-        const schemaPath = `${(options || {}).schemaOutputPath || SCHEMA_OUTPUT_PATH}/schema.node.js`;
-        transformSchemaToJson(schemaPath, (options || {}).schemaJsonOutputPath || SCHEMA_JSON_OUTPUT_PATH);
+        if (!options.webOnly) {
+          const schemaPath = `${(options || {}).schemaOutputPath || SCHEMA_OUTPUT_PATH}/schema.node.js`;
+          transformSchemaToJson(schemaPath, (options || {}).schemaJsonOutputPath || SCHEMA_JSON_OUTPUT_PATH);
+        }
         resolve(stats);
       });
   });

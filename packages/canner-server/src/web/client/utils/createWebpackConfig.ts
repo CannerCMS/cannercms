@@ -103,7 +103,11 @@ export function createSchemaConfig({
       new webpack.NormalModuleReplacementPlugin(
         /firebase/,
         path.resolve(__dirname, 'mock')
-      )
+      ),
+      new BundleAnalyzerPlugin({
+        analyzerMode: devMode ? 'static' : 'disabled',
+        openAnalyzer: false
+      }),
     ]
   };
 }
@@ -171,7 +175,7 @@ export function createWebConfig({
       modules: resolveLoaderModules
     },
     externals: {
-      // antd: "antd",
+      antd: "antd",
       react: "React",
       "react-dom": "ReactDOM",
       lodash: "_",
@@ -233,18 +237,22 @@ export function createWebConfig({
     },
     plugins: [
       new HtmlWebPackPlugin({
+        inject: true, // will inject the DLL bundles to index.html
         template: htmlPath
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new MiniCssExtractPlugin({
         filename: 'style.css',
-        chunkFilename: 'style.css'
+        chunkFilename: '[name].css'
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: devMode ? 'server' : 'disabled',
+        analyzerMode: 'static',
         openAnalyzer: false
       }),
-      new CompressionPlugin()
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1
+      }),
+      new CompressionPlugin(),
     ]
   };
 }
