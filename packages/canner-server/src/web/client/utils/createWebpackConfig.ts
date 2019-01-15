@@ -35,6 +35,7 @@ export type CreateSchemaConfigArgsType = {
   resolveModules?: Array<string>;
   resolveLoaderModules?: Array<string>;
   tsConfigFile?: string;
+  plugins?: Array<any>;
 }
 
 export type CreateWebConfigArgsType = {
@@ -48,12 +49,14 @@ export type CreateWebConfigArgsType = {
   tsConfigFile?: string;
   appPath?: string;
   graphqlPort?: number;
+  plugins?: Array<any>;
 }
 
 export type CreateConfigArgsType = {
   schemaOnly?: boolean;
   webOnly?: boolean;
   schemaJsonOutputPath?: string;
+  plugins?: Array<any>;
 } & CreateSchemaConfigArgsType & CreateWebConfigArgsType
 
 // create temp file
@@ -64,7 +67,8 @@ export function createSchemaConfig({
   schemaOutputPath = SCHEMA_OUTPUT_PATH,
   resolveModules = RESOLVE_MODULES,
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
-  tsConfigFile = TS_CONFIG_FILE
+  tsConfigFile = TS_CONFIG_FILE,
+  plugins = []
 }: CreateSchemaConfigArgsType): webpack.Configuration {
   return {
     target: 'node',
@@ -108,7 +112,7 @@ export function createSchemaConfig({
         analyzerMode: devMode ? 'static' : 'disabled',
         openAnalyzer: false
       }),
-    ]
+    ].concat(plugins)
   };
 }
 
@@ -122,7 +126,8 @@ export function createWebConfig({
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
   authPath = AUTH_PATH,
-  graphqlPort = GRAPHQL_PORT
+  graphqlPort = GRAPHQL_PORT,
+  plugins = [],
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
   const windowVarsFile = tmp.fileSync({postfix: '.ts'});
@@ -253,7 +258,7 @@ export function createWebConfig({
         maxChunks: 1
       }),
       new CompressionPlugin(),
-    ]
+    ].concat(plugins)
   };
 }
 
@@ -271,6 +276,7 @@ export function createConfig({
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
   graphqlPort = GRAPHQL_PORT,
+  plugins = []
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {
@@ -283,7 +289,8 @@ export function createConfig({
       resolveModules,
       tsConfigFile,
       appPath,
-      graphqlPort
+      graphqlPort,
+      plugins
     });
     config.push(webConfig);
   }
@@ -294,7 +301,8 @@ export function createConfig({
       schemaOutputPath,
       resolveLoaderModules,
       resolveModules,
-      tsConfigFile
+      tsConfigFile,
+      plugins
     });
     config.push(schemaConfig);
   }
