@@ -1,3 +1,4 @@
+import Router from 'koa-router';
 
 export enum level {
   info = 'INFO',
@@ -32,13 +33,17 @@ export interface ServerStatus {
   phase: phase;
 }
 
-export interface WebService<StartConfig> {
-  start(config: StartConfig): Promise<void>;
+export interface WebService {
+  // mount on root Koa app
+  mount(koaRouter: Router): void;
 
   // logger
   setLogger(logger: Logger): void;
   getLogger(): Logger;
 
   // status
-  getStatus(): ServerStatus;
+  getStatus?(): ServerStatus;
+
+  // handle status change
+  onStatusChange?(callback: (now: ServerStatus, prev: ServerStatus) => void): void;
 }

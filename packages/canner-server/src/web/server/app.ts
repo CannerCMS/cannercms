@@ -6,53 +6,61 @@ import koaMount from 'koa-mount';
 import views from 'koa-views';
 
 // config
-import {createConfig, Config} from './config';
+import { createConfig, CmsServerConfig } from './config';
+import { WebService, Logger } from '../../common/interface';
 
-interface ICreateAppOptions {
-  staticsPath?: string;
+export class CmsWebService implements WebService {
+  private logger: Logger;
+  private router: Router;
+
+  constructor(customConfig?: CmsServerConfig) {
+    const config = createConfig(customConfig);
+
+    // router
+    const router = new Router();
+    router.use(views(path.join(__dirname, './views'), {
+      extension: 'pug'
+    }));
+
+    // serve client static
+    const serveClientStatic = koaMount(config.staticsPath, serve(config.clientBundledDir, {gzip: true, index: false}));
+    router.use(serveClientStatic);
+
+    // serve favicon
+    const favicon = koaMount('/public/favicon', serve(path.resolve(__dirname, '../public/favicon'), {gzip: true, index: false}));
+    router.use(favicon);
+
+    // cms
+    router.get('/cms', async ctx => {
+      await ctx.render('cms', {title: 'Canenr CMS', staticsPath: config.staticsPath});
+    });
+    router.get('/cms/*', async ctx => {
+      await ctx.render('cms', {title: 'Canenr CMS', staticsPath: config.staticsPath});
+    });
+
+    // health check
+    router.get('/health', async ctx => {
+      ctx.status = 200;
+    });
+
+    // redirect
+    router.get('/', async (ctx: Context) => {
+      return ctx.redirect('/cms');
+    });
+
+    this.router = router;
+  }
+
+  public mount(rootRouter: Router) {
+    rootRouter.use(this.router.routes());
+  }
+
+  // logger
+  public setLogger(logger: Logger) {
+    this.logger = logger;
+  };
+
+  public getLogger(): Logger {
+    return this.logger;
+  }
 }
-
-export const createApp = async (options: ICreateAppOptions = {}): Promise<{app: Koa, config: Config}> => {
-  const config = createConfig();
-  const staticsUrl = config.appPrefix ? `${config.appPrefix}/` : '/';
-
-  // koa
-  const app = new Koa() as any;
-
-  app.use(views(path.join(__dirname, './views'), {
-    extension: 'pug'
-  }));
-  const staticsPath = options.staticsPath || config.staticsPath;
-  // serve client static
-  const serveClientStatic = config.appPrefix
-    ? koaMount(config.appPrefix, serve(staticsPath, {gzip: true, index: false}))
-    : serve(staticsPath, {gzip: true, index: false});
-  app.use(serveClientStatic);
-
-  // router
-  const rootRouter = new Router({
-    prefix: config.appPrefix
-  });
-
-  // cms
-  rootRouter.get('/cms', async ctx => {
-    await ctx.render('cms', {title: 'Canenr CMS', staticsUrl});
-  });
-  rootRouter.get('/cms/*', async ctx => {
-    await ctx.render('cms', {title: 'Canenr CMS', staticsUrl});
-  });
-  
-
-  // health check
-  rootRouter.get('/health', async ctx => {
-    ctx.status = 200;
-  });
-
-  // redirect
-  rootRouter.get('/', async (ctx: Context) => {
-    return ctx.redirect(`${config.appPrefix || ''}/cms`);
-  });
-
-  app.use(rootRouter.routes());
-  return {app, config};
-};
