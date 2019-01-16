@@ -56,7 +56,8 @@ export type CreateConfigArgsType = {
   schemaOnly?: boolean;
   webOnly?: boolean;
   schemaJsonOutputPath?: string;
-  plugins?: Array<any>;
+  schemaPlugins?: Array<any>;
+  webPlugins?: Array<any>;
 } & CreateSchemaConfigArgsType & CreateWebConfigArgsType
 
 // create temp file
@@ -276,7 +277,8 @@ export function createConfig({
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
   graphqlPort = GRAPHQL_PORT,
-  plugins = []
+  schemaPlugins = [],
+  webPlugins = []
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {
@@ -290,7 +292,7 @@ export function createConfig({
       tsConfigFile,
       appPath,
       graphqlPort,
-      plugins
+      plugins: webPlugins
     });
     config.push(webConfig);
   }
@@ -302,7 +304,7 @@ export function createConfig({
       resolveLoaderModules,
       resolveModules,
       tsConfigFile,
-      plugins
+      plugins: schemaPlugins
     });
     config.push(schemaConfig);
   }
