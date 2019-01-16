@@ -10,7 +10,7 @@ import tmp from 'tmp';
 import createEntryFile from './createEntryFile';
 import createWindowVarsFile from './createWindowVarsFile';
 import {
-  tsLoader,
+  createTsLoader,
   babelLoader,
 } from './webpackCommon';
 import {
@@ -18,13 +18,23 @@ import {
   SCHEMA_PATH,
   SCHEMA_OUTPUT_PATH,
   WEB_OUTPUT_PATH,
-  CLOUD_PATH
+  CLOUD_PATH,
+  RESOLVE_MODULES,
+  RESOLVE_LOADER_MODULES,
+  TS_CONFIG_FILE,
+  APP_PATH,
+  AUTH_PATH,
+  GRAPHQL_PORT,
+  SCHEMA_OUTPUT_FILENAME
 } from '../config';
-const devMode = process.env.NODE_ENV !== 'production';
+const devMode = process.env.NODE_ENV === 'development';
 
 export type CreateSchemaConfigArgsType = {
   schemaPath?: string;
   schemaOutputPath?: string;
+  resolveModules?: Array<string>;
+  resolveLoaderModules?: Array<string>;
+  tsConfigFile?: string;
 }
 
 export type CreateWebConfigArgsType = {
@@ -32,11 +42,18 @@ export type CreateWebConfigArgsType = {
   htmlPath?: string;
   schemaPath?: string;
   cloudPath?: string;
+  resolveModules?: Array<string>;
+  resolveLoaderModules?: Array<string>;
+  authPath?: string;
+  tsConfigFile?: string;
+  appPath?: string;
+  graphqlPort?: number;
 }
 
 export type CreateConfigArgsType = {
   schemaOnly?: boolean;
   webOnly?: boolean;
+  schemaJsonOutputPath?: string;
 } & CreateSchemaConfigArgsType & CreateWebConfigArgsType
 
 // create temp file
@@ -44,23 +61,32 @@ tmp.setGracefulCleanup();
 
 export function createSchemaConfig({
   schemaPath = SCHEMA_PATH,
-  schemaOutputPath = SCHEMA_OUTPUT_PATH
+  schemaOutputPath = SCHEMA_OUTPUT_PATH,
+  resolveModules = RESOLVE_MODULES,
+  resolveLoaderModules = RESOLVE_LOADER_MODULES,
+  tsConfigFile = TS_CONFIG_FILE
 }: CreateSchemaConfigArgsType): webpack.Configuration {
   return {
     target: 'node',
     entry: schemaPath,
     output: {
       path: schemaOutputPath,
-      filename: 'schema.node.js',
+      filename: SCHEMA_OUTPUT_FILENAME,
       libraryTarget: 'commonjs'
     },
     mode: devMode ? 'development' : 'production',
     resolve: {
-      "extensions": [".jsx", ".js", ".ts", ".tsx"]
+      "extensions": [".jsx", ".js", ".ts", ".tsx"],
+      modules: resolveModules
+    },
+    resolveLoader: {
+      modules: resolveLoaderModules
     },
     module: {
       rules: [
-        tsLoader,
+        createTsLoader({
+          configFile: tsConfigFile
+        }),
         babelLoader,
         {
           test: /\.(le|c)ss$/,
@@ -72,7 +98,12 @@ export function createSchemaConfig({
       // don't generate other chunks
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
-      })
+      }),
+      // mock firebase
+      new webpack.NormalModuleReplacementPlugin(
+        /firebase/,
+        path.resolve(__dirname, 'mock')
+      )
     ]
   };
 }
@@ -82,6 +113,12 @@ export function createWebConfig({
   htmlPath = HTML_PATH,
   schemaPath = SCHEMA_PATH,
   cloudPath = CLOUD_PATH,
+  resolveModules = RESOLVE_MODULES,
+  resolveLoaderModules = RESOLVE_LOADER_MODULES,
+  tsConfigFile = TS_CONFIG_FILE,
+  appPath = APP_PATH,
+  authPath = AUTH_PATH,
+  graphqlPort = GRAPHQL_PORT
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
   const windowVarsFile = tmp.fileSync({postfix: '.ts'});
@@ -91,18 +128,26 @@ export function createWebConfig({
   // create entry file dynamic so that we can change appPath, schemaPath by CLI
   createEntryFile({
     entryPath: ENTRY_PATH,
-    appPath: path.join(__dirname, '../statics/app')
+    appPath
   });
 
   createWindowVarsFile({
     windowVarsPath: WINDOW_VARS_PATH,
     schemaPath,
-    cloudPath
+    cloudPath,
+    authPath,
+    graphqlPort
   });
 
   return {
     entry: {
       index: [WINDOW_VARS_PATH, ENTRY_PATH]
+    },
+    node: {
+      dns: 'mock',
+      fs: 'empty',
+      path: true,
+      url: false
     },
     output: {
       path: webOutputPath,
@@ -119,7 +164,11 @@ export function createWebConfig({
       disableHostCheck: true
     },
     resolve: {
-      "extensions": [".jsx", ".js", ".ts", ".tsx"]
+      "extensions": [".jsx", ".js", ".ts", ".tsx"],
+      modules: resolveModules
+    },
+    resolveLoader: {
+      modules: resolveLoaderModules
     },
     externals: {
       // antd: "antd",
@@ -152,7 +201,9 @@ export function createWebConfig({
     },
     module: {
       rules: [
-        tsLoader,
+        createTsLoader({
+          configFile: tsConfigFile
+        }),
         babelLoader,
         {
           test: /\.css$/,
@@ -207,6 +258,11 @@ export function createConfig({
   webOutputPath = WEB_OUTPUT_PATH,
   htmlPath = HTML_PATH,
   cloudPath = CLOUD_PATH,
+  resolveModules = RESOLVE_MODULES,
+  resolveLoaderModules = RESOLVE_LOADER_MODULES,
+  tsConfigFile = TS_CONFIG_FILE,
+  appPath = APP_PATH,
+  graphqlPort = GRAPHQL_PORT,
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {
@@ -215,6 +271,11 @@ export function createConfig({
       htmlPath,
       schemaPath,
       cloudPath,
+      resolveLoaderModules,
+      resolveModules,
+      tsConfigFile,
+      appPath,
+      graphqlPort
     });
     config.push(webConfig);
   }
@@ -222,7 +283,10 @@ export function createConfig({
   if (!webOnly) {
     const schemaConfig = createSchemaConfig({
       schemaPath,
-      schemaOutputPath
+      schemaOutputPath,
+      resolveLoaderModules,
+      resolveModules,
+      tsConfigFile
     });
     config.push(schemaConfig);
   }

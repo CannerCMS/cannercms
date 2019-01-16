@@ -28,7 +28,7 @@ export class GraphQLService implements WebService {
     }
   
     // Read datamodel
-    const schemaPath = path.resolve(process.cwd(), options.schemaPath || 'schema.node.js');
+    const schemaPath = path.resolve(process.cwd(), options.schemaPath || 'canner.schema.json');
     const cannerSchema = JSON.parse(readFileSync(schemaPath, { encoding: 'utf8' }));
     const parser = new CannerSchemaToGQLifyParser(cannerSchema);
   

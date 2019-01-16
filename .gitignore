@@ -9,5 +9,7 @@ _gh-pages
 dist
 .cms
 schema.node.js
+canner.schema.json
+canner.dataSources.json
 packages/canner-server/src/web/client/index.tsx
 packages/canner-server/src/web/client/windowVars.ts

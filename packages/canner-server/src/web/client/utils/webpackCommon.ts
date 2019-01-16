@@ -1,6 +1,7 @@
 import tsImportPluginFactory from 'ts-import-plugin';
 import path from 'path';
 
+// must require babel plugin and preset, or it will throw the Can't resolve module error in CLI
 const plugins = [
   [require("@babel/plugin-proposal-decorators"), { "legacy": true }],
   require("@babel/plugin-proposal-function-sent"),
@@ -15,7 +16,12 @@ const plugins = [
   require("@babel/plugin-transform-modules-commonjs"),
   [require('babel-plugin-import'), {libraryName: 'antd', style: true}]
 ];
-export const tsLoader: any = {
+
+export const createTsLoader: any = ({
+  configFile
+}: {
+  configFile: string
+}) => ({
   oneOf: [{
     test: /canner\.schema\.tsx?$/,
     use: [{
@@ -27,7 +33,7 @@ export const tsLoader: any = {
           "jsx": "react",
           "jsxFactory": "CannerScript"
         },
-        configFile: path.join(__dirname, '../../../../tsconfig.json')
+        configFile
       }
     }]
   }, {
@@ -44,10 +50,10 @@ export const tsLoader: any = {
       compilerOptions: {
         module: 'es2015'
       },
-      configFile: path.join(__dirname, '../../../../tsconfig.json')
+      configFile
     }
   }]
-};
+});
 export const babelLoader = {
   oneOf: [{
     test: /(\.schema\.js|canner\.def\.js)$/,
@@ -58,16 +64,16 @@ export const babelLoader = {
       options: {
         babelrc: false,
         presets: [
-          "@babel/preset-env",
+          require("@babel/preset-env"),
           [
-            "@babel/preset-react",
+            require("@babel/preset-react"),
             {
               "pragma": "CannerScript", // default pragma is React.createElement
               "pragmaFrag": "CannerScript.Default", // default is React.Fragment
               "throwIfNamespace": false // defaults to true
             }
           ],
-          "@babel/preset-flow"
+          require("@babel/preset-flow")
         ],
         plugins
       }

@@ -1,4 +1,5 @@
-import {serve} from './index';
+import {serve} from '../index';
+
 serve()
   .then(stats => {
     console.log(stats.toString());
