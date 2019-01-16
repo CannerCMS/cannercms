@@ -1,5 +1,4 @@
 import {Context} from 'koa';
-import {isEmpty} from 'lodash';
 import path from 'path';
 
 export interface CmsServerConfig {

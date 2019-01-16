@@ -1,6 +1,6 @@
-import { level } from './interface';
+import { level, Logger } from './interface';
 
-export class JsonLogger {
+export class JsonLogger implements Logger {
   public log = (levelType: level = level.info, payload?: any) => {
     console.log(JSON.stringify({
       time: new Date().toISOString(),
@@ -33,3 +33,5 @@ export class JsonLogger {
     this.error(level.fatal, payload);
   };
 }
+
+export const jsonLogger = new JsonLogger();

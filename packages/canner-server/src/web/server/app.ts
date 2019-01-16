@@ -8,9 +8,10 @@ import views from 'koa-views';
 // config
 import { createConfig, CmsServerConfig } from './config';
 import { WebService, Logger } from '../../common/interface';
+import { jsonLogger } from '../../common/jsonLogger';
 
 export class CmsWebService implements WebService {
-  private logger: Logger;
+  private logger: Logger = jsonLogger;
   private router: Router;
 
   constructor(customConfig?: CmsServerConfig) {

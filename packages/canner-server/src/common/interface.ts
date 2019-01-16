@@ -14,7 +14,7 @@ export interface Logger {
   debug(payload: any): void;
   warn(payload: any): void;
   fatal(payload: any): void;
-  error(payload: any): void;
+  error(levelType: level, payload: any): void;
 }
 
 export enum phase {
