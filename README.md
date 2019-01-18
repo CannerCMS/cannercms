@@ -19,7 +19,7 @@
 >
 > Template CMS, Content Management System can build websites fast, but clients often need custom solutions? Well, what CannerCMS do is let creating custom CMS fast and easy with many clouds.
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/OVdxvGDGORs/0.jpg)](https://www.youtube.com/watch?v=OVdxvGDGORs)
+[![IMAGE ALT TEXT HERE](https://i.imgur.com/KUHLmSq.png)](https://www.youtube.com/watch?v=OVdxvGDGORs)
 
 Are you using CannerCMS? Please share with us [here](https://github.com/Canner/canner/issues/133). Once we approve, you will get **one month PREMIUM plan** for your account!
 
