@@ -35,6 +35,7 @@ export type CreateSchemaConfigArgsType = {
   resolveModules?: Array<string>;
   resolveLoaderModules?: Array<string>;
   tsConfigFile?: string;
+  plugins?: Array<any>;
 }
 
 export type CreateWebConfigArgsType = {
@@ -48,12 +49,15 @@ export type CreateWebConfigArgsType = {
   tsConfigFile?: string;
   appPath?: string;
   graphqlPort?: number;
+  plugins?: Array<any>;
 }
 
 export type CreateConfigArgsType = {
   schemaOnly?: boolean;
   webOnly?: boolean;
   schemaJsonOutputPath?: string;
+  schemaPlugins?: Array<any>;
+  webPlugins?: Array<any>;
 } & CreateSchemaConfigArgsType & CreateWebConfigArgsType
 
 // create temp file
@@ -64,7 +68,8 @@ export function createSchemaConfig({
   schemaOutputPath = SCHEMA_OUTPUT_PATH,
   resolveModules = RESOLVE_MODULES,
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
-  tsConfigFile = TS_CONFIG_FILE
+  tsConfigFile = TS_CONFIG_FILE,
+  plugins = []
 }: CreateSchemaConfigArgsType): webpack.Configuration {
   return {
     target: 'node',
@@ -103,8 +108,12 @@ export function createSchemaConfig({
       new webpack.NormalModuleReplacementPlugin(
         /firebase/,
         path.resolve(__dirname, 'mock')
-      )
-    ]
+      ),
+      new BundleAnalyzerPlugin({
+        analyzerMode: devMode ? 'static' : 'disabled',
+        openAnalyzer: false
+      }),
+    ].concat(plugins)
   };
 }
 
@@ -118,7 +127,8 @@ export function createWebConfig({
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
   authPath = AUTH_PATH,
-  graphqlPort = GRAPHQL_PORT
+  graphqlPort = GRAPHQL_PORT,
+  plugins = [],
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
   const windowVarsFile = tmp.fileSync({postfix: '.ts'});
@@ -171,7 +181,7 @@ export function createWebConfig({
       modules: resolveLoaderModules
     },
     externals: {
-      // antd: "antd",
+      antd: "antd",
       react: "React",
       "react-dom": "ReactDOM",
       lodash: "_",
@@ -233,19 +243,23 @@ export function createWebConfig({
     },
     plugins: [
       new HtmlWebPackPlugin({
+        inject: true, // will inject the DLL bundles to index.html
         template: htmlPath
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new MiniCssExtractPlugin({
         filename: 'style.css',
-        chunkFilename: 'style.css'
+        chunkFilename: '[name].css'
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: devMode ? 'server' : 'disabled',
+        analyzerMode: 'static',
         openAnalyzer: false
       }),
-      new CompressionPlugin()
-    ]
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1
+      }),
+      new CompressionPlugin(),
+    ].concat(plugins)
   };
 }
 
@@ -263,6 +277,8 @@ export function createConfig({
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
   graphqlPort = GRAPHQL_PORT,
+  schemaPlugins = [],
+  webPlugins = []
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {
@@ -275,7 +291,8 @@ export function createConfig({
       resolveModules,
       tsConfigFile,
       appPath,
-      graphqlPort
+      graphqlPort,
+      plugins: webPlugins
     });
     config.push(webConfig);
   }
@@ -286,7 +303,8 @@ export function createConfig({
       schemaOutputPath,
       resolveLoaderModules,
       resolveModules,
-      tsConfigFile
+      tsConfigFile,
+      plugins: schemaPlugins
     });
     config.push(schemaConfig);
   }

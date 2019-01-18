@@ -19,7 +19,9 @@ if (!argv.graphqlPort) {
 build({
   webOutputPath: argv.output && path.resolve(process.cwd(), argv.output),
   schemaOutputPath: argv.schema && path.resolve(process.cwd(), argv.schema),
-  graphqlPort: argv.graphqlPort
+  graphqlPort: argv.graphqlPort,
+  webOnly: argv.webOnly,
+  schemaOnly: argv.schemaOnly,
 })
   .then(stats => {
     console.log('success', stats.toString());

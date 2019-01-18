@@ -4,10 +4,8 @@ import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
 import {notification} from 'antd';
-import {createFakeData} from 'canner-helpers';
 import {Parser, Traverser} from 'canner-compiler';
-import {createClient, MemoryConnector} from 'canner-graphql-interface';
-import {isEmpty, isPlainObject, pickBy} from 'lodash';
+import {pickBy} from 'lodash';
 // i18n
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -17,7 +15,7 @@ import componentLocales from '@canner/antd-locales';
 addLocaleData([...en, ...zh]);
 
 // type
-import type {CMSProps, LoadedSchema} from './types';
+import type {CMSProps} from './types';
 
 type Props = CMSProps;
 
@@ -65,7 +63,6 @@ class CannerCMS extends React.Component<Props> {
       result[key] = v;
       return result;
     }, {});
-    this.client = genClient({...props.schema, schema: schema});
   }
 
   componentDidCatch(error: any) {
@@ -105,7 +102,8 @@ class CannerCMS extends React.Component<Props> {
       hideButtons,
       errorHandler,
       schema: {imageStorages, fileStorages, dict = {}},
-      defaultKey
+      defaultKey,
+      client
     } = this.props;
     const currentLocale = intl.locale || 'en';
     return (
@@ -122,7 +120,7 @@ class CannerCMS extends React.Component<Props> {
       >
         <Provider
           ref={provider => this.provider = provider}
-          client={this.client}
+          client={client}
           schema={this.schema}
           dataDidChange={this.dataDidChange}
           afterDeploy={afterDeploy}
@@ -158,49 +156,6 @@ function compile(schema, visitors) {
   });
   const componentTree = traverser.traverse();
   return componentTree;
-}
-
-export function genClient(schema: LoadedSchema) {
-  const {
-    resolvers,
-    connector,
-    graphqlClient,
-  } = schema;
-
-  const options: Object = {
-    schema: schema.schema
-  };
-
-  if (connector) {
-    if (isPlainObject(connector)) {
-      if (!isEmpty(connector)) {
-        options.connectors = connector
-      }
-    } else {
-      options.connector = connector;
-    }
-  }
-
-  if (graphqlClient) {
-    if (isPlainObject(graphqlClient)) {
-      if (!isEmpty(connector)) {
-        options.graphqlClients = graphqlClient;
-      }
-    } else {
-      options.graphqlClient = graphqlClient;
-    }
-  }
-
-  if (isEmpty(connector) && isEmpty(graphqlClient)) {
-    options.connector = new MemoryConnector({
-      defaultData: createFakeData(schema.schema, 10)
-    });
-  }
-
-  if (!isEmpty(resolvers)) {
-    options.resolvers = resolvers
-  }
-  return createClient(options);
 }
 
 function defaultErrorHandler(e) {
