@@ -29,6 +29,7 @@ export const createTsLoader: any = ({
     }, {
       loader: 'ts-loader',
       options: {
+        transpileOnly: true,
         compilerOptions: {
           "jsx": "react",
           "jsxFactory": "CannerScript"
@@ -75,7 +76,7 @@ export const babelLoader = {
           ],
           require("@babel/preset-flow")
         ],
-        plugins
+        plugins,
       }
     }]
   }, {
@@ -90,8 +91,21 @@ export const babelLoader = {
           require("@babel/preset-react"),
           require("@babel/preset-flow")
         ],
-        plugins
+        plugins,
       }
     }
   }]
+};
+
+export class CustomFilterPlugin {
+  exclude: any;
+  constructor({ exclude }) {
+    this.exclude = exclude;
+  }
+
+  apply(compiler) {
+    compiler.hooks.afterEmit.tap('CustomFilterPlugin', compilation => {
+      compilation.warnings = compilation.warnings.filter(warning => !this.exclude.test(warning.message));
+    });
+  }
 };
