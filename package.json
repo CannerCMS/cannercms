@@ -1,6 +1,6 @@
 {
   "workspaces": [
-    "packages/(!canner-server)"
+    "packages/*"
   ],
   "scripts": {
     "test": "jest --coverage --verbose false --maxWorkers=2 --testPathIgnorePatterns /node_modules/ e2e",
