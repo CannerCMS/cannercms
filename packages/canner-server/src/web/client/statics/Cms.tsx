@@ -10,6 +10,8 @@ import {
   LocalStorageConnector,
 } from 'canner-graphql-interface';
 import { createHttpLink } from 'apollo-link-http';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const confirm = Modal.confirm;
 
@@ -26,23 +28,42 @@ type Props = {
 
 type State = {
   hasError: boolean,
-  prepare: boolean
+  prepare: boolean,
+  client: ApolloClient<any>
 }
 
 export default class CMSPage extends React.Component<Props, State> {
+  client: ApolloClient<any>;
   constructor(props) {
     super(props);
     this.state = {
       hasError: false,
-      prepare: false
+      prepare: false,
+      client: null
     };
   }
 
   async componentDidMount() {
-    const token = await window.getAccessToken();
-    setApolloClient(window.schema, token);
-    this.setState({ prepare: true });
+    const client = await this.createClient();
+    this.setState({
+      prepare: true,
+      client
+    });
     
+  }
+
+  createClient = async (): Promise<ApolloClient<any>> => {
+    const token = await getAccessToken();
+    const link: any =  createHttpLink({
+      uri: `/graphql`,
+      headers: token ?
+        { Authentication: `Bearer ${token}` } :
+        {},
+    });
+    return new ApolloClient({
+      cache: new InMemoryCache(),
+      link
+    });
   }
 
   componentDidCatch(error, info) {
@@ -69,7 +90,7 @@ export default class CMSPage extends React.Component<Props, State> {
 
   render() {
     const { history } = this.props;
-    const { prepare, hasError } = this.state;
+    const { prepare, hasError, client } = this.state;
     if (hasError) return <Error />;
 
     if (!prepare) return null;
@@ -117,22 +138,10 @@ export default class CMSPage extends React.Component<Props, State> {
                 description: ""
               });
             }}
+            client={client}
           />
         </Container>
       </Layout>
     );
   }
-}
-
-function setApolloClient(schema: any, token?: string) {
-  delete schema.connector;
-  const options: any = {
-    uri: `http://localhost:${graphqlPort}`,
-  }
-  if (token) {
-    options.headers = {
-      Authentication: `Bearer ${token}`
-    };
-  }
-  schema.graphqlClient = new GraphqlClient(options)
 }

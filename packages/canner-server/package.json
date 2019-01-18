@@ -12,7 +12,6 @@
     "web:statics:build": "NODE_ENV=production ts-node src/web/client/bin/build.ts",
     "web:statics:serve": "NODE_ENV=production ts-node src/web/client/bin/serve.ts",
     "web:dataSources": "NODE_ENV=production ts-node src/web/client/bin/dataSources.ts",
-    "web:server": "NODE_ENV=production ts-node src/web/server/bin/www.ts",
     "web:start": "npm run web:statics:build && npm run web:dataSources && npm run web:server",
     "gqlify:server": "NODE_ENV=development ts-node src/gqlify/bin/www.ts",
     "lint": "tslint -c tslint.json src/**/*.ts",
