@@ -3,13 +3,9 @@ import {Layout, notification, Modal, Button} from 'antd';
 import Canner from 'canner';
 import Container, {transformSchemaToMenuConfig} from '@canner/container';
 import R from '@canner/history-router';
-import {GraphqlClient} from 'canner-graphql-interface';
 import Error from './Error';
 import styled from 'styled-components';
-import {
-  LocalStorageConnector,
-} from 'canner-graphql-interface';
-import { createHttpLink } from 'apollo-link-http';
+import ApolloClient from "apollo-boost";
 
 const confirm = Modal.confirm;
 
@@ -21,7 +17,7 @@ export const Logo = styled.img`
 type Props = {
   history: Object,
   match: Object,
-  location: Object
+  location: Object,
 };
 
 type State = {
@@ -30,6 +26,8 @@ type State = {
 }
 
 export default class CMSPage extends React.Component<Props, State> {
+  client: any
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -40,9 +38,21 @@ export default class CMSPage extends React.Component<Props, State> {
 
   async componentDidMount() {
     const token = await window.getAccessToken();
-    setApolloClient(window.schema, token);
+    this.createClient(token);
     this.setState({ prepare: true });
     
+  }
+
+  createClient(token) {
+    const options: any = {
+      uri: `/graphql`,
+    }
+    if (token) {
+      options.headers = {
+        Authentication: `Bearer ${token}`
+      };
+    }
+    this.client = new ApolloClient(options);
   }
 
   componentDidCatch(error, info) {
@@ -92,9 +102,6 @@ export default class CMSPage extends React.Component<Props, State> {
             menuStyle: cloudConfig.sidebarMenuStyle
           }}
           navbarConfig={{
-            renderMenu: ({theme}) => (
-              (schema.connector instanceof LocalStorageConnector) && <Button onClick={this.handleClickResetButton} key="reset" ghost={theme === 'dark'}>Reset</Button>
-            ),
             showSaveButton: true,
             logo: <Logo src={cloudConfig.logo || 'https://cdn.canner.io/images/logo/logo-word-white.png'} />,
             theme: cloudConfig.navbarTheme,
@@ -109,6 +116,7 @@ export default class CMSPage extends React.Component<Props, State> {
           }
         >
           <Canner
+            client={this.client}
             schema={schema}
             afterDeploy={() => {
               notification.success({
@@ -122,17 +130,4 @@ export default class CMSPage extends React.Component<Props, State> {
       </Layout>
     );
   }
-}
-
-function setApolloClient(schema: any, token?: string) {
-  delete schema.connector;
-  const options: any = {
-    uri: `http://localhost:${graphqlPort}`,
-  }
-  if (token) {
-    options.headers = {
-      Authentication: `Bearer ${token}`
-    };
-  }
-  schema.graphqlClient = new GraphqlClient(options)
 }

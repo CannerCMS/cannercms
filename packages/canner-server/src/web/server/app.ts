@@ -13,23 +13,17 @@ import { jsonLogger } from '../../common/jsonLogger';
 export class CmsWebService implements WebService {
   private logger: Logger = jsonLogger;
   private router: Router;
+  private config: CmsServerConfig;
 
   constructor(customConfig?: CmsServerConfig) {
     const config = createConfig(customConfig);
+    this.config = config;
 
     // router
     const router = new Router();
     router.use(views(path.join(__dirname, './views'), {
       extension: 'pug'
     }));
-
-    // serve client static
-    const serveClientStatic = koaMount(config.staticsPath, serve(config.clientBundledDir, {gzip: true, index: false}));
-    router.use(serveClientStatic);
-
-    // serve favicon
-    const favicon = koaMount('/public/favicon', serve(path.resolve(__dirname, '../public/favicon'), {gzip: true, index: false}));
-    router.use(favicon);
 
     // cms
     router.get('/cms', async ctx => {
@@ -52,8 +46,15 @@ export class CmsWebService implements WebService {
     this.router = router;
   }
 
-  public mount(rootRouter: Router) {
-    rootRouter.use(this.router.routes());
+  public mount(app: Koa) {
+    // serve client static
+    const serveClientStatic = koaMount(this.config.staticsPath, serve(this.config.clientBundledDir, {gzip: true, index: false}));
+    app.use(serveClientStatic);
+
+    // serve favicon
+    const favicon = koaMount('/public/favicon', serve(path.resolve(__dirname, '../public/favicon'), {gzip: true, index: false}));
+    app.use(favicon);
+    app.use(this.router.routes());
   }
 
   // logger
