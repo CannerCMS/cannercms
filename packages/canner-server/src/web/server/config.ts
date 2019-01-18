@@ -1,35 +1,24 @@
-import {isEmpty} from 'lodash';
+import {Context} from 'koa';
 import path from 'path';
 
-export interface Config {
-  env: string;
-  appPrefix: string;
-  staticsPath: string;
+export interface CmsServerConfig {
+  staticsPath?: string;
+  clientBundledDir: string;
+  beforeRenderCms?: (ctx: Context) => Promise<void>;
+  authCallback?: (ctx: Context) => Promise<void>;
+  logout?: (ctx: Context) => Promise<void>;
 }
 
-const sanitizePath = (path: string) => {
-  if (isEmpty(path) || path === '/') {
-    return null;
-  }
-  path = path.startsWith('/') ? path : `/${path}`;
-  path = path.endsWith('/') ? path.slice(0, -1) : path;
-  return path;
-};
+const defaultServerConfig = {
+  staticsPath: '/public',
+  clientBundledDir: path.join(process.cwd(), '.cms'),
+}
 
-export const createConfig = (): Config => {
-  const env = process.env.NODE_ENV || 'development';
-  switch (env) {
-    case 'production':
-      return {
-        env: 'production',
-        appPrefix: sanitizePath(process.env.APP_PREFIX),
-        staticsPath: path.join(process.cwd(), '.cms')
-      };
-    default:
-      return {
-        env: 'development',
-        appPrefix: sanitizePath(process.env.APP_PREFIX),
-        staticsPath: path.join(process.cwd(), '.cms')
-      };
-  }
+export const createConfig = (customConfig?: CmsServerConfig): CmsServerConfig => {
+  const mergedConfig = {
+    ...defaultServerConfig,
+    ...customConfig,
+  };
+
+  return mergedConfig;
 }
