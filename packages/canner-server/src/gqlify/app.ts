@@ -1,5 +1,5 @@
 import path from 'path';
-import Router from 'koa-router';
+import Koa from 'koa';
 import  { Gqlify } from '@gqlify/server';
 import { ScalarField } from '@gqlify/server/lib/dataModel';
 import { DataModelType } from '@gqlify/server/lib/dataModel/type';
@@ -56,8 +56,8 @@ export class GraphQLService implements WebService {
     this.apolloServer = new ApolloServer(gqlify.createApolloConfig());
   }
 
-  public mount(rootRouter: Router): void {
-    this.apolloServer.applyMiddleware(rootRouter as any);
+  public mount(app: Koa): void {
+    this.apolloServer.applyMiddleware({app});
   }
   
   public setLogger(logger: Logger): void {

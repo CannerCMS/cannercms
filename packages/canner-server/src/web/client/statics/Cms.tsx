@@ -3,12 +3,8 @@ import {Layout, notification, Modal, Button} from 'antd';
 import Canner from 'canner';
 import Container, {transformSchemaToMenuConfig} from '@canner/container';
 import R from '@canner/history-router';
-import {GraphqlClient} from 'canner-graphql-interface';
 import Error from './Error';
 import styled from 'styled-components';
-import {
-  LocalStorageConnector,
-} from 'canner-graphql-interface';
 import { createHttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -23,7 +19,7 @@ export const Logo = styled.img`
 type Props = {
   history: Object,
   match: Object,
-  location: Object
+  location: Object,
 };
 
 type State = {
@@ -34,6 +30,7 @@ type State = {
 
 export default class CMSPage extends React.Component<Props, State> {
   client: ApolloClient<any>;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -113,9 +110,6 @@ export default class CMSPage extends React.Component<Props, State> {
             menuStyle: cloudConfig.sidebarMenuStyle
           }}
           navbarConfig={{
-            renderMenu: ({theme}) => (
-              (schema.connector instanceof LocalStorageConnector) && <Button onClick={this.handleClickResetButton} key="reset" ghost={theme === 'dark'}>Reset</Button>
-            ),
             showSaveButton: true,
             logo: <Logo src={cloudConfig.logo || 'https://cdn.canner.io/images/logo/logo-word-white.png'} />,
             theme: cloudConfig.navbarTheme,
@@ -130,6 +124,7 @@ export default class CMSPage extends React.Component<Props, State> {
           }
         >
           <Canner
+            client={this.client}
             schema={schema}
             afterDeploy={() => {
               notification.success({

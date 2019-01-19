@@ -12,7 +12,6 @@ export interface AppConfig {
 
 export const createApp = async (config: AppConfig) => {
   const app = new Koa();
-  const rootRouter = new Router();
 
   // construct services
   const graphqlService = new GraphQLService({
@@ -22,10 +21,8 @@ export const createApp = async (config: AppConfig) => {
   const cmsWebService = new CmsWebService();
 
   // mount services
-  graphqlService.mount(rootRouter);
-  cmsWebService.mount(rootRouter);
-
-  app.use(rootRouter.routes());
+  graphqlService.mount(app);
+  cmsWebService.mount(app);
 
   return app;
 }

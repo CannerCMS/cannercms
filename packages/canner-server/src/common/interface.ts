@@ -1,4 +1,4 @@
-import Router from 'koa-router';
+import Koa from 'koa';
 
 export enum level {
   info = 'INFO',
@@ -35,7 +35,7 @@ export interface ServerStatus {
 
 export interface WebService {
   // mount on root Koa app
-  mount(koaRouter: Router): void;
+  mount(app: Koa): void;
 
   // logger
   setLogger(logger: Logger): void;
