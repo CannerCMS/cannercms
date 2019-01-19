@@ -46,11 +46,11 @@ export class GraphQLService implements WebService {
     const gqlify = new Gqlify({
       rootNode,
       models,
+      dataSources: options.dataSources,
       scalars: {
         JSON: GraphQLJSON,
         DateTime: GraphQLDateTime,
-      },
-      dataSources: options.dataSources,
+      }
     });
   
     this.apolloServer = new ApolloServer(gqlify.createApolloConfig());
