@@ -7,11 +7,14 @@ import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import tmp from 'tmp';
+import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
+
 import createEntryFile from './createEntryFile';
 import createWindowVarsFile from './createWindowVarsFile';
 import {
   createTsLoader,
   babelLoader,
+  CustomFilterPlugin
 } from './webpackCommon';
 import {
   HTML_PATH,
@@ -28,6 +31,9 @@ import {
   SCHEMA_OUTPUT_FILENAME
 } from '../config';
 const devMode = process.env.NODE_ENV === 'development';
+const smp = new SpeedMeasurePlugin({
+  disable: !process.env.MEASURE
+});
 
 export type CreateSchemaConfigArgsType = {
   schemaPath?: string;
@@ -149,7 +155,7 @@ export function createWebConfig({
     graphqlPort
   });
 
-  return {
+  return smp.wrap({
     entry: {
       index: [WINDOW_VARS_PATH, ENTRY_PATH]
     },
@@ -158,6 +164,9 @@ export function createWebConfig({
       fs: 'empty',
       path: true,
       url: false
+    },
+    performance: {
+      hints: false
     },
     output: {
       path: webOutputPath,
@@ -204,7 +213,7 @@ export function createWebConfig({
             },
             name: 'vendors',
             chunks: 'all',
-            priority: -10
+            enforce: true
           }
         },
       }
@@ -217,7 +226,10 @@ export function createWebConfig({
         babelLoader,
         {
           test: /\.css$/,
-          use: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, "css-loader"]
+          use: [
+            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            "css-loader"
+          ]
         }, {
           test: /\.less$/,
           use: [
@@ -246,7 +258,6 @@ export function createWebConfig({
         inject: true, // will inject the DLL bundles to index.html
         template: htmlPath
       }),
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new MiniCssExtractPlugin({
         filename: 'style.css',
         chunkFilename: '[name].css'
@@ -259,8 +270,11 @@ export function createWebConfig({
         maxChunks: 1
       }),
       new CompressionPlugin(),
+      new CustomFilterPlugin({
+        exclude: /Conflicting order between:/
+      })
     ].concat(plugins)
-  };
+  });
 }
 
 

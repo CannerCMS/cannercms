@@ -9,7 +9,7 @@
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "web:statics:build": "NODE_ENV=production ts-node src/web/client/bin/build.ts",
+    "web:statics:build": "MEASURE=true NODE_ENV=production ts-node src/web/client/bin/build.ts",
     "web:statics:serve": "NODE_ENV=production ts-node src/web/client/bin/serve.ts",
     "web:dataSources": "NODE_ENV=production ts-node src/web/client/bin/dataSources.ts",
     "web:start": "npm run web:statics:build && npm run web:dataSources && npm run web:server",
@@ -80,6 +80,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "rimraf": "^2.5.4",
+    "speed-measure-webpack-plugin": "^1.2.5",
     "style-loader": "^0.21.0",
     "styled-components": "^3.2.6",
     "tmp": "^0.0.33",

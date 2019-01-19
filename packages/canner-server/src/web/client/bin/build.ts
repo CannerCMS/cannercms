@@ -23,8 +23,17 @@ build({
   webOnly: argv.webOnly,
   schemaOnly: argv.schemaOnly,
 })
-  .then(stats => {
-    console.log('success', stats.toString());
+  .then((stats: any) => {
+    console.log('finished', stats.toString({
+      assets: true,
+      colors: true,
+      version: true,
+      hash: false,
+      timings: true,
+      chunks: false,
+      chunkModules: false,
+      children: false
+    }));
   })
   .catch(err => {
     console.log('error', err);
