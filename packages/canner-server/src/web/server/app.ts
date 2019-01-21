@@ -40,6 +40,17 @@ export class CmsWebService implements WebService {
     router.get('/cms/*', beforeRenderCms, async ctx => {
       await ctx.render('cms', {title: 'Canenr CMS', staticsPath: config.staticsPath});
     });
+    
+    // auth callback
+    // if not set in config, this route will simply redirect to /cms
+    router.get('/auth/callback', async ctx => {
+      if (!config.authCallback) {
+        return ctx.redirect('/cms');
+      }
+
+      await config.authCallback(ctx);
+      return ctx.redirect('/cms');
+    });
 
     // health check
     router.get('/health', async ctx => {
