@@ -98,6 +98,26 @@ const Products = () => (
             relationField: "category"
           }}
         />
+        <relation
+          keyName="cateogies"
+          ui="multipleSelect"
+          relation={{
+            type: "toMany",
+            to: "categories"
+          }}
+          title="${categories.title}"
+          uiParams={{
+            textCol: "name",
+            columns: [
+              {title: "${categories.name}", dataIndex: "name"}
+            ],
+            relationField: "category"
+          }}
+        >
+          <toolbar async>
+            <pagination />
+          </toolbar>
+        </relation>
       </Default>
       <Default keyName="storage" title="${products.storage.layoutTitle}">
         <object keyName="storage">

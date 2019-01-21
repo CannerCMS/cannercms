@@ -70,6 +70,7 @@ export type HOCProps = {
   relation: Relation,
   nodeType: string,
   rootValue: any,
+  relationValue: any,
   value: any,
   routerParams: Object,
   items: Object,

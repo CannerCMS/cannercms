@@ -53,6 +53,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
     shouldComponentUpdate(nextProps: HOCProps) {
       if (
         !isEqual(nextProps.value, this.props.value) ||
+        !isEqual(nextProps.relationValue, this.props.relationValue) ||
         nextProps.error !== this.props.error ||
         nextProps.disabled !== this.props.disabled
       ) {
