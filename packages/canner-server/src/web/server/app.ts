@@ -26,10 +26,18 @@ export class CmsWebService implements WebService {
     }));
 
     // cms
-    router.get('/cms', async ctx => {
+    const beforeRenderCms = async (ctx: Context, next: () => Promise<any>) => {
+      if (!config.beforeRenderCms) {
+        return next();
+      }
+
+      await config.beforeRenderCms(ctx);
+      return next();
+    };
+    router.get('/cms', beforeRenderCms, async ctx => {
       await ctx.render('cms', {title: 'Canenr CMS', staticsPath: config.staticsPath});
     });
-    router.get('/cms/*', async ctx => {
+    router.get('/cms/*', beforeRenderCms, async ctx => {
       await ctx.render('cms', {title: 'Canenr CMS', staticsPath: config.staticsPath});
     });
 
