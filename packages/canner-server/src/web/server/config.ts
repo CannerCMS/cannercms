@@ -6,7 +6,7 @@ export interface CmsServerConfig {
   clientBundledDir: string;
   beforeRenderCms?: (ctx: Context) => Promise<void>;
   authCallback?: (ctx: Context) => Promise<void>;
-  logout?: (ctx: Context) => Promise<void>;
+  logout?: (ctx: Context, next: () => Promise<any>) => Promise<void>;
 }
 
 const defaultServerConfig = {

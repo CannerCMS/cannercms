@@ -52,6 +52,16 @@ export class CmsWebService implements WebService {
       return ctx.redirect('/cms');
     });
 
+    // logout
+    // if not set in config, simply pass through
+    const logoutMiddleware = config.logout
+      ? config.logout
+      : (ctx: Context, next: () => Promise<any>) => next();
+    router.get('/auth/logout', logoutMiddleware, async ctx => {
+      // if logout middleware calls next, it will redirect to /cms
+      ctx.redirect('/cms');
+    });
+
     // health check
     router.get('/health', async ctx => {
       ctx.status = 200;
