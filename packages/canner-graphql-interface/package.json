@@ -29,7 +29,7 @@
     "apollo-utilities": "^1.0.11",
     "canner-graphql-utils": "^2.0.5",
     "dataloader": "^1.4.0",
-    "graphql": "0.13.0",
+    "graphql": "^14.1.1",
     "graphql-anywhere": "^4.1.6",
     "graphql-tag": "^2.8.0",
     "graphql-tools": "^2.21.0",
@@ -58,7 +58,8 @@
     "typescript": "^2.7.2"
   },
   "peerDependencies": {
-    "firebase": "^5.0.4"
+    "firebase": "^5.0.4",
+    "graphql": "*"
   },
   "repository": "Canner/canner",
   "license": "MIT"
