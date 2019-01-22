@@ -107,6 +107,21 @@
     "@types/webpack-dev-server": "^3.1.1",
     "copyfiles": "^2.1.0"
   },
+  "peerDependencies": {
+    "@canner/antd-components": "*",
+    "@canner/container": "*",
+    "@canner/history-router": "*",
+    "@canner/storage": "*",
+    "antd": "*",
+    "canner": "*",
+    "canner-schema-loader": "*",
+    "canner-script": "*",
+    "graphql": "*",
+    "graphql-iso-date": "*",
+    "graphql-type-json": "*",
+    "react": "*",
+    "react-dom": "*"
+  },
   "repository": "Canner/canner",
   "license": "MIT"
 }
