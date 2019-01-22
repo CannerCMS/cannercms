@@ -164,7 +164,16 @@ export default class FirestoreConnector implements Connector {
 
   public async mapUpdate(key: string, payload: any, schema: Field): Promise<any> {
     payload = recursivePayload({data: payload, schema});
-    await this.database.doc(`canner-object/${key}`).update(payload);
+    try {
+      await this.database.doc(`canner-object/${key}`).update(payload);
+    } catch (e) {
+      if (/No document to update/.test(e.message)) {
+        await this.database.doc(`canner-object/${key}`).set(payload);
+      } else {
+        // throw other error
+        throw e;
+      }
+    }
     return this.mapResolve(key, schema);
   }
 
