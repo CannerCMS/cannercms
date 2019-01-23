@@ -87,7 +87,8 @@ export function createSchemaConfig({
     },
     mode: devMode ? 'development' : 'production',
     resolve: {
-      "extensions": [".jsx", ".js", ".ts", ".tsx"],
+      // mjs to fix https://github.com/graphql/graphql-js/issues/1272
+      "extensions": [".jsx", ".js", ".ts", ".tsx", "mjs"],
       modules: resolveModules
     },
     resolveLoader: {
@@ -95,6 +96,12 @@ export function createSchemaConfig({
     },
     module: {
       rules: [
+        // mjs to fix https://github.com/graphql/graphql-js/issues/1272
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto'
+        },
         createTsLoader({
           configFile: tsConfigFile
         }),
@@ -183,7 +190,8 @@ export function createWebConfig({
       disableHostCheck: true
     },
     resolve: {
-      "extensions": [".jsx", ".js", ".ts", ".tsx"],
+      // mjs to fix https://github.com/graphql/graphql-js/issues/1272
+      "extensions": [".jsx", ".js", ".ts", ".tsx", ".mjs"],
       modules: resolveModules
     },
     resolveLoader: {
@@ -195,7 +203,6 @@ export function createWebConfig({
       "react-dom": "ReactDOM",
       lodash: "_",
       moment: 'moment',
-      firebase: "firebase",
       "styled-components": "styled",
     },
     optimization: {
@@ -220,6 +227,12 @@ export function createWebConfig({
     },
     module: {
       rules: [
+        // mjs to fix https://github.com/graphql/graphql-js/issues/1272
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto'
+        },
         createTsLoader({
           configFile: tsConfigFile
         }),
@@ -266,6 +279,11 @@ export function createWebConfig({
         analyzerMode: 'static',
         openAnalyzer: false
       }),
+      // temp solution for firebase undefined, since we will remove the canner-graphql-interface in the future
+      new webpack.NormalModuleReplacementPlugin(
+        /firebase/,
+        path.resolve(__dirname, 'mock')
+      ),
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
       }),
