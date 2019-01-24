@@ -16,7 +16,7 @@
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
     "clean": "rimraf lib dist",
     "prebuild": "npm run clean",
-    "build": "tsc -p ./tsconfig.release.json --pretty && copyfiles -u 4 \"src/statics/**/*\" lib/statics",
+    "build": "tsc -p ./tsconfig.release.json --pretty && copyfiles -u 2 \"src/statics/**/*\" lib/statics",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "publishConfig": {
