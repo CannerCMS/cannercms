@@ -79,6 +79,7 @@
     "pug": "^2.0.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-intl": "^2.8.0",
     "rimraf": "^2.5.4",
     "speed-measure-webpack-plugin": "^1.2.5",
     "style-loader": "^0.21.0",
@@ -120,7 +121,8 @@
     "graphql-iso-date": "*",
     "graphql-type-json": "*",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "react-intl": "*"
   },
   "repository": "Canner/canner",
   "license": "MIT"

@@ -56,6 +56,8 @@ export type CreateWebConfigArgsType = {
   appPath?: string;
   graphqlPort?: number;
   plugins?: Array<any>;
+  baseUrl?: string;
+  i18nMessages?: Object;
 }
 
 export type CreateConfigArgsType = {
@@ -141,6 +143,8 @@ export function createWebConfig({
   appPath = APP_PATH,
   authPath = AUTH_PATH,
   graphqlPort = GRAPHQL_PORT,
+  baseUrl = '/cms',
+  i18nMessages = {},
   plugins = [],
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
@@ -151,7 +155,9 @@ export function createWebConfig({
   // create entry file dynamic so that we can change appPath, schemaPath by CLI
   createEntryFile({
     entryPath: ENTRY_PATH,
-    appPath
+    appPath,
+    baseUrl,
+    i18nMessages
   });
 
   createWindowVarsFile({
@@ -310,7 +316,8 @@ export function createConfig({
   appPath = APP_PATH,
   graphqlPort = GRAPHQL_PORT,
   schemaPlugins = [],
-  webPlugins = []
+  webPlugins = [],
+  i18nMessages = {}
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {
@@ -324,7 +331,8 @@ export function createConfig({
       tsConfigFile,
       appPath,
       graphqlPort,
-      plugins: webPlugins
+      plugins: webPlugins,
+      i18nMessages
     });
     config.push(webConfig);
   }

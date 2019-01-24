@@ -22,6 +22,10 @@ build({
   graphqlPort: argv.graphqlPort,
   webOnly: argv.webOnly,
   schemaOnly: argv.schemaOnly,
+  resolveModules: [
+    path.resolve(__dirname, '../../../../node_modules'),
+    path.resolve(__dirname, '../../../../../../node_modules')
+  ]
 })
   .then((stats: any) => {
     console.log('finished', stats.toString({

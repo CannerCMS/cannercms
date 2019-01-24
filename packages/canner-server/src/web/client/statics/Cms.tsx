@@ -20,6 +20,10 @@ type Props = {
   history: Object,
   match: Object,
   location: Object,
+  intl: {
+    locale?: string,
+    messages?: Object
+  }
 };
 
 type State = {
@@ -86,7 +90,7 @@ export default class CMSPage extends React.Component<Props, State> {
   }
 
   render() {
-    const { history } = this.props;
+    const { history, intl } = this.props;
     const { prepare, hasError, client } = this.state;
     if (hasError) return <Error />;
 
@@ -124,7 +128,6 @@ export default class CMSPage extends React.Component<Props, State> {
           }
         >
           <Canner
-            client={this.client}
             schema={schema}
             afterDeploy={() => {
               notification.success({
@@ -133,6 +136,7 @@ export default class CMSPage extends React.Component<Props, State> {
                 description: ""
               });
             }}
+            intl={intl}
             client={client}
           />
         </Container>
