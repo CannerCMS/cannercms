@@ -54,8 +54,9 @@ export type CreateWebConfigArgsType = {
   authPath?: string;
   tsConfigFile?: string;
   appPath?: string;
-  graphqlPort?: number;
   plugins?: Array<any>;
+  baseUrl?: string;
+  i18nMessages?: Object;
 }
 
 export type CreateConfigArgsType = {
@@ -87,7 +88,8 @@ export function createSchemaConfig({
     },
     mode: devMode ? 'development' : 'production',
     resolve: {
-      "extensions": [".jsx", ".js", ".ts", ".tsx"],
+      // mjs to fix https://github.com/graphql/graphql-js/issues/1272
+      "extensions": [".jsx", ".js", ".ts", ".tsx", "mjs"],
       modules: resolveModules
     },
     resolveLoader: {
@@ -95,6 +97,12 @@ export function createSchemaConfig({
     },
     module: {
       rules: [
+        // mjs to fix https://github.com/graphql/graphql-js/issues/1272
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto'
+        },
         createTsLoader({
           configFile: tsConfigFile
         }),
@@ -133,7 +141,8 @@ export function createWebConfig({
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
   authPath = AUTH_PATH,
-  graphqlPort = GRAPHQL_PORT,
+  baseUrl = '/cms',
+  i18nMessages = {},
   plugins = [],
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
@@ -144,15 +153,16 @@ export function createWebConfig({
   // create entry file dynamic so that we can change appPath, schemaPath by CLI
   createEntryFile({
     entryPath: ENTRY_PATH,
-    appPath
+    appPath,
+    baseUrl,
+    i18nMessages
   });
 
   createWindowVarsFile({
     windowVarsPath: WINDOW_VARS_PATH,
     schemaPath,
     cloudPath,
-    authPath,
-    graphqlPort
+    authPath
   });
 
   return smp.wrap({
@@ -183,7 +193,8 @@ export function createWebConfig({
       disableHostCheck: true
     },
     resolve: {
-      "extensions": [".jsx", ".js", ".ts", ".tsx"],
+      // mjs to fix https://github.com/graphql/graphql-js/issues/1272
+      "extensions": [".jsx", ".js", ".ts", ".tsx", ".mjs"],
       modules: resolveModules
     },
     resolveLoader: {
@@ -195,7 +206,6 @@ export function createWebConfig({
       "react-dom": "ReactDOM",
       lodash: "_",
       moment: 'moment',
-      firebase: "firebase",
       "styled-components": "styled",
     },
     optimization: {
@@ -220,6 +230,12 @@ export function createWebConfig({
     },
     module: {
       rules: [
+        // mjs to fix https://github.com/graphql/graphql-js/issues/1272
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto'
+        },
         createTsLoader({
           configFile: tsConfigFile
         }),
@@ -266,6 +282,11 @@ export function createWebConfig({
         analyzerMode: 'static',
         openAnalyzer: false
       }),
+      // temp solution for firebase undefined, since we will remove the canner-graphql-interface in the future
+      new webpack.NormalModuleReplacementPlugin(
+        /firebase/,
+        path.resolve(__dirname, 'mock')
+      ),
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
       }),
@@ -290,9 +311,9 @@ export function createConfig({
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
-  graphqlPort = GRAPHQL_PORT,
   schemaPlugins = [],
-  webPlugins = []
+  webPlugins = [],
+  i18nMessages = {}
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {
@@ -305,8 +326,8 @@ export function createConfig({
       resolveModules,
       tsConfigFile,
       appPath,
-      graphqlPort,
-      plugins: webPlugins
+      plugins: webPlugins,
+      i18nMessages
     });
     config.push(webConfig);
   }

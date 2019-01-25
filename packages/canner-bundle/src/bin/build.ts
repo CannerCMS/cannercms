@@ -12,16 +12,15 @@ if (!argv.output) {
   console.log(`No option --output=<path>, use default path ${WEB_OUTPUT_PATH}`)
 }
 
-if (!argv.graphqlPort) {
-  console.log(`No option --graphqlPort=<port>, use default port ${GRAPHQL_PORT}`)
-}
-
 build({
   webOutputPath: argv.output && path.resolve(process.cwd(), argv.output),
   schemaOutputPath: argv.schema && path.resolve(process.cwd(), argv.schema),
-  graphqlPort: argv.graphqlPort,
   webOnly: argv.webOnly,
   schemaOnly: argv.schemaOnly,
+  resolveModules: [
+    path.resolve(__dirname, '../../node_modules'),
+    path.resolve(__dirname, '../../../../node_modules')
+  ]
 })
   .then((stats: any) => {
     console.log('finished', stats.toString({

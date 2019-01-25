@@ -6,19 +6,16 @@ export default function createWindowVarsFile({
   windowVarsPath,
   cloudPath,
   authPath,
-  graphqlPort
 }: {
   schemaPath: string,
   windowVarsPath: string,
   cloudPath: string,
   authPath: string,
-  graphqlPort: number
 }) {
   const templateCode = generateTemplate({
     schemaPath,
     cloudPath,
     authPath,
-    graphqlPort
   });
   fs.writeFileSync(windowVarsPath, templateCode);
 }
@@ -31,7 +28,6 @@ function generateTemplate({
   schemaPath,
   cloudPath,
   authPath,
-  graphqlPort
 }) {
   return `
   import schema from '${toNodePath(schemaPath)}';
@@ -41,6 +37,5 @@ function generateTemplate({
   window.cloudConfig = cloudConfig;
   window.getAccessToken = getAccessToken;
   window.baseUrl = "/cms";
-  window.graphqlPort = ${graphqlPort};
 `;
 }
