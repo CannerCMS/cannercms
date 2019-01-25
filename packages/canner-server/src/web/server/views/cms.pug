@@ -3,8 +3,7 @@ extends ./layout.pug
 
 block head
   script.
-    window.username = "#{username}";
-    window.thumbnail = "#{thumbnail}";
+    window.config = JSON.parse("#{frontendConfig}");
 block main
   div(id='root')
   script(src= `${staticsPath}/index.js`)

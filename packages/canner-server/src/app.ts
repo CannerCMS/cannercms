@@ -1,28 +1,22 @@
 import Koa from 'koa';
-import Router from 'koa-router';
+import { construct } from './config/factory';
 
 // Service
 import { GraphQLService } from './gqlify/app';
 import { CmsWebService } from './web/server/app';
+import { ServerConfig } from './config/interface';
 
-export interface AppConfig {
-  schemaPath?: string;
-  dataSources: Record<string, any>;
-}
-
-export const createApp = async (config: AppConfig) => {
+export const createApp = async (config: ServerConfig) => {
   const app = new Koa();
+  const {cmsConfig, graphqlConfig} = construct(config);
 
   // construct services
-  const graphqlService = new GraphQLService({
-    schemaPath: config.schemaPath,
-    dataSources: config.dataSources,
-  });
-  const cmsWebService = new CmsWebService();
+  const graphqlService = new GraphQLService(graphqlConfig);
+  const cmsWebService = new CmsWebService(cmsConfig);
 
   // mount services
-  graphqlService.mount(app);
-  cmsWebService.mount(app);
+  await graphqlService.mount(app);
+  await cmsWebService.mount(app);
 
   return app;
-}
+};

@@ -52,6 +52,8 @@
     "apollo-server-koa": "^2.3.1",
     "babel-loader": "^8.0.4",
     "babel-plugin-import": "^1.9.1",
+    "bluebird": "^3.5.3",
+    "boom": "^7.3.0",
     "canner": "^2.0.45",
     "canner-schema-loader": "^2.0.37",
     "canner-script": "^2.0.36",
@@ -75,6 +77,7 @@
     "mini-css-extract-plugin": "^0.5.0",
     "minimist": "^1.2.0",
     "node-jose": "^1.1.0",
+    "openid-client": "^2.4.5",
     "pluralize": "^7.0.0",
     "pug": "^2.0.3",
     "react": "^16.7.0",
@@ -95,6 +98,8 @@
     "webpack-dev-server": "^3.1.0"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.25",
+    "@types/boom": "^7.2.1",
     "@types/jsonwebtoken": "^8.3.0",
     "@types/koa": "^2.0.48",
     "@types/koa-mount": "^3.0.1",
@@ -105,7 +110,8 @@
     "@types/node": "^9.4.6",
     "@types/webpack": "^4.4.22",
     "@types/webpack-dev-server": "^3.1.1",
-    "copyfiles": "^2.1.0"
+    "copyfiles": "^2.1.0",
+    "tslint-react": "^3.6.0"
   },
   "repository": "Canner/canner",
   "license": "MIT"
