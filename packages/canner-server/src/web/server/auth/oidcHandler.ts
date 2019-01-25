@@ -1,5 +1,5 @@
 import { Context } from 'koa';
-import jksClient from 'jwks-rsa';
+import { URL } from 'url';
 import jwt from 'jsonwebtoken';
 import jose from 'node-jose';
 import BPromise from 'bluebird';
@@ -98,8 +98,7 @@ export class OidcHandler {
 
     if (!accessToken) {
       // redirect to login page
-      const backPath = this.buildBackPath(ctx.href);
-      const loginUrl = this.getLoginUrl(backPath);
+      const loginUrl = this.getLoginUrl();
       return ctx.redirect(loginUrl);
     }
 
@@ -115,8 +114,7 @@ export class OidcHandler {
 
   public authCallback = async (ctx: Context, next) => {
     const query = ctx.query;
-    const redirectUri = query.backPath ?
-      `${this.redirectUri}?backPath=${encodeURIComponent(query.backPath)}` : this.redirectUri;
+    const redirectUri = this.redirectUri;
     const tokenSet = await this.oidcClient.authorizationCallback(redirectUri, query);
     const accessToken = new Token(tokenSet.access_token);
 
@@ -126,11 +124,6 @@ export class OidcHandler {
       ctx.cookies.set(usernameCookieKey, username, {signed: true});
     }
     ctx.cookies.set(accessTokenCookieKey, tokenSet.access_token, {signed: true});
-
-    // go to backPath if exists
-    if (query.backPath) {
-      return ctx.redirect(query.backPath);
-    }
 
     // go to next by default, which would simply redirect to /cms
     return next();
@@ -168,11 +161,8 @@ export class OidcHandler {
     return encodeURIComponent(url.pathname + url.search);
   }
 
-  private getLoginUrl = (backPath?: string) => {
+  private getLoginUrl = () => {
     let redirectUri = this.redirectUri;
-    if (backPath) {
-      redirectUri += `?backPath=${backPath}`;
-    }
     const loginUrl = this.oidcClient.authorizationUrl({
       redirect_uri: redirectUri,
       scope: this.oidcScopes,

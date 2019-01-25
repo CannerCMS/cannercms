@@ -7,7 +7,11 @@ createApp({
     hostname: 'http://localhost:3000',
   },
   cms: {
-    oidc: null,
+    oidc: {
+      discoveryUrl: 'http://localhost:5000/.well-known/openid-configuration',
+      clientId: 'canner',
+      clientSecret: 'canner-client-secret',
+    },
   },
   graphql: {
     dataSources: {
