@@ -11,7 +11,8 @@
 [![backer](https://opencollective.com/cannercms/tiers/backer/badge.svg?label=backer&color=brightgreen)](https://opencollective.com/cannercms)
 [![Twitter Follow](https://img.shields.io/twitter/follow/cannerIO.svg?style=social&label=Follow)](https://twitter.com/cannerIO)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Canner%2C%20an%20agile%20Content%20Management%20System%20for%20APIs%20and%20Clouds.%20Build%20CMS%20faster%20and%20simpler%20with%20GraphQL%2C%20Prisma%2C%20Firebase%20and%20Restful%20APIs.%20%F0%9F%91%89https%3A%2F%2Fgithub.com%2FCanner%2Fcanner)
-
+[![Backers on Open Collective](https://opencollective.com/cannercms/backers/badge.svg)](#backers) 
+[![Sponsors on Open Collective](https://opencollective.com/cannercms/sponsors/badge.svg)](#sponsors) 
 </div>
 
 <br/><br/>
@@ -238,6 +239,36 @@ yarn
 ## Roadmap
 
 Interested in our next roadmap to v3? Please follow issue [here](https://github.com/Canner/canner/issues/141).
+
+
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/canner/canner/graphs/contributors"><img src="https://opencollective.com/cannercms/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/cannercms#backer)]
+
+<a href="https://opencollective.com/cannercms#backers" target="_blank"><img src="https://opencollective.com/cannercms/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/cannercms#sponsor)]
+
+<a href="https://opencollective.com/cannercms/sponsor/0/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/sponsor/1/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/sponsor/2/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/sponsor/3/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/sponsor/4/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/sponsor/5/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/sponsor/6/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/sponsor/7/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/sponsor/8/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/sponsor/9/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/9/avatar.svg"></a>
+
 
 
 ## License
