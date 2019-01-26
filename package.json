@@ -22,7 +22,8 @@
     "build:docs": "rm -rf docs/dist && NODE_ENV=production webpack",
     "gh-pages": "gh-pages -d docs/dist",
     "deploy": "npm run build:docs && npm run gh-pages",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "postinstall": "opencollective-postinstall"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -122,6 +123,12 @@
   "private": true,
   "dependencies": {
     "canner-antd-theme": "^1.0.2",
-    "flat": "^4.1.0"
+    "flat": "^4.1.0",
+    "opencollective-postinstall": "^2.0.1",
+    "opencollective": "^1.0.3"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/cannercms"
   }
 }
