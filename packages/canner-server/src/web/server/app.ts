@@ -26,6 +26,8 @@ export class CmsWebService implements WebService {
   public async mount(rootApp: Koa) {
     const config = this.config;
     const app = new Koa();
+    // todo: isolate the cookieKeys under mounted app
+    // https://github.com/koajs/mount/pull/58
     app.keys = config.cookieKeys;
 
     // construct auth related middlewares

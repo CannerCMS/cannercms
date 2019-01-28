@@ -1,15 +1,11 @@
 import { Context } from 'koa';
 import { URL } from 'url';
-import jwt from 'jsonwebtoken';
 import jose from 'node-jose';
-import BPromise from 'bluebird';
 import Boom from 'boom';
-import { isEmpty, defaultTo, isArray, isNull, get } from 'lodash';
-import { usernameCookieKey, accessTokenCookieKey, defaultUsernameClaim } from '../constants';
+import { defaultTo, isArray, get } from 'lodash';
+import { usernameCookieKey, accessTokenCookieKey, idTokenCookieKey, defaultUsernameClaim } from '../constants';
 import { Issuer } from 'openid-client';
 import { Token } from './token';
-
-const asyncJwtVerify = BPromise.promisify(jwt.verify) as any;
 
 interface IssuerConfig {
   issuer?: string;
@@ -20,7 +16,9 @@ interface IssuerConfig {
 }
 
 export class OidcHandler {
-  private verify: (accessToken: string) => Promise<any>;
+  private verifier: {
+    verify: (accessToken: string) => Promise<any>
+  };
   private usernameClaim: string;
   private oidcScopes: string;
   private forceSsoLogout: boolean;
@@ -84,7 +82,7 @@ export class OidcHandler {
 
     // construct jose verify
     const keystore = await issuer.keystore();
-    this.verify = jose.JWS.createVerify(keystore);
+    this.verifier = jose.JWS.createVerify(keystore);
 
     // construct client
     this.oidcClient = new issuer.Client({
@@ -103,7 +101,7 @@ export class OidcHandler {
     }
 
     try {
-      await this.verify(accessToken);
+      await this.verifier.verify(accessToken);
     } catch (err) {
       throw Boom.unauthorized(err.message);
     }
@@ -124,15 +122,18 @@ export class OidcHandler {
       ctx.cookies.set(usernameCookieKey, username, {signed: true});
     }
     ctx.cookies.set(accessTokenCookieKey, tokenSet.access_token, {signed: true});
+    ctx.cookies.set(idTokenCookieKey, tokenSet.id_token, {signed: true});
 
     // go to next by default, which would simply redirect to /cms
     return next();
   }
 
   public logout = async (ctx: Context, next: () => Promise<any>) => {
+    const idToken = ctx.cookies.get(idTokenCookieKey, {signed: true});
     // kill cookies
     ctx.cookies.set(usernameCookieKey, null);
     ctx.cookies.set(accessTokenCookieKey, null);
+    ctx.cookies.set(idTokenCookieKey, null);
 
     // if we don't need to logout from SSO, simply go to next
     // which would redirect to /cms
@@ -148,7 +149,10 @@ export class OidcHandler {
       return this.ssoLogout(ctx);
     } else {
       // RPLogout
-      const logoutUrl = this.oidcClient.endSessionUrl();
+      const logoutUrl = this.oidcClient.endSessionUrl({
+        post_logout_redirect_uri: 'http://localhost:3000/',
+        id_token_hint: idToken,
+      });
       return ctx.redirect(logoutUrl);
     }
   }
@@ -162,7 +166,7 @@ export class OidcHandler {
   }
 
   private getLoginUrl = () => {
-    let redirectUri = this.redirectUri;
+    const redirectUri = this.redirectUri;
     const loginUrl = this.oidcClient.authorizationUrl({
       redirect_uri: redirectUri,
       scope: this.oidcScopes,

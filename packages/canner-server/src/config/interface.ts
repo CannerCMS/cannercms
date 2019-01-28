@@ -4,6 +4,7 @@ import { GqlifyConfig } from '../gqlify/config';
 export interface CommonConfig {
   hostname: string;
   cannerSchemaPath?: string;
+  cookieKeys?: string[];
 }
 
 export interface CmsUIConfig {
