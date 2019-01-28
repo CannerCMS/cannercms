@@ -16,9 +16,8 @@ interface IssuerConfig {
 }
 
 export class OidcHandler {
-  private verifier: {
-    verify: (accessToken: string) => Promise<any>
-  };
+  private keystore: any;
+  private issuer: Issuer;
   private usernameClaim: string;
   private oidcScopes: string;
   private forceSsoLogout: boolean;
@@ -78,34 +77,18 @@ export class OidcHandler {
     this.postLogoutRedirectUri = postLogoutRedirectUri;
   }
 
-  public async initialize() {
-    // construct issuer
-    const issuer = (this.discoveryUrl)
-      ? await Issuer.discover(this.discoveryUrl)
-      : new Issuer(this.issuerConfig);
-
-    // construct jose verify
-    const keystore = await issuer.keystore();
-    this.verifier = jose.JWS.createVerify(keystore);
-
-    // construct client
-    this.oidcClient = new issuer.Client({
-      client_id: this.clientId,
-      client_secret: this.clientSecret,
-    });
-  }
-
   public beforeRenderCms = async (ctx: Context, next) => {
     const accessToken = ctx.cookies.get(accessTokenCookieKey, {signed: true});
 
     if (!accessToken) {
       // redirect to login page
-      const loginUrl = this.getLoginUrl();
+      const loginUrl = await this.getLoginUrl();
       return ctx.redirect(loginUrl);
     }
 
     try {
-      await this.verifier.verify(accessToken);
+      // construct jose verify
+      await this.verify(accessToken);
     } catch (err) {
       throw Boom.unauthorized(err.message);
     }
@@ -115,9 +98,10 @@ export class OidcHandler {
   }
 
   public authCallback = async (ctx: Context, next) => {
+    const oidcClient = await this.getOidcClient();
     const query = ctx.query;
     const redirectUri = this.redirectUri;
-    const tokenSet = await this.oidcClient.authorizationCallback(redirectUri, query);
+    const tokenSet = await oidcClient.authorizationCallback(redirectUri, query);
     const accessToken = new Token(tokenSet.access_token);
 
     // assign to cookie
@@ -153,7 +137,8 @@ export class OidcHandler {
       return this.ssoLogout(ctx);
     } else {
       // RPLogout
-      const logoutUrl = this.oidcClient.endSessionUrl({
+      const oidcClient = await this.getOidcClient();
+      const logoutUrl = oidcClient.endSessionUrl({
         post_logout_redirect_uri: this.postLogoutRedirectUri,
         id_token_hint: idToken,
       });
@@ -169,12 +154,37 @@ export class OidcHandler {
     return encodeURIComponent(url.pathname + url.search);
   }
 
-  private getLoginUrl = () => {
+  private getLoginUrl = async () => {
+    const oidcClient = await this.getOidcClient();
     const redirectUri = this.redirectUri;
-    const loginUrl = this.oidcClient.authorizationUrl({
+    const loginUrl = oidcClient.authorizationUrl({
       redirect_uri: redirectUri,
       scope: this.oidcScopes,
     });
     return loginUrl;
+  }
+
+  private verify = async (accessToken: string) => {
+    const keystore = this.keystore || await this.issuer.keystore();
+    return jose.JWS.createVerify(keystore).verify(accessToken);
+  }
+
+  private getOidcClient = async () => {
+    if (this.oidcClient) {
+      return this.oidcClient;
+    }
+
+    // construct issuer
+    this.issuer = (this.discoveryUrl)
+      ? await Issuer.discover(this.discoveryUrl)
+      : new Issuer(this.issuerConfig);
+
+    // construct client
+    this.oidcClient = new this.issuer.Client({
+      client_id: this.clientId,
+      client_secret: this.clientSecret,
+    });
+
+    return this.oidcClient;
   }
 }

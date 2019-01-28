@@ -43,8 +43,6 @@ export const construct = async (config: CmsServerConfig, authCallbackPath: strin
     ssoLogout: config.oidc.ssoLogout,
   });
 
-  await oidcHandler.initialize();
-
   return {
     beforeRenderCms: oidcHandler.beforeRenderCms,
     authCallback: oidcHandler.authCallback,
