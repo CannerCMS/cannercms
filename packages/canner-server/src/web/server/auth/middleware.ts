@@ -28,8 +28,10 @@ export const construct = async (config: CmsServerConfig, authCallbackPath: strin
   // config.hostname should be like `https://cms.host.name`
   // authCallbackPath should be like `/auth/callback`
   const redirectUri = `${config.hostname}${authCallbackPath}`;
+  const postLogoutRedirectUri = `${config.hostname}/`;
   const oidcHandler = new OidcHandler({
     redirectUri,
+    postLogoutRedirectUri,
     usernameClaim: config.oidc.usernameClaim,
     additionalScopes: config.oidc.additionalScopes,
     forceSsoLogout: config.oidc.forceSsoLogout,

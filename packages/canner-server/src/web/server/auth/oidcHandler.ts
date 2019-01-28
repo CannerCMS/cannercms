@@ -37,9 +37,11 @@ export class OidcHandler {
 
   // logout
   private ssoLogout: (ctx: Context) => Promise<void>;
+  private postLogoutRedirectUri: string;
 
   constructor({
     redirectUri,
+    postLogoutRedirectUri,
     usernameClaim,
     additionalScopes,
     forceSsoLogout,
@@ -50,6 +52,7 @@ export class OidcHandler {
     ssoLogout,
   }: {
     redirectUri: string,
+    postLogoutRedirectUri: string,
     usernameClaim?: string
     additionalScopes?: string[],
     forceSsoLogout?: boolean,
@@ -72,6 +75,7 @@ export class OidcHandler {
     this.clientSecret = clientSecret;
     this.redirectUri = redirectUri;
     this.ssoLogout = ssoLogout;
+    this.postLogoutRedirectUri = postLogoutRedirectUri;
   }
 
   public async initialize() {
@@ -150,7 +154,7 @@ export class OidcHandler {
     } else {
       // RPLogout
       const logoutUrl = this.oidcClient.endSessionUrl({
-        post_logout_redirect_uri: 'http://localhost:3000/',
+        post_logout_redirect_uri: this.postLogoutRedirectUri,
         id_token_hint: idToken,
       });
       return ctx.redirect(logoutUrl);
