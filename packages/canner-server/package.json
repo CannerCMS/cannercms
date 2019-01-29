@@ -48,6 +48,7 @@
     "pluralize": "^7.0.0",
     "pug": "^2.0.3",
     "rimraf": "^2.5.4",
+    "simple-oidc-server": "^1.1.1",
     "speed-measure-webpack-plugin": "^1.2.5",
     "tmp": "^0.0.33",
     "ts-node": "^5.0.1",

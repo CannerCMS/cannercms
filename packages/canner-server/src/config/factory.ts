@@ -3,6 +3,7 @@ import { CmsServerConfig } from '../web/server/config';
 import { GqlifyConfig } from '../gqlify/config';
 import { get, defaultTo } from 'lodash';
 import { RootAppConfig } from '../app';
+import { AuthConfig } from '../auth/config';
 
 const defaultConfig = {
   cookieKeys: ['canner-secret'],
@@ -13,6 +14,7 @@ export const construct = (config: ServerConfig): {
   rootAppConfig: RootAppConfig,
   cmsConfig: CmsServerConfig,
   graphqlConfig: GqlifyConfig,
+  authConfig: AuthConfig,
 } => {
   // merge common config with default config
   const cookieKeys = defaultTo(get(config, 'common.cookieKeys'), defaultConfig.cookieKeys);
@@ -26,6 +28,18 @@ export const construct = (config: ServerConfig): {
 
   const graphqlConfig: GqlifyConfig = config.graphql;
 
+  const authConfig: AuthConfig = {
+    issuer: `${hostname}/oidc`,
+    cookies: {
+      long: { signed: true, maxAge: (1 * 24 * 60 * 60) * 1000 }, // 1 day in ms
+      short: { signed: true },
+      keys: cookieKeys,
+    },
+    redirectUris: [`${hostname}/auth/callback`],
+    postLogoutRedirectUris: [`${hostname}/`],
+    ...config.auth,
+  }
+
   const rootAppConfig = {
     cookieKeys,
   };
@@ -34,5 +48,6 @@ export const construct = (config: ServerConfig): {
     rootAppConfig,
     cmsConfig,
     graphqlConfig,
+    authConfig,
   };
 };

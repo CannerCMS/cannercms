@@ -8,7 +8,7 @@ createApp({
   },
   cms: {
     oidc: {
-      discoveryUrl: 'http://localhost:5000/.well-known/openid-configuration',
+      discoveryUrl: 'http://localhost:3000/oidc/.well-known/openid-configuration',
       clientId: 'canner',
       clientSecret: 'canner-client-secret',
     },
@@ -18,7 +18,12 @@ createApp({
       memory: () => new MemoryDataSource(),
     },
   },
-  auth: null,
+  auth: {
+    accounts: [{
+      username: 'wwwy3y3',
+      password: 'wwwy3y3',
+    }],
+  },
 }).then(app => {
   app.listen(port, () => {
     // tslint:disable-next-line:no-console
