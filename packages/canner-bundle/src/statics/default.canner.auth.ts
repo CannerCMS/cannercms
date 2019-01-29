@@ -1,3 +1,3 @@
 exports.getAccessToken = async () => {
-  return localStorage.getItem('apiToken');
+  return (window as any).config.accessToken;
 }
