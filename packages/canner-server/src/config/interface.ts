@@ -6,6 +6,9 @@ export interface CommonConfig {
   hostname: string;
   cannerSchemaPath?: string;
   cookieKeys?: string[];
+  public?: boolean;
+  clientId?: string;
+  clientSecret?: string;
 }
 
 export interface CmsUIConfig {
@@ -15,7 +18,7 @@ export interface CmsUIConfig {
 
 export interface ServerConfig {
   common: CommonConfig;
-  cms: CmsServerConfig & CmsUIConfig;
-  graphql: GqlifyConfig | null;
-  auth: AuthConfig | null;
+  cms?: CmsServerConfig & CmsUIConfig;
+  graphql?: GqlifyConfig | null;
+  auth?: AuthConfig | null;
 }

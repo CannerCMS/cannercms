@@ -20,14 +20,20 @@ export const createApp = async (config: ServerConfig) => {
   app.keys = rootAppConfig.cookieKeys;
 
   // construct services
-  const graphqlService = new GraphQLService(graphqlConfig);
   const cmsWebService = new CmsWebService(cmsConfig);
-  const authService = new AuthService(authConfig);
-
-  // mount services
-  await graphqlService.mount(app);
   await cmsWebService.mount(app);
-  await authService.mount(app);
+
+  // graphql service is optional, it might be created to other server
+  if (graphqlConfig) {
+    const graphqlService = new GraphQLService(graphqlConfig);
+    await graphqlService.mount(app);
+  }
+
+  // auth service is optional, might be created to other server as well
+  if (authConfig) {
+    const authService = new AuthService(authConfig);
+    await authService.mount(app);
+  }
 
   return app;
 };

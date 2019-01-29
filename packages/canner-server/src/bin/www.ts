@@ -5,13 +5,8 @@ const port = process.env.NODE_PORT || 3000;
 createApp({
   common: {
     hostname: 'http://localhost:3000',
-  },
-  cms: {
-    oidc: {
-      discoveryUrl: 'http://localhost:3000/oidc/.well-known/openid-configuration',
-      clientId: 'canner',
-      clientSecret: 'canner-client-secret',
-    },
+    clientId: 'canner',
+    clientSecret: 'canner-client-secret',
   },
   graphql: {
     dataSources: {

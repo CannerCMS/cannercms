@@ -1,5 +1,5 @@
 import { AppConfig } from 'simple-oidc-server/lib/config';
 
-export {
-  AppConfig as AuthConfig
-};
+export interface AuthConfig extends AppConfig {
+  mountPath?: string;
+}

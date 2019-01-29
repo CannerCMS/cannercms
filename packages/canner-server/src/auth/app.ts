@@ -5,8 +5,6 @@ import { WebService, Logger } from '../common/interface';
 import { jsonLogger } from '../common/jsonLogger';
 import { AuthConfig } from './config';
 
-const mountPath = '/oidc';
-
 export class AuthService implements WebService {
   private logger: Logger = jsonLogger;
   private config: AuthConfig;
@@ -16,6 +14,7 @@ export class AuthService implements WebService {
   }
 
   public async mount(app: Koa) {
+    const mountPath = this.config.mountPath;
     const config: AuthConfig = {
       ...this.config,
       appPrefix: `${mountPath}/`,

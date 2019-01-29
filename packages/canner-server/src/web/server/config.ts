@@ -10,7 +10,7 @@ export interface CmsServerConfig {
    * OIDC config
    * If `oidc` is null, all oidc features will be disabled
    */
-  oidc: {
+  oidc?: {
     // issuer
     // via Discovery
     discoveryUrl?: string;
