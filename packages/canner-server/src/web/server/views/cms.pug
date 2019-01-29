@@ -3,10 +3,7 @@ extends ./layout.pug
 
 block head
   script.
-    window.username = "#{username}";
-    window.thumbnail = "#{thumbnail}";
+    window.config = !{frontendConfig};
 block main
   div(id='root')
-  script(src= `${staticsPath}/vendors.js`)
   script(src= `${staticsPath}/index.js`)
-block footerScript
