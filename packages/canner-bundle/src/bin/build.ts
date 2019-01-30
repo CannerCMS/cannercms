@@ -1,7 +1,7 @@
 import {build} from '../index';
 import path from 'path';
 import minimist from 'minimist';
-import {WEB_OUTPUT_PATH, SCHEMA_OUTPUT_PATH, GRAPHQL_PORT} from '../config';
+import {WEB_OUTPUT_PATH, SCHEMA_OUTPUT_PATH} from '../config';
 
 const argv = minimist(process.argv.slice(2));
 if (!argv.schema) {
@@ -14,7 +14,7 @@ if (!argv.output) {
 
 build({
   webOutputPath: argv.output && path.resolve(process.cwd(), argv.output),
-  schemaOutputPath: argv.schema && path.resolve(process.cwd(), argv.schema),
+  schemaJsonOutputPath: argv.schema && path.resolve(process.cwd(), argv.schema),
   webOnly: argv.webOnly,
   schemaOnly: argv.schemaOnly,
   resolveModules: [

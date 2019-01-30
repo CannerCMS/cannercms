@@ -9,7 +9,7 @@
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "web:statics:build": "MEASURE=true NODE_ENV=production ts-node src/bin/build.ts --output=../canner-server/.cms --schema=../canner-server",
+    "web:statics:build": "MEASURE=true NODE_ENV=production ts-node src/bin/build.ts --output=../canner-server/.cms --schema=../canner-server/canner.schema.json",
     "web:statics:serve": "NODE_ENV=production ts-node src/bin/serve.ts",
     "web:dataSources": "NODE_ENV=production ts-node src/bin/dataSources.ts",
     "lint": "tslint -c tslint.json src/**/*.ts",

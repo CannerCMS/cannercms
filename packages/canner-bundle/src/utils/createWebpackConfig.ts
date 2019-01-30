@@ -21,13 +21,12 @@ import {
   SCHEMA_PATH,
   SCHEMA_OUTPUT_PATH,
   WEB_OUTPUT_PATH,
-  CLOUD_PATH,
+  CMS_CONFIG,
   RESOLVE_MODULES,
   RESOLVE_LOADER_MODULES,
   TS_CONFIG_FILE,
   APP_PATH,
   AUTH_PATH,
-  GRAPHQL_PORT,
   SCHEMA_OUTPUT_FILENAME
 } from '../config';
 const devMode = process.env.NODE_ENV === 'development';
@@ -48,7 +47,7 @@ export type CreateWebConfigArgsType = {
   webOutputPath?: string;
   htmlPath?: string;
   schemaPath?: string;
-  cloudPath?: string;
+  cmsConfig?: Object;
   resolveModules?: Array<string>;
   resolveLoaderModules?: Array<string>;
   authPath?: string;
@@ -135,7 +134,7 @@ export function createWebConfig({
   webOutputPath = WEB_OUTPUT_PATH,
   htmlPath = HTML_PATH,
   schemaPath = SCHEMA_PATH,
-  cloudPath = CLOUD_PATH,
+  cmsConfig = CMS_CONFIG,
   resolveModules = RESOLVE_MODULES,
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
   tsConfigFile = TS_CONFIG_FILE,
@@ -161,7 +160,7 @@ export function createWebConfig({
   createWindowVarsFile({
     windowVarsPath: WINDOW_VARS_PATH,
     schemaPath,
-    cloudPath,
+    cmsConfig,
     authPath
   });
 
@@ -306,7 +305,7 @@ export function createConfig({
   schemaOutputPath = SCHEMA_OUTPUT_PATH,
   webOutputPath = WEB_OUTPUT_PATH,
   htmlPath = HTML_PATH,
-  cloudPath = CLOUD_PATH,
+  cmsConfig = CMS_CONFIG,
   resolveModules = RESOLVE_MODULES,
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
   tsConfigFile = TS_CONFIG_FILE,
@@ -321,7 +320,7 @@ export function createConfig({
       webOutputPath,
       htmlPath,
       schemaPath,
-      cloudPath,
+      cmsConfig,
       resolveLoaderModules,
       resolveModules,
       tsConfigFile,

@@ -4,17 +4,17 @@ import fs from 'fs';
 export default function createWindowVarsFile({
   schemaPath,
   windowVarsPath,
-  cloudPath,
+  cmsConfig,
   authPath,
 }: {
   schemaPath: string,
   windowVarsPath: string,
-  cloudPath: string,
+  cmsConfig: Object,
   authPath: string,
 }) {
   const templateCode = generateTemplate({
     schemaPath,
-    cloudPath,
+    cmsConfig,
     authPath,
   });
   fs.writeFileSync(windowVarsPath, templateCode);
@@ -26,15 +26,14 @@ function toNodePath(p) {
 
 function generateTemplate({
   schemaPath,
-  cloudPath,
   authPath,
+  cmsConfig
 }) {
   return `
   import schema from '${toNodePath(schemaPath)}';
-  import cloudConfig from '${toNodePath(cloudPath)}';
   import {getAccessToken} from '${toNodePath(authPath)}';
   window.schema = schema;
-  window.cloudConfig = cloudConfig;
+  window.cmsConfig = ${JSON.stringify(cmsConfig || {})};
   window.getAccessToken = getAccessToken;
   window.baseUrl = "/cms";
 `;

@@ -97,28 +97,28 @@ export default class CMSPage extends React.Component<Props, State> {
     if (!prepare) return null;
     const {
       schema,
-      cloudConfig
+      cmsConfig
     } = window as any;
 
     const sidebar =
-      cloudConfig.sidebarMenu || transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema});
+      cmsConfig.sidebarMenu || transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema});
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Container
           schema={schema}
           sidebarConfig={{
             menuConfig: [...sidebar],
-            theme: cloudConfig.sidebarTheme,
-            mode: cloudConfig.sidebarMode,
-            style: cloudConfig.sidebarStyle,
-            menuStyle: cloudConfig.sidebarMenuStyle
+            theme: cmsConfig.sidebarTheme,
+            mode: cmsConfig.sidebarMode,
+            style: cmsConfig.sidebarStyle,
+            menuStyle: cmsConfig.sidebarMenuStyle
           }}
           navbarConfig={{
             showSaveButton: true,
-            logo: <Logo src={cloudConfig.logo || 'https://cdn.canner.io/images/logo/logo-word-white.png'} />,
-            theme: cloudConfig.navbarTheme,
-            style: cloudConfig.navbarStyle,
-            menuStyle: cloudConfig.navbarMenuStyle
+            logo: <Logo src={cmsConfig.logo || 'https://cdn.canner.io/images/logo/logo-word-white.png'} />,
+            theme: cmsConfig.navbarTheme,
+            style: cmsConfig.navbarStyle,
+            menuStyle: cmsConfig.navbarMenuStyle
           }}
           router={
             new R({

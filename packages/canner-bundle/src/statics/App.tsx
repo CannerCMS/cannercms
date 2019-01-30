@@ -34,8 +34,8 @@ function removeDoubleSlash(url) {
 
 function getFirstKey() {
   const schemaKeys = Object.keys(schema.pageSchema).concat(Object.keys(schema.schema));
-  if (cloudConfig.sidebarMenu && cloudConfig.sidebarMenu.length) {
-    const item = cloudConfig.sidebarMenu.find(menuItem => {
+  if (cmsConfig.sidebarMenu && cmsConfig.sidebarMenu.length) {
+    const item = cmsConfig.sidebarMenu.find(menuItem => {
       return schemaKeys.indexOf(menuItem.pathname) >= 0
     })
     if (item)
