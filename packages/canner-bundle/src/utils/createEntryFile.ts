@@ -12,6 +12,7 @@ export default function createEntryFile({
   i18nMessages: Record<string, any>,
   baseUrl: string
 }) {
+  i18nMessages = mergeDefaultMessages(i18nMessages);
   const templateCode = generateTemplate({appPath, baseUrl, i18nMessages});
   fs.writeFileSync(entryPath, templateCode);
 }
@@ -20,17 +21,29 @@ function toNodePath(p) {
   return p.replace(/\\/g, '/')
 }
 
+function mergeDefaultMessages(i18nMessages) {
+  if (i18nMessages && i18nMessages.en) {
+    i18nMessages.en = {
+      'cmspage.header.hi': 'Hi, ',
+      'cmspage.header.logout': 'Logout',
+      ...i18nMessages.en,
+    }
+    return i18nMessages;
+  }
+  return {
+    en: {
+      'cmspage.header.hi': 'Hi, ',
+      'cmspage.header.logout': 'Logout',
+    }
+  }
+}
+
 function generateTemplate({
   appPath,
   i18nMessages,
   baseUrl
 }) {
-  let locales = [];
-  if (i18nMessages.en) {
-    locales = Object.keys(i18nMessages);
-  } else {
-    locales = Object.keys(i18nMessages).concat('en');
-  }
+  const locales = Object.keys(i18nMessages);
   return `
 import React from 'react';
 import ReactDOM from 'react-dom';

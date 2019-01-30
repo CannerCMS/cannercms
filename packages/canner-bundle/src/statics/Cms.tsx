@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Layout, notification, Modal, Button} from 'antd';
+import {Layout, notification, Modal} from 'antd';
 import Canner from 'canner';
 import Container, {transformSchemaToMenuConfig} from '@canner/container';
 import R from '@canner/history-router';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { createHttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import ContentHeader from './Header';
 
 const confirm = Modal.confirm;
 
@@ -114,11 +115,23 @@ export default class CMSPage extends React.Component<Props, State> {
             menuStyle: cmsConfig.sidebarMenuStyle
           }}
           navbarConfig={{
-            showSaveButton: true,
+            showSaveButton: 'showSaveButton' in cmsConfig ? cmsConfig.showSaveButton : true,
             logo: <Logo src={cmsConfig.logo || 'https://cdn.canner.io/images/logo/logo-word-white.png'} />,
             theme: cmsConfig.navbarTheme,
             style: cmsConfig.navbarStyle,
-            menuStyle: cmsConfig.navbarMenuStyle
+            menuStyle: cmsConfig.navbarMenuStyle,
+            renderMenu: ({theme}) => (
+              <ContentHeader
+                theme={theme}
+                user={{
+                  username: ((window as any).config || {}).username
+                }}
+                location={location}
+                history={history}
+                style={cmsConfig.navbarMenuStyle}
+              />
+            ),
+  
           }}
           router={
             new R({
