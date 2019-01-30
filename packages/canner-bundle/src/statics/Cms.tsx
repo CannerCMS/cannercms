@@ -98,9 +98,9 @@ export default class CMSPage extends React.Component<Props, State> {
     if (!prepare) return null;
     const {
       schema,
-      cmsConfig
+      cmsConfig = {}
     } = window as any;
-
+    const cmsStyle = cmsConfig.style || {};
     const sidebar =
       cmsConfig.sidebarMenu || transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema});
     return (
@@ -109,17 +109,17 @@ export default class CMSPage extends React.Component<Props, State> {
           schema={schema}
           sidebarConfig={{
             menuConfig: [...sidebar],
-            theme: cmsConfig.sidebarTheme,
-            mode: cmsConfig.sidebarMode,
-            style: cmsConfig.sidebarStyle,
-            menuStyle: cmsConfig.sidebarMenuStyle
+            theme: cmsStyle.sidebarTheme,
+            mode: cmsStyle.sidebarMode,
+            style: cmsStyle.sidebarStyle,
+            menuStyle: cmsStyle.sidebarMenuStyle
           }}
           navbarConfig={{
             showSaveButton: 'showSaveButton' in cmsConfig ? cmsConfig.showSaveButton : true,
             logo: <Logo src={cmsConfig.logo || 'https://cdn.canner.io/images/logo/logo-word-white.png'} />,
-            theme: cmsConfig.navbarTheme,
-            style: cmsConfig.navbarStyle,
-            menuStyle: cmsConfig.navbarMenuStyle,
+            theme: cmsStyle.navbarTheme,
+            style: cmsStyle.navbarStyle,
+            menuStyle: cmsStyle.navbarMenuStyle,
             renderMenu: ({theme}) => (
               <ContentHeader
                 theme={theme}
@@ -128,7 +128,7 @@ export default class CMSPage extends React.Component<Props, State> {
                 }}
                 location={location}
                 history={history}
-                style={cmsConfig.navbarMenuStyle}
+                style={cmsStyle.navbarMenuStyle}
               />
             ),
   

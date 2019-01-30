@@ -47,7 +47,7 @@ export type CreateWebConfigArgsType = {
   webOutputPath?: string;
   htmlPath?: string;
   schemaPath?: string;
-  cmsConfig?: Object;
+  cmsConfig?: Record<string, any>;
   resolveModules?: Array<string>;
   resolveLoaderModules?: Array<string>;
   authPath?: string;
@@ -258,7 +258,7 @@ export function createWebConfig({
               loader: "less-loader", // compiles Less to CSS
               options: {
                 javascriptEnabled: true,
-                modifyVars: {}
+                modifyVars: (cmsConfig.style && cmsConfig.style.theme) || {}
               }
             }
           ]
