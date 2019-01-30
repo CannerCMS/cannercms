@@ -165,8 +165,24 @@ export class OidcHandler {
   }
 
   private verify = async (accessToken: string) => {
-    const keystore = this.keystore || await this.issuer.keystore();
+    let keystore = this.keystore;
+    if (!keystore) {
+      const issuer = await this.getIssuer();
+      keystore = await issuer.keystore();
+      this.keystore = keystore;
+    }
     return jose.JWS.createVerify(keystore).verify(accessToken);
+  }
+
+  private getIssuer = async () => {
+    if (this.issuer) {
+      return this.issuer;
+    }
+
+    this.issuer = (this.discoveryUrl)
+      ? await Issuer.discover(this.discoveryUrl)
+      : new Issuer(this.issuerConfig);
+    return this.issuer;
   }
 
   private getOidcClient = async () => {
@@ -175,12 +191,10 @@ export class OidcHandler {
     }
 
     // construct issuer
-    this.issuer = (this.discoveryUrl)
-      ? await Issuer.discover(this.discoveryUrl)
-      : new Issuer(this.issuerConfig);
+    const issuer = await this.getIssuer();
 
     // construct client
-    this.oidcClient = new this.issuer.Client({
+    this.oidcClient = new issuer.Client({
       client_id: this.clientId,
       client_secret: this.clientSecret,
     });
