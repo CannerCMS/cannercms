@@ -2,11 +2,10 @@ import { createApp } from 'simple-oidc-server';
 import koaMount from 'koa-mount';
 import Koa from 'koa';
 import { WebService, Logger } from '../common/interface';
-import { jsonLogger } from '../common/jsonLogger';
 import { AuthConfig } from './config';
 
 export class AuthService implements WebService {
-  private logger: Logger = jsonLogger;
+  private logger: Logger;
   private config: AuthConfig;
 
   constructor(config: AuthConfig) {
@@ -21,13 +20,5 @@ export class AuthService implements WebService {
     };
     const authApp = await createApp(config);
     app.use(koaMount(mountPath, authApp));
-  }
-
-  public setLogger(logger: Logger): void {
-    this.logger = logger;
-  }
-
-  public getLogger(): Logger {
-    return this.logger;
   }
 }

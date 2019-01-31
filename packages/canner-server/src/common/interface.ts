@@ -37,10 +37,6 @@ export interface WebService {
   // mount on root Koa app
   mount(app: Koa): Promise<void>;
 
-  // logger
-  setLogger(logger: Logger): void;
-  getLogger(): Logger;
-
   // status
   getStatus?(): ServerStatus;
 

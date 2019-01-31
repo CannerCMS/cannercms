@@ -11,17 +11,19 @@ import {
   GraphQLDateTime
 } from 'graphql-iso-date';
 import { WebService, Logger } from '../common/interface';
-import { jsonLogger } from '../common/jsonLogger';
 import { GqlifyConfig } from './config';
 
 export class GraphQLService implements WebService {
-  private logger: Logger = jsonLogger;
+  private logger: Logger;
   private apolloServer: ApolloServer;
 
   constructor(config: GqlifyConfig = {}) {
     if (!config.dataSources) {
       throw new Error(`require dataSources`);
     }
+
+    // logger
+    this.logger = config.logger;
 
     // Read datamodel
     const schemaPath = path.resolve(process.cwd(), config.schemaPath || 'canner.schema.json');
@@ -51,18 +53,12 @@ export class GraphQLService implements WebService {
       }
     });
 
-    this.apolloServer = new ApolloServer(gqlify.createApolloConfig());
+    this.apolloServer = new ApolloServer({
+      ...gqlify.createApolloConfig(),
+    });
   }
 
   public async mount(app: Koa) {
     this.apolloServer.applyMiddleware({app});
-  }
-
-  public setLogger(logger: Logger): void {
-    this.logger = logger;
-  }
-
-  public getLogger(): Logger {
-    return this.logger;
   }
 }

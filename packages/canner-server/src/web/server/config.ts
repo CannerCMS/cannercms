@@ -1,5 +1,6 @@
-import {Context} from 'koa';
+import { Context } from 'koa';
 import path from 'path';
+import { Logger } from '../../common/interface';
 
 export interface CmsServerConfig {
   hostname?: string;
@@ -46,6 +47,7 @@ export interface CmsServerConfig {
    * Cookie
    */
   cookieKeys?: string[];
+  logger: Logger;
 }
 
 const defaultServerConfig = {

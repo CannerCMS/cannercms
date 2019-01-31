@@ -1,6 +1,7 @@
 import { CmsServerConfig } from '../web/server/config';
 import { GqlifyConfig } from '../gqlify/config';
 import { AuthConfig } from '../auth/config';
+import { Logger } from '../common/interface';
 
 export interface CommonConfig {
   hostname: string;

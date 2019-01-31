@@ -1,26 +1,28 @@
 import Koa, {Context} from 'koa';
 import path from 'path';
-import serve from 'koa-static';
+import send from 'koa-send';
 import Router from 'koa-router';
 import koaMount from 'koa-mount';
 import views from 'koa-views';
 import { construct } from './auth/middleware';
+import serve from './utils/serve';
 
 // config
 import { createConfig, CmsServerConfig } from './config';
 import { WebService, Logger } from '../../common/interface';
-import { jsonLogger } from '../../common/jsonLogger';
+import { create as createLoggerMiddleware } from '../../common/loggerMiddleware';
 
 // constants
 import { usernameCookieKey, accessTokenCookieKey, authCallbackPath } from './constants';
 
 export class CmsWebService implements WebService {
-  private logger: Logger = jsonLogger;
+  private logger: Logger;
   private config: CmsServerConfig;
 
   constructor(customConfig?: CmsServerConfig) {
     const config = createConfig(customConfig);
     this.config = config;
+    this.logger = this.config.logger;
   }
 
   public async mount(rootApp: Koa) {
@@ -37,21 +39,37 @@ export class CmsWebService implements WebService {
       logout,
     } = await construct(config, authCallbackPath);
 
-    // serve client static
-    const serveClientStatic =
-      koaMount(this.config.staticsPath, serve(this.config.clientBundledDir, {gzip: true, index: false}));
-    app.use(serveClientStatic);
+    // error handler
+    app.use(async (ctx: Context, next) => {
+      try {
+        await next();
+      } catch (err) {
+        const errorCode = (err.isBoom && err.data && err.data.code) ? err.data.code : 'INTERNAL_ERROR';
+        const statusCode =
+          (err.isBoom && err.output && err.output.statusCode) ? err.output.statusCode : err.status || 500;
+  
+        ctx.status = statusCode;
+        ctx.body = {code: errorCode, message: err.message};
+      }
+    });
 
-    // serve favicon
-    const favicon =
-      koaMount('/public/favicon', serve(path.resolve(__dirname, '../public/favicon'), {gzip: true, index: false}));
-    app.use(favicon);
+    // logging
+    const loggingMiddleware = createLoggerMiddleware(this.logger);
 
     // router
     const router = new Router();
     router.use(views(path.join(__dirname, './views'), {
       extension: 'pug'
     }));
+
+    // serve client static
+    const clientStatic = serve(this.config.staticsPath, this.config.clientBundledDir);
+    router.get(clientStatic.path, loggingMiddleware, clientStatic.middleware);
+
+    // serve favicon
+    const faviconPath = path.resolve(__dirname, '../public/favicon');
+    const favicon = serve('/public/favicon', faviconPath);
+    router.get(favicon.path, loggingMiddleware, favicon.middleware);
 
     // cms
     const setConfigMiddleware = async (ctx: Context, next: () => Promise<any>) => {
@@ -62,32 +80,32 @@ export class CmsWebService implements WebService {
       return next();
     };
 
-    router.get('/cms', beforeRenderCms, setConfigMiddleware, async ctx => {
+    router.get('/cms', loggingMiddleware, beforeRenderCms, setConfigMiddleware, async ctx => {
       await ctx.render('cms', {title: 'Canenr CMS', staticsPath: config.staticsPath});
     });
 
-    router.get('/cms/*', beforeRenderCms, setConfigMiddleware, async ctx => {
+    router.get('/cms/*', loggingMiddleware, beforeRenderCms, setConfigMiddleware, async ctx => {
       await ctx.render('cms', {title: 'Canenr CMS', staticsPath: config.staticsPath});
     });
 
     // auth callback
-    router.get(authCallbackPath, authCallback, async ctx => {
+    router.get(authCallbackPath, loggingMiddleware, authCallback, async ctx => {
       ctx.redirect('/cms');
     });
 
     // logout
-    router.get('/auth/logout', logout, async ctx => {
+    router.get('/auth/logout', loggingMiddleware, logout, async ctx => {
       // if logout middleware calls next, it will redirect to /cms
       ctx.redirect('/cms');
     });
 
     // health check
-    router.get('/health', async ctx => {
+    router.get('/health', loggingMiddleware, async ctx => {
       ctx.status = 200;
     });
 
     // redirect
-    router.get('/', async (ctx: Context) => {
+    router.get('/', loggingMiddleware, async (ctx: Context) => {
       return ctx.redirect('/cms');
     });
 
@@ -96,14 +114,5 @@ export class CmsWebService implements WebService {
     // mount cmsApp to rootApp
     const cmsMiddleware = koaMount(app);
     rootApp.use(cmsMiddleware);
-  }
-
-  // logger
-  public setLogger(logger: Logger) {
-    this.logger = logger;
-  }
-
-  public getLogger(): Logger {
-    return this.logger;
   }
 }

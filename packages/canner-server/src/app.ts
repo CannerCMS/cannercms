@@ -6,6 +6,7 @@ import { GraphQLService } from './gqlify/app';
 import { CmsWebService } from './web/server/app';
 import { AuthService } from './auth/app';
 import { ServerConfig } from './config/interface';
+import { get } from 'lodash';
 
 export interface RootAppConfig {
   cookieKeys: string[];

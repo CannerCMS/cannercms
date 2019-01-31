@@ -4,6 +4,7 @@ import { GqlifyConfig } from '../gqlify/config';
 import { get, defaultTo, merge } from 'lodash';
 import { RootAppConfig } from '../app';
 import { AuthConfig } from '../auth/config';
+import { jsonLogger } from '../common/jsonLogger';
 
 const defaultConfig = {
   cookieKeys: ['canner-secret'],
@@ -43,10 +44,14 @@ export const construct = (config: ServerConfig): {
       clientId,
       clientSecret,
     },
+    logger: jsonLogger,
   }, config.cms);
 
   // config for gqlify service
-  const graphqlConfig: GqlifyConfig = config.graphql;
+  const graphqlConfig: GqlifyConfig = {
+    logger: jsonLogger,
+    ...config.graphql,
+  };
 
   // config for auth service
   let authConfig: AuthConfig = {
@@ -61,6 +66,7 @@ export const construct = (config: ServerConfig): {
     postLogoutRedirectUris: [`${hostname}/`],
     clientId,
     clientSecret,
+    logger: jsonLogger,
     ...config.auth,
   }
 
