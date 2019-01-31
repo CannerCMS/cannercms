@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Layout, notification, Modal, Button} from 'antd';
+import {Layout, notification, Modal} from 'antd';
 import Canner from 'canner';
 import Container, {transformSchemaToMenuConfig} from '@canner/container';
 import R from '@canner/history-router';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { createHttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import ContentHeader from './Header';
 
 const confirm = Modal.confirm;
 
@@ -97,9 +98,9 @@ export default class CMSPage extends React.Component<Props, State> {
     if (!prepare) return null;
     const {
       schema,
-      cmsConfig
+      cmsConfig = {}
     } = window as any;
-
+    const cmsStyle = cmsConfig.style || {};
     const sidebar =
       cmsConfig.sidebarMenu || transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema});
     return (
@@ -108,17 +109,29 @@ export default class CMSPage extends React.Component<Props, State> {
           schema={schema}
           sidebarConfig={{
             menuConfig: [...sidebar],
-            theme: cmsConfig.sidebarTheme,
-            mode: cmsConfig.sidebarMode,
-            style: cmsConfig.sidebarStyle,
-            menuStyle: cmsConfig.sidebarMenuStyle
+            theme: cmsStyle.sidebarTheme,
+            mode: cmsStyle.sidebarMode,
+            style: cmsStyle.sidebarStyle,
+            menuStyle: cmsStyle.sidebarMenuStyle
           }}
           navbarConfig={{
-            showSaveButton: true,
+            showSaveButton: 'showSaveButton' in cmsConfig ? cmsConfig.showSaveButton : true,
             logo: <Logo src={cmsConfig.logo || 'https://cdn.canner.io/images/logo/logo-word-white.png'} />,
-            theme: cmsConfig.navbarTheme,
-            style: cmsConfig.navbarStyle,
-            menuStyle: cmsConfig.navbarMenuStyle
+            theme: cmsStyle.navbarTheme,
+            style: cmsStyle.navbarStyle,
+            menuStyle: cmsStyle.navbarMenuStyle,
+            renderMenu: ({theme}) => (
+              <ContentHeader
+                theme={theme}
+                user={{
+                  username: ((window as any).config || {}).username
+                }}
+                location={location}
+                history={history}
+                style={cmsStyle.navbarMenuStyle}
+              />
+            ),
+  
           }}
           router={
             new R({
