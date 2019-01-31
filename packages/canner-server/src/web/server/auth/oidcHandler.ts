@@ -86,7 +86,7 @@ export class OidcHandler {
 
     if (!accessToken) {
       // redirect to login page
-      await gotoLogin();
+      return gotoLogin();
     }
 
     try {
@@ -99,7 +99,7 @@ export class OidcHandler {
     // check expired
     if (new Token(accessToken).isExpired()) {
       // expired, go to login page
-      await gotoLogin();
+      return gotoLogin();
     }
 
     // token verified
@@ -111,10 +111,10 @@ export class OidcHandler {
     const query = ctx.query;
     const redirectUri = this.redirectUri;
     const tokenSet = await oidcClient.authorizationCallback(redirectUri, query);
-    const accessToken = new Token(tokenSet.access_token);
+    const idToken = new Token(tokenSet.id_token);
 
     // assign to cookie
-    const username = get(accessToken.getContent(), this.usernameClaim);
+    const username = get(idToken.getContent(), this.usernameClaim);
     if (username) {
       ctx.cookies.set(usernameCookieKey, username, {signed: true});
     }

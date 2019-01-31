@@ -5,6 +5,6 @@ export const accessTokenCookieKey = 'canner.accessToken';
 
 export const idTokenCookieKey = 'canner.idToken';
 
-export const defaultUsernameClaim = 'username';
+export const defaultUsernameClaim = 'name';
 
 export const authCallbackPath = '/auth/callback';

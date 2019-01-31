@@ -39,11 +39,20 @@ export class CmsWebService implements WebService {
       logout,
     } = await construct(config, authCallbackPath);
 
+    // logging
+    const loggingMiddleware = createLoggerMiddleware(this.logger);
+
+    // router
+    const router = new Router();
     // error handler
-    app.use(async (ctx: Context, next) => {
+    router.use('*', loggingMiddleware, async (ctx: Context, next) => {
       try {
         await next();
       } catch (err) {
+        this.logger.fatal({
+          message: err.message,
+          stacktrace: err.stack,
+        });
         const errorCode = (err.isBoom && err.data && err.data.code) ? err.data.code : 'INTERNAL_ERROR';
         const statusCode =
           (err.isBoom && err.output && err.output.statusCode) ? err.output.statusCode : err.status || 500;
@@ -53,11 +62,6 @@ export class CmsWebService implements WebService {
       }
     });
 
-    // logging
-    const loggingMiddleware = createLoggerMiddleware(this.logger);
-
-    // router
-    const router = new Router();
     router.use(views(path.join(__dirname, './views'), {
       extension: 'pug'
     }));

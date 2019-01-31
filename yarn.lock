@@ -13537,10 +13537,10 @@ signal-exit@^3.0.0, signal-exit@^3.0.1, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-simple-oidc-server@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/simple-oidc-server/-/simple-oidc-server-1.2.1.tgz#24354d2617365886d822b20fade5b6b82dc8a7f3"
-  integrity sha512-88DLTeXaJbMGouDqcXxHPUPHPGxSVnCc0QWc8asvgaVloe1EI1S/SLAjTAbFVuDx07XDXsVbFxNQr23dUJCmng==
+simple-oidc-server@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/simple-oidc-server/-/simple-oidc-server-1.2.3.tgz#605b68155dd7a0a03d00d60e458e448c28d978b6"
+  integrity sha512-nTMPqG+Wm4gzj1121+MAQCvKFso4Fql5Mz8YJfCBwZmZdLJcvOP7tB69wf0O3MYqywBbh8WQ1EosbaNA1n48Iw==
   dependencies:
     bcrypt "^3.0.3"
     helmet "^3.15.0"
