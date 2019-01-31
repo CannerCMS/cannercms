@@ -35,12 +35,17 @@ export const construct = (config: ServerConfig): {
   const clientId = defaultTo(get(config, 'common.clientId'), defaultConfig.clientId);
   const clientSecret = defaultTo(get(config, 'common.clientSecret'), defaultConfig.clientSecret);
 
+  // oidc issuer
+  const discoveryUrlFromHost = `${hostname}${authMountPath}/.well-known/openid-configuration`;
+  const discoveryUrl = defaultTo(get(config, 'common.discoveryUrl'), discoveryUrlFromHost);
+  const issuerConfig = get(config, 'common.issuerConfig');
+
   // construct config for cms service
   const cmsConfig: CmsServerConfig = merge({
     cookieKeys,
     hostname,
     oidc: {
-      discoveryUrl: `${hostname}${authMountPath}/.well-known/openid-configuration`,
+      discoveryUrl,
       clientId,
       clientSecret,
     },
@@ -50,6 +55,10 @@ export const construct = (config: ServerConfig): {
   // config for gqlify service
   const graphqlConfig: GqlifyConfig = {
     logger: jsonLogger,
+    oidc: {
+      discoveryUrl,
+      issuerConfig,
+    },
     ...config.graphql,
   };
 
@@ -68,7 +77,7 @@ export const construct = (config: ServerConfig): {
     clientSecret,
     logger: jsonLogger,
     ...config.auth,
-  }
+  };
 
   const rootAppConfig = {
     cookieKeys,
@@ -76,9 +85,11 @@ export const construct = (config: ServerConfig): {
 
   // if publicAuth is true, we make this cms public
   // mark cmsConfig.oidc as null to tell cmsServer we do not need oidc
+  // mark graphqlConfig.oidc as null to tell graphql server we do not need auth
   // mark authConfig to null, so auth service won't start
   if (publicAuth) {
     cmsConfig.oidc = null;
+    graphqlConfig.oidc = null;
     authConfig = null;
   }
 

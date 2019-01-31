@@ -1,7 +1,7 @@
 import { CmsServerConfig } from '../web/server/config';
 import { GqlifyConfig } from '../gqlify/config';
 import { AuthConfig } from '../auth/config';
-import { Logger } from '../common/interface';
+import { IssuerConfig } from '../common/oidcTokenVerifier';
 
 export interface CommonConfig {
   hostname: string;
@@ -10,6 +10,8 @@ export interface CommonConfig {
   public?: boolean;
   clientId?: string;
   clientSecret?: string;
+  discoveryUrl?: string;
+  issuerConfig?: IssuerConfig;
 }
 
 export interface CmsUIConfig {

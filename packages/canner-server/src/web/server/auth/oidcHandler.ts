@@ -2,7 +2,7 @@ import { Context } from 'koa';
 import { URL } from 'url';
 import jose from 'node-jose';
 import Boom from 'boom';
-import { defaultTo, isArray, get } from 'lodash';
+import { defaultTo, isArray, get, isEmpty } from 'lodash';
 import { usernameCookieKey, accessTokenCookieKey, idTokenCookieKey, defaultUsernameClaim } from '../constants';
 import { Issuer } from 'openid-client';
 import { Token } from './token';
@@ -79,11 +79,14 @@ export class OidcHandler {
 
   public beforeRenderCms = async (ctx: Context, next) => {
     const accessToken = ctx.cookies.get(accessTokenCookieKey, {signed: true});
+    const gotoLogin = async () => {
+      const loginUrl = await this.getLoginUrl();
+      return ctx.redirect(loginUrl);
+    };
 
     if (!accessToken) {
       // redirect to login page
-      const loginUrl = await this.getLoginUrl();
-      return ctx.redirect(loginUrl);
+      await gotoLogin();
     }
 
     try {
@@ -91,6 +94,12 @@ export class OidcHandler {
       await this.verify(accessToken);
     } catch (err) {
       throw Boom.unauthorized(err.message);
+    }
+
+    // check expired
+    if (new Token(accessToken).isExpired()) {
+      // expired, go to login page
+      await gotoLogin();
     }
 
     // token verified
@@ -179,9 +188,9 @@ export class OidcHandler {
       return this.issuer;
     }
 
-    this.issuer = (this.discoveryUrl)
-      ? await Issuer.discover(this.discoveryUrl)
-      : new Issuer(this.issuerConfig);
+    this.issuer = (!isEmpty(this.issuerConfig))
+      ? new Issuer(this.issuerConfig)
+      : await Issuer.discover(this.discoveryUrl);
     return this.issuer;
   }
 
