@@ -59,7 +59,7 @@ export default class CMSPage extends React.Component<Props, State> {
     const link: any =  createHttpLink({
       uri: `/graphql`,
       headers: token ?
-        { Authentication: `Bearer ${token}` } :
+        { Authorization: `Bearer ${token}` } :
         {},
     });
     return new ApolloClient({
