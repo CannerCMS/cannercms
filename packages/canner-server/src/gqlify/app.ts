@@ -1,17 +1,22 @@
 import path from 'path';
-import Koa from 'koa';
+import Koa, { Context } from 'koa';
 import { Gqlify } from '@gqlify/server';
 import { ScalarField } from '@gqlify/server/lib/dataModel';
 import { DataModelType } from '@gqlify/server/lib/dataModel/type';
 import { CannerSchemaToGQLifyParser } from '@gqlify/canner-schema-to-gqlify-model';
 import { readFileSync } from 'fs';
-import { ApolloServer } from 'apollo-server-koa';
+import { ApolloServer, gql } from 'apollo-server-koa';
 import GraphQLJSON from 'graphql-type-json';
 import {
   GraphQLDateTime
 } from 'graphql-iso-date';
 import { WebService, Logger } from '../common/interface';
 import { GqlifyConfig } from './config';
+import { readOnlyMiddleware } from '../common/graphql';
+import { makeExecutableSchema } from 'graphql-tools';
+import { applyMiddleware } from 'graphql-middleware';
+import { apolloErrorHandler } from './error';
+import { createContext } from './context';
 
 export class GraphQLService implements WebService {
   private logger: Logger;
@@ -50,11 +55,27 @@ export class GraphQLService implements WebService {
       scalars: {
         JSON: GraphQLJSON,
         DateTime: GraphQLDateTime,
-      }
+      },
     });
 
+    const { typeDefs, resolvers } = gqlify.createApolloConfig();
+    const schema = makeExecutableSchema({
+      typeDefs: typeDefs as any,
+      resolvers
+    });
+    const schemaWithMiddleware = applyMiddleware(schema, readOnlyMiddleware);
+
+    // context
+    const context = config.context || createContext(config);
+
     this.apolloServer = new ApolloServer({
-      ...gqlify.createApolloConfig(),
+      debug: true,
+      playground: config.graphqlPlayground,
+      schema: schemaWithMiddleware as any,
+      formatError: (error: any) => {
+        return apolloErrorHandler(error, this.logger);
+      },
+      context,
     });
   }
 
