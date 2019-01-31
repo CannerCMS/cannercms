@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Menu, Icon, Avatar, Select, notification } from 'antd';
+import { Menu, Icon, Avatar, Select } from 'antd';
 import styled from 'styled-components';
 import {FormattedMessage} from 'react-intl';
 
@@ -28,16 +28,7 @@ export default class HeaderContainer extends React.Component<Props, {}> {
     const {history} = this.props;
 
     if (menuItem.key === 'logout') {
-      fetch('/auth/logout')
-        .then(() => {
-          location.href = '/';
-        })
-        .catch(e => {
-          notification.error({
-            placement: "bottomRight",
-            message: "Logout failed!"
-          });
-        })
+      location.href = '/auth/logout';
     }
   };
 
