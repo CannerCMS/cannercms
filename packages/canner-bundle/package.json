@@ -1,6 +1,6 @@
 {
   "name": "@canner/bundle",
-  "version": "0.0.8",
+  "version": "3.0.0-alpha.0",
   "description": "Bundle the canner app and schema",
   "author": "Canner",
   "files": [
@@ -43,13 +43,19 @@
     "@canner/container": "^2.0.37",
     "@canner/history-router": "^2.0.11",
     "@canner/storage": "2.0.11",
+    "@types/lodash": "^4.14.107",
+    "@types/minimist": "^1.2.0",
+    "@types/node": "^9.4.6",
+    "@types/webpack": "^4.4.22",
+    "@types/webpack-dev-server": "^3.1.1",
     "antd": "^3.11.5",
     "babel-loader": "^8.0.4",
     "babel-plugin-import": "^1.9.1",
-    "canner": "^2.0.45",
+    "canner": "3.0.0-alpha.0",
     "canner-schema-loader": "^2.0.37",
     "canner-script": "^2.0.36",
     "compression-webpack-plugin": "^2.0.0",
+    "copyfiles": "^2.1.0",
     "graphql": "^14.1.1",
     "html-webpack-plugin": "^3.2.0",
     "ignore-loader": "^0.1.2",
@@ -74,13 +80,7 @@
     "webpack": "^4.20.2",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.1",
-    "webpack-dev-server": "^3.1.0",
-    "@types/lodash": "^4.14.107",
-    "@types/minimist": "^1.2.0",
-    "@types/node": "^9.4.6",
-    "@types/webpack": "^4.4.22",
-    "@types/webpack-dev-server": "^3.1.1",
-    "copyfiles": "^2.1.0"
+    "webpack-dev-server": "^3.1.0"
   },
   "peerDependencies": {
     "@canner/antd-components": "*",
