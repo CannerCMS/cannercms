@@ -9,7 +9,9 @@ const listPkg = execSync("lerna ls --p", { encoding: "utf8" })
   .split("\n")
   .filter(d => d.length > 0);
 const jsPkgs = listPkg.filter(pkg => !isTs(pkg));
-const tsPkgs = listPkg.filter(pkg => isTs(pkg)).sort(a => a.match(/canner-graphql-utils/) ? -1 : 1);
+const tsPkgs = listPkg.filter(pkg => isTs(pkg)).sort(a => {
+  a.match(/canner-graphql-utils/) ? -1 : 1
+});
 // generate js task
 jsPkgs.forEach(pkg => {
   const pkgName = getPkgName(pkg);
@@ -27,27 +29,36 @@ jsPkgs.forEach(pkg => {
   );
 });
 
+gulp.task("cms-server:copy-files", gulp.parallel(
+  () => gulp
+    .src(['packages/cms-server/src/public/**/*'])
+    .pipe(gulp.dest(['packages/cms-server/lib/public'])),
+  () => gulp
+    .src(['packages/cms-server/src/server/views/**/*'])
+    .pipe(gulp.dest(['packages/cms-server/lib/server/views']))
+));
 
 // generate ts task
 tsPkgs.forEach(pkg => {
   const pkgName = getPkgName(pkg);
-  const tsProject = ts.createProject('./tsconfig.json');
-  gulp.task(pkgName, () => gulp
-    .src([`${pkg}/src/**/*.ts`])
-    .pipe(sourcemaps.init())
-    .pipe(tsProject())
-    // eslint-disable-next-line no-console
-    .on("error", console.error.bind(console))
-    // eslint-disable-next-line no-console
-    .pipe(gulp.dest(`${pkg}/lib`))
-  );
+  gulp.task(pkgName, () => {
+    const tsProject = ts.createProject(`./packages/${pkgName}/tsconfig.release.json`);
+    return gulp
+      .src([`${pkg}/src/**/*.ts`])
+      .pipe(sourcemaps.init())
+      .pipe(tsProject())
+      // eslint-disable-next-line no-console
+      .on("error", console.error.bind(console))
+      // eslint-disable-next-line no-console
+      .pipe(gulp.dest(`${pkg}/lib`))
+  });
   gulp.task(`${pkgName}:watch`, () => gulp
-    .watch(`${pkg}/src/**/*.ts`, gulp.parallel(pkgName))
+    .watch(`${pkg}/src/**/*.ts`, gulp.parallel(pkgName, "cms-server:copy-files"))
   );
 });
 
 gulp.task("js", gulp.parallel(...jsPkgs.map(getPkgName)));
-gulp.task("ts", gulp.series(...tsPkgs.map(getPkgName)));
+gulp.task("ts", gulp.series(...tsPkgs.map(getPkgName), "cms-server:copy-files"));
 gulp.task("default", gulp.parallel('js', 'ts'));
 
 gulp.task("js:watch", gulp.parallel(...jsPkgs.map(pkg => `${getPkgName(pkg)}:watch`)));

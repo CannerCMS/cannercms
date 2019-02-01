@@ -28,13 +28,7 @@ export default class HeaderContainer extends React.Component<Props, {}> {
     const {history} = this.props;
 
     if (menuItem.key === 'logout') {
-      fetch('/auth/cms')
-        .then(res => {
-
-        })
-        .catch(e => {
-
-        })
+      location.href = '/auth/logout';
     }
   };
 

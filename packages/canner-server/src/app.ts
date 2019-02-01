@@ -2,9 +2,9 @@ import Koa from 'koa';
 import { construct } from './config/factory';
 
 // Service
-import { GraphQLService } from './gqlify/app';
-import { CmsWebService } from './web/server/app';
-import { AuthService } from './auth/app';
+import { GraphQLService } from '@canner/graphql-server/lib/app';
+import { CmsWebService } from '@canner/cms-server/lib/server/app';
+import { AuthService } from '@canner/auth-server/lib/app';
 import { ServerConfig } from './config/interface';
 import { createMiddleware } from './playground';
 

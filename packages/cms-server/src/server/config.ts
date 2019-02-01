@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import path from 'path';
-import { Logger } from '../../common/interface';
+import { Logger } from '@canner/server-common/lib/interface';
 
 export interface CmsServerConfig {
   hostname?: string;

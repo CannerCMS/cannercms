@@ -1,10 +1,10 @@
 import { ServerConfig } from './interface';
-import { CmsServerConfig } from '../web/server/config';
-import { GqlifyConfig } from '../gqlify/config';
+import { CmsServerConfig } from '@canner/cms-server/lib/server/config';
+import { GqlifyConfig } from '@canner/graphql-server/lib/config';
 import { get, defaultTo, merge } from 'lodash';
 import { RootAppConfig } from '../app';
-import { AuthConfig } from '../auth/config';
-import { jsonLogger } from '../common/jsonLogger';
+import { AuthConfig } from '@canner/auth-server/lib/config';
+import { jsonLogger } from '@canner/server-common/lib/jsonLogger';
 
 const defaultConfig = {
   cookieKeys: ['canner-secret'],

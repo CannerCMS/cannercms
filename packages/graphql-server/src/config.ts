@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import { Context, ContextFunction } from 'apollo-server-core';
-import { Logger } from '../common/interface';
-import { IssuerConfig } from '../common/oidcTokenVerifier';
+import { Logger } from '@canner/server-common/lib/interface';
+import { IssuerConfig } from '@canner/server-common/lib/oidcTokenVerifier';
 
 export interface GqlifyConfig {
   schemaPath?: string;

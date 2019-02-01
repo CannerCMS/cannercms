@@ -57,7 +57,7 @@ export default class CMSPage extends React.Component<Props, State> {
   createClient = async (): Promise<ApolloClient<any>> => {
     const token = await getAccessToken();
     const link: any =  createHttpLink({
-      uri: `/graphql`,
+      uri: ((window as any).config && (window as any).config.graphqlEndpoint) || `/graphql`,
       headers: token ?
         { Authorization: `Bearer ${token}` } :
         {},

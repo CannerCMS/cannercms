@@ -3,7 +3,7 @@ import Boom from 'boom';
 import { ErrorCodes } from './error';
 import { GqlifyConfig } from './config';
 import { isNil, get } from 'lodash';
-import { createAuthHandler } from '../common/graphql';
+import { createAuthHandler } from '@canner/server-common/lib/graphql';
 
 export const createContext = (config: GqlifyConfig) => {
   const publicAccess = isNil(config.oidc);
