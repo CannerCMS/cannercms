@@ -1,6 +1,6 @@
 {
   "name": "@canner/cms-server",
-  "version": "3.0.0-alpha.3",
+  "version": "3.0.0-alpha.4",
   "description": "The server to host CannerCMS",
   "author": "Canner",
   "files": [
