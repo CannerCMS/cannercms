@@ -69,22 +69,22 @@ export interface GraphqlPlaygroundOidcConfig {
 
 export class GraphqlPlaygroundUrlFactory {
   private oidc: GraphqlPlaygroundOidcConfig;
-  private endpoint: string;
+  private playgroundUrl: string;
   private issuer: Issuer;
   private oidcClient: any;
 
   constructor(option: {
-    endpoint: string,
+    playgroundUrl: string,
     oidc?: GraphqlPlaygroundOidcConfig
   }) {
     this.oidc = option.oidc;
-    this.endpoint = option.endpoint;
+    this.playgroundUrl = option.playgroundUrl;
   }
 
   public getUrl = async () => {
     if (!this.oidc) {
-      // public accessible graphql endpoint
-      return this.endpoint;
+      // public accessible graphql playgroundUrl
+      return this.playgroundUrl;
     }
 
     // get accessToken with clientCredential
@@ -100,7 +100,7 @@ export class GraphqlPlaygroundUrlFactory {
         Authorization: accessToken,
       }),
     });
-    return `${this.endpoint}?${query}`;
+    return `${this.playgroundUrl}?${query}`;
   }
 
   private getIssuer = async () => {
