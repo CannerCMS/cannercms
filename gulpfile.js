@@ -29,6 +29,14 @@ jsPkgs.forEach(pkg => {
   );
 });
 
+gulp.task("cms-server:copy-files", gulp.parallel(
+  () => gulp
+    .src(['packages/cms-server/src/public/**/*'])
+    .pipe(gulp.dest(['packages/cms-server/lib/public'])),
+  () => gulp
+    .src(['packages/cms-server/src/server/views/**/*'])
+    .pipe(gulp.dest(['packages/cms-server/lib/server/views']))
+));
 
 // generate ts task
 tsPkgs.forEach(pkg => {
@@ -45,12 +53,12 @@ tsPkgs.forEach(pkg => {
       .pipe(gulp.dest(`${pkg}/lib`))
   });
   gulp.task(`${pkgName}:watch`, () => gulp
-    .watch(`${pkg}/src/**/*.ts`, gulp.parallel(pkgName))
+    .watch(`${pkg}/src/**/*.ts`, gulp.parallel(pkgName, "cms-server:copy-files"))
   );
 });
 
 gulp.task("js", gulp.parallel(...jsPkgs.map(getPkgName)));
-gulp.task("ts", gulp.series(...tsPkgs.map(getPkgName)));
+gulp.task("ts", gulp.series(...tsPkgs.map(getPkgName), "cms-server:copy-files"));
 gulp.task("default", gulp.parallel('js', 'ts'));
 
 gulp.task("js:watch", gulp.parallel(...jsPkgs.map(pkg => `${getPkgName(pkg)}:watch`)));
