@@ -1,6 +1,6 @@
 {
   "name": "@canner/auth-server",
-  "version": "0.0.0",
+  "version": "3.0.0-alpha.1",
   "description": "The auth server",
   "author": "Canner",
   "files": [
@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@canner/server-common": "^0.0.0",
+    "@canner/server-common": "3.0.0-alpha.1",
     "@gqlify/canner-schema-to-gqlify-model": "^1.1.2",
     "@gqlify/server": "^2.1.0",
     "apollo-server": "^2.3.1",
@@ -75,10 +75,10 @@
     "tslint-react": "^3.6.0"
   },
   "peerDependencies": {
+    "@canner/server-common": "*",
     "graphql": "*",
     "graphql-iso-date": "*",
-    "graphql-type-json": "*",
-    "@canner/server-common": "*"
+    "graphql-type-json": "*"
   },
   "repository": "Canner/canner",
   "license": "MIT"
