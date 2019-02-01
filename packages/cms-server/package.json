@@ -13,7 +13,7 @@
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
     "clean": "rimraf lib dist",
     "prebuild": "npm run clean",
-    "build": "tsc -p ./tsconfig.release.json --pretty && copyfiles -u 4 \"src/web/server/views/**/*\" lib/web/server/views",
+    "build": "tsc -p ./tsconfig.release.json --pretty && copyfiles -u 3 \"src/server/views/**/*\" lib/server/views && copyfiles -u 2 \"src/public/**/*\" lib/public",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "publishConfig": {
