@@ -8,10 +8,25 @@ const {existsSync} = require('fs');
 const listPkg = execSync("lerna ls --p", { encoding: "utf8" })
   .split("\n")
   .filter(d => d.length > 0);
+const tsCompiledOrder = [
+  'canner-graphql-utils',
+  'canner-graphql-interface',
+  'server-common',
+  'auth-server',
+  'cms-server',
+  'graphql-server',
+  'canner-server'
+]
 const jsPkgs = listPkg.filter(pkg => !isTs(pkg));
-const tsPkgs = listPkg.filter(pkg => isTs(pkg)).sort(a => {
-  a.match(/canner-graphql-utils/) ? -1 : 1
-});
+const tsPkgs = listPkg.filter(pkg => isTs(pkg))
+  .map(pkg => {
+    return {
+      pkg,
+      order: tsCompiledOrder.indexOf(getPkgName(pkg))
+    }
+  })
+  .sort((a, b) => a.order - b.order)
+  .map(({pkg}) => pkg);
 // generate js task
 jsPkgs.forEach(pkg => {
   const pkgName = getPkgName(pkg);
