@@ -79,5 +79,6 @@
     "graphql-type-json": "*"
   },
   "repository": "Canner/canner",
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "622c41de13707ab33b1bfb28fcfc9f427ce37619"
 }
