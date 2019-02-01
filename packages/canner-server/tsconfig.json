@@ -1,5 +1,11 @@
 {
   "extends": "../../tsconfig.json",
   "include": ["*.ts", "**/*.ts"],
-  "exclude": ["./node_modules"]
+  "exclude": ["./node_modules"],
+  "references": [
+    { "path": "../server-common" },
+    { "path": "../auth-server" },
+    { "path": "../graphql-server" },
+    { "path": "../cms-server" }
+  ]
 }

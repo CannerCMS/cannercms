@@ -9,8 +9,8 @@ import serve from './utils/serve';
 
 // config
 import { createConfig, CmsServerConfig } from './config';
-import { WebService, Logger } from '../../common/interface';
-import { create as createLoggerMiddleware } from '../../common/loggerMiddleware';
+import { WebService, Logger } from '@canner/server-common/lib/interface';
+import { create as createLoggerMiddleware } from '@canner/server-common/lib/loggerMiddleware';
 
 // constants
 import { usernameCookieKey, accessTokenCookieKey, authCallbackPath } from './constants';

@@ -1,7 +1,7 @@
-import { CmsServerConfig } from '../web/server/config';
-import { GqlifyConfig } from '../gqlify/config';
-import { AuthConfig } from '../auth/config';
-import { IssuerConfig } from '../common/oidcTokenVerifier';
+import { CmsServerConfig } from '@canner/cms-server/lib/server/config';
+import { GqlifyConfig } from '@canner/graphql-server/lib/config';
+import { AuthConfig } from '@canner/auth-server/lib/config';
+import { IssuerConfig } from '@canner/server-common/lib/oidcTokenVerifier';
 
 export interface CommonConfig {
   hostname: string;

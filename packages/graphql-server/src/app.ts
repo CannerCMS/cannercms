@@ -10,9 +10,9 @@ import GraphQLJSON from 'graphql-type-json';
 import {
   GraphQLDateTime
 } from 'graphql-iso-date';
-import { WebService, Logger } from '../common/interface';
+import { WebService, Logger } from '@canner/server-common/lib/interface';
 import { GqlifyConfig } from './config';
-import { readOnlyMiddleware } from '../common/graphql';
+import { readOnlyMiddleware } from '@canner/server-common/lib/graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 import { applyMiddleware } from 'graphql-middleware';
 import { apolloErrorHandler } from './error';

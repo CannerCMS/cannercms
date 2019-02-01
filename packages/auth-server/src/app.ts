@@ -1,7 +1,7 @@
 import { createApp } from 'simple-oidc-server';
 import koaMount from 'koa-mount';
 import Koa from 'koa';
-import { WebService, Logger } from '../common/interface';
+import { WebService, Logger } from '@canner/server-common/lib/interface';
 import { AuthConfig } from './config';
 
 export class AuthService implements WebService {

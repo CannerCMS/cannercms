@@ -1,6 +1,6 @@
 import { ApolloError } from 'apollo-server-koa';
 import { get } from 'lodash';
-import { Logger } from '../common/interface';
+import { Logger } from '@canner/server-common/lib/interface';
 
 export const ErrorCodes = {
   INTERNAL_ERROR: 'INTERNAL_ERROR',

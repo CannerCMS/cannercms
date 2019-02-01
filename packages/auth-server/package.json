@@ -1,7 +1,7 @@
 {
-  "name": "@canner/server",
-  "version": "3.0.0-alpha.0",
-  "description": "Build CMS and GraphQL server with CannerCMS and GQLify",
+  "name": "@canner/auth-server",
+  "version": "0.0.0",
+  "description": "The auth server",
   "author": "Canner",
   "files": [
     "lib"
@@ -9,7 +9,6 @@
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "gqlify:server": "NODE_ENV=development ts-node src/gqlify/bin/www.ts",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
     "clean": "rimraf lib dist",
@@ -21,10 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@canner/auth-server": "0.0.0",
-    "@canner/graphql-server": "0.0.0",
-    "@canner/cms-server": "0.0.0",
-    "@canner/server-common": "0.0.0",
+    "@canner/server-common": "^0.0.0",
     "@gqlify/canner-schema-to-gqlify-model": "^1.1.2",
     "@gqlify/server": "^2.1.0",
     "apollo-server": "^2.3.1",
@@ -81,7 +77,8 @@
   "peerDependencies": {
     "graphql": "*",
     "graphql-iso-date": "*",
-    "graphql-type-json": "*"
+    "graphql-type-json": "*",
+    "@canner/server-common": "*"
   },
   "repository": "Canner/canner",
   "license": "MIT"
