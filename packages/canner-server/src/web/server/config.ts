@@ -6,6 +6,7 @@ export interface CmsServerConfig {
   hostname?: string;
   staticsPath?: string;
   clientBundledDir?: string;
+  graphqlEndpoint?: string;
 
   /**
    * OIDC config
@@ -51,6 +52,7 @@ export interface CmsServerConfig {
 }
 
 const defaultServerConfig = {
+  graphqlEndpoint: '/graphql',
   staticsPath: '/public',
   clientBundledDir: path.join(process.cwd(), '.cms'),
   cookieKeys: ['canner-secret'],

@@ -40,6 +40,9 @@ export const construct = (config: ServerConfig): {
   const discoveryUrl = defaultTo(get(config, 'common.discoveryUrl'), discoveryUrlFromHost);
   const issuerConfig = get(config, 'common.issuerConfig');
 
+  // graphql endpoint
+  const graphqlEndpoint = `${hostname}/graphql`;
+
   // construct config for cms service
   const cmsConfig: CmsServerConfig = merge({
     cookieKeys,
@@ -80,6 +83,7 @@ export const construct = (config: ServerConfig): {
   };
 
   const rootAppConfig = {
+    graphqlEndpoint,
     cookieKeys,
   };
 

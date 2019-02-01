@@ -6,9 +6,10 @@ import { GraphQLService } from './gqlify/app';
 import { CmsWebService } from './web/server/app';
 import { AuthService } from './auth/app';
 import { ServerConfig } from './config/interface';
-import { get } from 'lodash';
+import { createMiddleware } from './playground';
 
 export interface RootAppConfig {
+  graphqlEndpoint: string;
   cookieKeys: string[];
 }
 
@@ -23,6 +24,26 @@ export const createApp = async (config: ServerConfig) => {
   // construct services
   const cmsWebService = new CmsWebService(cmsConfig);
   await cmsWebService.mount(app);
+
+  // graphql playground
+  const playgroundMid = createMiddleware(
+    ctx => {
+      let headers = {};
+      try {
+        headers = JSON.parse(ctx.query.headers);
+      } catch (e) {
+        // tslint:disable-next-line:no-console
+        console.log('cannot parse headers');
+      }
+      return {
+        tabs: [{
+          endpoint: rootAppConfig.graphqlEndpoint,
+          headers,
+        }]
+      };
+    }
+  );
+  app.use(playgroundMid);
 
   // graphql service is optional, it might be created to other server
   if (graphqlConfig) {

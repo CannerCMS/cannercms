@@ -56,7 +56,7 @@ export class CmsWebService implements WebService {
         const errorCode = (err.isBoom && err.data && err.data.code) ? err.data.code : 'INTERNAL_ERROR';
         const statusCode =
           (err.isBoom && err.output && err.output.statusCode) ? err.output.statusCode : err.status || 500;
-  
+
         ctx.status = statusCode;
         ctx.body = {code: errorCode, message: err.message};
       }
@@ -80,7 +80,8 @@ export class CmsWebService implements WebService {
       // put into frontendConfig
       const username = ctx.cookies.get(usernameCookieKey, {signed: true});
       const accessToken = ctx.cookies.get(accessTokenCookieKey, {signed: true});
-      ctx.state.frontendConfig = JSON.stringify({username, accessToken});
+      const graphqlEndpoint = config.graphqlEndpoint;
+      ctx.state.frontendConfig = JSON.stringify({username, accessToken, graphqlEndpoint});
       return next();
     };
 
