@@ -1,6 +1,6 @@
 {
   "name": "@canner/auth-server",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.3",
   "description": "The auth server",
   "author": "Canner",
   "files": [
@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@canner/server-common": "3.0.0-alpha.2",
+    "@canner/server-common": "3.0.0-alpha.3",
     "@gqlify/canner-schema-to-gqlify-model": "^1.1.2",
     "@gqlify/server": "^2.1.0",
     "apollo-server": "^2.3.1",

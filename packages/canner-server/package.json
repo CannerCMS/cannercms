@@ -1,6 +1,6 @@
 {
   "name": "@canner/server",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.3",
   "description": "Build CMS and GraphQL server with CannerCMS and GQLify",
   "author": "Canner",
   "files": [
@@ -21,10 +21,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@canner/auth-server": "3.0.0-alpha.2",
-    "@canner/cms-server": "3.0.0-alpha.2",
-    "@canner/graphql-server": "3.0.0-alpha.2",
-    "@canner/server-common": "3.0.0-alpha.2",
+    "@canner/auth-server": "3.0.0-alpha.3",
+    "@canner/cms-server": "3.0.0-alpha.3",
+    "@canner/graphql-server": "3.0.0-alpha.3",
+    "@canner/server-common": "3.0.0-alpha.3",
     "@gqlify/canner-schema-to-gqlify-model": "^1.1.2",
     "@gqlify/server": "^2.1.0",
     "apollo-server": "^2.3.1",
