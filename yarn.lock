@@ -13542,7 +13542,7 @@ signal-exit@^3.0.0, signal-exit@^3.0.1, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-simple-oidc-server@^1.2.6:
+simple-oidc-server@^1.2.3, simple-oidc-server@^1.2.6:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/simple-oidc-server/-/simple-oidc-server-1.2.6.tgz#e95212b0c36ad9e45191211bb4a57b404cdd1c79"
   integrity sha512-K46QJ9C6+gjp24dtHgNQBeHdFxnXC5rYxFG/EKg0PVIsXDrIcNXdubKhDvdQx7VVEqRwWOaqaKYyPMBVK3wT/A==

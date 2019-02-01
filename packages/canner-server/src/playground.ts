@@ -4,7 +4,7 @@ import {
 } from 'graphql-playground-html';
 import { Context } from 'koa';
 import { Issuer } from 'openid-client';
-import { IssuerConfig } from './common/oidcTokenVerifier';
+import { IssuerConfig } from '@canner/server-common/lib/oidcTokenVerifier';
 import { isEmpty, get } from 'lodash';
 import querystring from 'querystring';
 
