@@ -1,6 +1,6 @@
 {
   "name": "@canner/auth-server",
-  "version": "3.0.0-alpha.3",
+  "version": "3.0.0-alpha.5",
   "description": "The auth server",
   "author": "Canner",
   "files": [
