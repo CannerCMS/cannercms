@@ -3600,6 +3600,11 @@ bcrypt@^3.0.3:
     nan "2.12.1"
     node-pre-gyp "0.12.0"
 
+bcryptjs@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/bcryptjs/-/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
+  integrity sha1-mrVie5PmBiH/fNrF2pczAn3x0Ms=
+
 bfj-node4@^5.2.0:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/bfj-node4/-/bfj-node4-5.3.1.tgz#e23d8b27057f1d0214fc561142ad9db998f26830"
@@ -13542,12 +13547,31 @@ signal-exit@^3.0.0, signal-exit@^3.0.1, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-simple-oidc-server@^1.2.3, simple-oidc-server@^1.2.6:
+simple-oidc-server@^1.2.3:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/simple-oidc-server/-/simple-oidc-server-1.2.6.tgz#e95212b0c36ad9e45191211bb4a57b404cdd1c79"
   integrity sha512-K46QJ9C6+gjp24dtHgNQBeHdFxnXC5rYxFG/EKg0PVIsXDrIcNXdubKhDvdQx7VVEqRwWOaqaKYyPMBVK3wT/A==
   dependencies:
     bcrypt "^3.0.3"
+    helmet "^3.15.0"
+    koa "^2.6.2"
+    koa-bodyparser "^4.2.1"
+    koa-helmet "^4.0.0"
+    koa-morgan "^1.0.1"
+    koa-mount "^4.0.0"
+    koa-router "^7.4.0"
+    koa-static "^5.0.0"
+    koa-views "^6.1.5"
+    lodash "^4.17.11"
+    oidc-provider "^5.5.2"
+    pug "^2.0.3"
+
+simple-oidc-server@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/simple-oidc-server/-/simple-oidc-server-1.3.0.tgz#8bddbe046b88044096ae97ef226d3c3cdf058429"
+  integrity sha512-bWpOx8LkqF5p+cUpefKOURcTFwpy/v8KGL0kKwBJyCTpOzLtZTgN+M3STVlAYZBkc80/PSNigoOhHXIkCLlDeg==
+  dependencies:
+    bcryptjs "^2.4.3"
     helmet "^3.15.0"
     koa "^2.6.2"
     koa-bodyparser "^4.2.1"
