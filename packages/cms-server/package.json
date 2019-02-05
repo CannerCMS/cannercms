@@ -1,6 +1,6 @@
 {
   "name": "@canner/cms-server",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.6",
   "description": "The server to host CannerCMS",
   "author": "Canner",
   "files": [
@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@canner/server-common": "3.0.0-alpha.3",
+    "@canner/server-common": "3.0.0-alpha.6",
     "@gqlify/canner-schema-to-gqlify-model": "^1.1.2",
     "@gqlify/server": "^2.1.0",
     "apollo-server": "^2.3.1",
