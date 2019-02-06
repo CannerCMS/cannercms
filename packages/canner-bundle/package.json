@@ -4,7 +4,8 @@
   "description": "Bundle the canner app and schema",
   "author": "Canner",
   "files": [
-    "lib"
+    "lib",
+    "tsconfig.global.json"
   ],
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
