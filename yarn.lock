@@ -1380,9 +1380,10 @@
   version "0.2.11"
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.11.tgz#32a853fad9974cbbc9fc766ec5699a18b22ccee6"
 
-"@gqlify/canner-schema-to-gqlify-model@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@gqlify/canner-schema-to-gqlify-model/-/canner-schema-to-gqlify-model-1.1.2.tgz#e35519265a4144a9be9b4cbf7eaaa0273b05bf75"
+"@gqlify/canner-schema-to-gqlify-model@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@gqlify/canner-schema-to-gqlify-model/-/canner-schema-to-gqlify-model-1.2.0.tgz#23800768c8c00e0b4a650a9264bed77a84e50128"
+  integrity sha512-QH/D0Guebos6OnZQFppp7/hl3pjjiiz2B38QrLZ6wnPXbPtVGbqgkdZv9ltBMXKiCz38QsUXTwog6Bsg9QiPGA==
   dependencies:
     lodash "^4.17.11"
 

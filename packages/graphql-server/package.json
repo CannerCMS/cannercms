@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@canner/server-common": "3.0.0-alpha.8",
-    "@gqlify/canner-schema-to-gqlify-model": "^1.1.2",
+    "@gqlify/canner-schema-to-gqlify-model": "^1.2.0",
     "@gqlify/server": "^2.1.0",
     "apollo-server": "^2.3.1",
     "apollo-server-koa": "^2.3.1",
