@@ -8,6 +8,9 @@
   ],
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
+  "bin": {
+    "canner-bundle": "./lib/bin/build.js"
+  },
   "scripts": {
     "web:statics:build": "MEASURE=true NODE_ENV=production ts-node src/bin/build.ts --output=../canner-server/.cms --schema=../canner-server/canner.schema.json",
     "web:statics:serve": "NODE_ENV=production ts-node src/bin/serve.ts",
