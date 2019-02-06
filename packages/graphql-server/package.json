@@ -1,6 +1,6 @@
 {
   "name": "@canner/graphql-server",
-  "version": "3.0.0-alpha.17",
+  "version": "3.0.0-alpha.18",
   "description": "Build GraphQL server with GQLify",
   "author": "Canner",
   "files": [
