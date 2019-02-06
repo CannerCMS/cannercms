@@ -1,11 +1,11 @@
 import path from 'path';
-import Koa, { Context } from 'koa';
+import Koa from 'koa';
 import { Gqlify } from '@gqlify/server';
 import { ScalarField } from '@gqlify/server/lib/dataModel';
 import { DataModelType } from '@gqlify/server/lib/dataModel/type';
 import { CannerSchemaToGQLifyParser } from '@gqlify/canner-schema-to-gqlify-model';
 import { readFileSync } from 'fs';
-import { ApolloServer, gql } from 'apollo-server-koa';
+import { ApolloServer } from 'apollo-server-koa';
 import GraphQLJSON from 'graphql-type-json';
 import {
   GraphQLDateTime
