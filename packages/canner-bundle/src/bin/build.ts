@@ -22,7 +22,11 @@ build({
   resolveModules: [
     path.resolve(__dirname, '../../node_modules'),
     path.resolve(__dirname, '../../../../node_modules')
-  ]
+  ],
+  resolveLoaderModules: [
+    'node_modules',
+    path.resolve(__dirname, '../../node_modules')
+  ],
 })
   .then((stats: any) => {
     console.log('finished', stats.toString({
