@@ -25,7 +25,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
+  "dependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "7.1.2",
     "@babel/plugin-proposal-class-properties": "7.0.0",

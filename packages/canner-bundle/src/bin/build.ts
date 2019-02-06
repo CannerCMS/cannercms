@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import {build} from '../index';
 import path from 'path';
 import minimist from 'minimist';
