@@ -14,6 +14,8 @@ if (!argv.output) {
   console.log(`No option --output=<path>, use default path ${WEB_OUTPUT_PATH}`)
 }
 
+const global = argv.global;
+
 build({
   webOutputPath: argv.output && path.resolve(process.cwd(), argv.output),
   schemaJsonOutputPath: argv.schema && path.resolve(process.cwd(), argv.schema),
@@ -27,6 +29,7 @@ build({
     'node_modules',
     path.resolve(__dirname, '../../node_modules')
   ],
+  tsConfigFile: global ? path.resolve(__dirname, '../../tsconfig.global.json') : undefined,
 })
   .then((stats: any) => {
     console.log('finished', stats.toString({
