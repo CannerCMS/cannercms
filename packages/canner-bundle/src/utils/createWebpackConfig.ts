@@ -8,7 +8,6 @@ import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import tmp from 'tmp';
 import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
-
 import createEntryFile from './createEntryFile';
 import createWindowVarsFile from './createWindowVarsFile';
 import {
@@ -292,7 +291,7 @@ export function createWebConfig({
       new CompressionPlugin(),
       new CustomFilterPlugin({
         exclude: /Conflicting order between:/
-      })
+      }),
     ].concat(plugins)
   });
 }

@@ -3,6 +3,7 @@
 import {build} from '../index';
 import path from 'path';
 import minimist from 'minimist';
+import Webpackbar from 'webpackbar';
 import {WEB_OUTPUT_PATH, SCHEMA_OUTPUT_PATH} from '../config';
 
 const argv = minimist(process.argv.slice(2));
@@ -29,6 +30,8 @@ build({
     path.resolve(__dirname, '../../node_modules')
   ],
   tsConfigFile: global ? path.resolve(__dirname, '../../tsconfig.global.json') : undefined,
+  schemaPlugins: global ? [new Webpackbar()] : [],
+  webPlugins: global ? [new Webpackbar()] : []
 })
   .then((stats: any) => {
     console.log('finished', stats.toString({
