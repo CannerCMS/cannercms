@@ -1,6 +1,6 @@
 {
   "name": "@canner/server-common",
-  "version": "3.0.0-alpha.3",
+  "version": "3.0.0-alpha.8",
   "description": "The common config of @canner/server, @canner/auth-server, @canner/cms-server, @canner/graphql-server",
   "author": "Canner",
   "files": [
@@ -39,13 +39,13 @@
     "@types/node": "^9.4.6",
     "@types/webpack": "^4.4.22",
     "@types/webpack-dev-server": "^3.1.1",
-    "koa": "^2.6.2",
     "copyfiles": "^2.1.0",
+    "koa": "^2.6.2",
     "rimraf": "^2.5.4",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
-    "typescript": "^2.7.2",
-    "tslint-react": "^3.6.0"
+    "tslint-react": "^3.6.0",
+    "typescript": "^2.7.2"
   },
   "peerDependencies": {
     "graphql": "*",

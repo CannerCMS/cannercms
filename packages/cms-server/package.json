@@ -1,6 +1,6 @@
 {
   "name": "@canner/cms-server",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.8",
   "description": "The server to host CannerCMS",
   "author": "Canner",
   "files": [
@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@canner/server-common": "3.0.0-alpha.3",
+    "@canner/server-common": "3.0.0-alpha.8",
     "boom": "^7.3.0",
     "koa": "^2.6.2",
     "koa-mount": "^4.0.0",

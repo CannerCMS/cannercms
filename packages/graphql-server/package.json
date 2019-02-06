@@ -1,6 +1,6 @@
 {
   "name": "@canner/graphql-server",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.8",
   "description": "Build GraphQL server with GQLify",
   "author": "Canner",
   "files": [
@@ -20,7 +20,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@canner/server-common": "3.0.0-alpha.3",
+    "@canner/server-common": "3.0.0-alpha.8",
     "@gqlify/canner-schema-to-gqlify-model": "^1.1.2",
     "@gqlify/server": "^2.1.0",
     "apollo-server": "^2.3.1",
@@ -53,8 +53,8 @@
     "rimraf": "^2.5.4",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
-    "typescript": "^2.7.2",
-    "tslint-react": "^3.6.0"
+    "tslint-react": "^3.6.0",
+    "typescript": "^2.7.2"
   },
   "peerDependencies": {
     "@canner/server-common": "*",
