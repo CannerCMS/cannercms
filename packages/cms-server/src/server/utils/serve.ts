@@ -1,5 +1,4 @@
 import send from 'koa-send';
-import { Context } from 'koa';
 import assert = require('assert');
 import { resolve } from 'path';
 

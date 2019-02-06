@@ -1,6 +1,5 @@
 import Koa, {Context} from 'koa';
 import path from 'path';
-import send from 'koa-send';
 import Router from 'koa-router';
 import koaMount from 'koa-mount';
 import views from 'koa-views';
