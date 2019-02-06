@@ -1380,15 +1380,15 @@
   version "0.2.11"
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.11.tgz#32a853fad9974cbbc9fc766ec5699a18b22ccee6"
 
-"@gqlify/canner-schema-to-gqlify-model@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@gqlify/canner-schema-to-gqlify-model/-/canner-schema-to-gqlify-model-1.2.0.tgz#23800768c8c00e0b4a650a9264bed77a84e50128"
+"@gqlify/canner-schema-to-gqlify-model@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@gqlify/canner-schema-to-gqlify-model/-/canner-schema-to-gqlify-model-1.3.0.tgz#a42531868e009ac3c8ba0d214323c9500b649900"
   dependencies:
     lodash "^4.17.11"
 
-"@gqlify/server@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@gqlify/server/-/server-2.1.0.tgz#1552f8b7c1dc66557d24a5ab716905ed1a9e5c37"
+"@gqlify/server@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@gqlify/server/-/server-3.1.0.tgz#cbc389899fef2cafc553bd65dda0b2c582bd1781"
   dependencies:
     axios "^0.18.0"
     bluebird "^3.5.1"
