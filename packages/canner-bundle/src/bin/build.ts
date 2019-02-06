@@ -22,7 +22,9 @@ build({
   schemaJsonOutputPath: argv.schema && path.resolve(process.cwd(), argv.schema),
   webOnly: argv.webOnly,
   schemaOnly: argv.schemaOnly,
-  resolveModules: [
+  resolveModules: global ? [
+    path.resolve(__dirname, '../../node_modules')
+  ] : [
     path.resolve(__dirname, '../../node_modules'),
     path.resolve(__dirname, '../../../../node_modules')
   ],
@@ -30,8 +32,8 @@ build({
     path.resolve(__dirname, '../../node_modules')
   ],
   tsConfigFile: global ? path.resolve(__dirname, '../../tsconfig.global.json') : undefined,
-  schemaPlugins: global ? [new Webpackbar()] : [],
-  webPlugins: global ? [new Webpackbar()] : []
+  schemaPlugins: global ? [new Webpackbar({name: 'Bundle Schema'})] : [],
+  webPlugins: global ? [new Webpackbar({name: 'Bundle CMS'})] : []
 })
   .then((stats: any) => {
     console.log('finished', stats.toString({
