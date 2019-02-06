@@ -1,6 +1,6 @@
 {
   "name": "@canner/bundle",
-  "version": "3.0.0-alpha.13",
+  "version": "3.0.0-alpha.14",
   "description": "Bundle the canner app and schema",
   "author": "Canner",
   "files": [
@@ -70,9 +70,9 @@
     "mini-css-extract-plugin": "^0.5.0",
     "minimist": "^1.2.0",
     "react": "^16.7.0",
-    "react-router-dom": "^4.3.1",
     "react-dom": "^16.7.0",
     "react-intl": "^2.8.0",
+    "react-router-dom": "^4.3.1",
     "rimraf": "^2.5.4",
     "speed-measure-webpack-plugin": "^1.2.5",
     "style-loader": "^0.21.0",
@@ -100,9 +100,9 @@
     "canner-script": "*",
     "graphql": "*",
     "react": "*",
-    "react-router-dom": "*",
     "react-dom": "*",
-    "react-intl": "*"
+    "react-intl": "*",
+    "react-router-dom": "*"
   },
   "repository": "Canner/canner",
   "license": "MIT"
