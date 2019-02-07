@@ -39,10 +39,10 @@ export const createAuthHandler = ({
     let readOnly = false;
     if (readOnlyAccess && accessToken === readOnlyAccessToken) {
       readOnly = true;
+    } else {
+      // check with verifier
+      await verifier.verify(accessToken);
     }
-
-    // check with verifier
-    await verifier.verify(accessToken);
 
     return {
       readOnly,
