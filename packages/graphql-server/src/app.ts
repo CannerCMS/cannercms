@@ -40,7 +40,7 @@ export class GraphQLService implements WebService {
     // add unique id
     for (const model of models) {
       const idField = model.getField('id');
-      if (!idField) {
+      if (!idField && !model.isObjectType()) {
         model.appendField(
           'id',
           new ScalarField({ type: DataModelType.ID, nonNull: true, unique: true, autoGen: true }));
