@@ -1,6 +1,6 @@
 {
   "name": "@canner/server-common",
-  "version": "3.0.0-alpha.8",
+  "version": "3.0.0-alpha.21",
   "description": "The common config of @canner/server, @canner/auth-server, @canner/cms-server, @canner/graphql-server",
   "author": "Canner",
   "files": [
