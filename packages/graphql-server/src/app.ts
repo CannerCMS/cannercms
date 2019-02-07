@@ -1,6 +1,6 @@
 import path from 'path';
 import Koa from 'koa';
-import { Gqlify } from '@gqlify/server';
+import { Gqlify, MemoryDataSource } from '@gqlify/server';
 import { ScalarField } from '@gqlify/server/lib/dataModel';
 import { DataModelType } from '@gqlify/server/lib/dataModel/type';
 import { CannerSchemaToGQLifyParser } from '@gqlify/canner-schema-to-gqlify-model';
@@ -47,11 +47,17 @@ export class GraphQLService implements WebService {
       }
     }
 
+    // inject memory dataSource
+    const dataSources = {
+      memory: () => new MemoryDataSource(),
+      ...config.dataSources,
+    };
+
     // construct gqlify
     const gqlify = new Gqlify({
       rootNode,
       models,
-      dataSources: config.dataSources,
+      dataSources,
       scalars: {
         JSON: GraphQLJSON,
         DateTime: GraphQLDateTime,
