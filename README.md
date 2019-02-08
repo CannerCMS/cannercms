@@ -15,7 +15,9 @@
 </div>
 
 <div align="center">
+
 [✨ Major release: Canner v3 is now live!! ✨](https://www.cannercms.com/blog/2019/02/07/canner-v3)
+
 </div>
 
 <br/><br/>
