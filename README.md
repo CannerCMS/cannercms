@@ -107,7 +107,7 @@ Full documentation: https://www.cannercms.com/docs
 
 ## Backers
 
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/cannercms#backer)]
+**We are currently a very small team, your support will inspire us to provide better and better software. Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/cannercms#backer)]
 
 <a href="https://opencollective.com/cannercms/backer/0/website" target="_blank"><img src="https://opencollective.com/cannercms/backer/0/avatar.svg"></a>
 
