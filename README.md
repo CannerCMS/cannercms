@@ -14,6 +14,10 @@
 
 </div>
 
+<div align="center">
+[✨ Major release: Canner v3 is now live!! ✨](https://www.cannercms.com/blog/2019/02/07/canner-v3)
+</div>
+
 <br/><br/>
 > CannerCMS lets you build flexible content management systems easy and fast, CMS developers built for CMS developers.
 >
@@ -84,7 +88,7 @@ Full documentation: https://www.cannercms.com/docs
 ➜ $ npm install --global @canner/cli
 
 # 2. Initialize schema
-➜ $ canner init:schema
+➜ $ canner init
 # Answer the questions
 # Initializing schema...
 # ? What template do you want to create? (Use arrow keys)
