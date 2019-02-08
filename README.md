@@ -77,6 +77,8 @@ Full documentation: https://www.cannercms.com/docs
 
 ## 🔥🔥 Only 3 commands to start 🔥🔥
 
+![cli-preview](./docs/cli-preview.png)
+
 ```sh
 # 1. Download Canner CLI tool
 ➜ $ npm install --global @canner/cli
@@ -98,7 +100,7 @@ Full documentation: https://www.cannercms.com/docs
 ✔ Initialized
 
 # 3. Serve your CMS with Livereload in local, while you update your schema the dev server will automatically reload open http://localhost:9090
-➜ $ canner script:serve
+➜ $ canner start
 ```
 
 ***👉👉 START USING CANNER: https://www.cannercms.com***
@@ -192,7 +194,7 @@ Canner adopts Adaptive CMS concept. Adaptive CMS is a new CMS structure that is 
 
 > ***Adaptive CMS?*** Learn more [here](https://www.cannercms.com/docs/why-adaptive-cms)
 
-![overview](http://www.cannercms.com/docs/assets/revolution.png)
+![overview](./docs/revolution.png)
 
 ### Learn more about Canner.
 
