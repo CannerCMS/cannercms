@@ -18,7 +18,7 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest",
     "^.+\\.jsx?$": "babel-jest",
   },
-  "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.(j|t)sx?$",
+  "testRegex": "((\\.|/)(test|spec))\\.(j|t)sx?$",
   "moduleFileExtensions": [
     "ts",
     "tsx",
