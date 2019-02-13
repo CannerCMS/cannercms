@@ -1,5 +1,6 @@
 // @flow
 
+
 export default function log(type: string, ...payload: any) {
   if (process.env.NODE_ENV !== 'development') {
     return;

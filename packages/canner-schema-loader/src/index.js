@@ -3,10 +3,8 @@ import traverse from 'babel-traverse';
 import generate from 'babel-generator';
 import * as t from 'babel-types';
 import template from 'babel-template';
-import fs from 'fs';
-import path from 'path';
 import {componentMap} from './utils'
-
+const UNEXISTING = 'UNEXISTING';
 const buildDynamicImport = template(`
   new Promise((resolve) => {
     require.ensure([], (require) => {
@@ -19,9 +17,64 @@ const buildRequire = template(`
   require(DEF_FILE).default ? require(DEF_FILE).default : require(DEF_FILE)
 `)
 
-export default function loader(source) {
+export default function loader(source, map, meta) {
   const ast = babylon.parse(source);
   const that = this;
+  const callback = this.async();
+  const promises = [];
+  // first traverse, we collect all resolve promise and store in promises array
+  traverseAst(
+    ast,
+    ({packageName}) => {
+      promises.push(generatePaths(packageName, that));
+    },
+    ({packageName}) => {
+      promises.push(generatePaths(packageName, that));
+    }
+  );
+  generate(ast, {}, source).code;
+
+  // second traverse, we get the generatePaths from the promises array
+  Promise.all(promises).then(paths => {
+    const copyPaths = paths.slice();
+    traverseAst(
+      ast,
+      ({path, type}) => {
+        const {
+          absPackageName,
+          absPackageJson,
+          absDefJs,
+          packageName
+        } = copyPaths.shift();
+        path.get('arguments.1').replaceWith(
+          t.objectExpression([
+            t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)),
+            t.objectProperty(t.stringLiteral('loader'), buildLoader(absPackageName)),
+            t.objectProperty(t.stringLiteral('builder'), buildBuilder(absDefJs, that)),
+            ...buildCannerConfig(absPackageJson, type)
+          ])
+        );
+      },
+      ({propsNode, type}) => {
+        const {
+          absPackageName,
+          absPackageJson,
+          absDefJs,
+          packageName
+        } = copyPaths.shift();
+        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)));
+        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('loader'), buildLoader(absPackageName)));
+        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('builder'), buildBuilder(absDefJs, that)));
+        propsNode.node.properties = propsNode.node.properties.concat(buildCannerConfig(absPackageJson, type));
+
+      }
+    );
+    const result = generate(ast, {}, source).code;
+    callback(null, result, map, meta);
+  });
+}
+
+function traverseAst(ast, nullPropsCallback, ObjectPropsCallback) {
   traverse(ast, {
     CallExpression(path) {
       let typeNode, propsNode, type, packageName;
@@ -36,15 +89,12 @@ export default function loader(source) {
         if (!packageName) {
           return;
         }
-        packageName = absPackageName(packageName, that);
-        path.get('arguments.1').replaceWith(
-          t.objectExpression([
-            t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)),
-            t.objectProperty(t.stringLiteral('loader'), buildLoader(packageName)),
-            t.objectProperty(t.stringLiteral('builder'), buildBuilder(packageName)),
-            ...builderCannerConfig(packageName, type)
-          ])
-        );
+        nullPropsCallback({
+          packageName,
+          type,
+          propsNode,
+          path
+        });
       }
 
       if (typeNode.isStringLiteral() && propsNode.isObjectExpression()) {
@@ -58,17 +108,16 @@ export default function loader(source) {
         if (!packageName) {
           return;
         }
-        packageName = absPackageName(packageName, that);
-        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)));
-        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('loader'), buildLoader(packageName)));
-        propsNode.node.properties.push(t.objectProperty(t.stringLiteral('builder'), buildBuilder(packageName)));
-        propsNode.node.properties = propsNode.node.properties.concat(builderCannerConfig(packageName, type));
+        ObjectPropsCallback({
+          packageName,
+          type,
+          path,
+          propsNode
+        });
       }
     }
   });
-  return generate(ast, {}, source).code;
 }
-
 
 function getProperties(propsNode) {
   return propsNode.node.properties.reduce((result, property) => {
@@ -91,18 +140,30 @@ function getPropertyValue(property) {
   return undefined;
 }
 
-export function absPackageName(sourcePkgName, context) {
-  let packageName = sourcePkgName;
-  if (packageName.startsWith('.') || packageName.startsWith(path.sep)) {
-    // customize component
-    packageName = path.resolve(context.context, sourcePkgName);
-  } else {
-    // deployed component
-    const paths = require.resolve(packageName).split(path.sep);
-    const dirPathIndex = paths.indexOf(packageName);
-    packageName = paths.slice(0, dirPathIndex - 1).join(path.sep);
+function absPath(path, context) {
+  return new Promise(resolve => {
+    context.resolve(context.context, path, (err, result) => {
+      if (err) {
+        resolve(UNEXISTING);
+      }
+      resolve(result);
+    });
+  })
+}
+
+export async function generatePaths(sourcePkgName, context) {
+  let absPackageName = sourcePkgName;
+  let absPackageJson = `${sourcePkgName}/package.json`;
+  let absDefJs = `${sourcePkgName}/canner.def.js`;
+  absPackageName = await absPath(absPackageName, context);
+  absPackageJson = await absPath(absPackageJson, context);
+  absDefJs = await absPath(absDefJs, context);
+  return {
+    absPackageName,
+    absPackageJson,
+    absDefJs,
+    packageName: sourcePkgName
   }
-  return packageName;
 }
 
 function buildLoader(packageName) {
@@ -111,24 +172,19 @@ function buildLoader(packageName) {
   }).expression;
 }
 
-function buildBuilder(packageName) {
-  let builder;
-  const defFile = `${packageName}/canner.def.js`;
-  if (fs.existsSync(defFile)) {
-    // to check defFile is exist or not, if not this line will throw an error
-    builder = buildRequire({
-      DEF_FILE: t.stringLiteral(defFile)
-    }).expression;
-  } else {
-    builder = t.nullLiteral();
+function buildBuilder(defFile) {
+  if (defFile === UNEXISTING) {
+    return t.nullLiteral();
   }
-  return builder;
+  return buildRequire({
+    DEF_FILE: t.stringLiteral(defFile)
+  }).expression;
 }
 
-function builderCannerConfig(packageName, type) {
+function buildCannerConfig(packageJson, type) {
   let canner = {}, properties = [];
   try {
-    canner = require(`${packageName}/package.json`).canner || {};
+    canner = require(packageJson).canner || {};
   } catch (e) {
     canner = {};
   }

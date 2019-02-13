@@ -4,7 +4,7 @@ import {Tooltip, Icon, Alert, Row, Col} from 'antd';
 import {HOCContext} from './context';
 import {Context} from 'canner-helpers';
 import styled from 'styled-components';
-import {isEmpty} from 'lodash';
+import {isEmpty, isEqual} from 'lodash';
 import type {HOCProps} from './types';
 
 const Title = styled.div`
@@ -50,6 +50,18 @@ export function Label({
 // $FlowFixMe
 export default function withTitleAndDescription(Com: React.ComponentType<*>) {
   return class ComponentWithTitleAndDescription extends React.Component<HOCProps> {
+    shouldComponentUpdate(nextProps: HOCProps) {
+      if (
+        !isEqual(nextProps.value, this.props.value) ||
+        !isEqual(nextProps.relationValue, this.props.relationValue) ||
+        nextProps.error !== this.props.error ||
+        nextProps.disabled !== this.props.disabled
+      ) {
+        return true;
+      }
+      return false;
+    }
+
     render() {
       const {title, layout, description, hideTitle,
         fetch, subscribe, request, deploy, reset, query,

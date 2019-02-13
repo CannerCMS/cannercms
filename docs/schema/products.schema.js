@@ -76,7 +76,7 @@ const Products = () => (
       <Default keyName="basicSetting" title="${products.basicSetting}" type="inner" injectValue={{layout: 'horizontal'}} >
         <string keyName="no" title="${products.no}" description="Unique Number of the Product" required/>
         <string keyName="name" title="${products.name}" required />
-        {/* <object keyName="description" ui="editor" title="${products.prod.description}" /> */}
+        <object keyName="description" ui="editor" title="${products.prod.description}" />
         <number keyName="price" title="${products.price}" required />
         <number keyName="promo" title="${products.promo}" />
         <relation
@@ -98,6 +98,26 @@ const Products = () => (
             relationField: "category"
           }}
         />
+        <relation
+          keyName="cateogies"
+          ui="multipleSelect"
+          relation={{
+            type: "toMany",
+            to: "categories"
+          }}
+          title="${categories.title}"
+          uiParams={{
+            textCol: "name",
+            columns: [
+              {title: "${categories.name}", dataIndex: "name"}
+            ],
+            relationField: "category"
+          }}
+        >
+          <toolbar async>
+            <pagination />
+          </toolbar>
+        </relation>
       </Default>
       <Default keyName="storage" title="${products.storage.layoutTitle}">
         <object keyName="storage">

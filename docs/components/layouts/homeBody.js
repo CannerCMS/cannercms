@@ -19,7 +19,7 @@ export default class Body extends React.Component<Props> {
     const key = routes[0];
     const item = schema[key];
     const breadcrumbs = [{
-      path: 'home',
+      path: '__home',
       render: () => <Icon type="home" />
     }, {
       path: routes[0],
