@@ -11,10 +11,6 @@ serve({
     path.resolve(__dirname, '../../../../node_modules')
   ],
   watch: true
-})
-  .then(stats => {
-    console.log(stats.toString());
-  })
-  .catch(err => {
-    console.log(err);
-  });
+}, (err, stats) => {
+  console.log(stats.toString());
+});

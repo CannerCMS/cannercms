@@ -1,10 +1,11 @@
 const fs = require('fs');
+const requireUncached = require('./requireUncached');
 
 export default function(schemaJsPath: string, jsonPath: string) {
-  const json = require(schemaJsPath);
+
+  const json = requireUncached(schemaJsPath);
   const pureSchema = resolve(json.default.schema)
   const jsString = JSON.stringify(pureSchema, null, 2);
-
   fs.unlinkSync(schemaJsPath);
   fs.writeFileSync(jsonPath, jsString, 'utf8');
 }

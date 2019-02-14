@@ -9,5 +9,8 @@ watchSchema({
     path.resolve(__dirname, '../../node_modules'),
     path.resolve(__dirname, '../../../../node_modules')
   ],
-  plugins: global ? [new Webpackbar({name: 'Watch Schema'})] : [],
-}, () => {});
+  schemaJsonOutputPath: argv.schema && path.resolve(process.cwd(), argv.schema),
+  plugins: argv.global ? [new Webpackbar({name: 'Watch Schema'})] : [],
+}, (err, stats) => {
+  console.log(stats.toString());
+});

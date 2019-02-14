@@ -30,32 +30,31 @@ export function build(options?: CreateConfigArgsType) {
 }
 
 export function watchSchema(options: CreateConfigArgsType, callback: any) {
+  if (options && !options.watch) {
+    options.watch = true;
+  }
   const config = createSchemaConfig(options || {});
   const watchOptions = typeof config.watch === 'object'?
     config.watch :
     {
       aggregateTimeout: 300,
-      poll: undefined
     };
   return webpack(config)
-    .watch(watchOptions, callback);
+    .watch(watchOptions, (err, stats) => {
+      const schemaPath = `${(options || {}).schemaOutputPath || SCHEMA_OUTPUT_PATH}/schema.node.js`;
+      transformSchemaToJson(schemaPath, (options || {}).schemaJsonOutputPath || SCHEMA_JSON_OUTPUT_PATH);
+      callback(err, stats);
+    });
 }
 
-export function serve(options?: CreateConfigArgsType) {
+export function serve(options: CreateConfigArgsType, callback: any) {
+  if (options) {
+    options.watch = true;
+  }
   const config = createWebConfig(options || {});
   const compiler = webpack(config);
   const devServerOptions = {...config.devServer};
   const server = new WebpackDevServer(compiler, devServerOptions);
-  server.listen(config.devServer.port, '127.0.0.1', () => {
-    console.log(`Starting server on http://localhost:${config.devServer.port}`);
-  });
-  return new Promise((resolve, reject) => {
-    webpack(config)
-      .watch({}, (err, stats) => {
-        if (err || stats.hasErrors()) {
-          return reject(err);
-        }
-        resolve(stats);
-      });
-  });
+  server.listen(config.devServer.port, '127.0.0.1', () => {});
+  return server;
 }

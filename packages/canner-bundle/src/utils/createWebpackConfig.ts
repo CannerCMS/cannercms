@@ -84,13 +84,13 @@ export function createSchemaConfig({
   return {
     target: 'node',
     entry: schemaPath,
-    watch,
     output: {
       path: schemaOutputPath,
       filename: SCHEMA_OUTPUT_FILENAME,
       libraryTarget: 'commonjs'
     },
-    mode: devMode ? 'development' : 'production',
+    watch,
+    mode: watch ? 'development' : 'production',
     resolve: {
       // mjs to fix https://github.com/graphql/graphql-js/issues/1272
       "extensions": [".jsx", ".js", ".ts", ".tsx", "mjs"],
@@ -123,10 +123,10 @@ export function createSchemaConfig({
         maxChunks: 1
       }),
       // mock firebase
-      new webpack.NormalModuleReplacementPlugin(
-        /firebase/,
-        path.resolve(__dirname, 'mock')
-      ),
+      // new webpack.NormalModuleReplacementPlugin(
+      //   /firebase/,
+      //   path.resolve(__dirname, 'mock')
+      // ),
       new BundleAnalyzerPlugin({
         analyzerMode: devMode ? 'static' : 'disabled',
         openAnalyzer: false
@@ -290,10 +290,10 @@ export function createWebConfig({
         openAnalyzer: false
       }),
       // temp solution for firebase undefined, since we will remove the canner-graphql-interface in the future
-      new webpack.NormalModuleReplacementPlugin(
-        /firebase/,
-        path.resolve(__dirname, 'mock')
-      ),
+      // new webpack.NormalModuleReplacementPlugin(
+      //   /firebase/,
+      //   path.resolve(__dirname, 'mock')
+      // ),
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
       }),

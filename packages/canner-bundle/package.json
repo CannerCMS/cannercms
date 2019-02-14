@@ -15,7 +15,7 @@
   "scripts": {
     "web:statics:build": "MEASURE=true NODE_ENV=production ts-node src/bin/build.ts --output=../canner-server/.cms --schema=../canner-server/canner.schema.json",
     "web:statics:serve": "NODE_ENV=production ts-node src/bin/serve.ts",
-    "web:statics:watchSchema": "NODE_ENV=production ts-node src/bin/watchSchema.ts",
+    "web:statics:watchSchema": "NODE_ENV=production ts-node src/bin/watchSchema.ts --schema=./canner.schema.json",
     "web:dataSources": "NODE_ENV=production ts-node src/bin/dataSources.ts",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
