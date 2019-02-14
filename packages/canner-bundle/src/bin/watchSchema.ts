@@ -11,6 +11,7 @@ watchSchema({
   ],
   schemaJsonOutputPath: argv.schema && path.resolve(process.cwd(), argv.schema),
   plugins: argv.global ? [new Webpackbar({name: 'Watch Schema'})] : [],
+  devMode: true
 }, (err, stats) => {
   console.log(stats.toString());
 });

@@ -41,6 +41,7 @@ export type CreateSchemaConfigArgsType = {
   tsConfigFile?: string;
   plugins?: Array<any>;
   watch?: any;
+  devMode?: boolean;
 }
 
 export type CreateWebConfigArgsType = {
@@ -58,6 +59,7 @@ export type CreateWebConfigArgsType = {
   i18nMessages?: Object;
   watch?: any;
   devServerPort?: number;
+  devMode?: boolean;
 }
 
 export type CreateConfigArgsType = {
@@ -79,7 +81,8 @@ export function createSchemaConfig({
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
   tsConfigFile = TS_CONFIG_FILE,
   plugins = [],
-  watch = false
+  watch = false,
+  devMode = false,
 }: CreateSchemaConfigArgsType): webpack.Configuration {
   return {
     target: 'node',
@@ -90,7 +93,7 @@ export function createSchemaConfig({
       libraryTarget: 'commonjs'
     },
     watch,
-    mode: watch ? 'development' : 'production',
+    mode: devMode ? 'development' : 'production',
     resolve: {
       // mjs to fix https://github.com/graphql/graphql-js/issues/1272
       "extensions": [".jsx", ".js", ".ts", ".tsx", "mjs"],
@@ -150,6 +153,7 @@ export function createWebConfig({
   plugins = [],
   watch = false,
   devServerPort = 8090,
+  devMode = false
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
   const windowVarsFile = tmp.fileSync({postfix: '.ts'});

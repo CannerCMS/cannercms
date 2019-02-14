@@ -10,7 +10,8 @@ serve({
     path.resolve(__dirname, '../../node_modules'),
     path.resolve(__dirname, '../../../../node_modules')
   ],
-  watch: true
+  watch: true,
+  devMode: true
 }, (err, stats) => {
   console.log(stats.toString());
 });
