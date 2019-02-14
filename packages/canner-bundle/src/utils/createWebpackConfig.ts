@@ -40,6 +40,7 @@ export type CreateSchemaConfigArgsType = {
   resolveLoaderModules?: Array<string>;
   tsConfigFile?: string;
   plugins?: Array<any>;
+  watch?: any;
 }
 
 export type CreateWebConfigArgsType = {
@@ -55,6 +56,8 @@ export type CreateWebConfigArgsType = {
   plugins?: Array<any>;
   baseUrl?: string;
   i18nMessages?: Object;
+  watch?: any;
+  devServerPort?: number;
 }
 
 export type CreateConfigArgsType = {
@@ -63,6 +66,7 @@ export type CreateConfigArgsType = {
   schemaJsonOutputPath?: string;
   schemaPlugins?: Array<any>;
   webPlugins?: Array<any>;
+  watch?: any;
 } & CreateSchemaConfigArgsType & CreateWebConfigArgsType
 
 // create temp file
@@ -74,11 +78,13 @@ export function createSchemaConfig({
   resolveModules = RESOLVE_MODULES,
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
   tsConfigFile = TS_CONFIG_FILE,
-  plugins = []
+  plugins = [],
+  watch = false
 }: CreateSchemaConfigArgsType): webpack.Configuration {
   return {
     target: 'node',
     entry: schemaPath,
+    watch,
     output: {
       path: schemaOutputPath,
       filename: SCHEMA_OUTPUT_FILENAME,
@@ -142,6 +148,8 @@ export function createWebConfig({
   baseUrl = '/cms',
   i18nMessages = {},
   plugins = [],
+  watch = false,
+  devServerPort = 8090,
 }: CreateWebConfigArgsType): webpack.Configuration {
   const entryFile = tmp.fileSync({postfix: '.tsx'});
   const windowVarsFile = tmp.fileSync({postfix: '.ts'});
@@ -176,15 +184,16 @@ export function createWebConfig({
     performance: {
       hints: false
     },
+    watch,
     output: {
       path: webOutputPath,
       filename: '[name].js',
       chunkFilename: '[name].js',
-      publicPath: devMode ? 'http://localhost:8090/' : '/'
+      publicPath: '/'
     },
     mode: devMode ? 'development' : 'production',
     devServer: {
-      port: 8090,
+      port: devServerPort,
       contentBase: webOutputPath,
       historyApiFallback: true,
       // https://github.com/webpack/webpack-dev-server/issues/1604
@@ -311,7 +320,7 @@ export function createConfig({
   appPath = APP_PATH,
   schemaPlugins = [],
   webPlugins = [],
-  i18nMessages = {}
+  i18nMessages = {},
 }: CreateConfigArgsType): webpack.Configuration[] {
   const config: webpack.Configuration[] = [];
   if (!schemaOnly) {

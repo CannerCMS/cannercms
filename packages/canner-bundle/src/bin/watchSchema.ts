@@ -1,20 +1,13 @@
-import {serve} from '../index';
+import {watchSchema} from '../index';
 import minimist from 'minimist';
 import path from 'path';
+import Webpackbar from 'webpackbar';
 const argv = minimist(process.argv.slice(2));
 
-serve({
-  webOnly: argv.webOnly,
-  schemaOnly: argv.schemaOnly,
+watchSchema({
   resolveModules: [
     path.resolve(__dirname, '../../node_modules'),
     path.resolve(__dirname, '../../../../node_modules')
   ],
-  watch: true
-})
-  .then(stats => {
-    console.log(stats.toString());
-  })
-  .catch(err => {
-    console.log(err);
-  });
+  plugins: global ? [new Webpackbar({name: 'Watch Schema'})] : [],
+}, () => {});

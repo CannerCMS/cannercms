@@ -1,6 +1,6 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import {createConfig, CreateConfigArgsType, createWebConfig} from './utils/createWebpackConfig';
+import {createConfig, CreateConfigArgsType, createWebConfig, createSchemaConfig} from './utils/createWebpackConfig';
 import transformSchemaToJson from './utils/transformSchemaToJSON';
 import {SCHEMA_OUTPUT_PATH, SCHEMA_JSON_OUTPUT_PATH} from './config';
 export function build(options?: CreateConfigArgsType) {
@@ -27,6 +27,18 @@ export function build(options?: CreateConfigArgsType) {
         resolve(stats);
       });
   });
+}
+
+export function watchSchema(options: CreateConfigArgsType, callback: any) {
+  const config = createSchemaConfig(options || {});
+  const watchOptions = typeof config.watch === 'object'?
+    config.watch :
+    {
+      aggregateTimeout: 300,
+      poll: undefined
+    };
+  return webpack(config)
+    .watch(watchOptions, callback);
 }
 
 export function serve(options?: CreateConfigArgsType) {
