@@ -28,8 +28,11 @@ build({
     path.resolve(__dirname, '../../node_modules'),
     path.resolve(__dirname, '../../../../node_modules')
   ],
-  resolveLoaderModules: [
+  resolveLoaderModules: global ? [
     path.resolve(__dirname, '../../node_modules')
+  ] : [
+    path.resolve(__dirname, '../../node_modules'),
+    path.resolve(__dirname, '../../../../node_modules')
   ],
   tsConfigFile: global ? path.resolve(__dirname, '../../tsconfig.global.json') : undefined,
   schemaPlugins: global ? [new Webpackbar({name: 'Bundle Schema'})] : [],
