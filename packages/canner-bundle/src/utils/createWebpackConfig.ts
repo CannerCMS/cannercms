@@ -126,14 +126,10 @@ export function createSchemaConfig({
         maxChunks: 1
       }),
       // mock firebase
-      // new webpack.NormalModuleReplacementPlugin(
-      //   /firebase/,
-      //   path.resolve(__dirname, 'mock')
-      // ),
-      new BundleAnalyzerPlugin({
-        analyzerMode: devMode ? 'static' : 'disabled',
-        openAnalyzer: false
-      }),
+      new webpack.NormalModuleReplacementPlugin(
+        /firebase/,
+        path.resolve(__dirname, 'mock')
+      ),
     ].concat(plugins)
   };
 }
@@ -174,7 +170,9 @@ export function createWebConfig({
     cmsConfig,
     authPath
   });
-
+  if (watch) {
+    plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
   return smp.wrap({
     entry: {
       index: [WINDOW_VARS_PATH, ENTRY_PATH]
@@ -201,7 +199,10 @@ export function createWebConfig({
       contentBase: webOutputPath,
       historyApiFallback: true,
       // https://github.com/webpack/webpack-dev-server/issues/1604
-      disableHostCheck: true
+      disableHostCheck: true,
+      quiet: true,
+      hot: true,
+      inline: true
     },
     resolve: {
       // mjs to fix https://github.com/graphql/graphql-js/issues/1272
@@ -289,15 +290,11 @@ export function createWebConfig({
         filename: 'style.css',
         chunkFilename: '[name].css'
       }),
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        openAnalyzer: false
-      }),
       // temp solution for firebase undefined, since we will remove the canner-graphql-interface in the future
-      // new webpack.NormalModuleReplacementPlugin(
-      //   /firebase/,
-      //   path.resolve(__dirname, 'mock')
-      // ),
+      new webpack.NormalModuleReplacementPlugin(
+        /firebase/,
+        path.resolve(__dirname, 'mock')
+      ),
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
       }),

@@ -41,8 +41,12 @@ export function watchSchema(options: CreateConfigArgsType, callback: any) {
     };
   return webpack(config)
     .watch(watchOptions, (err, stats) => {
-      const schemaPath = `${(options || {}).schemaOutputPath || SCHEMA_OUTPUT_PATH}/schema.node.js`;
-      transformSchemaToJson(schemaPath, (options || {}).schemaJsonOutputPath || SCHEMA_JSON_OUTPUT_PATH);
+      try {
+        const schemaPath = `${(options || {}).schemaOutputPath || SCHEMA_OUTPUT_PATH}/schema.node.js`;
+        transformSchemaToJson(schemaPath, (options || {}).schemaJsonOutputPath || SCHEMA_JSON_OUTPUT_PATH);
+      } catch(e) {
+        err = e;
+      }
       callback(err, stats);
     });
 }
@@ -51,10 +55,16 @@ export function serve(options: CreateConfigArgsType, callback: any) {
   if (options) {
     options.watch = true;
   }
-  const config = createWebConfig(options || {});
+  const config = createWebConfig(options || {}) as any;
+  config.entry.index.unshift(`webpack-dev-server/client?http://localhost:${config.devServer.port}/`, `webpack/hot/dev-server`);
   const compiler = webpack(config);
   const devServerOptions = {...config.devServer};
+  WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
   const server = new WebpackDevServer(compiler, devServerOptions);
-  server.listen(config.devServer.port, '127.0.0.1', () => {});
-  return server;
+  server.listen(config.devServer.port, '127.0.0.1', callback);
+  return {
+    compiler,
+    server,
+    config
+  };
 }
