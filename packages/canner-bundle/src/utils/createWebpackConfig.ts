@@ -187,6 +187,9 @@ export function createWebConfig({
       hints: false
     },
     watch,
+    watchOptions: {
+      aggregateTimeout: 2000
+    },
     output: {
       path: webOutputPath,
       filename: '[name].js',

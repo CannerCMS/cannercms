@@ -37,7 +37,7 @@ export function watchSchema(options: CreateConfigArgsType, callback: any) {
   const watchOptions = typeof config.watch === 'object'?
     config.watch :
     {
-      aggregateTimeout: 300,
+      aggregateTimeout: 1000,
     };
   return webpack(config)
     .watch(watchOptions, (err, stats) => {
