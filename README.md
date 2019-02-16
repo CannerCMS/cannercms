@@ -27,8 +27,6 @@
 
 [![IMAGE ALT TEXT HERE](https://i.imgur.com/KUHLmSq.png)](https://www.youtube.com/watch?v=OVdxvGDGORs)
 
-Are you using CannerCMS? Please share with us [here](https://github.com/Canner/canner/issues/133). Once we approve, you will get **one month PREMIUM plan** for your account!
-
 ## Benefits and advantages (Simple. Agile. Flexible. Efficient - SAFE)
 
 ### 🌍 Simple, One Framework
