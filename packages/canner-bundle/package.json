@@ -78,6 +78,7 @@
     "speed-measure-webpack-plugin": "^1.2.5",
     "style-loader": "^0.21.0",
     "styled-components": "^3.2.6",
+    "time-fix-plugin": "^2.0.5",
     "tmp": "^0.0.33",
     "ts-import-plugin": "^1.5.5",
     "ts-loader": "^4.3.0",

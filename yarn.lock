@@ -14080,6 +14080,10 @@ thunky@^1.0.2:
   version "1.0.3"
   resolved "https://registry.npmjs.org/thunky/-/thunky-1.0.3.tgz#f5df732453407b09191dae73e2a8cc73f381a826"
 
+time-fix-plugin@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/time-fix-plugin/-/time-fix-plugin-2.0.5.tgz#41c76e734217cc91a08ea525fdde56de119fb683"
+
 time-stamp@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/time-stamp/-/time-stamp-1.1.0.tgz#764a5a11af50561921b133f3b44e618687e0f5c3"

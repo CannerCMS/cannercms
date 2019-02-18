@@ -85,11 +85,11 @@ export class CmsWebService implements WebService {
     };
 
     router.get('/cms', loggingMiddleware, beforeRenderCms, setConfigMiddleware, async ctx => {
-      await ctx.render('cms', {title: 'Canenr CMS', staticsPath: config.staticsPath});
+      await ctx.render('cms', {title: 'Canner CMS', staticsPath: config.staticsPath});
     });
 
     router.get('/cms/*', loggingMiddleware, beforeRenderCms, setConfigMiddleware, async ctx => {
-      await ctx.render('cms', {title: 'Canenr CMS', staticsPath: config.staticsPath});
+      await ctx.render('cms', {title: 'Canner CMS', staticsPath: config.staticsPath});
     });
 
     // auth callback

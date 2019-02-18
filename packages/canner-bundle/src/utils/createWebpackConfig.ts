@@ -4,6 +4,7 @@ import * as webpackDevServer from 'webpack-dev-server';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
+import TimeFixPlugin from 'time-fix-plugin';
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import tmp from 'tmp';
@@ -188,7 +189,8 @@ export function createWebConfig({
     },
     watch,
     watchOptions: {
-      aggregateTimeout: 2000
+      aggregateTimeout: 2000,
+      ignored: ['.cms', webOutputPath, 'schema.node.js', 'canner.schema.json', 'node_modules']
     },
     output: {
       path: webOutputPath,
@@ -305,6 +307,7 @@ export function createWebConfig({
       new CustomFilterPlugin({
         exclude: /Conflicting order between:/
       }),
+      new TimeFixPlugin()
     ].concat(plugins)
   });
 }
