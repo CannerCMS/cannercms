@@ -1,6 +1,6 @@
 {
   "name": "@canner/server",
-  "version": "3.0.0-alpha.21",
+  "version": "3.0.0-alpha.24",
   "description": "Build CMS and GraphQL server with CannerCMS and GQLify",
   "author": "Canner",
   "files": [
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@canner/auth-server": "3.0.0-alpha.21",
-    "@canner/cms-server": "3.0.0-alpha.21",
+    "@canner/cms-server": "3.0.0-alpha.24",
     "@canner/graphql-server": "3.0.0-alpha.21",
     "@canner/server-common": "3.0.0-alpha.21",
     "boom": "^7.3.0",
