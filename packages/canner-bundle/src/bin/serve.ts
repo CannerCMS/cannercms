@@ -12,6 +12,4 @@ serve({
   ],
   watch: true,
   devMode: true
-}, (err, stats) => {
-  console.log(stats.toString());
 });
