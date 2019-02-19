@@ -3,7 +3,11 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
-      "canner-graphql-*": ["./canner-graphql-*/src"]
+      "canner-graphql-*": ["./canner-graphql-*/src"],
+      "@canner/auth-server": ["./packages/auth-server"],
+      "@canner/graphql-server": ["./packages/graphql-server"],
+      "@canner/cms-server": ["./packages/cms-server"],
+      "@canner/server-common": ["./packages/server-common"],
     }
   }
 }

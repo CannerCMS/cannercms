@@ -2,6 +2,8 @@ import React from 'react';
 import Enzyme, {mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Canner from '../../src/components';
+import {createClient, MemoryConnector} from 'canner-graphql-interface';
+import {defaultData} from './data';
 
 function MockPosts({renderChildren, refId}) {
   return (
@@ -67,9 +69,16 @@ const schema = {
 describe('<Canner>', () => {
   let wrapper;
   beforeEach(async () => {
+    const client = createClient({
+      schema: schema.schema,
+      connector: new MemoryConnector({
+        defaultData
+      })
+    });
     wrapper = mount(
       <Canner
         schema={schema}
+        client={client}
         routes={['posts']}
       />
     );

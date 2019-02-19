@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title #{title}
+    include ./utils/head.pug
+    block head
+  body
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/react/16.4.0/umd/react.production.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.4.0/umd/react-dom.production.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/antd/3.10.10/antd-with-locales.min.js")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/styled-components/3.4.0-4/styled-components.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.js')
+    block main
+    block footerScript

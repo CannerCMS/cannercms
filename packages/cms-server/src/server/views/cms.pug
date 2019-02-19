@@ -1,0 +1,9 @@
+
+extends ./layout.pug
+
+block head
+  script.
+    window.config = !{frontendConfig};
+block main
+  div(id='root')
+  script(src= `${staticsPath}/index.js`)
