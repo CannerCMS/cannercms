@@ -1,0 +1,257 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createSchemaConfig default schema config 1`] = `
+Object {
+  "entry": "schemaPath",
+  "mode": "development",
+  "module": Object {
+    "rules": Array [
+      Object {
+        "include": /node_modules/,
+        "test": /\\\\\\.mjs\\$/,
+        "type": "javascript/auto",
+      },
+      Object {
+        "oneOf": Array [
+          Object {
+            "test": /canner\\\\\\.schema\\\\\\.tsx\\?\\$/,
+            "use": Array [
+              Object {
+                "loader": "canner-schema-loader",
+              },
+              Object {
+                "loader": "ts-loader",
+                "options": Object {
+                  "compilerOptions": Object {
+                    "jsx": "react",
+                    "jsxFactory": "CannerScript",
+                  },
+                  "configFile": "tsConfigFile",
+                  "transpileOnly": true,
+                },
+              },
+            ],
+          },
+          Object {
+            "loader": "ts-loader",
+            "options": Object {
+              "compilerOptions": Object {
+                "module": "es2015",
+              },
+              "configFile": "tsConfigFile",
+              "getCustomTransformers": [Function],
+              "transpileOnly": true,
+            },
+            "test": /\\\\\\.tsx\\?\\$/,
+          },
+        ],
+      },
+      Object {
+        "oneOf": Array [
+          Object {
+            "test": /\\(\\\\\\.schema\\\\\\.js\\|canner\\\\\\.def\\\\\\.js\\)\\$/,
+            "use": Array [
+              Object {
+                "loader": "canner-schema-loader",
+              },
+              Object {
+                "loader": "babel-loader",
+                "options": Object {
+                  "babelrc": false,
+                  "plugins": Array [
+                    Array [
+                      Object {
+                        "default": [Function],
+                      },
+                      Object {
+                        "legacy": true,
+                      },
+                    ],
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Array [
+                      Object {
+                        "default": [Function],
+                      },
+                      Object {
+                        "loose": false,
+                      },
+                    ],
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Array [
+                      Object {
+                        "default": [Function],
+                      },
+                      Object {
+                        "libraryName": "antd",
+                        "style": true,
+                      },
+                    ],
+                  ],
+                  "presets": Array [
+                    Object {
+                      "default": [Function],
+                      "isPluginRequired": [Function],
+                      "transformIncludesAndExcludes": [Function],
+                    },
+                    Array [
+                      Object {
+                        "default": [Function],
+                      },
+                      Object {
+                        "pragma": "CannerScript",
+                        "pragmaFrag": "CannerScript.Default",
+                        "throwIfNamespace": false,
+                      },
+                    ],
+                    Object {
+                      "default": [Function],
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          Object {
+            "exclude": /node_modules/,
+            "test": /\\\\\\.js\\$/,
+            "use": Object {
+              "loader": "babel-loader",
+              "options": Object {
+                "babelrc": false,
+                "plugins": Array [
+                  Array [
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "legacy": true,
+                    },
+                  ],
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Array [
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "loose": false,
+                    },
+                  ],
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Array [
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "libraryName": "antd",
+                      "style": true,
+                    },
+                  ],
+                ],
+                "presets": Array [
+                  Object {
+                    "default": [Function],
+                    "isPluginRequired": [Function],
+                    "transformIncludesAndExcludes": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      },
+      Object {
+        "loader": "ignore-loader",
+        "test": /\\\\\\.\\(le\\|c\\)ss\\$/,
+      },
+    ],
+  },
+  "output": Object {
+    "filename": "schema.node.js",
+    "libraryTarget": "commonjs",
+    "path": "schemaOutputPath",
+  },
+  "plugins": Array [
+    LimitChunkCountPlugin {
+      "options": Object {
+        "maxChunks": 1,
+      },
+    },
+    NormalModuleReplacementPlugin {
+      "newResource": "/Users/siou/projects/canner/packages/canner-bundle/src/utils/mock",
+      "resourceRegExp": /firebase/,
+    },
+    "plugins",
+  ],
+  "resolve": Object {
+    "extensions": Array [
+      ".jsx",
+      ".js",
+      ".ts",
+      ".tsx",
+      "mjs",
+    ],
+    "modules": "resolveModules",
+  },
+  "resolveLoader": Object {
+    "modules": "resolveLoaderModules",
+  },
+  "target": "node",
+  "watch": true,
+}
+`;

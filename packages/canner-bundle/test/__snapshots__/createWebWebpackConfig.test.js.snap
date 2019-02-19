@@ -1,0 +1,395 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createWebConfig web config 1`] = `
+Object {
+  "devServer": Object {
+    "contentBase": "webOutputPath",
+    "disableHostCheck": true,
+    "historyApiFallback": true,
+    "hot": true,
+    "inline": true,
+    "port": 8080,
+    "quiet": true,
+  },
+  "entry": Object {
+    "index": Array [
+      "file-name",
+      "file-name",
+    ],
+  },
+  "externals": Object {
+    "antd": "antd",
+    "lodash": "_",
+    "moment": "moment",
+    "react": "React",
+    "react-dom": "ReactDOM",
+    "styled-components": "styled",
+  },
+  "mode": "development",
+  "module": Object {
+    "rules": Array [
+      Object {
+        "include": /node_modules/,
+        "test": /\\\\\\.mjs\\$/,
+        "type": "javascript/auto",
+      },
+      Object {
+        "oneOf": Array [
+          Object {
+            "test": /canner\\\\\\.schema\\\\\\.tsx\\?\\$/,
+            "use": Array [
+              Object {
+                "loader": "canner-schema-loader",
+              },
+              Object {
+                "loader": "ts-loader",
+                "options": Object {
+                  "compilerOptions": Object {
+                    "jsx": "react",
+                    "jsxFactory": "CannerScript",
+                  },
+                  "configFile": "tsConfigFile",
+                  "transpileOnly": true,
+                },
+              },
+            ],
+          },
+          Object {
+            "loader": "ts-loader",
+            "options": Object {
+              "compilerOptions": Object {
+                "module": "es2015",
+              },
+              "configFile": "tsConfigFile",
+              "getCustomTransformers": [Function],
+              "transpileOnly": true,
+            },
+            "test": /\\\\\\.tsx\\?\\$/,
+          },
+        ],
+      },
+      Object {
+        "oneOf": Array [
+          Object {
+            "test": /\\(\\\\\\.schema\\\\\\.js\\|canner\\\\\\.def\\\\\\.js\\)\\$/,
+            "use": Array [
+              Object {
+                "loader": "canner-schema-loader",
+              },
+              Object {
+                "loader": "babel-loader",
+                "options": Object {
+                  "babelrc": false,
+                  "plugins": Array [
+                    Array [
+                      Object {
+                        "default": [Function],
+                      },
+                      Object {
+                        "legacy": true,
+                      },
+                    ],
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Array [
+                      Object {
+                        "default": [Function],
+                      },
+                      Object {
+                        "loose": false,
+                      },
+                    ],
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "default": [Function],
+                    },
+                    Array [
+                      Object {
+                        "default": [Function],
+                      },
+                      Object {
+                        "libraryName": "antd",
+                        "style": true,
+                      },
+                    ],
+                  ],
+                  "presets": Array [
+                    Object {
+                      "default": [Function],
+                      "isPluginRequired": [Function],
+                      "transformIncludesAndExcludes": [Function],
+                    },
+                    Array [
+                      Object {
+                        "default": [Function],
+                      },
+                      Object {
+                        "pragma": "CannerScript",
+                        "pragmaFrag": "CannerScript.Default",
+                        "throwIfNamespace": false,
+                      },
+                    ],
+                    Object {
+                      "default": [Function],
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          Object {
+            "exclude": /node_modules/,
+            "test": /\\\\\\.js\\$/,
+            "use": Object {
+              "loader": "babel-loader",
+              "options": Object {
+                "babelrc": false,
+                "plugins": Array [
+                  Array [
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "legacy": true,
+                    },
+                  ],
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Array [
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "loose": false,
+                    },
+                  ],
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Array [
+                    Object {
+                      "default": [Function],
+                    },
+                    Object {
+                      "libraryName": "antd",
+                      "style": true,
+                    },
+                  ],
+                ],
+                "presets": Array [
+                  Object {
+                    "default": [Function],
+                    "isPluginRequired": [Function],
+                    "transformIncludesAndExcludes": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                  Object {
+                    "default": [Function],
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      },
+      Object {
+        "test": /\\\\\\.css\\$/,
+        "use": Array [
+          "style-loader",
+          "css-loader",
+        ],
+      },
+      Object {
+        "test": /\\\\\\.less\\$/,
+        "use": Array [
+          Object {
+            "loader": "style-loader",
+          },
+          Object {
+            "loader": "css-loader",
+          },
+          Object {
+            "loader": "less-loader",
+            "options": Object {
+              "javascriptEnabled": true,
+              "modifyVars": Object {},
+            },
+          },
+        ],
+      },
+      Object {
+        "loader": "file-loader",
+        "test": /\\\\\\.\\(png\\|jpg\\|gif\\|svg\\)\\$/,
+      },
+    ],
+  },
+  "node": Object {
+    "dns": "mock",
+    "fs": "empty",
+    "path": true,
+    "url": false,
+  },
+  "optimization": Object {
+    "splitChunks": Object {
+      "cacheGroups": Object {
+        "style": Object {
+          "chunks": "all",
+          "enforce": true,
+          "name": "style",
+          "test": /\\\\\\.css/,
+        },
+        "vendors": Object {
+          "chunks": "all",
+          "enforce": true,
+          "name": "vendors",
+          "test": [Function],
+        },
+      },
+    },
+  },
+  "output": Object {
+    "chunkFilename": "[name].js",
+    "filename": "[name].js",
+    "path": "webOutputPath",
+    "publicPath": "/",
+  },
+  "performance": Object {
+    "hints": false,
+  },
+  "plugins": Array [
+    HtmlWebpackPlugin {
+      "addFileToAssets": [MockFunction],
+      "appendHash": [MockFunction],
+      "apply": [MockFunction],
+      "applyPluginsAsyncWaterfall": [MockFunction],
+      "createHtmlTag": [MockFunction],
+      "evaluateCompilationResult": [MockFunction],
+      "executeTemplate": [MockFunction],
+      "filterChunks": [MockFunction],
+      "generateHtmlTags": [MockFunction],
+      "getAssetFiles": [MockFunction],
+      "getFullTemplatePath": [MockFunction],
+      "getMetaTags": [MockFunction],
+      "getTemplateParameters": [MockFunction],
+      "htmlWebpackPluginAssets": [MockFunction],
+      "injectAssetsIntoHtml": [MockFunction],
+      "isHotUpdateCompilation": [MockFunction],
+      "postProcessHtml": [MockFunction],
+      "sortChunks": [MockFunction],
+    },
+    MiniCssExtractPlugin {
+      "options": Object {
+        "chunkFilename": "[name].css",
+        "filename": "style.css",
+      },
+    },
+    NormalModuleReplacementPlugin {
+      "newResource": "/Users/siou/projects/canner/packages/canner-bundle/src/utils/mock",
+      "resourceRegExp": /firebase/,
+    },
+    LimitChunkCountPlugin {
+      "options": Object {
+        "maxChunks": 1,
+      },
+    },
+    CompressionPlugin {
+      "options": Object {
+        "algorithm": [Function],
+        "cache": false,
+        "compressionOptions": Object {
+          "level": 9,
+        },
+        "deleteOriginalAssets": false,
+        "exclude": undefined,
+        "filename": "[path].gz[query]",
+        "include": undefined,
+        "minRatio": 0.8,
+        "test": undefined,
+        "threshold": 0,
+      },
+    },
+    CustomFilterPlugin {
+      "exclude": /Conflicting order between:/,
+    },
+    TimeFixPlugin {
+      "watchOffset": 11000,
+    },
+    "plugins",
+    HotModuleReplacementPlugin {
+      "fullBuildTimeout": 200,
+      "multiStep": undefined,
+      "options": Object {},
+      "requestTimeout": 10000,
+    },
+  ],
+  "resolve": Object {
+    "extensions": Array [
+      ".jsx",
+      ".js",
+      ".ts",
+      ".tsx",
+      ".mjs",
+    ],
+    "modules": "resolveModules",
+  },
+  "resolveLoader": Object {
+    "modules": "resolveLoaderModules",
+  },
+  "watch": true,
+  "watchOptions": Object {
+    "aggregateTimeout": 2000,
+    "ignored": Array [
+      ".cms",
+      "webOutputPath",
+      "schema.node.js",
+      "canner.schema.json",
+      "node_modules",
+    ],
+  },
+}
+`;

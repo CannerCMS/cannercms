@@ -17,11 +17,11 @@ export default function createEntryFile({
   fs.writeFileSync(entryPath, templateCode);
 }
 
-function toNodePath(p) {
+export function toNodePath(p) {
   return p.replace(/\\/g, '/')
 }
 
-function mergeDefaultMessages(i18nMessages) {
+export function mergeDefaultMessages(i18nMessages: Record<string, any>) {
   if (i18nMessages && i18nMessages.en) {
     i18nMessages.en = {
       'cmspage.header.hi': 'Hi, ',
@@ -38,10 +38,14 @@ function mergeDefaultMessages(i18nMessages) {
   }
 }
 
-function generateTemplate({
+export function generateTemplate({
   appPath,
   i18nMessages,
   baseUrl
+}: {
+  appPath: string,
+  i18nMessages: Record<string, any>,
+  baseUrl: string
 }) {
   const locales = Object.keys(i18nMessages);
   return `
