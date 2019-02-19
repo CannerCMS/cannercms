@@ -3,8 +3,6 @@ import {
 } from '../src/utils/createWebpackConfig';
 import tmp from 'tmp';
 import path from 'path';
-jest.mock('path');
-path.resolve.mockImplementation((pre, post) => `path/${post}`);
 jest.mock('tmp');
 jest.mock('html-webpack-plugin');
 jest.mock('../src/utils/createEntryFile');
@@ -12,6 +10,12 @@ jest.mock('../src/utils/createWindowVarsFile');
 tmp.fileSync.mockReturnValue({
   name: 'file-name'
 });
+const replacePath = path.resolve(__dirname, '../../../..');
+expect.addSnapshotSerializer({
+  test:(val) => typeof val === 'string' && val.indexOf(replacePath) !== -1,
+  print:(val) => val.replace(replacePath, '')
+});
+
 afterAll(() => {
   const fs = require('fs');
   if (fs.existsSync('file-name')) {

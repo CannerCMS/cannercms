@@ -233,7 +233,7 @@ Object {
       },
     },
     NormalModuleReplacementPlugin {
-      "newResource": "path/mock",
+      "newResource": /canner/packages/canner-bundle/src/utils/mock,
       "resourceRegExp": /firebase/,
     },
     "plugins",

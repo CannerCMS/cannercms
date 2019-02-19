@@ -2,8 +2,11 @@ import {
   createSchemaConfig,
 } from '../src/utils/createWebpackConfig';
 import path from 'path';
-jest.mock('path');
-path.resolve.mockImplementation((pre, post) => `path/${post}`);
+const replacePath = path.resolve(__dirname, '../../../..');
+expect.addSnapshotSerializer({
+  test:(val) => typeof val === 'string' && val.indexOf(replacePath) !== -1,
+  print:(val) => val.replace(replacePath, '')
+});
 describe('createSchemaConfig', () => {
   const config = createSchemaConfig({
     schemaPath: 'schemaPath',

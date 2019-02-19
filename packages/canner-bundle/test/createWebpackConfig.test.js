@@ -4,8 +4,6 @@ import {
 } from '../src/utils/createWebpackConfig';
 import tmp from 'tmp';
 import path from 'path';
-jest.mock('path');
-path.resolve.mockImplementation((pre, post) => `path/${post}`);
 jest.mock('tmp');
 tmp.fileSync.mockReturnValue({
   name: 'file-name'
@@ -15,6 +13,11 @@ afterAll(() => {
   if (fs.existsSync('file-name')) {
     fs.unlinkSync('file-name');
   }
+});
+const replacePath = path.resolve(__dirname, '../../../..');
+expect.addSnapshotSerializer({
+  test:(val) => typeof val === 'string' && val.indexOf(replacePath) !== -1,
+  print:(val) => val.replace(replacePath, '')
 });
 describe('createBothConfig', () => {
   const config = createConfig({
