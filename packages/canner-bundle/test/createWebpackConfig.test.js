@@ -14,7 +14,7 @@ afterAll(() => {
     fs.unlinkSync('file-name');
   }
 });
-const replacePath = path.resolve(__dirname, '../../../..');
+const replacePath = path.resolve(__dirname, '../../..');
 expect.addSnapshotSerializer({
   test:(val) => typeof val === 'string' && val.indexOf(replacePath) !== -1,
   print:(val) => val.replace(replacePath, '')

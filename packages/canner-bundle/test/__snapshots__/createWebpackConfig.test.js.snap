@@ -241,7 +241,7 @@ Array [
         Object {
           "test": /\\\\\\.css\\$/,
           "use": Array [
-            /canner/packages/canner-bundle/node_modules/mini-css-extract-plugin/dist/loader.js,
+            /packages/canner-bundle/node_modules/mini-css-extract-plugin/dist/loader.js,
             "css-loader",
           ],
         },
@@ -249,7 +249,7 @@ Array [
           "test": /\\\\\\.less\\$/,
           "use": Array [
             Object {
-              "loader": /canner/packages/canner-bundle/node_modules/mini-css-extract-plugin/dist/loader.js,
+              "loader": /packages/canner-bundle/node_modules/mini-css-extract-plugin/dist/loader.js,
             },
             Object {
               "loader": "css-loader",
@@ -330,7 +330,7 @@ Array [
         },
       },
       NormalModuleReplacementPlugin {
-        "newResource": /canner/packages/canner-bundle/src/utils/mock,
+        "newResource": /packages/canner-bundle/src/utils/mock,
         "resourceRegExp": /firebase/,
       },
       LimitChunkCountPlugin {
@@ -619,7 +619,7 @@ Array [
         },
       },
       NormalModuleReplacementPlugin {
-        "newResource": /canner/packages/canner-bundle/src/utils/mock,
+        "newResource": /packages/canner-bundle/src/utils/mock,
         "resourceRegExp": /firebase/,
       },
       "schemaPlugins",

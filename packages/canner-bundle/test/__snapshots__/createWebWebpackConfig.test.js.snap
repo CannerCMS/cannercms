@@ -329,7 +329,7 @@ Object {
       },
     },
     NormalModuleReplacementPlugin {
-      "newResource": /canner/packages/canner-bundle/src/utils/mock,
+      "newResource": /packages/canner-bundle/src/utils/mock,
       "resourceRegExp": /firebase/,
     },
     LimitChunkCountPlugin {
