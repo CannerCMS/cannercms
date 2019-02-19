@@ -3,6 +3,9 @@ import {
   createConfig
 } from '../src/utils/createWebpackConfig';
 import tmp from 'tmp';
+import path from 'path';
+jest.mock('path');
+path.resolve.mockImplementation((pre, post) => `path/${post}`);
 jest.mock('tmp');
 tmp.fileSync.mockReturnValue({
   name: 'file-name'
@@ -26,6 +29,7 @@ describe('createBothConfig', () => {
     resolveLoaderModules: 'resolveLoaderModules',
     tsConfigFile: 'tsConfigFile',
     appPath: 'appPath',
+    authPath: 'authPath',
     schemaPlugins: ['schemaPlugins'],
     webPlugins: ['webPlugins'],
     i18nMessages :'i18nMessages',

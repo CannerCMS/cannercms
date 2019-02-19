@@ -1,7 +1,9 @@
 import {
   createSchemaConfig,
 } from '../src/utils/createWebpackConfig';
-
+import path from 'path';
+jest.mock('path');
+path.resolve.mockImplementation((pre, post) => `path/${post}`);
 describe('createSchemaConfig', () => {
   const config = createSchemaConfig({
     schemaPath: 'schemaPath',

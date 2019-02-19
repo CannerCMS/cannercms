@@ -325,6 +325,7 @@ export function createConfig({
   resolveLoaderModules = RESOLVE_LOADER_MODULES,
   tsConfigFile = TS_CONFIG_FILE,
   appPath = APP_PATH,
+  authPath = AUTH_PATH,
   schemaPlugins = [],
   webPlugins = [],
   i18nMessages = {},
@@ -341,6 +342,7 @@ export function createConfig({
       tsConfigFile,
       appPath,
       plugins: webPlugins,
+      authPath,
       i18nMessages
     });
     config.push(webConfig);

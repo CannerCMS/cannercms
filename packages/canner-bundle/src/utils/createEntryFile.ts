@@ -18,7 +18,7 @@ export default function createEntryFile({
 }
 
 export function toNodePath(p) {
-  return p.replace(/\\/g, '/')
+  return p.replace(/\\/g, '/');
 }
 
 export function mergeDefaultMessages(i18nMessages: Record<string, any>) {

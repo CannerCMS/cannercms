@@ -330,7 +330,7 @@ Array [
         },
       },
       NormalModuleReplacementPlugin {
-        "newResource": "/Users/siou/projects/canner/packages/canner-bundle/src/utils/mock",
+        "newResource": "path/mock",
         "resourceRegExp": /firebase/,
       },
       LimitChunkCountPlugin {
@@ -619,7 +619,7 @@ Array [
         },
       },
       NormalModuleReplacementPlugin {
-        "newResource": "/Users/siou/projects/canner/packages/canner-bundle/src/utils/mock",
+        "newResource": "path/mock",
         "resourceRegExp": /firebase/,
       },
       "schemaPlugins",
