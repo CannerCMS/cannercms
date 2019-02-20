@@ -1,6 +1,6 @@
 {
   "name": "canner-schema-loader",
-  "version": "3.0.0-alpha.22",
+  "version": "3.0.0",
   "description": "Deconstruct JSX into objects schema object and componentTree.",
   "main": "lib/index.js",
   "files": [
