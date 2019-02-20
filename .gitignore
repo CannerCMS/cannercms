@@ -8,6 +8,7 @@ _gh-pages
 .cache
 dist
 .cms
+report.html
 schema.node.js
 canner.schema.json
 canner.dataSources.json
