@@ -107,5 +107,6 @@
     "react-router-dom": "*"
   },
   "repository": "Canner/canner",
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "d17f7bbfccc4aca3127fb73afc88c2cef39a7e42"
 }
