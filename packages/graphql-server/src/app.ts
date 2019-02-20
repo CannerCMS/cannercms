@@ -62,6 +62,7 @@ export class GraphQLService implements WebService {
         JSON: GraphQLJSON,
         DateTime: GraphQLDateTime,
       },
+      plugins: config.plugins,
     });
 
     const { typeDefs, resolvers } = gqlify.createApolloConfig();
