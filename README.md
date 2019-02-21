@@ -120,6 +120,8 @@ Full documentation: https://www.cannercms.com/docs
 
 [Open Collective sponsors](https://opencollective.com/cannercms#sponsers)
 
+<a href="https://opencollective.com/cannercms/sponsor/0/website" target="_blank"><img src="https://opencollective.com/cannercms/sponsor/0/avatar.svg"></a>
+
 ## Open source vs. CannerCMS cloud
 
 Worrying about hosting, updates, security problems? Use [CannerCMS cloud](https://www.cannercms.com) - Just create CMS schema, we will do the rest.
