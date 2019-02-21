@@ -175,6 +175,7 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     case 'Layout': {
       const insertionVistor = createLayoutVisitor(attributes, children).visitor;
       visitorManager.addVisitor(insertionVistor);
+      // if there is injectValue property then add the injectVisitor
       if (attributes.injectValue) {
         const injectVistor = createLayoutVisitor({...attributes, layoutType: 'injection'}, children).visitor;
         visitorManager.addVisitor(injectVistor);

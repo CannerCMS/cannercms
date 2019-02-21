@@ -373,6 +373,65 @@ describe('script handle layout', () => {
     expect(schema[0]).toHaveProperty(CANNER_KEY);
   });
 
+  it('Layout should work in map function', () => {
+    configure({
+      visitorManager: {
+        visitors: []
+      }
+    });
+    const arr = [{
+      keyName: 'keyName1',
+    }, {
+      keyName: 'keyName2',
+    }, {
+      keyName: 'keyName3',
+    }];
+    const schema = (
+      <root>
+        <object keyName="info">
+        {
+          arr.map(item => {
+            return (
+              <Layout component="test" keyName={item.keyName} key={item.keyName}>
+                <string keyName={`${item.keyName}Name`} />
+              </Layout>
+            );
+          })
+        }
+        </object>
+      </root>
+    );
+    expect(schema).toMatchObject({
+      schema: {
+        info: {
+          type: 'object',
+          items: {
+            keyName1Name: {
+              type: 'string',
+            },
+            keyName2Name: {
+              type: 'string',
+            },
+            keyName3Name: {
+              type: 'string',
+            }
+          }
+        }
+      },
+      visitors: expect.arrayContaining([{
+        'component.object.fieldset': {
+          exit: expect.any(Function)
+        },
+        'component.array': {
+          exit: expect.any(Function)
+        },
+        'page.page': {
+          exit: expect.any(Function)
+        }
+      }])
+    })
+  });
+
   it('root export visitors', () => {
     configure({
       visitorManager: {

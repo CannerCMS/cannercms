@@ -7,10 +7,12 @@ export function createLayoutVisitor(attrs: Object, children: Array<CannerSchema>
   const {layoutType} = attrs;
   switch (layoutType) {
     case 'injection': {
+      // inject value into children node
       return createInjectionLayout(attrs, children, getCannerKey);
     }
     case 'insertion':
     default: {
+      // insert node between parent and children;
       return createInsertionLayout(attrs, children, getCannerKey);
     }
   }
@@ -43,6 +45,7 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
     if (!children) return;
     
     if (ui === 'body' && CANNER_KEY in path.node && path.node[CANNER_KEY].indexOf(cannerKey) > -1) {
+      // body layout is different from other layout, it just set to the root of tree.
       const layout = {
         ...attrs,
         nodeType: 'layout.body',
@@ -99,6 +102,8 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
     // update children
     path.tree.setChildren(path.route, newChildren);
   };
+  // layout must exist under the <object>, <array>, and <page>,
+  // so check the nodes of these types
   return {
     visitor: {
       'component.object.fieldset': {
