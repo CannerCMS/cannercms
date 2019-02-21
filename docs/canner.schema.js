@@ -1,8 +1,6 @@
 /** @jsx builder */
 
 import builder, {Body} from 'canner-script';
-import {LocalStorageConnector} from 'packages/canner-graphql-interface/src';
-import {createFakeData} from 'packages/canner-helpers/src';
 import Dashboard from './schema/Dashboard.schema';
 import Customers from './schema/customers.schema';
 import Home from './schema/home.schema';
@@ -10,7 +8,6 @@ import Orders from './schema/orders.schema';
 import Categories from './schema/categories.schema';
 import Products from './schema/products.schema';
 import dict from './schema/locale';
-import fakeData from './schema/fake-data';
 import DashboardBody from './components/layouts/dashboardBody';
 import ProductsBody from './components/layouts/productsBody';
 import HomeBody from './components/layouts/homeBody';
@@ -53,13 +50,6 @@ const schema = (
   </root>
 );
 
-const fD = createFakeData(schema.schema, 10);
-const connector = new LocalStorageConnector({
-  defaultData: {...fD, ...fakeData},
-  localStorageKey: 'cannerDEMO'
-});
-
 export default {
-  ...schema,
-  connector
+  ...schema
 }

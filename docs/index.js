@@ -7,9 +7,10 @@ import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 import Container, {transformSchemaToMenuConfig} from 'packages/canner-container/src';
 import R from 'packages/router/src';
-
-import schema from './canner.schema';
 import styled from 'styled-components';
+import schema from './canner.schema';
+import client from './client';
+
 addLocaleData([...en, ...zh]);
 
 // eslint-disable-next-line
@@ -107,7 +108,7 @@ class CMSExample extends React.Component {
         <Alert
           message={
             <div>
-              In less than 1500 lines of code you can build this demo (<a href="https://github.com/Canner/canner/tree/canary/docs/schema" target="_blank">Source code</a>). Please visit <a href="/">our homepage</a>. 
+              In less than 1500 lines of code you can build this demo (<a href="https://github.com/Canner/canner/tree/canary/docs/schema" target="_blank" rel="noopener noreferrer">Source code</a>). Please visit <a href="/">our homepage</a>. 
             </div>
           }
           banner
@@ -150,6 +151,7 @@ class CMSExample extends React.Component {
               intl={{
                 locale
               }}
+              client={client}
             />
           </Container>
         </IntlProvider>
