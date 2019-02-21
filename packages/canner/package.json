@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "keywords": [

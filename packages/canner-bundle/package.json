@@ -1,6 +1,6 @@
 {
   "name": "@canner/bundle",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Bundle the canner app and schema",
   "author": "Canner",
   "files": [
@@ -56,8 +56,8 @@
     "antd": "^3.11.5",
     "babel-loader": "^8.0.4",
     "babel-plugin-import": "^1.9.1",
-    "canner": "3.0.0",
-    "canner-schema-loader": "3.0.0",
+    "canner": "3.0.1",
+    "canner-schema-loader": "3.0.1",
     "canner-script": "^2.0.36",
     "compression-webpack-plugin": "^2.0.0",
     "copyfiles": "^2.1.0",
