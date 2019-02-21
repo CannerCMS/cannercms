@@ -131,6 +131,7 @@ export function createSchemaConfig({
         /firebase/,
         path.resolve(__dirname, 'mock')
       ),
+      new TimeFixPlugin()
     ].concat(plugins)
   };
 }
