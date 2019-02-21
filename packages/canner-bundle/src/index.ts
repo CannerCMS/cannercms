@@ -51,7 +51,7 @@ export function watchSchema(options: CreateConfigArgsType, callback: any) {
     });
 }
 
-export function serve(options: CreateConfigArgsType, callback?: any) {
+export function createWebpackDevServer(options: CreateConfigArgsType) {
   if (options) {
     options.watch = true;
   }
@@ -61,7 +61,6 @@ export function serve(options: CreateConfigArgsType, callback?: any) {
   const devServerOptions = {...config.devServer};
   WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
   const server = new WebpackDevServer(compiler, devServerOptions);
-  server.listen(config.devServer.port, '127.0.0.1', callback);
   return {
     compiler,
     server,
