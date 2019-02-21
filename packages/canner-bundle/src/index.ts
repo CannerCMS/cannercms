@@ -51,7 +51,7 @@ export function watchSchema(options: CreateConfigArgsType, callback: any) {
     });
 }
 
-export function serve(options: CreateConfigArgsType, callback: any) {
+export function serve(options: CreateConfigArgsType, callback?: any) {
   if (options) {
     options.watch = true;
   }
