@@ -3,8 +3,6 @@ import * as webpack from 'webpack';
 import * as webpackDevServer from 'webpack-dev-server';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
-import TimeFixPlugin from 'time-fix-plugin';
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import tmp from 'tmp';
@@ -130,8 +128,7 @@ export function createSchemaConfig({
       new webpack.NormalModuleReplacementPlugin(
         /firebase/,
         path.resolve(__dirname, 'mock')
-      ),
-      new TimeFixPlugin()
+      )
     ].concat(plugins)
   };
 }
@@ -191,7 +188,7 @@ export function createWebConfig({
     watch,
     watchOptions: {
       aggregateTimeout: 2000,
-      ignored: ['.cms', webOutputPath, 'schema.node.js', 'canner.schema.json', 'node_modules']
+      ignored: [WINDOW_VARS_PATH, ENTRY_PATH, '.cms', webOutputPath, 'schema.node.js', 'canner.schema.json', 'node_modules']
     },
     output: {
       path: webOutputPath,
@@ -307,8 +304,7 @@ export function createWebConfig({
       new CompressionPlugin(),
       new CustomFilterPlugin({
         exclude: /Conflicting order between:/
-      }),
-      new TimeFixPlugin()
+      })
     ].concat(plugins)
   });
 }
