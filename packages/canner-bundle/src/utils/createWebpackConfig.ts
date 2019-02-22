@@ -9,6 +9,7 @@ import tmp from 'tmp';
 import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import createEntryFile from './createEntryFile';
 import createWindowVarsFile from './createWindowVarsFile';
+import TimeFixPlugin from 'time-fix-plugin';
 import {
   createTsLoader,
   babelLoader,
@@ -304,7 +305,9 @@ export function createWebConfig({
       new CompressionPlugin(),
       new CustomFilterPlugin({
         exclude: /Conflicting order between:/
-      })
+      }),
+      new TimeFixPlugin(),
+      new webpack.WatchIgnorePlugin([WINDOW_VARS_PATH, ENTRY_PATH])
     ].concat(plugins)
   });
 }
