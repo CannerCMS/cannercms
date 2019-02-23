@@ -622,6 +622,9 @@ Array [
         "newResource": /packages/canner-bundle/src/utils/mock,
         "resourceRegExp": /firebase/,
       },
+      TimeFixPlugin {
+        "watchOffset": 11000,
+      },
       "schemaPlugins",
     ],
     "resolve": Object {
