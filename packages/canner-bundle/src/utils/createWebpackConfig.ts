@@ -307,7 +307,7 @@ export function createWebConfig({
         exclude: /Conflicting order between:/
       }),
       new TimeFixPlugin(),
-      new webpack.WatchIgnorePlugin([WINDOW_VARS_PATH, ENTRY_PATH])
+      new webpack.WatchIgnorePlugin([WINDOW_VARS_PATH, ENTRY_PATH, /node_modules/])
     ].concat(plugins)
   });
 }
