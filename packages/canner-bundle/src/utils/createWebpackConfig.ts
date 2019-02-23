@@ -185,7 +185,7 @@ export function createWebConfig({
     watch,
     watchOptions: {
       aggregateTimeout: 2000,
-      ignored: [WINDOW_VARS_PATH, ENTRY_PATH, '.cms', webOutputPath, 'schema.node.js', 'canner.schema.json', 'node_modules']
+      ignored: [WINDOW_VARS_PATH, ENTRY_PATH, '.cms', webOutputPath, 'schema.node.js', 'canner.schema.json', /node_modules/]
     },
     output: {
       path: webOutputPath,
