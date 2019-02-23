@@ -6,7 +6,6 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import tmp from 'tmp';
-import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import createEntryFile from './createEntryFile';
 import createWindowVarsFile from './createWindowVarsFile';
 import TimeFixPlugin from 'time-fix-plugin';
@@ -29,9 +28,6 @@ import {
   SCHEMA_OUTPUT_FILENAME
 } from '../config';
 const devMode = process.env.NODE_ENV === 'development';
-const smp = new SpeedMeasurePlugin({
-  disable: !process.env.MEASURE
-});
 
 export type CreateSchemaConfigArgsType = {
   schemaPath?: string;
@@ -173,7 +169,7 @@ export function createWebConfig({
   if (watch) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
-  return smp.wrap({
+  return {
     entry: {
       index: [WINDOW_VARS_PATH, ENTRY_PATH]
     },
@@ -309,7 +305,7 @@ export function createWebConfig({
       new TimeFixPlugin(),
       new webpack.WatchIgnorePlugin([WINDOW_VARS_PATH, ENTRY_PATH, /node_modules/])
     ].concat(plugins)
-  });
+  };
 }
 
 
