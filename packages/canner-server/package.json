@@ -6,10 +6,13 @@
   "files": [
     "lib"
   ],
+  "bin": {
+    "canner-server": "./lib/bin/index.js"
+  },
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "gqlify:server": "NODE_ENV=development ts-node src/gqlify/bin/www.ts",
+    "start": "ts-node src/bin/index.ts",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
     "clean": "rimraf lib dist",
