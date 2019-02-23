@@ -1,8 +1,9 @@
 // @flow
 
 import * as React from 'react';
-import {mapValues, get, isPlainObject, isArray} from 'lodash';
+import {get, isPlainObject, isArray} from 'lodash';
 import type {HOCProps} from './types';
+import {getRecordValue} from './utils';
 
 type State = {
   value: any,
@@ -42,11 +43,11 @@ export default function withContainerRouter(Com: React.ComponentType<*>) {
     
     queryData = (props?: HOCProps): Promise<*> => {
       const {refId, fetch} = props || this.props;
-      return fetch(this.key).then(data => {
-        const rootValue = parseConnectionToNormal(data);
+      return fetch(this.key).then(result => {
+        const {data, rootValue} = result;
         this.setState({
-          originRootValue: data,
-          rootValue,
+          originRootValue: result.data,
+          rootValue: result.rootValue,
           recordValue: getRecordValue(rootValue, refId),
           value: getValue(data, refId.getPathArr()),
           isFetching: false
@@ -56,8 +57,8 @@ export default function withContainerRouter(Com: React.ComponentType<*>) {
 
     subscribe = () => {
       const {subscribe, refId} = this.props;
-      const subscription = subscribe(this.key, (data) => {
-        const rootValue = parseConnectionToNormal(data);
+      const subscription = subscribe(this.key, (result) => {
+        const {data, rootValue} = result;
         this.setState({
           originRootValue: data,
           rootValue,
@@ -95,21 +96,4 @@ export function getValue(value: Map<string, *>, idPathArr: Array<string>) {
       return result;
     }
   }, value);
-}
-
-export function parseConnectionToNormal(value: any) {
-  if (isPlainObject(value)) {
-    if (value.edges && value.pageInfo) {
-      return value.edges.map(edge => parseConnectionToNormal(edge.node));
-    }
-    return mapValues(value, item => parseConnectionToNormal(item));
-  } else if (isArray(value)) {
-    return value.map(item => parseConnectionToNormal(item))
-  } else {
-    return value;
-  }
-}
-
-function getRecordValue(rootValue, refId) {
-  return get(rootValue, refId.getPathArr(), {});
 }

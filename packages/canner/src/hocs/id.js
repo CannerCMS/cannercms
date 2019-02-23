@@ -136,11 +136,12 @@ export default function connectId(Com: React.ComponentType<*>) {
         where: {id: id},
       }).then(() => fetch(keyName))
         .then(result => {
-          let index = 0;	
-          if (result[keyName].edges) {	
-            index = result[keyName].edges.findIndex(edge => edge.cursor === id);	
+          let index = 0;
+          const {data} = result;
+          if (data[keyName].edges) {	
+            index = data[keyName].edges.findIndex(edge => edge.cursor === id);	
           } else {	
-            index = result[keyName].findIndex(item => item.id === id);	
+            index = data[keyName].findIndex(item => item.id === id);	
           }
           setTimeout(() => {
             this.setState({
@@ -156,7 +157,8 @@ export default function connectId(Com: React.ComponentType<*>) {
       await updateQuery([keyName], {first: 0})
       await fetch(keyName)
         .then(result => {
-          const size = get(result, [keyName, 'edges']).length;
+          const {data} = result;
+          const size = get(data, [keyName, 'edges']).length;
           // $FlowFixMe
           return request({
             type: 'CREATE_ARRAY',

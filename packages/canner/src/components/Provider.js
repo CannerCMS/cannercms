@@ -16,6 +16,7 @@ import {objectToQueries} from '../query/utils';
 import mapValues from 'lodash/mapValues';
 import {groupBy, difference} from 'lodash';
 import log from '../utils/log';
+import { parseConnectionToNormal } from '../hocs/utils';
 import type {ProviderProps} from './types';
 import type {Action, ActionType} from '../action/types';
 
@@ -149,7 +150,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       return observabale.result()
         .then(result => {
           log('fetch', 'loading', key, result);
-          return result.data;
+          return {data: result.data, rootValue: parseConnectionToNormal(result.data)};
         }).catch(e => {
           errorHandler && errorHandler(e);
         })
@@ -157,10 +158,10 @@ export default class Provider extends React.PureComponent<Props, State> {
       const lastResult = observabale.getLastResult();
       log('fetch', 'error', key, lastResult);
       errorHandler && errorHandler(error);
-      return Promise.resolve(lastResult.data);
+      return Promise.resolve({data: lastResult.data, rootValue: parseConnectionToNormal(lastResult.data)});
     } else {
       log('fetch', 'loaded', key, currentResult, this.query.getVairables());
-      return Promise.resolve(currentResult.data);
+      return Promise.resolve({data: currentResult.data, rootValue: parseConnectionToNormal(currentResult.data)});
     }
   }
 
@@ -170,7 +171,7 @@ export default class Provider extends React.PureComponent<Props, State> {
       next: () => {
         const {loading, errors, data} = observableQuery.currentResult();
         if (!loading && !errors && data && !isEmpty(data)) {
-          callback(data);
+          callback({data, rootValue: parseConnectionToNormal(data)});
         }
       },
       error: () => {

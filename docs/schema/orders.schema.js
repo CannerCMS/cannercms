@@ -39,7 +39,7 @@ const exportFields = [{
 const orders = () => (
   <array
     keyName="orders"
-    ui="tableRoute"
+    // ui="tableRoute"
     title="${orders.title}"
     description="${orders.description}"
     uiParams={{

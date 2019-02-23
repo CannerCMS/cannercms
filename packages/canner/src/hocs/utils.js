@@ -141,3 +141,7 @@ export function passCondition(data: any, condition: Object) {
     return result && isPass;
   }, true);
 }
+
+export function getRecordValue(rootValue, refId) {
+  return get(rootValue, refId.getPathArr(), {});
+}

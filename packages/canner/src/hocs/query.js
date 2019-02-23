@@ -5,7 +5,7 @@ import {List} from 'react-content-loader';
 import Toolbar from '../components/toolbar/index';
 import {Icon, Spin} from 'antd';
 import {mapValues, isNil} from 'lodash';
-import {parseConnectionToNormal, getValue, defaultValue} from './utils';
+import {getValue, defaultValue} from './utils';
 import {withApollo} from 'react-apollo';
 import type {HOCProps} from './types';
 type State = {
@@ -62,8 +62,9 @@ export default function withQuery(Com: React.ComponentType<*>) {
 
     subscribe = () => {
       const {subscribe} = this.props;
-      const subscription = subscribe(this.key, data => {
-        this.updateData(data);
+      const subscription = subscribe(this.key, result => {
+        const {data, rootValue} = result;
+        this.updateData(data, rootValue);
       });
       this.subscription = subscription;
     }
@@ -73,15 +74,19 @@ export default function withQuery(Com: React.ComponentType<*>) {
       this.setState({
         isFetching: true
       });
-      return fetch(this.key).then(this.updateData);
+      return fetch(this.key).then(result => {
+        const {data, rootValue} = result;
+        this.updateData(data, rootValue);
+      });
     }
 
-    updateData = (data: Object) => {
+    updateData = (data: any, rootValue: any) => {
       const {refId} = this.props;
+      const newValue = getValue(data, refId.getPathArr());
       this.setState({
         originRootValue: data,
-        rootValue: parseConnectionToNormal(data),
-        value: getValue(data, refId.getPathArr()),
+        rootValue,
+        value: newValue,
         isFetching: false
       });
     }
@@ -119,9 +124,8 @@ export default function withQuery(Com: React.ComponentType<*>) {
             refId={refId}
             keyName={keyName}
             originRootValue={originRootValue}
-            parseConnectionToNormal={parseConnectionToNormal}
+            rootValue={rootValue}
             getValue={getValue}
-            defaultValue={defaultValue}
             updateQuery={this.updateQuery}
             request={request}
             deploy={deploy}

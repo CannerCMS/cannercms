@@ -24,12 +24,12 @@ type Args = {
 type Props = {
   children: React.Node,
   updateQuery: Function,
-  parseConnectionToNormal: Function,
   getValue: Function,
   refId: RefId,
   keyName: string,
-  defaultValue: Function,
   children: React.Element<*>,
+  request: Function,
+  deploy: Function,
   toolbar: {
     async: boolean,
     actions?: {
@@ -65,11 +65,13 @@ type Props = {
   args: Args,
   items: Object,
   originRootValue: Object,
+  rootValue: Object,
   onChange?: Function
 }
 
 type State = {
   originRootValue: any,
+  rootValue: any,
   sort: any,
   filter: any,
   pagination: any,
@@ -82,12 +84,13 @@ export default class Toolbar extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const {args, originRootValue} = props;
+    const {args, originRootValue, rootValue} = props;
     this.async = props.toolbar && props.toolbar.async;
     // $FlowFixMe
     const permanentFilter = (props.toolbar && props.toolbar.filter && props.toolbar.filter.permanentFilter) || {};
     this.state = {
       originRootValue,
+      rootValue,
       sort: parseOrder(args.orderBy),
       filter: {...parseWhere(args.where || {}), ...parseWhere(permanentFilter)},
       pagination: parsePagination(args),
@@ -97,16 +100,18 @@ export default class Toolbar extends React.PureComponent<Props, State> {
   }
 
   static getDerivedStateFromProps(nextProps: Props) {
-    const {originRootValue, args, toolbar} = nextProps;
+    const {originRootValue, rootValue, args, toolbar} = nextProps;
     if (toolbar && !toolbar.async) {
       return {
-        originRootValue
+        originRootValue,
+        rootValue
       };
     }
     // $FlowFixMe
     const permanentFilter = (toolbar.filter && toolbar.filter.permanentFilter) || {};
     return {
       originRootValue,
+      rootValue,
       sort: parseOrder(args.orderBy),
       filter: {...parseWhere(args.where || {}), ...parseWhere(permanentFilter)},
       pagination: parsePagination(args)
@@ -230,15 +235,13 @@ export default class Toolbar extends React.PureComponent<Props, State> {
       args,
       refId,
       items,
-      defaultValue,
-      parseConnectionToNormal,
       getValue,
       query,
       keyName,
       request,
       deploy
     } = this.props;
-    let {originRootValue, current, displayedFilterIndexs} = this.state;
+    let {originRootValue, rootValue, current, displayedFilterIndexs} = this.state;
     const {sorter, pagination, filter, toolbarLayout, actions} = toolbar;
     const ToolbarLayout = toolbarLayout && toolbarLayout.component ? toolbarLayout.component : DefaultToolbarLayout;
     const SortComponent = sorter && sorter.component ? sorter.component : Sort;
@@ -249,7 +252,6 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const where = parseWhere(args.where || {});
     const {first, last} = parsePagination(args);
     let total = 0;
-    const rootValue = parseConnectionToNormal(originRootValue);
     const value = getValue(originRootValue, refId.getPathArr());
 
     return <ToolbarLayout
@@ -301,7 +303,7 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     >
       {React.cloneElement(children, {
         rootValue,
-        value: value ? get(value, 'edges', []).map(item => item.node) : defaultValue('array'),
+        value: value ? get(value, 'edges', []).map(item => item.node) : [],
         showPagination: toolbar && !toolbar.async
       })}
     </ToolbarLayout>

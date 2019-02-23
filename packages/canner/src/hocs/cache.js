@@ -8,6 +8,7 @@ import {groupBy} from 'lodash';
 import { OnDeployManager } from '../onDeployManager';
 import type {Action, ActionType} from '../action/types';
 import type {HOCProps} from './types';
+import { parseConnectionToNormal } from './utils';
 
 type State = {
   [string]: *,
@@ -73,8 +74,10 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       const mutatedData = actions.reduce((result: any, action: Action<ActionType>) => {
         return mutate(result, action);
       }, data);
+      console.log('exe')
+      const rootValue = parseConnectionToNormal(mutatedData);
       (this.subscribers[key] || []).forEach(subscribe => {
-        subscribe.callback(mutatedData);
+        subscribe.callback({data: mutatedData, rootValue});
       });
     }
 
@@ -85,22 +88,26 @@ export default function withCache(Com: React.ComponentType<*>, options: {
         return fetch(key);
       }
       const actions = this.actionManager.getActions(key);
-      return fetch(key).then(data => {
+      return fetch(key).then(result => {
         this.setState({
-          [key]: data
+          [key]: result.data
         });
         this._subscribe(key);
-        return actions.reduce((result: any, action: Action<ActionType>) => {
-          return mutate(result, action);
-        }, data);
+        const mutatedData =  actions.reduce((acc: any, action: Action<ActionType>) => {
+          return mutate(acc, action);
+        }, result.data)
+        return {
+          data: mutatedData,
+          rootValue: parseConnectionToNormal(mutatedData)
+        };
       });
     }
 
     _subscribe = (key: string) => {
       const {subscribe} = this.props;
-      this.subscription = subscribe(key, (data) => {
+      this.subscription = subscribe(key, (result) => {
         this.setState({
-          [key]: data
+          [key]: result.data
         }, () => this.publish(key));
       });
     }

@@ -142,6 +142,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       const args = this.getArgs();
       const removeSelfRootValue = {[relation.to]: removeSelf(originRootValue[relation.to], refId, relation.to)};
       let parsedRootValue = removeSelfRootValue;
+      const rootValue = parseConnectionToNormal(parsedRootValue);
       const tb = ({children, ...restProps}) => <Toolbar
         {...restProps}
         items={schema[relation.to].items.items}
@@ -152,7 +153,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         refId={new RefId(relation.to)}
         originRootValue={parsedRootValue}
         updateQuery={this.updateQuery}
-        parseConnectionToNormal={parseConnectionToNormal}
+        rootValue={rootValue}
         getValue={getValue}
         defaultValue={defaultValue}
       >
