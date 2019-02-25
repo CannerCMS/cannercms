@@ -142,6 +142,6 @@ export function passCondition(data: any, condition: Object) {
   }, true);
 }
 
-export function getRecordValue(rootValue, refId) {
+export function getRecordValue(rootValue: any, refId: any) {
   return get(rootValue, refId.getPathArr(), {});
 }
