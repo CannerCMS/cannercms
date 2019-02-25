@@ -7,18 +7,10 @@ import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 import Container, {transformSchemaToMenuConfig} from 'packages/canner-container/src';
 import R from 'packages/router/src';
-import styled from 'styled-components';
 import schema from './canner.schema';
 import client from './client';
 
 addLocaleData([...en, ...zh]);
-
-// eslint-disable-next-line
-export const Logo = styled.img`
-  padding: 20px;
-  margin-left: -20px;
-  width: 200px;
-`;
 
 const Option = Select.Option;
 const menuConfig = [
@@ -123,11 +115,10 @@ class CMSExample extends React.Component {
               theme: 'dark'
             }}
             navbarConfig={{
-              logo: (
-                <a href="https://www.canner.io/">
-                  <Logo src="https://cdn.canner.io/images/logo/logo-word-white.png" />
-                </a>
-              ),
+              logo: {
+                href: 'https://www.canner.io/',
+                src: 'https://cdn.canner.io/images/logo/logo-word-white.png'
+              },
               showSaveButton: true,
               renderMenu: renderCustomHeaderMenu,
               theme: 'dark'

@@ -13,7 +13,10 @@ const MenuText = styled.span`
 `;
 
 export const LogoContainer = styled.div`
-  width: 150px;
+  background: ${props => `url(${props.url}) center no-repeat`};
+  background-size: contain;
+  width: ${props => ensureString(props.width) || '150px'};
+  height: ${props => ensureString(props.height) || '100%'};
 `;
 
 const HeaderMenu = styled.div`
@@ -166,24 +169,25 @@ export default class Navbar extends React.Component<NavbarProps, State> {
   }
 }
 
-function getLogo(logo) {
+function getLogo(logo: any) {
   if (typeof logo === 'string') {
     return (
-      <LogoContainer>
-        <img src={logo} width={150}/>
-      </LogoContainer> 
+      <LogoContainer url={logo} />
     );
   }
-
   if (logo && typeof logo === 'object' && logo.src) {
     return (
-      <LogoContainer>
-        <a href={logo.href}>
-          <img src={logo.src} width={150} />
-        </a>
-      </LogoContainer> 
-    )
+      <a href={logo.href}>
+        <LogoContainer url={logo.src} width={logo.width} height={logo.height} />
+      </a>
+    );
   }
-
   return logo || <div></div>; // render emptry div instead of null to make space-between works
+}
+
+function ensureString(length: number | string): string {
+  if (typeof length === 'number') {
+    return `${length}px`;
+  }
+  return length;
 }
