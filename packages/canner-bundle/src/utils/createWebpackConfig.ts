@@ -125,7 +125,8 @@ export function createSchemaConfig({
       new webpack.NormalModuleReplacementPlugin(
         /firebase/,
         path.resolve(__dirname, 'mock')
-      )
+      ),
+      new webpack.WatchIgnorePlugin([/node_modules/])
     ].concat(plugins)
   };
 }
