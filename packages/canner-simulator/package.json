@@ -1,6 +1,6 @@
 {
   "name": "canner-simulator",
-  "version": "2.0.14",
+  "version": "3.2.1",
   "description": "Testing tool for Canner ",
   "homepage": "",
   "author": "Canner",
@@ -26,7 +26,7 @@
   "dependencies": {
     "antd": "^3.4.1",
     "canner-helpers": "^0.0.1",
-    "canner-ref-id": "2.0.14",
+    "canner-ref-id": "3.2.1",
     "immutable": "^3.8.2"
   },
   "gitHead": "61f8cfa5b91b92753c83aef591cb408c2a0d2afc"

@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "3.0.1",
+  "version": "3.2.1",
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "keywords": [
@@ -15,10 +15,10 @@
     "ajv": "^6.5.2",
     "apollo-boost": "^0.1.4",
     "bson-objectid": "^1.2.2",
-    "canner-compiler": "2.0.14",
-    "canner-helpers": "2.0.14",
-    "canner-layouts": "2.0.37",
-    "canner-ref-id": "2.0.14",
+    "canner-compiler": "3.2.1",
+    "canner-helpers": "3.2.1",
+    "canner-layouts": "3.2.1",
+    "canner-ref-id": "3.2.1",
     "graphql-tag": "^2.9.1",
     "immer": "^1.3.0",
     "immutable": "^3.8.2",
