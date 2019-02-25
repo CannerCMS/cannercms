@@ -89,7 +89,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
     const {deploying} = this.state;
     const hasChanged = dataChanged && Object.keys(dataChanged).length;
     const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-    const Logo = getLogo(logo);
+    const Logo = getLogo(logo, theme);
     const renderNav = ({
       mode,
       theme
@@ -169,19 +169,23 @@ export default class Navbar extends React.Component<NavbarProps, State> {
   }
 }
 
-function getLogo(logo: any) {
+function getLogo(logo: any, theme: 'dark' | 'light') {
   if (typeof logo === 'string') {
     return (
-      <LogoContainer url={logo} />
+      <LogoContainer url={logo} theme={theme} />
     );
+  }
+  if (typeof logo === 'function') {
+    return getLogo(logo(theme), theme);
   }
   if (logo && typeof logo === 'object' && logo.src) {
     return (
       <a href={logo.href}>
-        <LogoContainer url={logo.src} width={logo.width} height={logo.height} />
+        <LogoContainer url={logo.src} width={logo.width} height={logo.height} theme={theme} />
       </a>
     );
   }
+  // react component
   return logo || <div></div>; // render emptry div instead of null to make space-between works
 }
 
