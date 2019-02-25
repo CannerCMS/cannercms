@@ -236,6 +236,11 @@ Object {
       "newResource": /packages/canner-bundle/src/utils/mock,
       "resourceRegExp": /firebase/,
     },
+    WatchIgnorePlugin {
+      "paths": Array [
+        /node_modules/,
+      ],
+    },
     "plugins",
   ],
   "resolve": Object {

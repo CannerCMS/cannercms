@@ -360,6 +360,13 @@ Array [
       TimeFixPlugin {
         "watchOffset": 11000,
       },
+      WatchIgnorePlugin {
+        "paths": Array [
+          "file-name",
+          "file-name",
+          /node_modules/,
+        ],
+      },
       "webPlugins",
     ],
     "resolve": Object {
@@ -379,11 +386,13 @@ Array [
     "watchOptions": Object {
       "aggregateTimeout": 2000,
       "ignored": Array [
+        "file-name",
+        "file-name",
         ".cms",
         "webOutputPath",
         "schema.node.js",
         "canner.schema.json",
-        "node_modules",
+        /node_modules/,
       ],
     },
   },
@@ -621,6 +630,11 @@ Array [
       NormalModuleReplacementPlugin {
         "newResource": /packages/canner-bundle/src/utils/mock,
         "resourceRegExp": /firebase/,
+      },
+      WatchIgnorePlugin {
+        "paths": Array [
+          /node_modules/,
+        ],
       },
       "schemaPlugins",
     ],
