@@ -359,6 +359,13 @@ Object {
     TimeFixPlugin {
       "watchOffset": 11000,
     },
+    WatchIgnorePlugin {
+      "paths": Array [
+        "file-name",
+        "file-name",
+        /node_modules/,
+      ],
+    },
     "plugins",
     HotModuleReplacementPlugin {
       "fullBuildTimeout": 200,
@@ -384,11 +391,13 @@ Object {
   "watchOptions": Object {
     "aggregateTimeout": 2000,
     "ignored": Array [
+      "file-name",
+      "file-name",
       ".cms",
       "webOutputPath",
       "schema.node.js",
       "canner.schema.json",
-      "node_modules",
+      /node_modules/,
     ],
   },
 }
