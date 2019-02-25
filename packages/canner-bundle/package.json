@@ -1,6 +1,6 @@
 {
   "name": "@canner/bundle",
-  "version": "3.0.4-alpha.3",
+  "version": "3.1.0",
   "description": "Bundle the canner app and schema",
   "author": "Canner",
   "files": [
@@ -13,7 +13,7 @@
     "canner-bundle": "./lib/bin/build.js"
   },
   "scripts": {
-    "web:statics:build": "MEASURE=true NODE_ENV=production ts-node src/bin/build.ts --output=../canner-server/.cms --schema=../canner-server/canner.schema.json",
+    "web:statics:build": "MEASURE=true NODE_ENV=production ts-node src/bin/build.ts --output=../canner-server/.cms --schemaOutput=../canner-server/canner.schema.json",
     "web:statics:serve": "NODE_ENV=production ts-node src/bin/serve.ts",
     "web:statics:watchSchema": "NODE_ENV=production ts-node src/bin/watchSchema.ts --schema=./canner.schema.json",
     "web:dataSources": "NODE_ENV=production ts-node src/bin/dataSources.ts",

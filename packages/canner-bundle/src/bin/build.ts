@@ -4,22 +4,40 @@ import {build} from '../index';
 import path from 'path';
 import minimist from 'minimist';
 import Webpackbar from 'webpackbar';
-import {WEB_OUTPUT_PATH, SCHEMA_OUTPUT_PATH} from '../config';
+import {WEB_OUTPUT_PATH, SCHEMA_OUTPUT_PATH, } from '../config';
 
 const argv = minimist(process.argv.slice(2));
-if (!argv.schema) {
-  console.log(`No option --schema=<path>, use default path ${SCHEMA_OUTPUT_PATH}`)
-}
-
-if (!argv.output) {
-  console.log(`No option --output=<path>, use default path ${WEB_OUTPUT_PATH}`)
-}
-
 const global = argv.global;
 
+resolveFlag({
+  shortName: 'c',
+  normalName: 'config',
+  defaultValue: path.resolve(process.cwd(), 'canner.server.js'),
+});
+
+resolveFlag({
+  shortName: 's',
+  normalName: 'schema',
+  defaultValue: path.resolve(process.cwd(), 'canner.schema.js'),
+})
+
+resolveFlag({
+  shortName: 'o',
+  normalName: 'output',
+  defaultValue: WEB_OUTPUT_PATH,
+});
+
+resolveFlag({
+  shortName: 'O',
+  normalName: 'schemaOutput',
+  defaultValue: '',
+});
+
 build({
-  webOutputPath: argv.output && path.resolve(process.cwd(), argv.output),
-  schemaJsonOutputPath: argv.schema && path.resolve(process.cwd(), argv.schema),
+  webOutputPath: argv.output,
+  schemaJsonOutputPath: argv.schemaOutput,
+  schemaPath: argv.schema,
+  cmsConfig: global ? require(argv.config) : {},
   webOnly: argv.webOnly,
   schemaOnly: argv.schemaOnly,
   resolveModules: global ? [
@@ -53,3 +71,15 @@ build({
   .catch(err => {
     console.log('error', err);
   });
+
+function resolveFlag({shortName, normalName, defaultValue}) {
+  if (argv[normalName]) {
+    argv[normalName] = path.resolve(process.cwd(), argv[normalName]);
+    return;
+  }
+  if (argv[shortName]) {
+    argv[normalName] = path.resolve(process.cwd(), argv[shortName]);
+  } else {
+    argv[normalName] = defaultValue;
+  }
+}
