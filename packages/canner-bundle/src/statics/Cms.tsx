@@ -12,11 +12,6 @@ import ContentHeader from './Header';
 
 const confirm = Modal.confirm;
 
-export const Logo = styled.img`
-  padding: 20px 0;
-  width: 160px;
-`;
-
 type Props = {
   history: Object,
   match: Object,
@@ -103,6 +98,11 @@ export default class CMSPage extends React.Component<Props, State> {
     const cmsStyle = cmsConfig.style || {};
     const sidebar =
       cmsConfig.sidebarMenu || transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema});
+    const defaultLogo = (theme) => ({
+      src: theme === 'dark' ? 'https://cdn.canner.io/images/logo/logo-word-white.png': 'https://cdn.canner.io/images/logo/logo-word.png',
+      width: '150px',
+      href: '#'
+    })
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Container
@@ -116,7 +116,7 @@ export default class CMSPage extends React.Component<Props, State> {
           }}
           navbarConfig={{
             showSaveButton: 'showSaveButton' in cmsConfig ? cmsConfig.showSaveButton : true,
-            logo: <Logo src={cmsConfig.logo || 'https://cdn.canner.io/images/logo/logo-word-white.png'} />,
+            logo: cmsConfig.logo || defaultLogo,
             theme: cmsStyle.navbarTheme,
             style: cmsStyle.navbarStyle,
             menuStyle: cmsStyle.navbarMenuStyle,
