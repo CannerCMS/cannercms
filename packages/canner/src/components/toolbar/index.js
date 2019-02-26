@@ -8,6 +8,7 @@ import Sort from './sort';
 import Filter from './filter/index';
 import Actions from './actions';
 import isObject from 'lodash/isObject';
+import {findAlwaysDisplayedFilterIndexes} from './utils';
 import type {Query} from '../../query';
 import type RefId from 'canner-ref-id';
 
@@ -86,13 +87,14 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     this.async = props.toolbar && props.toolbar.async;
     // $FlowFixMe
     const permanentFilter = (props.toolbar && props.toolbar.filter && props.toolbar.filter.permanentFilter) || {};
+    const displayedFilterIndexs = findAlwaysDisplayedFilterIndexes((props.toolbar && props.toolbar.filter && props.toolbar.filter.filters) || []);
     this.state = {
       originRootValue,
       sort: parseOrder(args.orderBy),
       filter: {...parseWhere(args.where || {}), ...parseWhere(permanentFilter)},
       pagination: parsePagination(args),
       current: 1,
-      displayedFilterIndexs: []
+      displayedFilterIndexs
     };
   }
 
