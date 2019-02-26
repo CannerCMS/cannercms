@@ -3,14 +3,12 @@ import * as webpack from 'webpack';
 import * as webpackDevServer from 'webpack-dev-server';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
-import TimeFixPlugin from 'time-fix-plugin';
 import path from 'path';
 import CompressionPlugin from 'compression-webpack-plugin';
 import tmp from 'tmp';
-import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import createEntryFile from './createEntryFile';
 import createWindowVarsFile from './createWindowVarsFile';
+import TimeFixPlugin from 'time-fix-plugin';
 import {
   createTsLoader,
   babelLoader,
@@ -30,9 +28,6 @@ import {
   SCHEMA_OUTPUT_FILENAME
 } from '../config';
 const devMode = process.env.NODE_ENV === 'development';
-const smp = new SpeedMeasurePlugin({
-  disable: !process.env.MEASURE
-});
 
 export type CreateSchemaConfigArgsType = {
   schemaPath?: string;
@@ -131,7 +126,7 @@ export function createSchemaConfig({
         /firebase/,
         path.resolve(__dirname, 'mock')
       ),
-      new TimeFixPlugin()
+      new webpack.WatchIgnorePlugin([/node_modules/])
     ].concat(plugins)
   };
 }
@@ -175,7 +170,7 @@ export function createWebConfig({
   if (watch) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
-  return smp.wrap({
+  return {
     entry: {
       index: [WINDOW_VARS_PATH, ENTRY_PATH]
     },
@@ -191,7 +186,7 @@ export function createWebConfig({
     watch,
     watchOptions: {
       aggregateTimeout: 2000,
-      ignored: ['.cms', webOutputPath, 'schema.node.js', 'canner.schema.json', 'node_modules']
+      ignored: [WINDOW_VARS_PATH, ENTRY_PATH, '.cms', webOutputPath, 'schema.node.js', 'canner.schema.json', /node_modules/]
     },
     output: {
       path: webOutputPath,
@@ -308,9 +303,10 @@ export function createWebConfig({
       new CustomFilterPlugin({
         exclude: /Conflicting order between:/
       }),
-      new TimeFixPlugin()
+      new TimeFixPlugin(),
+      new webpack.WatchIgnorePlugin([WINDOW_VARS_PATH, ENTRY_PATH, /node_modules/])
     ].concat(plugins)
-  });
+  };
 }
 
 

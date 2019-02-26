@@ -236,8 +236,10 @@ Object {
       "newResource": /packages/canner-bundle/src/utils/mock,
       "resourceRegExp": /firebase/,
     },
-    TimeFixPlugin {
-      "watchOffset": 11000,
+    WatchIgnorePlugin {
+      "paths": Array [
+        /node_modules/,
+      ],
     },
     "plugins",
   ],

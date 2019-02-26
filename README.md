@@ -5,7 +5,7 @@
 <div align="center">
 
 [![npm version](https://badge.fury.io/js/%40canner%2Fcli.svg)](https://badge.fury.io/js/%40canner%2Fcli)
-[![npm download](https://img.shields.io/npm/dm/%40canner%2Fcli.svg)](https://www.npmjs.com/package/%40canner%2Fcli)
+[![npm download](https://img.shields.io/npm/dm/canner.svg)](https://www.npmjs.com/package/canner)
 [![CircleCI branch](https://img.shields.io/circleci/project/github/Canner/canner/master.svg)](https://circleci.com/gh/Canner/canner)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/canner/cannercms)
 [![backer](https://opencollective.com/cannercms/tiers/backer/badge.svg?label=backer&color=brightgreen)](https://opencollective.com/cannercms)
@@ -24,6 +24,12 @@
 > CannerCMS lets you build flexible content management systems easy and fast, CMS developers built for CMS developers.
 >
 > Template CMS, Content Management System can build websites fast, but clients often need custom solutions? Well, what CannerCMS do is let creating custom CMS fast and easy with many clouds.
+
+<div align="center">
+  
+***Hire us for professional service to create your awesome CMS using Canner? Contact us at contact@canner.io***
+
+</div>
 
 [![IMAGE ALT TEXT HERE](https://i.imgur.com/KUHLmSq.png)](https://www.youtube.com/watch?v=OVdxvGDGORs)
 
@@ -246,7 +252,7 @@ yarn
 
 ## Roadmap
 
-Interested in our next roadmap to v3? Please follow issue [here](https://github.com/Canner/canner/issues/141).
+Interested in our next roadmap to v4? Please follow issue [here](https://github.com/Canner/canner/issues/123).
 
 
 ## License
