@@ -252,7 +252,7 @@ yarn
 
 ## Roadmap
 
-Interested in our next roadmap to v3? Please follow issue [here](https://github.com/Canner/canner/issues/141).
+Interested in our next roadmap to v4? Please follow issue [here](https://github.com/Canner/canner/issues/123).
 
 
 ## License
