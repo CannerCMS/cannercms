@@ -74,7 +74,6 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       const mutatedData = actions.reduce((result: any, action: Action<ActionType>) => {
         return mutate(result, action);
       }, data);
-      console.log('exe')
       const rootValue = parseConnectionToNormal(mutatedData);
       (this.subscribers[key] || []).forEach(subscribe => {
         subscribe.callback({data: mutatedData, rootValue});
