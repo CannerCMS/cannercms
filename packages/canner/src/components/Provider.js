@@ -2,7 +2,7 @@
  * @flow
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
 import isEmpty from 'lodash/isEmpty';
@@ -33,8 +33,9 @@ export default function Provider({
   children,
   afterDeploy
 }: Props) {
-  const actionManager = new ActionManager();
-  const query = new Query({schema});
+  // ensure these instance only create at first rendering
+  const actionManagerRef = useRef(new ActionManager());
+  const queryRef = useRef(new Query({schema}));
   const getObservable = ({
     routes,
     operator
@@ -43,14 +44,14 @@ export default function Provider({
     operator: string
   }) => {
     const key = routes[0];
-    const variables = query.getVairables();
+    const variables = queryRef.current.getVairables();
     const customizedGQL = routes.length === 1 && operator === 'update' && schema[key].graphql;
     const fetchPolicy = schema[key].fetchPolicy;
     let gqlStr = ''
     if (customizedGQL) {
       gqlStr = schema[key].graphql;
     } else {
-      gqlStr = query.toGQL(key);
+      gqlStr = queryRef.current.toGQL(key);
     }
     return client.watchQuery({
       query: gql`${gqlStr}`,
@@ -59,7 +60,7 @@ export default function Provider({
     });
   }
 
-  const observableQueryMap = mapValues(schema, (v, key) => {
+  const observableQueryMapRef = useRef(mapValues(schema, (v, key) => {
     if (routes[0] === key) {
       return getObservable({
         routes: routes,
@@ -70,14 +71,14 @@ export default function Provider({
       routes: [key],
       operator: 'update'
     });
-  });
-  const onDeployManager = new OnDeployManager();
+  }));
+  const onDeployManagerRef = useRef(new OnDeployManager());
   const [changedData, setChangedData] = useState(null);
   
   useEffect(() => {
     const customizedGQL = schema[rootKey] && schema[rootKey].graphql;
     if (customizedGQL) {
-      observableQueryMap[rootKey] = getObservable({
+      observableQueryMapRef.current[rootKey] = getObservable({
         routes: routes,
         operator: routerParams.operator
       });
@@ -85,7 +86,7 @@ export default function Provider({
   }, [rootKey]);
 
   const updateChangedData = () => {
-    const actions = actionManager.getActions();
+    const actions = actionManagerRef.current.getActions();
     let changedData = groupBy(actions, (action => action.payload.key));
     changedData = mapValues(changedData, value => {
       if (value[0].type === 'UPDATE_OBJECT') {
@@ -100,12 +101,12 @@ export default function Provider({
   };
 
   const updateQuery = (paths: Array<string>, args: Object) => {
-    const originVariables = query.getVairables();
-    query.updateQueries(paths, 'args', args);
-    const variables = query.getVairables();
+    const originVariables = queryRef.current.getVairables();
+    queryRef.current.updateQueries(paths, 'args', args);
+    const variables = queryRef.current.getVairables();
     const reWatchQuery = compareVariables(originVariables, variables);
     if (reWatchQuery) {
-      observableQueryMap[paths[0]] = getObservable({
+      observableQueryMapRef.current[paths[0]] = getObservable({
         routes: paths,
         operator: routerParams.operator
       });
@@ -115,15 +116,15 @@ export default function Provider({
       const refetch = (routes.length > 1 && schema[paths[0]] && schema[paths[0]].refetch);
       log('updateQuery', variables, args);
       if (refetch) {
-        return observableQueryMap[paths[0]].refetch(variables).then(() => false);
+        return observableQueryMapRef.current[paths[0]].refetch(variables).then(() => false);
       }
-      return observableQueryMap[paths[0]].setVariables(variables).then(() => false);
+      return observableQueryMapRef.current[paths[0]].setVariables(variables).then(() => false);
     }
   };
 
   // path: posts/name args: {where, pagination, sort}
   const fetch = (key: string): Promise.resolve<*> => {
-    const observabale = observableQueryMap[key];
+    const observabale = observableQueryMapRef.current[key];
     const currentResult = observabale.currentResult();
     const {loading, error} = currentResult;
     if (loading) {
@@ -140,13 +141,13 @@ export default function Provider({
       errorHandler && errorHandler(error);
       return Promise.resolve({data: lastResult.data, rootValue: parseConnectionToNormal(lastResult.data)});
     } else {
-      log('fetch', 'loaded', key, currentResult, query.getVairables());
+      log('fetch', 'loaded', key, currentResult, queryRef.current.getVairables());
       return Promise.resolve({data: currentResult.data, rootValue: parseConnectionToNormal(currentResult.data)});
     }
   };
 
   const subscribe = (key: string, callback: (data: any) => void) => {
-    const observableQuery = observableQueryMap[key];
+    const observableQuery = observableQueryMapRef.current[key];
     return observableQuery.subscribe({
       next: () => {
         const {loading, errors, data} = observableQuery.currentResult();
@@ -161,26 +162,26 @@ export default function Provider({
   };
 
   const executeOnDeploy = (key: string, value: any) => {
-    return onDeployManager.execute({
+    return onDeployManagerRef.current.execute({
       key,
       value
     });
   }
 
   const deploy = (key: string, id?: string): Promise<*> => {
-    let actions = actionManager.getActions(key, id);
+    let actions = actionManagerRef.current.getActions(key, id);
     if (!actions || !actions.length) {
       return Promise.resolve();
     }
     actions = removeIdInCreateArray(actions);
     const mutation = objectToQueries(actionToMutation(actions[0]), false);
     const variables = actionsToVariables(actions, schema);
-    const queryVariables = query.getVairables();  
+    const queryVariables = queryRef.current.getVairables();  
     let graphqlQuery = '';
     if (routes.length === 1 && routerParams.operator === 'update' && schema[rootKey].graphql) {
       graphqlQuery = gql`${schema[rootKey].graphql}`;
     } else {
-      graphqlQuery = gql`${query.toGQL(actions[0].payload.key)}`;
+      graphqlQuery = gql`${queryRef.current.toGQL(actions[0].payload.key)}`;
     }
     const cachedData = client.readQuery({query: graphqlQuery, variables: queryVariables});
     const mutatedData = cachedData[key];
@@ -206,7 +207,7 @@ export default function Provider({
         mutation,
         variables
       });
-      actionManager.removeActions(key, id);
+      actionManagerRef.current.removeActions(key, id);
       return result.data;
     }).then(result => {
       updateChangedData();
@@ -240,8 +241,8 @@ export default function Provider({
     const key = action.payload.key;
     const resultKey = `create${upperFirst(pluralize.singular(key))}`;
     const newId = result.data[resultKey].id;
-    const variables = query.getVairables();  
-    const graphqlQuery = gql`${query.toGQL(key)}`;
+    const variables = queryRef.current.getVairables();  
+    const graphqlQuery = gql`${queryRef.current.toGQL(key)}`;
     const data = client.readQuery({query: graphqlQuery, variables});
     data[key].edges.map(edge => {
       if (edge.cursor === originId) {
@@ -258,14 +259,14 @@ export default function Provider({
   }
 
   const reset = (key?: string, id?: string): Promise<*> => {
-    if (actionManager.getActions(key, id).length === 0) {
+    if (actionManagerRef.current.getActions(key, id).length === 0) {
       return Promise.resolve();
     }
-    actionManager.removeActions(key, id);
+    actionManagerRef.current.removeActions(key, id);
     updateChangedData();
-    const variables = query.getVairables();
-    if (observableQueryMap[(key || rootKey)]) {
-      return observableQueryMap[key || rootKey].refetch(variables);
+    const variables = queryRef.current.getVairables();
+    if (observableQueryMapRef.current[(key || rootKey)]) {
+      return observableQueryMapRef.current[key || rootKey].refetch(variables);
     }
     return Promise.resolve();
   }
@@ -276,7 +277,7 @@ export default function Provider({
     if (actions.length === 0) {
       return Promise.resolve();
     }
-    actions.forEach(ac => actionManager.addAction(ac));
+    actions.forEach(ac => actionManagerRef.current.addAction(ac));
     updateChangedData();
     if (write) {
       const {data, mutatedData} = updateCachedData(actions);
@@ -286,12 +287,12 @@ export default function Provider({
   }
 
   const updateCachedData = (actions: Array<Action<ActionType>>) => {
-    const variables = query.getVairables();  
+    const variables = queryRef.current.getVairables();  
     let graphqlQuery = null;
     if (routes.length === 1 && routerParams.operator === 'update' && schema[rootKey].graphql) {
       graphqlQuery = gql`${schema[rootKey].graphql}`;
     } else {
-      graphqlQuery = gql`${query.toGQL(actions[0].payload.key)}`;
+      graphqlQuery = gql`${queryRef.current.toGQL(actions[0].payload.key)}`;
     }
     const data = client.readQuery({query: graphqlQuery, variables});
     const mutatedData = actions.reduce((result: Object, ac: any) => mutate(result, ac), data);
@@ -313,9 +314,9 @@ export default function Provider({
         reset: reset,
         updateQuery: updateQuery,
         subscribe: subscribe,
-        query: query,
-        onDeploy: onDeployManager.registerCallback,
-        removeOnDeploy: onDeployManager.unregisterCallback,
+        query: queryRef.current,
+        onDeploy: (...args) => onDeployManagerRef.current.registerCallback(...args),
+        removeOnDeploy: (...args) => onDeployManagerRef.current.unregisterCallback(...args),
         dataChanged: changedData
       }}>
         {/* $FlowFixMe */}
@@ -326,9 +327,9 @@ export default function Provider({
           reset: reset,
           updateQuery: updateQuery,
           subscribe: subscribe,
-          query: query,
-          onDeploy: onDeployManager.registerCallback,
-          removeOnDeploy: onDeployManager.unregisterCallback
+          query: queryRef.current,
+          onDeploy: (...args) => onDeployManagerRef.current.registerCallback(...args),
+          removeOnDeploy: (...args) => onDeployManagerRef.current.unregisterCallback(...args)
         })}
       </HOCContext.Provider>
     </ApolloProvider>
