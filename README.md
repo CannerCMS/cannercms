@@ -27,7 +27,7 @@
 
 <div align="center">
   
-***Need us to build your awesome CMS using Canner? Contact us at contact@canner.io***
+***Need professional service to build your awesome CMS using Canner? Contact us at contact@canner.io***
 
 </div>
 
