@@ -45,6 +45,8 @@ export default function Provider({
   }) => {
     const key = routes[0];
     const variables = queryRef.current.getVairables();
+    // in list form, if there is the customized graphql string,
+    // we will use this string to genereate observable query
     const customizedGQL = routes.length === 1 && operator === 'update' && schema[key].graphql;
     const fetchPolicy = schema[key].fetchPolicy;
     let gqlStr = ''
