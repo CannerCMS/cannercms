@@ -7,7 +7,7 @@ import Webpackbar from 'webpackbar';
 import {WEB_OUTPUT_PATH, SCHEMA_OUTPUT_PATH, } from '../config';
 
 const argv = minimist(process.argv.slice(2));
-const global = argv.global;
+const global = !argv.local;
 
 resolveFlag({
   shortName: 'c',
@@ -41,13 +41,15 @@ build({
   webOnly: argv.webOnly,
   schemaOnly: argv.schemaOnly,
   resolveModules: global ? [
-    path.resolve(__dirname, '../../node_modules')
+    path.resolve(__dirname, '../../node_modules'),
+    'node_modules'
   ] : [
     path.resolve(__dirname, '../../node_modules'),
     path.resolve(__dirname, '../../../../node_modules')
   ],
   resolveLoaderModules: global ? [
-    path.resolve(__dirname, '../../node_modules')
+    path.resolve(__dirname, '../../node_modules'),
+    'node_modules'
   ] : [
     path.resolve(__dirname, '../../node_modules'),
     path.resolve(__dirname, '../../../../node_modules')
