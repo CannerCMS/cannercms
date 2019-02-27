@@ -76,6 +76,8 @@ export default function Provider({
   const [changedData, setChangedData] = useState(null);
   
   useEffect(() => {
+    // if there is ther customized graphql string,
+    // we should update the observable query since the "LIST query" is different from "UPDATE query"
     const customizedGQL = schema[rootKey] && schema[rootKey].graphql;
     if (customizedGQL) {
       observableQueryMapRef.current[rootKey] = getObservable({
@@ -83,7 +85,7 @@ export default function Provider({
         operator: routerParams.operator
       });
     }
-  }, [rootKey]);
+  }, [routes, routerParams.operator]);
 
   const updateChangedData = () => {
     const actions = actionManagerRef.current.getActions();
