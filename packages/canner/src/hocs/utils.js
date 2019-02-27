@@ -4,7 +4,7 @@ import {mapValues, get, isPlainObject, isArray} from 'lodash';
 export function getValue(value: any, idPathArr: Array<string>) {
   return idPathArr.reduce((result: any, key: string) => {
     if (isPlainObject(result)) {
-      if ('edges' in result && 'pageInfo' in result) {
+      if ('edges' in result && 'node' in result.edges[key]) {
         return get(result, ['edges', key, 'node']);
       }
       return get(result, key);
