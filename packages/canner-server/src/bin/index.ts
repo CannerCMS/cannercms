@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { createApp } from '../app';	
 import minimist from 'minimist';
 import path from 'path';
