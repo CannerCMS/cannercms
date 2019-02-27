@@ -32,6 +32,7 @@
     "graphql-playground-html": "^1.6.11",
     "koa": "^2.6.2",
     "lodash": "^4.17.5",
+    "minimist": "^1.2.0",
     "openid-client": "^2.4.5"
   },
   "devDependencies": {
