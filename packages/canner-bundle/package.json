@@ -1,6 +1,6 @@
 {
   "name": "@canner/bundle",
-  "version": "3.2.4",
+  "version": "3.2.5",
   "description": "Bundle the canner app and schema",
   "author": "Canner",
   "files": [
