@@ -31,7 +31,7 @@
   
 ***Hire us for professional service to create your awesome CMS using Canner?***
 
-***Want to join Canner team, we are also hiring talents? Contact us at contact@canner.io***
+***Want to join Canner team, we are also hiring talents. Contact us at contact@canner.io***
 
 </div>
 
