@@ -81,7 +81,7 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
           selectedKeys={[`/${routes[0]}`]}
           mode={mode}
           theme={theme}
-          style={{marginTop: 12, ...menuStyle}}
+          style={{paddingTop: 12, ...menuStyle}}
         >
           {
             // $FlowIgnore
