@@ -1,4 +1,4 @@
-// flow-typed signature: 628af4bc1ab9e62c1253783b117cbe45
+// flow-typed signature: 61525946c145fec8447d5134b9a68268
 // flow-typed version: <<STUB>>/apollo-link_v^1.2.2/flow_v0.77.0
 
 /**
@@ -22,6 +22,10 @@ declare module 'apollo-link' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
+declare module 'apollo-link/lib/bundle.esm' {
+  declare module.exports: any;
+}
+
 declare module 'apollo-link/lib/bundle.umd' {
   declare module.exports: any;
 }
@@ -58,11 +62,10 @@ declare module 'apollo-link/lib/types' {
   declare module.exports: any;
 }
 
-declare module 'apollo-link/rollup.config' {
-  declare module.exports: any;
-}
-
 // Filename aliases
+declare module 'apollo-link/lib/bundle.esm.js' {
+  declare module.exports: $Exports<'apollo-link/lib/bundle.esm'>;
+}
 declare module 'apollo-link/lib/bundle.umd.js' {
   declare module.exports: $Exports<'apollo-link/lib/bundle.umd'>;
 }
@@ -89,7 +92,4 @@ declare module 'apollo-link/lib/test-utils/testingUtils.js' {
 }
 declare module 'apollo-link/lib/types.js' {
   declare module.exports: $Exports<'apollo-link/lib/types'>;
-}
-declare module 'apollo-link/rollup.config.js' {
-  declare module.exports: $Exports<'apollo-link/rollup.config'>;
 }
