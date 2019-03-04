@@ -66,31 +66,31 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
       pagination: router.getPagination()
     };
     return (
-      <Layout>
-        {navbarConfig && (
-          <Navbar
-            dataChanged={dataChanged}
-            deploy={this.cannerRef.current && this.cannerRef.current.deploy}
-            {...navbarConfig}
-          />
-        )}
-        <Layout style={{
-          WebkitBoxOrient: 'horizontal',
-          WebkitBoxDirection: 'normal',
-          WebkitFlexDirection: 'row',
-          MsFlexDirection: 'row',
-          flexDirection: 'row',
-          minHeight: '100vh'
-        }}>
-          <Sidebar
-            dataChanged={dataChanged}
-            goTo={router.goTo}
-            reset={this.cannerRef.current && this.cannerRef.current.reset}
-            routes={routes}
-            schema={this.uiSchema}
-            {...sidebarConfig}
-            menuConfig={this.menuConfig}
-          />
+      <Layout style={{
+        WebkitBoxOrient: 'horizontal',
+        WebkitBoxDirection: 'normal',
+        WebkitFlexDirection: 'row',
+        MsFlexDirection: 'row',
+        flexDirection: 'row',
+        minHeight: '100vh'
+      }} >
+        <Sidebar
+          dataChanged={dataChanged}
+          goTo={router.goTo}
+          reset={this.cannerRef.current && this.cannerRef.current.reset}
+          routes={routes}
+          schema={this.uiSchema}
+          {...sidebarConfig}
+          menuConfig={this.menuConfig}
+        />
+        <Layout>
+          {navbarConfig && (
+            <Navbar
+              dataChanged={dataChanged}
+              deploy={this.cannerRef.current && this.cannerRef.current.deploy}
+              {...navbarConfig}
+            />
+          )}
           <Layout.Content>
             { 
               React.cloneElement(children, {
