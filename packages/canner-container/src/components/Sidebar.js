@@ -78,7 +78,7 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
         {Logo}
         <Menu
           onClick={this.siderMenuOnClick}
-          selectedKeys={[`/${routes[0]}`]}
+          selectedKeys={[`${routes[0]}`]}
           mode={mode}
           theme={theme}
           style={{paddingTop: 12, ...menuStyle}}
