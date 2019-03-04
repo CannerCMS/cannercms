@@ -12,13 +12,6 @@ const MenuText = styled.span`
   }
 `;
 
-export const LogoContainer = styled.div`
-  background: ${props => `url(${props.url}) center no-repeat`};
-  background-size: contain;
-  width: ${props => ensureString(props.width) || '150px'};
-  height: ${props => ensureString(props.height) || '100%'};
-`;
-
 const HeaderMenu = styled.div`
   @media (max-width: 576px) {
     display: none;
@@ -89,27 +82,16 @@ export default class Navbar extends React.Component<NavbarProps, State> {
     const {deploying} = this.state;
     const hasChanged = dataChanged && Object.keys(dataChanged).length;
     const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-    const Logo = getLogo(logo, theme);
+
+    if (logo) {
+      console.error(`Unexpected property 'logo' in navbar config, it should be put in sidebar config!`);
+    }
+
     const renderNav = ({
       mode,
       theme
     }) => (
       <React.Fragment>
-        {
-          mode === 'inline' && (
-            <Menu
-              mode={mode}
-              theme={theme}
-              selectedKeys={[]}
-              onClick={this.headerMenuOnClick}
-              style={{paddingBottom: 16, ...menuStyle}}
-            >
-              <Menu.Item key="__logo">
-              {Logo}
-              </Menu.Item>
-            </Menu>
-          )
-        }
         { renderMenu && renderMenu({mode, theme}) }
         <Menu
           mode={mode}
@@ -146,8 +128,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
       </React.Fragment>
     );
     return (
-      <Header style={{padding: "0 20px", display: 'flex', justifyContent: 'space-between', ...style}}>
-        {Logo}
+      <Header style={{padding: "0 20px", textAlign: 'right', ...style}}>
         <HeaderMenu>
           {renderNav({mode: 'horizontal', theme})}
         </HeaderMenu>
@@ -167,31 +148,4 @@ export default class Navbar extends React.Component<NavbarProps, State> {
       </Header>
     );
   }
-}
-
-function getLogo(logo: any, theme: 'dark' | 'light') {
-  if (typeof logo === 'string') {
-    return (
-      <LogoContainer url={logo} theme={theme} />
-    );
-  }
-  if (typeof logo === 'function') {
-    return getLogo(logo(theme), theme);
-  }
-  if (logo && typeof logo === 'object' && logo.src) {
-    return (
-      <a href={logo.href}>
-        <LogoContainer url={logo.src} width={logo.width} height={logo.height} theme={theme} />
-      </a>
-    );
-  }
-  // react component
-  return logo || <div></div>; // render emptry div instead of null to make space-between works
-}
-
-function ensureString(length: number | string): string {
-  if (typeof length === 'number') {
-    return `${length}px`;
-  }
-  return length;
 }

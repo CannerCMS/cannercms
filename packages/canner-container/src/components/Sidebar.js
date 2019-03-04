@@ -2,6 +2,7 @@
 
 import React from 'react'
 import {Layout, Menu, Modal, Icon} from 'antd';
+import styled from 'styled-components';
 import type {SidebarProps, MenuParams} from './types';
 import Error from './Error';
 const confirm = Modal.confirm;
@@ -9,6 +10,14 @@ const confirm = Modal.confirm;
 type State = {
   hasError: boolean
 }
+
+export const LogoContainer = styled.div`
+  background: ${props => `url(${props.url}) center no-repeat`};
+  background-size: contain;
+  margin: ${props => props.margin || `0 20px`};
+  width: ${props => ensureString(props.width) || 'auto'};
+  height: ${props => ensureString(props.height) || '64px'};
+`;
 
 export default class Sidebar extends React.Component<SidebarProps, State> {
   state = {hasError: false}
@@ -50,7 +59,7 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
   }
 
   render() {
-    const {menuConfig, routes, theme = 'dark', mode = 'inline', style = {}, menuStyle = {}} = this.props;
+    const {menuConfig, logo, routes, theme = 'dark', mode = 'inline', style = {}, menuStyle = {}} = this.props;
     const {hasError} = this.state;
 
     // if user's customize Menu is has error, display error messages
@@ -61,8 +70,12 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
     if (!menuConfig) {
       return null;
     }
+
+    const Logo = getLogo(logo, theme);
+
     return (
       <Layout.Sider breakpoint="sm" collapsedWidth={0} style={{zIndex: 1, ...style}} theme={theme}>
+        {Logo}
         <Menu
           onClick={this.siderMenuOnClick}
           selectedKeys={[`/${routes[0]}`]}
@@ -73,16 +86,23 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
           {
             // $FlowIgnore
             menuConfig.length > 0 && menuConfig.map(item => {
-              if (item.pathname) {
-                return renderMenuItem(item);
-              }
-              return renderSubMenu(item);
+              return renderMenu(item);
             })
           }
         </Menu>
       </Layout.Sider>
     );
   }
+}
+
+function renderMenu(item: Object) {
+  if (item.group && item.items) {
+    return renderItemGroup(item);
+  }
+  if (item.items) {
+    return renderSubMenu(item);
+  }
+  return renderMenuItem(item);
 }
 
 function renderMenuItem(item: Object) {
@@ -97,12 +117,22 @@ function renderMenuItem(item: Object) {
   )
 }
 
+function renderItemGroup(item: Object) {
+  return (
+    <Menu.ItemGroup title={item.title}>
+      {
+        item.items.map(i => renderMenu(i))
+      }
+    </Menu.ItemGroup>
+  )
+}
+
 function renderSubMenu(item: Object) {
   return (
     <Menu.SubMenu key={`submenu-${item.pathname}`} title={item.title} data-testid={`sidebar-${item.pathname}`}>
       {renderIcon(item.icon)}
       {
-        item.items.map(i => renderMenuItem(i))
+        item.items.map(i => renderMenu(i))
       }
     </Menu.SubMenu>
   )
@@ -122,4 +152,39 @@ function removeFirstSlash(key) {
     return key.substr(1);
   }
   return key;
+}
+
+
+function getLogo(logo: any, theme: 'dark' | 'light') {
+  if (typeof logo === 'string') {
+    return (
+      <LogoContainer url={logo} theme={theme} style={{}}/>
+    );
+  }
+  if (typeof logo === 'function') {
+    return getLogo(logo(theme), theme);
+  }
+  if (logo && typeof logo === 'object' && logo.src) {
+    return (
+      <a href={logo.href}
+        style={
+          logo.backgroundColor ? {
+            backgroundColor: logo.backgroundColor,
+            display: 'block'
+          }: {}
+        }
+      >
+        <LogoContainer url={logo.src} style={logo.style || {}} theme={theme} />
+      </a>
+    );
+  }
+  // react component
+  return logo || <div></div>; // render emptry div instead of null to make space-between works
+}
+
+function ensureString(length: number | string): string {
+  if (typeof length === 'number') {
+    return `${length}px`;
+  }
+  return length;
 }
