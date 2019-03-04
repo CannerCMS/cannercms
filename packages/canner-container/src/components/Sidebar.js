@@ -14,8 +14,8 @@ type State = {
 export const LogoContainer = styled.div`
   background: ${props => `url(${props.url}) center no-repeat`};
   background-size: contain;
-  margin: ${props => props.margin || `0 20px`};
-  width: ${props => ensureString(props.width) || 'auto'};
+  margin: ${props => props.margin || `auto`};
+  width: ${props => ensureString(props.width) || '150px'};
   height: ${props => ensureString(props.height) || '64px'};
 `;
 

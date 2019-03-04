@@ -112,11 +112,11 @@ export default class CMSPage extends React.Component<Props, State> {
             theme: cmsStyle.sidebarTheme,
             mode: cmsStyle.sidebarMode,
             style: cmsStyle.sidebarStyle,
-            menuStyle: cmsStyle.sidebarMenuStyle
+            menuStyle: cmsStyle.sidebarMenuStyle,
+            logo: cmsConfig.logo || defaultLogo,
           }}
           navbarConfig={{
             showSaveButton: 'showSaveButton' in cmsConfig ? cmsConfig.showSaveButton : true,
-            logo: cmsConfig.logo || defaultLogo,
             theme: cmsStyle.navbarTheme,
             style: cmsStyle.navbarStyle,
             menuStyle: cmsStyle.navbarMenuStyle,
