@@ -84,6 +84,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
     const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
     if (logo) {
+      // eslint-disable-next-line
       console.error(`Unexpected property 'logo' in navbar config, it should be put in sidebar config!`);
     }
 
