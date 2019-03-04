@@ -1,6 +1,6 @@
 {
   "name": "@canner/bundle",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "description": "Bundle the canner app and schema",
   "author": "Canner",
   "files": [
@@ -45,7 +45,7 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@canner/antd-components": "^0.5.28",
-    "@canner/container": "3.3.3",
+    "@canner/container": "3.3.4",
     "@canner/history-router": "3.2.1",
     "@canner/storage": "2.0.11",
     "@types/lodash": "^4.14.107",
