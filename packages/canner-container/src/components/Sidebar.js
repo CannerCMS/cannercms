@@ -74,14 +74,14 @@ export default class Sidebar extends React.Component<SidebarProps, State> {
     const Logo = getLogo(logo, theme);
 
     return (
-      <Layout.Sider breakpoint="sm" collapsedWidth={0} style={{zIndex: 1, ...style}} theme={theme}>
+      <Layout.Sider breakpoint="sm" width={style.width || 200} collapsedWidth={0} style={{zIndex: 1, ...style}} theme={theme}>
         {Logo}
         <Menu
           onClick={this.siderMenuOnClick}
           selectedKeys={[`/${routes[0]}`]}
           mode={mode}
           theme={theme}
-          style={menuStyle}
+          style={{marginTop: 12, ...menuStyle}}
         >
           {
             // $FlowIgnore
@@ -174,7 +174,13 @@ function getLogo(logo: any, theme: 'dark' | 'light') {
           }: {}
         }
       >
-        <LogoContainer url={logo.src} style={logo.style || {}} theme={theme} />
+        <LogoContainer
+          url={logo.src}
+          theme={theme}
+          width={logo.width}
+          height={logo.height}
+          margin={logo.margin}
+        />
       </a>
     );
   }

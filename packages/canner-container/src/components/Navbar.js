@@ -97,7 +97,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
         <Menu
           mode={mode}
           theme={theme}
-          style={{ lineHeight: '64px', display: mode === 'horizontal' ? 'inline-block' : 'block', ...menuStyle }}
+          style={{ lineHeight: '60px', borderBottom: 'none', display: mode === 'horizontal' ? 'inline-block' : 'block', ...menuStyle }}
           selectedKeys={[]}
           onClick={this.headerMenuOnClick}
         >
