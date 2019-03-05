@@ -15,6 +15,7 @@
     "ajv": "^6.5.2",
     "apollo-boost": "^0.1.4",
     "bson-objectid": "^1.2.2",
+    "@canner/cache": "^0.0.1",
     "canner-compiler": "3.2.1",
     "canner-helpers": "3.2.1",
     "canner-layouts": "3.2.1",
@@ -42,6 +43,7 @@
     "canner-helpers": "*",
     "canner-layouts": "*",
     "canner-ref-id": "*",
+    "@canner/cache": "*",
     "react": ">=16.8",
     "react-dom": ">=16.8"
   },
