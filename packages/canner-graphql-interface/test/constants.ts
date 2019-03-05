@@ -45,6 +45,9 @@ export const schema = {
               items: {
                 type: 'string'
               }
+            },
+            author: {
+              type: 'string',
             }
           }
         }
