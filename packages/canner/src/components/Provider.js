@@ -79,7 +79,7 @@ export default function Provider({
   
   useEffect(() => {
     // if there is ther customized graphql string,
-    // we should update the observable query since the "LIST query" is different from "UPDATE query"
+    // we should update the observable query because the "LIST query" is different from "UPDATE query"
     const customizedGQL = schema[rootKey] && schema[rootKey].graphql;
     if (customizedGQL) {
       observableQueryMapRef.current[rootKey] = getObservable({
