@@ -15,7 +15,8 @@ const tsCompiledOrder = [
   'auth-server',
   'cms-server',
   'graphql-server',
-  'canner-server'
+  'canner-server',
+  'canner-cache'
 ]
 const jsPkgs = listPkg.filter(pkg => !isTs(pkg));
 const tsPkgs = listPkg.filter(pkg => isTs(pkg))

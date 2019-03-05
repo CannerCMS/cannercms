@@ -1,0 +1,32 @@
+{
+  "name": "@canner/cache",
+  "version": "0.0.1",
+  "description": "The simple cache",
+  "author": "Canner",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "bin": {
+    "canner-bundle": "./lib/bin/build.js"
+  },
+  "scripts": {
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha --timeout 10000 --compilers ts:ts-node/register --recursive --exit \"test/**/*.spec.ts\"",
+    "clean": "rimraf lib dist",
+    "prebuild": "npm run clean",
+    "build": "tsc -p ./tsconfig.release.json --pretty",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "ts-node": "^5.0.1",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2"
+  },
+  "repository": "Canner/canner",
+  "license": "MIT"
+}
