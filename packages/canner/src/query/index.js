@@ -47,6 +47,14 @@ export class Query {
     }
   }
 
+  getGQLMap = (): Object => {
+    return Object.keys(this.schema).reduce((gqlMap, key) => {
+      const customizedGql = this.schema[key].graphql;
+      gqlMap[key] = customizedGql || this.toGQL(key);
+      return gqlMap
+    }, {});
+  }
+
   getQueryKey = (key: string): string => {
     // return the string which includes the information of this query excluding the fields and declareArgs
     // e.g: postsConnection(first: $postsFirst,where: $postsWhere)

@@ -34,6 +34,11 @@ export default class Cache implements CacheI {
     throw new Error(`There is no cached data with key '${key}'`);
   };
 
+  removeData = (key: string) => {
+    delete this.data[key];
+    delete this.listeners[key];
+  }
+
   mutate = (key, actions) => {
     const originData = this.getData(key);
     const newData = this.reducer(originData, actions);
@@ -54,7 +59,9 @@ export default class Cache implements CacheI {
   }
 
   unsubscribe = (key, id) => {
-    this.listeners[key] = this.listeners[key].filter(listener => listener.id !== id);
+    if (this.listeners[key]) {
+      this.listeners[key] = this.listeners[key].filter(listener => listener.id !== id);
+    }
   }
 
   publish = (key) => {
