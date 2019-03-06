@@ -84,7 +84,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       if (type === 'relation' && graphql) {
         return client.query({
           query: gql`${graphql}`,
-          variables: variables || this.query.getVairables(),
+          variables: variables || this.query.getVariables(),
           fetchPolicy
         }).then(({data, error, errors}) => {
           if (error) {
@@ -94,7 +94,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
         }).then(this.updateData);
       }
       const gqlStr = this.query.toGQL(relation.to);
-      const gqlVariables = this.query.getVairables();
+      const gqlVariables = this.query.getVariables();
 
       return client.query({
         query: gql`${gqlStr}`,
@@ -120,7 +120,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
     getArgs = () => {
       const {relation} = this.props;
       const queries = this.query.getQueries([relation.to]).args || {pagination: {first: 10}};
-      const variables = this.query.getVairables();
+      const variables = this.query.getVariables();
       const args = mapValues(queries, v => variables[v.substr(1)]);
       return args;
     }

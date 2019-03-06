@@ -64,7 +64,7 @@ export default class ExportModal extends React.Component<Props, State> {
         if (exportData === ALL) {
           // have to fetch data without pagination data
           const queries = query.getQueries([keyName]).args;
-          const variables = query.getVairables();
+          const variables = query.getVariables();
           delete variables[queries.first.substr(1)];
           delete variables[queries.after.substr(1)];
           delete variables[queries.last.substr(1)];

@@ -113,7 +113,7 @@ export default function withQuery(Com: React.ComponentType<*>) {
       }
       if (pattern === 'array') {
         const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
-        const variables = query.getVairables();
+        const variables = query.getVariables();
         const args = mapValues(queries, v => variables[v.substr(1)]);
 
         return (

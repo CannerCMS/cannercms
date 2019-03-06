@@ -122,7 +122,7 @@ export function getValueAndPaths(value: Object, idPathArr: Array<string>) {
     let v = result.value;
     let paths = result.paths;
     if (isPlainObject(v)) {
-      if ('edges' in v && 'pageInfo' in v) {
+      if ('edges' in v && 'node' in v.edges[key]) {
         v = get(v, ['edges', key, 'node']);
         paths = paths.concat(['edges', key, 'node']);
       } else {

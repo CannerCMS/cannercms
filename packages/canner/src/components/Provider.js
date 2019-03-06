@@ -25,7 +25,6 @@ type Props = ProviderProps;
 export default function Provider({
   schema,
   routes,
-  routerParams,
   client,
   dataDidChange,
   errorHandler,
@@ -36,9 +35,9 @@ export default function Provider({
   const actionManager = useActionManager();
   const query = useQuery(schema);
   const apollo = useApollo({
-    variables: query.getVairables(),
-    gqlMap: query.getGQLMap(),
-    schema, client, routes, routerParams
+    schema,
+    routes,
+    client
   });
   const cache = useCache();
   const onDeployManager = useOnDeployManager();
@@ -61,17 +60,16 @@ export default function Provider({
     setChangedData(changedData)
   };
 
-  const fetch = (key: string): Promise<*> => {
+  const fetch = (key: string, refetch: boolean = false): Promise<*> => {
     const queryKey = query.getQueryKey(key);
     // if the data is cached, return it
-    if (cache.isCached(queryKey)) {
+    if (cache.isCached(queryKey) && !refetch) {
       const cachedData = cache.getData(queryKey);
       log('fetch', 'cached', cachedData);
       return Promise.resolve(cachedData);
     }
-
     // get the data from apollo and store in cache
-    return apollo.fetch(key).then(({data}) => {
+    return apollo.fetch(key, query).then(({data}) => {
       const cachedData = {
         data,
         rootValue: parseConnectionToNormal(data)
@@ -91,13 +89,11 @@ export default function Provider({
   }
 
   const updateQuery = (paths: Array<string>, args: Object): Promise<*> => {
-    const originVariables = query.getVairables();
     query.updateQueries(paths, 'args', args);
-    const variables = query.getVairables();
-    const reWatchQuery = compareVariables(originVariables, variables);
-    log('updateQuery', {variables, reWatchQuery})
-    return apollo.updateQuery(paths, reWatchQuery, variables)
-      .then(() => reWatchQuery);
+    const variables = query.getVariables();
+    log('updateQuery', {variables})
+    return fetch(paths[0], true)
+      .then(() => true);
   };
 
   const reset = (key: string = routes[0], id?: string): Promise<*> => {
@@ -107,7 +103,7 @@ export default function Provider({
     actionManager.removeActions(key, id);
     const queryKey = query.getQueryKey(key);
     cache.removeData(queryKey);
-    apollo.reset(key);
+    apollo.reset();
     updateChangedData();
 
     return Promise.resolve();
@@ -226,16 +222,4 @@ function removeIdInCreateArray(actions: Array<Action<ActionType>>) {
     }
     return action;
   });
-}
-
-
-function compareVariables(originVariables: Object, variables: Object) {
-  const originArr = Object.keys(originVariables).filter(key => originVariables[key]);
-  const varArr = Object.keys(variables).filter(key => variables[key]);
-  const less = difference(originArr, varArr);
-  const more = difference(varArr, originArr);
-  if (less.length === 0 && more.length === 0) {
-    return false;
-  }
-  return true
 }
