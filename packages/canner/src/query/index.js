@@ -47,6 +47,15 @@ export class Query {
     }
   }
 
+  getQueryKey = (key: string): string => {
+    // return the string which includes the information of this query excluding the fields and declareArgs
+    // e.g: postsConnection(first: $postsFirst,where: $postsWhere)
+    const queries = this.getQueries([key]);
+    delete queries.fields;
+    delete queries.declareArgs;
+    return objectToQueries({[key]: queries}, false)
+  }
+
   getVairables = () => {
     return mapKeys(this.variables, (value, key) => key.substr(1));
   }

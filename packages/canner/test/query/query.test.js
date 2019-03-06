@@ -64,4 +64,11 @@ describe('query', () => {
     });
     expect(query.toGQL('posts')).toEqual(`query($postsFirst: Int,$postsWhere: PostWhereInput){posts: postsConnection(first: $postsFirst,where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
   });
+
+  it('should get queryKey', () => {
+    query = new Query({
+      schema
+    });
+    expect(query.getQueryKey('posts')).toEqual(`posts: postsConnection(first: $postsFirst,after: $postsAfter,last: $postsLast,before: $postsBefore,where: $postsWhere,orderBy: $postsOrderBy)`);
+  });
 });
