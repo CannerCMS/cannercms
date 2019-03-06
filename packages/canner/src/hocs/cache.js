@@ -1,5 +1,5 @@
 // @flow
-import * as React from 'react';
+import React, {useState} from 'react';
 import {mutate as defaultMutate, ActionManager as DefaultAciontManager} from '../action';
 import {isCompleteContain, genPaths} from './route';
 import { isArray } from 'lodash';
@@ -7,13 +7,9 @@ import mapValues from 'lodash/mapValues';
 import {groupBy} from 'lodash';
 import { OnDeployManager } from '../onDeployManager';
 import type {Action, ActionType} from '../action/types';
-import type {HOCProps} from './types';
-import { parseConnectionToNormal } from './utils';
-
-type State = {
-  [string]: *,
-  dataChanged: Object,
-}
+import useCache from '../hooks/useCache';
+import useOnDeployManager from '../hooks/useOnDeployManager';
+import useActionManager from '../hooks/useActionManager';
 
 export default function withCache(Com: React.ComponentType<*>, options: {
   mutate: typeof defaultMutate,
@@ -21,182 +17,92 @@ export default function withCache(Com: React.ComponentType<*>, options: {
   onDeployManager: OnDeployManager
 }) {
   const {mutate = defaultMutate, ActionManager = DefaultAciontManager} = options || {};
-  return class ComWithCache extends React.Component<HOCProps, State> {
-  actionManager: ?ActionManager;
-  onDeployManager: OnDeployManager;
-  subscribers: {
-      [key: string]: Array<{id: string, callback: Function}>
-    }
-    subscribers = {};
-    subscription: any;
-    constructor(props: HOCProps) {
-      super(props);
-      const {routes, cacheActions, pattern, path} = this.props;
-      if ((routes.length > 1 && isRoutesEndAtMe({routes, pattern, path})) ||
-        cacheActions
-      ) {
-        this.actionManager = new ActionManager();
-        this.onDeployManager = new OnDeployManager();
-      }
-      this.state = {
-        dataChanged: {}
-      };
-    }
+  return function(props: Props) {
+    const {
+      routes,
+      pattern,
+      path,
+      fetch,
+      request,
+      updateQuery,
+      deploy,
+      reset,
+      removeOnDeploy,
+      onDeploy,
+      subscribe
+    } = props;
+    const cache = useCache();
+    const onDeployManager = useOnDeployManager();
+    const actionManager = useActionManager();
+    const hasToCache = routes.length > 1 && isRoutesEndAtMe({routes, pattern, path});
+    const [changedData, setChangedData] = useState(null);
 
-    addSubscriber = (key: string, id: string, callback: Function) => {
-      const subscriber = {
-        id,
-        callback
-      };
-      if (this.subscribers[key]) {
-        this.subscribers[key].push(subscriber);
-      } else {
-        this.subscribers[key] = [subscriber];
-      }
-    }
-
-    unsubscribe = (key: string, subscriberId: string) => {
-      this.subscribers[key] = this.subscribers[key].filter(subscriber => {
-        return subscriber.id !== subscriberId;
-      });
-    }
-
-    publish = (key: string, id?: string) => {
-      // $FlowFixMe
-      if (!this.actionManager) {
-        return;
-      }
-      const data = this.state[key];
-      if (!data) {
-        return;
-      }
-      const actions = this.actionManager.getActions(key, id);
-      const mutatedData = actions.reduce((result: any, action: Action<ActionType>) => {
-        return mutate(result, action);
-      }, data);
-      const rootValue = parseConnectionToNormal(mutatedData);
-      (this.subscribers[key] || []).forEach(subscribe => {
-        subscribe.callback({data: mutatedData, rootValue});
-      });
-    }
-
-    fetch = (key: string) => {
+    const _fetch = (key: string) => {
       // the data will be mutated by cached actions
-      const {fetch} = this.props;
-      if (!this.actionManager) {
+      if (!hasToCache) {
         return fetch(key);
       }
-      const actions = this.actionManager.getActions(key);
       return fetch(key).then(result => {
-        this.setState({
-          [key]: result.data
-        });
-        this._subscribe(key);
-        const mutatedData =  actions.reduce((acc: any, action: Action<ActionType>) => {
-          return mutate(acc, action);
-        }, result.data)
-        return {
-          data: mutatedData,
-          rootValue: parseConnectionToNormal(mutatedData)
-        };
+        cache.setData(key, result);
       });
     }
 
-    _subscribe = (key: string) => {
-      const {subscribe} = this.props;
-      this.subscription = subscribe(key, (result) => {
-        this.setState({
-          [key]: result.data
-        }, () => this.publish(key));
-      });
-    }
-
-    _unsubscribe = () => {
-      if (this.subscription) {
-        this.subscription.unsubscribe();
+    const _subscribe = (key: string, callback: any) => {
+      if (!hasToCache) {
+        return subscribe(key, callback);
+      }
+      const subscriptionId = cache.subscribe(key, callback);
+      return {
+        unsubscribe: () => cache.unsubscribe(key, subscriptionId)
       }
     }
 
-    request = (action: Array<Action<ActionType>> | Action<ActionType>): Promise<*> => {
+    const updateCachedData = (actions: Array<Action<ActionType>> | Action<ActionType>) => {
+      const [key] = routes;
+      cache.mutate(key, actions);
+      return cache.getData(key);
+    }
+    const _request = (action: Array<Action<ActionType>> | Action<ActionType>): Promise<*> => {
       // use action manager cache the actions
       // update state.actions
-      const {request} = this.props;
-      if (!this.actionManager) {
-        // $FlowFixMe
+      if (!hasToCache)
         return request(action);
-      }
-      let key, id;
       if (isArray(action)) {
         // $FlowFixMe
         action.forEach(ac => {
-          // $FlowFixMe
-          this.actionManager.addAction(ac);
+          actionManager.addAction(ac);
         });
-        key = action[0].payload.key;
-        id = action[0].payload.id;
       } else {
-        // $FlowFixMe
-        this.actionManager.addAction(action);
-        // $FlowFixMe
-        key = action.payload.key;
-        // $FlowFixMe
-        id = action.payload.id;
+        actionManager.addAction(action);
       }
-      this.updateDataChanged();
-      this.publish(key, id);
+      updateDataChanged();
+      updateCachedData(action);
       return Promise.resolve();
     }
 
-    onDeploy = (key: string, callback: any) => {
-      const {onDeploy} = this.props;
-      if (!this.onDeployManager) {
+    const _onDeploy = (key: string, callback: any) => {
+      if (!hasToCache)
         return onDeploy(key, callback);
-      }
-      return this.onDeployManager.registerCallback(key, callback);
+      return onDeployManager.subscribe(key, callback);
     }
 
-    removeOnDeploy = (key: string, callbackId: string) => {
-      const {removeOnDeploy} = this.props;
-      if (!this.onDeployManager) {
+    const _removeOnDeploy = (key: string, callbackId: string) => {
+      if (!hasToCache)
         return removeOnDeploy(key, callbackId);
-      }
-      return this.onDeployManager.unregisterCallback(key, callbackId);
+      return  onDeployManager.unsubscribe(key, callbackId);
     }
 
-    _executeOnDeployCallback = (key: string, value: any) => {
-      return this.onDeployManager.execute({
-        key,
-        value
-      });
-    }
-
-    deploy = (key: string, id?: string): Promise<*> => {
-      // request cached actions
-      const {request, deploy, pattern} = this.props;
-      if (!this.actionManager) {
+    const _deploy = (key: string, id?: string): Promise<*> => {
+      if (!hasToCache)
         return deploy(key, id);
-      }
-      const originData = this.state[key];
-      let actions = this.actionManager.getActions(key, id);
-      const mutatedData = actions.reduce((result: any, action: Action<ActionType>) => {
-        return mutate(result, action);
-      }, originData);
-      const {error} = this._executeOnDeployCallback(key, mutatedData[key]);
+      const cachedData = cache.getData(key).data;
+      const {error} = onDeployManager.publish(key, cachedData[key]);
       if (error) {
         return Promise.reject();
       }
-      // actions = actions.map(action => {
-      //   const {key, value} = action.payload;
-      //   hasError = hasError || error;
-      //   action.payload.value = data;
-      //   return action;
-      // });
-
-      // $FlowFixMe
-      this.actionManager.removeActions(key, id);
-
-      this.updateDataChanged();
-      // $FlowFixMe
+      const actions = actionManager.getActions(key);
+      actionManager.removeActions(key, id);
+      updateDataChanged();
       request(actions);
       // if this cache is on the first layer,
       // it should call the deploy after request
@@ -206,76 +112,54 @@ export default function withCache(Com: React.ComponentType<*>, options: {
       return Promise.resolve();
     }
 
-    reset = (key: string, id?: string): Promise<*> => {
+    const _reset = (key: string, id?: string): Promise<*> => {
       // remove sepicfic cached actions in actionManager
-      const {reset} = this.props;
-      if (!this.actionManager) {
+      if (!hasToCache)
         return reset(key, id);
-      }
-      this.actionManager.removeActions(key, id);
-      this.updateDataChanged();
-      this.publish(key, id);
-      return Promise.resolve();
+      actionManager.removeActions(key, id);
+      updateDataChanged();
+      cache.removeData(key);
+      return _fetch(key);
     }
 
-    subscribe = (key: string, callback: Function) => {
-      const {subscribe} = this.props;
-      if (!this.actionManager) {
-        return subscribe(key, callback);
-      }
-      const id = genSubscriberId();
-      this.addSubscriber(key, id, callback);
-      return {
-        unsubscribe: () => {
-          this.unsubscribe(key, id);
-        }
-      }
-    }
-
-    updateDataChanged = () => {
-      if (!this.actionManager) {
+    const updateDataChanged = () => {
+      if (!hasToCache)
         return;
-      }
-      const actions = this.actionManager.getActions();
-      let dataChanged = groupBy(actions, (action => action.payload.key));
-      dataChanged = mapValues(dataChanged, value => {
+      const actions = actionManager.getActions();
+      let changedData = groupBy(actions, (action => action.payload.key));
+      changedData = mapValues(changedData, value => {
         if (value[0].type === 'UPDATE_OBJECT') {
           return true;
         }
         return value.map(v => v.payload.id);
       });
-      this.setState({dataChanged});
+      setChangedData(changedData)
     }
 
-    updateQuery = (paths: Array<string>, args: Object) => {
-      const {updateQuery} = this.props;
+    const _updateQuery = (paths: Array<string>, args: Object) => {
       return updateQuery(paths, args)
         .then(reWatch => {
           if (reWatch) {
-            this._unsubscribe();
-            this.fetch(paths[0]);
+            _reset(paths[0])
           }
           return reWatch;
         });
     }
 
-    render() {
-      return (
-        <Com
-          {...this.props}
-          fetch={this.fetch}
-          request={this.request}
-          deploy={this.deploy}
-          reset={this.reset}
-          subscribe={this.subscribe}
-          updateQuery={this.updateQuery}
-          onDeploy={this.onDeploy}
-          removeOnDeploy={this.removeOnDeploy}
-          dataChanged={this.state.dataChanged}
-          
-        />
-      );
-    }
+    return (
+      <Com
+        {...props}
+        fetch={_fetch}
+        request={_request}
+        deploy={_deploy}
+        reset={_reset}
+        subscribe={_subscribe}
+        updateQuery={_updateQuery}
+        onDeploy={_onDeploy}
+        removeOnDeploy={_removeOnDeploy}
+        dataChanged={changedData}
+      />
+    );
   }
 }
 
