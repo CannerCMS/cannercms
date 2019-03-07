@@ -97,6 +97,7 @@ export default class Resolver {
   public toOneResolver =
     ({from, to, key, typename}: {from: string, to: string, key: string, typename: string}) =>
     (obj, args, {connectors}: Context) => {
+
     const data = obj[key];
     // when query with toOne field, data will be inserted
     if (isPlainObject(data)) {
@@ -346,11 +347,20 @@ export default class Resolver {
         fieldResolvers[key] = obj => isEmpty(obj[key]) ? [] : obj[key];
       } else if (subfield.getType() === Types.OBJECT) {
         // return empty object, if empty
-        fieldResolvers[key] = obj => isEmpty(obj[key]) ? {} : obj[key];
+        fieldResolvers[key] = obj => {
+          return isEmpty(obj[key]) ? {
+            __typename: `${modelKey}${key}`,
+          } : {
+            ...obj[key],
+            __typename: `${modelKey}${key}`,
+          };
+        }
       } else {
         // default resolver
         // for nestedObject, nested array, scalar type
-        fieldResolvers[key] = obj => isUndefined(obj[key]) ? null : obj[key];
+        fieldResolvers[key] = obj => {
+          return isUndefined(obj[key]) ? null : obj[key];
+        }
       }
     });
     return fieldResolvers;
@@ -390,7 +400,6 @@ export default class Resolver {
       // add fields & fieldsConnection
       if (type === Types.ARRAY) {
         const capitalSingularKey = capitalizeFirstLetter(singularKey);
-
         // query by id
         retQuery[singularKey] = this.listQueryById(key, capitalSingularKey);
 
@@ -405,7 +414,6 @@ export default class Resolver {
         retQuery[key] = this.mapQuery(key, typename);
       }
     });
-
     return retQuery;
   }
 
@@ -485,20 +493,24 @@ export default class Resolver {
     if (connection) {
       const rows = response.edges;
       return {
-        ...response,
+        pageInfo: {
+          ...response.pegeInfo,
+          __typename: `${typename}PageInfo`,
+        },
         edges: rows.map(row => {
           const data = (!isEmpty(fieldResolvers))
             ? row.node
             : this.mergeWithCustomizeFieldResolvers(row.node, fieldResolvers);
-
           return {
             cursor: row.cursor,
             node: {
               ...data,
               __typename: typename
-            }
+            },
+            __typename: `${typename}Edge`,
           };
-        })
+        }),
+        __typename: `${typename}Connection`,
       };
     }
     return response.edges.map(edge => {

@@ -151,6 +151,7 @@ export default class Provider extends React.PureComponent<Props, State> {
           log('fetch', 'loading', key, result);
           return result.data;
         }).catch(e => {
+          log('fetch', 'network error', key, e);
           errorHandler && errorHandler(e);
         })
     } else if (error) {

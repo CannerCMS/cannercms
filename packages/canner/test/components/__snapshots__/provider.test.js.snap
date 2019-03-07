@@ -22,7 +22,7 @@ Object {
     },
     "count": 10,
     "header": Object {
-      "__typename": null,
+      "__typename": "homeheader",
       "subTitle": "subTitle",
       "title": "largeTitle",
     },

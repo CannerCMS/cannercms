@@ -6,7 +6,7 @@ const expect = chai.expect;
 
 export let defaultData = {
   posts: [
-    {id: '1', title: '123', tags: ['node'], author: '1', notes: [{text: 'note1'}, {text: 'note2'}], attributes: {categories: ['cate1'], author: 'leo'}},
+    {id: '1', title: '123', tags: ['node'], author: '1', notes: [{text: 'note1'}, {text: 'note2'}], attributes: {categories: ['cate1']}},
     {id: '2', title: '123', author: '2', notes: [{text: 'note3'}, {text: 'note4'}]}
   ],
   users: [
@@ -143,14 +143,13 @@ export const queryOne = ({graphqlResolve, data}: {graphqlResolve?, data?}) => {
 };
 
 export const listQuery = ({graphqlResolve}) => {
-  it.only('should query with nested object', async () => {
+  it('should query with nested object', async () => {
     const result = await graphqlResolve(gql`
       {
         posts {
           id
-          author
           attributes {
-            author
+            categories
           }
           __typename
         }
@@ -158,7 +157,7 @@ export const listQuery = ({graphqlResolve}) => {
     `);
     expect(result.posts.length).to.be.eql(2);
     expect(result.posts[0]).to.be.eql({
-      ...pick(defaultData.posts[0], ['id', 'author', 'attributes']),
+      ...pick(defaultData.posts[0], ['id', 'attributes']),
       __typename: 'Post'
     });
   });
