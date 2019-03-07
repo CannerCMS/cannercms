@@ -72,7 +72,6 @@ export const createLink = (
         }
 
         const fieldValue = rootValue[info.resultKey];
-
         if (fieldValue !== undefined) {
           return fieldValue;
         }
