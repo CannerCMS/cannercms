@@ -5,7 +5,11 @@ import { IssuerConfig } from '@canner/server-common/lib/oidcTokenVerifier';
 import { Plugin } from '@gqlify/server/lib/plugins';
 
 export interface GqlifyConfig {
+  // config should provide either schemaPath or schema
   schemaPath?: string;
+  schema?: any;
+
+  // dataSources
   dataSources?: Record<string, any>;
   plugins?: Plugin[];
   context?: Context<any> | ContextFunction<any>;
