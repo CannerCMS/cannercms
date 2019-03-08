@@ -8,6 +8,7 @@ import Sort from './sort';
 import Filter from './filter/index';
 import Actions from './actions';
 import isObject from 'lodash/isObject';
+import {getFieldValue} from '../../utils/value';
 import {findAlwaysDisplayedFilterIndexes} from './utils';
 import type {Query} from '../../query';
 import type RefId from 'canner-ref-id';
@@ -25,7 +26,6 @@ type Args = {
 type Props = {
   children: React.Node,
   updateQuery: Function,
-  getValue: Function,
   refId: RefId,
   keyName: string,
   children: React.Element<*>,
@@ -237,7 +237,6 @@ export default class Toolbar extends React.PureComponent<Props, State> {
       args,
       refId,
       items,
-      getValue,
       query,
       keyName,
       request,
@@ -254,7 +253,7 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const where = parseWhere(args.where || {});
     const {first, last} = parsePagination(args);
     let total = 0;
-    const value = getValue(originRootValue, refId.getPathArr());
+    const value = getFieldValue(originRootValue, refId.getPathArr());
 
     return <ToolbarLayout
       Actions={actions && toolbar.async ? <ActionsComponent
