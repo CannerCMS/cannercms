@@ -39,7 +39,8 @@ export default function withCanner(Com: any) {
       title,
       hideTitle,
     } = props;
-    const {imageStorage, query, renderComponent, renderChildren} = useContext(Context);
+    const contextValue = useContext(Context);
+    const {imageStorage, query, renderComponent, renderChildren} = contextValue;
     const refId = useRefId({pattern, keyName});
     const {renderType, showListButton, showSubmitAndCancelButtons} = useRenderType({pattern, path, hideBackButton});
     const {
@@ -59,7 +60,8 @@ export default function withCanner(Com: any) {
       fetch,
       updateQuery,
       refId,
-      path
+      path,
+      pattern
     });
     const {
       updateRelationQuery,
@@ -108,6 +110,8 @@ export default function withCanner(Com: any) {
     });
     const item = (
       <CannerItem
+        refId={refId}
+        value={value}
         layout={layout}
         required={required}
         type={type}
@@ -131,7 +135,7 @@ export default function withCanner(Com: any) {
         showListButton={showListButton}
         showSubmitAndCancelButtons={showSubmitAndCancelButtons}
       >
-        {(cannerItemProps) => <Com {...props} {...cannerItemProps} />}
+        {(cannerItemProps) => <Com {...props} {...contextValue} {...cannerItemProps} />}
       </CannerItem>
     )
 

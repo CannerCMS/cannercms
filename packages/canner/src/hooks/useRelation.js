@@ -2,7 +2,7 @@
 import {useState, useContext, useRef, useEffect} from 'react';
 import {Context} from 'canner-helpers';
 import gql from 'graphql-tag';
-import {mapValues} from 'lodash';
+import {isEmpty, mapValues} from 'lodash';
 import {Query} from '../query';
 import RefId from 'canner-ref-id';
 
@@ -35,7 +35,7 @@ export default function({
     setFetching(false);
   }
   const queryData = async (): Promise<*> => {
-    if (!relation) {
+    if (isEmpty(relation)) {
       return Promise.resolve();
     }
     setFetching(true);

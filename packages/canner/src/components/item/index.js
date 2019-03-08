@@ -3,6 +3,7 @@ import {Row, Col, Alert} from 'antd';
 import {isEmpty} from 'lodash';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
+import {RENDER_TYPE} from '../../hooks/useRenderType';
 
 export default (props) => {
   const {
@@ -16,7 +17,15 @@ export default (props) => {
     title,
     errorInfo,
     children,
+    shouldRenderSubmitButton,
+    shouldRenderCancelButton,
+    showListButton,
+    renderType,
+    renderChildren,
+    refId,
   } = props;
+  if (renderType === RENDER_TYPE.NULL)
+    return null;
   const labelCol = layout === 'horizontal' ? this.props.labelCol || {
     span: 6
   } : null;
@@ -44,7 +53,14 @@ export default (props) => {
             <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
           )
         }
-        {children(props)}
+        {
+          renderType === RENDER_TYPE.CHILDREN && renderChildren(() => {
+            return {
+              refId
+            };
+          })
+        }
+        {renderType === RENDER_TYPE.COMPONENT && (children(props))}
         {
           error && (
             <ErrorMessage>

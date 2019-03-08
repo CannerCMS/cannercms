@@ -13,7 +13,8 @@ export default function({
   fetch,
   updateQuery,
   refId,
-  path
+  path,
+  pattern
 }: {
   type: string,
   relation: any,
@@ -21,7 +22,8 @@ export default function({
   fetch: Function,
   updateQuery: Function,
   refId: RefId,
-  path: string
+  path: string,
+  pattern: string
 }) {
   const {routes, query} = useContext(Context);
   const firstKey = routes[0];
@@ -34,7 +36,7 @@ export default function({
   const [data, setData] = useState({});
   const subscriptionRef = useRef(null);
   const updateData = (data: any, rootValue: any) => {
-    const newValue = getFieldValue(data, refId.getPathArr());
+    const newValue = getFieldValue(rootValue, refId.getPathArr());
     setRootValue(rootValue);
     setValue(newValue);
     setData(data);
@@ -65,7 +67,7 @@ export default function({
         if (rewatch) {
           unsubscribe();
           queryData()
-            .then(() => subscribe);
+            .then(_subscribe);
         } else {
           queryData();
         }
@@ -79,7 +81,7 @@ export default function({
     return unsubscribe;
   }, [refId.toString()]);
   const getArgs = () => {
-    if (type !== 'array')
+    if (pattern !== 'array')
       return {}
     const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
     const variables = query.getVariables();
