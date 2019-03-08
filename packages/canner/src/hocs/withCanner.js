@@ -37,9 +37,9 @@ export default function withCanner(Com: any) {
       items,
       description,
       title,
-      hideTitle
+      hideTitle,
     } = props;
-    const {imageStorage, query} = useContext(Context);
+    const {imageStorage, query, renderComponent, renderChildren} = useContext(Context);
     const refId = useRefId({pattern, keyName});
     const {renderType, showListButton, showSubmitAndCancelButtons} = useRenderType({pattern, path, hideBackButton});
     const {
@@ -107,6 +107,67 @@ export default function withCanner(Com: any) {
       refId,
     });
     const item = (
+      <CannerItem
+        layout={layout}
+        required={required}
+        type={type}
+        description={description}
+        hideTitle={hideTitle}
+        imageStorage={imageStorage}
+        title={title}
+        fetching={fetching || relationFetching}
+        relationValue={relationValue}
+        onChange={onChange}
+        onDeploy={componentOnDeploy.onDeploy}
+        removeOnDeploy={componentOnDeploy.removeOnDeploy}
+        renderChildren={renderChildren}
+        renderComponent={renderComponent}
+        // external
+        error={error}
+        errorInfo={errorInfo}
+        shouldRenderSubmitButton={shouldRenderSubmitButton}
+        shouldRenderCancelButton={shouldRenderCancelButton}
+        renderType={renderType}
+        showListButton={showListButton}
+        showSubmitAndCancelButtons={showSubmitAndCancelButtons}
+      >
+        {(cannerItemProps) => <Com {...props} {...cannerItemProps} />}
+      </CannerItem>
+    )
+
+    // if (pattern === 'array' || type === 'relation') {
+    //   return (
+    //     <Context.Provider value={{
+    //       fetch,
+    //       subscribe,
+    //       request,
+    //       deploy,
+    //       reset,
+    //       updateQuery,
+    //       onDeploy,
+    //       removeOnDeploy,
+    //       renderConfirmButton: renderSubmitButton,
+    //       renderCancelButton,
+    //       refId
+    //     }}>
+    //       <Toolbar items={items}
+    //         toolbar={toolbar}
+    //         args={type === 'relation' ? relationArgs : args}
+    //         query={type === 'relation' ? relationQuery: query}
+    //         refId={type === 'relation' ? relationRefId : refId}
+    //         keyName={type === 'relation' ? relationKeyName: keyName}
+    //         originRootValue={type === 'relation' ? relationOriginRootValue : originRootValue}
+    //         rootValue={type === 'relation' ? relationRootValue: rootValue}
+    //         updateQuery={type === 'relation' ? updateRelationQuery : updateToolbarQuery}
+    //         request={request}
+    //         deploy={deploy}
+    //       >
+    //         {item}
+    //       </Toolbar>
+    //     </Context.Provider>
+    //   );
+    // }
+    return (
       <Context.Provider value={{
         fetch,
         subscribe,
@@ -120,52 +181,8 @@ export default function withCanner(Com: any) {
         renderCancelButton,
         refId
       }}>
-        <CannerItem
-          layout={layout}
-          required={required}
-          type={type}
-          description={description}
-          hideTitle={hideTitle}
-          imageStorage={imageStorage}
-          title={title}
-          fetching={fetching || relationFetching}
-          relationValue={relationValue}
-          onChange={onChange}
-          onDeploy={componentOnDeploy.onDeploy}
-          removeOnDeploy={componentOnDeploy.removeOnDeploy}
-          // external
-          error={error}
-          errorInfo={errorInfo}
-          shouldRenderSubmitButton={shouldRenderSubmitButton}
-          shouldRenderCancelButton={shouldRenderCancelButton}
-          renderType={renderType}
-          showListButton={showListButton}
-          showSubmitAndCancelButtons={showSubmitAndCancelButtons}
-        >
-          {props => <Com {...props} />}
-        </CannerItem>
+        {item}
       </Context.Provider>
-    )
-
-    if (pattern === 'array' || type === 'relation') {
-      return (
-        <Toolbar items={items}
-          toolbar={toolbar}
-          args={type === 'relation' ? relationArgs : args}
-          query={type === 'relation' ? relationQuery: query}
-          refId={type === 'relation' ? relationRefId : refId}
-          keyName={type === 'relation' ? relationKeyName: keyName}
-          originRootValue={type === 'relation' ? relationOriginRootValue : originRootValue}
-          rootValue={type === 'relation' ? relationRootValue: rootValue}
-          updateQuery={type === 'relation' ? updateRelationQuery : updateToolbarQuery}
-          request={request}
-          deploy={deploy}
-        >
-          {item}
-        </Toolbar>
-      );
-    }
-
-    return item;
+    );
   }
 }

@@ -77,10 +77,15 @@ export default function({
     queryData()
       .then(_subscribe);
     return unsubscribe;
-  }, [refId.toString()])
-  const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
-  const variables = query.getVariables();
-  const args = mapValues(queries, v => variables[v.substr(1)]);
+  }, [refId.toString()]);
+  const getArgs = () => {
+    if (type !== 'array')
+      return {}
+    const queries = query.getQueries(path.split('/')).args || {pagination: {first: 10}};
+    const variables = query.getVariables();
+    const args = mapValues(queries, v => variables[v.substr(1)]);
+    return args;
+  }
 
   return {
     rootValue,
@@ -88,6 +93,6 @@ export default function({
     value,
     fetching,
     updateToolbarQuery: _updateQuery,
-    args
+    args: getArgs()
   }
 }

@@ -114,7 +114,8 @@ export default class Generator extends React.Component<Props, State> {
       unsubscribe,
       query,
       fetch,
-      dataChanged
+      dataChanged,
+      client
     } = this.props;
     if (node.hidden || props.hidden) {
       return null;
@@ -128,6 +129,7 @@ export default class Generator extends React.Component<Props, State> {
         schema,
         goTo,
         reset,
+        client,
         updateQuery,
         subscribe,
         unsubscribe,
@@ -293,7 +295,7 @@ function generateComponent(node) {
     } else {
       component = createLoadableComponnet(node);
     }
-    return wrapByHOC(component, ['title', 'onDeploy', 'validation', 'deploy', 'request', 'relation', 'query', 'cache', 'route', 'id', 'context', 'errorCatch']);
+    return wrapByHOC(component, ['withCanner', 'errorCatch']);
   } else if (isPage(node)) {
     if (isPageRoot(node)) {
       component = () => <Item />;

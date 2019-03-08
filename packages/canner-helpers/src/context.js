@@ -9,7 +9,8 @@ export const defaultContext =  {
   routerParams: {},
   imageStorage: null,
   fileStorage: null,
-  refId: null
+  refId: null,
+  client: null
 };
 
 const functions = [

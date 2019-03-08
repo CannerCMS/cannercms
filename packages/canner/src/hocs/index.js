@@ -12,6 +12,7 @@ import context from './connectContext';
 import errorCatch from './errorCatch';
 import validation from './validation';
 import graphqlQuery from './graphqlQuery';
+import withCanner from './withCanner';
 
 export default {
   errorCatch,
@@ -27,5 +28,6 @@ export default {
   onDeploy,
   context,
   validation,
-  graphqlQuery
+  graphqlQuery,
+  withCanner
 };

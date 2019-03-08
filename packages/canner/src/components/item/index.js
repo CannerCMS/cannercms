@@ -4,18 +4,19 @@ import {isEmpty} from 'lodash';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 
-export default ({
-  layout,
-  required,
-  type,
-  description,
-  hideTitle,
-  imageStorage,
-  error,
-  title,
-  errorInfo,
-  children,
-}) => {
+export default (props) => {
+  const {
+    layout,
+    required,
+    type,
+    description,
+    hideTitle,
+    imageStorage,
+    error,
+    title,
+    errorInfo,
+    children,
+  } = props;
   const labelCol = layout === 'horizontal' ? this.props.labelCol || {
     span: 6
   } : null;
@@ -23,7 +24,7 @@ export default ({
   const itemCol = layout === 'horizontal' ?  this.props.itemCol || {
     span: 14
   } : null;
-  (
+  return (
     <Row
       type={layout === 'horizontal' ? 'flex' : ''}
       style={{marginBottom: 24}}
@@ -43,7 +44,7 @@ export default ({
             <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
           )
         }
-        {children}
+        {children(props)}
         {
           error && (
             <ErrorMessage>

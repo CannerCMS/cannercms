@@ -190,6 +190,7 @@ export default function Provider({
         updateQuery,
         subscribe,
         query: query,
+        client,
         onDeploy: onDeployManager.subscribe,
         removeOnDeploy: onDeployManager.unsubscribe,
         dataChanged: changedData

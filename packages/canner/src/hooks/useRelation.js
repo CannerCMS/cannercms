@@ -7,7 +7,7 @@ import {Query} from '../query';
 import RefId from 'canner-ref-id';
 
 export default function({
-  relation,
+  relation = {},
   type,
   graphql,
   variables,
@@ -61,6 +61,9 @@ export default function({
     return updateRelationValue(data);
   }
   const getArgs = () => {
+    if (!relation.to) {
+      return {};
+    }
     const queries = queryRef.current.getQueries([relation.to]).args || {pagination: {first: 10}};
     const variables = queryRef.current.getVariables();
     const args = mapValues(queries, v => variables[v.substr(1)]);
@@ -82,10 +85,10 @@ export default function({
     relationFetching: fetching,
     relationArgs: getArgs(),
     relationQuery: queryRef.current,
-    relationRefId: new RefId(relation && relation.to),
-    relationKeyName: relation && relation.to,
+    relationRefId: new RefId(relation.to),
+    relationKeyName: relation.to,
     relationRootValue: rootValue,
     relationOriginRootValue: data,
-    relationValue: data[relation && relation.to]
+    relationValue: data[relation.to]
   }
 }

@@ -13,7 +13,8 @@ const Title = styled.div`
     color: red;
   }
 `;
-export function Label({
+
+export default function Label({
   required,
   description,
   title,

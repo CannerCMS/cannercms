@@ -7,21 +7,17 @@ import {isPlainObject, get, isArray} from 'lodash';
 
 export default ({
   value,
-  refId,
   required,
-  validation
+  validation = {}
 }: {
   value: any,
-  refId: RefId,
   required: boolean,
   validation: any
 }) => {
   const [error, setError] = useState(false);
   const [errorInfo, setErrorInfo] = useState([]);
-  const _validate = (result: any) => {
+  const _validate = () => {
     // required
-    const paths = refId.getPathArr().slice(1);
-    const {value} = getValueAndPaths(result.data, paths);
     const isRequiredValid = required ? Boolean(value) : true;
 
     // Ajv validation
@@ -38,7 +34,7 @@ export default ({
     if (customValid && isRequiredValid && (!value || validate(value))) {
       setError(false);
       setErrorInfo([]);
-      return result;
+      return;
     }
     
 
