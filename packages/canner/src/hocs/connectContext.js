@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import RefId from 'canner-ref-id';
-import {HOCContext} from './context';
 import type {Query} from '../query';
-import type {HOCProps, Reset} from './types';
+import { Context } from 'canner-helpers';
+import type {Reset, HOCProps} from './types';
 
 type State = {
   canRender: boolean,
@@ -18,22 +18,14 @@ export default function connectContext(Com: React.ComponentType<*>) {
     reset: Reset;
 
     render() {
-      return <HOCContext.Consumer>
-        {context => (
-          <Com {...this.props}
-            query={context.query}
-            dataChanged={context.dataChanged}
-            reset={context.reset}
-            fetch={context.fetch}
-            subscribe={context.subscribe}
-            request={context.request}
-            deploy={context.deploy}
-            updateQuery={context.updateQuery}
-            onDeploy={context.onDeploy}
-            removeOnDeploy={context.removeOnDeploy}
+      return <Context.Consumer>
+        {contextValue => (
+          <Com
+            {...contextValue}
+            {...this.props}
           />
         )}
-      </HOCContext.Consumer>
+      </Context.Consumer>
     }
   };
 }

@@ -82,7 +82,16 @@ export type GeneratorProps = {
   removeOnDeploy?: Function,
   hideButtons: boolean,
   schema: Object,
-  defaultKey?: string
+  defaultKey?: string,
+  request: Function,
+  deploy: Function,
+  reset: Function,
+  updateQuery: Function,
+  subscribe: Function,
+  unsubscribe: Function,
+  fetch: Function,
+  query: any,
+  dataChanged: any
 }
 
 export type ProviderProps = {

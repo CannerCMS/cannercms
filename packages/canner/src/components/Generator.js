@@ -96,19 +96,54 @@ export default class Generator extends React.Component<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {routerParams = {}, goTo, routes, imageStorages, fileStorages, onDeploy, removeOnDeploy, hideButtons, schema} = this.props;
-    const renderChildren = props => this.renderChildren(node, props);
-
+    const {
+      routerParams = {},
+      goTo,
+      routes,
+      imageStorages,
+      fileStorages,
+      onDeploy,
+      removeOnDeploy,
+      hideButtons,
+      schema,
+      request,
+      deploy,
+      reset,
+      updateQuery,
+      subscribe,
+      unsubscribe,
+      query,
+      fetch,
+      dataChanged
+    } = this.props;
     if (node.hidden || props.hidden) {
       return null;
     }
 
     if (component) {
       const contextValue = {
-        renderChildren,
-        routes,
+        request,
+        deploy,
+        fetch,
+        schema,
+        goTo,
+        reset,
+        updateQuery,
+        subscribe,
+        unsubscribe,
+        query,
+        onDeploy,
+        removeOnDeploy,
+        dataChanged,
+        hideButtons,
+        routerParams,
+        renderChildren: (props) => this.renderChildren(node, props),
+        renderComponent: this.renderComponent,
+        routes: routes,
+        imageStorage: (imageStorages || {})[routes[0]],
+        fileStorage: (fileStorages || {})[routes[0]],
         refId: props.refId
-      };
+      }
       return (
         <div data-testid={node.path}>
           <Context.Provider
@@ -116,19 +151,8 @@ export default class Generator extends React.Component<Props, State> {
             value={contextValue}
           >
             <node.component
-              hideButtons={hideButtons}
-              routes={routes}
-              imageStorage={(imageStorages || {})[routes[0]]}
-              fileStorage={(fileStorages || {})[routes[0]]}
-              renderChildren={(props) => this.renderChildren(node, props)}
-              renderComponent={this.renderComponent}
-              routerParams={routerParams}
-              onDeploy={onDeploy}
-              removeOnDeploy={removeOnDeploy}
-              schema={schema}
-              goTo={goTo}
-              {...restNodeData}
-              {...props}
+              {...restNodeData} // props directly passed by schema
+              {...props} // props from the parent
             />
           </Context.Provider>
         </div>
@@ -167,7 +191,6 @@ export default class Generator extends React.Component<Props, State> {
       return children.map((child, index) => {
         const childProps = typeof props === 'function' ? props(child) : props;
         const {refId} = childProps;
-
         if (isUndefined(refId)) {
           throw new Error(`refId is required for renderChildren, please check node '${node.keyName || ''}'`);
         }

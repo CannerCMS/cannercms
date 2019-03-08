@@ -21,7 +21,6 @@ export default {
   request,
   deploy,
   relation,
-  // validator,
   id,
   title,
   containerQuery,

@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
-import {notification} from 'antd';
 import {Parser, Traverser} from 'canner-compiler';
 import {pickBy} from 'lodash';
 // i18n
@@ -78,9 +77,8 @@ class CannerCMS extends React.Component<Props> {
   }
 
   deploy = (key: string, id?: string): Promise<*> => {
-    if (this.provider) {
+    if (this.provider)
       return this.provider.deploy(key, id);
-    }
     return Promise.resolve();
   }
 

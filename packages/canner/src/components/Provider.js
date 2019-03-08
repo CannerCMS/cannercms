@@ -3,7 +3,6 @@
  */
 
 import React, {useEffect, useState, useRef} from 'react';
-import {HOCContext} from '../hocs/context';
 import {ApolloProvider} from 'react-apollo';
 import pluralize from 'pluralize';
 import {actionToMutation, actionsToVariables} from '../action';
@@ -183,7 +182,7 @@ export default function Provider({
   return (
     <ApolloProvider client={client}>
       {/* $FlowFixMe */}
-      <HOCContext.Provider value={{
+      {React.cloneElement(children, {
         request: request,
         deploy: deploy,
         fetch: fetch,
@@ -194,20 +193,7 @@ export default function Provider({
         onDeploy: onDeployManager.subscribe,
         removeOnDeploy: onDeployManager.unsubscribe,
         dataChanged: changedData
-      }}>
-        {/* $FlowFixMe */}
-        {React.cloneElement(children, {
-          request: request,
-          deploy: deploy,
-          fetch: fetch,
-          reset: reset,
-          updateQuery,
-          subscribe,
-          query: query,
-          onDeploy: onDeployManager.subscribe,
-          removeOnDeploy: onDeployManager.unsubscribe
-        })}
-      </HOCContext.Provider>
+      })}
     </ApolloProvider>
   );
 }

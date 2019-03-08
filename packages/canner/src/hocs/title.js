@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import {Tooltip, Icon, Alert, Row, Col} from 'antd';
-import {HOCContext} from './context';
 import {Context} from 'canner-helpers';
 import styled from 'styled-components';
 import {isEmpty, isEqual} from 'lodash';
@@ -69,7 +68,6 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         refId, routes, updateQuery, type, imageStorage,
         onDeploy, removeOnDeploy, required, dataChanged, error, errorInfo
       } = this.props;
-
       const labelCol = layout === 'horizontal' ? this.props.labelCol || {
         span: 6
       } : null;
@@ -78,60 +76,54 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         span: 14
       } : null;
 
-      // $FlowFixMe: default funcitons in HOCContext only throw error, so they don't have any arguments
-      return <HOCContext.Provider
-        value={{
-          fetch,
-          subscribe,
-          request,
-          deploy,
-          reset,
-          query,
-          updateQuery,
-          onDeploy,
-          removeOnDeploy,
-          dataChanged
-        }}
-      >
-        <Context.Provider value={{
-          renderChildren,
-          renderComponent,
-          renderConfirmButton,
-          renderCancelButton,
-          refId,
-          routes
-        }}>
-          <Row
-            type={layout === 'horizontal' ? 'flex' : ''}
-            style={{marginBottom: 24}}
-          >
-            <Col {...labelCol}>
-              <Label
-                required={required}
-                type={type}
-                layout={layout}
-                description={description}
-                title={hideTitle ? '' : title}
-              />
-            </Col>
-            <Col {...itemCol}>
-              {
-                (type === 'image' && isEmpty(imageStorage)) && (
-                  <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
-                )
-              }
-              <Com {...this.props} />
-              {
-                error && (
-                  <ErrorMessage>
-                    {errorInfo[0].message}
-                  </ErrorMessage>
-                )
-              }
-            </Col>
-          </Row>
-        </Context.Provider>
-      </HOCContext.Provider>
+      return <Context.Provider value={{
+        fetch,
+        subscribe,
+        request,
+        deploy,
+        reset,
+        query,
+        updateQuery,
+        onDeploy,
+        removeOnDeploy,
+        dataChanged,
+        renderChildren,
+        renderComponent,
+        renderConfirmButton,
+        renderCancelButton,
+        refId,
+        routes
+      }}>
+        <Row
+          type={layout === 'horizontal' ? 'flex' : ''}
+          style={{marginBottom: 24}}
+        >
+          <Col {...labelCol}>
+            <Label
+              required={required}
+              type={type}
+              layout={layout}
+              description={description}
+              title={hideTitle ? '' : title}
+            />
+          </Col>
+          <Col {...itemCol}>
+            {
+              (type === 'image' && isEmpty(imageStorage)) && (
+                <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
+              )
+            }
+            <Com {...this.props} />
+            {
+              error && (
+                <ErrorMessage>
+                  {errorInfo[0].message}
+                </ErrorMessage>
+              )
+            }
+          </Col>
+        </Row>
+      </Context.Provider>
     }
   };
 }
