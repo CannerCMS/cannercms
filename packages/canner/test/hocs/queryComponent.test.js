@@ -163,7 +163,7 @@ describe('toolbar method', () => {
       keyName: 'posts',
       parseConnectionToNormal,
       defaultValue,
-      args: mapValues(query.getQueries(refId.getPathArr()).args, v => query.getVairables()[v]),
+      args: mapValues(query.getQueries(refId.getPathArr()).args, v => query.getVariables()[v]),
     };
   });
 

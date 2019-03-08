@@ -1,23 +1,17 @@
 // @flow
-import React, {useState} from 'react';
-import {mutate as defaultMutate, ActionManager as DefaultAciontManager} from '../action';
+import * as React from 'react';
 import {isCompleteContain, genPaths} from './route';
 import { isArray } from 'lodash';
 import mapValues from 'lodash/mapValues';
 import {groupBy} from 'lodash';
-import { OnDeployManager } from '../onDeployManager';
 import type {Action, ActionType} from '../action/types';
 import useCache from '../hooks/useCache';
 import useOnDeployManager from '../hooks/useOnDeployManager';
 import useActionManager from '../hooks/useActionManager';
+const {useState} = React;
 
-export default function withCache(Com: React.ComponentType<*>, options: {
-  mutate: typeof defaultMutate,
-  ActionManager: DefaultAciontManager,
-  onDeployManager: OnDeployManager
-}) {
-  const {mutate = defaultMutate, ActionManager = DefaultAciontManager} = options || {};
-  return function(props: Props) {
+export default function withCache(Com: React.ComponentType<*>) {
+  return function(props: any) {
     const {
       routes,
       pattern,
