@@ -39,6 +39,7 @@ export default ({
     }
     return fetch(key).then(result => {
       cache.setData(key, result);
+      return result;
     });
   }
 
@@ -113,7 +114,6 @@ export default ({
       return reset(key, id);
     actionManager.removeActions(key, id);
     updateDataChanged();
-    cache.removeData(key);
     return _fetch(key);
   }
 

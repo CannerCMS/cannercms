@@ -2,7 +2,7 @@
  * @flow
  */
 
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useImperativeHandle, forwardRef} from 'react';
 import {ApolloProvider} from 'react-apollo';
 import pluralize from 'pluralize';
 import {actionToMutation, actionsToVariables} from '../action';
@@ -21,7 +21,9 @@ import type {Action, ActionType} from '../action/types';
 
 type Props = ProviderProps;
 
-export default function Provider({
+export default forwardRef(Provider);
+
+function Provider({
   schema,
   routes,
   client,
@@ -29,7 +31,7 @@ export default function Provider({
   errorHandler,
   children,
   afterDeploy
-}: Props) {
+}: Props, ref: any) {
   // ensure these instance only create at first rendering
   const actionManager = useActionManager();
   const query = useQuery(schema);
@@ -95,20 +97,18 @@ export default function Provider({
       .then(() => true);
   };
 
-  const reset = (key: string = routes[0], id?: string): Promise<*> => {
+  const reset = async (key: string = routes[0], id?: string): Promise<*> => {
     if (actionManager.getActions(key, id).length === 0) {
       return Promise.resolve();
     }
     actionManager.removeActions(key, id);
-    const queryKey = query.getQueryKey(key);
-    cache.removeData(queryKey);
-    apollo.reset();
+    await apollo.reset();
     updateChangedData();
 
     return Promise.resolve();
   }
 
-  const deploy = (key: string, id?: string): Promise<*> => {
+  const deploy = async (key: string, id?: string): Promise<*> => {
     let actions = actionManager.getActions(key, id);
     if (!actions || !actions.length) {
       return Promise.resolve();
@@ -124,11 +124,13 @@ export default function Provider({
       errorHandler && errorHandler(new Error('Invalid field'));
       return Promise.reject(error);
     }
-    return client.mutate({
-      mutation: gql`${mutation}`,
-      variables
-    }).then(result => {
-      reset();
+    try {
+      const result = await client.mutate({
+        mutation: gql`${mutation}`,
+        variables
+      });
+      const {data} = result;
+      await reset();
       log('deploy', key, {
         id,
         result,
@@ -136,17 +138,15 @@ export default function Provider({
         variables
       });
       actionManager.removeActions(key, id);
-      return result.data;
-    }).then(result => {
       updateChangedData();
       afterDeploy && afterDeploy({
         key,
         id: id || '',
-        result,
+        result: data,
         actions
       });
-      return result;
-    }).catch(e => {
+      return data;
+    } catch (e) {
       errorHandler && errorHandler(e);
       log('deploy', e, key, {
         id,
@@ -155,7 +155,8 @@ export default function Provider({
       });
       // to hocs
       throw e;
-    });
+    }
+
   };
 
   const request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {
@@ -178,6 +179,11 @@ export default function Provider({
     cache.mutate(queryKey, actions);
     return cache.getData(queryKey);
   }
+
+  useImperativeHandle(ref, () => ({
+    deploy,
+    reset,
+  }));
 
   return (
     <ApolloProvider client={client}>

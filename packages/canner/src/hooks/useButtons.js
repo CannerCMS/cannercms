@@ -50,15 +50,15 @@ export default ({
 
   const renderSubmitButton = genDeployButton(_deploy, refId);
   const renderCancelButton = genCancelButton(_reset, refId);
-  const isCreateOp = routerParams.operator === 'create';
-  const shouldRenderButtons = (routes.length === 1 || isRoutesEndAtMe({routes, path, pattern}) &&
-  isCreateOp) && !controlDeployAndResetButtons && !hideButtons && refId.getPathArr().length <= routes.length;
-
+  const isCreateView = routerParams.operator === 'create';
+  const isFirstArray = pattern === 'array';
+  const isUpdateView = routes.length === 2;
+  const shouldRenderButtons = (isFirstArray && (isUpdateView || isCreateView)) && !controlDeployAndResetButtons && !hideButtons;
   return {
     renderSubmitButton,
     renderCancelButton,
     shouldRenderSubmitButton: shouldRenderButtons,
-    shouldRenderCancelButton: shouldRenderButtons && !isCreateOp
+    shouldRenderCancelButton: shouldRenderButtons && !isCreateView
   }
 }
 

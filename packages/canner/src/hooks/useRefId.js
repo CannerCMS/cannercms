@@ -7,12 +7,11 @@ export default ({
   keyName,
 }) => {
   const {refId, routerParams, routes} = useContext(Context);
-
   if (routerParams.operator === 'create' && pattern === 'array') {
-    return refId;
+    return refId.child(keyName);
   } else if (pattern === 'array' && routes.length > 1) {
-    // in update view, the index must be one
-    return refId.child(0);
+    // in update view, the index must be 0
+    return refId.child(`${keyName}/0`);
   } else {
     return refId ? refId.child(keyName) : new RefId(keyName);
   }

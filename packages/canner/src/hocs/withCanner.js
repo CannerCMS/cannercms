@@ -125,6 +125,8 @@ export default function withCanner(Com: any) {
         onDeploy={componentOnDeploy.onDeploy}
         removeOnDeploy={componentOnDeploy.removeOnDeploy}
         renderChildren={renderChildren}
+        renderSubmitButton={renderSubmitButton}
+        renderCancelButton={renderCancelButton}
         renderComponent={renderComponent}
         // external
         error={error}

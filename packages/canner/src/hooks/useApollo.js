@@ -28,8 +28,8 @@ export default ({
     })
   }
 
-  const reset = () => {
-    client.clearStore();
+  const reset = (): Promise<*> => {
+    return client.clearStore();
   }
 
   return {

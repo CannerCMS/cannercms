@@ -45,6 +45,7 @@ export default function({
   const queryData = (): Promise<*> => {
     setFetching(true);
     return fetch(firstKey).then(result => {
+      console.log(firstKey, result);
       const {data, rootValue} = result;
       updateData(data, rootValue);
     });

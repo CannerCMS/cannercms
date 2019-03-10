@@ -17,9 +17,12 @@ export default (props) => {
     title,
     errorInfo,
     children,
+    renderSubmitButton,
+    renderCancelButton,
     shouldRenderSubmitButton,
     shouldRenderCancelButton,
     showListButton,
+    showSubmitAndCancelButtons,
     renderType,
     renderChildren,
     refId,
@@ -67,6 +70,18 @@ export default (props) => {
               {errorInfo[0].message}
             </ErrorMessage>
           )
+        }
+        {
+          showSubmitAndCancelButtons && renderSubmitButton()
+        }
+        {
+          showSubmitAndCancelButtons && renderCancelButton()
+        }
+        {
+          shouldRenderSubmitButton && renderSubmitButton()
+        }
+        {
+          shouldRenderCancelButton && renderCancelButton()
         }
       </Col>
     </Row>

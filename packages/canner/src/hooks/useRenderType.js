@@ -97,7 +97,12 @@ export function getSubmitAndCancelButtons({
 }) {
   const routesLength = routes.length;
   const pathArrLength = refId.getPathArr().length;
-  return pattern === 'array' && !hideButtons && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))
+  const isCreateView = operator === 'create';
+  const isFirstArray = pattern === 'array';
+  const isUpdateView = routes.length === 2;
+
+  const shouldRenderButtons = (isFirstArray && (isUpdateView || isCreateView)) && !hideButtons;
+  return shouldRenderButtons
 }
 
 export function getShowListButton({
