@@ -45,7 +45,6 @@ export default function({
   const queryData = (): Promise<*> => {
     setFetching(true);
     return fetch(firstKey).then(result => {
-      console.log(firstKey, result);
       const {data, rootValue} = result;
       updateData(data, rootValue);
     });
@@ -63,7 +62,7 @@ export default function({
   }
 
   const _updateQuery = (paths: Array<string>, args: Object) => {
-    updateQuery(paths, args)
+    return updateQuery(paths, args)
       .then(rewatch => {
         if (rewatch) {
           unsubscribe();
@@ -75,12 +74,6 @@ export default function({
       })
   };
 
-  useEffect(() => {
-    unsubscribe();
-    queryData()
-      .then(_subscribe);
-    return unsubscribe;
-  }, [refId.toString()]);
   const getArgs = () => {
     if (pattern !== 'array')
       return {}
@@ -89,6 +82,28 @@ export default function({
     const args = mapValues(queries, v => variables[v.substr(1)]);
     return args;
   }
+
+  const isUpdateView = routes.length > 1;
+  const isFirstArray = pattern === 'array';
+
+  // when refId changes, we should get new value
+  useEffect(() => {
+    unsubscribe();
+    const args = getArgs();
+    if (isUpdateView && isFirstArray) {
+      args.where = {
+        id: routes[1]
+      };
+    } else {
+      if (args.where && args.where.id) {
+        delete args.where.id;
+      }
+    }
+    _updateQuery(refId.getPathArr().slice(0, 1), args)
+      .then(queryData)
+      .then(_subscribe)
+    return unsubscribe;
+  }, [refId.toString()]);
 
   return {
     rootValue,
