@@ -17,18 +17,7 @@ export default (props) => {
     title,
     errorInfo,
     children,
-    renderSubmitButton,
-    renderCancelButton,
-    shouldRenderSubmitButton,
-    shouldRenderCancelButton,
-    showListButton,
-    showSubmitAndCancelButtons,
-    renderType,
-    renderChildren,
-    refId,
   } = props;
-  if (renderType === RENDER_TYPE.NULL)
-    return null;
   const labelCol = layout === 'horizontal' ? this.props.labelCol || {
     span: 6
   } : null;
@@ -56,32 +45,13 @@ export default (props) => {
             <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
           )
         }
-        {
-          renderType === RENDER_TYPE.CHILDREN && renderChildren(() => {
-            return {
-              refId
-            };
-          })
-        }
-        {renderType === RENDER_TYPE.COMPONENT && (children(props))}
+        {children(props)}
         {
           error && (
             <ErrorMessage>
               {errorInfo[0].message}
             </ErrorMessage>
           )
-        }
-        {
-          showSubmitAndCancelButtons && renderSubmitButton()
-        }
-        {
-          showSubmitAndCancelButtons && renderCancelButton()
-        }
-        {
-          shouldRenderSubmitButton && renderSubmitButton()
-        }
-        {
-          shouldRenderCancelButton && renderCancelButton()
         }
       </Col>
     </Row>

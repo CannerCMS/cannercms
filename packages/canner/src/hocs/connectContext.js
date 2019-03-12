@@ -19,12 +19,15 @@ export default function connectContext(Com: React.ComponentType<*>) {
 
     render() {
       return <Context.Consumer>
-        {contextValue => (
-          <Com
-            {...contextValue}
-            {...this.props}
-          />
-        )}
+        {contextValue => {
+          console.log(contextValue);
+          return (
+            <Com
+              {...contextValue}
+              {...this.props}
+            />
+          );
+        }}
       </Context.Consumer>
     }
   };

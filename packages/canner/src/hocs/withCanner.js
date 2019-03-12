@@ -3,102 +3,58 @@
 import React, {useContext} from 'react';
 import {Context} from 'canner-helpers';
 import CannerItem from '../components/item';
-import Toolbar from '../components/toolbar';
 
 // hooks
 import useRefId from '../hooks/useRefId';
-import useMethods from '../hooks/useMethods';
-import useFetch from '../hooks/useFetch';
-import useRenderType from '../hooks/useRenderType';
-import useRelation from '../hooks/useRelation';
 import useOnChange from '../hooks/useOnChange';
-import useButtons from '../hooks/useButtons';
 import useValidation from '../hooks/useValidation';
 import useOnDeploy from '../hooks/useOnDeploy';
+import useFieldValue from '../hooks/useFieldValue';
 
 export default function withCanner(Com: any) {
   return function(props: any) {
     const {
       pattern,
       keyName,
-      path,
       type,
-      relation,
-      hideBackButton,
-      graphql,
-      variables,
-      fetchPolicy,
-      controlDeployAndResetButtons,
-      hideButtons,
       required,
       validation,
       layout,
-      toolbar,
-      items,
       description,
       title,
       hideTitle,
     } = props;
     const contextValue = useContext(Context);
-    const {imageStorage, query, renderComponent, renderChildren} = contextValue;
-    const refId = useRefId({pattern, keyName});
-    const {renderType, showListButton, showSubmitAndCancelButtons} = useRenderType({pattern, path, hideBackButton});
     const {
-      subscribe,
-      updateQuery,
-      fetch,
+      rootValue,
       request,
-      reset,
-      deploy,
+      imageStorage,
       onDeploy,
       removeOnDeploy
-    } = useMethods({path, pattern});
-    const {rootValue, originRootValue, value, fetching, updateToolbarQuery, args} = useFetch({
-      type,
-      relation,
-      subscribe,
-      fetch,
-      updateQuery,
-      refId,
-      path,
-      pattern
-    });
-    const {
-      updateRelationQuery,
-      relationFetching,
-      relationArgs,
-      relationQuery,
-      relationRefId,
-      relationKeyName,
-      relationRootValue,
-      relationValue,
-      relationOriginRootValue,
-    } = useRelation({
-      relation,
-      type,
-      graphql,
-      variables,
-      fetchPolicy,
-      refId
-    })
+    } = contextValue;
+    const refId = useRefId({pattern, keyName});
+    // const {
+    //   updateRelationQuery,
+    //   relationFetching,
+    //   relationArgs,
+    //   relationQuery,
+    //   relationRefId,
+    //   relationKeyName,
+    //   relationRootValue,
+    //   relationValue,
+    //   relationOriginRootValue,
+    // } = useRelation({
+    //   relation,
+    //   type,
+    //   graphql,
+    //   variables,
+    //   fetchPolicy,
+    //   refId
+    // })
     const {onChange} = useOnChange({rootValue, request});
-    const {
-      renderSubmitButton,
-      renderCancelButton,
-      shouldRenderSubmitButton,
-      shouldRenderCancelButton
-    } = useButtons({
-      deploy,
-      reset,
-      rootValue,
-      refId,
-      controlDeployAndResetButtons,
-      hideButtons,
-      path,
-      pattern
-    })
+    const {fieldValue} = useFieldValue({rootValue, refId});
     const {error, errorInfo} = useValidation({
-      value,
+      value: fieldValue,
       refId,
       required,
       validation
@@ -111,7 +67,7 @@ export default function withCanner(Com: any) {
     const item = (
       <CannerItem
         refId={refId}
-        value={value}
+        value={fieldValue}
         layout={layout}
         required={required}
         type={type}
@@ -119,23 +75,16 @@ export default function withCanner(Com: any) {
         hideTitle={hideTitle}
         imageStorage={imageStorage}
         title={title}
-        fetching={fetching || relationFetching}
-        relationValue={relationValue}
+        // relationValue={relationValue}
         onChange={onChange}
         onDeploy={componentOnDeploy.onDeploy}
         removeOnDeploy={componentOnDeploy.removeOnDeploy}
-        renderChildren={renderChildren}
-        renderSubmitButton={renderSubmitButton}
-        renderCancelButton={renderCancelButton}
-        renderComponent={renderComponent}
+        renderChildren={() => null}
+        renderConfirmButton={() => null}
+        renderCancelButton={() => null}
         // external
         error={error}
         errorInfo={errorInfo}
-        shouldRenderSubmitButton={shouldRenderSubmitButton}
-        shouldRenderCancelButton={shouldRenderCancelButton}
-        renderType={renderType}
-        showListButton={showListButton}
-        showSubmitAndCancelButtons={showSubmitAndCancelButtons}
       >
         {(cannerItemProps) => <Com {...props} {...contextValue} {...cannerItemProps} />}
       </CannerItem>
@@ -175,16 +124,9 @@ export default function withCanner(Com: any) {
     // }
     return (
       <Context.Provider value={{
-        fetch,
-        subscribe,
-        request,
-        deploy,
-        reset,
-        updateQuery,
-        onDeploy,
-        removeOnDeploy,
-        renderConfirmButton: renderSubmitButton,
-        renderCancelButton,
+        ...contextValue,
+        renderCancelButton: () => null,
+        renderConfirmButton: () => null,
         refId
       }}>
         {item}

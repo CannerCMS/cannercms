@@ -96,55 +96,16 @@ export default class Generator extends React.Component<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {
-      routerParams = {},
-      goTo,
-      routes,
-      imageStorages,
-      fileStorages,
-      onDeploy,
-      removeOnDeploy,
-      hideButtons,
-      schema,
-      request,
-      deploy,
-      reset,
-      updateQuery,
-      subscribe,
-      unsubscribe,
-      query,
-      fetch,
-      dataChanged,
-      client
-    } = this.props;
     if (node.hidden || props.hidden) {
       return null;
     }
 
     if (component) {
       const contextValue = {
-        request,
-        deploy,
-        fetch,
-        schema,
-        goTo,
-        reset,
-        client,
-        updateQuery,
-        subscribe,
-        unsubscribe,
-        query,
-        onDeploy,
-        removeOnDeploy,
-        dataChanged,
-        hideButtons,
-        routerParams,
+        ...this.props.contextValue,
         renderChildren: (props) => this.renderChildren(node, props),
         renderComponent: this.renderComponent,
-        routes: routes,
-        imageStorage: (imageStorages || {})[routes[0]],
-        fileStorage: (fileStorages || {})[routes[0]],
-        refId: props.refId
+        refId: props.refId,
       }
       return (
         <div data-testid={node.path}>
@@ -286,7 +247,7 @@ function generateComponent(node) {
     if (!node.component) {
       component = Layouts[node.ui];
     }
-    return wrapByHOC(component, node.ui === 'condition' ? ['containerQuery', 'context'] : ['context']);
+    return wrapByHOC(component, node.ui === 'condition' ? ['containerQuery', 'context'] : ['withCanner']);
   }
   
   if (isComponent(node)) {

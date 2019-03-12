@@ -3,6 +3,7 @@
 import React, {useRef, forwardRef, useImperativeHandle} from 'react';
 import {Parser, Traverser} from 'canner-compiler';
 import {pickBy} from 'lodash';
+import Generator from './Generator';
 import ListForm from './form/ListForm';
 import useProvider from '../hooks/useProvider';
 import useListForm from '../hooks/useListForm';
@@ -86,12 +87,16 @@ function CannerCMS({
             schema={dataSchema}
             baseUrl={baseUrl}
             goTo={goTo}
+            routes={routes}
+            routerParams={routerParams}
             defaultKey={defaultKey}
             hideButtons={hideButtons}
             componentTree={componentTree}
             imageStorage={imageStorages[routes[0]]}
             fileStorage={fileStorages[routes[0]]}
-          />
+          >
+            <Generator />
+          </ListForm>
         }
       </React.Fragment>
     </IntlProvider>

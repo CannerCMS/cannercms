@@ -33,7 +33,7 @@ export default function useListForm({
   }, [isListForm, routes[0]])
   return {
     data: result.data,
-    rootValue: result.data,
+    rootValue: result.rootValue,
     isFetching,
     toolbar: (schema[routes[0]] || {}).toolbar,
     onClickAddButton: () => {},
