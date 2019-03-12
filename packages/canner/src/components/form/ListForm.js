@@ -3,55 +3,49 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import {Context} from 'canner-helpers';
 const AddButton = () => null;
-const Generator = () => null;
+const Generator = (props) => {
+  console.log(props);
+  return '123';
+};
 const Toolbar = () => null;
 
 export default function ListForm({
-  getListValue,
-  goTo,
+  data,
+  rootValue,
+  loading = null,
+  isFetching,
+  toolbar,
+  onClickAddButton,
+  componentTree,
   routes,
-  subscribeListValue
-}: {
-  goTo: Function,
-  routes: Function,
-  getListValue: Function,
-  subscribeListValue: Function
-}) {
-  const {rootValue, setRootValue} = useState({});
-  const {data, setData} = useState({});
-  const {isFetching, setIsFetching} = useState(true);
-  const unsubscribeRef = useRef(function() {});
-  const updateValue = (result) => {
-    setData(result.data);
-    setRootValue(result.rootValue);
-    setIsFetching(false);
-  };
-  useEffect(() => {
-    getListValue().then(result => {
-      updateValue(result);
-      const {unsubscribe} = subscribeListValue();
-      return unsubscribeRef.current = unsubscribe;
-    });
-    return unsubscribeRef.current;
-  }, []);
-  const clickAddButton = () => {
-    goTo({
-      pathname: `${routes[0]}`,
-      operator: {
-        operator: 'create'
-      }
-    });
-  }
+  routerParams,
+  goTo,
+  defaultKey,
+  ...props
+}: any) {
+
   return (
     <Context.Provider
       value={{
         rootValue,
-        data
+        data,
+        routes,
+        routerParams,
+        goTo,
+        ...props
       }}
     >
-      <AddButton onClick={clickAddButton}/>
-      <Toolbar />
-      {isFetching ? null : (<Generator/>)}
+      <AddButton onClick={onClickAddButton}/>
+      <Toolbar toolbar={toolbar}/>
+      {isFetching ? loading : (
+        <Generator
+          componentTree={componentTree}
+          goTo={goTo}
+          routes={routes}
+          routerParams={routerParams || {}}
+          defaultKey={defaultKey}
+        />
+      )}
     </Context.Provider>
   )
 }

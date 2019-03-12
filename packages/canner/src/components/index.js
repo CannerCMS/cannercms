@@ -1,10 +1,13 @@
 // @flow
 
-import * as React from 'react';
-import Provider from './Provider';
-import Generator from './Generator';
+import React, {useRef, forwardRef, useImperativeHandle} from 'react';
 import {Parser, Traverser} from 'canner-compiler';
 import {pickBy} from 'lodash';
+import ListForm from './form/ListForm';
+import useProvider from '../hooks/useProvider';
+import useListForm from '../hooks/useListForm';
+import useFormType from '../hooks/useFormType';
+
 // i18n
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -18,131 +21,81 @@ import type {CMSProps} from './types';
 
 type Props = CMSProps;
 
-class CannerCMS extends React.Component<Props> {
-  imageServiceConfigs: Object
-  client: Client;
-  provider: ?Provider;
-  componentTree: any;
-  schema: any;
+export default forwardRef(CannerCMS);
 
-  static defaultProps = {
-    schema: {
-      schema: {}
-    },
-    dataDidChange: () => {},
-    afterDeploy: () => {},
-    baseUrl: '/',
-    intl: {
-      locale: 'en',
-      defaultLocale: 'en',
-      messages: {
-        'en': {}
-      }
-    },
-    routerParams: {},
-    routes: []
-  }
-
-  constructor(props: Props) {
-    super(props);
-    const {schema, visitors, pageSchema} = props.schema;
-    const uiSchema = {
-      ...pageSchema,
-      ...pickBy(schema, v => !v.defOnly)
+function CannerCMS({
+  schema,
+  dataDidChange = () => {},
+  afterDeploy = () => {},
+  baseUrl = '/',
+  intl = {
+    locale: 'en',
+    defaultLocale: 'en',
+    messages: {
+      'en': {}
     }
-    this.componentTree = compile(uiSchema, visitors);
-    this.schema = Object.keys(schema).reduce((result: any, key: string) => {
-      let v = {...schema[key]};
-      if (v.type === 'array') {
-        // v.items = v.items.items;
-        v.items.id = {
-          type: 'id'
-        }
-      }
-      result[key] = v;
-      return result;
-    }, {});
+  },
+  routerParams = {},
+  routes = [],
+  goTo,
+  hideButtons,
+  errorHandler = defaultErrorHandler,
+  defaultKey,
+  client
+}: Props, ref) {
+  const {visitors, pageSchema, imageStorages, fileStorages, dict} = schema;
+  const dataSchema = schema.schema;
+  const uiSchema = {
+    ...pageSchema,
+    ...pickBy(dataSchema, v => !v.defOnly)
   }
-
-  componentDidCatch(error: any) {
-    const {errorHandler} = this.props;
-    errorHandler && errorHandler(error);
-  }
-
-  dataDidChange = (dataChanged: Object) => {
-    const {dataDidChange} = this.props;
-    if (dataDidChange) {
-      dataDidChange(dataChanged);
-    }
-  }
-
-  deploy = (key: string, id?: string): Promise<*> => {
-    if (this.provider)
-      return this.provider.deploy(key, id);
-    return Promise.resolve();
-  }
-
-  reset = (key: string, id?: string): Promise<*> => {
-    if (this.provider) {
-      return this.provider.reset(key, id);
-    }
-    return Promise.resolve();
-  }
-
-  render() {
-    const {
-      baseUrl,
-      routes,
-      routerParams,
-      goTo,
-      afterDeploy,
-      intl = {},
-      hideButtons,
-      errorHandler,
-      schema: {imageStorages, fileStorages, dict = {}},
-      defaultKey,
-      client
-    } = this.props;
-    const currentLocale = intl.locale || 'en';
-    return (
-      <IntlProvider
-        locale={currentLocale}
-        key={currentLocale}
-        defaultLocale={intl.defaultLocale || currentLocale}
-        messages={{
-          ...(componentLocales[currentLocale] || {}),
-          ...(cannerLocales[currentLocale] || {}),
-          ...(dict[currentLocale] || {}),
-          ...((intl.messages || {})[currentLocale] || {})
-        }}
-      >
-        <Provider
-          ref={provider => this.provider = provider}
-          client={client}
-          schema={this.schema}
-          dataDidChange={this.dataDidChange}
-          afterDeploy={afterDeploy}
-          rootKey={routes[0]}
-          routes={routes}
-          routerParams={routerParams || {}}
-          errorHandler={errorHandler || defaultErrorHandler}
-        >
-          <Generator
-            imageStorages={imageStorages}
-            fileStorages={fileStorages}
-            schema={this.schema}
-            componentTree={this.componentTree || {}}
-            goTo={goTo}
+  const componentTree = useRef(compile(uiSchema, visitors)).current;
+  const currentLocale = intl.locale || 'en';
+  const provider = useProvider({
+    schema: dataSchema,
+    routes,
+    client,
+    dataDidChange,
+    errorHandler,
+    afterDeploy
+  });
+  const {
+    isListForm,
+  } = useFormType({routes, routerParams, schema: dataSchema, goTo});
+  const listForm = useListForm({provider, schema: dataSchema, routes, isListForm});
+  useImperativeHandle(ref, () => ({
+    deploy: provider.deploy,
+    reset: provider.reset,
+  }));
+  return (
+    <IntlProvider
+      locale={currentLocale}
+      key={currentLocale}
+      defaultLocale={intl.defaultLocale || currentLocale}
+      messages={{
+        ...(componentLocales[currentLocale] || {}),
+        ...(cannerLocales[currentLocale] || {}),
+        ...(dict[currentLocale] || {}),
+        ...((intl.messages || {})[currentLocale] || {})
+      }}
+    >
+      <React.Fragment>
+        {
+          isListForm && <ListForm
+            {...listForm}
+            schema={dataSchema}
             baseUrl={baseUrl}
-            routes={routes}
-            routerParams={routerParams || {}}
-            hideButtons={hideButtons}
+            goTo={goTo}
             defaultKey={defaultKey}
+            hideButtons={hideButtons}
+            componentTree={componentTree}
+            imageStorage={imageStorages[routes[0]]}
+            fileStorage={fileStorages[routes[0]]}
           />
-        </Provider>
-      </IntlProvider>
-    );
-  }
+        }
+      </React.Fragment>
+    </IntlProvider>
+  )
 }
 
 function compile(schema, visitors) {
@@ -157,10 +110,9 @@ function compile(schema, visitors) {
 }
 
 function defaultErrorHandler(e) {
-  return notification.error({
-    message: e.message,
-    placement: 'bottomRight'
-  });
+  console.log(e);
+  // return notification.error({
+  //   message: e.message,
+  //   placement: 'bottomRight'
+  // });
 }
-
-export default CannerCMS;
