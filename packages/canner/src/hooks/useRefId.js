@@ -8,16 +8,17 @@ export default ({
   refId
 }) => {
   const contextValue = useContext(Context);
-  const {routerParams, routes} = contextValue;
+  const {routerParams, routes, rootValue} = contextValue;
   const parentRefId = refId || contextValue.refId;
   if (!pattern) {
     // layout component
     return parentRefId;
   }
   if (routerParams.operator === 'create' && pattern === 'array') {
-    return parentRefId.child(keyName);
+    // in create form, the index must be 0
+    return parentRefId.child(`${keyName}/0`);
   } else if (pattern === 'array' && routes.length > 1) {
-    // in update view, the index must be 0
+    // in update form, the index must be 0
     return parentRefId.child(`${keyName}/0`);
   } else {
     return parentRefId ? parentRefId.child(keyName) : new RefId(keyName);
