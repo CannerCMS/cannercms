@@ -6,9 +6,9 @@ import {isCompleteContain, genPaths} from '../utils/renderType';
 import type RefId from 'canner-ref-id';
 
 export const RENDER_TYPE = {
-  CHILDREN: 0,
-  NULL: 1,
-  COMPONENT: 2
+  CHILDREN: 'CHILDREN',
+  NULL: 'NULL',
+  COMPONENT: 'COMPONENT'
 }
 
 export default ({

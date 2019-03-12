@@ -204,6 +204,13 @@ export default class Generator extends React.Component<Props, State> {
       }
     }
     
+    if (formType === FORM_TYPE.CREATE) {
+      return (
+        <div>
+          {this.renderNode(cacheTree[routes[0]], {refId: new RefId('')}, 0)}
+        </div>
+      );
+    }
   }
 }
 

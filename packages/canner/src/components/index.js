@@ -7,10 +7,12 @@ import { ApolloProvider } from 'react-apollo';
 import Generator from './Generator';
 import ListForm from './form/ListForm';
 import UpdateForm from './form/UpdateForm';
+import CreateForm from './form/CreateForm';
 // hooks
 import useProvider from '../hooks/useProvider';
 import useListForm from '../hooks/useListForm';
 import useUpdateForm from '../hooks/useUpdateForm';
+import useCreateForm from '../hooks/useCreateForm';
 import useFormType, {FORM_TYPE} from '../hooks/useFormType';
 // i18n
 import en from 'react-intl/locale-data/en';
@@ -65,10 +67,12 @@ function CannerCMS({
   });
   const {
     isListForm,
-    isUpdateForm
+    isUpdateForm,
+    isCreateForm
   } = useFormType({routes, routerParams, schema: dataSchema, goTo});
   const listFormProps = useListForm({provider, schema: dataSchema, routes, isListForm});
   const updateFormProps = useUpdateForm({provider, schema: dataSchema, routes, isUpdateForm});
+  const createFormProps = useCreateForm({provider, schema: dataSchema, routes, isCreateForm});
   useImperativeHandle(ref, () => ({
     deploy: provider.deploy,
     reset: provider.reset,
@@ -114,6 +118,14 @@ function CannerCMS({
             >
               <Generator formType={FORM_TYPE.UPDATE} />
             </UpdateForm>
+          }
+          {
+            isCreateForm && <CreateForm
+              {...commonFormProps}
+              {...createFormProps}
+            >
+              <Generator formType={FORM_TYPE.CREATE} />
+            </CreateForm>
           }
         </React.Fragment>
       </ApolloProvider>

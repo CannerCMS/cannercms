@@ -5,6 +5,7 @@
 import React, {useEffect, useState, useRef, useImperativeHandle, forwardRef} from 'react';
 import {actionToMutation, actionsToVariables} from '../action';
 import gql from 'graphql-tag';
+import {createEmptyData} from 'canner-helpers';
 import {objectToQueries} from '../query/utils';
 import {groupBy, mapValues} from 'lodash';
 import log from '../utils/log';
@@ -75,6 +76,31 @@ export default function useProvider({
       return cachedData;
     });
   };
+
+  const create = (key: string): Promise<*> => {
+    const queryKey = query.getQueryKey(key);
+    const {items} = schema[key];
+    const defaultData = createEmptyData(items);
+    const id = randomId();
+    defaultData.id = id;
+    if (cache.isCached(queryKey)) {
+      request({
+        type: 'CREATE_ARRAY',
+        payload: {
+          key,
+          id,
+          value: defaultData,
+          path: ''
+        }
+      })
+    } else {
+      cache.setData(queryKey, {
+        data: {[key]: {edges: [{cursor: id, node: defaultData}]}},
+        rootValue: {[key]: [defaultData]}
+      });
+    }
+    return Promise.resolve(cache.getData(queryKey));
+  }
 
   const subscribe = (key: string, callback: Function): any => {
     const queryKey = query.getQueryKey(key);
@@ -183,6 +209,7 @@ export default function useProvider({
     updateQuery,
     subscribe,
     query: query,
+    create: create,
     client,
     onDeploy: onDeployManager.subscribe,
     removeOnDeploy: onDeployManager.unsubscribe,
@@ -200,4 +227,8 @@ function removeIdInCreateArray(actions: Array<Action<ActionType>>) {
     }
     return action;
   });
+}
+
+function randomId() {
+  return Math.random().toString(36).substr(2, 12);
 }

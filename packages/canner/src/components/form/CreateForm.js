@@ -5,7 +5,7 @@ import {Context} from 'canner-helpers';
 const BackButton = () => null;
 const SubmitButton = () => null;
 const CancelButton = () => null;
-export default function CreateForm({
+export default function UpdateForm({
   data,
   rootValue,
   loading = null,
