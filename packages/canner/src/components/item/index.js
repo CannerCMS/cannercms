@@ -1,11 +1,12 @@
 import React from 'react';
 import {Row, Col, Alert} from 'antd';
-import {isEmpty} from 'lodash';
+import {isEmpty, isEqual, isFunction} from 'lodash';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import {RENDER_TYPE} from '../../hooks/useRenderType';
+import useTraceUpdate from '../../hooks/useTraceUpdate';
 
-export default (props) => {
+export default React.memo((props) => {
   const {
     renderChildren,
     refId,
@@ -60,4 +61,14 @@ export default (props) => {
       </Col>
     </Row>
   );
-}
+}, function(prevProps, nextProps) {
+  return Object.entries(nextProps).reduce((eq, [k, v]) => {
+    if (isFunction(v)) {
+      return eq;
+    }
+    if (k === 'refId') {
+      return eq && prevProps[k].toString() === v.toString();
+    }
+    return isEqual(v, prevProps[k]) && eq;
+  }, true)
+});

@@ -1,6 +1,6 @@
 // @flow
 
-import React, {useContext} from 'react';
+import React, {useContext, useMemo, useCallback} from 'react';
 import {Context} from 'canner-helpers';
 import CannerItem from '../components/item';
 
@@ -13,7 +13,7 @@ import useFieldValue from '../hooks/useFieldValue';
 import useRenderType from '../hooks/useRenderType';
 
 export default function withCanner(Com: any) {
-  return function(props: any) {
+  return function ComWithCanner(props: any) {
     const {
       pattern,
       keyName,
@@ -25,6 +25,8 @@ export default function withCanner(Com: any) {
       title,
       path,
       hideTitle,
+      refId,
+      renderChildren
     } = props;
     const contextValue = useContext(Context);
     const {
@@ -33,9 +35,8 @@ export default function withCanner(Com: any) {
       imageStorage,
       onDeploy,
       removeOnDeploy,
-      renderChildren
     } = contextValue;
-    const refId = useRefId({pattern, keyName});
+    const myRefId = useRefId({pattern, keyName, refId});
     // const {
     //   updateRelationQuery,
     //   relationFetching,
@@ -54,23 +55,23 @@ export default function withCanner(Com: any) {
     //   fetchPolicy,
     //   refId
     // })
-    const {renderType} = useRenderType({pattern, path});
+    const {renderType} = useRenderType({pattern, path, refId: myRefId});
     const {onChange} = useOnChange({rootValue, request});
-    const {fieldValue} = useFieldValue({rootValue, refId});
+    const {fieldValue} = useFieldValue({rootValue, refId: myRefId});
     const {error, errorInfo} = useValidation({
       value: fieldValue,
-      refId,
+      refId: myRefId,
       required,
       validation
     });
     const componentOnDeploy = useOnDeploy({
       onDeploy,
       removeOnDeploy,
-      refId,
+      refId: myRefId,
     });
     const item = (
       <CannerItem
-        refId={refId}
+        refId={myRefId}
         value={fieldValue}
         layout={layout}
         required={required}
@@ -127,13 +128,13 @@ export default function withCanner(Com: any) {
     //     </Context.Provider>
     //   );
     // }
+    const myContextValue = {
+      ...contextValue,
+      refId: myRefId,
+      renderChildren
+    };
     return (
-      <Context.Provider value={{
-        ...contextValue,
-        renderCancelButton: () => null,
-        renderConfirmButton: () => null,
-        refId
-      }}>
+      <Context.Provider value={myContextValue}>
         {item}
       </Context.Provider>
     );

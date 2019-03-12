@@ -4,19 +4,22 @@ import RefId from 'canner-ref-id';
 
 export default ({
   pattern,
-  keyName
+  keyName,
+  refId
 }) => {
-  const {refId, routerParams, routes} = useContext(Context);
+  const contextValue = useContext(Context);
+  const {routerParams, routes} = contextValue;
+  const parentRefId = refId || contextValue.refId;
   if (!pattern) {
     // layout component
-    return refId;
+    return parentRefId;
   }
   if (routerParams.operator === 'create' && pattern === 'array') {
-    return refId.child(keyName);
+    return parentRefId.child(keyName);
   } else if (pattern === 'array' && routes.length > 1) {
     // in update view, the index must be 0
-    return refId.child(`${keyName}/0`);
+    return parentRefId.child(`${keyName}/0`);
   } else {
-    return refId ? refId.child(keyName) : new RefId(keyName);
+    return parentRefId ? parentRefId.child(keyName) : new RefId(keyName);
   }
 }

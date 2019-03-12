@@ -15,12 +15,14 @@ export default ({
   pattern,
   path,
   hideBackButton,
+  refId
 }: {
   pattern: string,
   path: string,
-  hideBackButton: boolean
+  hideBackButton: boolean,
+  refId: RefId
 }) => {
-  const {hideButtons, routes, refId, routerParams: {operator}} = useContext(Context);
+  const {hideButtons, routes, routerParams: {operator}} = useContext(Context);
   const [renderType, setRenderType] = useState(() => getRenderType({
     routes,
     path,

@@ -102,23 +102,14 @@ export default class Generator extends React.Component<Props, State> {
     }
 
     if (component) {
-      const contextValue = {
-        ...this.props.contextValue,
-        renderChildren: (props) => this.renderChildren(node, props),
-        renderComponent: this.renderComponent,
-        refId: props.refId,
-      }
       return (
         <div data-testid={node.path}>
-          <Context.Provider
-            key={restNodeData.keyName ? `${props.refId.toString()}/${restNodeData.keyName}` : index}
-            value={contextValue}
-          >
-            <node.component
-              {...restNodeData} // props directly passed by schema
-              {...props} // props from the parent
-            />
-          </Context.Provider>
+          <node.component
+            renderChildren={(props) => this.renderChildren(node, props)}
+            renderComponent={this.renderComponent}
+            {...restNodeData} // props directly passed by schema
+            {...props} // props from the parent
+          />
         </div>
       );
     }

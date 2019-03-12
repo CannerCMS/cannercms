@@ -1,6 +1,6 @@
 // @flow
 
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import Ajv from 'ajv';
 import type RefId from 'canner-ref-id';
 import {isPlainObject, get, isArray} from 'lodash';
@@ -15,7 +15,7 @@ export default ({
   validation: any
 }) => {
   const [error, setError] = useState(false);
-  const [errorInfo, setErrorInfo] = useState([]);
+  const errorInfoRef = useRef([]);
   const _validate = () => {
     // required
     const isRequiredValid = required ? Boolean(value) : true;
@@ -33,7 +33,7 @@ export default ({
     // if value is empty, should not validate with ajv
     if (customValid && isRequiredValid && (!value || validate(value))) {
       setError(false);
-      setErrorInfo([]);
+      errorInfoRef.current = [];
       return;
     }
     
@@ -46,14 +46,14 @@ export default ({
       .concat(customValid ? [] : validatorResult);
     
     setError(true);
-    setErrorInfo(errorInfo);
+    errorInfoRef.current = errorInfo;
   }
   useEffect(() => {
     _validate();
   }, [value]);
   return {
     error,
-    errorInfo
+    errorInfo: errorInfoRef.current
   }
 }
 

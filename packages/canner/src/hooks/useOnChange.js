@@ -16,7 +16,7 @@ export default ({
   request: Function
 }) => {
   const {schema} = useContext(Context);
-  const onChange = useCallback((refId: RefId | {firstRefId: RefId, secondRefId: RefId} | changeQueue, type: any, delta: any, config: any, transformGqlPayload?: Function): Promise<*> => {
+  const onChange = (refId: RefId | {firstRefId: RefId, secondRefId: RefId} | changeQueue, type: any, delta: any, config: any, transformGqlPayload?: Function): Promise<*> => {
     let id;
     if (isArray(refId)) { // changeQueue
       const changeQueue = refId;
@@ -53,7 +53,7 @@ export default ({
       return Promise.resolve();
     }
     return request(action);
-  });
+  };
   return {
     onChange
   }
