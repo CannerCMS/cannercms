@@ -25,6 +25,7 @@ export default function useListForm({
 
     getListValue()
       .then(result => {
+        console.log('list', result);
         setResult(result);
         setIsFetching(false);
       });

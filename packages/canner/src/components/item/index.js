@@ -7,6 +7,8 @@ import {RENDER_TYPE} from '../../hooks/useRenderType';
 
 export default (props) => {
   const {
+    renderChildren,
+    refId,
     layout,
     required,
     type,
@@ -17,6 +19,7 @@ export default (props) => {
     title,
     errorInfo,
     children,
+    renderType,
   } = props;
   const labelCol = layout === 'horizontal' ? this.props.labelCol || {
     span: 6
@@ -45,7 +48,8 @@ export default (props) => {
             <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
           )
         }
-        {children(props)}
+        {renderType === RENDER_TYPE.CHILDREN && renderChildren({refId})}
+        {renderType === RENDER_TYPE.COMPONENT && children(props)}
         {
           error && (
             <ErrorMessage>

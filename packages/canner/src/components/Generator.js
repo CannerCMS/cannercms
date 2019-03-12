@@ -25,6 +25,7 @@ import {Alert} from 'antd';
 import {Item, Context} from 'canner-helpers';
 import hocs from '../hocs';
 import {List} from 'react-content-loader';
+import {FORM_TYPE} from '../hooks/useFormType';
 import type {GeneratorProps, ComponentTree, ComponentNode} from './types';
 
 type Props = GeneratorProps;
@@ -175,7 +176,7 @@ export default class Generator extends React.Component<Props, State> {
 
   render() {
     const {cacheTree, error, errorInfo} = this.state;
-    const {routes, routerParams} = this.props;
+    const {routes, routerParams, formType} = this.props;
     if (error) {
       return errorInfo;
     }
@@ -184,11 +185,34 @@ export default class Generator extends React.Component<Props, State> {
       return null;
     }
 
-    return (
-      <div>
-        {this.renderNode(cacheTree[routes[0]], {refId: new RefId(''), routes, routerParams}, 0)}
-      </div>
-    );
+    if (formType === FORM_TYPE.LIST) {
+      return (
+        <div>
+          {this.renderNode(cacheTree[routes[0]], {refId: new RefId('')}, 0)}
+        </div>
+      );
+    }
+
+    if (formType === FORM_TYPE.UPDATE) {
+      if (routes.length > 1) {
+        // map
+        return (
+          <div>
+            {this.renderNode(cacheTree[routes[0]], {refId: new RefId('')}, 0)}
+          </div>
+        );
+      } else {
+        // list item
+        // now renderChildren is executed in withCanner hoc,
+        // should be fixed here
+        return (
+          <div>
+            {this.renderNode(cacheTree[routes[0]], {refId: new RefId('')}, 0)}
+          </div>
+        );
+      }
+    }
+    
   }
 }
 
@@ -309,6 +333,7 @@ function genCacheTree (tree: ComponentTree): ComponentTree {
 
 
 export function findNode (pathArr: Array<string>, node: ComponentNode): ?Node {
+  if (pathArr[0])
   if (isComponent(node) && node.keyName === pathArr[0]) {
     pathArr = pathArr.slice(1);
     if (!pathArr.length) {

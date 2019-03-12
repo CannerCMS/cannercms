@@ -50,7 +50,7 @@ export default ({
       operator
     });
     setRenderType(renderType);
-  }, [routes, pattern, path, operator]);
+  }, [JSON.stringify(routes), pattern, path, operator]);
 
   useEffect(() => {
     const showListButton = getShowListButton({
@@ -61,7 +61,7 @@ export default ({
       operator
     });
     setShowListButton(showListButton);
-  }, [hideBackButton, routes, pattern, refId.toString(), operator]);
+  }, [hideBackButton, JSON.stringify(routes), pattern, refId.toString(), operator]);
 
   useEffect(() => {
     const showSubmitAndCancelButtons = getSubmitAndCancelButtons({
@@ -72,7 +72,7 @@ export default ({
       operator
     });
     setSubmitAndCancelButtons(showSubmitAndCancelButtons);
-  }, [routes, pattern, hideButtons, refId.toString(), operator]);
+  }, [JSON.stringify(routes), pattern, hideButtons, refId.toString(), operator]);
 
   return {
     renderType,
@@ -134,6 +134,10 @@ export function getRenderType({
   pattern: string,
   operator: string
 }) {
+  if (!pattern && !path) {
+    // layout
+    return RENDER_TYPE.COMPONENT
+  }
   const paths = genPaths(path, pattern);
   const pathsLength = paths.length;
   const routesLength = routes.length;

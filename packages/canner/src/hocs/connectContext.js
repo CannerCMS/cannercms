@@ -20,7 +20,6 @@ export default function connectContext(Com: React.ComponentType<*>) {
     render() {
       return <Context.Consumer>
         {contextValue => {
-          console.log(contextValue);
           return (
             <Com
               {...contextValue}

@@ -1,6 +1,6 @@
 // @flow
 
-import {useContext} from 'react';
+import {useContext, useCallback} from 'react';
 import {Context} from 'canner-helpers';
 import RefId from 'canner-ref-id';
 import {set, get, isArray, isPlainObject} from 'lodash';
@@ -16,15 +16,15 @@ export default function({
 }) {
   const {routes} = useContext(Context);
   const firstKey = routes[0];
-  const _removeOnDeploy = (arg1: string, callbackId: string) => {
+  const _removeOnDeploy = useCallback((arg1: string, callbackId: string) => {
     if (callbackId) {
       return removeOnDeploy(arg1, callbackId);
     } else {
       return removeOnDeploy(firstKey, arg1);
     }
-  }
+  }, [refId.toString()])
 
-  const _onDeploy = (arg1: string | Function, callback: Function): string => {
+  const _onDeploy = useCallback((arg1: string | Function, callback: Function): string => {
     if (typeof arg1 === 'string') {
       return onDeploy(arg1, callback);
     } else {
@@ -44,7 +44,7 @@ export default function({
         }
       });
     }
-  }
+  }, [refId.toString()]);
   return {
     removeOnDeploy: _removeOnDeploy,
     onDeploy: _onDeploy

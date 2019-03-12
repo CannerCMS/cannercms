@@ -4,9 +4,13 @@ import RefId from 'canner-ref-id';
 
 export default ({
   pattern,
-  keyName,
+  keyName
 }) => {
   const {refId, routerParams, routes} = useContext(Context);
+  if (!pattern) {
+    // layout component
+    return refId;
+  }
   if (routerParams.operator === 'create' && pattern === 'array') {
     return refId.child(keyName);
   } else if (pattern === 'array' && routes.length > 1) {

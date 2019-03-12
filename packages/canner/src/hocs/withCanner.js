@@ -10,6 +10,7 @@ import useOnChange from '../hooks/useOnChange';
 import useValidation from '../hooks/useValidation';
 import useOnDeploy from '../hooks/useOnDeploy';
 import useFieldValue from '../hooks/useFieldValue';
+import useRenderType from '../hooks/useRenderType';
 
 export default function withCanner(Com: any) {
   return function(props: any) {
@@ -22,6 +23,7 @@ export default function withCanner(Com: any) {
       layout,
       description,
       title,
+      path,
       hideTitle,
     } = props;
     const contextValue = useContext(Context);
@@ -30,7 +32,8 @@ export default function withCanner(Com: any) {
       request,
       imageStorage,
       onDeploy,
-      removeOnDeploy
+      removeOnDeploy,
+      renderChildren
     } = contextValue;
     const refId = useRefId({pattern, keyName});
     // const {
@@ -51,6 +54,7 @@ export default function withCanner(Com: any) {
     //   fetchPolicy,
     //   refId
     // })
+    const {renderType} = useRenderType({pattern, path});
     const {onChange} = useOnChange({rootValue, request});
     const {fieldValue} = useFieldValue({rootValue, refId});
     const {error, errorInfo} = useValidation({
@@ -78,8 +82,9 @@ export default function withCanner(Com: any) {
         // relationValue={relationValue}
         onChange={onChange}
         onDeploy={componentOnDeploy.onDeploy}
+        renderChildren={renderChildren}
         removeOnDeploy={componentOnDeploy.removeOnDeploy}
-        renderChildren={() => null}
+        renderType={renderType}
         renderConfirmButton={() => null}
         renderCancelButton={() => null}
         // external

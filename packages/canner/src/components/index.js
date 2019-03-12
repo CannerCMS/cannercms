@@ -3,12 +3,15 @@
 import React, {useRef, forwardRef, useImperativeHandle} from 'react';
 import {Parser, Traverser} from 'canner-compiler';
 import {pickBy} from 'lodash';
+import { ApolloProvider } from 'react-apollo';
 import Generator from './Generator';
 import ListForm from './form/ListForm';
+import UpdateForm from './form/UpdateForm';
+// hooks
 import useProvider from '../hooks/useProvider';
 import useListForm from '../hooks/useListForm';
-import useFormType from '../hooks/useFormType';
-
+import useUpdateForm from '../hooks/useUpdateForm';
+import useFormType, {FORM_TYPE} from '../hooks/useFormType';
 // i18n
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -62,12 +65,26 @@ function CannerCMS({
   });
   const {
     isListForm,
+    isUpdateForm
   } = useFormType({routes, routerParams, schema: dataSchema, goTo});
-  const listForm = useListForm({provider, schema: dataSchema, routes, isListForm});
+  const listFormProps = useListForm({provider, schema: dataSchema, routes, isListForm});
+  const updateFormProps = useUpdateForm({provider, schema: dataSchema, routes, isUpdateForm});
   useImperativeHandle(ref, () => ({
     deploy: provider.deploy,
     reset: provider.reset,
   }));
+  const commonFormProps = {
+    schema: dataSchema,
+    baseUrl,
+    goTo,
+    routes,
+    routerParams,
+    defaultKey,
+    hideButtons,
+    componentTree,
+    imageStorage: imageStorages[routes[0]],
+    fileStorage: fileStorages[routes[0]],
+  };
   return (
     <IntlProvider
       locale={currentLocale}
@@ -80,25 +97,26 @@ function CannerCMS({
         ...((intl.messages || {})[currentLocale] || {})
       }}
     >
-      <React.Fragment>
-        {
-          isListForm && <ListForm
-            {...listForm}
-            schema={dataSchema}
-            baseUrl={baseUrl}
-            goTo={goTo}
-            routes={routes}
-            routerParams={routerParams}
-            defaultKey={defaultKey}
-            hideButtons={hideButtons}
-            componentTree={componentTree}
-            imageStorage={imageStorages[routes[0]]}
-            fileStorage={fileStorages[routes[0]]}
-          >
-            <Generator />
-          </ListForm>
-        }
-      </React.Fragment>
+      <ApolloProvider client={client}>
+        <React.Fragment>
+          {
+            isListForm && <ListForm
+              {...commonFormProps}
+              {...listFormProps}
+            >
+              <Generator formType={FORM_TYPE.LIST} />
+            </ListForm>
+          }
+          {
+            isUpdateForm && <UpdateForm
+              {...commonFormProps}
+              {...updateFormProps}
+            >
+              <Generator formType={FORM_TYPE.UPDATE} />
+            </UpdateForm>
+          }
+        </React.Fragment>
+      </ApolloProvider>
     </IntlProvider>
   )
 }
