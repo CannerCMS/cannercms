@@ -25,7 +25,6 @@ export default function useListForm({
 
     getListValue()
       .then(result => {
-        console.log('list', result);
         setResult(result);
         setIsFetching(false);
       });
@@ -37,6 +36,8 @@ export default function useListForm({
     rootValue: result.rootValue,
     isFetching,
     toolbar: (schema[routes[0]] || {}).toolbar,
+    items: (schema[routes[0]] || {}).items,
+    args: provider.query.getArgs(routes[0]),
     onClickAddButton: () => {},
     ...provider
   }

@@ -43,7 +43,7 @@ export default class ToolbarLayout extends React.PureComponent<Props> {
             ) : null
           }
         </div>
-        {React.Children.only(children)}
+        {children}
         {Pagination}
       </React.Fragment>
     );

@@ -19,7 +19,7 @@ export default ({
 }: {
   pattern: string,
   path: string,
-  hideBackButton: boolean,
+  hideBackButton?: boolean,
   refId: RefId
 }) => {
   const {hideButtons, routes, routerParams: {operator}} = useContext(Context);

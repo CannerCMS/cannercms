@@ -254,7 +254,6 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const {first, last} = parsePagination(args);
     let total = 0;
     const value = getFieldValue(originRootValue, refId.getPathArr());
-
     return <ToolbarLayout
       Actions={actions && toolbar.async ? <ActionsComponent
         {...actions}
@@ -302,7 +301,7 @@ export default class Toolbar extends React.PureComponent<Props, State> {
         deleteFilter={this.deleteFilter}
       /> : null}
     >
-      {React.cloneElement(children, {
+      {children && React.cloneElement(children, {
         rootValue,
         value: value ? get(value, 'edges', []).map(item => item.node) : [],
         showPagination: toolbar && !toolbar.async

@@ -3,6 +3,7 @@
 import React, {useContext, useMemo, useCallback} from 'react';
 import {Context} from 'canner-helpers';
 import CannerItem from '../components/item';
+import Toolbar from '../components/toolbar';
 
 // hooks
 import useRefId from '../hooks/useRefId';
@@ -26,7 +27,9 @@ export default function withCanner(Com: any) {
       path,
       hideTitle,
       refId,
-      renderChildren
+      renderChildren,
+      items,
+      toolbar
     } = props;
     const contextValue = useContext(Context);
     const {
@@ -35,6 +38,12 @@ export default function withCanner(Com: any) {
       imageStorage,
       onDeploy,
       removeOnDeploy,
+      deploy,
+      data,
+      updateQuery,
+      query,
+      routes,
+      routerParams,
     } = contextValue;
     const myRefId = useRefId({pattern, keyName, refId});
     // const {
@@ -95,44 +104,46 @@ export default function withCanner(Com: any) {
         {(cannerItemProps) => <Com {...props} {...contextValue} {...cannerItemProps} />}
       </CannerItem>
     )
-
-    // if (pattern === 'array' || type === 'relation') {
-    //   return (
-    //     <Context.Provider value={{
-    //       fetch,
-    //       subscribe,
-    //       request,
-    //       deploy,
-    //       reset,
-    //       updateQuery,
-    //       onDeploy,
-    //       removeOnDeploy,
-    //       renderConfirmButton: renderSubmitButton,
-    //       renderCancelButton,
-    //       refId
-    //     }}>
-    //       <Toolbar items={items}
-    //         toolbar={toolbar}
-    //         args={type === 'relation' ? relationArgs : args}
-    //         query={type === 'relation' ? relationQuery: query}
-    //         refId={type === 'relation' ? relationRefId : refId}
-    //         keyName={type === 'relation' ? relationKeyName: keyName}
-    //         originRootValue={type === 'relation' ? relationOriginRootValue : originRootValue}
-    //         rootValue={type === 'relation' ? relationRootValue: rootValue}
-    //         updateQuery={type === 'relation' ? updateRelationQuery : updateToolbarQuery}
-    //         request={request}
-    //         deploy={deploy}
-    //       >
-    //         {item}
-    //       </Toolbar>
-    //     </Context.Provider>
-    //   );
-    // }
     const myContextValue = {
       ...contextValue,
       refId: myRefId,
       renderChildren
     };
+    const isListForm = (pattern === 'array' && routes.length === 1 && routerParams.operator === 'update');
+    if (isListForm || type === 'relation') {
+      const args = query.getArgs(keyName);
+      return (
+        <Context.Provider value={myContextValue}>
+          <Toolbar
+            items={items}
+            toolbar={toolbar}
+            args={args}
+            query={query}
+            refId={myRefId}
+            keyName={keyName}
+            originRootValue={data}
+            rootValue={rootValue}
+            updateQuery={updateQuery}
+            request={request}
+            deploy={deploy}
+            // items={items}
+            // toolbar={toolbar}
+            // args={type === 'relation' ? relationArgs : args}
+            // query={type === 'relation' ? relationQuery: query}
+            // refId={type === 'relation' ? relationRefId : refId}
+            // keyName={type === 'relation' ? relationKeyName: keyName}
+            // originRootValue={type === 'relation' ? relationOriginRootValue : data}
+            // rootValue={type === 'relation' ? relationRootValue: rootValue}
+            // updateQuery={type === 'relation' ? updateRelationQuery : updateQuery}
+            // request={request}
+            // deploy={deploy}
+          >
+            {item}
+          </Toolbar>
+        </Context.Provider>
+      );
+    }
+
     return (
       <Context.Provider value={myContextValue}>
         {item}
