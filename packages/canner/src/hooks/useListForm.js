@@ -22,7 +22,7 @@ export default function useListForm({
     if (!isListForm) {
       return;
     }
-
+    setIsFetching(true);
     getListValue()
       .then(result => {
         setResult(result);
