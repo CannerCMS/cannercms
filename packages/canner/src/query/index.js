@@ -18,7 +18,7 @@ export class Query {
   updateQueries = (pathArr: Array<string>, field: string, value: any) => {
     const path = `${pathArr.join('.fields.')}.${field}`;
     if (field === 'args') {
-      const args = get(this.queries, path);
+      const args = get(this.queries, path) || {};
       this.variables = {...this.variables, ...Object.keys(args).reduce((result: Object, key: string) => {
         result[args[key]] = value[key];
 
@@ -69,7 +69,7 @@ export class Query {
   }
 
   getArgs = (path: string) => {
-    const queries = this.getQueries(path.split('/')).args || {pagination: {first: 10}};
+    const queries = this.getQueries(path.split('/')).args || {};
     const variables = this.getVariables();
     return mapValues(queries, v => variables[v.substr(1)]);
   }

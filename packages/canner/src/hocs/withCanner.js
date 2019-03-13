@@ -78,7 +78,6 @@ export default function withCanner(Com: any) {
       removeOnDeploy,
       refId: myRefId,
     });
-    console.log(relationValue)
     const item = (
       <CannerItem
         refId={myRefId}
