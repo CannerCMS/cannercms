@@ -20,13 +20,13 @@ export default React.memo((props) => {
     title,
     errorInfo,
     renderType,
-    render
+    render,
   } = props;
-  const labelCol = layout === 'horizontal' ? this.props.labelCol || {
+  const labelCol = layout === 'horizontal' ? props.labelCol || {
     span: 6
   } : null;
 
-  const itemCol = layout === 'horizontal' ?  this.props.itemCol || {
+  const itemCol = layout === 'horizontal' ?  props.itemCol || {
     span: 14
   } : null;
   return (

@@ -9,6 +9,7 @@ import Toolbar from '../components/toolbar';
 import useRefId from '../hooks/useRefId';
 import useOnChange from '../hooks/useOnChange';
 import useValidation from '../hooks/useValidation';
+import useRelation from '../hooks/useRelation';
 import useOnDeploy from '../hooks/useOnDeploy';
 import useFieldValue from '../hooks/useFieldValue';
 import useRenderType from '../hooks/useRenderType';
@@ -29,7 +30,11 @@ export default function withCanner(Com: any) {
       refId,
       renderChildren,
       items,
-      toolbar
+      toolbar,
+      graphql,
+      variables,
+      fetchPolicy,
+      relation,
     } = props;
     const contextValue = useContext(Context);
     const {
@@ -46,24 +51,19 @@ export default function withCanner(Com: any) {
       routerParams,
     } = contextValue;
     const myRefId = useRefId({pattern, keyName, refId});
-    // const {
-    //   updateRelationQuery,
-    //   relationFetching,
-    //   relationArgs,
-    //   relationQuery,
-    //   relationRefId,
-    //   relationKeyName,
-    //   relationRootValue,
-    //   relationValue,
-    //   relationOriginRootValue,
-    // } = useRelation({
-    //   relation,
-    //   type,
-    //   graphql,
-    //   variables,
-    //   fetchPolicy,
-    //   refId
-    // })
+    const {
+      relationToolbar,
+      relationValue,
+      relationFetching
+    } = useRelation({
+      relation,
+      toolbar,
+      type,
+      graphql,
+      variables,
+      fetchPolicy,
+      refId: myRefId
+    })
     const {renderType} = useRenderType({pattern, path, refId: myRefId});
     const {onChange} = useOnChange({rootValue, request});
     const {fieldValue} = useFieldValue({rootValue, refId: myRefId});
@@ -78,18 +78,21 @@ export default function withCanner(Com: any) {
       removeOnDeploy,
       refId: myRefId,
     });
+    console.log(relationValue)
     const item = (
       <CannerItem
         refId={myRefId}
         value={fieldValue}
         layout={layout}
         required={required}
+        relationFetching={relationFetching}
         type={type}
         description={description}
         hideTitle={hideTitle}
         imageStorage={imageStorage}
         title={title}
-        // relationValue={relationValue}
+        Toolbar={relationToolbar}
+        relationValue={relationValue}
         onChange={onChange}
         onDeploy={componentOnDeploy.onDeploy}
         renderChildren={renderChildren}
@@ -109,40 +112,27 @@ export default function withCanner(Com: any) {
       renderChildren
     };
     const isListForm = (pattern === 'array' && routes.length === 1 && routerParams.operator === 'update');
-    if (isListForm || type === 'relation') {
-      const args = query.getArgs(keyName);
+    if (isListForm) {
       return (
         <Context.Provider value={myContextValue}>
           <Toolbar
             items={items}
             toolbar={toolbar}
-            args={args}
+            args={query.getArgs(keyName)}
             query={query}
             refId={myRefId}
             keyName={keyName}
             originRootValue={data}
             rootValue={rootValue}
-            updateQuery={updateQuery}
+            updateQuery={ updateQuery}
             request={request}
             deploy={deploy}
-            // items={items}
-            // toolbar={toolbar}
-            // args={type === 'relation' ? relationArgs : args}
-            // query={type === 'relation' ? relationQuery: query}
-            // refId={type === 'relation' ? relationRefId : refId}
-            // keyName={type === 'relation' ? relationKeyName: keyName}
-            // originRootValue={type === 'relation' ? relationOriginRootValue : data}
-            // rootValue={type === 'relation' ? relationRootValue: rootValue}
-            // updateQuery={type === 'relation' ? updateRelationQuery : updateQuery}
-            // request={request}
-            // deploy={deploy}
           >
             {item}
           </Toolbar>
         </Context.Provider>
       );
     }
-
     return (
       <Context.Provider value={myContextValue}>
         {item}
