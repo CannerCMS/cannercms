@@ -1,5 +1,6 @@
 // @flow
 import {useState, useEffect} from 'react';
+import {createEmptyData} from 'canner-helpers';
 
 export default function useCreateForm({
   provider,
@@ -14,7 +15,23 @@ export default function useCreateForm({
 }) {
   const [result, setResult] = useState({data: {}, rootValue: {}});
   const [isFetching, setIsFetching] = useState(true);
-  const getCreateValue = () => provider.create(routes[0]);
+  const key = routes[0];
+  const createItem = async () => {
+    const {items} = schema[key];
+    const defaultData = createEmptyData(items);
+    const id = randomId();
+    const action = {
+      type: 'CREATE_ARRAY',
+      payload: {
+        key,
+        id,
+        value: defaultData,
+        path: ''
+      }
+    };
+    await provider.updateQuery([key], {where: {id}})
+    return provider.request(action);
+  }
   const subscribeValue = () => provider.subscribe(routes[0], (result) => {
     setResult(result);
   });
@@ -22,9 +39,9 @@ export default function useCreateForm({
     if (!isCreateForm) {
       return;
     }
-    getCreateValue()
-      .then(result => {
-        setResult(result);
+    setIsFetching(true);
+    createItem()
+      .then(() => {
         setIsFetching(false);
       });
     const {unsubscribe} = subscribeValue();
@@ -40,4 +57,7 @@ export default function useCreateForm({
     onClickBackButton: () => {},
     ...provider
   }
+}
+function randomId() {
+  return Math.random().toString(36).substr(2, 12);
 }
