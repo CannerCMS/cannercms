@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import {Row, Col} from 'antd';
+import {Item} from 'canner-helpers';
 
 type Props = {
   id: string,
@@ -30,7 +31,8 @@ export default class RowLayout extends React.Component<Props> {
       type={type}
       style={style}
     >
-      {
+      <Item />
+      {/* {
         children.map((child, index) => {
           const {offset, order, pull, push, span, xs, sm, md, lg, xl, xxl, style} =child;
           if (child.nodeType === 'layout.col') {
@@ -50,20 +52,20 @@ export default class RowLayout extends React.Component<Props> {
               style={style}
             >
               {
-                renderChildren(node => ({
+                renderChildren((node, i) => ({
                   refId,
-                  hidden: child !== node,
+                  hidden: i !== index,
                 }))
               }
             </Col>
           } else {
-            return renderChildren(node => ({
+            return renderChildren((node, i) => ({
               refId,
-              hidden: child !== node
+              hidden: i !== index
             }))
           }
         })
-      }
+      } */}
     </Row>;
   }
 }

@@ -1,20 +1,15 @@
 // @flow
-import * as React from 'react';
+import React, {useContext} from 'react';
 import Context from './context';
 
-type Props = {
-  [string]: any
-};
-
-export default class CancelButton extends React.Component<Props> {
-  render() {
-    return (
-      <Context.Consumer>
-        {value => value.renderCancelButton({
-          refId: value.refId,
-          ...this.props
-        })}
-      </Context.Consumer>
-    );
-  }
+export default function CancelButton(props) {
+  const contextValue = useContext(Context);
+  const {renderCancelButton, refId} = contextValue;
+  console.log(contextValue)
+  return <React.Fragment>
+    {renderCancelButton({
+      refId,
+      ...props
+    })}
+  </React.Fragment>;
 }

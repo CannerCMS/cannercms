@@ -16,10 +16,10 @@ export default ({
   }
   if (routerParams.operator === 'create' && pattern === 'array') {
     // in create form, the index must be 0
-    return parentRefId.child(`${keyName}/0`);
+    return new RefId(`${keyName}/0`);
   } else if (pattern === 'array' && routes.length > 1) {
     // in update form, the index must be 0
-    return parentRefId.child(`${keyName}/0`);
+    return new RefId(`${keyName}/0`);
   } else {
     return parentRefId ? parentRefId.child(keyName) : new RefId(keyName);
   }

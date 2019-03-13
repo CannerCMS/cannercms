@@ -27,6 +27,8 @@ export default function CreateForm({
     routes,
     routerParams,
     goTo,
+    renderConfirmButton: () => null,
+    renderCancelButton: () => null,
     ...props
   };
   return (

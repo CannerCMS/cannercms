@@ -1,20 +1,14 @@
 // @flow
-import * as React from 'react';
+import React, {useContext} from 'react';
 import Context from './context';
 
-type Props = {
-  [string]: any
-};
-
-export default class ConfirmButton extends React.Component<Props> {
-  render() {
-    return (
-      <Context.Consumer>
-        {value => value.renderConfirmButton({
-          refId: value.refId,
-          ...this.props
-        })}
-      </Context.Consumer>
-    );
-  }
+export default function CancelButton(props) {
+  const contextValue = useContext(Context);
+  const {renderConfirmButton, refId} = contextValue;
+  return <React.Fragment>
+    {renderConfirmButton({
+      refId,
+      ...props
+    })}
+  </React.Fragment>;
 }

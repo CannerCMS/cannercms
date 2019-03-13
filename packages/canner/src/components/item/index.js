@@ -19,8 +19,8 @@ export default React.memo((props) => {
     error,
     title,
     errorInfo,
-    children,
     renderType,
+    render
   } = props;
   const labelCol = layout === 'horizontal' ? this.props.labelCol || {
     span: 6
@@ -50,7 +50,7 @@ export default React.memo((props) => {
           )
         }
         {renderType === RENDER_TYPE.CHILDREN && renderChildren({refId})}
-        {renderType === RENDER_TYPE.COMPONENT && children(props)}
+        {renderType === RENDER_TYPE.COMPONENT && render(props)}
         {
           error && (
             <ErrorMessage>

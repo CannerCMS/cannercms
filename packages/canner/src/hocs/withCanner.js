@@ -97,12 +97,11 @@ export default function withCanner(Com: any) {
         renderType={renderType}
         renderConfirmButton={() => null}
         renderCancelButton={() => null}
+        render={(cannerItemProps) => <Com {...props} {...contextValue} {...cannerItemProps} />}
         // external
         error={error}
         errorInfo={errorInfo}
-      >
-        {(cannerItemProps) => <Com {...props} {...contextValue} {...cannerItemProps} />}
-      </CannerItem>
+      />
     )
     const myContextValue = {
       ...contextValue,

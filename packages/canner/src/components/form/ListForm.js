@@ -36,6 +36,8 @@ export default function ListForm({
     query,
     deploy,
     updateQuery,
+    renderConfirmButton: () => null,
+    renderCancelButton: () => null,
     ...props
   }
   // const keyName = routes[0];

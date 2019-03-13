@@ -138,15 +138,15 @@ export default class Generator extends React.Component<Props, State> {
     return this.renderNode(node, {refId: refId.remove(1), keyName: refId.getPathArr().slice(-1)[0], ...props}, 0);
   }
 
-  renderChildren = (node: ComponentNode, props: childrenProps | Node => childrenProps): React.Node => {
+  renderChildren = (node: ComponentNode, props: childrenProps | (child: Node, index: number) => childrenProps): React.Node => {
     // just get the props and call renderNode
     // this method is called by components themselves
     const {children} = node;
     if (children) {
       return children.map((child, index) => {
-        const childProps = typeof props === 'function' ? props(child) : props;
+        const childProps = typeof props === 'function' ? props(child, index) : props;
         const {refId} = childProps;
-        if (isUndefined(refId)) {
+        if (isComponent(node) && isUndefined(refId)) {
           throw new Error(`refId is required for renderChildren, please check node '${node.keyName || ''}'`);
         }
 
@@ -269,7 +269,7 @@ function generateComponent(node) {
     if (!node.component) {
       component = Layouts[node.ui];
     }
-    return wrapByHOC(component, node.ui === 'condition' ? ['containerQuery', 'context'] : ['withCanner']);
+    return wrapByHOC(component, node.ui === 'condition' ? ['containerQuery', 'context'] : ['withCannerLayout']);
   }
   
   if (isComponent(node)) {
