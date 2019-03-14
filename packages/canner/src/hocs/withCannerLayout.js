@@ -48,6 +48,7 @@ export default function withCannerLayout(Com: any) {
       if (k === 'refId') {
         return eq && prevProps[k].toString() === v.toString();
       }
+
       return isEqual(v, prevProps[k]) && eq;
     }, true)
   })
