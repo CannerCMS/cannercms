@@ -35,6 +35,7 @@ export default React.memo((props) => {
     <Row
       type={layout === 'horizontal' ? 'flex' : ''}
       style={{marginBottom: 24}}
+      data-testid={props['data-testid']}
     >
       <Col {...labelCol}>
         <Label

@@ -88,6 +88,7 @@ export default function withCanner(Com: any) {
     } = useButtons({deploy, reset, rootValue, refId, controlDeployAndResetButtons, hideButtons, path, pattern})
     const item = (
       <CannerItem
+        data-testid={props['data-testid']}
         refId={myRefId}
         value={fieldValue}
         layout={layout}
