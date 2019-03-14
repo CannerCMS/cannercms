@@ -91,7 +91,8 @@ export type GeneratorProps = {
   unsubscribe: Function,
   fetch: Function,
   query: any,
-  dataChanged: any
+  dataChanged: any,
+  formType: string
 }
 
 export type ProviderProps = {
