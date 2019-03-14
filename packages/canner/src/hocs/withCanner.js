@@ -13,7 +13,6 @@ import useRelation from '../hooks/useRelation';
 import useOnDeploy from '../hooks/useOnDeploy';
 import useFieldValue from '../hooks/useFieldValue';
 import useRenderType from '../hooks/useRenderType';
-
 export default function withCanner(Com: any) {
   return function ComWithCanner(props: any) {
     const {
