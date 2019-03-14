@@ -13,6 +13,8 @@ import useRelation from '../hooks/useRelation';
 import useOnDeploy from '../hooks/useOnDeploy';
 import useFieldValue from '../hooks/useFieldValue';
 import useRenderType from '../hooks/useRenderType';
+import useButtons from '../hooks/useButtons';
+
 export default function withCanner(Com: any) {
   return function ComWithCanner(props: any) {
     const {
@@ -34,6 +36,8 @@ export default function withCanner(Com: any) {
       variables,
       fetchPolicy,
       relation,
+      controlDeployAndResetButtons,
+      hideButtons
     } = props;
     const contextValue = useContext(Context);
     const {
@@ -48,6 +52,7 @@ export default function withCanner(Com: any) {
       query,
       routes,
       routerParams,
+      reset
     } = contextValue;
     const myRefId = useRefId({pattern, keyName, refId});
     const {
@@ -77,6 +82,12 @@ export default function withCanner(Com: any) {
       removeOnDeploy,
       refId: myRefId,
     });
+    const {
+      shouldRenderCancelButton,
+      shouldRenderSubmitButton,
+      renderCancelButton,
+      renderSubmitButton
+    } = useButtons({deploy, reset, rootValue, refId, controlDeployAndResetButtons, hideButtons, path, pattern})
     const item = (
       <CannerItem
         refId={myRefId}
@@ -96,8 +107,10 @@ export default function withCanner(Com: any) {
         renderChildren={renderChildren}
         removeOnDeploy={componentOnDeploy.removeOnDeploy}
         renderType={renderType}
-        renderConfirmButton={() => null}
-        renderCancelButton={() => null}
+        shouldRenderCancelButton={shouldRenderCancelButton}
+        shouldRenderSubmitButton={shouldRenderSubmitButton}
+        renderSubmitButton={renderSubmitButton}
+        renderCancelButton={renderCancelButton}
         render={(cannerItemProps) => <Com {...props} {...contextValue} {...cannerItemProps} />}
         // external
         error={error}
@@ -107,7 +120,9 @@ export default function withCanner(Com: any) {
     const myContextValue = {
       ...contextValue,
       refId: myRefId,
-      renderChildren
+      renderChildren,
+      renderConfirmButton: renderSubmitButton,
+      renderCancelButton
     };
     const isListForm = (pattern === 'array' && routes.length === 1 && routerParams.operator === 'update');
     if (isListForm) {

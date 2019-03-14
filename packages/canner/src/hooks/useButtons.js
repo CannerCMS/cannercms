@@ -53,7 +53,7 @@ export default ({
   const isCreateView = routerParams.operator === 'create';
   const isFirstArray = pattern === 'array';
   const isUpdateView = routes.length === 2;
-  const shouldRenderButtons = (isFirstArray && (isUpdateView || isCreateView)) && !controlDeployAndResetButtons && !hideButtons;
+  const shouldRenderButtons = (isFirstArray && (isUpdateView || isCreateView)) && !hideButtons;
   return {
     renderSubmitButton,
     renderCancelButton,

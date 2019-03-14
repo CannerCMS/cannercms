@@ -20,6 +20,10 @@ export default React.memo((props) => {
     errorInfo,
     renderType,
     render,
+    shouldRenderSubmitButton,
+    shouldRenderCancelButton,
+    renderSubmitButton,
+    renderCancelButton
   } = props;
   const labelCol = layout === 'horizontal' ? props.labelCol || {
     span: 6
@@ -50,6 +54,17 @@ export default React.memo((props) => {
         }
         {renderType === RENDER_TYPE.CHILDREN && renderChildren({refId})}
         {renderType === RENDER_TYPE.COMPONENT && render(props)}
+        <div
+          style={{
+            textAlign: "right",
+            marginTop: 60
+          }}
+        >
+          {shouldRenderCancelButton && renderCancelButton({
+            style: {marginRight: 16}
+          })}
+          {shouldRenderSubmitButton && renderSubmitButton()}
+        </div>
         {
           error && (
             <ErrorMessage>
