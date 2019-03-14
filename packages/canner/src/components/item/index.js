@@ -1,6 +1,7 @@
 import React from 'react';
 import {Row, Col, Alert} from 'antd';
 import {isEmpty, isEqual, isFunction} from 'lodash';
+import {ResetButton, ConfirmButton} from 'canner-helpers';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import {RENDER_TYPE} from '../../hooks/useRenderType';
@@ -21,9 +22,7 @@ export default React.memo((props) => {
     renderType,
     render,
     shouldRenderSubmitButton,
-    shouldRenderCancelButton,
-    renderSubmitButton,
-    renderCancelButton
+    shouldRenderCancelButton
   } = props;
   const labelCol = layout === 'horizontal' ? props.labelCol || {
     span: 6
@@ -60,10 +59,8 @@ export default React.memo((props) => {
             marginTop: 60
           }}
         >
-          {shouldRenderCancelButton && renderCancelButton({
-            style: {marginRight: 16}
-          })}
-          {shouldRenderSubmitButton && renderSubmitButton()}
+          {shouldRenderCancelButton && <ResetButton style={{marginRight: 16}} />}
+          {shouldRenderSubmitButton && <ConfirmButton />}
         </div>
         {
           error && (

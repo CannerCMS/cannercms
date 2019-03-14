@@ -85,8 +85,6 @@ export default function withCanner(Com: any) {
     const {
       shouldRenderCancelButton,
       shouldRenderSubmitButton,
-      renderCancelButton,
-      renderSubmitButton
     } = useButtons({deploy, reset, rootValue, refId, controlDeployAndResetButtons, hideButtons, path, pattern})
     const item = (
       <CannerItem
@@ -109,8 +107,6 @@ export default function withCanner(Com: any) {
         renderType={renderType}
         shouldRenderCancelButton={shouldRenderCancelButton}
         shouldRenderSubmitButton={shouldRenderSubmitButton}
-        renderSubmitButton={renderSubmitButton}
-        renderCancelButton={renderCancelButton}
         render={(cannerItemProps) => <Com {...props} {...contextValue} {...cannerItemProps} />}
         // external
         error={error}
@@ -121,8 +117,6 @@ export default function withCanner(Com: any) {
       ...contextValue,
       refId: myRefId,
       renderChildren,
-      renderConfirmButton: renderSubmitButton,
-      renderCancelButton
     };
     const isListForm = (pattern === 'array' && routes.length === 1 && routerParams.operator === 'update');
     if (isListForm) {
