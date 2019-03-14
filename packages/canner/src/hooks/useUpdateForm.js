@@ -14,7 +14,13 @@ export default function useUpdateForm({
 }) {
   const [result, setResult] = useState({data: {}, rootValue: {}});
   const [isFetching, setIsFetching] = useState(true);
-  const originArgsRef = useRef(provider.query.getArgs(routes[0]));
+  const getArgs = () => {
+    if (isUpdateForm) {
+      return provider.query.getArgs(routes[0]);
+    }
+    return {}
+  }
+  const originArgsRef = useRef(getArgs());
   const getMapValue = () => provider.fetch(routes[0]);
   const getListValue = () => {
     return provider.updateQuery(routes.slice(0, 1), {where: {id: routes[1]}})

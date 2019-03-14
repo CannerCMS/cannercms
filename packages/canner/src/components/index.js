@@ -68,11 +68,12 @@ function CannerCMS({
   const {
     isListForm,
     isUpdateForm,
-    isCreateForm
-  } = useFormType({routes, routerParams, schema: dataSchema, goTo});
-  const listFormProps = useListForm({provider, schema: dataSchema, routes, isListForm});
-  const updateFormProps = useUpdateForm({provider, schema: dataSchema, routes, isUpdateForm});
-  const createFormProps = useCreateForm({provider, schema: dataSchema, routes, isCreateForm});
+    isCreateForm,
+  } = useFormType({routes, routerParams, schema: uiSchema, defaultKey, goTo});
+
+  const listFormProps = useListForm({provider, schema: uiSchema, routes, isListForm});
+  const updateFormProps = useUpdateForm({provider, schema: uiSchema, routes, isUpdateForm});
+  const createFormProps = useCreateForm({provider, schema: uiSchema, routes, isCreateForm});
   useImperativeHandle(ref, () => ({
     deploy: provider.deploy,
     reset: provider.reset,

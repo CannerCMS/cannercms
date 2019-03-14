@@ -14,6 +14,12 @@ export default function useListForm({
 }) {
   const [result, setResult] = useState({data: {}, rootValue: {}});
   const [isFetching, setIsFetching] = useState(true);
+  const getArgs = () => {
+    if (isListForm) {
+      return provider.query.getArgs(routes[0])
+    }
+    return {};
+  };
   const getListValue = () => provider.fetch(routes[0]);
   const subscribeListValue = () => provider.subscribe(routes[0], (result) => {
     setResult(result);
@@ -28,6 +34,7 @@ export default function useListForm({
         setResult(result);
         setIsFetching(false);
       });
+    
     const {unsubscribe} = subscribeListValue();
     return unsubscribe;
   }, [isListForm, routes[0]])
@@ -37,7 +44,7 @@ export default function useListForm({
     isFetching,
     toolbar: (schema[routes[0]] || {}).toolbar,
     items: (schema[routes[0]] || {}).items,
-    args: provider.query.getArgs(routes[0]),
+    args: getArgs(),
     onClickAddButton: () => {},
     ...provider
   }

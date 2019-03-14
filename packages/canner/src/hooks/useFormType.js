@@ -10,13 +10,20 @@ export default function useFormType({
   routes,
   schema,
   routerParams,
-  goTo
+  goTo,
+  defaultKey
 }) {
   const [formType, setFormType] = useState(FORM_TYPE.NONE);
   const key = routes[0];
+  const redirect = () => {
+    goTo({
+      pathname: `/${defaultKey || Object.keys(schema)[0]}`
+    });
+  }
   useEffect(() => {
-    if (!key) {
+    if (!key || !(key in schema)) {
       setFormType(FORM_TYPE.NONE)
+      redirect();
       return;
     }
     if (routes.length === 1 && routerParams.operator === 'create') {
@@ -27,9 +34,7 @@ export default function useFormType({
       setFormType(FORM_TYPE.UPDATE);
     } else {
       setFormType(FORM_TYPE.NONE);
-      goTo({
-        pathname: `/${Object.keys(schema)[0]}`
-      });
+      redirect();
     }
   });
   return {
