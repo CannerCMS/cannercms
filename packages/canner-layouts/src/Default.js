@@ -7,11 +7,10 @@ type Props = {
   style: any,
 };
 
-export default class Default extends React.Component<Props> {
-  render() {
-    const {style} = this.props;
-    return <div style={style}>
-      <Item />
-    </div>;
-  }
+export default function Default({
+  style
+}: Props) {
+  return <div style={style}>
+    <Item />
+  </div>;
 }
