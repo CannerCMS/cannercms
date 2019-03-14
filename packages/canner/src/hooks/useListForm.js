@@ -14,14 +14,15 @@ export default function useListForm({
 }) {
   const [result, setResult] = useState({data: {}, rootValue: {}});
   const [isFetching, setIsFetching] = useState(true);
+  const key = routes[0];
   const getArgs = () => {
     if (isListForm) {
-      return provider.query.getArgs(routes[0])
+      return provider.query.getArgs(key)
     }
     return {};
   };
-  const getListValue = () => provider.fetch(routes[0]);
-  const subscribeListValue = () => provider.subscribe(routes[0], (result) => {
+  const getListValue = () => provider.fetch(key);
+  const subscribeListValue = () => provider.subscribe(key, (result) => {
     setResult(result);
   });
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function useListForm({
     
     const {unsubscribe} = subscribeListValue();
     return unsubscribe;
-  }, [isListForm, routes[0]])
+  }, [isListForm, key])
   return {
     data: result.data,
     rootValue: result.rootValue,

@@ -14,37 +14,34 @@ export default function useFormType({
   goTo,
   defaultKey
 }) {
-  const [formType, setFormType] = useState(FORM_TYPE.NONE);
   const key = routes[0];
   const redirect = () => {
     goTo({
       pathname: `/${defaultKey || Object.keys(schema)[0]}`
     });
   }
+  let formType = FORM_TYPE.NONE;
+  if (!key || !(key in schema)) {
+    formType = FORM_TYPE.NONE;
+  }
+  if (routes.length === 1 && routerParams.operator === 'create') {
+    formType = FORM_TYPE.CREATE;
+  } else if (routes.length === 1 && routerParams.operator === 'update' && schema[key].type === 'array') {
+    formType = FORM_TYPE.LIST;
+  } else if (routes.length >= 1 && ( schema[key].type === 'array' || schema[key].type === 'object')) {
+    formType = FORM_TYPE.UPDATE;
+  } else if (routes.length >= 1 && schema[key].type === 'page') {
+    formType = FORM_TYPE.PAGE;
+  } else {
+    formType = FORM_TYPE.NONE;
+  }
   useEffect(() => {
     if (!key || !(key in schema)) {
-      setFormType(FORM_TYPE.NONE)
       redirect();
       return;
     }
-    if (routes.length === 1 && routerParams.operator === 'create') {
-      setFormType(FORM_TYPE.CREATE);
-    } else if (routes.length === 1 && routerParams.operator === 'update' && schema[key].type === 'array') {
-      setFormType(FORM_TYPE.LIST);
-    } else if (routes.length >= 1 && ( schema[key].type === 'array' || schema[key].type === 'object')) {
-      setFormType(FORM_TYPE.UPDATE);
-    } else if (routes.length >= 1 && schema[key].type === 'page') {
-      setFormType(FORM_TYPE.PAGE);
-    } else {
-      setFormType(FORM_TYPE.NONE);
-      redirect();
-    }
-  }, [routes.join('/'), routerParams.operator]);
+  }, [key]);
   return {
-    isListForm: formType === FORM_TYPE.LIST,
-    isCreateForm: formType === FORM_TYPE.CREATE,
-    isUpdateForm: formType === FORM_TYPE.UPDATE,
-    isNoneForm: formType === FORM_TYPE.NONE,
-    isPage: formType === FORM_TYPE.PAGE
+    formType
   }
 }

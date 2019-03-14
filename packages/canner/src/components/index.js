@@ -4,17 +4,10 @@ import React, {useRef, forwardRef, useImperativeHandle, useMemo} from 'react';
 import {Parser, Traverser} from 'canner-compiler';
 import {pickBy} from 'lodash';
 import { ApolloProvider } from 'react-apollo';
-import Generator from './Generator';
-import ListForm from './form/ListForm';
-import UpdateForm from './form/UpdateForm';
-import CreateForm from './form/CreateForm';
-import Page from './form/Page';
+import Router from './Router';
 // hooks
 import useProvider from '../hooks/useProvider';
-import useListForm from '../hooks/useListForm';
-import useUpdateForm from '../hooks/useUpdateForm';
-import useCreateForm from '../hooks/useCreateForm';
-import useFormType, {FORM_TYPE} from '../hooks/useFormType';
+import useFormType from '../hooks/useFormType';
 // i18n
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -66,15 +59,7 @@ function CannerCMS({
     errorHandler,
     afterDeploy
   });
-  const {
-    isListForm,
-    isUpdateForm,
-    isCreateForm,
-    isPage
-  } = useFormType({routes, routerParams, schema: uiSchema, defaultKey, goTo});
-  const listFormProps = useListForm({provider, schema: uiSchema, routes, isListForm});
-  const updateFormProps = useUpdateForm({provider, schema: uiSchema, routes, isUpdateForm});
-  const createFormProps = useCreateForm({provider, schema: uiSchema, routes, isCreateForm});
+  const {formType} = useFormType({routes, routerParams, schema: uiSchema, defaultKey, goTo});
   useImperativeHandle(ref, () => ({
     deploy: provider.deploy,
     reset: provider.reset,
@@ -104,37 +89,7 @@ function CannerCMS({
       }}
     >
       <ApolloProvider client={client}>
-        <React.Fragment>
-          {
-            isListForm && <ListForm
-              {...commonFormProps}
-              {...listFormProps}
-            >
-              <Generator formType={FORM_TYPE.LIST} />
-            </ListForm>
-          }
-          {
-            isUpdateForm && <UpdateForm
-              {...commonFormProps}
-              {...updateFormProps}
-            >
-              <Generator formType={FORM_TYPE.UPDATE} />
-            </UpdateForm>
-          }
-          {
-            isCreateForm && <CreateForm
-              {...commonFormProps}
-              {...createFormProps}
-            >
-              <Generator formType={FORM_TYPE.CREATE} />
-            </CreateForm>
-          }
-          {
-            isPage && <Page {...commonFormProps}>
-              <Generator formType={FORM_TYPE.PAGE} />
-            </Page>
-          }
-        </React.Fragment>
+        <Router uiSchema={uiSchema} provider={provider} commonFormProps={commonFormProps} formType={formType} />
       </ApolloProvider>
     </IntlProvider>
   )

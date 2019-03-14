@@ -34,7 +34,7 @@ export class Query {
       return this.queries;
     }
     const path = pathArr.join('.fields.');
-    return get(this.queries, path);
+    return get(this.queries, path, {});
   }
 
   toGQL = (key?: string): string => {
