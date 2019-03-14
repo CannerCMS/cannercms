@@ -16,6 +16,10 @@ export function getFieldValue(value: any, idPathArr: Array<string>) {
   }, value);
 }
 
+export function getRecordValue(rootValue: any, refId: any) {
+  return get(rootValue, refId ? refId.getPathArr() : [], {});
+}
+
 export function getEmptyValue({
   type,
   relation,

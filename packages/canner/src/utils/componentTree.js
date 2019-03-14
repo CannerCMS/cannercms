@@ -59,7 +59,7 @@ export function generateComponent(node: any) {
     if (!node.component) {
       component = Layouts[node.ui];
     }
-    return wrapByHOC(component, node.ui === 'condition' ? ['containerQuery', 'context'] : ['withCannerLayout']);
+    return wrapByHOC(component, ['withCannerLayout']);
   }
   
   if (isComponent(node)) {

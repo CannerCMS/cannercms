@@ -6,22 +6,24 @@ import {Context} from 'canner-helpers';
 // hooks
 import useRefId from '../hooks/useRefId';
 import useOnChange from '../hooks/useOnChange';
+import useRecordValue from '../hooks/useRecordValue';
 
 export default function withCannerLayout(Com: any) {
   return function LayoutWithCanner(props: any) {
     const {
       pattern,
       keyName,
-      renderChildren
+      renderChildren,
+      refId
     } = props;
     const contextValue = useContext(Context);
     const {
       rootValue,
-      request,
-      refId
+      request
     } = contextValue;
     const myRefId = useRefId({pattern, keyName, refId});
     const {onChange} = useOnChange({rootValue, request});
+    const {recordValue} = useRecordValue({rootValue, refId});
     const myContextValue = {
       ...contextValue,
       refId: myRefId,
@@ -32,6 +34,7 @@ export default function withCannerLayout(Com: any) {
         <Com
           {...props}
           {...contextValue}
+          recordValue={recordValue}
           refId={myRefId}
           onChange={onChange}
         />

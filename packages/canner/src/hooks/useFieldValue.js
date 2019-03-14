@@ -1,5 +1,5 @@
 // @flow
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import {getFieldValue} from '../utils/value';
 import type RefId from 'canner-ref-id';
 

@@ -62,7 +62,6 @@ export default function Generator({componentTree, routes, formType}: Props) {
     if (children) {
       return children.map((child, index) => {
         const childProps = typeof props === 'function' ? props(child, index) : props;
-
         if (childProps.hidden) {
           return null;
         }
