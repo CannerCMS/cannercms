@@ -16,7 +16,7 @@ type Props = {
   type: any,
   description: string,
 };
-export default function Block({
+export default React.memo(function Block({
   style,
   headStyle,
   bodyStyle,
@@ -48,5 +48,4 @@ export default function Block({
   >
     <Item />
   </Card>;
-}
-
+})

@@ -4,6 +4,7 @@ import React, {useContext, useMemo, useCallback} from 'react';
 import {Context} from 'canner-helpers';
 import CannerItem from '../components/item';
 import Toolbar from '../components/toolbar';
+import {isEqual, isFunction} from 'lodash';
 
 // hooks
 import useRefId from '../hooks/useRefId';
@@ -14,9 +15,10 @@ import useOnDeploy from '../hooks/useOnDeploy';
 import useFieldValue from '../hooks/useFieldValue';
 import useRenderType from '../hooks/useRenderType';
 import useButtons from '../hooks/useButtons';
+import useTraceUpdate from '../hooks/useTraceUpdate';
 
 export default function withCanner(Com: any) {
-  return function ComWithCanner(props: any) {
+  return React.memo(function ComWithCanner(props: any) {
     const {
       pattern,
       keyName,
@@ -114,11 +116,11 @@ export default function withCanner(Com: any) {
         errorInfo={errorInfo}
       />
     )
-    const myContextValue = {
+    const myContextValue = useMemo(() => ({
       ...contextValue,
       refId: myRefId,
       renderChildren,
-    };
+    }), [myRefId.toString()]);
     const isListForm = (pattern === 'array' && routes.length === 1 && routerParams.operator === 'update');
     if (isListForm) {
       return (
@@ -146,5 +148,15 @@ export default function withCanner(Com: any) {
         {item}
       </Context.Provider>
     );
-  }
+  }, function(prevProps, nextProps) {
+    return Object.entries(nextProps).reduce((eq, [k, v]: any) => {
+      if (isFunction(v)) {
+        return eq;
+      }
+      if (k === 'refId') {
+        return eq && prevProps[k].toString() === v.toString();
+      }
+      return isEqual(v, prevProps[k]) && eq;
+    }, true)
+  })
 }

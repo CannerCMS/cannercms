@@ -1,12 +1,13 @@
 // @flow
 import React, {useContext} from 'react';
 import Context from './context';
+import {isFunction, isEqual} from 'lodash';
 
 type Props = {
   [string]: any
 };
 
-export default function Item({filter, ...rest}: Props) {
+export default React.memo(function Item({filter, ...rest}: Props) {
   const {renderChildren, refId, routes} = useContext(Context);
   return (
     renderChildren(
@@ -19,4 +20,4 @@ export default function Item({filter, ...rest}: Props) {
         }
     )
   );
-}
+})

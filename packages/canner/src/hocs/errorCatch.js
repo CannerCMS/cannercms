@@ -18,6 +18,18 @@ export default function errorCatch(Com: React.ComponentType<*>) {
       errorInfo: {componentStack: null}
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+      if (nextState.error !== this.state.error) {
+        return true;
+      }
+
+      if (nextProps.refId.toString() !== this.props.refId.toString()) {
+        return true;
+      }
+
+      return false;
+    }
+
     componentDidCatch(e: Error, info: Object) {
       // eslint-disable-next-line
       console.log(e, info);

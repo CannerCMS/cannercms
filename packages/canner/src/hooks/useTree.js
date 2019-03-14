@@ -9,6 +9,5 @@ export default function useTree({
   useEffect(() => {
     setTree(genCacheTree(componentTree));
   }, [componentTree]);
-  console.log(tree);
   return tree
 }
