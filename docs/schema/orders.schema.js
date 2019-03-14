@@ -230,8 +230,8 @@ const orders = () => (
         <number keyName="count" title="${orders.detail.count}" />
       </array>
     </Block>
-    <Row type="flex" gutter={16}>
-      <Col xs={24} sm={12} md={12}>
+    {/* <Row type="flex" gutter={16}>
+      <Col xs={24} sm={12} md={12}> */}
         <Block title="${orders.orderStatus}">
           <enum
             values={['new', 'old']}
@@ -310,16 +310,16 @@ const orders = () => (
             }}
           />
         </Block>
-      </Col>
-      <Col xs={24} sm={12} md={12}>
+      {/* </Col>
+      <Col xs={24} sm={12} md={12}> */}
         <Block title="${orders.otherInfo}">
           <boolean keyName="isHighPrice" title="${orders.isHighPrice}" />
           <number keyName="discount" title="${orders.discount}" />
           <number keyName="shipFee" title="${orders.shipFee}" />
           <number keyName="amount" title="${orders.amount}" />
         </Block>
-      </Col>
-    </Row>
+      {/* </Col>
+    </Row> */}
   </array>
 );
 

@@ -31,34 +31,6 @@ type childrenProps = {
 export default function Generator({componentTree, routes, formType}: Props) {
   const tree = useTree({componentTree});
   const [idNodeMap, setIdNodeMap] = useState({});
-  const renderNode = (node: ComponentNode, props: childrenProps, index: number): React$Node => {
-    // take the node.component to render it, and give the component
-    // some props it maybe needs such as renderChildren
-    // eslint-disable-next-line no-unused-vars
-    if (!node) {
-      throw new Error(`Unexpected Error: Want to render a undefined node with refId '${props.refId.toString()}'`);
-    }
-
-    const {component, ...restNodeData} = node;
-    if (node.hidden || props.hidden) {
-      return null;
-    }
-
-    if (component) {
-      return (
-        <div data-testid={node.path} key={index}>
-          <node.component
-            renderChildren={(props) => renderChildren(node, props)}
-            renderComponent={renderComponent}
-            {...restNodeData} // props directly passed by schema
-            {...props} // props from the parent
-          />
-        </div>
-      );
-    }
-    return null;
-  }
-
   const renderComponent = (refId: RefId, props: childrenProps): React$Node => {
     const componentPathArr = refId.getPathArr()
       .filter(path => isNaN(Number(path)));
@@ -90,10 +62,6 @@ export default function Generator({componentTree, routes, formType}: Props) {
     if (children) {
       return children.map((child, index) => {
         const childProps = typeof props === 'function' ? props(child, index) : props;
-        const {refId} = childProps;
-        if (isComponent(node) && isUndefined(refId)) {
-          throw new Error(`refId is required for renderChildren, please check node '${node.keyName || ''}'`);
-        }
 
         if (childProps.hidden) {
           return null;
@@ -106,6 +74,41 @@ export default function Generator({componentTree, routes, formType}: Props) {
 
         return renderNode(child, childProps, index);
       });
+    }
+    return null;
+  }
+
+  const renderNode = (node: ComponentNode, props: childrenProps, index: number): React$Node => {
+    // take the node.component to render it, and give the component
+    // some props it maybe needs such as renderChildren
+    // eslint-disable-next-line no-unused-vars
+    if (!node) {
+      throw new Error(`Unexpected Error: Want to render a undefined node with refId '${props.refId.toString()}'`);
+    }
+
+    const {component, children, ...restNodeData} = node;
+    if (node.hidden || props.hidden) {
+      return null;
+    }
+
+    if (component) {
+      const wrappedRenderChildren = (...args) => {
+        if (args.length === 1) {
+          return renderChildren(node, args[0]);
+        }
+        return renderChildren(...args);
+      }
+      return (
+        <node.component
+          data-testid={node.path}
+          key={index}
+          renderChildren={wrappedRenderChildren}
+          renderComponent={renderComponent}
+          childrenNode={children}
+          {...restNodeData} // props directly passed by schema
+          {...props} // props from the parent
+        />
+      );
     }
     return null;
   }
@@ -143,6 +146,14 @@ export default function Generator({componentTree, routes, formType}: Props) {
   }
   
   if (formType === FORM_TYPE.CREATE) {
+    return (
+      <div>
+        {renderNode(tree[routes[0]], {refId: new RefId('')}, 0)}
+      </div>
+    );
+  }
+
+  if (formType === FORM_TYPE.PAGE) {
     return (
       <div>
         {renderNode(tree[routes[0]], {refId: new RefId('')}, 0)}

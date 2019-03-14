@@ -1,5 +1,5 @@
 // @flow
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useDebugValue} from 'react';
 import {genCacheTree} from '../utils/componentTree';
 
 export default function useTree({
@@ -9,5 +9,6 @@ export default function useTree({
   useEffect(() => {
     setTree(genCacheTree(componentTree));
   }, [componentTree]);
+  console.log(tree);
   return tree
 }

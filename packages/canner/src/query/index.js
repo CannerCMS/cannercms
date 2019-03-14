@@ -19,7 +19,7 @@ export class Query {
     const path = `${pathArr.join('.fields.')}.${field}`;
     if (field === 'args') {
       const args = get(this.queries, path) || {};
-      this.variables = {...this.variables, ...Object.keys(args).reduce((result: Object, key: string) => {
+      this.variables = {...this.variables, ...Object.keys(args).reduce((result: any, key: string) => {
         result[args[key]] = value[key];
 
         return result;

@@ -1,6 +1,6 @@
 // @flow
 
-import React, {useRef, forwardRef, useImperativeHandle} from 'react';
+import React, {useRef, forwardRef, useImperativeHandle, useMemo} from 'react';
 import {Parser, Traverser} from 'canner-compiler';
 import {pickBy} from 'lodash';
 import { ApolloProvider } from 'react-apollo';
@@ -8,6 +8,7 @@ import Generator from './Generator';
 import ListForm from './form/ListForm';
 import UpdateForm from './form/UpdateForm';
 import CreateForm from './form/CreateForm';
+import Page from './form/Page';
 // hooks
 import useProvider from '../hooks/useProvider';
 import useListForm from '../hooks/useListForm';
@@ -51,11 +52,11 @@ function CannerCMS({
 }: Props, ref) {
   const {visitors, pageSchema, imageStorages, fileStorages, dict} = schema;
   const dataSchema = schema.schema;
-  const uiSchema = {
+  const uiSchema = useMemo(() => ({
     ...pageSchema,
     ...pickBy(dataSchema, v => !v.defOnly)
-  }
-  const componentTree = useRef(compile(uiSchema, visitors)).current;
+  }), [pageSchema, dataSchema])
+  const componentTree = useMemo(() => compile(uiSchema, visitors), [uiSchema, visitors]);
   const currentLocale = intl.locale || 'en';
   const provider = useProvider({
     schema: dataSchema,
@@ -69,8 +70,8 @@ function CannerCMS({
     isListForm,
     isUpdateForm,
     isCreateForm,
+    isPage
   } = useFormType({routes, routerParams, schema: uiSchema, defaultKey, goTo});
-
   const listFormProps = useListForm({provider, schema: uiSchema, routes, isListForm});
   const updateFormProps = useUpdateForm({provider, schema: uiSchema, routes, isUpdateForm});
   const createFormProps = useCreateForm({provider, schema: uiSchema, routes, isCreateForm});
@@ -127,6 +128,11 @@ function CannerCMS({
             >
               <Generator formType={FORM_TYPE.CREATE} />
             </CreateForm>
+          }
+          {
+            isPage && <Page {...commonFormProps}>
+              <Generator formType={FORM_TYPE.PAGE} />
+            </Page>
           }
         </React.Fragment>
       </ApolloProvider>

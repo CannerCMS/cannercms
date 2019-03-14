@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import {Row, Col} from 'antd';
-import {Item} from 'canner-helpers';
 
 type Props = {
   id: string,
@@ -17,13 +16,13 @@ type Props = {
   renderChildren: Function,
   refId: any,
   style: Object,
-  children: Array<Object>
+  childrenNode: Array<Object>
 };
 
 export default class RowLayout extends React.Component<Props> {
   render() {
     // eslint-disable-next-line no-unused-vars
-    const {align, gutter, justify, type, renderChildren, refId, style, children} = this.props;
+    const {align, gutter, justify, type, renderChildren, refId, style, childrenNode} = this.props;
     return <Row
       align={align}
       gutter={gutter}
@@ -31,10 +30,9 @@ export default class RowLayout extends React.Component<Props> {
       type={type}
       style={style}
     >
-      <Item />
-      {/* {
-        children.map((child, index) => {
-          const {offset, order, pull, push, span, xs, sm, md, lg, xl, xxl, style} =child;
+      {
+        childrenNode.map((child, index) => {
+          const {offset, order, pull, push, span, xs, sm, md, lg, xl, xxl, style} = child;
           if (child.nodeType === 'layout.col') {
             return <Col
               key={index}
@@ -59,13 +57,14 @@ export default class RowLayout extends React.Component<Props> {
               }
             </Col>
           } else {
-            return renderChildren((node, i) => ({
-              refId,
-              hidden: i !== index
-            }))
+            return null;
+            // return renderChildren((node, i) => ({
+            //   refId,
+            //   hidden: i !== index
+            // }));
           }
         })
-      } */}
+      }
     </Row>;
   }
 }

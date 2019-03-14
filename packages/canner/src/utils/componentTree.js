@@ -1,15 +1,15 @@
 // @flow
-import React from 'react';
+import React from 'react'
 import {
   mapValues,
   get,
 } from 'lodash';
-import {Alert} from 'antd';
-import {List} from 'react-content-loader';
+
 import Loadable from 'react-loadable';
 import {Item} from 'canner-helpers';
 import Layouts from 'canner-layouts';
 import hocs from '../hocs';
+import Loading from '../components/Loading';
 import type {ComponentTree, ComponentNode} from '../components/types';
 
 export function genCacheTree (tree: ComponentTree): ComponentTree {
@@ -46,19 +46,6 @@ export function inPage (node: ComponentNode) {
   return node.pattern.startsWith('page');
 }
 
-export function Loading(props: any) {
-  if (props.error) {
-    return <Alert
-      message="Something went wrong."
-      description={props.error}
-      type="error"
-      closable
-    />
-  } else {
-    return <List style={{maxWidth: '600px'}}/>;
-  }
-}
-
 export function createLoadableComponnet(node: ComponentNode) {
   return Loadable({
     loader: () => node.loader || Promise.reject(`There is no loader in ${node.path}`),
@@ -77,14 +64,15 @@ export function generateComponent(node: any) {
   
   if (isComponent(node)) {
     if (isFieldset(node)) {
-      component = () => <Item />;
+      component = Item;
     } else {
       component = createLoadableComponnet(node);
     }
     return wrapByHOC(component, ['withCanner', 'errorCatch']);
   } else if (isPage(node)) {
     if (isPageRoot(node)) {
-      component = () => <Item />;
+      component = Item;
+      return wrapByHOC(component, ['withCannerLayout']);
     } else if (inPage(node)) {
       component = createLoadableComponnet(node);
       return wrapByHOC(component, ['graphqlQuery']);

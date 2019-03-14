@@ -4,7 +4,6 @@ import {isEmpty, isEqual, isFunction} from 'lodash';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import {RENDER_TYPE} from '../../hooks/useRenderType';
-import useTraceUpdate from '../../hooks/useTraceUpdate';
 
 export default React.memo((props) => {
   const {

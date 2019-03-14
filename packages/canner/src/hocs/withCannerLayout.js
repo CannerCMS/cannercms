@@ -1,6 +1,6 @@
 // @flow
 
-import React, {useContext, useMemo, useCallback} from 'react';
+import React, {useContext, useMemo, useCallback, useDebugValue} from 'react';
 import {Context} from 'canner-helpers';
 
 // hooks
