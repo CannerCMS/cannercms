@@ -12,7 +12,7 @@ export default React.memo(function Item({filter, ...rest}: Props) {
   return (
     renderChildren(
       filter ? 
-        node => ({refId, routes, hidden: !filter(node), ...rest}):
+        (node, index) => ({refId, routes, hidden: !filter(node, index), ...rest}):
         {
           refId,
           routes,

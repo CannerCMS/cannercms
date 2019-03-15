@@ -171,10 +171,6 @@ const orders = () => (
               dataIndex: "no"
             },
             {
-              title: "${products.photos}",
-              dataIndex: "photos"
-            },
-            {
               title: "${products.name}",
               dataIndex: "name"
             },
@@ -191,30 +187,6 @@ const orders = () => (
               dataIndex: "count"
             }
           ],
-          relationColumns: [
-            {
-              title: "${products.no}",
-              dataIndex: "no"
-            },
-            {
-              title: "${products.photos}",
-              dataIndex: "photos"
-            },
-            {
-              title: "${products.name}",
-              dataIndex: "name"
-            },
-            {
-              title: "${products.price}",
-              dataIndex: "price"
-            },
-            {
-              title: "${products.promo}",
-              dataIndex: "promo"
-            }
-          ],
-          relationField: "products",
-          copyFields: ["no", "name", "price", "promo", "count", "photos"]
         }}
       >
         <string keyName="no" title="${products.no}" />

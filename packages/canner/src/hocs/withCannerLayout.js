@@ -7,6 +7,7 @@ import {isFunction, isEqual} from 'lodash';
 import useRefId from '../hooks/useRefId';
 import useOnChange from '../hooks/useOnChange';
 import useRecordValue from '../hooks/useRecordValue';
+import useTraceUpdate from '../hooks/useTraceUpdate';
 
 export default function withCannerLayout(Com: any) {
   return React.memo(function LayoutWithCanner(props: any) {
@@ -24,11 +25,11 @@ export default function withCannerLayout(Com: any) {
     const myRefId = useRefId({pattern, keyName, refId});
     const {onChange} = useOnChange({rootValue, request});
     const {recordValue} = useRecordValue({rootValue, refId});
-    const myContextValue = {
+    const myContextValue = useMemo(() => ({
       ...contextValue,
       refId: myRefId,
       renderChildren
-    };
+    }), [myRefId.toString(), recordValue]);
     return (
       <Context.Provider value={myContextValue}>
         <Com
@@ -48,7 +49,6 @@ export default function withCannerLayout(Com: any) {
       if (k === 'refId') {
         return eq && prevProps[k].toString() === v.toString();
       }
-
       return isEqual(v, prevProps[k]) && eq;
     }, true)
   })

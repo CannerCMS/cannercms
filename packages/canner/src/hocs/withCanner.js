@@ -41,6 +41,7 @@ export default function withCanner(Com: any) {
       controlDeployAndResetButtons,
       hideButtons
     } = props;
+    useTraceUpdate(props)
     const contextValue = useContext(Context);
     const {
       rootValue,

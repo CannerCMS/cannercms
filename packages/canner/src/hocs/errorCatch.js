@@ -12,7 +12,7 @@ type State = {
 };
 
 export default function errorCatch(Com: React.ComponentType<*>) {
-  return class ComponentErrorCatch extends React.PureComponent<HOCProps, State> {
+  return class ComponentErrorCatch extends React.Component<HOCProps, State> {
     state = {
       error: false,
       errorInfo: {componentStack: null}

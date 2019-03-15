@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import {Row, Col} from 'antd';
-
+import {Item} from 'canner-helpers';
 type Props = {
   id: string,
   title: string,
@@ -48,12 +48,9 @@ export default function RowLayout({
             xxl={xxl}
             style={style}
           >
-            {
-              renderChildren((node, i) => ({
-                refId,
-                hidden: i !== index,
-              }))
-            }
+            <Item
+              filter={(node, i) => (i === index)}
+            />
           </Col>
         } else {
           return null;
