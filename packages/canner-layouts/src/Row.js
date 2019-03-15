@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function RowLayout({
-  align, gutter, justify, type, renderChildren, refId, style, childrenNode
+  align, gutter, justify, type, style, childrenNode
 }: Props) {
   return <Row
     align={align}
@@ -53,11 +53,11 @@ export default function RowLayout({
             />
           </Col>
         } else {
-          return null;
-          // return renderChildren((node, i) => ({
-          //   refId,
-          //   hidden: i !== index
-          // }));
+          return (
+            <Item
+              filter={(node, i) => (i === index)}
+            />
+          )
         }
       })
     }
