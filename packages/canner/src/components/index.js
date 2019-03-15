@@ -8,7 +8,6 @@ import Router from './Router';
 // hooks
 import useProvider from '../hooks/useProvider';
 import useFormType from '../hooks/useFormType';
-import useTraceUpdate from '../hooks/useTraceUpdate';
 // i18n
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -48,7 +47,6 @@ function CannerCMS({
   defaultKey,
   client
 }: Props, ref) {
-  useTraceUpdate({schema, routes, routerParams, client})
   const {visitors, pageSchema, imageStorages, fileStorages, dict} = schema;
   const dataSchema = schema.schema;
   const uiSchema = useMemo(() => ({

@@ -15,7 +15,6 @@ import useOnDeploy from '../hooks/useOnDeploy';
 import useFieldValue from '../hooks/useFieldValue';
 import useRenderType from '../hooks/useRenderType';
 import useButtons from '../hooks/useButtons';
-import useTraceUpdate from '../hooks/useTraceUpdate';
 
 export default function withCanner(Com: any) {
   return React.memo(function ComWithCanner(props: any) {
@@ -41,7 +40,6 @@ export default function withCanner(Com: any) {
       controlDeployAndResetButtons,
       hideButtons
     } = props;
-    useTraceUpdate(props)
     const contextValue = useContext(Context);
     const {
       rootValue,
