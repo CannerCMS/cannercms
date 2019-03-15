@@ -115,12 +115,12 @@ export default function withCanner(Com: any) {
         error={error}
         errorInfo={errorInfo}
       />
-    )
+    );
     const myContextValue = useMemo(() => ({
       ...contextValue,
       refId: myRefId,
       renderChildren,
-    }), [myRefId.toString()]);
+    }), [myRefId.toString(), fieldValue]);
     const isListForm = (pattern === 'array' && routes.length === 1 && routerParams.operator === 'update');
     if (isListForm) {
       return (
