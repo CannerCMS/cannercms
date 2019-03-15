@@ -2,7 +2,7 @@
  * @flow
  */
 
-import React, {useEffect, useState, useRef, useImperativeHandle, forwardRef} from 'react';
+import React, {useEffect, useCallback, useState, useRef, useImperativeHandle, forwardRef, useMemo} from 'react';
 import {actionToMutation, actionsToVariables} from '../action';
 import gql from 'graphql-tag';
 import {createEmptyData} from 'canner-helpers';
@@ -200,8 +200,7 @@ export default function useProvider({
     cache.mutate(queryKey, actions);
     return cache.getData(queryKey);
   }
-
-  return {
+  const provider = useMemo(() => ({
     request: request,
     deploy: deploy,
     fetch: fetch,
@@ -214,7 +213,8 @@ export default function useProvider({
     onDeploy: onDeployManager.subscribe,
     removeOnDeploy: onDeployManager.unsubscribe,
     dataChanged: changedData
-  }
+  }), [schema, routes]);
+  return provider
 }
 
 function removeIdInCreateArray(actions: Array<Action<ActionType>>) {

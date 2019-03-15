@@ -11,7 +11,7 @@ export default ({
   const {routerParams, routes, rootValue} = contextValue;
   const parentRefId = refId || contextValue.refId;
 
-  if (!pattern) {
+  if (!pattern || !keyName) {
     // layout component
     return parentRefId;
   }

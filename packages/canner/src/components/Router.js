@@ -8,13 +8,14 @@ import UpdateForm from './form/UpdateForm';
 import CreateForm from './form/CreateForm';
 import Page from './form/Page';
 import {FORM_TYPE} from '../hooks/useFormType';
-
+import useTraceUpdate from '../hooks/useTraceUpdate';
 export default function Router({
   provider,
   formType,
   uiSchema,
   commonFormProps
 }) {
+  useTraceUpdate({provider, formType, uiSchema, commonFormProps})
   const {routes} = commonFormProps;
   const isCreateForm = formType === FORM_TYPE.CREATE;
   const isUpdateForm = formType === FORM_TYPE.UPDATE;

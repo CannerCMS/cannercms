@@ -2,12 +2,13 @@
 
 import React, {useRef, forwardRef, useImperativeHandle, useMemo} from 'react';
 import {Parser, Traverser} from 'canner-compiler';
-import {pickBy} from 'lodash';
+import {pickBy, isEqual, isFunction} from 'lodash';
 import { ApolloProvider } from 'react-apollo';
 import Router from './Router';
 // hooks
 import useProvider from '../hooks/useProvider';
 import useFormType from '../hooks/useFormType';
+import useTraceUpdate from '../hooks/useTraceUpdate';
 // i18n
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
@@ -21,7 +22,11 @@ import type {CMSProps} from './types';
 
 type Props = CMSProps;
 
-export default forwardRef(CannerCMS);
+export default (React.memo(forwardRef(CannerCMS), function(prevProps, nextProps) {
+  return Object.entries(nextProps).reduce((eq, [k, v]: any) => {
+    return isEqual(v, prevProps[k]) && eq;
+  }, true)
+}));
 
 function CannerCMS({
   schema,
@@ -43,6 +48,7 @@ function CannerCMS({
   defaultKey,
   client
 }: Props, ref) {
+  useTraceUpdate({schema, routes, routerParams, client})
   const {visitors, pageSchema, imageStorages, fileStorages, dict} = schema;
   const dataSchema = schema.schema;
   const uiSchema = useMemo(() => ({
@@ -64,7 +70,7 @@ function CannerCMS({
     deploy: provider.deploy,
     reset: provider.reset,
   }));
-  const commonFormProps = {
+  const commonFormProps = useMemo(() => ({
     schema: dataSchema,
     baseUrl,
     goTo,
@@ -75,7 +81,7 @@ function CannerCMS({
     componentTree,
     imageStorage: imageStorages[routes[0]],
     fileStorage: fileStorages[routes[0]],
-  };
+  }), [dataSchema, routes, baseUrl, routerParams, componentTree]);
   return (
     <IntlProvider
       locale={currentLocale}
