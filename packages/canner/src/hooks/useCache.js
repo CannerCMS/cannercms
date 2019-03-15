@@ -5,7 +5,7 @@ import Cache from '@canner/cache';
 import {mutate} from '../action';
 import { parseConnectionToNormal } from '../hocs/utils';
 
-export default () => {
+export default function useCache(defaultData: any) {
   const cacheRef = useRef(new Cache({
     reducer: (cachedData, action) => {
       const mutatedData = mutate(cachedData.data, action);
@@ -13,7 +13,8 @@ export default () => {
         data: mutatedData,
         rootValue: parseConnectionToNormal(mutatedData)
       }
-    }
+    },
+    defaultData
   }));
   return cacheRef.current;
 }

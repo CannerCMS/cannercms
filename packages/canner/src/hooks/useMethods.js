@@ -1,5 +1,5 @@
 // @flow
-import {useContext, useState} from 'react';
+import {useRef, useContext, useState, useEffect, useMemo} from 'react';
 import {Context} from 'canner-helpers';
 import {mapValues, groupBy, isArray} from 'lodash';
 import {isCompleteContain, genPaths} from '../utils/renderType';
@@ -7,62 +7,34 @@ import useCache from './useCache';
 import useOnDeployManager from './useOnDeployManager';
 import useActionManager from './useActionManager';
 import type {Action, ActionType} from '../action/types';
+import RefId from 'canner-ref-id';
 
 export default ({
   pattern,
-  path,
 }: {
   pattern: string,
-  path: string
 }) => {
   const {
     routes,
-    fetch,
     request,
     updateQuery,
     deploy,
-    reset,
-    removeOnDeploy,
-    onDeploy,
-    subscribe
+    rootValue,
+    data,
   } = useContext(Context);
-  const cache = useCache();
+  const [key] = routes;
+  const cache = useCache({[key]: JSON.parse(JSON.stringify({rootValue, data}))});
   const onDeployManager = useOnDeployManager();
   const actionManager = useActionManager();
-  const hasToCache = routes.length > 1 && isRoutesEndAtMe({routes, pattern, path});
   const [changedData, setChangedData] = useState(null);
 
-  const _fetch = (key: string) => {
-    // the data will be mutated by cached actions
-    if (!hasToCache) {
-      return fetch(key);
-    }
-    return fetch(key).then(result => {
-      cache.setData(key, result);
-      return result;
-    });
-  }
-
-  const _subscribe = (key: string, callback: any) => {
-    if (!hasToCache) {
-      return subscribe(key, callback);
-    }
-    const subscriptionId = cache.subscribe(key, callback);
-    return {
-      unsubscribe: () => cache.unsubscribe(key, subscriptionId)
-    }
-  }
-
   const updateCachedData = (actions: Array<Action<ActionType>> | Action<ActionType>) => {
-    const [key] = routes;
     cache.mutate(key, actions);
     return cache.getData(key);
   }
   const _request = (action: Array<Action<ActionType>> | Action<ActionType>): Promise<*> => {
     // use action manager cache the actions
     // update state.actions
-    if (!hasToCache)
-      return request(action);
     if (isArray(action)) {
       // $FlowFixMe
       action.forEach(ac => {
@@ -77,20 +49,14 @@ export default ({
   }
 
   const _onDeploy = (key: string, callback: any) => {
-    if (!hasToCache)
-      return onDeploy(key, callback);
     return onDeployManager.subscribe(key, callback);
   }
 
   const _removeOnDeploy = (key: string, callbackId: string) => {
-    if (!hasToCache)
-      return removeOnDeploy(key, callbackId);
     return  onDeployManager.unsubscribe(key, callbackId);
   }
 
   const _deploy = (key: string, id?: string): Promise<*> => {
-    if (!hasToCache)
-      return deploy(key, id);
     const cachedData = cache.getData(key).data;
     const {error} = onDeployManager.publish(key, cachedData[key]);
     if (error) {
@@ -108,18 +74,19 @@ export default ({
     return Promise.resolve();
   }
 
-  const _reset = (key: string, id?: string): Promise<*> => {
+  const _reset = (k: string, id?: string): Promise<*> => {
     // remove sepicfic cached actions in actionManager
-    if (!hasToCache)
-      return reset(key, id);
-    actionManager.removeActions(key, id);
+    let resetKey = k;
+    if (k instanceof RefId) {
+      resetKey = k.getPathArr()[0];
+    }
+    actionManager.removeActions(resetKey, id);
     updateDataChanged();
-    return _fetch(key);
+    cache.setData(resetKey, {data, rootValue});
+    return Promise.resolve();
   }
 
   const updateDataChanged = () => {
-    if (!hasToCache)
-      return;
     const actions = actionManager.getActions();
     let changedData = groupBy(actions, (action => action.payload.key));
     changedData = mapValues(changedData, value => {
@@ -141,17 +108,16 @@ export default ({
       });
   };
 
+  const value = cache.getData(key);
   return {
     changedData,
-    subscribe: _subscribe,
-    fetch: _fetch,
-    unsubscribe: _subscribe,
     reset: _reset,
     updateQuery: _updateQuery,
     request: _request,
     onDeploy: _onDeploy,
     removeOnDeploy: _removeOnDeploy,
-    deploy: _deploy
+    deploy: _deploy,
+    ...value
   }
 }
 

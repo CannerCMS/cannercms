@@ -23,8 +23,7 @@ export default function useFormType({
   let formType = FORM_TYPE.NONE;
   if (!key || !(key in schema)) {
     formType = FORM_TYPE.NONE;
-  }
-  if (routes.length === 1 && routerParams.operator === 'create') {
+  } else if (routes.length === 1 && routerParams.operator === 'create') {
     formType = FORM_TYPE.CREATE;
   } else if (routes.length === 1 && routerParams.operator === 'update' && schema[key].type === 'array') {
     formType = FORM_TYPE.LIST;

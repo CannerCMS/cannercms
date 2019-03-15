@@ -11,7 +11,7 @@
  * some props it maybe needs such as renderChildren
  */
 
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   isUndefined,
 } from 'lodash';
@@ -55,7 +55,7 @@ export default function Generator({componentTree, routes, formType}: Props) {
     return renderNode(node, {refId: refId.remove(1), keyName: refId.getPathArr().slice(-1)[0], ...props}, 0);
   }
 
-  const renderChildren = (node: ComponentNode, props: childrenProps | (child: Node, index: number) => childrenProps): React$Node => {
+  const renderChildren = useCallback((node: ComponentNode, props: childrenProps | (child: Node, index: number) => childrenProps): React$Node => {
     // just get the props and call renderNode
     // this method is called by components themselves
     const {children} = node;
@@ -75,9 +75,9 @@ export default function Generator({componentTree, routes, formType}: Props) {
       });
     }
     return null;
-  }
+  });
 
-  const renderNode = (node: ComponentNode, props: childrenProps, index: number): React$Node => {
+  const renderNode = useCallback((node: ComponentNode, props: childrenProps, index: number): React$Node => {
     // take the node.component to render it, and give the component
     // some props it maybe needs such as renderChildren
     // eslint-disable-next-line no-unused-vars
@@ -110,7 +110,7 @@ export default function Generator({componentTree, routes, formType}: Props) {
       );
     }
     return null;
-  }
+  }, [])
 
   if (!routes[0] || !tree[routes[0]]) {
     return null;

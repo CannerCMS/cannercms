@@ -2,31 +2,33 @@
 
 import React, {useState, useEffect, useContext, useRef, useMemo} from 'react';
 import {Context} from 'canner-helpers';
+import {isEqual} from 'lodash';
 import RefId from 'canner-ref-id';
 // import Toolbar from '../toolbar';
 // const AddButton = () => null;
-export default function ListForm({
-  data,
-  rootValue,
-  loading = null,
-  isFetching,
-  // toolbar,
-  // onClickAddButton,
-  componentTree,
-  routes,
-  routerParams,
-  goTo,
-  defaultKey,
-  children,
-  request,
-  query,
-  deploy,
-  updateQuery,
-  // items,
-  // args,
-  ...props
-}: any) {
-  const contextValue = {
+export default React.memo(function ListForm(props: any) {
+  const {
+    data,
+    rootValue,
+    loading = null,
+    isFetching,
+    // toolbar,
+    // onClickAddButton,
+    componentTree,
+    routes,
+    routerParams,
+    goTo,
+    defaultKey,
+    children,
+    request,
+    query,
+    deploy,
+    updateQuery,
+    // items,
+    // args,
+    ...rest
+  } = props;
+  const contextValue = useMemo(() => ({
     rootValue,
     data,
     routes,
@@ -36,10 +38,8 @@ export default function ListForm({
     query,
     deploy,
     updateQuery,
-    renderConfirmButton: () => null,
-    renderCancelButton: () => null,
-    ...props
-  }
+    ...rest
+  }), [rootValue, data, routes, routerParams, goTo])
   // const keyName = routes[0];
   // const refId = useMemo(() => new RefId(keyName), [keyName]);
   return (
@@ -64,10 +64,16 @@ export default function ListForm({
           goTo,
           routes,
           routerParams: routerParams || {},
-          defaultKey,
-          contextValue
+          defaultKey
         })
       )}
     </Context.Provider>
   )
-}
+}, function(prevProps, nextProps) {
+  return Object.entries(nextProps).reduce((eq, [k, v]: any) => {
+    if (k === 'refId') {
+      return eq && prevProps[k].toString() === v.toString();
+    }
+    return isEqual(v, prevProps[k]) && eq;
+  }, true)
+})

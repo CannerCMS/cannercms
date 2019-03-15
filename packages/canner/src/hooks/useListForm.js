@@ -1,5 +1,5 @@
 // @flow
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback, useMemo} from 'react';
 
 export default function useListForm({
   provider,
@@ -39,14 +39,16 @@ export default function useListForm({
     const {unsubscribe} = subscribeListValue();
     return unsubscribe;
   }, [isListForm, key])
+  const args = useMemo(getArgs, [key, isListForm]);
+  const onClickAddButton = useCallback(() => {}, []);
   return {
     data: result.data,
     rootValue: result.rootValue,
     isFetching,
     toolbar: (schema[routes[0]] || {}).toolbar,
     items: (schema[routes[0]] || {}).items,
-    args: getArgs(),
-    onClickAddButton: () => {},
+    args,
+    onClickAddButton,
     ...provider
   }
 }

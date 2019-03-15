@@ -7,8 +7,6 @@ import {isFunction, isEqual} from 'lodash';
 import useRefId from '../hooks/useRefId';
 import useOnChange from '../hooks/useOnChange';
 import useRecordValue from '../hooks/useRecordValue';
-import useTraceUpdate from '../hooks/useTraceUpdate';
-
 export default function withCannerLayout(Com: any) {
   return React.memo(function LayoutWithCanner(props: any) {
     const {
@@ -34,7 +32,7 @@ export default function withCannerLayout(Com: any) {
       <Context.Provider value={myContextValue}>
         <Com
           {...props}
-          {...contextValue}
+          {...myContextValue}
           recordValue={recordValue}
           refId={myRefId}
           onChange={onChange}

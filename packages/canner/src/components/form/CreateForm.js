@@ -2,33 +2,35 @@
 
 import React, {useState, useEffect, useContext, useRef, useMemo} from 'react';
 import {Context} from 'canner-helpers';
+
 const BackButton = () => null;
 const SubmitButton = () => null;
 const CancelButton = () => null;
-export default function UpdateForm({
-  data,
-  rootValue,
-  loading = null,
-  isFetching,
-  onClickBackButton,
-  onClickSubmitButton,
-  onClickCancelButton,
-  componentTree,
-  routes,
-  routerParams,
-  goTo,
-  defaultKey,
-  children,
-  ...props
-}: any) {
-  const contextValue = {
+export default function CreateForm(props: any) {
+  const {
+    data,
+    rootValue,
+    loading = null,
+    isFetching,
+    onClickBackButton,
+    onClickSubmitButton,
+    onClickCancelButton,
+    componentTree,
+    routes,
+    routerParams,
+    goTo,
+    defaultKey,
+    children,
+    ...rest
+  } = props;
+  const contextValue = useMemo(() => ({
     rootValue,
     data,
     routes,
     routerParams,
     goTo,
-    ...props
-  };
+    ...rest
+  }), [routes, routerParams, rootValue]);
   return (
     <Context.Provider value={contextValue}>
       <BackButton onClick={onClickBackButton}>BackButton</BackButton>
@@ -39,7 +41,6 @@ export default function UpdateForm({
           routes,
           routerParams: routerParams || {},
           defaultKey,
-          contextValue
         })
       )}
       <SubmitButton onClick={onClickSubmitButton}>submit</SubmitButton>

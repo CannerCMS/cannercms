@@ -14,7 +14,7 @@ import validation from './validation';
 import graphqlQuery from './graphqlQuery';
 import withCanner from './withCanner';
 import withCannerLayout from './withCannerLayout';
-
+import withCache from './withCache';
 export default {
   errorCatch,
   query,
@@ -31,5 +31,6 @@ export default {
   validation,
   graphqlQuery,
   withCanner,
-  withCannerLayout
+  withCannerLayout,
+  withCache
 };

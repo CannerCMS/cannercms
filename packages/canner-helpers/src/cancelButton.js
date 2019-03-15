@@ -14,7 +14,7 @@ export default function CancelButton({
   const {reset, refId} = contextValue;
   const onClick = (refId: RefId, callback: Function) => {
     const key = refId.getPathArr()[0];
-    reset(key).then(callback());
+    reset(key).then(callback);
   }
   return <Button
     disabled={disabled}

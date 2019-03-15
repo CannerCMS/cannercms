@@ -4,7 +4,7 @@ export default class Cache implements CacheI {
   reducer: (data: any, action: Action) => any;
   data: Record<string, any>;
   listeners: Listeners;
-  constructor({reducer}: {reducer: Reducer}) {
+  constructor({reducer, defaultData}: {reducer: Reducer, defaultData: any}) {
     this.reducer = (data, actions) => {
       // action array
       if (Array.isArray(actions)) {
@@ -13,7 +13,7 @@ export default class Cache implements CacheI {
       // single action
       return reducer(data, actions);
     };
-    this.data = {};
+    this.data = defaultData || {};
     this.listeners = {}
   }
 

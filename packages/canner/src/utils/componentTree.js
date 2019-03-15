@@ -26,6 +26,10 @@ export function isComponent(node: ComponentNode) {
   return node.nodeType && node.nodeType.startsWith('component');
 }
 
+export function isCached(node: ComponentNode) {
+  return node.nodeType && node.nodeType.startsWith('component') && node.cacheActions;
+}
+
 export function isLayout(node: ComponentNode) {
   return node.nodeType && node.nodeType.startsWith('layout');
 }
@@ -67,6 +71,9 @@ export function generateComponent(node: any) {
       component = Item;
     } else {
       component = createLoadableComponnet(node);
+    }
+    if (isCached(node)) {
+      return wrapByHOC(component, ['withCanner', 'withCache', 'errorCatch']);
     }
     return wrapByHOC(component, ['withCanner', 'errorCatch']);
   } else if (isPage(node)) {

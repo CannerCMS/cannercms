@@ -1,5 +1,5 @@
 // @flow
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect, useRef, useCallback} from 'react';
 
 export default function useUpdateForm({
   provider,
@@ -56,15 +56,18 @@ export default function useUpdateForm({
       unsubscribe();
       provider.updateQuery(routes.slice(0, 1), originArgsRef.current)
     };
-  }, [isUpdateForm, routes.join('/')])
+  }, [isUpdateForm, routes.join('/')]);
+  const onClickSubmitButton = useCallback(() => {}, []);
+  const onClickCancelButton = useCallback(() => {}, []);
+  const onClickBackButton = useCallback(() => {}, []);
   return {
     data: result.data,
     rootValue: result.rootValue,
     isFetching,
     toolbar: (schema[routes[0]] || {}).toolbar,
-    onClickSubmitButton: () => {},
-    onClickCancelButton: () => {},
-    onClickBackButton: () => {},
+    onClickSubmitButton,
+    onClickCancelButton,
+    onClickBackButton,
     ...provider
   }
 }
