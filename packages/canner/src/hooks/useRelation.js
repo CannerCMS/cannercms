@@ -104,7 +104,7 @@ export default function({
   return {
     relationToolbar,
     relationFetching: fetching,
-    relationValue: data[relation.to] || null
+    relationValue: data[relation.to] || {edges: []}
   }
 }
 

@@ -22,7 +22,7 @@ export default React.memo(function CannerItem(props) {
     renderType,
     render,
     shouldRenderSubmitButton,
-    shouldRenderCancelButton
+    shouldRenderCancelButton,
   } = props;
   const labelCol = layout === 'horizontal' ? props.labelCol || {
     span: 6

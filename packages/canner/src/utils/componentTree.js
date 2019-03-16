@@ -27,7 +27,9 @@ export function isComponent(node: ComponentNode) {
 }
 
 export function isCached(node: ComponentNode) {
-  return node.nodeType && node.nodeType.startsWith('component') && node.cacheActions;
+  return node.nodeType &&
+    node.nodeType === 'component.array.table' &&
+    node.cacheActions;
 }
 
 export function isLayout(node: ComponentNode) {

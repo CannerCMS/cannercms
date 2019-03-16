@@ -87,6 +87,7 @@ export default function withCanner(Com: any) {
       shouldRenderCancelButton,
       shouldRenderSubmitButton,
     } = useButtons({deploy, reset, rootValue, refId, controlDeployAndResetButtons, hideButtons, path, pattern})
+
     const item = (
       <CannerItem
         data-testid={props['data-testid']}

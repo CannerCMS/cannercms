@@ -31,10 +31,10 @@ export class Query {
 
   getQueries = (pathArr: Array<string>): Object => {
     if (!pathArr || pathArr.length === 0) {
-      return this.queries;
+      return {...this.queries};
     }
     const path = pathArr.join('.fields.');
-    return get(this.queries, path, {});
+    return {...get(this.queries, path, {})};
   }
 
   toGQL = (key?: string): string => {
