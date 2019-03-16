@@ -29,8 +29,6 @@ export default function Page({
     query,
     deploy,
     updateQuery,
-    renderConfirmButton: () => null,
-    renderCancelButton: () => null,
     ...props
   }
   return (
@@ -40,7 +38,6 @@ export default function Page({
         goTo,
         routes,
         routerParams: routerParams || {},
-        contextValue
       })}
     </Context.Provider>
   )

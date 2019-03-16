@@ -1,18 +1,24 @@
-import * as React from 'react';
+// @flow
+import React, {useContext, useMemo} from 'react';
 import gql from 'graphql-tag';
+import {Context} from 'canner-helpers';
 import {Query} from 'react-apollo';
 import {List} from 'react-content-loader';
-
-export default function withQuery(Com) {
-  return class ComWithQuery extends React.Component {
-    render() {
-      const {graphql, variables, transformData, ...restProps} = this.props;
-      if (!graphql) {
-        return (
-          <Com {...restProps}/>
-        );
-      }
+export default function withQuery(Com: any) {
+  return function ComWithQuery(props: any) {
+    const {graphql, variables, transformData, renderChildren, ...restProps} = props;
+    const contextValue = useContext(Context);
+    if (!graphql) {
       return (
+        <Com {...restProps}/>
+      );
+    }
+    const myContextValue = useMemo(() => ({
+      ...contextValue,
+      renderChildren: renderChildren
+    }), [renderChildren]);
+    return (
+      <Context.Provider value={myContextValue}>
         <Query query={gql`${graphql}`} variables={variables}>
           {({loading, error, data, ...graphqlProps}) => {
             if (loading) return <List style={{maxWidth: '600px'}}/>;
@@ -27,11 +33,11 @@ export default function withQuery(Com) {
               value = transformData(value);
             }
             return (
-              <Com value={value} {...restProps} {...graphqlProps} />
+              <Com value={value}{...restProps} {...graphqlProps}  {...myContextValue}  />
             );
           }}
         </Query>
-      );
-    }
+      </Context.Provider>
+    );
   }
 }
