@@ -175,6 +175,10 @@ const orders = () => (
               dataIndex: "name"
             },
             {
+              title: "${products.photos}",
+              dataIndex: "photos"
+            },
+            {
               title: "${products.price}",
               dataIndex: "price"
             },

@@ -97,6 +97,7 @@ export default function withCanner(Com: any) {
         required={required}
         relationFetching={relationFetching}
         type={type}
+        items={items}
         description={description}
         hideTitle={hideTitle}
         imageStorage={imageStorage}
