@@ -12,21 +12,13 @@ type State = {
   dataChanged: Object
 };
 
-class CannerContainer extends React.Component<CannerContainerProps, State> {
+class CannerContainer extends React.PureComponent<CannerContainerProps, State> {
   cannerRef: React.ElementRef<any>;
   menuConfig: MenuConfig | boolean;
   uiSchema: Object;
 
   constructor(props: CannerContainerProps) {
     super(props);
-    const {sidebarConfig, schema} = props;
-    this.uiSchema = {...schema.pageSchema, ...pickBy(schema.schema, v => !v.defOnly)};
-
-    if (sidebarConfig.menuConfig === true) {
-      this.menuConfig = transformSchemaToMenuConfig(this.uiSchema);
-    } else {
-      this.menuConfig = sidebarConfig.menuConfig;
-    }
 
     this.cannerRef = React.createRef();
     this.state = {
@@ -65,6 +57,11 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
       sort: router.getSort(),
       pagination: router.getPagination()
     };
+    const uiSchema = {...schema.pageSchema, ...pickBy(schema.schema, v => !v.defOnly)};
+    let menuConfig = sidebarConfig.menuConfig;
+    if (sidebarConfig.menuConfig === true) {
+      menuConfig = transformSchemaToMenuConfig(uiSchema);
+    }
     return (
       <Layout style={{
         WebkitBoxOrient: 'horizontal',
@@ -79,9 +76,9 @@ class CannerContainer extends React.Component<CannerContainerProps, State> {
           goTo={router.goTo}
           reset={this.cannerRef.current && this.cannerRef.current.reset}
           routes={routes}
-          schema={this.uiSchema}
+          schema={uiSchema}
           {...sidebarConfig}
-          menuConfig={this.menuConfig}
+          menuConfig={menuConfig}
         />
         <Layout>
           {navbarConfig && (
