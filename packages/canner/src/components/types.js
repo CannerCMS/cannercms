@@ -70,7 +70,7 @@ export type GeneratorProps = {
   layouts: {[string]: React.ComponentType<*>},
   imageStorages: Object,
   fileStorages: Object,
-
+  rules?: Object,
   goTo: Object => void,
   baseUrl: string,
   routes: Array<string>,

@@ -103,7 +103,8 @@ class CannerCMS extends React.Component<Props> {
       errorHandler,
       schema: {imageStorages, fileStorages, dict = {}},
       defaultKey,
-      client
+      client,
+      rules
     } = this.props;
     const currentLocale = intl.locale || 'en';
     return (
@@ -137,6 +138,7 @@ class CannerCMS extends React.Component<Props> {
             goTo={goTo}
             baseUrl={baseUrl}
             routes={routes}
+            rules={rules}
             routerParams={routerParams || {}}
             hideButtons={hideButtons}
             defaultKey={defaultKey}

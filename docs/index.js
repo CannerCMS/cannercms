@@ -133,6 +133,7 @@ class CMSExample extends React.Component {
                   message: 'Deployed!'
                 })
               }}
+              rules={JSON.parse(localStorage.getItem('CannerDemoRules') || "{}")}
               errorHandler={e => {
                 // eslint-disable-next-line no-console
                 console.error(e);
