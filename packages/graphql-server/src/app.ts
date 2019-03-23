@@ -75,6 +75,7 @@ export class GraphQLService implements WebService {
     const context = config.context || createContext(config);
 
     this.apolloServer = new ApolloServer({
+      ...config.apolloConfig,
       debug: true,
       playground: config.graphqlPlayground,
       schema: schemaWithMiddleware as any,
