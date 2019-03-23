@@ -86,8 +86,8 @@ export class GraphQLService implements WebService {
     });
   }
 
-  public async mount(app: Koa) {
-    this.apolloServer.applyMiddleware({app});
+  public async mount(app: Koa, mountPath?: string) {
+    this.apolloServer.applyMiddleware({app, path: mountPath});
   }
 
   private getCannerSchema(config: GqlifyConfig) {
