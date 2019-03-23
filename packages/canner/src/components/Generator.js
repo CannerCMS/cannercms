@@ -21,7 +21,7 @@ import {
 } from 'lodash';
 import RefId from 'canner-ref-id';
 import Layouts from 'canner-layouts';
-import {Alert, Empty} from 'antd';
+import {Alert} from 'antd';
 import {Item, Context} from 'canner-helpers';
 import hocs from '../hocs';
 import {List} from 'react-content-loader';
