@@ -7,9 +7,9 @@ export default function useRecordValue({
   refId
 }: any) {
   const [recordValue, setRecordValue] = useState({});
+  const myRecordValue = getRecordValue(rootValue, refId);
   useEffect(() => {
-    const recordValue = getRecordValue(rootValue, refId);
-    setRecordValue(recordValue);
-  }, [refId && refId.toString(), rootValue])
+    setRecordValue(myRecordValue);
+  }, [refId && refId.toString(), JSON.stringify(myRecordValue)])
   return {recordValue}
 }

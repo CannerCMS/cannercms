@@ -4,6 +4,7 @@ import {isEmpty, isEqual, isFunction} from 'lodash';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import Buttons from './Buttons';
+import BackButton from './BackButton';
 import {RENDER_TYPE} from '../../hooks/useRenderType';
 
 export default React.memo(function CannerItem(props) {
@@ -52,6 +53,11 @@ export default React.memo(function CannerItem(props) {
             <Alert style={{margin: '16px 0'}} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
           )
         }
+        {renderType === RENDER_TYPE.CHILDREN && (
+          <BackButton
+            {...props}
+          />
+        )}
         {renderType === RENDER_TYPE.CHILDREN && renderChildren({refId})}
         {renderType === RENDER_TYPE.COMPONENT && render(props)}
         <Buttons

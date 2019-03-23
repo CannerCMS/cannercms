@@ -27,7 +27,7 @@ export default function withCannerLayout(Com: any) {
       ...contextValue,
       refId: myRefId,
       renderChildren
-    }), [myRefId.toString(), recordValue, renderChildren]);
+    }), [myRefId.toString(), recordValue]);
     return (
       <Context.Provider value={myContextValue}>
         <Com

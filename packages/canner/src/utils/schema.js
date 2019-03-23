@@ -13,6 +13,9 @@ export function findSchemaByRefId(schema: Object, refId: any) {
 }
 
 export function loop(schema: Object, paths: Array<string>, pattern: string): any {
+  if (!schema) {
+    return {};
+  }
   if (paths.length === 0) {
     return {
       ...schema,

@@ -4,7 +4,7 @@ export const defaultContext =  {
   routes: [],
   schema: Object,
   query: null,
-  dataChanges: {},
+  dataChanged: {},
   hideButtons: false,
   routerParams: {},
   imageStorage: null,

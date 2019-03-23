@@ -111,7 +111,6 @@ export default function Generator({componentTree, routes, formType}: Props) {
     }
     return null;
   }, [])
-
   if (!routes[0] || !tree[routes[0]]) {
     return null;
   }

@@ -1,9 +1,13 @@
-import React from 'react';
-import {ResetButton, ConfirmButton} from 'canner-helpers';
+import React, { useContext, useCallback } from 'react';
+import {ResetButton, ConfirmButton, Context} from 'canner-helpers';
 export default function Buttons({
   shouldRenderCancelButton,
   shouldRenderSubmitButton
 }) {
+  const {routes, goTo} = useContext(Context);
+  const backToList = useCallback(() => {
+    goTo({pathname: routes[0]});
+  });
   return <React.Fragment>
     {
       (shouldRenderCancelButton || shouldRenderSubmitButton) && (
@@ -13,8 +17,8 @@ export default function Buttons({
             marginTop:  60
           }}
         >
-          {shouldRenderCancelButton && <ResetButton style={{marginRight: 16}} />}
-          {shouldRenderSubmitButton && <ConfirmButton />}
+          {shouldRenderCancelButton && <ResetButton style={{marginRight: 16}} callback={backToList} />}
+          {shouldRenderSubmitButton && <ConfirmButton callback={backToList}/>}
         </div>
       )
     }

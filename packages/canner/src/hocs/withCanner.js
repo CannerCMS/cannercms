@@ -38,7 +38,7 @@ export default function withCanner(Com: any) {
       fetchPolicy,
       relation,
       controlDeployAndResetButtons,
-      hideButtons
+      hideButtons,
     } = props;
     const contextValue = useContext(Context);
     const {
