@@ -38,14 +38,14 @@ export default class ArrayField implements Field {
   }
 
   getChild(fieldName: string) {
+    if (!this.schema.items || !this.schema.items.items || !this.schema.items.items[fieldName]) {
+      return new NullField({key: fieldName});
+    }
+
     if (isCompositeType(this.schema.items.type)) {
       const child = createField(fieldName, this.rootSchema, this.schema.items);
       const childField = child.getChild(fieldName);
       return childField;
-    }
-
-    if (!this.schema.items || !this.schema.items.items || !this.schema.items.items[fieldName]) {
-      return new NullField({key: fieldName});
     }
 
     // array of object
@@ -54,6 +54,10 @@ export default class ArrayField implements Field {
   }
 
   forEach(visitor: Function) {
+    if (!this.schema.items) {
+      return;
+    }
+
     if (isCompositeType(this.schema.items.type)) {
       const child = createField('', this.rootSchema, this.schema.items);
       child.forEach(visitor);
