@@ -103,20 +103,6 @@ describe('<CannerContainer>', () => {
     expect(wrapper.state('dataChanged')).toEqual({});
   });
 
-  it('should this.menuConfig be sidebarConfig.menuConfig', () => {
-    const wrapper = renderComponent();
-    expect(wrapper.instance().menuConfig).toEqual(sidebarConfig.menuConfig);
-  });
-
-  it('should this.menuConfig be schemaTransformed', () => {
-    const wrapper = renderComponent({
-      sidebarConfig: {
-        menuConfig: true
-      }
-    });
-    expect(wrapper.instance().menuConfig).toEqual(transformedSchemaMenuConfig);
-  });
-
   it('should didDataChange update dataChanged state', () => {
     const goTo = jest.fn();
     const wrapper = renderMountComponent({ goTo });

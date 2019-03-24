@@ -53,6 +53,7 @@ export type Toolbar = {
 };
 
 export type HOCProps = {
+  rules?: Object,
   refId: RefId,
   keyName: string,
   routes: Array<string>,
