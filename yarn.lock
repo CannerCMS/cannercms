@@ -1403,10 +1403,10 @@
   dependencies:
     lodash "^4.17.11"
 
-"@gqlify/server@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@gqlify/server/-/server-3.1.2.tgz#a0b38e94f30179408225c41fe135c05302a262a2"
-  integrity sha512-QwhjQEzW0Wfsx4mVlNkOaPrecn42t6eRmRlSRDPZnf8LQfugf8adEMFsI5Y6tq3mb6TS6XHCkBe5m1IF48NmgQ==
+"@gqlify/server@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@gqlify/server/-/server-3.2.1.tgz#32e0d379fd0e676e25d7b4adeb698882f100f6c9"
+  integrity sha512-fGsTvAQsJV8bzddXawHzY0hVC0Ngh1XrhD2XGZFdbfLAPZ93VPHFZEAb8nQjp/rqF0So+C5CuBjy71spkfeJOQ==
   dependencies:
     axios "^0.18.0"
     bluebird "^3.5.1"
