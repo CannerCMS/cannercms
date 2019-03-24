@@ -102,7 +102,7 @@ export default class Generator extends React.Component<Props, State> {
     // rbac
     const rbacResult = rbac({keyName: routes[0], rules});
     const disabled = node.pattern === 'array' ?  mergeDisabled(node.disabled, rbacResult.disabled) : node.disabled;
-    const hidden = node.pattern === 'array' ? rbacResult.hidden || node.hidden : node.hidden
+    const hidden = node.pattern === 'array' ? rbacResult.hidden || node.hidden : node.hidden;
     let renderChildren = props => this.renderChildren(node, props);
     let hideButtons = this.props.hideButtons;
     if (node.pattern === 'array' && routerParams.operator === 'update' && disabled.update){
@@ -114,8 +114,8 @@ export default class Generator extends React.Component<Props, State> {
       hideButtons = true;
     }
 
-    if (node.hidden || props.hidden) {
-      return null;
+    if (hidden) {
+      return emptyRenderChildren();
     }
 
     if (component) {

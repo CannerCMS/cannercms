@@ -54,8 +54,7 @@ class CannerCMS extends React.Component<Props> {
     this.componentTree = compile(uiSchema, visitors);
     this.schema = Object.keys(schema).reduce((result: any, key: string) => {
       let v = {...schema[key]};
-      if (v.type === 'array') {
-        // v.items = v.items.items;
+      if (v.type === 'array' && v.items) {
         v.items.id = {
           type: 'id'
         }
