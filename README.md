@@ -254,6 +254,16 @@ To install packages
 yarn
 ```
 
+To build lib
+```
+yarn build
+```
+
+To run the demo under `/docs`
+```
+yarn start
+```
+
 ## Roadmap
 
 Interested in our next roadmap to v4? Please follow issue [here](https://github.com/Canner/canner/issues/123).
