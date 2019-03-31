@@ -9,7 +9,6 @@ import Container, {transformSchemaToMenuConfig} from 'packages/canner-container/
 import R from 'packages/router/src';
 import schema from './canner.schema';
 import client from './client';
-delete schema.schema.products.items;
 addLocaleData([...en, ...zh]);
 
 const Option = Select.Option;
