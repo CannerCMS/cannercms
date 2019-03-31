@@ -25,6 +25,8 @@ import {Alert} from 'antd';
 import {Item, Context} from 'canner-helpers';
 import hocs from '../hocs';
 import {List} from 'react-content-loader';
+import rbac, {mergeDisabled} from '../utils/rbac';
+import emptyRenderChildren from '../utils/emptyRenderChildren';
 import type {GeneratorProps, ComponentTree, ComponentNode} from './types';
 
 type Props = GeneratorProps;
@@ -96,18 +98,31 @@ export default class Generator extends React.Component<Props, State> {
     }
 
     const {component, ...restNodeData} = node;
-    const {routerParams = {}, goTo, routes, imageStorages, fileStorages, onDeploy, removeOnDeploy, hideButtons, schema} = this.props;
-    const renderChildren = props => this.renderChildren(node, props);
+    const {routerParams = {}, goTo, routes, imageStorages, fileStorages, onDeploy, removeOnDeploy, schema, rules} = this.props;
+    // rbac
+    const rbacResult = rbac({keyName: routes[0], rules});
+    const disabled = node.pattern === 'array' ?  mergeDisabled(node.disabled, rbacResult.disabled) : node.disabled;
+    const hidden = node.pattern === 'array' ? rbacResult.hidden || node.hidden : node.hidden;
+    let renderChildren = props => this.renderChildren(node, props);
+    let hideButtons = this.props.hideButtons;
+    if (node.pattern === 'array' && routerParams.operator === 'update' && disabled.update){
+      renderChildren = emptyRenderChildren;
+      hideButtons = true;
+    }
+    if (node.pattern === 'array' && routerParams.operator === 'create' && disabled.create) {
+      renderChildren = emptyRenderChildren;
+      hideButtons = true;
+    }
 
-    if (node.hidden || props.hidden) {
-      return null;
+    if (hidden) {
+      return emptyRenderChildren();
     }
 
     if (component) {
       const contextValue = {
         renderChildren,
         routes,
-        refId: props.refId
+        refId: props.refId,
       };
       return (
         <div data-testid={node.path}>
@@ -120,15 +135,18 @@ export default class Generator extends React.Component<Props, State> {
               routes={routes}
               imageStorage={(imageStorages || {})[routes[0]]}
               fileStorage={(fileStorages || {})[routes[0]]}
-              renderChildren={(props) => this.renderChildren(node, props)}
+              renderChildren={renderChildren}
               renderComponent={this.renderComponent}
               routerParams={routerParams}
               onDeploy={onDeploy}
               removeOnDeploy={removeOnDeploy}
               schema={schema}
               goTo={goTo}
+              rules={rules}
               {...restNodeData}
               {...props}
+              hidden={hidden}
+              disabled={disabled}
             />
           </Context.Provider>
         </div>

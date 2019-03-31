@@ -75,6 +75,7 @@ export class GraphQLService implements WebService {
     const context = config.context || createContext(config);
 
     this.apolloServer = new ApolloServer({
+      ...config.apolloConfig,
       debug: true,
       playground: config.graphqlPlayground,
       schema: schemaWithMiddleware as any,
@@ -85,8 +86,8 @@ export class GraphQLService implements WebService {
     });
   }
 
-  public async mount(app: Koa) {
-    this.apolloServer.applyMiddleware({app});
+  public async mount(app: Koa, mountPath?: string) {
+    this.apolloServer.applyMiddleware({app, path: mountPath});
   }
 
   private getCannerSchema(config: GqlifyConfig) {

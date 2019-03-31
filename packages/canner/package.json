@@ -1,6 +1,6 @@
 {
   "name": "canner",
-  "version": "3.2.2",
+  "version": "3.4.3",
   "description": "Build CMS in few lines of code for different data sources",
   "main": "lib/index.js",
   "keywords": [
@@ -51,5 +51,5 @@
   "devDependencies": {
     "flow-bin": "^0.78.0"
   },
-  "gitHead": "d17f7bbfccc4aca3127fb73afc88c2cef39a7e42"
+  "gitHead": "51047c4a90312d9c4d88f11199d25131f22993a4"
 }

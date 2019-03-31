@@ -43,7 +43,6 @@ exports[`with route mini app should render 1`] = `
       ghost={false}
       loading={false}
       onClick={[Function]}
-      prefixCls="ant-btn"
       style={
         Object {
           "marginRight": 16,
@@ -60,7 +59,6 @@ exports[`with route mini app should render 1`] = `
       ghost={false}
       loading={false}
       onClick={[Function]}
-      prefixCls="ant-btn"
       style={Object {}}
     >
       Reset

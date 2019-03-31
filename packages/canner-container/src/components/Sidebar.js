@@ -19,7 +19,7 @@ export const LogoContainer = styled.div`
   height: ${props => ensureString(props.height) || '64px'};
 `;
 
-export default class Sidebar extends React.Component<SidebarProps, State> {
+export default class Sidebar extends React.PureComponent<SidebarProps, State> {
   state = {hasError: false}
 
   siderMenuOnClick = (menuItem: {key: string, params: MenuParams}) => {

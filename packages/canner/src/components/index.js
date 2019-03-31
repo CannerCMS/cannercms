@@ -54,8 +54,7 @@ class CannerCMS extends React.Component<Props> {
     this.componentTree = compile(uiSchema, visitors);
     this.schema = Object.keys(schema).reduce((result: any, key: string) => {
       let v = {...schema[key]};
-      if (v.type === 'array') {
-        // v.items = v.items.items;
+      if (v.type === 'array' && v.items) {
         v.items.id = {
           type: 'id'
         }
@@ -103,7 +102,8 @@ class CannerCMS extends React.Component<Props> {
       errorHandler,
       schema: {imageStorages, fileStorages, dict = {}},
       defaultKey,
-      client
+      client,
+      rules
     } = this.props;
     const currentLocale = intl.locale || 'en';
     return (
@@ -137,6 +137,7 @@ class CannerCMS extends React.Component<Props> {
             goTo={goTo}
             baseUrl={baseUrl}
             routes={routes}
+            rules={rules}
             routerParams={routerParams || {}}
             hideButtons={hideButtons}
             defaultKey={defaultKey}

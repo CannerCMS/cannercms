@@ -54,6 +54,7 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
       if (
         !isEqual(nextProps.value, this.props.value) ||
         !isEqual(nextProps.relationValue, this.props.relationValue) ||
+        !isEqual(nextProps.rules, this.props.rules) ||
         nextProps.error !== this.props.error ||
         nextProps.disabled !== this.props.disabled
       ) {
@@ -67,9 +68,9 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
         fetch, subscribe, request, deploy, reset, query,
         renderChildren, renderComponent, renderConfirmButton, renderCancelButton,
         refId, routes, updateQuery, type, imageStorage,
-        onDeploy, removeOnDeploy, required, dataChanged, error, errorInfo
+        onDeploy, removeOnDeploy, required, dataChanged, error, errorInfo,
+        rules
       } = this.props;
-
       const labelCol = layout === 'horizontal' ? this.props.labelCol || {
         span: 6
       } : null;
@@ -90,7 +91,8 @@ export default function withTitleAndDescription(Com: React.ComponentType<*>) {
           updateQuery,
           onDeploy,
           removeOnDeploy,
-          dataChanged
+          dataChanged,
+          rules
         }}
       >
         <Context.Provider value={{
