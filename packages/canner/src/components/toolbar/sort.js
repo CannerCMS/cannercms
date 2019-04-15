@@ -17,11 +17,11 @@ const OrderSwitch = styled.div`
 `;
 
 const UpIcon = styled(Icon)`
-  color: ${props => props.order > 0 ? '#333' : '#ccc'};
+  color: ${(props: any) => props.order > 0 ? '#333' : '#ccc'};
 `;
 
 const DownIcon = styled(Icon)`
-  color: ${props => props.order > 0 ? '#ccc' : '#333'};
+  color: ${(props: any) => props.order > 0 ? '#ccc' : '#333'};
 `
 
 type Props = {

@@ -18,7 +18,7 @@ export default function errorCatch(Com: React.ComponentType<*>) {
       errorInfo: {componentStack: null}
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps: HOCProps, nextState: State) {
       if (nextState.error !== this.state.error) {
         return true;
       }

@@ -2,13 +2,12 @@
  * @flow
  */
 
-import React, {useEffect, useState, useRef, useImperativeHandle, forwardRef} from 'react';
+import React, {useState, useImperativeHandle, forwardRef} from 'react';
 import {ApolloProvider} from 'react-apollo';
-import pluralize from 'pluralize';
 import {actionToMutation, actionsToVariables} from '../action';
 import gql from 'graphql-tag';
 import {objectToQueries} from '../query/utils';
-import {groupBy, difference, mapValues, upperFirst} from 'lodash';
+import {groupBy, mapValues} from 'lodash';
 import log from '../utils/log';
 import { parseConnectionToNormal } from '../hocs/utils';
 import useActionManager from '../hooks/useActionManager';
@@ -21,7 +20,7 @@ import type {Action, ActionType} from '../action/types';
 
 type Props = ProviderProps;
 
-export default forwardRef(Provider);
+export default (forwardRef(Provider): any);
 
 function Provider({
   schema,
