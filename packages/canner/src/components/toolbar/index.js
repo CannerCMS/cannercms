@@ -169,7 +169,8 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const {updateQuery, args, refId, keyName} = this.props;
     const {originRootValue, pagination} = this.state;
     if (get(originRootValue, [keyName, 'pageInfo', 'hasNextPage'])) {
-      const after = originRootValue[keyName].edges.slice(-1)[0].cursor; // the last one
+      const endCursor = get(originRootValue, [keyName, 'pageInfo', 'endCursor'], null);
+      const after = endCursor || originRootValue[keyName].edges.slice(-1)[0].cursor; // the last one
       updateQuery(refId.getPathArr(), {
         ...args, 
         first: pagination.first || 10,
@@ -184,7 +185,8 @@ export default class Toolbar extends React.PureComponent<Props, State> {
     const {updateQuery, args, refId, keyName} = this.props;
     const {originRootValue, pagination} = this.state;
     if (get(originRootValue, [keyName, 'pageInfo', 'hasPreviousPage'])) {
-      const before = get(originRootValue, [keyName, 'edges', 0, 'cursor']); // the first one
+      const startCursor = get(originRootValue, [keyName, 'pageInfo', 'startCursor'], null);
+      const before = startCursor ||  get(originRootValue, [keyName, 'edges', 0, 'cursor']); // the first one
       updateQuery(refId.getPathArr(), {
         ...args,
         last: pagination.last || 10,

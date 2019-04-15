@@ -52,7 +52,7 @@ describe('query', () => {
   });
 
   it('should get gql when toolbar sync', () => {
-    expect(query.toGQL('posts')).toEqual(`query($postsWhere: PostWhereInput){posts: postsConnection(where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
+    expect(query.toGQL('posts')).toEqual(`query($postsWhere: PostWhereInput){posts: postsConnection(where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage startCursor endCursor}}}`);
   });
 
   it('should get gql when toolbar async', () => {
@@ -62,6 +62,6 @@ describe('query', () => {
     query = new Query({
       schema
     });
-    expect(query.toGQL('posts')).toEqual(`query($postsFirst: Int,$postsWhere: PostWhereInput){posts: postsConnection(first: $postsFirst,where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
+    expect(query.toGQL('posts')).toEqual(`query($postsFirst: Int,$postsWhere: PostWhereInput){posts: postsConnection(first: $postsFirst,where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage startCursor endCursor}}}`);
   });
 });

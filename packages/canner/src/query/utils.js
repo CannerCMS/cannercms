@@ -231,7 +231,9 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
           pageInfo: {
             fields: {
               hasNextPage: null,
-              hasPreviousPage: null
+              hasPreviousPage: null,
+              startCursor: null,
+              endCursor: null
             }
           }
         }
