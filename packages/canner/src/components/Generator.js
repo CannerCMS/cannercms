@@ -114,7 +114,7 @@ export default function Generator({componentTree, routes, formType}: Props) {
   if (!routes[0] || !tree[routes[0]]) {
     return null;
   }
-
+  // TODO: there should be render differently for different type
   if (formType === FORM_TYPE.LIST) {
     return (
       <div>
@@ -133,7 +133,7 @@ export default function Generator({componentTree, routes, formType}: Props) {
       );
     } else {
       // list item
-      // now renderChildren is executed in withCanner hoc,
+      // TODO: now renderChildren is executed in withCanner hoc,
       // should be fixed here
       return (
         <div>

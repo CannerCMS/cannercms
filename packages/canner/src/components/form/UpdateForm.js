@@ -30,6 +30,7 @@ export default function UpdateForm(props: any) {
     goTo,
     ...rest
   }), [data, routes]);
+  // TODO: move buttons from HOC to here
   return (
     <Context.Provider value={contextValue}>
       <BackButton onClick={onClickBackButton}>BackButton</BackButton>
