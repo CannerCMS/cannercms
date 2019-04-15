@@ -12,9 +12,6 @@
  */
 
 import React, {useState, useCallback} from 'react';
-import {
-  isUndefined,
-} from 'lodash';
 import RefId from 'canner-ref-id';
 import {FORM_TYPE} from '../hooks/useFormType';
 import useTree from '../hooks/useTree';

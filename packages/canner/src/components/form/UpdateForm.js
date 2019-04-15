@@ -1,6 +1,6 @@
 // @flow
 
-import React, {useState, useEffect, useContext, useRef, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {Context} from 'canner-helpers';
 const BackButton = () => null;
 const SubmitButton = () => null;

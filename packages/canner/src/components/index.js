@@ -1,8 +1,8 @@
 // @flow
 
-import React, {useRef, forwardRef, useImperativeHandle, useMemo} from 'react';
+import React, {forwardRef, useImperativeHandle, useMemo} from 'react';
 import {Parser, Traverser} from 'canner-compiler';
-import {pickBy, isEqual, isFunction} from 'lodash';
+import {pickBy, isEqual} from 'lodash';
 import { ApolloProvider } from 'react-apollo';
 import Router from './Router';
 // hooks
@@ -25,7 +25,7 @@ export default (React.memo(forwardRef(CannerCMS), function(prevProps, nextProps)
   return Object.entries(nextProps).reduce((eq, [k, v]: any) => {
     return isEqual(v, prevProps[k]) && eq;
   }, true)
-}));
+}): any);
 
 function CannerCMS({
   schema,
@@ -111,6 +111,7 @@ function compile(schema, visitors) {
 }
 
 function defaultErrorHandler(e) {
+  // eslint-disable-next-line no-console
   console.log(e);
   // return notification.error({
   //   message: e.message,

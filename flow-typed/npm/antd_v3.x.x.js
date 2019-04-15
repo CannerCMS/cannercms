@@ -1,5 +1,5 @@
-// flow-typed signature: 5f8d2dc4dba75f09d8456a8e7c3645af
-// flow-typed version: 1ac34f93df/antd_v3.x.x/flow_>=v0.25.x
+// flow-typed signature: 38f63fc0bcf26a271982b89d799827ba
+// flow-typed version: 8c673017cc/antd_v3.x.x/flow_>=v0.25.x
 
 declare module "antd" {
   import type { Node, Component } from "react";
@@ -26,11 +26,60 @@ declare module "antd" {
 
   declare export class Avatar extends React$Component<{}> {}
 
-  declare export class AutoComplete extends React$Component<{}> {}
+  declare export type AutoCompleteDataItem =
+    | string
+    | { value: string, text: string }
+    | React$Element<typeof SelectOption>
+    | React$Element<typeof SelectOptGroup>;
+
+  declare export type AutoCompleteProps<T = SelectValue> = {
+    allowClear?: boolean,
+    autoFocus?: boolean,
+    backfill?: boolean,
+    dataSource?: AutoCompleteDataItem[],
+    defaultActiveFirstOption?: boolean,
+    defaultValue?: T,
+    disabled?: boolean,
+    filterOption?: boolean | (input: string, option: React$Node) => boolean,
+    open?: boolean,
+    optionLabelProp?: string,
+    placeholder?: string,
+    value?: T,
+    onBlur?: () => void,
+    onChange?: (value: T) => void,
+    onDropdownVisibleChange?: (open: boolean) => void,
+    onFocus?: () => void,
+    onSearch?: (value: string) => void,
+    onSelect?: (value: T, option: React$Node) => void
+  }
+
+  declare export class AutoComplete<T = SelectValue> extends React$Component<AutoCompleteProps<T>> {
+    static Option: typeof SelectOption;
+    static OptGroup: typeof SelectOptGroup;
+  }
 
   declare export class Badge extends React$Component<{}> {}
 
-  declare export class Button extends React$Component<{}> {}
+  declare export type ButtonProps = {
+    disabled?: boolean,
+    ghost?: boolean,
+    href?: string,
+    htmlType?: string,
+    icon?: string,
+    loading?: boolean | { delay: number },
+    shape?: 'circle' | 'round',
+    size?: 'small' | 'large',
+    target?: string,
+    type?: 'primary' | 'ghost' | 'dashed' | 'danger' | 'default',
+    onClick?: (event: SyntheticEvent<HTMLButtonElement>) => void,
+    block?: boolean
+  }
+
+  declare export class Button extends React$Component<ButtonProps> {
+    static Group: typeof ButtonGroup
+  }
+
+  declare class ButtonGroup extends React$Component<{}> {}
 
   declare export class Card extends React$Component<{}> {}
 
@@ -73,11 +122,11 @@ declare module "antd" {
     bordered?: boolean,
     cover?: React$Node,
     defaultActiveTabKey?: string,
-    extra?: string | React$Node,
+    extra?: React$Node,
     hoverable?: boolean,
     loading?: boolean,
     tabList?: Array<{ key: string, tab: React$Node }>,
-    title?: string | React$Node,
+    title?: React$Node,
     type?: "inner",
     onTabChange?: (key: string) => void
   }> {
@@ -210,7 +259,7 @@ declare module "antd" {
     layout?: "horizontal" | "inline" | "vertical",
     onSubmit?: (e: SyntheticEvent<HTMLFormElement>) => void,
     prefixCls?: string,
-    style?: Object,
+    style?: $Shape<CSSStyleDeclaration>,
     vertical?: boolean
   };
 
@@ -262,11 +311,14 @@ declare module "antd" {
 
   declare export class Layout extends React$Component<{}> {
     static Content: typeof LayoutContent;
+    static Footer: typeof LayoutFooter;
     static Header: typeof LayoutHeader;
     static Sider: typeof LayoutSider;
   }
 
   declare class LayoutContent extends React$Component<{}> {}
+
+  declare class LayoutFooter extends React$Component<{}> {}
 
   declare class LayoutHeader extends React$Component<{}> {}
 
@@ -330,8 +382,8 @@ declare module "antd" {
     defaultPageSize?: number,
     hideOnSinglePage?: boolean,
     itemRender?: (
-      page: number, 
-      type: "page" | "prev" | "next", 
+      page: number,
+      type: "page" | "prev" | "next",
       originalElement: React$Node
     ) => React$Node,
     pageSize?: number,
@@ -348,7 +400,53 @@ declare module "antd" {
 
   declare export class Pagination extends React$Component<PaginationProps> {}
 
-  declare export class Popconfirm extends React$Component<{}> {}
+  // These props are shared by Tooltip, Popconfirm, and Poopover
+  declare type TooltipSharedProps = {
+    arrowPointAtCenter?: boolean,
+    autoAdjustOverflow?: boolean,
+    defaultVisible?: boolean,
+    getPopupContainer?: (element?: HTMLElement) => HTMLElement,
+    mouseEnterDelay?: number,
+    mouseLeaveDelay?: number,
+    overlayClassName?: string,
+    overlayStyle?: $Shape<CSSStyleDeclaration>,
+    placement?: 'top' | 'left' | 'right' | 'bottom' | 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'leftTop' | 'leftBottom' | 'rightTop' | 'rightBottom',
+    trigger?: 'hover' | 'focus' | 'click' | 'contextMenu',
+    visible?: boolean,
+    onVisibleChange?: (visible: boolean) => void,
+    align?: AlignConfig
+  }
+
+  // for alignConfig value, antd documentation points to rc-tooltip docs,
+  // which poits to https://github.com/yiminghe/dom-align
+  declare type AlignConfig = {|
+    points?: string,
+    offset?: number | string,
+    targetOffset?: number | string,
+    overflow?: {| adjustX?: boolean, adjustY?: boolean |},
+    useCssRight?: boolean,
+    useCssBottom?: boolean,
+    useCssTransform:? boolean
+  |}
+
+  declare export type PopconfirmProps = {
+    cancelText?: string,
+    okText?: string,
+    okType?: 'primary' | 'dashed' | 'ghost' | 'danger' | 'default',
+    title?: 'string' | React$Node,
+    onCancel?: (event: SyntheticEvent<>) => void,
+    onConfirm?: (event: SyntheticEvent<>) => void,
+    icon?: React$Node
+  } & TooltipSharedProps
+
+  declare export class Popconfirm extends React$Component<PopconfirmProps> {}
+
+  declare export type PopoverProps = {
+    content?: 'string' | React$Node,
+    title?: 'string' | React$Node,
+  } & TooltipSharedProps
+
+  declare export class Popover extends React$Component<PopoverProps> {}
 
   declare export class Progress extends React$Component<{}> {}
 
@@ -362,20 +460,71 @@ declare module "antd" {
   declare class RadioButton extends React$Component<{}> {}
 
   declare export class Row extends React$Component<{}> {}
+  
+  declare export type SelectValue = string | string[] | number | number[];
 
-  declare export type SelectProps = {
-    expandTrigger?: "click" | "hover",
-    filterOption?: (input: string, option: React$Element<mixed>) => boolean,
-    onFocus?: () => mixed,
-    popupVisible?: boolean,
-    showSearch?: boolean
+  declare export type SelectProps<T = SelectValue> = {
+    allowClear?: boolean,
+    autoClearSearchValue?: boolean,
+    autoFocus?: boolean,
+    defaultActiveFirstOption?: boolean,
+    defaultOpen?: boolean,
+    defaultValue?: T,
+    disabled?: boolean,
+    dropdownClassName?: string,
+    dropdownMatchSelectWidth?: boolean,
+    filterOption?: boolean | (input: string, option: React$Node) => boolean,
+    firstActiveValue?: string | string[],
+    labelInValue?: boolean,
+    loading?: boolean,
+    maxTagCount?: number,
+    mode?: 'default' | 'multiple' | 'tags',
+    notFoundContent?: string,
+    open?: boolean,
+    optionFilterProp?: string,
+    optionLabelProp?: string,
+    placeholder?: string | React$Node,
+    showArrow?: boolean,
+    showSearch?: boolean,
+    size?: 'default' | 'small' | 'large' | string,
+    suffixIcon?: React$Node,
+    removeIcon?: React$Node,
+    clearIcon?: React$Node,
+    menuItemSelectedIcon?: React$Node,
+    tokenSeparators?: string[],
+    value?: T,
+    onBlur?: () => void,
+    onChange?: (value: T, option: React$Node) => void,
+    onDeselect?: (value: T, option: React$Node) => void,
+    onDropdownVisibleChange?: (open: boolean) => void,
+    onFocus?: () => void,
+    onSearch?: (value: string) => void,
+    onSelect?: (value: T, option: React$Node) => void
   };
 
-  declare export class Select extends React$Component<SelectProps> {
+  declare export class Select<T = SelectValue> extends React$Component<SelectProps<T>> {
     static Option: typeof SelectOption;
+    static OptGroup: typeof SelectOptGroup;
+    blur: () => void;
+    focus: () => void;
   }
 
-  declare class SelectOption extends React$Component<{}> {}
+  declare export type SelectOptionProps = {
+    className?: string,
+    disabled?: boolean,
+    key?: string,
+    title?: string,
+    value?: string | number
+  };
+
+  declare class SelectOption extends React$Component<SelectOptionProps> {}
+
+  declare export type SelectOptGroupProps = {
+    key?: string,
+    label?: string | React$Node
+  };
+
+  declare class SelectOptGroup extends React$Component<SelectOptGroupProps> {}
 
   declare export class Slider extends React$Component<{}> {}
 
@@ -389,10 +538,10 @@ declare module "antd" {
   declare export class Spin extends React$Component<SpinProps> {}
 
   declare export class Step extends React$Component<{
-    description?: string | React$Node,
-    icon?: string | React$Node,
+    description?: React$Node,
+    icon?: React$Node,
     status?: "wait" | "process" | "finish" | "error",
-    title?: string | React$Node
+    title?: React$Node
   }> {}
 
   declare export class Steps extends React$Component<{
@@ -406,8 +555,8 @@ declare module "antd" {
           {
             index: number,
             status: "wait" | "process" | "finish" | "error",
-            title: string | React$Node,
-            description: string | React$Node
+            title: React$Node,
+            description: React$Node
           }
         ) => React$Node),
     size?: "default" | "small",
@@ -429,8 +578,8 @@ declare module "antd" {
   declare export class Tag extends React$Component<{}> {}
 
   declare export type TooltipProps = {
-    title: string | React$Node | () => React$Node
-  };
+    title: React$Node | () => React$Node
+  } & TooltipSharedProps
 
   declare export class Tooltip extends React$Component<TooltipProps> {}
 
