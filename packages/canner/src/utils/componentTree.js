@@ -70,7 +70,7 @@ export function generateComponent(node: any) {
   
   if (isComponent(node)) {
     if (isFieldset(node)) {
-      component = Item;
+      component = () => <Item />;
     } else {
       component = createLoadableComponnet(node);
     }
@@ -80,7 +80,7 @@ export function generateComponent(node: any) {
     return wrapByHOC(component, ['withCanner', 'errorCatch']);
   } else if (isPage(node)) {
     if (isPageRoot(node)) {
-      component = Item;
+      component = () => <Item />;
       return wrapByHOC(component, ['withCannerLayout']);
     } else if (inPage(node)) {
       component = createLoadableComponnet(node);
