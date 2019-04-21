@@ -18,7 +18,6 @@ export default function withQuery(Com: any) {
       renderChildren: renderChildren
     }), [renderChildren]);
     return (
-      <Context.Provider value={myContextValue}>
         <Query query={gql`${graphql}`} variables={variables}>
           {({loading, error, data, ...graphqlProps}) => {
             if (loading) return <List style={{maxWidth: '600px'}}/>;
@@ -33,11 +32,12 @@ export default function withQuery(Com: any) {
               value = transformData(value);
             }
             return (
-              <Com value={value}{...restProps} {...graphqlProps}  {...myContextValue}  />
+              <Context.Provider value={myContextValue}>
+                <Com value={value}{...restProps} {...graphqlProps}  {...myContextValue}  />
+              </Context.Provider>
             );
           }}
         </Query>
-      </Context.Provider>
     );
   }
 }

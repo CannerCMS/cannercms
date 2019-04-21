@@ -96,13 +96,14 @@ export default function Generator({componentTree, routes, formType}: Props) {
       }
       return (
         <node.component
+
+          {...restNodeData} // props directly passed by schema
+          {...props} // props from the parent
+          childrenNode={children}
+          renderComponent={renderComponent}
           data-testid={node.path}
           key={index}
           renderChildren={wrappedRenderChildren}
-          renderComponent={renderComponent}
-          childrenNode={children}
-          {...restNodeData} // props directly passed by schema
-          {...props} // props from the parent
         />
       );
     }
