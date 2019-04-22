@@ -8,7 +8,7 @@ import useRefId from '../hooks/useRefId';
 import useOnChange from '../hooks/useOnChange';
 import useRecordValue from '../hooks/useRecordValue';
 export default function withCannerLayout(Com: any) {
-  return React.memo(function LayoutWithCanner(props: any) {
+  return (React.memo: any)(function LayoutWithCanner(props: any) {
     const {
       pattern,
       keyName,
@@ -27,7 +27,7 @@ export default function withCannerLayout(Com: any) {
       ...contextValue,
       refId: myRefId,
       renderChildren
-    }), [myRefId.toString(), recordValue]);
+    }), [myRefId.toString(), recordValue, rootValue]);
     return (
       <Context.Provider value={myContextValue}>
         <Com

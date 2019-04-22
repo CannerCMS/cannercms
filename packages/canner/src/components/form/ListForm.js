@@ -1,12 +1,12 @@
 // @flow
 
-import React, {useState, useEffect, useContext, useRef, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {Context} from 'canner-helpers';
 import {isEqual} from 'lodash';
 import RefId from 'canner-ref-id';
 // import Toolbar from '../toolbar';
 // const AddButton = () => null;
-export default React.memo(function ListForm(props: any) {
+export default (React.memo: any)(function ListForm(props: any) {
   const {
     data,
     rootValue,
