@@ -42,17 +42,6 @@ const schema = {
   }
 };
 
-const transformedSchemaMenuConfig = [{
-  title: 'My Info',
-  pathname: '/info'
-}, {
-  title: 'Posts',
-  pathname: '/posts'
-}, {
-  title: 'Authors',
-  pathname: '/authors'
-}];
-
 const router = {
   getRoutes: jest.fn().mockReturnValue(() => ['1', '2']),
   getPayload: jest.fn(),
