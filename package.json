@@ -6,7 +6,7 @@
     "test": "jest --coverage --verbose false --maxWorkers=2 --testPathIgnorePatterns /node_modules/ e2e",
     "test:watch": "jest --watch --verbose false --testPathIgnorePatterns /node_modules/ e2e",
     "test:e2e": "jest e2e --verbose false --testPathIgnorePatterns /node_modules/ --runInBand",
-    "lint": "eslint ./packages/*/src/**.js",
+    "lint": "eslint ./packages/*/src/**.js & eslint ./packages/*/test/**.js",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna exec --parallel -- rimraf lib dist",
     "build:flow": "lerna exec --parallel --ignore *graphql* -- flow-copy-source -v -i '**/test/**' src lib",
@@ -14,10 +14,10 @@
     "build:ts": "gulp ts",
     "build:js": "gulp js",
     "build": "gulp",
-    "prepublishOnly": "yarn clean && yarn check:src && yarn test && yarn build && yarn build:flow",
+    "prepublishOnly": "yarn clean && yarn check:js && yarn test && yarn build && yarn build:flow",
     "release": "lerna publish --exact",
     "release:next": "lerna publish --exact --npm-tag next",
-    "check:src": "yarn lint && yarn flow",
+    "check:js": "yarn lint && yarn flow",
     "start": "NODE_ENV=development webpack-dev-server",
     "build:docs": "rm -rf docs/dist && NODE_ENV=production webpack",
     "gh-pages": "gh-pages -d docs/dist",
@@ -122,7 +122,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn check:src",
+      "pre-commit": "yarn check:js",
       "pre-push": "yarn test"
     }
   },

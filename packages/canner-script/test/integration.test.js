@@ -296,7 +296,7 @@ describe('complex schema', () => {
           <object keyName="contactInfo" title="ContactInfo">
           {
             contactInfo.map(info => (
-              <array ui="table" keyName={info.key} uiParams={{
+              <array ui="table" keyName={info.key} key={info.key} uiParams={{
                 columns: [{
                   title: 'Type',
                   dataIndex: 'type'

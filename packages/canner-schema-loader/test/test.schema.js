@@ -1,6 +1,6 @@
 /** @jsx builder */
 
-import builder, {Block, Layout, Tabs} from 'canner-script';
+import builder from 'canner-script';
 
 export default <root>
   <object keyName="test">
