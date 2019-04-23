@@ -14,14 +14,14 @@
     "build:ts": "gulp ts",
     "build:js": "gulp js",
     "build": "gulp",
-    "prepublishOnly": "yarn run clean && yarn run check:src && yarn run build && yarn run build:flow",
+    "prepublishOnly": "yarn clean && yarn check:src && yarn test && yarn build && yarn build:flow",
     "release": "lerna publish --exact",
     "release:next": "lerna publish --exact --npm-tag next",
-    "check:src": "yarn run lint && yarn run flow",
+    "check:src": "yarn lint && yarn flow",
     "start": "NODE_ENV=development webpack-dev-server",
     "build:docs": "rm -rf docs/dist && NODE_ENV=production webpack",
     "gh-pages": "gh-pages -d docs/dist",
-    "deploy": "yarn run build:docs && yarn run gh-pages",
+    "deploy": "yarn build:docs && yarn gh-pages",
     "validate": "yarn ls"
   },
   "devDependencies": {
@@ -122,7 +122,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn check:src"
+      "pre-commit": "yarn check:src",
+      "pre-push": "yarn test"
     }
   },
   "private": true,
