@@ -1,5 +1,6 @@
 // @flow
 
+// $FlowFixMe: unresolved
 import {fromJS} from 'immutable';
 import RefId from 'canner-ref-id';
 

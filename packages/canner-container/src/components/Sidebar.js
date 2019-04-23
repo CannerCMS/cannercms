@@ -77,6 +77,7 @@ export default class Sidebar extends React.PureComponent<SidebarProps, State> {
       <Layout.Sider breakpoint="sm" width={style.width || 200} collapsedWidth={0} style={{zIndex: 1, ...style}} theme={theme}>
         {Logo}
         <Menu
+          // $FlowFixMe: antd flow typed
           onClick={this.siderMenuOnClick}
           selectedKeys={[`${routes[0]}`]}
           mode={mode}
@@ -119,6 +120,7 @@ function renderMenuItem(item: Object) {
 
 function renderItemGroup(item: Object) {
   return (
+    // $FlowFixMe: antd flow typed
     <Menu.ItemGroup title={item.title}>
       {
         item.items.map(i => renderMenu(i))

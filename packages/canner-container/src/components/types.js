@@ -93,5 +93,6 @@ export type SidebarProps = SidebarConfig & {
   dataChanged: Object,
   reset: Function,
   routes: Array<string>,
-  schema: CannerSchema
+  schema: CannerSchema,
+  logo?: any
 };

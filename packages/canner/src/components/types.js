@@ -62,7 +62,8 @@ export type CMSProps = {
   hideButtons: HideButtons,
   errorHandler: Error => any,
   defaultKey?: string,
-  client: ApolloClient
+  client: ApolloClient,
+  rules: any
 }
 
 export type GeneratorProps = {

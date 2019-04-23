@@ -25,10 +25,10 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
     return null;
   }
   const firstLevelKeys = getFirstLevelKeys(root);
-  return root.hasOwnProperty('type') ? loop(root, root.keyName): mapSchema(root, loop);
+  return root.hasOwnProperty('type') ? loop(((root: any): Schema), ((root: any): Schema).keyName): mapSchema(((root: any): SchemaMap), loop);
 
   // Loop schema
-  function loop(schema: Schema, key: string) {
+  function loop(schema: Schema, key: ?string) {
     let result: any;
 
     switch (schema.type) {
@@ -44,7 +44,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
         break;
       }
       case 'array':
-        result = getArrayData(schema, key, listLength, loop);
+        result = getArrayData(schema, (key: any), listLength, loop);
         break;
       case 'number':
         result = faker.random.number();
@@ -121,12 +121,12 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
 
 function getFirstLevelKeys(root: Schema | SchemaMap) {
   if ('type' in root) {
-    return root.items ? Object.keys(root.items) : {};
+    return root.items ? Object.keys((root: any).items) : {};
   }
   return Object.keys(root);
 }
 
-function getArrayData(schema: Schema, key: string, listLength: number, loop: Function) {
+function getArrayData(schema: any, key: string, listLength: number, loop: Function) {
   const result = [];
   for (let i = 0; i < listLength; ++i) {
     let item;
@@ -148,7 +148,7 @@ function getArrayData(schema: Schema, key: string, listLength: number, loop: Fun
 }
 
 function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
-  const {type, to} = schema.relation;
+  const {type, to} = (schema: any).relation;
   const isInFirstLevel = Array.isArray(firstLevelKeys) && firstLevelKeys.indexOf(to) > -1 && listLength > 0;
   let result: any;
 
@@ -176,7 +176,7 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
 }
 
 
-export function getRandomNumber(min, max) {
+export function getRandomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 

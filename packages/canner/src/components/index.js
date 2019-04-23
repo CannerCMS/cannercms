@@ -3,6 +3,7 @@
 import * as React from 'react';
 import Provider from './Provider';
 import Generator from './Generator';
+// $FlowFixMe: antd flow typed
 import {notification} from 'antd';
 import {Parser, Traverser} from 'canner-compiler';
 import {pickBy} from 'lodash';

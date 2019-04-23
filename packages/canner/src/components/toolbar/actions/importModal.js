@@ -47,7 +47,7 @@ export default class ImportModal extends React.Component<Props, State> {
     list: []
   };
   
-  download = (e: Event) => {
+  download = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const {
       fileName,

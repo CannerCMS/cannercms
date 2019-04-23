@@ -1,4 +1,5 @@
 // @flow
+// $FlowFixMe: Unresolved
 import axios from 'axios';
 import {getUploadPercent} from './utils';
 

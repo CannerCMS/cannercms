@@ -31,10 +31,12 @@ type Props = {
   keyName: string,
   defaultValue: Function,
   children: React.Element<*>,
+  request: Function,
+  deploy: Function,
   toolbar: {
     async: boolean,
     actions?: {
-      component?: React.ComponentType<*>,
+      component?: React.ComponentType<any>,
       export?: {
         fields?: Array<Object>,
         title?: string,
@@ -155,7 +157,6 @@ export default class Toolbar extends React.PureComponent<Props, State> {
       });
     } else {
       this.setState({
-        // $FlowFixMe
         filter: {...where}
       });
     }

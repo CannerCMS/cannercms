@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react'
+// $FlowFixMe: antd.notification
 import {Button, Layout, Menu, Badge, Icon, notification, Drawer} from 'antd';
 import type {NavbarProps} from './types';
 import styled from 'styled-components';

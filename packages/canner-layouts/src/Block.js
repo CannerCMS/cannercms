@@ -35,6 +35,7 @@ export default class Block extends React.Component<Props> {
       extra={extra}
       hoverable={hoverable}
       title={title}
+      // $FlowFixMe: antd Card with type
       type={type}
       style={{marginBottom: 16, ...style}}
     >

@@ -11,14 +11,14 @@ type Props = {
   addFilter: Function,
   displayedFilters: Array<number>,
   export?: {
-    title: string,
-    filename: string,
-    fields: Array<Object>
+    title?: string,
+    filename?: string,
+    fields?: Array<Object>
   },
   import?: Object,
   filter?: Object,
   value: Array<Object>,
-  selectedValue: Array<Object>,
+  selectedValue?: Array<Object>,
   query: Object,
   keyName: string,
   items: Object,

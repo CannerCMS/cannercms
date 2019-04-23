@@ -44,7 +44,7 @@ export default class ExportModal extends React.Component<Props, State> {
     downloading: false
   };
 
-  handleSubmit = (e: Event) => {
+  handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {
       form,
