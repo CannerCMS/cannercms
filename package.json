@@ -6,7 +6,7 @@
     "test": "jest --coverage --verbose false --maxWorkers=2 --testPathIgnorePatterns /node_modules/ e2e",
     "test:watch": "jest --watch --verbose false --testPathIgnorePatterns /node_modules/ e2e",
     "test:e2e": "jest e2e --verbose false --testPathIgnorePatterns /node_modules/ --runInBand",
-    "lint": "eslint ./packages/*/src/**/*.js",
+    "lint": "eslint ./packages/*/src/**.js",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna exec --parallel -- rimraf lib dist",
     "build:flow": "lerna exec --parallel --ignore *graphql* -- flow-copy-source -v -i '**/test/**' src lib",
@@ -14,15 +14,15 @@
     "build:ts": "gulp ts",
     "build:js": "gulp js",
     "build": "gulp",
-    "prepublishOnly": "npm run clean && npm run check:src && npm run build && npm run build:flow",
+    "prepublishOnly": "yarn run clean && yarn run check:src && yarn run build && yarn run build:flow",
     "release": "lerna publish --exact",
     "release:next": "lerna publish --exact --npm-tag next",
-    "check:src": "npm run lint",
+    "check:src": "yarn run lint && yarn run flow",
     "start": "NODE_ENV=development webpack-dev-server",
     "build:docs": "rm -rf docs/dist && NODE_ENV=production webpack",
     "gh-pages": "gh-pages -d docs/dist",
-    "deploy": "npm run build:docs && npm run gh-pages",
-    "validate": "npm ls"
+    "deploy": "yarn run build:docs && yarn run gh-pages",
+    "validate": "yarn ls"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
