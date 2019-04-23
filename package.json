@@ -3,8 +3,8 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "jest --coverage --verbose false --maxWorkers=2 --testPathIgnorePatterns /node_modules/ e2e",
-    "test:watch": "jest --watch --verbose false --testPathIgnorePatterns /node_modules/ e2e",
+    "test": "jest --verbose false --testPathIgnorePatterns /node_modules/ e2e --maxWorkers=2",
+    "test:watch": "jest --watch --verbose false --testPathIgnorePatterns /node_modules/ e2e --maxWorkers=2",
     "test:e2e": "jest e2e --verbose false --testPathIgnorePatterns /node_modules/ --runInBand",
     "lint": "eslint ./packages/*/src/**.js & eslint ./packages/*/test/**.js",
     "bootstrap": "lerna bootstrap",
