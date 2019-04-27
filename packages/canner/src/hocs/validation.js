@@ -12,7 +12,7 @@ type State = {
 }
 
 export default function withValidation(Com: React.ComponentType<*>) {
-  return class ComponentWithValition extends React.Component<HOCProps, State> {
+  return class ComponentWithValidation extends React.Component<HOCProps, State> {
     key: string;
     id: ?string;
     callbackId: ?string;
