@@ -3,7 +3,7 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import Ajv from 'ajv';
-import {isEmpty, isArray, isPlainObject, get} from 'lodash';
+import {isEmpty, isArray, isPlainObject, isFunction, get} from 'lodash';
 import type {HOCProps} from './types';
 
 type State = {
@@ -49,7 +49,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
       // custom validator
       const {validator, errorMessage} = validation;
       const reject = message => ({error: true, message});
-      const validatorResult = validator && validator(value, reject);
+      const validatorResult = (validator && isFunction(validator) ) && validator(value, reject);
   
       let customValid = !(validatorResult && validatorResult.error);
       // if value is empty, should not validate with ajv
