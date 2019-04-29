@@ -42,18 +42,22 @@ export default function withValidation(Com: React.ComponentType<*>) {
       const {value} = getValueAndPaths(result.data, paths);
       const isRequiredValid = required ? Boolean(value) : true;
 
+      const {schema, validator, errorMessage} = validation;
+      let validate = null
+
       // Ajv validation
-      const ajv = new Ajv();
-      const validate = ajv.compile(validation);
-      
+      if(schema && !isEmpty(schema)) {
+        const ajv = new Ajv();
+        validate = ajv.compile(schema);
+      }
       // custom validator
-      const {validator, errorMessage} = validation;
       const reject = message => ({error: true, message});
       const validatorResult = (validator && isFunction(validator) ) && validator(value, reject);
   
       let customValid = !(validatorResult && validatorResult.error);
+
       // if value is empty, should not validate with ajv
-      if (customValid && isRequiredValid && (!value || validate(value))) {
+      if (customValid && isRequiredValid && (!(value && isFunction(validate)) || validate(value))) {
         this.setState({
           error: false,
           errorInfo: []
