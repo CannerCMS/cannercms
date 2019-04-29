@@ -43,7 +43,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
       const isRequiredValid = required ? Boolean(value) : true;
 
       const {schema, validator, errorMessage} = validation;
-      let validate = null
+      let validate = null;
 
       // Ajv validation
       if(schema && !isEmpty(schema)) {
@@ -52,7 +52,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
       }
       // custom validator
       const reject = message => ({error: true, message});
-      const validatorResult = (validator && isFunction(validator) ) && validator(value, reject);
+      const validatorResult = (validator && isFunction(validator)) && validator(value, reject);
   
       let customValid = !(validatorResult && validatorResult.error);
 
