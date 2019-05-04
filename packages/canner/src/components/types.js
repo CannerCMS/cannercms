@@ -52,18 +52,18 @@ export type BaseUrl = string;
 
 export type CMSProps = {
   schema: LoadedSchema,
-  dataDidChange: DataDidChange,
-  afterDeploy: AfterDeploy,
-  baseUrl: BaseUrl,
   goTo: Object => void,
   routes: Array<string>,
   routerParams: Object,
-  intl: Intl,
-  hideButtons: HideButtons,
-  errorHandler: Error => any,
-  defaultKey?: string,
   client: ApolloClient,
-  rules: any
+  dataDidChange?: DataDidChange,
+  afterDeploy?: AfterDeploy,
+  baseUrl?: BaseUrl,
+  intl?: Intl,
+  hideButtons?: HideButtons,
+  errorHandler?: Error => any,
+  defaultKey?: string,
+  rules?: any
 }
 
 export type GeneratorProps = {

@@ -1,33 +1,36 @@
 import React from 'react';
-import Enzyme, {mount} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import {render, cleanup, waitForElement} from 'react-testing-library'
+import 'jest-dom/extend-expect'
 import Canner from '../../src/components';
 import {createClient, MemoryConnector} from 'canner-graphql-interface';
+import {Item} from 'canner-helpers';
 import {defaultData} from './data';
+// automatically unmount and cleanup DOM after the test is finished.
+afterEach(cleanup);
 
-function MockPosts({renderChildren, refId}) {
+function MockPosts() {
   return (
-    <div className="posts">
-      {renderChildren({refId})}
+    <div data-testid="mock-posts">
+      <Item />
     </div>
   )
 }
 
-function MockInfo({renderChildren, refId}) {
+function MockInfo() {
   return (
-    <div className="info">
-      {renderChildren({refId})}
+    <div data-testid="mock-info">
+      <Item />
     </div>
   )
 }
 
 function MockComponnet() {
   return (
-    <div className="component"></div>
+    <div data-testid="mock-component">
+      <Item />
+    </div>
   );
 }
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const schema = {
   schema: {
@@ -61,67 +64,79 @@ const schema = {
       loader: new Promise(resolve => resolve(MockInfo))
     }
   },
-  visitors: []
+  visitors: [],
+  fileStorages: {},
+  imageStorages: {},
+  pageSchema: {},
+  dict: {}
 }
 
 
 
 describe('<Canner>', () => {
-  let wrapper;
-  beforeEach(async () => {
-    const client = createClient({
+  let client;
+  beforeEach(() => {
+    client = createClient({
       schema: schema.schema,
       connector: new MemoryConnector({
         defaultData
       })
     });
-    wrapper = mount(
-      <Canner
-        schema={schema}
-        client={client}
-        routes={['posts']}
-      />
-    );
-    // waiting the async fetching
-    await wait();
   });
 
   test('Should render', async () => {
-    const render = wrapper.render();
-    expect(render.find('.component').length).toBe(1);
-    expect(render.find('.posts').length).toBe(1);
-    expect(render.find('.info').length).toBe(0);
+    const {getByTestId} = render(
+      <Canner
+        client={client}
+        schema={schema}
+        routes={['posts']}
+        goTo={() => {}}
+        routerParams={{}}
+      />
+    );
+    const posts = await waitForElement(() => getByTestId('mock-posts'));
+    expect(posts).toBeInTheDocument();
   });
 
   test('Should change UI when routes change', async () => {
-    wrapper.setProps({
-      schema,
-      routes: ['info']
-    });
-    await wait();
-    const render = wrapper.render();
-    expect(render.find('.component').length).toBe(1);
-    expect(render.find('.posts').length).toBe(0);
-    expect(render.find('.info').length).toBe(1);
+    const {getByTestId, rerender} = render(
+      <Canner
+        client={client}
+        schema={schema}
+        routes={['posts']}
+        goTo={() => {}}
+        routerParams={{}}
+      />
+    );
+    await waitForElement(() => getByTestId('mock-posts'));
+    rerender(
+      <Canner
+        client={client}
+        schema={schema}
+        routes={['info']}
+        goTo={() => {}}
+        routerParams={{}}
+      />
+    );
+    const info = await waitForElement(() => getByTestId('mock-info'));
+    expect(info).toBeInTheDocument();
   });
 
   test('Should render children when create form', async () => {
-    wrapper.setProps({
-      schema,
-      routes: ['posts'],
-      routerParams: {
-        operator: 'create'
-      }
-    });
-    await wait();
-    const render = wrapper.render();
-    expect(render.find('.component').length).toBe(1);
-    expect(render.find('.posts').length).toBe(0);
-    expect(render.find('.info').length).toBe(0);
+    const {queryByTestId} = render(
+      <Canner
+        client={client}
+        schema={schema}
+        routes={['posts']}
+        goTo={() => {}}
+        routerParams={{
+          operator: 'create'
+        }}
+      />
+    );
+    const com = await waitForElement(() => queryByTestId('mock-component'));
+    const posts = queryByTestId('mock-posts');
+    expect(posts).not.toBeInTheDocument();
+    expect(com).toBeInTheDocument();
   });
 })
-
-
-async function wait(ms = 300) {
-  await new Promise(resolve => setTimeout(resolve, ms));  
-}

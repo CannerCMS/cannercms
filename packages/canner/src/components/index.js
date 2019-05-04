@@ -47,6 +47,30 @@ function CannerCMS({
   defaultKey,
   client
 }: Props, ref) {
+  if (!schema) {
+    throw new Error('Missing schema property.');
+  }
+  if (!goTo) {
+    throw new Error('Missing goto property.');
+  }
+  if (!routes) {
+    throw new Error('Missing routes property.');
+  }
+  if (!routerParams) {
+    throw new Error('Missing routerParams property.');
+  }
+  if (!client) {
+    throw new Error('Missing client property.');
+  }
+  if (!schema.schema ||
+      !schema.visitors ||
+      !schema.imageStorages ||
+      !schema.fileStorages ||
+      !schema.dict || 
+      !schema.pageSchema
+  ) {
+    throw new Error(`Incorrect schema format. Should have the keys ['schema', 'visitors', 'fileStorages', 'imageStorages', 'dict', 'pageSchema']`);
+  }
   const {visitors, pageSchema, imageStorages, fileStorages, dict} = schema;
   const dataSchema = schema.schema;
   const uiSchema = useMemo(() => ({
