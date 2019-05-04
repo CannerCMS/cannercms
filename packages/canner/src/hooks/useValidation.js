@@ -37,8 +37,8 @@ export default ({
       return;
     }
     
-
-    const errorInfo = []
+    // TODO: fix type
+    const errorInfo: any = []
       .concat(isRequiredValid ? [] : {
         message: 'should be required'
       })

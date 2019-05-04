@@ -1,5 +1,9 @@
 import * as React from 'react';
+// FIX
+// eslint-disable-next-line no-unused-vars
 import Enzyme, { shallow } from 'enzyme';
+// FIX
+// eslint-disable-next-line no-unused-vars
 import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import withQuery from '../../src/hocs/query';
@@ -10,6 +14,8 @@ import { Query } from '../../src/query';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('with  query', () => {
+  // FIX
+  // eslint-disable-next-line no-unused-vars
   let WrapperComponent, props, MockComponent, mockFetch,
     mockUnsubscribe, mockSubscribe;
 
@@ -67,7 +73,7 @@ describe('with  query', () => {
     WrapperComponent = withQuery(MockComponent);
   });
 
-  // FIXME: This method 'setState' is only meant to be run on single node. Undefined found instead
+  // FIX: This method 'setState' is only meant to be run on single node. Undefined found instead
   // it('should render', () => {
   //   const wrapper = shallow(<WrapperComponent {...props} />);
   //   expect(toJson(wrapper)).toMatchSnapshot();

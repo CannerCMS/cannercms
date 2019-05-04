@@ -3,14 +3,14 @@
 exports[`Inserts schema and outputs JSONSchema and componentTree 1`] = `
 "\\"use strict\\";
 
-var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
 
 Object.defineProperty(exports, \\"__esModule\\", {
   value: true
 });
 exports.default = void 0;
 
-var _cannerScript = _interopRequireWildcard(require(\\"canner-script\\"));
+var _cannerScript = _interopRequireDefault(require(\\"canner-script\\"));
 
 /** @jsx builder */
 var _default = (0, _cannerScript.default)(\\"root\\", null, (0, _cannerScript.default)(\\"object\\", {

@@ -2,15 +2,7 @@
 
 import * as React from 'react';
 
-type Props = {
-  Sort: React.Node,
-  Filter: React.Node,
-  Pagination: React.Node,
-  children: React.Node,
-  Actions: React.Node,
-}
-
-export default React.memo(function ToolbarLayout({Filter, Sort, Actions, children, Pagination}) {
+export default (React.memo: any)(function ToolbarLayout({Filter, Sort, Actions, children, Pagination}) {
   return (
     <React.Fragment>
       <div style={{

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Enzyme, { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import withValidationn from '../../src/hocs/validation';
 import RefId from 'canner-ref-id';

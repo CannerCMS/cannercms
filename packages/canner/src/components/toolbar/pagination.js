@@ -5,8 +5,8 @@ import styled from 'styled-components';
 const ButtonGroup = Button.Group;
 const Wrapper = styled.div`
   text-align: right;
-  margin-top: ${props => props.marginTop}px;
-  margin-right: ${props => props.marginRight}px;
+  margin-top: ${(props: any) => props.marginTop}px;
+  margin-right: ${(props: any) => props.marginRight}px;
   display: inline-block;
 `;
 

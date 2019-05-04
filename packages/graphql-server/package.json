@@ -1,6 +1,6 @@
 {
   "name": "@canner/graphql-server",
-  "version": "3.2.3",
+  "version": "3.4.3",
   "description": "Build GraphQL server with GQLify",
   "author": "Canner",
   "files": [
@@ -22,7 +22,7 @@
   "dependencies": {
     "@canner/server-common": "3.2.1",
     "@gqlify/canner-schema-to-gqlify-model": "^1.3.2",
-    "@gqlify/server": "^3.1.2",
+    "@gqlify/server": "^3.2.1",
     "apollo-server": "^2.3.1",
     "apollo-server-koa": "^2.3.1",
     "bluebird": "^3.5.3",
@@ -64,5 +64,5 @@
   },
   "repository": "Canner/canner",
   "license": "MIT",
-  "gitHead": "d17f7bbfccc4aca3127fb73afc88c2cef39a7e42"
+  "gitHead": "51047c4a90312d9c4d88f11199d25131f22993a4"
 }

@@ -1,6 +1,5 @@
 // @flow
 
-import {useRef, useEffect} from 'react';
 import gql from 'graphql-tag';
 import type { ApolloClient } from 'apollo-boost';
 

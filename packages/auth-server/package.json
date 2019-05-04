@@ -1,6 +1,6 @@
 {
   "name": "@canner/auth-server",
-  "version": "3.2.1",
+  "version": "3.3.5",
   "description": "The auth server",
   "author": "Canner",
   "files": [
@@ -23,7 +23,7 @@
     "@canner/server-common": "3.2.1",
     "koa": "^2.6.2",
     "koa-mount": "^4.0.0",
-    "simple-oidc-server": "^1.3.0"
+    "simple-oidc-server": "^1.3.1"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.25",

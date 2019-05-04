@@ -9,7 +9,6 @@ import Container, {transformSchemaToMenuConfig} from 'packages/canner-container/
 import R from 'packages/router/src';
 import schema from './canner.schema';
 import client from './client';
-
 addLocaleData([...en, ...zh]);
 
 const Option = Select.Option;
@@ -20,7 +19,7 @@ const menuConfig = [
     icon: 'left',
     onClick: () => location.href = 'https://www.canner.io/',
   },
-  ...transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema})
+  ...transformSchemaToMenuConfig({...schema.pageSchema, ...schema.schema}),
 ].map(item => {
   item.icon = item.icon || getIcon(item.pathname);
   return item;
@@ -112,13 +111,14 @@ class CMSExample extends React.Component {
             schema={schema}
             sidebarConfig={{
               menuConfig,
-              theme: 'dark'
-            }}
-            navbarConfig={{
+              theme: 'dark',
               logo: {
                 href: 'https://www.canner.io/',
-                src: 'https://cdn.canner.io/images/logo/logo-word-white.png'
+                src: 'https://cdn.canner.io/images/logo/logo-word-white.png',
+                backgroundColor: '#283050'
               },
+            }}
+            navbarConfig={{
               showSaveButton: true,
               renderMenu: renderCustomHeaderMenu,
               theme: 'dark'
@@ -132,6 +132,7 @@ class CMSExample extends React.Component {
                   message: 'Deployed!'
                 })
               }}
+              rules={JSON.parse(localStorage.getItem('CannerDemoRules') || "{}")}
               errorHandler={e => {
                 // eslint-disable-next-line no-console
                 console.error(e);

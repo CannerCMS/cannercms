@@ -37,7 +37,9 @@ type State = {
 
 // $FlowFixMe
 @injectIntl
+// $FlowFixMe
 @withApollo
+// $FlowFixMe
 @Form.create()
 export default class ImportModal extends React.Component<Props, State> {
   state = {
@@ -47,7 +49,7 @@ export default class ImportModal extends React.Component<Props, State> {
     list: []
   };
   
-  download = (e: Event) => {
+  download = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const {
       fileName,
@@ -87,7 +89,7 @@ export default class ImportModal extends React.Component<Props, State> {
     };
   }
 
-  request = (csv: Array<Array<string>>) => {
+  request = (csv: Array<Array<string>>): Promise<*> => {
     const {request, fields, keyName, items, intl} = this.props;
     const fieldsLength = fields.length;
     return new Promise((resolve, reject) => {

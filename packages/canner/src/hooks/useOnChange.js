@@ -1,5 +1,5 @@
 // @flow
-import {useContext, useCallback} from 'react';
+import {useContext} from 'react';
 import {isArray} from 'lodash';
 import {Context} from 'canner-helpers';
 import {createAction} from '../utils/action';

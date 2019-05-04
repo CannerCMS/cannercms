@@ -37,14 +37,16 @@ const DOWNLOAD = 'DOWNLOAD';
 
 // $FlowFixMe
 @injectIntl
+// $FlowFixMe
 @withApollo
+// $FlowFixMe
 @Form.create()
 export default class ExportModal extends React.Component<Props, State> {
   state = {
     downloading: false
   };
 
-  handleSubmit = (e: Event) => {
+  handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {
       form,

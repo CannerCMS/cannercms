@@ -1,5 +1,5 @@
 // @flow
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {Context} from 'canner-helpers';
 import type RefId from 'canner-ref-id';
 

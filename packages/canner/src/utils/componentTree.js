@@ -53,7 +53,8 @@ export function inPage (node: ComponentNode) {
 }
 
 export function createLoadableComponnet(node: ComponentNode) {
-  return Loadable({
+  // TODO: fix type
+  return (Loadable: any)({
     loader: () => node.loader || Promise.reject(`There is no loader in ${node.path}`),
     loading: Loading,
   });

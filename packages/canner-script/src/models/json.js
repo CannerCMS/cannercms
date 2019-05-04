@@ -8,6 +8,7 @@ export default class JsonModal extends BasicModel {
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
     super('json', attrs);
 
+    // $FlowFixMe
     let {builder} = this.attributes;
     
     if (typeof builder === 'string') {
@@ -15,14 +16,15 @@ export default class JsonModal extends BasicModel {
     }
     
     if (typeof builder === 'function') {
-      // $FlowFixMe
       this.toJson = () => builder({attributes: {...attrs, builder: undefined, type: 'json'}, children});
       return this;
     }
     
     if (children && children.length) {
+    // $FlowFixMe
       this.attributes.items = children.reduce((result, child) => {
         if (child.keyName in result) {
+    // $FlowFixMe
           throw new Error(`duplicated keyName in children of ${this.attributes.keyName}`);
         }
         result[child.keyName] = child;

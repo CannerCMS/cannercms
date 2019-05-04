@@ -42,17 +42,6 @@ const schema = {
   }
 };
 
-const transformedSchemaMenuConfig = [{
-  title: 'My Info',
-  pathname: '/info'
-}, {
-  title: 'Posts',
-  pathname: '/posts'
-}, {
-  title: 'Authors',
-  pathname: '/authors'
-}];
-
 const router = {
   getRoutes: jest.fn().mockReturnValue(() => ['1', '2']),
   getPayload: jest.fn(),
@@ -101,20 +90,6 @@ describe('<CannerContainer>', () => {
   it('should initial dataChanged state be {}', () => {
     const wrapper = renderComponent();
     expect(wrapper.state('dataChanged')).toEqual({});
-  });
-
-  it('should this.menuConfig be sidebarConfig.menuConfig', () => {
-    const wrapper = renderComponent();
-    expect(wrapper.instance().menuConfig).toEqual(sidebarConfig.menuConfig);
-  });
-
-  it('should this.menuConfig be schemaTransformed', () => {
-    const wrapper = renderComponent({
-      sidebarConfig: {
-        menuConfig: true
-      }
-    });
-    expect(wrapper.instance().menuConfig).toEqual(transformedSchemaMenuConfig);
   });
 
   it('should didDataChange update dataChanged state', () => {

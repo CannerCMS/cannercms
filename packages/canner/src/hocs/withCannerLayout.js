@@ -1,6 +1,6 @@
 // @flow
 
-import React, {useContext, useMemo, useCallback, useDebugValue} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {Context} from 'canner-helpers';
 import {isFunction, isEqual} from 'lodash';
 // hooks

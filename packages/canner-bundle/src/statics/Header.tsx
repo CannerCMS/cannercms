@@ -46,7 +46,7 @@ export default class HeaderContainer extends React.Component<Props, {}> {
       <Menu
         theme={theme}
         mode="horizontal"
-        style={{ lineHeight: '64px', display: 'inline-block', ...style }}
+        style={{ lineHeight: '60px', borderBottom: 'none', display: 'inline-block', ...style }}
         onClick={this.headerMenuOnClick}
         selectedKeys={[]}
       >

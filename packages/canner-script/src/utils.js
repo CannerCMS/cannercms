@@ -5,8 +5,6 @@ import * as React from 'react';
 import {FormattedHTMLMessage} from 'react-intl';
 import {isPlainObject, mapValues} from 'lodash';
 
-import type {Node} from './flow-types';
-
 // this componentMap is the default component in CannerCMS
 export const componentMap = {
   _map: {

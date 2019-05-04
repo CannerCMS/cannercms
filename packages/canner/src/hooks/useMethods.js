@@ -1,5 +1,5 @@
 // @flow
-import {useRef, useContext, useState, useEffect, useMemo} from 'react';
+import {useContext, useState} from 'react';
 import {Context} from 'canner-helpers';
 import {mapValues, groupBy, isArray} from 'lodash';
 import {isCompleteContain, genPaths} from '../utils/renderType';

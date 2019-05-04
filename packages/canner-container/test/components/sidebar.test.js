@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import {Layout, Menu} from 'antd';
 
-import Sidebar from  '../../src/components/Sidebar';
+import Sidebar, {LogoContainer} from  '../../src/components/Sidebar';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -73,5 +73,25 @@ describe('<Sidebar>', () => {
     const menuItem = { key: 'key', params: { payload: {}, where: { a: '>1' } }};
     wrapper.find(Menu).simulate('click', menuItem)
     expect(goTo).toBeCalledWith({pathname: menuItem.key, ...menuItem.params});
+  });
+});
+
+
+describe('render logo', () => {
+  test('logo can be string', () => {
+    const wrapper = renderComponent({logo: 'http://www.img.jpg'});
+    expect(wrapper.find(LogoContainer).length).toBe(1);
+  });
+
+  test('logo can be object', () => {
+    const wrapper = renderComponent({logo: {src: 'http://www.img.jpg'}});
+    expect(wrapper.find(LogoContainer).length).toBe(1);
+  });
+
+  test('logo can be react element', () => {
+    const Logo = <div className="logo">123</div>;
+    const wrapper = renderComponent({logo: Logo});
+
+    expect(wrapper.find('.logo').length).toBe(1);
   });
 });

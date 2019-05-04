@@ -16,7 +16,7 @@ type Props = {
   type: any,
   description: string,
 };
-export default React.memo(function Block({
+export default (React.memo: any)(function Block({
   style,
   headStyle,
   bodyStyle,

@@ -31,8 +31,7 @@ export class GraphQLService implements WebService {
     this.logger = config.logger;
 
     // Read datamodel
-    const schemaPath = path.resolve(process.cwd(), config.schemaPath || 'canner.schema.json');
-    const cannerSchema = JSON.parse(readFileSync(schemaPath, { encoding: 'utf8' }));
+    const cannerSchema = this.getCannerSchema(config);
     const parser = new CannerSchemaToGQLifyParser(cannerSchema);
 
     const {models, rootNode} = parser.parse();
@@ -76,6 +75,7 @@ export class GraphQLService implements WebService {
     const context = config.context || createContext(config);
 
     this.apolloServer = new ApolloServer({
+      ...config.apolloConfig,
       debug: true,
       playground: config.graphqlPlayground,
       schema: schemaWithMiddleware as any,
@@ -86,7 +86,18 @@ export class GraphQLService implements WebService {
     });
   }
 
-  public async mount(app: Koa) {
-    this.apolloServer.applyMiddleware({app});
+  public async mount(app: Koa, mountPath?: string) {
+    this.apolloServer.applyMiddleware({app, path: mountPath});
+  }
+
+  private getCannerSchema(config: GqlifyConfig) {
+    if (config.schema) {
+      return config.schema;
+    }
+
+    // read from schemaPath
+    const schemaPath = path.resolve(process.cwd(), config.schemaPath || 'canner.schema.json');
+    const cannerSchema = JSON.parse(readFileSync(schemaPath, { encoding: 'utf8' }));
+    return cannerSchema;
   }
 }

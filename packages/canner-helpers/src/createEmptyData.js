@@ -95,7 +95,6 @@ function loop(schema: Schema) {
       break;
     default:
       throw new Error(`unsupport type ${schema.type}`);
-      break;
   }
   return result;
 }

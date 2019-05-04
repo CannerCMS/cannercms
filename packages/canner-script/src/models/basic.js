@@ -14,6 +14,7 @@ export default class BasicModel {
     description: ?string;
     type: string;
     loader: string;
+    builder: any;
   }
 
   attributes = {}

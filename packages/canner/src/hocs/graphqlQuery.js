@@ -21,9 +21,9 @@ export default function withQuery(Com: any) {
         <Query query={gql`${graphql}`} variables={variables}>
           {({loading, error, data, ...graphqlProps}) => {
             if (loading) return <List style={{maxWidth: '600px'}}/>;
-            if (error) return `Error!: ${error}`;
-            const key = Object.keys(data)[0];
-            let value = data[key];
+            if (error) return `Error!: ${error.toString()}`;
+            const key = Object.keys(data || {})[0];
+            let value = (data: any)[key];
             if (Array.isArray(value)) {
               // delete symbol in every item to let vega works
               value = value.map(v => ({...v}));

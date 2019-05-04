@@ -4,21 +4,20 @@ import * as React from 'react';
 import {Alert} from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-import type {HOCProps} from './types';
-
 type State = {
   error: any,
   errorInfo: any
 };
 
 export default function errorCatch(Com: React.ComponentType<*>) {
-  return class ComponentErrorCatch extends React.Component<HOCProps, State> {
+  // TODO: fix props type
+  return class ComponentErrorCatch extends React.Component<any, State> {
     state = {
       error: false,
       errorInfo: {componentStack: null}
     }
 
-    shouldComponentUpdate(nextProps: HOCProps, nextState: State) {
+    shouldComponentUpdate(nextProps: any, nextState: State) {
       if (nextState.error !== this.state.error) {
         return true;
       }

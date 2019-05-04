@@ -1,6 +1,6 @@
 // @flow
 
-import React, {useContext, useMemo, useCallback} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {Context} from 'canner-helpers';
 import CannerItem from '../components/item';
 import Toolbar from '../components/toolbar';
@@ -17,7 +17,7 @@ import useRenderType from '../hooks/useRenderType';
 import useButtons from '../hooks/useButtons';
 
 export default function withCanner(Com: any) {
-  return React.memo(function ComWithCanner(props: any) {
+  return (React.memo: any)(function ComWithCanner(props: any) {
     const {
       pattern,
       keyName,

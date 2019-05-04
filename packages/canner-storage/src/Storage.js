@@ -1,9 +1,9 @@
 // @flow
 
+// $FlowFixMe: Unresolved
 import axios from 'axios';
 import {getUploadPercent} from './utils';
 import type {UploadOptions, OnProgressType, GetUploadUrlType} from './types';
-
 export default class Storage {
   getUploadUrl: GetUploadUrlType;
   

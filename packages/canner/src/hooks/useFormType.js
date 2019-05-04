@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 export const FORM_TYPE = {
   NONE: 'NONE',
   LIST: 'LIST',

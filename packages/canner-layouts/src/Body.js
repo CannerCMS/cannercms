@@ -1,6 +1,7 @@
 // @flow
 
 import  React from 'react';
+// $FlowFixMe: antd Breadcrumb
 import {Breadcrumb, Icon} from 'antd';
 import {Item} from 'canner-helpers';
 

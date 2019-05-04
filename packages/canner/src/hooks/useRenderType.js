@@ -14,7 +14,7 @@ export const RENDER_TYPE = {
 export default ({
   pattern,
   path,
-  hideBackButton,
+  hideBackButton = false,
   refId
 }: {
   pattern: string,
@@ -88,7 +88,6 @@ export function getSubmitAndCancelButtons({
   pattern,
   hideButtons,
   routes,
-  refId,
   operator
 }: {
   pattern: string,
@@ -97,8 +96,6 @@ export function getSubmitAndCancelButtons({
   refId: RefId,
   operator: string
 }) {
-  const routesLength = routes.length;
-  const pathArrLength = refId.getPathArr().length;
   const isCreateView = operator === 'create';
   const isFirstArray = pattern === 'array';
   const isUpdateView = routes.length === 2;

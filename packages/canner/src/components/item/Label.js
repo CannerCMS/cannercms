@@ -6,10 +6,10 @@ import {Tooltip, Icon} from 'antd';
 
 const Title = styled.div`
   color: rgba(0, 0, 0, 0.85);
-  padding: ${props => props.layout === 'horizontal' ? 0 : '0 0 8px'}
+  padding: ${(props: any) => props.layout === 'horizontal' ? '0' : '0 0 8px'}
 
   & > span:before {
-    content: ${props => props.required && props.title ? '"* "' : '""'};
+    content: ${(props: any) => props.required && props.title ? '"* "' : '""'};
     color: red;
   }
 `;

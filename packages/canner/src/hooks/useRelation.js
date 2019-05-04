@@ -2,7 +2,7 @@
 import React, {useState, useContext, useRef, useEffect} from 'react';
 import {Context} from 'canner-helpers';
 import gql from 'graphql-tag';
-import {isEmpty, mapValues} from 'lodash';
+import {isEmpty} from 'lodash';
 import {Icon, Spin} from 'antd';
 import {Query} from '../query';
 import Toolbar from '../components/toolbar/index';

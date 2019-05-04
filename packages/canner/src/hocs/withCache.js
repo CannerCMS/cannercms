@@ -1,5 +1,5 @@
 // @flow
-import React, {useMemo, useContext, useRef} from 'react';
+import React, {useMemo, useContext} from 'react';
 import {Context} from 'canner-helpers';
 import useCacheMethods from '../hooks/useMethods';
 

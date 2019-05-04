@@ -2,7 +2,7 @@
  * @flow
  */
 
-import React, {useEffect, useCallback, useState, useRef, useImperativeHandle, forwardRef, useMemo} from 'react';
+import {useState, useMemo} from 'react';
 import {actionToMutation, actionsToVariables} from '../action';
 import gql from 'graphql-tag';
 import {createEmptyData} from 'canner-helpers';
@@ -15,10 +15,7 @@ import useQuery from '../hooks/useQuery';
 import useApollo from '../hooks/useApollo';
 import useOnDeployManager from '../hooks/useOnDeployManager';
 import useCache from '../hooks/useCache';
-import type {ProviderProps} from '../components/types';
 import type {Action, ActionType} from '../action/types';
-
-type Props = ProviderProps;
 
 export default function useProvider({
   schema,

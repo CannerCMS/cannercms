@@ -8,7 +8,7 @@ export default ({
   refId
 }) => {
   const contextValue = useContext(Context);
-  const {routerParams, routes, rootValue} = contextValue;
+  const {routerParams, routes} = contextValue;
   const parentRefId = refId || contextValue.refId;
 
   if (!pattern || !keyName) {

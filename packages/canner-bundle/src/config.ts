@@ -1,5 +1,5 @@
 import path from 'path';
-export const APP_PATH = path.join(__dirname, './statics/app');
+export const APP_PATH = path.join(__dirname, './statics/App');
 export const HTML_PATH = path.join(__dirname, './statics/index.html');
 export const SCHEMA_PATH = path.join(__dirname, './statics/schema/canner.schema.js');
 export const SCHEMA_OUTPUT_PATH = process.cwd();
