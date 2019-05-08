@@ -1,11 +1,8 @@
 import * as React from 'react';
-import {configure, mount} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import {render, cleanup} from 'react-testing-library';
 import {Item, Context} from '../src';
-
-configure({
-  adapter: new Adapter()
-});
+import 'jest-dom/extend-expect';
+afterEach(cleanup);
 
 describe('children', () => {
   let context, MockChildren;
@@ -14,16 +11,14 @@ describe('children', () => {
     MockChildren = function MockChildren(props) {
       return (
         <div>
-          <p className="refId">{props.refId}</p>
-          <p className="routes">{JSON.stringify(props.routes)}</p>
+          <p data-testid="refId">{props.refId}</p>
+          <p data-testid="routes">{JSON.stringify(props.routes)}</p>
         </div>
       );
     }
     const node = {
       children: [{
         keyName: 'child1'
-      }, {
-        keyName: 'child2'
       }]
     }
     context = {
@@ -43,28 +38,28 @@ describe('children', () => {
   });
 
   it('should render, has refId and routes', () => {
-    const component = mount(
+    const {getByTestId} = render(
       <Context.Provider value={context}>
         <Item />
       </Context.Provider>
     );
-    expect(component.find('.refId').length).toBe(2);
-    expect(component.find('.routes').length).toBe(2);
+    expect(getByTestId('refId')).toHaveTextContent('refId');
+    expect(getByTestId('routes')).toHaveTextContent('routes');
   });
 
-  it('should pass props', () => {
-    const component = mount(<Context.Provider value={context}>
+  it('should overwrite props', () => {
+    const {getByTestId} = render(<Context.Provider value={context}>
       <Item refId="refId/0" routes={[]}/>
     </Context.Provider>);
-    expect(component.find('.refId').length).toBe(2);
-    expect(component.find('.routes').length).toBe(2);
+    expect(getByTestId('refId')).toHaveTextContent('refId/0');
+    expect(getByTestId('routes')).toHaveTextContent('[]');
   });
 
   it('should hidden', () => {
-    const component = mount(<Context.Provider value={context}>
-      <Item refId="refId/0" routes={[]} filter={node => node.keyName === 'child1'}/>
+    const {queryByTestId} = render(<Context.Provider value={context}>
+      <Item refId="refId/0" routes={[]} filter={node => node.keyName === 'child0'}/>
     </Context.Provider>);
-    expect(component.find('.refId').length).toBe(1);
-    expect(component.find('.routes').length).toBe(1);
+    expect(queryByTestId('refId')).toBe(null);
+    expect(queryByTestId('routes')).toBe(null);
   });
 });

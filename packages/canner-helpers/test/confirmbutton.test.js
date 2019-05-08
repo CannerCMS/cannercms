@@ -1,42 +1,35 @@
 import * as React from 'react';
-import {configure, mount} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import {ConfirmButton, Context} from '../src';
+import {render, cleanup, fireEvent} from 'react-testing-library';
+import RefId from 'canner-ref-id';
+import 'jest-dom/extend-expect';
+afterEach(cleanup);
 
-configure({
-  adapter: new Adapter()
-});
 
 describe('confirm button', () => {
-  let context, MockChildren;
+  let context;
 
   beforeEach(() => {
-    MockChildren = function MockChildren(props) {
-      return (
-        <button>
-          <p className="refId">{props.refId}</p>
-        </button>
-      );
-    }
     context = {
-      renderConfirmButton: jest.fn().mockImplementation(props => <MockChildren {...props} />),
-      refId: 'refId',
-    }
+      refId: new RefId('refId'),
+      deploy: jest.fn().mockResolvedValue()
+    };
   });
 
   it('should render, default refId', () => {
-    const component = mount(
+    const {getByTestId} = render(
       <Context.Provider value={context}>
         <ConfirmButton />
       </Context.Provider>
     );
-    expect(component.find('.refId').text()).toBe(context.refId);
+    expect(getByTestId('confirm-button')).toHaveTextContent('Submit');
   });
 
-  it('should pass props', () => {
-    const component = mount(<Context.Provider value={context}>
-      <ConfirmButton refId="refId/0"/>
+  it('should execute deploy with key', () => {
+    const {getByTestId} = render(<Context.Provider value={context}>
+      <ConfirmButton />
     </Context.Provider>);
-    expect(component.find('.refId').text()).toBe("refId/0");
+    fireEvent.click(getByTestId('confirm-button'));
+    expect(context.deploy).toHaveBeenCalledWith(context.refId.getPathArr()[0]);
   });
 });

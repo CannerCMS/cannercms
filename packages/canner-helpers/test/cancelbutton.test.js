@@ -1,42 +1,35 @@
 import * as React from 'react';
-import {configure, mount} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import {ResetButton, Context} from '../src';
+import {render, cleanup, fireEvent} from 'react-testing-library';
+import RefId from 'canner-ref-id';
+import 'jest-dom/extend-expect';
+afterEach(cleanup);
 
-configure({
-  adapter: new Adapter()
-});
 
-describe('cancel button', () => {
-  let context, MockChildren;
+describe('confirm button', () => {
+  let context;
 
   beforeEach(() => {
-    MockChildren = function MockChildren(props) {
-      return (
-        <button>
-          <p className="refId">{props.refId}</p>
-        </button>
-      );
-    }
     context = {
-      renderCancelButton: jest.fn().mockImplementation(props => <MockChildren {...props} />),
-      refId: 'refId',
-    }
+      refId: new RefId('refId'),
+      reset: jest.fn().mockResolvedValue()
+    };
   });
 
-  it('should render, has default refId', () => {
-    const component = mount(
+  it('should render, default refId', () => {
+    const {getByTestId} = render(
       <Context.Provider value={context}>
         <ResetButton />
       </Context.Provider>
     );
-    expect(component.find('.refId').text()).toBe(context.refId);
+    expect(getByTestId('reset-button')).toHaveTextContent('Cancel');
   });
 
-  it('should pass props', () => {
-    const component = mount(<Context.Provider value={context}>
-      <ResetButton refId="refId/0"/>
+  it('should execute reset with key', () => {
+    const {getByTestId} = render(<Context.Provider value={context}>
+      <ResetButton />
     </Context.Provider>);
-    expect(component.find('.refId').text()).toBe("refId/0");
+    fireEvent.click(getByTestId('reset-button'));
+    expect(context.reset).toHaveBeenCalledWith(context.refId.getPathArr()[0]);
   });
 });
