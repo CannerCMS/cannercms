@@ -41,7 +41,7 @@ describe('query', () => {
   });
 
   it('should get posts/title queries', () => {
-    expect(query.getQueries(['posts', 'title'])).toEqual(queries.posts.fields.title);
+    expect(query.getQueries(['posts', 'title'])).toEqual({});
   });
 
   it('should update posts args', () => {
