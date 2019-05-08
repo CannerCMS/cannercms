@@ -121,7 +121,7 @@ export default class Navbar extends React.Component<NavbarProps, State> {
                   </MenuText>
                 </Badge>
               </Menu.Item> :
-              <Menu.Item key="saved">
+              <Menu.Item key="saved" data-testid="navbar-saved-button">
                 <MenuText theme={theme}>
                   Saved
                 </MenuText>

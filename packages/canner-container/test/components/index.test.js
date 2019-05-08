@@ -1,21 +1,16 @@
 
 import * as React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { shallow, mount } from 'enzyme';
-
+import {render, cleanup} from 'react-testing-library';
+import 'jest-dom/extend-expect';
 import CannerContainer from  '../../src/components/index';
+afterEach(cleanup);
 
-Enzyme.configure({ adapter: new Adapter() });
-
-class TestChildren extends React.Component {
-  render() {
-    return (
-      <div />
-    );
-  }
+function TestChildren() {
+  return <div data-testid="children">children</div>;
 }
 
 const sidebarConfig = {
+  logo: 'http://www.img.jpg',
   menuConfig: [{
     title: 'My Info',
     pathname: '/info'
@@ -29,7 +24,6 @@ const sidebarConfig = {
 };
 
 const navbarConfig = {
-  logo: 'http://www.img.jpg',
   showSaveButton: true,
   renderMenu: jest.fn()
 };
@@ -52,51 +46,28 @@ const router = {
   goTo: jest.fn()
 }
 
-const renderComponent = (props) => {
-  return shallow(
-    <CannerContainer
-      sidebarConfig={sidebarConfig}
-      navbarConfig={navbarConfig}
-      schema={schema}
-      router={router}
-      {...props}
-    >
-      <TestChildren />
-    </CannerContainer>
-  )
-};
-
-const renderMountComponent = (props) => {
-  return mount(
-    <CannerContainer
-      sidebarConfig={sidebarConfig}
-      navbarConfig={navbarConfig}
-      schema={schema}
-      router={router}
-      {...props}
-    >
-      <TestChildren />
-    </CannerContainer>
-  )
-};
-
-
 describe('<CannerContainer>', () => {
   it('should render children', () => {
-    const wrapper = renderComponent();
-    expect(wrapper.find(TestChildren).length).toBe(1);
+    const {getByTestId} = render(<CannerContainer
+      sidebarConfig={sidebarConfig}
+      navbarConfig={navbarConfig}
+      schema={schema}
+      router={router}
+    >
+      <TestChildren />
+    </CannerContainer>);
+    expect(getByTestId('children')).toHaveTextContent('children');
   });
 
   it('should initial dataChanged state be {}', () => {
-    const wrapper = renderComponent();
-    expect(wrapper.state('dataChanged')).toEqual({});
-  });
-
-  it('should didDataChange update dataChanged state', () => {
-    const goTo = jest.fn();
-    const wrapper = renderMountComponent({ goTo });
-    const dataChanged = {test: 'test'};
-    wrapper.instance().dataDidChange(dataChanged);
-    expect(wrapper.state('dataChanged')).toEqual(dataChanged);
+    const {getByTestId} = render(<CannerContainer
+      sidebarConfig={sidebarConfig}
+      navbarConfig={navbarConfig}
+      schema={schema}
+      router={router}
+    >
+      <TestChildren />
+    </CannerContainer>);
+    expect(getByTestId('navbar-saved-button')).toHaveTextContent('Saved');
   });
 });
