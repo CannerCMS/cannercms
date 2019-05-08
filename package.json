@@ -91,6 +91,7 @@
     "puppeteer": "^1.11.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
+    "react-hooks-testing-library": "^0.5.0",
     "react-router-dom": "^4.2.2",
     "react-test-renderer": "^16.2.0",
     "react-testing-library": "^7.0.0",

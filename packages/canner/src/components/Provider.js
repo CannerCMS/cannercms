@@ -31,6 +31,19 @@ function Provider({
   children,
   afterDeploy
 }: Props, ref: any) {
+  if (!schema) {
+    throw new Error('Missing schema property.');
+  }
+  if (!routes) {
+    throw new Error('Missing routes property.');
+  }
+  if (!children) {
+    throw new Error('Provider should have exactly one children.');
+  }
+  if (!client) {
+    throw new Error('Missing children property.');
+  }
+
   // ensure these instance only create at first rendering
   const actionManager = useActionManager();
   const query = useQuery(schema);

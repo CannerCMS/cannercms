@@ -98,14 +98,14 @@ export type GeneratorProps = {
 
 export type ProviderProps = {
   schema: CannerSchema,
-  dataDidChange: DataDidChange,
-  afterDeploy: AfterDeploy,
   children: React.Element<*>,
   client: ApolloClient,
   rootKey: string,
-  errorHandler: Error => any,
   routes: Array<string>,
-  routerParams: Object
+  routerParams: Object,
+  errorHandler?: Error => any,
+  dataDidChange?: DataDidChange,
+  afterDeploy?: AfterDeploy,
 };
 
 export type Submenu = {
