@@ -3,12 +3,68 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import Ajv from 'ajv';
-import {isEmpty, isArray, isPlainObject, isFunction, get} from 'lodash';
+import {isEmpty, isObject, isArray, isPlainObject, isFunction, get} from 'lodash';
 import type {HOCProps} from './types';
 
 type State = {
   error: boolean,
   errorInfo: Array<any>
+}
+
+const _isRequiredValidation = async (value) => {
+  const valid = Boolean(value)
+  return {
+    error: !valid,
+    errorInfo: !valid ? [{message: 'should be required'}] :[]
+  }
+}
+
+const checkValidation = (validation) => {
+  return (isObject(validation) && !isEmpty(validation))
+}
+
+const checkSchema = (schema) => {
+  return (isObject(schema) && !isEmpty(schema) )
+}
+const checkValidator = (validator) => {
+  return (isFunction(validator))
+}
+
+const _schemaValidation = (schema, errorMessage) => {
+  const ajv = new Ajv();
+  const validate = ajv.compile(schema);
+  return async (value) => {
+    try {
+      const error = !validate(value)
+      const errorInfo = error ? [].concat( errorMessage ? {message: errorMessage} : validate.errors ) : []
+      return {
+        error,
+        errorInfo
+      }
+    }
+    catch(err){
+      return {
+        error: true,
+        errorInfo: [{message: err}]
+      }
+    }
+
+  }
+}
+const _customizedValidator = (validator) => async (value) => {
+  try {
+    const errorMessage = await validator(value)
+    return {
+      error: Boolean(errorMessage),
+      errorInfo: [{message: errorMessage}]
+    }
+  }
+  catch(err) {
+    return {
+      error: true,
+      errorInfo: [{message: err}]
+    }
+  }
 }
 
 export default function withValidation(Com: React.ComponentType<*>) {
@@ -35,52 +91,55 @@ export default function withValidation(Com: React.ComponentType<*>) {
       this.removeOnDeploy();
     }
 
+    handleValidationResult = (results: any) => {
+
+      let error = false;
+      let errorInfo = [];
+
+      for(let index = 0; index < results.length; index++) {
+        error = error || results[index].error
+        errorInfo = errorInfo.concat(results[index].errorInfo);
+      }
+
+      this.setState({
+        error,
+        errorInfo
+      });
+
+      return {
+        error,
+        errorInfo
+      }
+    }
+
     validate = async (result: any) => {
-      const {refId, validation = {}, required = false} = this.props;
+      const {refId, required = false, validation} = this.props;
       // required
       const paths = refId.getPathArr().slice(1);
       const {value} = getValueAndPaths(result.data, paths);
-      const isRequiredValid = required ? Boolean(value) : true;
+      const promiseQueue = [];
 
-      const {schema, validator, errorMessage} = validation;
-      let validate = null;
-
-      // Ajv validation
-      if(schema && !isEmpty(schema)) {
-        const ajv = new Ajv();
-        validate = ajv.compile(schema);
+      // check whether value is required in first step
+      if(required) {
+        promiseQueue.push(_isRequiredValidation(value));
       }
-      // custom validator
-      const reject = message => ({error: true, message});
-      const validatorResult = (validator && isFunction(validator)) && validator(value, reject);
-  
-      let customValid = !(validatorResult && validatorResult.error);
 
-      // if value is empty, should not validate with ajv
-      if (customValid && isRequiredValid && (!(value && isFunction(validate)) || validate(value))) {
-        this.setState({
-          error: false,
-          errorInfo: []
-        });
-        return result;
+      // skip validation if object validation is undefined or empty
+      if(checkValidation(validation)) {
+        const {schema, errorMessage, validator} = validation;
+        if(value && checkSchema(schema)) {
+          promiseQueue.push(_schemaValidation(schema, errorMessage)(value));
+        }
+        if(checkValidator(validator)) {
+          promiseQueue.push(_customizedValidator(validator)(value));
+        }
       }
-      
-  
-      const errorInfo = []
-        .concat(isRequiredValid ? [] : {
-          message: 'should be required'
-        })
-        .concat(validate.errors ? (errorMessage ? {message: errorMessage} : validate.errors) : [])
-        .concat(customValid ? [] : validatorResult);
 
-      this.setState({
-        error: true,
-        errorInfo: errorInfo
-      });
+      const ValidationResult = await Promise.all(promiseQueue);
+
       return {
         ...result,
-        error: true,
-        errorInfo: errorInfo
+        ...this.handleValidationResult(ValidationResult)
       }
     }
 
