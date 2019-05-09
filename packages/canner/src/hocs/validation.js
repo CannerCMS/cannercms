@@ -35,7 +35,7 @@ export default function withValidation(Com: React.ComponentType<*>) {
       this.removeOnDeploy();
     }
 
-    validate = (result: any) => {
+    validate = async (result: any) => {
       const {refId, validation = {}, required = false} = this.props;
       // required
       const paths = refId.getPathArr().slice(1);
