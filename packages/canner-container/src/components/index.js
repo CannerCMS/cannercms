@@ -39,31 +39,33 @@ function CannerContainer(props: CannerContainerProps) {
     setDataChanged(dataChanged);
   }, [])
   return (
-    <Layout>
-        {navbarConfig && (
-          <Navbar
-            dataChanged={dataChanged}
-            deploy={cannerRef.current && cannerRef.current.deploy}
-            {...navbarConfig}
-          />
-        )}
-        <Layout style={{
+    <Layout
+      style={{
           WebkitBoxOrient: 'horizontal',
           WebkitBoxDirection: 'normal',
           WebkitFlexDirection: 'row',
           MsFlexDirection: 'row',
           flexDirection: 'row',
           minHeight: '100vh'
-        }}>
-          <Sidebar
-            dataChanged={dataChanged}
-            goTo={router.goTo}
-            reset={cannerRef.current && cannerRef.current.reset}
-            routes={routes}
-            schema={uiSchema}
-            {...sidebarConfig}
-            menuConfig={menuConfig}
-          />
+        }}
+    >
+        <Sidebar
+          dataChanged={dataChanged}
+          goTo={router.goTo}
+          reset={cannerRef.current && cannerRef.current.reset}
+          routes={routes}
+          schema={uiSchema}
+          {...sidebarConfig}
+          menuConfig={menuConfig}
+        />
+        <Layout>
+          {navbarConfig && (
+            <Navbar
+              dataChanged={dataChanged}
+              deploy={cannerRef.current && cannerRef.current.deploy}
+              {...navbarConfig}
+            />
+          )}
           <Layout.Content>
             { 
               React.cloneElement(children, {
