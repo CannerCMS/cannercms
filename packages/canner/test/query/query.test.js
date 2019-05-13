@@ -17,8 +17,8 @@ describe('query', () => {
         }
       }
     };
-    queries = schemaToQueriesObject(schema, schema, {firstLayer: true}).queriesObj;
-    variables = schemaToQueriesObject(schema, schema, {firstLayer: true}).variables;
+    queries = schemaToQueriesObject(schema).queriesObj;
+    variables = schemaToQueriesObject(schema).variables;
     query = new Query({
       schema
     });
