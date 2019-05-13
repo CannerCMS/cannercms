@@ -97,4 +97,30 @@ describe('schema to queries object', () => {
     };
     expect(schemaToQueriesObject(schema)).toMatchSnapshot();
   });
+
+  it('should not changed to lower case', () => {
+    const schema = {
+      otherMenuItem: {
+        keyName: 'otherMenuItem',
+        type: 'array',
+        path: 'otherMenuItem',
+        items: {
+          type: 'object',
+          items: {
+            title: {
+              keyName: 'title',
+              path: 'otherMenuItem/title',
+              type: 'string',
+            },
+            pathName: {
+              keyName: 'pathName',
+              path: 'otherMenuItem/pathName',
+              type: 'string',
+            }
+          }
+        }
+      },
+    };
+    expect(schemaToQueriesObject(schema)).toMatchSnapshot();
+  });
 });
