@@ -147,9 +147,9 @@ describe('withValidation', () => {
       onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
       validation={
         {
-          validator: (content, reject) => {
+          validator: (content) => {
             if (!content) {
-              return reject('should be required');
+              return 'should be required';
             }
           }
         }
