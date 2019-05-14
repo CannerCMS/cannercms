@@ -64,4 +64,24 @@ describe('query', () => {
     });
     expect(query.toGQL('posts')).toEqual(`query($postsFirst: Int,$postsWhere: PostWhereInput){posts: postsConnection(first: $postsFirst,where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
   });
+
+  it('should confirm lower case for ${lowercase}Connection', () => {
+    schema = {
+      otherMenuItem: {
+        type: 'array',
+        items: {
+          type: 'object',
+          items: {
+            title: {
+              type: 'string'
+            }
+          }
+        }
+      }
+    };
+    query = new Query({
+      schema
+    });
+    expect(query.toGQL('otherMenuItem')).toEqual(`query($otherMenuItemWhere: OthermenuitemWhereInput){otherMenuItem: othermenuitemsConnection(where: $otherMenuItemWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
+  });
 });
