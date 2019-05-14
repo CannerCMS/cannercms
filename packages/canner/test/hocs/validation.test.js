@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import withValidationn from '../../src/hocs/validation';
+import withValidation from '../../src/hocs/validation';
 import RefId from 'canner-ref-id';
 
 
@@ -21,7 +21,7 @@ describe('withValidation', () => {
       onDeploy,
       removeOnDeploy
     }
-    WrapperComponent = withValidationn(MockComponent);
+    WrapperComponent = withValidation(MockComponent);
   });
 
   it('should error state = false', () => {
