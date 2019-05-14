@@ -110,6 +110,34 @@ describe('actions to variables', () => {
   });
 });
 
+describe('with correct key name about case problem', () => {
+  it('create array', () => {
+    const updateAction = {
+      type: 'CREATE_ARRAY',
+      payload: {
+        key: 'otherMenuItem',
+        id: 'id1',
+        value: {
+          "title": "123"
+        }
+      }
+    }
+
+    expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
+      $payload: 'OthermenuitemCreateInput!',
+    });
+
+    expect(get(actionToMutation(updateAction), 'mutation.fields.createOthermenuitem')).toEqual({
+      args: {
+        data: '$payload'
+      },
+      fields: {
+        id: null
+      }
+    });
+  });
+});
+
 describe('integration', () => {
   test('should works', () => {
     const updateAction = {
