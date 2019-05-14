@@ -1,7 +1,7 @@
 import {objectToQueries} from '../../src/query/utils';
 import gql from 'graphql-tag';
 
-describe('object to quries', () => {
+describe('object to queries', () => {
   it('query should works', () => {
     const obj = {
       posts: {
@@ -69,6 +69,71 @@ describe('object to quries', () => {
         createPost(data: $payload, where: $where)
       }
     `.replace(/\n+|\s+/g, ''));
+  });
+
+  describe('with correct key name about case problem', () => {
+    it('for ${KeyName}WhereInput', () => {
+      const obj = {
+        otherMenuItem: {
+          declareArgs: {
+            $randomKey1: 'otherMenuItemWhereInput',
+          },
+          args: {
+            where: '$randomKey1',
+          },
+          fields: {
+            id: null,
+            title: null,
+          }
+        }
+      }
+      const variables = {randomKey1: {}};
+
+      expect(objectToQueries(obj, false, variables).replace(/\n+|\s+/g, '')).toBe(`
+        query($randomKey1: OthermenuitemWhereInput) {
+          otherMenuItem(where: $randomKey1) {
+            id
+            title
+          }
+        }
+      `.replace(/\n+|\s+/g, ''));
+    });
+
+    it('for ${KeyName}OrderByInput', () => {
+      const obj = {
+        otherMenuItem: {
+          declareArgs: {
+            $randomKey1: 'OthermenuitemWhereInput',
+            $randomKey2: 'otherMenuItemOrderByInput',
+            $randomKey3: 'Int',
+          },
+          args: {
+            where: '$randomKey1',
+            orderBy: '$randomKey2',
+            first: '$randomKey3',
+          },
+          fields: {
+            id: null,
+            title: null,
+          }
+        }
+      }
+      const variables = {
+        randomKey1: {},
+        randomKey2: {},
+        randomKey3: 10,
+      };
+
+      expect(objectToQueries(obj, false, variables).replace(/\n+|\s+/g, '')).toBe(`
+        query($randomKey1: OthermenuitemWhereInput, $randomKey2: OthermenuitemOrderByInput, $randomKey3: Int) {
+          otherMenuItem(where: $randomKey1, orderBy: $randomKey2, first: $randomKey3) {
+            id
+            title
+          }
+        }
+      `.replace(/\n+|\s+/g, ''));
+    });
+
   });
 });
 
