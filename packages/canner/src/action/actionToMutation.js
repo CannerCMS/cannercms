@@ -47,7 +47,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         data: '$payload',
         where: '$where'
       }
-      name = `update${transformKey(key)}`;
+      name = `update${transformKey(key.toLowerCase())}`;
       fields = {id: null};
       break;
     case 'CREATE_ARRAY':
@@ -118,12 +118,12 @@ function genCreateInputType(action) {
 
 function genUpdateInputType(action) {
   const key = action.payload.key;
-  return `${transformKey(key)}UpdateInput!`;
+  return `${transformKey(key.toLowerCase())}UpdateInput!`;
 }
 
 function genWhereInputType(action) {
   const key = action.payload.key;
-  return `${transformKey(key)}WhereUniqueInput!`;
+  return `${transformKey(key.toLowerCase())}WhereUniqueInput!`;
 }
 
 export function transformKey(key: string) {
