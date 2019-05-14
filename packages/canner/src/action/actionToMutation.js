@@ -35,7 +35,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       actionArgs = {
         data: '$payload'
       }
-      name = `update${transformKey(key)}`;
+      name = `update${transformKey(key.toLowerCase())}`;
       fields = {__typename: null};
       break;
     case 'UPDATE_ARRAY':
