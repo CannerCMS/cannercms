@@ -164,6 +164,32 @@ describe('with correct key name about case problem', () => {
       }
     });
   });
+
+  it('delete array', () => {
+    const updateAction = {
+      type: 'DELETE_ARRAY',
+      payload: {
+        key: 'otherMenuItem',
+        id: 'id1',
+        value: {
+          "title": "123"
+        }
+      }
+    }
+
+    expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
+      $where: 'OthermenuitemWhereUniqueInput!'
+    });
+
+    expect(get(actionToMutation(updateAction), 'mutation.fields.deleteOthermenuitem')).toEqual({
+      args: {
+        where: '$where'
+      },
+      fields: {
+        id: null
+      }
+    });
+  });
 });
 
 describe('integration', () => {

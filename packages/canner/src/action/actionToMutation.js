@@ -67,7 +67,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       actionArgs = {
         where: '$where',
       }
-      name = `delete${transformKey(key)}`;
+      name = `delete${transformKey(key.toLowerCase())}`;
       fields = {id: null};
       break;
     case 'CONNECT':
