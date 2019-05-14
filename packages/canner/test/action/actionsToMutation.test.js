@@ -233,4 +233,20 @@ describe('integration', () => {
       gql`${mutation}`;
     }).not.toThrow();
   });
+
+  test('should works with correct key name about case problem', () => {
+    const updateAction = {
+      type: 'UPDATE_OBJECT',
+      payload: {
+        key: 'otherMenuItem',
+        value: {
+          "title": "123"
+        }
+      }
+    };
+    const mutation = objectToQueries(actionToMutation(updateAction), false);
+    expect(() => {
+      gql`${mutation}`;
+    }).not.toThrow();
+  });
 });
