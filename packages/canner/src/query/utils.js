@@ -200,7 +200,7 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
     }
 
     if (element.connection) {
-      query = `${query}Connection`;
+      query = `${query.toLowerCase()}Connection`;
     }
 
     if (element.alias) {
