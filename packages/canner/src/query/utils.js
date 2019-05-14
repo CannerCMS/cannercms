@@ -1,6 +1,7 @@
 // @flow
 
 import pluralize from 'pluralize';
+import capitalize from 'lodash/capitalize';
 import lowerFirst from 'lodash/lowerFirst';
 import upperFirst from 'lodash/upperFirst';
 import {merge, mapValues, set} from 'lodash';
@@ -237,7 +238,7 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
         }
       }
       fields = objectToQueries(fields, true, variables);
-      
+
       query = `${query}${fields}`;
     }
     return `${query}`;
@@ -269,8 +270,22 @@ function genDeclareArgs(args, variables) {
     })
     .map(key => {
       const argValue = args[key];
-      return `${key}: ${argValue}`
+      return `${key}: ${convertKeynameToCorrectCase(argValue)}`
     }).join(',');
+}
+
+function convertKeynameToCorrectCase(argValue) {
+  if (argValue.endsWith('WhereInput')) {
+    const words = argValue.split('WhereInput');
+    return `${capitalize(words[0])}WhereInput`
+  }
+
+  if (argValue.endsWith('OrderByInput')) {
+    const words = argValue.split('OrderByInput');
+    return `${capitalize(words[0])}OrderByInput`
+  }
+
+  return argValue;
 }
 
 function typeKey(key) {
