@@ -190,6 +190,31 @@ describe('with correct key name about case problem', () => {
       }
     });
   });
+
+  it('update object', () => {
+    const updateAction = {
+      type: 'UPDATE_OBJECT',
+      payload: {
+        key: 'otherMenuItem',
+        value: {
+          "title": "123"
+        }
+      }
+    }
+
+    expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
+      $payload: 'OthermenuitemUpdateInput!'
+    });
+
+    expect(get(actionToMutation(updateAction), 'mutation.fields.updateOthermenuitem')).toEqual({
+      args: {
+        data: '$payload'
+      },
+      fields: {
+        __typename: null
+      }
+    });
+  });
 });
 
 describe('integration', () => {
