@@ -1,6 +1,6 @@
 // @flow
 import pluralize from 'pluralize';
-import {upperFirst, set, isEmpty} from 'lodash';
+import {capitalize, set, isEmpty} from 'lodash';
 
 import type {Action, ActionType} from './types';
 
@@ -35,7 +35,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       actionArgs = {
         data: '$payload'
       }
-      name = `update${transformKey(key.toLowerCase())}`;
+      name = `update${transformKey(key)}`;
       fields = {__typename: null};
       break;
     case 'UPDATE_ARRAY':
@@ -47,7 +47,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         data: '$payload',
         where: '$where'
       }
-      name = `update${transformKey(key.toLowerCase())}`;
+      name = `update${transformKey(key)}`;
       fields = {id: null};
       break;
     case 'CREATE_ARRAY':
@@ -57,7 +57,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       actionArgs = {
         data: '$payload',
       }
-      name = `create${transformKey(key.toLowerCase())}`;
+      name = `create${transformKey(key)}`;
       fields = {id: null};
       break;
     case 'DELETE_ARRAY':
@@ -67,7 +67,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       actionArgs = {
         where: '$where',
       }
-      name = `delete${transformKey(key.toLowerCase())}`;
+      name = `delete${transformKey(key)}`;
       fields = {id: null};
       break;
     case 'CONNECT':
@@ -90,7 +90,7 @@ export default function actionToMutation(action: Action<ActionType>) {
         actionArgs = {
           data: '$payload'
         }
-        name = `update${upperFirst(key)}`;
+        name = `update${capitalize(key)}`;
         // $FlowFixMe
         fields = {[action.payload.path]: {
           fields: {
@@ -113,19 +113,19 @@ export default function actionToMutation(action: Action<ActionType>) {
 
 function genCreateInputType(action) {
   const key = action.payload.key;
-  return `${transformKey(key.toLowerCase())}CreateInput!`
+  return `${transformKey(key)}CreateInput!`
 }
 
 function genUpdateInputType(action) {
   const key = action.payload.key;
-  return `${transformKey(key.toLowerCase())}UpdateInput!`;
+  return `${transformKey(key)}UpdateInput!`;
 }
 
 function genWhereInputType(action) {
   const key = action.payload.key;
-  return `${transformKey(key.toLowerCase())}WhereUniqueInput!`;
+  return `${transformKey(key)}WhereUniqueInput!`;
 }
 
 export function transformKey(key: string) {
-  return upperFirst(pluralize.singular(key));
+  return capitalize(pluralize.singular(key));
 }
