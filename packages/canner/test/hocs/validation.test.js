@@ -88,7 +88,7 @@ describe('withValidation', () => {
       {...props}
       onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
       required
-      validation={{pattern: '^http://[.]+'}}
+      validation={{schema: {pattern: '^http://[.]+'}}}
     />);
     expect(wrapper.state()).toMatchObject({
       error: true,
@@ -109,7 +109,7 @@ describe('withValidation', () => {
       {...props}
       onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
       required
-      validation={{pattern: '^http://[.]+', errorMessage}}
+      validation={{schema: {pattern: '^http://[.]+'}, errorMessage}}
     />);
     expect(wrapper.state()).toMatchObject({
       error: true,
@@ -128,7 +128,7 @@ describe('withValidation', () => {
     const wrapper =  mount(<WrapperComponent
       {...props}
       onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
-      validation={{pattern: '^http://[.]+'}}
+      validation={{schema: {pattern: '^http://[.]+'}}}
     />);
     expect(wrapper.state()).toMatchObject({
       error: false,
