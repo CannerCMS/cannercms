@@ -23,7 +23,7 @@ export default ({
     data,
   } = useContext(Context);
   const [key] = routes;
-  const cache = useCache({[key]: JSON.parse(JSON.stringify({rootValue, data}))});
+  const cache = useCache({[key]: {rootValue, data}});
   const onDeployManager = useOnDeployManager();
   const actionManager = useActionManager();
   const [changedData, setChangedData] = useState(null);

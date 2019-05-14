@@ -1,12 +1,12 @@
 // @flow
-import produce from 'immer';
+import produce, {setAutoFreeze} from 'immer';
 import {get, set, findIndex, remove, isArray} from 'lodash';
 
 import type {Action, ActionType} from './types';
+setAutoFreeze(false);
 
 export default function mutate(originValue: Object, action: Action<ActionType>): any {
   let {key, id, value, path, relation} = action.payload;
-  // $FlowFixMe
   return produce(originValue, draft => {
     switch (action.type) {
       case 'CREATE_ARRAY': {
