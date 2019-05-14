@@ -19,8 +19,8 @@ Object {
         "$otherMenuItemBefore": "String",
         "$otherMenuItemFirst": "Int",
         "$otherMenuItemLast": "Int",
-        "$otherMenuItemOrderBy": "OtherMenuItemOrderByInput",
-        "$otherMenuItemWhere": "OtherMenuItemWhereInput",
+        "$otherMenuItemOrderBy": "OthermenuitemOrderByInput",
+        "$otherMenuItemWhere": "OthermenuitemWhereInput",
       },
       "fields": Object {
         "id": null,

@@ -71,69 +71,39 @@ describe('object to queries', () => {
     `.replace(/\n+|\s+/g, ''));
   });
 
-  describe('with correct key name about case problem', () => {
-    it('for ${KeyName}WhereInput', () => {
-      const obj = {
-        otherMenuItem: {
-          declareArgs: {
-            $randomKey1: 'otherMenuItemWhereInput',
-          },
-          args: {
-            where: '$randomKey1',
-          },
-          fields: {
-            id: null,
-            title: null,
-          }
+  it('with correct key name about case problem', () => {
+    const obj = {
+      otherMenuItem: {
+        declareArgs: {
+          $randomKey1: 'OthermenuitemWhereInput',
+          $randomKey2: 'OthermenuitemOrderByInput',
+          $randomKey3: 'Int',
+        },
+        args: {
+          where: '$randomKey1',
+          orderBy: '$randomKey2',
+          first: '$randomKey3',
+        },
+        fields: {
+          id: null,
+          title: null,
         }
       }
-      const variables = {randomKey1: {}};
+    }
+    const variables = {
+      randomKey1: {},
+      randomKey2: {},
+      randomKey3: 10,
+    };
 
-      expect(objectToQueries(obj, false, variables).replace(/\n+|\s+/g, '')).toBe(`
-        query($randomKey1: OthermenuitemWhereInput) {
-          otherMenuItem(where: $randomKey1) {
-            id
-            title
-          }
-        }
-      `.replace(/\n+|\s+/g, ''));
-    });
-
-    it('for ${KeyName}OrderByInput', () => {
-      const obj = {
-        otherMenuItem: {
-          declareArgs: {
-            $randomKey1: 'OthermenuitemWhereInput',
-            $randomKey2: 'otherMenuItemOrderByInput',
-            $randomKey3: 'Int',
-          },
-          args: {
-            where: '$randomKey1',
-            orderBy: '$randomKey2',
-            first: '$randomKey3',
-          },
-          fields: {
-            id: null,
-            title: null,
-          }
+    expect(objectToQueries(obj, false, variables).replace(/\n+|\s+/g, '')).toBe(`
+      query($randomKey1: OthermenuitemWhereInput, $randomKey2: OthermenuitemOrderByInput, $randomKey3: Int) {
+        otherMenuItem(where: $randomKey1, orderBy: $randomKey2, first: $randomKey3) {
+          id
+          title
         }
       }
-      const variables = {
-        randomKey1: {},
-        randomKey2: {},
-        randomKey3: 10,
-      };
-
-      expect(objectToQueries(obj, false, variables).replace(/\n+|\s+/g, '')).toBe(`
-        query($randomKey1: OthermenuitemWhereInput, $randomKey2: OthermenuitemOrderByInput, $randomKey3: Int) {
-          otherMenuItem(where: $randomKey1, orderBy: $randomKey2, first: $randomKey3) {
-            id
-            title
-          }
-        }
-      `.replace(/\n+|\s+/g, ''));
-    });
-
+    `.replace(/\n+|\s+/g, ''));
   });
 });
 
