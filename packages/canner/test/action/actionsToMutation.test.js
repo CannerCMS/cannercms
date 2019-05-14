@@ -136,6 +136,34 @@ describe('with correct key name about case problem', () => {
       }
     });
   });
+
+  it('update array', () => {
+    const updateAction = {
+      type: 'UPDATE_ARRAY',
+      payload: {
+        key: 'otherMenuItem',
+        id: 'id1',
+        value: {
+          "title": "123"
+        }
+      }
+    }
+
+    expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
+      $payload: 'OthermenuitemUpdateInput!',
+      $where: 'OthermenuitemWhereUniqueInput!'
+    });
+
+    expect(get(actionToMutation(updateAction), 'mutation.fields.updateOthermenuitem')).toEqual({
+      args: {
+        data: '$payload',
+        where: '$where'
+      },
+      fields: {
+        id: null
+      }
+    });
+  });
 });
 
 describe('integration', () => {
