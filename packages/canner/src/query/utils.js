@@ -3,7 +3,6 @@
 import pluralize from 'pluralize';
 import capitalize from 'lodash/capitalize';
 import lowerFirst from 'lodash/lowerFirst';
-import upperFirst from 'lodash/upperFirst';
 import {merge, mapValues, set} from 'lodash';
 import {createSchema} from './schema/utils';
 import {types, Field} from './schema/types';
@@ -270,24 +269,10 @@ function genDeclareArgs(args, variables) {
     })
     .map(key => {
       const argValue = args[key];
-      return `${key}: ${convertKeynameToCorrectCase(argValue)}`
+      return `${key}: ${argValue}`
     }).join(',');
 }
 
-function convertKeynameToCorrectCase(argValue) {
-  if (argValue.endsWith('WhereInput')) {
-    const words = argValue.split('WhereInput');
-    return `${capitalize(words[0])}WhereInput`
-  }
-
-  if (argValue.endsWith('OrderByInput')) {
-    const words = argValue.split('OrderByInput');
-    return `${capitalize(words[0])}OrderByInput`
-  }
-
-  return argValue;
-}
-
 function typeKey(key) {
-  return upperFirst(pluralize.singular(key));
+  return capitalize(pluralize.singular(key));
 }
