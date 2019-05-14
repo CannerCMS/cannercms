@@ -57,7 +57,7 @@ export default function actionToMutation(action: Action<ActionType>) {
       actionArgs = {
         data: '$payload',
       }
-      name = `create${transformKey(key)}`;
+      name = `create${transformKey(key.toLowerCase())}`;
       fields = {id: null};
       break;
     case 'DELETE_ARRAY':
@@ -113,7 +113,7 @@ export default function actionToMutation(action: Action<ActionType>) {
 
 function genCreateInputType(action) {
   const key = action.payload.key;
-  return `${transformKey(key)}CreateInput!`
+  return `${transformKey(key.toLowerCase())}CreateInput!`
 }
 
 function genUpdateInputType(action) {
