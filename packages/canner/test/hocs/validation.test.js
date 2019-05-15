@@ -136,7 +136,7 @@ describe('withValidation', () => {
     })
   });
 
-  it('should use custom validation', async () => {
+  it('should use customized validator with error message', async () => {
     const result = {
       data: {
         0: { url: ''}
