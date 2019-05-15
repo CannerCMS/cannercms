@@ -148,7 +148,7 @@ describe('withValidation', () => {
         {
           validator: (content) => {
             if (!content) {
-              return 'should be required';
+              return 'error message as return value';
             }
           }
         }
@@ -158,8 +158,55 @@ describe('withValidation', () => {
     expect(wrapper.state()).toMatchObject({
       error: true,
       errorInfo: [{
-        message: 'should be required'
+        message: 'error message as return value'
       }]
+    })
+  });
+
+  it('should use customized validator with throwing error', async () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      validation={
+        {
+          validator: () => {
+              throw 'Throw error'
+          }
+        }
+      }
+    />);
+    await wrapper.instance().validate(result)
+    expect(wrapper.state()).toMatchObject({
+      error: true,
+      errorInfo: [{
+        message: 'Throw error'
+      }]
+    })
+  });
+
+
+  it('should use customized validator with void return', async () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      validation={
+        {
+          validator: () => {}
+        }
+      }
+    />);
+    await wrapper.instance().validate(result)
+    expect(wrapper.state()).toMatchObject({
+      error: false,
+      errorInfo: []
     })
   });
 
