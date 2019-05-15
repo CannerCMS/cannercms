@@ -21,7 +21,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
     switch(action.type) {
       case 'CREATE_ARRAY': {
         // remove null relation
-        const ensureValue = pickBy(value, (v, k) => v !== null && relationField.indexOf(k) === -1);
+        const ensureValue = pickBy(value, (v: any, k: string) => v !== null && relationField.indexOf(k) === -1);
         merge(variables.payload, ensureValue);
         break;
       }

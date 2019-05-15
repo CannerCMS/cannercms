@@ -178,7 +178,7 @@ export default class ImportModal extends React.Component<Props, State> {
               <Icon type="inbox" />
             </p>
             <FormattedMessage id="actions.import.upload.hint">
-              {text => (
+              {(text: string): React$Node => (
                 <p className="ant-upload-text">{text}</p>
               )}
             </FormattedMessage>

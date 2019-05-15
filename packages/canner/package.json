@@ -20,7 +20,6 @@
     "canner-helpers": "3.2.1",
     "canner-layouts": "3.2.1",
     "canner-ref-id": "3.2.1",
-    "flow-bin": "^0.98.1",
     "graphql-tag": "^2.9.1",
     "immer": "^3.1.1",
     "immutable": "^3.8.2",
@@ -52,7 +51,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "flow-bin": "^0.78.0"
+    "flow-bin": "0.97.0"
   },
   "gitHead": "51047c4a90312d9c4d88f11199d25131f22993a4"
 }

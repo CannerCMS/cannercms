@@ -20,7 +20,7 @@ export default class ConnectPattern implements Pattern<ConnectAction> {
   mergeConnectAndDisconnectAndDelete = () => {
     this.actions = uniqBy([...this.actions].reverse(), action => {
       const {key, id, path, value} = action.payload;
-      return `${key}.${id}.${path}.${value.id}`;
+      return `${key}.${(id: any)}.${(path: any)}.${value.id}`;
     }).reverse();
   }
 

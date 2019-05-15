@@ -9,7 +9,9 @@ import Router from './Router';
 import useProvider from '../hooks/useProvider';
 import useFormType from '../hooks/useFormType';
 // i18n
+// $FlowFixMe: cant resolve
 import en from 'react-intl/locale-data/en';
+// $FlowFixMe: cant resolve
 import zh from 'react-intl/locale-data/zh';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import cannerLocales from './locale';

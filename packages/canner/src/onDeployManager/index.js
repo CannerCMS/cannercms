@@ -30,7 +30,7 @@ export class OnDeployManager {
     return callbackId;
   }
 
-  unregisterCallback = (key: string, callbackId: ?string) => {
+  unregisterCallback = (key: string, callbackId: string) => {
     unset(this._map, [key, callbackId]);
   }
 }
