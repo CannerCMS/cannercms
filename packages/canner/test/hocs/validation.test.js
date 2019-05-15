@@ -287,6 +287,80 @@ describe('withValidation', () => {
     })
   });
 
+  // Function with promise operation
+  it('should use customized validator with a Promise<string>', async () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      validation={
+        {
+          validator: () => {
+            return new Promise(resolve => resolve('error message as resolved value'));
+          }
+        }
+      }
+    />);
+    await wrapper.instance().validate(result)
+    expect(wrapper.state()).toMatchObject({
+      error: true,
+      errorInfo: [{
+        message: 'error message as resolved value'
+      }]
+    })
+  });
+
+  it('should use customized validator with a rejected Promise', async () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      validation={
+        {
+          validator: () => {
+            return new Promise((resolve, reject) => {
+              reject(new Error('Rejected promise'));
+          })
+          }
+        }
+      }
+    />);
+    await wrapper.instance().validate(result)
+    expect(wrapper.state()).toMatchObject({
+      error: true,
+      errorInfo: [{
+        message: 'Error: Rejected promise'
+      }]
+    })
+  });
+
+  it('should use customized validator with a Promise<void>', async () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      validation={
+        {
+          validator: () => { return new Promise(resolve => resolve())}
+        }
+      }
+    />);
+    await wrapper.instance().validate(result)
+    expect(wrapper.state()).toMatchObject({
+      error: false,
+      errorInfo: []
+    })
+  });
+
   
   it('should removeOnDeploy not be called', () => {
     const wrapper = mount(<WrapperComponent
