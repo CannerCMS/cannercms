@@ -3,7 +3,7 @@
 import * as React from 'react';
 import RefId from 'canner-ref-id';
 import Ajv from 'ajv';
-import {isEmpty, isObject, isArray, isPlainObject, isFunction, get} from 'lodash';
+import {isEmpty, isObject, isArray, isPlainObject, isFunction, toString, get} from 'lodash';
 import type {HOCProps} from './types';
 
 type State = {
@@ -35,8 +35,8 @@ const _schemaValidation = (schema, errorMessage) => {
   const validate = ajv.compile(schema);
   return async (value) => {
     try {
-      const error = !validate(value)
-      const errorInfo = error ? [].concat( errorMessage ? {message: errorMessage} : validate.errors ) : []
+      const error = !validate(value);
+      const errorInfo = error ? [].concat( errorMessage ? {message: errorMessage} : validate.errors ) : [];
       return {
         error,
         errorInfo
@@ -45,7 +45,7 @@ const _schemaValidation = (schema, errorMessage) => {
     catch(err){
       return {
         error: true,
-        errorInfo: [{message: err}]
+        errorInfo: [{message: toString(err)}]
       }
     }
 
@@ -53,16 +53,18 @@ const _schemaValidation = (schema, errorMessage) => {
 }
 const _customizedValidator = (validator) => async (value) => {
   try {
-    const errorMessage = await validator(value)
+    const errorMessage = await validator(value);
+    const error = Boolean(errorMessage);
+    const errorInfo = error ? [{message: errorMessage}] : []
     return {
-      error: Boolean(errorMessage),
-      errorInfo: [{message: errorMessage}]
+      error,
+      errorInfo
     }
   }
   catch(err) {
     return {
       error: true,
-      errorInfo: [{message: err}]
+      errorInfo: [{message: toString(err)}]
     }
   }
 }
