@@ -42,7 +42,7 @@ describe('withValidation', () => {
     expect(onDeploy).toBeCalledWith('posts', wrapper.instance().validate);
   });
 
-  it('should pass validation', () => {
+  it('should pass validation', async () => {
     const result = {
       data: {
         0: { url: 'https://'}
@@ -50,16 +50,16 @@ describe('withValidation', () => {
     };
     const wrapper =  mount(<WrapperComponent
       {...props}
-      onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
       required
     />);
+    await wrapper.instance().validate(result)
     expect(wrapper.state()).toEqual({
       error: false,
       errorInfo: []
     })
   });
 
-  it('should not pass required validation', () => {
+  it('should not pass required validation', async () => {
     const result = {
       data: {
         0: { url: ''}
@@ -67,9 +67,9 @@ describe('withValidation', () => {
     };
     const wrapper =  mount(<WrapperComponent
       {...props}
-      onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
       required
     />);
+    await wrapper.instance().validate(result)
     expect(wrapper.state()).toEqual({
       error: true,
       errorInfo: [{
@@ -78,7 +78,7 @@ describe('withValidation', () => {
     })
   });
 
-  it('should not pass ajv validation', () => {
+  it('should not pass ajv validation', async () => {
     const result = {
       data: {
         0: { url: 'imgurl.com'}
@@ -86,10 +86,10 @@ describe('withValidation', () => {
     };
     const wrapper =  mount(<WrapperComponent
       {...props}
-      onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
       required
       validation={{schema: {pattern: '^http://[.]+'}}}
     />);
+    await wrapper.instance().validate(result)
     expect(wrapper.state()).toMatchObject({
       error: true,
       errorInfo: [{
@@ -98,7 +98,7 @@ describe('withValidation', () => {
     })
   });
 
-  it('should not pass ajv validation with custom error message', () => {
+  it('should not pass ajv validation with custom error message', async () => {
     const result = {
       data: {
         0: { url: 'imgurl.com'}
@@ -107,10 +107,10 @@ describe('withValidation', () => {
     const errorMessage = 'custom error';
     const wrapper =  mount(<WrapperComponent
       {...props}
-      onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
       required
       validation={{schema: {pattern: '^http://[.]+'}, errorMessage}}
     />);
+    await wrapper.instance().validate(result)
     expect(wrapper.state()).toMatchObject({
       error: true,
       errorInfo: [{
@@ -119,7 +119,7 @@ describe('withValidation', () => {
     })
   });
 
-  it('should pass ajv validation if empty', () => {
+  it('should pass ajv validation if empty', async () => {
     const result = {
       data: {
         0: { url: ''}
@@ -127,16 +127,16 @@ describe('withValidation', () => {
     };
     const wrapper =  mount(<WrapperComponent
       {...props}
-      onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
       validation={{schema: {pattern: '^http://[.]+'}}}
     />);
+    await wrapper.instance().validate(result)
     expect(wrapper.state()).toMatchObject({
       error: false,
       errorInfo: []
     })
   });
 
-  it('should use custom validation', () => {
+  it('should use custom validation', async () => {
     const result = {
       data: {
         0: { url: ''}
@@ -144,7 +144,6 @@ describe('withValidation', () => {
     };
     const wrapper =  mount(<WrapperComponent
       {...props}
-      onDeploy={jest.fn().mockImplementation((_, fn) => (fn(result)))}
       validation={
         {
           validator: (content) => {
@@ -155,6 +154,7 @@ describe('withValidation', () => {
         }
       }
     />);
+    await wrapper.instance().validate(result)
     expect(wrapper.state()).toMatchObject({
       error: true,
       errorInfo: [{
