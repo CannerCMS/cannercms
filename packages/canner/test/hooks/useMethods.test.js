@@ -16,7 +16,7 @@ beforeEach(() => {
     title: 'new title'
   }
   Com = ({pattern}) => {
-    const {rootValue, request, deploy} = useMethods({pattern});
+    const {rootValue, request, deploy, reset} = useMethods({pattern});
     updateTitle.mockImplementation(() => {
       const action = {
         type: 'UPDATE_ARRAY',
@@ -36,7 +36,7 @@ beforeEach(() => {
         </p>
         <button data-testid="mock-update-title" onClick={updateTitle}>update title</button>
         <button data-testid="mock-deploy" onClick={() => deploy('posts')}>deploy</button>
-        <button data-testid="mock-reset">reset</button>
+        <button data-testid="mock-reset" onClick={() => reset('posts')}>reset</button>
       </div>
     )
   };
@@ -99,6 +99,29 @@ describe('update in useMethods hook', () => {
       });
     fireEvent.click(getByTestId('mock-update-title'));
     fireEvent.click(getByTestId('mock-deploy'));
+    await promise; 
+  });
+
+  it('should not call the contextValue.request after reset', async () => {
+    const {getByTestId, container} = render(
+      <Context.Provider value={contextValue}>
+        <Com pattern="array" />
+      </Context.Provider>
+    );
+    let promise = waitForDomChange({container})
+      .then(() => {
+        expect(getByTestId('mock-content')).toHaveTextContent(JSON.stringify(newPost));
+        expect(request).toBeCalledTimes(0);
+        expect(updateTitle).toBeCalledTimes(1);
+      });
+    fireEvent.click(getByTestId('mock-update-title'));
+    await promise; 
+    promise = waitForDomChange({container})
+      .then(() => {
+        expect(getByTestId('mock-content')).not.toHaveTextContent(JSON.stringify(newPost));
+        expect(request).toBeCalledTimes(0);
+      });
+    fireEvent.click(getByTestId('mock-reset'));
     await promise; 
   });
 });
