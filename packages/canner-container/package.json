@@ -21,7 +21,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "flow-bin": "^0.78.0"
+    "flow-bin": "0.97.0"
   },
   "gitHead": "51047c4a90312d9c4d88f11199d25131f22993a4"
 }

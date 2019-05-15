@@ -17,13 +17,12 @@ export default class ObjectModel extends BasicModel {
     }
     
     if (typeof builder === 'function') {
-      // $FlowFixMe
       this.toJson = () => builder({attributes: {...attrs, builder: undefined}, children});
       return this;
     }
     
     if (children && children.length) {
-      const flattenChildren = flatten(children);
+      const flattenChildren = flatten((children: Array<any>));
       this.attributes.items = flattenChildren.reduce((result, child) => {
         if (child.keyName in result) {
           throw new Error(`duplicated keyName in children of ${this.attributes.keyName}`);

@@ -17,13 +17,12 @@ export default class ArrayModel extends BasicModel {
     }
 
     if (typeof builder === 'function') {
-      // $FlowFixMe
       this.toJson = () => builder({attributes: {...attrs, builder: undefined}, children});
       return this;
     }
 
     if (children && children.length) {
-      const flattenChilden = flatten(children);
+      const flattenChilden = flatten((children: Array<any>));
       const toolbar = flattenChilden.find(item => item.__TOOLBAR__);
       if (toolbar) {
         this.attributes.toolbar = toolbar;

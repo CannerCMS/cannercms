@@ -1,5 +1,5 @@
-// flow-typed signature: 38f63fc0bcf26a271982b89d799827ba
-// flow-typed version: 8c673017cc/antd_v3.x.x/flow_>=v0.25.x
+// flow-typed signature: 11d7d4a06b32709311059dbdbad303a1
+// flow-typed version: 3ad3e93d2e/antd_v3.x.x/flow_>=v0.25.x
 
 declare module "antd" {
   import type { Node, Component } from "react";
@@ -211,7 +211,7 @@ declare module "antd" {
     valuePropName?: string
   };
 
-  declare type WrappedFormUtils = {
+  declare export type WrappedFormUtils = {
     getFieldDecorator(
       id: string,
       options?: GetFieldDecoratorOptions
@@ -250,6 +250,17 @@ declare module "antd" {
     validateFieldsAndScroll(options?: Object, callback?: ValidateCallback): void
   };
 
+  declare interface RcBaseFormProps {
+    wrappedComponentRef?: any;
+  }
+
+  declare interface FormComponentProps extends RcBaseFormProps {
+    form: WrappedFormUtils;
+  }
+
+  declare type FormWrappedProps<T> = <C: React$ComponentType<T>>
+  (component: C) => C;
+
   declare export type FormProps = {
     className?: string,
     form?: WrappedFormUtils,
@@ -272,7 +283,9 @@ declare module "antd" {
 
   declare export class Form extends React$Component<FormProps> {
     static Item: typeof FormItem;
-    static create: <TOwnProps>(options?: FormCreateOption<TOwnProps>) => mixed;
+    static create: <TOwnProps: FormComponentProps>(
+      options?: FormCreateOption<TOwnProps>
+    ) => FormWrappedProps<TOwnProps>;
   }
 
   declare export type FormItemProps = {
@@ -301,6 +314,7 @@ declare module "antd" {
   declare export class Input extends React$Component<InputProps> {
     static Search: typeof InputSearch;
     static TextArea: typeof InputTextArea;
+    static Password: typeof InputPassword;
   }
 
   declare class InputSearch extends React$Component<{}> {
@@ -308,6 +322,13 @@ declare module "antd" {
   }
 
   declare class InputTextArea extends React$Component<{}> {}
+
+  declare type InputPasswordProps = {
+    visibilityToggle?: boolean
+  };
+  
+  // Added in 3.12.0
+  declare class InputPassword extends React$Component<InputPasswordProps> {}
 
   declare export class Layout extends React$Component<{}> {
     static Content: typeof LayoutContent;

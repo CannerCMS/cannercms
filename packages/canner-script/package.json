@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "canner-compiler": "3.2.1",
-    "flow-bin": "^0.78.0",
+    "flow-bin": "0.97.0",
     "jest": "^23.5.0",
     "regenerator-runtime": "^0.12.1"
   },

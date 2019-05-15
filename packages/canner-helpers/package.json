@@ -12,7 +12,7 @@
     "cms react cannerCMS"
   ],
   "devDependencies": {
-    "flow-bin": "^0.78.0"
+    "flow-bin": "0.97.0"
   },
   "pre-commit": [
     "lint"

@@ -15,7 +15,7 @@ debug@=3.1.0:
   dependencies:
     ms "2.0.0"
 
-flow-bin@^0.78.0:
+flow-bin@*:
   version "0.78.0"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.78.0.tgz#df9fe7f9c9a2dfaff39083949fe2d831b41627b7"
 

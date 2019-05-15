@@ -6647,17 +6647,9 @@ flexboxgrid2@^7.2.0:
   dependencies:
     normalize.css "^7.0.0"
 
-flow-bin@^0.78.0:
-  version "0.78.0"
-  resolved "https://registry.npmjs.org/flow-bin/-/flow-bin-0.78.0.tgz#df9fe7f9c9a2dfaff39083949fe2d831b41627b7"
-
-flow-bin@^0.97.0:
+flow-bin@0.97.0, flow-bin@^0.97.0:
   version "0.97.0"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.97.0.tgz#036ffcfc27503367a9d906ec9d843a0aa6f6bb83"
-
-flow-bin@^0.98.1:
-  version "0.98.1"
-  resolved "https://registry.npmjs.org/flow-bin/-/flow-bin-0.98.1.tgz#a8d781621c91703df69928acc83c9777e2fcbb49"
 
 flow-copy-source@^2.0.3:
   version "2.0.3"
