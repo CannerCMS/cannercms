@@ -211,6 +211,29 @@ describe('withValidation', () => {
     })
   });
 
+  it('validator is not a function', async () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      validation={
+        {
+          validator: 'validator'
+        }
+      }
+    />);
+    await wrapper.instance().validate(result)
+    expect(wrapper.state()).toMatchObject({
+      error: true,
+      errorInfo: [{
+        message: 'Validator should be a function'
+      }]
+    })
+  });
+
   // Async-await functions
   it('should use customized async validator with error message', async () => {
     const result = {

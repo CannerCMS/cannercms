@@ -131,9 +131,13 @@ export default function withValidation(Com: React.ComponentType<*>) {
           if(value && checkSchema(schema)) {
             promiseQueue.push(_schemaValidation(schema, errorMessage)(value));
           }
-          if(checkValidator(validator)) {
-            promiseQueue.push(_customizedValidator(validator)(value));
-          }
+          if(validator) {
+            if(checkValidator(validator)) {
+              promiseQueue.push(_customizedValidator(validator)(value));
+            } else {
+              throw 'Validator should be a function'
+            }
+           }
         }
   
         const ValidationResult = await Promise.all(promiseQueue);
@@ -144,6 +148,10 @@ export default function withValidation(Com: React.ComponentType<*>) {
         }
       }
       catch(err){
+        this.setState({
+          error: true,
+          errorInfo: [].concat({message: toString(err)})
+        });
         return {
           ...result,
           error: true,
