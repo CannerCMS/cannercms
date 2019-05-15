@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import withValidation from '../../src/hocs/validation';
 import RefId from 'canner-ref-id';
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -136,6 +137,7 @@ describe('withValidation', () => {
     })
   });
 
+  // Synchronous functions
   it('should use customized validator with error message', async () => {
     const result = {
       data: {
@@ -188,7 +190,6 @@ describe('withValidation', () => {
     })
   });
 
-
   it('should use customized validator with void return', async () => {
     const result = {
       data: {
@@ -210,6 +211,83 @@ describe('withValidation', () => {
     })
   });
 
+  // Async-await functions
+  it('should use customized async validator with error message', async () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      validation={
+        {
+          validator: async (content) => {
+            await sleep(5)
+            if (!content) {
+              return 'error message as return value';
+            }
+          }
+        }
+      }
+    />);
+    await wrapper.instance().validate(result)
+    expect(wrapper.state()).toMatchObject({
+      error: true,
+      errorInfo: [{
+        message: 'error message as return value'
+      }]
+    })
+  });
+
+  it('should use customized async validator with throwing error', async () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      validation={
+        {
+          validator: async () => {
+            await sleep(5)
+            throw 'Throw error'
+          }
+        }
+      }
+    />);
+    await wrapper.instance().validate(result)
+    expect(wrapper.state()).toMatchObject({
+      error: true,
+      errorInfo: [{
+        message: 'Throw error'
+      }]
+    })
+  });
+
+  it('should use customized async validator with void return', async () => {
+    const result = {
+      data: {
+        0: { url: ''}
+      }
+    };
+    const wrapper =  mount(<WrapperComponent
+      {...props}
+      validation={
+        {
+          validator: async () => { await sleep(5) }
+        }
+      }
+    />);
+    await wrapper.instance().validate(result)
+    expect(wrapper.state()).toMatchObject({
+      error: false,
+      errorInfo: []
+    })
+  });
+
+  
   it('should removeOnDeploy not be called', () => {
     const wrapper = mount(<WrapperComponent
       {...props}
