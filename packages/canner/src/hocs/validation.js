@@ -116,32 +116,39 @@ export default function withValidation(Com: React.ComponentType<*>) {
 
     validate = async (result: any) => {
       const {refId, required = false, validation} = this.props;
-      // required
       const paths = refId.getPathArr().slice(1);
       const {value} = getValueAndPaths(result.data, paths);
       const promiseQueue = [];
-
-      // check whether value is required in first step
-      if(required) {
-        promiseQueue.push(_isRequiredValidation(value));
-      }
-
-      // skip validation if object validation is undefined or empty
-      if(checkValidation(validation)) {
-        const {schema, errorMessage, validator} = validation;
-        if(value && checkSchema(schema)) {
-          promiseQueue.push(_schemaValidation(schema, errorMessage)(value));
+      try{
+        // check whether value is required in first step
+        if(required) {
+          promiseQueue.push(_isRequiredValidation(value));
         }
-        if(checkValidator(validator)) {
-          promiseQueue.push(_customizedValidator(validator)(value));
+  
+        // skip validation if object validation is undefined or empty
+        if(checkValidation(validation)) {
+          const {schema, errorMessage, validator} = validation;
+          if(value && checkSchema(schema)) {
+            promiseQueue.push(_schemaValidation(schema, errorMessage)(value));
+          }
+          if(checkValidator(validator)) {
+            promiseQueue.push(_customizedValidator(validator)(value));
+          }
+        }
+  
+        const ValidationResult = await Promise.all(promiseQueue);
+  
+        return {
+          ...result,
+          ...this.handleValidationResult(ValidationResult)
         }
       }
-
-      const ValidationResult = await Promise.all(promiseQueue);
-
-      return {
-        ...result,
-        ...this.handleValidationResult(ValidationResult)
+      catch(err){
+        return {
+          ...result,
+          error: true,
+          errorInfo: [].concat({message: toString(err)})
+        }
       }
     }
 
