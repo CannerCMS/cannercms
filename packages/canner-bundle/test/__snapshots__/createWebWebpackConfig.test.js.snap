@@ -328,10 +328,6 @@ Object {
         "filename": "style.css",
       },
     },
-    NormalModuleReplacementPlugin {
-      "newResource": /packages/canner-bundle/src/utils/mock,
-      "resourceRegExp": /firebase/,
-    },
     LimitChunkCountPlugin {
       "options": Object {
         "maxChunks": 1,
