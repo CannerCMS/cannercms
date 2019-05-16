@@ -11,13 +11,6 @@ type State = {
   errorInfo: Array<any>
 }
 
-const _isRequiredValidation = async (value) => {
-  const valid = Boolean(value)
-  return {
-    error: !valid,
-    errorInfo: !valid ? [{message: 'should be required'}] :[]
-  }
-}
 
 const checkValidation = (validation) => {
   return (isObject(validation) && !isEmpty(validation))
@@ -30,7 +23,15 @@ const checkValidator = (validator) => {
   return (isFunction(validator))
 }
 
-const _schemaValidation = (schema, errorMessage) => {
+const isRequiredValidation = async (value) => {
+  const valid = Boolean(value)
+  return {
+    error: !valid,
+    errorInfo: !valid ? [{message: 'should be required'}] :[]
+  }
+}
+
+const schemaValidation = (schema, errorMessage) => {
   const ajv = new Ajv();
   const validate = ajv.compile(schema);
   return async (value) => {
@@ -51,7 +52,7 @@ const _schemaValidation = (schema, errorMessage) => {
 
   }
 }
-const _customizedValidator = (validator) => async (value) => {
+const customizedValidator = (validator) => async (value) => {
   try {
     const errorMessage = await validator(value);
     const error = Boolean(errorMessage);
@@ -122,18 +123,18 @@ export default function withValidation(Com: React.ComponentType<*>) {
       try{
         // check whether value is required in first step
         if(required) {
-          promiseQueue.push(_isRequiredValidation(value));
+          promiseQueue.push(isRequiredValidation(value));
         }
   
         // skip validation if object validation is undefined or empty
         if(checkValidation(validation)) {
           const {schema, errorMessage, validator} = validation;
           if(value && checkSchema(schema)) {
-            promiseQueue.push(_schemaValidation(schema, errorMessage)(value));
+            promiseQueue.push(schemaValidation(schema, errorMessage)(value));
           }
           if(validator) {
             if(checkValidator(validator)) {
-              promiseQueue.push(_customizedValidator(validator)(value));
+              promiseQueue.push(customizedValidator(validator)(value));
             } else {
               throw 'Validator should be a function'
             }
