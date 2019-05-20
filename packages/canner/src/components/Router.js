@@ -29,6 +29,7 @@ export default function Router({
         isListForm && <ListForm
           {...commonFormProps}
           {...listFormProps}
+          formType={FORM_TYPE.LIST}
         >
           <Generator formType={FORM_TYPE.LIST} />
         </ListForm>
@@ -37,6 +38,7 @@ export default function Router({
         isUpdateForm && <UpdateForm
           {...commonFormProps}
           {...updateFormProps}
+          formType={FORM_TYPE.UPDATE}
         >
           <Generator formType={FORM_TYPE.UPDATE} />
         </UpdateForm>
@@ -45,12 +47,13 @@ export default function Router({
         isCreateForm && <CreateForm
           {...commonFormProps}
           {...createFormProps}
+          formType={FORM_TYPE.CREATE}
         >
           <Generator formType={FORM_TYPE.CREATE} />
         </CreateForm>
       }
       {
-        isPage && <Page {...commonFormProps}>
+        isPage && <Page {...commonFormProps} formType={FORM_TYPE.PAGE}>
           <Generator formType={FORM_TYPE.PAGE} />
         </Page>
       }

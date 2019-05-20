@@ -3,17 +3,12 @@
 import React, {useMemo} from 'react';
 import {Context} from 'canner-helpers';
 import {isEqual} from 'lodash';
-import RefId from 'canner-ref-id';
-// import Toolbar from '../toolbar';
-// const AddButton = () => null;
 export default (React.memo: any)(function ListForm(props: any) {
   const {
     data,
     rootValue,
     loading = null,
     isFetching,
-    // toolbar,
-    // onClickAddButton,
     componentTree,
     routes,
     routerParams,
@@ -40,25 +35,8 @@ export default (React.memo: any)(function ListForm(props: any) {
     updateQuery,
     ...rest
   }), [rootValue, data, routes, routerParams, goTo])
-  // const keyName = routes[0];
-  // const refId = useMemo(() => new RefId(keyName), [keyName]);
-  // TODO: move extract addButton and toolbar from HOC to here
   return (
     <Context.Provider value={contextValue}>
-      {/* <AddButton onClick={onClickAddButton}/> */}
-      {/* <Toolbar
-        items={items}
-        toolbar={toolbar}
-        args={args}
-        query={query}
-        refId={refId}
-        keyName={keyName}
-        originRootValue={data}
-        rootValue={rootValue}
-        updateQuery={updateQuery}
-        request={request}
-        deploy={deploy}
-      /> */}
       {isFetching ? loading : (
         React.cloneElement(children, {
           componentTree,
