@@ -9,7 +9,6 @@ type Props = {
   id: string,
   title: string,
   description: string,
-
   schema: Object,
   routes: Array<string>
 };
