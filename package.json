@@ -22,7 +22,9 @@
     "build:docs": "rm -rf docs/dist && NODE_ENV=production webpack",
     "gh-pages": "gh-pages -d docs/dist",
     "deploy": "yarn build:docs && yarn gh-pages",
-    "validate": "yarn ls"
+    "validate": "yarn ls",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -110,7 +112,11 @@
     "victory": "^30.5.1",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.0"
+    "webpack-dev-server": "^3.1.0",
+    "@storybook/react": "^5.0.11",
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addons": "^5.0.11"
   },
   "theme": {
     "menu-dark-bg": "#373d62",
