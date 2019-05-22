@@ -106,7 +106,8 @@ function CannerCMS({
     componentTree,
     imageStorage: imageStorages[routes[0]],
     fileStorage: fileStorages[routes[0]],
-  }), [dataSchema, routes, baseUrl, routerParams, componentTree]);
+    formType,
+  }), [dataSchema, routes, baseUrl, routerParams, componentTree, formType]);
   return (
     <IntlProvider
       locale={currentLocale}
