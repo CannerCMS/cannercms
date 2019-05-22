@@ -11,6 +11,7 @@ export const defaultContext = {
   fileStorage: null,
   refId: null,
   client: null,
+  formType: null,
 };
 
 const functions = [
