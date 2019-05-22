@@ -1,10 +1,10 @@
 import React from 'react';
 import { Row, Col, Alert } from 'antd';
 import { isEmpty, isEqual, isFunction } from 'lodash';
+import { BackButton } from 'canner-helpers';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 import Buttons from './Buttons';
-import BackButton from './BackButton';
 import { RENDER_TYPE } from '../../hooks/useRenderType';
 
 export default React.memo((props) => {

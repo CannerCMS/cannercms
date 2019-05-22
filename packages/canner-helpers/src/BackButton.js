@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, Icon, Modal } from 'antd';
-import { Context } from 'canner-helpers';
 import { injectIntl } from 'react-intl';
+import Context from './context';
 
 const { confirm } = Modal;
 

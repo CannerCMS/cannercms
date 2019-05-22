@@ -1,6 +1,7 @@
 // components
 export Item from './item';
 export Context from './context';
+export BackButton from './BackButton';
 export ConfirmButton from './confirmButton';
 export ResetButton from './cancelButton';
 export LiteCMS from './liteCMS';
