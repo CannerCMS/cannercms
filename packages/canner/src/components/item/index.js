@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row, Col, Alert } from 'antd';
 import { isEmpty, isEqual, isFunction } from 'lodash';
-import { BackButton } from 'canner-helpers';
 import { RENDER_TYPE } from '../../hooks/useRenderType';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
@@ -50,11 +49,6 @@ export default React.memo((props) => {
             <Alert style={{ margin: '16px 0' }} message="There is no storage config so you can't upload image. Checkout the storage section to know more" type="warning" />
           )
         }
-        {renderType === RENDER_TYPE.CHILDREN && (
-          <BackButton
-            {...props}
-          />
-        )}
         {renderType === RENDER_TYPE.CHILDREN && renderChildren({ refId })}
         {renderType === RENDER_TYPE.COMPONENT && render(props)}
         {
