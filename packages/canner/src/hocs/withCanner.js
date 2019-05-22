@@ -14,7 +14,6 @@ import useRelation from '../hooks/useRelation';
 import useOnDeploy from '../hooks/useOnDeploy';
 import useFieldValue from '../hooks/useFieldValue';
 import useRenderType from '../hooks/useRenderType';
-import useButtons from '../hooks/useButtons';
 
 export default function withCanner(Com: any) {
   return (React.memo: any)((props: any) => {
@@ -37,8 +36,6 @@ export default function withCanner(Com: any) {
       variables,
       fetchPolicy,
       relation,
-      controlDeployAndResetButtons,
-      hideButtons,
     } = props;
     const contextValue = useContext(Context);
     const {
@@ -53,7 +50,6 @@ export default function withCanner(Com: any) {
       query,
       routes,
       routerParams,
-      reset,
     } = contextValue;
     const myRefId = useRefId({ pattern, keyName, refId });
     const {
@@ -83,12 +79,6 @@ export default function withCanner(Com: any) {
       removeOnDeploy,
       refId: myRefId,
     });
-    const {
-      shouldRenderCancelButton,
-      shouldRenderSubmitButton,
-    } = useButtons({
-      deploy, reset, rootValue, refId, controlDeployAndResetButtons, hideButtons, path, pattern,
-    });
 
     const item = (
       <CannerItem
@@ -111,8 +101,6 @@ export default function withCanner(Com: any) {
         renderChildren={renderChildren}
         removeOnDeploy={componentOnDeploy.removeOnDeploy}
         renderType={renderType}
-        shouldRenderCancelButton={shouldRenderCancelButton}
-        shouldRenderSubmitButton={shouldRenderSubmitButton}
         render={cannerItemProps => <Com {...props} {...contextValue} {...cannerItemProps} />}
         // external
         error={error}
