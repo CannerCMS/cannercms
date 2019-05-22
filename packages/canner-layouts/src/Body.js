@@ -1,65 +1,51 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
+import { useContext } from 'react';
 // $FlowFixMe: antd Breadcrumb
-import { Breadcrumb, Icon } from 'antd';
-import { Item } from 'canner-helpers';
+import { Context } from 'canner-helpers';
+import { FORM_TYPE } from 'canner/src/hooks/useFormType';
+
+import { DefaultCreateBody, DefaultListBody, DefaultUpdateBody } from './defaultBody';
 
 type Props = {
   id: string,
   title: string,
   description: string,
   schema: Object,
-  routes: Array<string>
+  routes: Array<string>,
+
+  createComponent?: React.ComponentType<Props>,
+  listComponent?: React.ComponentType<Props>,
+  updateComponent?: React.ComponentType<Props>,
 };
 
 export default function Body({
-  title, description, schema, routes,
+  createComponent,
+  listComponent,
+  updateComponent,
+  ...restProps
 }: Props) {
-  const key = routes[0];
-  const item = schema[key];
-  const breadcrumbs = [{
-    path: 'home',
-    render: () => <Icon type="home" />,
-  }, {
-    path: routes[0],
-    render: () => item.title || title,
-  }];
-  const itemRender = route => route.render();
-  return (
-    <div>
-      <div style={{
-        background: '#fff',
-        borderBottom: '1px solid #eee',
-        padding: '16px 24px',
-      }}
-      >
-        <div style={{
-          marginBottom: 24,
-        }}
-        >
-          <Breadcrumb itemRender={itemRender} routes={breadcrumbs} />
-        </div>
-        <h2>{item.title || title}</h2>
-        {
-          (item.description || description) && (
-            <div style={{
-              marginTop: 8,
-            }}
-            >
-              {item.description || description}
-            </div>
-          )
-        }
-      </div>
-      <div style={{
-        padding: '16px',
-        background: '#f0f2f5',
-        minHeight: '100vh',
-      }}
-      >
-        <Item />
-      </div>
-    </div>
-  );
+  const { formType } = useContext(Context);
+  let RenderBody = DefaultListBody;
+
+  if (formType === FORM_TYPE.CREATE) {
+    RenderBody = createComponent || DefaultCreateBody;
+  }
+
+  if (formType === FORM_TYPE.LIST) {
+    RenderBody = listComponent || DefaultListBody;
+  }
+
+  if (formType === FORM_TYPE.UPDATE) {
+    RenderBody = updateComponent || DefaultUpdateBody;
+  }
+
+  return <RenderBody {...restProps} />;
 }
+
+Body.defaultProps = {
+  createComponent: null,
+  listComponent: null,
+  updateComponent: null,
+};
