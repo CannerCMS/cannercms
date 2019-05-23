@@ -28,7 +28,7 @@ export default function DefaultListBody({title, description, schema, routes}: Pr
     return route.render();
   };
   return (
-    <div>
+    <div data-testid="list-body">
       <div style={{
         background: '#fff',
         borderBottom: '1px solid #eee',

@@ -31,7 +31,7 @@ export default function DefaultUpdateBody({title, description, schema, routes}: 
   const cancelButtonProps = (item.type === 'object') ? {text: 'Reset'}: {};
 
   return (
-    <div>
+    <div data-testid="update-body">
       <div style={{
         background: '#fff',
         borderBottom: '1px solid #eee',

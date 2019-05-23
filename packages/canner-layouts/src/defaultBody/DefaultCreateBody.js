@@ -29,7 +29,7 @@ export default function DefaultCreateBody({title, description, schema, routes}: 
     return route.render();
   };
   return (
-    <div>
+    <div data-testid="create-body">
       <div style={{
         background: '#fff',
         borderBottom: '1px solid #eee',
