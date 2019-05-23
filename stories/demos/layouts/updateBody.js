@@ -9,6 +9,13 @@ const schema = {
     title: 'Posts',
     type: 'array',
     items: {}
+  },
+  categories: {
+    keyName: 'categories',
+    path: 'categories',
+    title: 'Categories',
+    type: 'object',
+    items: {}
   }
 };
 
@@ -43,6 +50,21 @@ class DefaultUpdateBody extends React.Component {
   }
 }
 
+class DefaultUpdateBodyWithObjectType extends React.Component {
+  render() {
+    return (
+      <React.Fragment>
+        <Divider>Demo: Normal Body with object type</Divider>
+        <Body
+          description="This is description!"
+          routes={["categories"]}
+          schema={schema}
+        />
+      </React.Fragment>
+    );
+  }
+}
+
 class UpdateComponentBody extends React.Component {
   render() {
     return (
@@ -62,6 +84,7 @@ export default class UpdateBodyDemo extends React.Component {
     return (
       <React.Fragment>
         <DefaultUpdateBody/>
+        <DefaultUpdateBodyWithObjectType />
         <UpdateComponentBody/>
       </React.Fragment>
     )
