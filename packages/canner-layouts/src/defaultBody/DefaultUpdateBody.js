@@ -28,6 +28,8 @@ export default function DefaultUpdateBody({title, description, schema, routes}: 
   const itemRender = (route) => {
     return route.render();
   };
+  const cancelButtonProps = (item.type === 'object') ? {text: 'Reset'}: {};
+
   return (
     <div>
       <div style={{
@@ -63,6 +65,7 @@ export default function DefaultUpdateBody({title, description, schema, routes}: 
           <BackButton />
           <Item />
           <Buttons
+            cancelButtonProps={cancelButtonProps}
             shouldRenderCancelButton
             shouldRenderSubmitButton
           />
