@@ -3,8 +3,7 @@
 import  React from 'react';
 // $FlowFixMe: antd Breadcrumb
 import {Breadcrumb, Icon} from 'antd';
-import {BackButton, Item} from 'canner-helpers';
-import Buttons from 'canner/src/components/item/Buttons';
+import {BackButton, Buttons, Item} from 'canner-helpers';
 
 type Props = {
   id: string,
