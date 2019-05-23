@@ -2,6 +2,7 @@ import React, { useContext, useCallback } from 'react';
 import { ResetButton, ConfirmButton, Context } from 'canner-helpers';
 
 export default function Buttons({
+  cancelButtonProps = {},
   shouldRenderCancelButton,
   shouldRenderSubmitButton,
 }) {
@@ -19,7 +20,7 @@ export default function Buttons({
             marginTop: 60,
           }}
         >
-          {shouldRenderCancelButton && <ResetButton style={{ marginRight: 16 }} callback={backToList} />}
+          {shouldRenderCancelButton && <ResetButton style={{ marginRight: 16 }} callback={backToList} {...cancelButtonProps} />}
           {shouldRenderSubmitButton && <ConfirmButton callback={backToList} />}
         </div>
       )
