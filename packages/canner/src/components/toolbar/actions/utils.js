@@ -6,22 +6,23 @@ export function flattenItems(items) {
   const fields = [];
 
   function loop(item, keyName = '') {
+    let newKeyName = keyName;
     if (item.keyName) {
-      keyName = `${keyName}${keyName ? '.' : ''}${item.keyName}`;
+      newKeyName = `${newKeyName}${newKeyName ? '.' : ''}${item.keyName}`;
     }
 
     if (item.items && !item.items.type) {
       forEach(item.items, (item) => {
-        loop(item, keyName);
+        loop(item, newKeyName);
       });
     } else if (item.items && item.items.type && item.items.items) {
       forEach(item.items.items, (item) => {
-        loop(item, keyName);
+        loop(item, newKeyName);
       });
     } else {
       fields.push({
         ...item,
-        keyName,
+        keyName: newKeyName,
       });
     }
   }
