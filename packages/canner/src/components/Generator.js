@@ -42,8 +42,11 @@ export default function Generator({ componentTree, routes, formType }: Props) {
         node = findNode(componentPathArr.slice(), tree[entryKey]);
       }
       setIdNodeMap((nodeMap) => {
-        nodeMap[componentPath] = node;
-        return nodeMap;
+        const obj = {
+          ...nodeMap,
+          [componentPath]: node
+        };
+        return obj;
       });
     }
     if (!node) {
@@ -160,8 +163,8 @@ export default function Generator({ componentTree, routes, formType }: Props) {
 export function findNode(pathArr: Array<string>, node: ComponentNode): ?Node {
   if (pathArr[0]) {
     if (isComponent(node) && node.keyName === pathArr[0]) {
-      pathArr = pathArr.slice(1);
-      if (!pathArr.length) {
+      const newPathArr = pathArr.slice(1);
+      if (!newPathArr.length) {
         return node;
       }
     }
