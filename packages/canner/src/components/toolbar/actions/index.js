@@ -34,20 +34,29 @@ type State = {
 }
 
 export default class Actions extends Component<Props, State> {
+  static defaultProps = {
+    export: {},
+    filter: {},
+    import: {},
+    selectedValue: ''
+  }
+
   state = {
     exportModalVisible: false,
     importModalVisible: false,
   }
 
   triggerExportModal = () => {
+    const { exportModalVisible } = this.state;
     this.setState({
-      exportModalVisible: !this.state.exportModalVisible,
+      exportModalVisible: !exportModalVisible,
     });
   }
 
   triggerImportModal = () => {
+    const { importModalVisible } = this.state;
     this.setState({
-      importModalVisible: !this.state.importModalVisible,
+      importModalVisible: !importModalVisible,
     });
   }
 
@@ -71,9 +80,11 @@ export default class Actions extends Component<Props, State> {
       filter,
       request,
       deploy,
+      export: exportFile,
+      import: importFile,
     } = this.props;
-    const exp = this.props.export || {};
-    const imp = this.props.import || {};
+    const exp = exportFile || {};
+    const imp = importFile || {};
     const exportFields = exp.fields || Object.keys(items).map(keyName => items[keyName]);
     let importFields = exp.fields || Object.keys(items).map(keyName => items[keyName]);
     // in csv format, it's difficult to write array or object type
@@ -82,8 +93,11 @@ export default class Actions extends Component<Props, State> {
     const menu = (
       <Menu onClick={this.addFilter}>
         {
-          filters.map((filter, index) => (
-            <Menu.Item key={index} data-testid={`actions-filter-dropdown-menu-${index}`}>
+          filters.map(filter => (
+            <Menu.Item
+              key={filter.label}
+              data-testid={`actions-filter-dropdown-menu-${filter.label}`}
+            >
               {filter.label}
             </Menu.Item>
           ))
@@ -94,7 +108,7 @@ export default class Actions extends Component<Props, State> {
       <React.Fragment>
         <Button.Group>
           {
-            this.props.export && (
+            exportFile && (
               <Button onClick={this.triggerExportModal} data-testid="actions-export-button">
                 <Icon type="download" />
                 <FormattedMessage id="query.actions.export" />
@@ -102,7 +116,7 @@ export default class Actions extends Component<Props, State> {
             )
           }
           {
-            this.props.import && (
+            importFile && (
               <Button onClick={this.triggerImportModal} data-testid="actions-import-button">
                 <Icon type="upload" />
                 <FormattedMessage id="query.actions.import" />
