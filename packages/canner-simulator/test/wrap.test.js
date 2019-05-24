@@ -77,9 +77,11 @@ describe('wrap simple', () => {
     });
 
     const MyItem = jest.fn().mockImplementation(() => 'my item');
-    const wrapper = mount(<WrappedObjectComponent keyName="info/test">
-      <MyItem />
-    </WrappedObjectComponent>);
+    const wrapper = mount(
+      <WrappedObjectComponent keyName="info/test">
+        <MyItem />
+      </WrappedObjectComponent>
+    );
     expect(MyItem.mock.calls[0][0]).toEqual({
       refId: expect.any(RefId),
     });
@@ -104,13 +106,15 @@ describe('wrap comlex', () => {
         test: '123',
       },
     });
-    const wrapper = mount(<WrappedObjectComponent
-      keyName="info"
-    >
-      <WrappedStringComponent
-        keyName="test"
-      />
-    </WrappedObjectComponent>);
+    const wrapper = mount(
+      <WrappedObjectComponent
+        keyName="info"
+      >
+        <WrappedStringComponent
+          keyName="test"
+        />
+      </WrappedObjectComponent>
+    );
     expect(wrapper.find('input').prop('value')).toBe('123');
     wrapper.find('input').simulate('change', { target: { value: '321' } });
     expect(wrapper.find('input').prop('value')).toBe('321');
@@ -122,13 +126,15 @@ describe('wrap comlex', () => {
         test: '123',
       }],
     });
-    const wrapper = mount(<WrappedArrayComponent
-      keyName="posts"
-    >
-      <WrappedStringComponent
-        keyName="test"
-      />
-    </WrappedArrayComponent>);
+    const wrapper = mount(
+      <WrappedArrayComponent
+        keyName="posts"
+      >
+        <WrappedStringComponent
+          keyName="test"
+        />
+      </WrappedArrayComponent>
+    );
     expect(wrapper.find('input').prop('value')).toBe('123');
     wrapper.find('input').simulate('change', { target: { value: '321' } });
     expect(wrapper.find('input').prop('value')).toBe('321');
@@ -148,19 +154,21 @@ describe('wrap comlex', () => {
         username: 'haha',
       }],
     });
-    const wrapper = mount(<WrappedArrayComponent
-      keyName="users"
-    >
-      <WrappedObjectComponent keyName="basicInfo">
-        <WrappedStringComponent keyName="name" />
-        <WrappedStringComponent keyName="nickname" />
-      </WrappedObjectComponent>
-      <WrappedArrayComponent keyName="addresses">
-        <WrappedStringComponent keyName="type" className="type" />
-        <WrappedStringComponent keyName="value" className="value" />
+    const wrapper = mount(
+      <WrappedArrayComponent
+        keyName="users"
+      >
+        <WrappedObjectComponent keyName="basicInfo">
+          <WrappedStringComponent keyName="name" />
+          <WrappedStringComponent keyName="nickname" />
+        </WrappedObjectComponent>
+        <WrappedArrayComponent keyName="addresses">
+          <WrappedStringComponent keyName="type" className="type" />
+          <WrappedStringComponent keyName="value" className="value" />
+        </WrappedArrayComponent>
+        <WrappedStringComponent keyName="username" />
       </WrappedArrayComponent>
-      <WrappedStringComponent keyName="username" />
-    </WrappedArrayComponent>);
+    );
     expect(wrapper.html()).toMatchSnapshot();
     wrapper.find('.type input')
       .simulate('change', { target: { value: 'company' } });
