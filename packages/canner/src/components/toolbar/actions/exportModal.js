@@ -251,7 +251,9 @@ function download(fileName, csvContent) {
   link.setAttribute('href', encodedUri);
   link.setAttribute('download', `${fileName}.csv`);
   link.innerHTML = '';
-  document.body && document.body.appendChild(link); // Required for FF
+  if (document.body) {
+    document.body.appendChild(link); // Required for FF
+  }
 
   link.click();
 }
