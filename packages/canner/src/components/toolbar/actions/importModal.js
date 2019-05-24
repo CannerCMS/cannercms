@@ -64,7 +64,8 @@ export default class ImportModal extends React.Component<Props, State> {
   }
 
   handleCancel = () => {
-    this.props.triggerModal();
+    const { triggerModal } = this.props;
+    triggerModal();
   }
 
   customRequest = ({
@@ -227,13 +228,13 @@ function parseCSV(text, lineTerminator, cellTerminator) {
   const rows = [];
   // break the lines apart
   const lines = text.split(lineTerminator);
-  for (let j = 0; j < lines.length; j++) {
+  for (let j = 0; j < lines.length; j += 1) {
     const values = [];
-    if (lines[j] != '') {
+    if (lines[j] !== '') {
       // create a table row
       // split the rows at the cellTerminator character
       const information = lines[j].split(cellTerminator);
-      for (let k = 0; k < information.length; k++) {
+      for (let k = 0; k < information.length; k += 1) {
         // append the cell to the row
         values.push(information[k]);
       }
@@ -271,7 +272,9 @@ function download(fileName, csvContent) {
   link.setAttribute('href', encodedUri);
   link.setAttribute('download', `${fileName}.csv`);
   link.innerHTML = '';
-  document.body && document.body.appendChild(link); // Required for FF
+  if (document.body) {
+    document.body.appendChild(link); // Required for FF
+  }
 
   link.click();
 }
