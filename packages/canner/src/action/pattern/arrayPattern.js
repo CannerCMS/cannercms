@@ -36,8 +36,9 @@ export default class ArrayPattern implements Pattern<ArrayAction> {
       && this.actions.slice(-1)[0].type === 'UPDATE_ARRAY'
     ) {
       this.actions = [this.actions.reduce((result: Object, action: ArrayAction) => {
-        result.payload.value = { ...result.payload.value, ...action.payload.value };
-        return result;
+        const newResult = { ...result };
+        newResult.payload.value = { ...newResult.payload.value, ...action.payload.value };
+        return newResult;
       })];
     }
   }
@@ -48,8 +49,9 @@ export default class ArrayPattern implements Pattern<ArrayAction> {
       && this.actions.slice(-1)[0].type === 'UPDATE_ARRAY'
     ) {
       this.actions = [this.actions.reduce((result: Object, action: ArrayAction) => {
-        result.payload.value = { ...result.payload.value, ...action.payload.value };
-        return result;
+        const newResult = { ...result };
+        newResult.payload.value = { ...newResult.payload.value, ...action.payload.value };
+        return newResult;
       })];
     }
   }
