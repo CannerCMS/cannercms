@@ -1,4 +1,5 @@
 // @flow
+/* eslint no-param-reassign: "error" */
 import produce, { setAutoFreeze } from 'immer';
 import {
   get, set, findIndex, remove, isArray,
