@@ -13,32 +13,32 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
   const variables = { payload: {}, where: {} };
 
   actions.forEach((action) => {
-    let {
+    const {
       path = '', value, id, relation, key, transformGqlPayload,
     } = action.payload;
     const relationField = genRelationField(schema, key);
     const schemaWithPath = addPath(schema[key], '');
     const jsonPath = findSchema(schemaWithPath, s => s.type === 'json')
       .map(v => v.path);
-    value = parseArrayToSet(value, relationField, jsonPath, path ? `${key}/${path}` : key);
+    const newValue = parseArrayToSet(value, relationField, jsonPath, path ? `${key}/${path}` : key);
 
     switch (action.type) {
       case 'CREATE_ARRAY': {
         // remove null relation
-        const ensureValue = pickBy(value, (v: any, k: string) => v !== null && relationField.indexOf(k) === -1);
+        const ensureValue = pickBy(newValue, (v: any, k: string) => v !== null && relationField.indexOf(k) === -1);
         merge(variables.payload, ensureValue);
         break;
       }
       case 'UPDATE_ARRAY':
       case 'UPDATE_OBJECT': {
-        merge(variables.payload, value);
+        merge(variables.payload, newValue);
         merge(variables.where, { id });
         break;
       }
       case 'CONNECT': {
         if (relation && relation.type === 'toMany') {
           update(variables.payload, path.split('/').concat('connect'), (arr) => {
-            let connectValue = { id: value.id };
+            let connectValue = { id: newValue.id };
             /* transformGqlPayload is a experimental usage */
             if (transformGqlPayload) {
               connectValue = transformGqlPayload(connectValue, action);
@@ -49,7 +49,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
             return arr.concat(connectValue);
           });
         } else {
-          set(variables.payload, path.split('/').concat('connect'), { id: value.id });
+          set(variables.payload, path.split('/').concat('connect'), { id: newValue.id });
         }
         if (id) {
           merge(variables.where, { id });
@@ -58,16 +58,16 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
       }
       case 'CREATE_AND_CONNECT': {
         if (relation && relation.type === 'toMany') {
-          update(variables.payload, path.split('/').concat('create'), arr => (arr || []).concat(value));
+          update(variables.payload, path.split('/').concat('create'), arr => (arr || []).concat(newValue));
         } else {
-          set(variables.payload, path.split('/').concat('create'), value);
+          set(variables.payload, path.split('/').concat('create'), newValue);
         }
         merge(variables.where, { id });
         break;
       }
       case 'DISCONNECT':
         if (relation && relation.type === 'toMany') {
-          update(variables.payload, path.split('/').concat('disconnect'), arr => (arr || []).concat({ id: value.id }));
+          update(variables.payload, path.split('/').concat('disconnect'), arr => (arr || []).concat({ id: newValue.id }));
         } else {
           set(variables.payload, path.split('/').concat('disconnect'), true);
         }
@@ -77,7 +77,7 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
         break;
       case 'DISCONNECT_AND_DELETE':
         if (relation && relation.type === 'toMany') {
-          update(variables.payload, path.split('/').concat('delete'), arr => (arr || []).concat(value));
+          update(variables.payload, path.split('/').concat('delete'), arr => (arr || []).concat(newValue));
         } else {
           set(variables.payload, path.split('/').concat('delete'), true);
         }
