@@ -182,7 +182,7 @@ export function findSchema(schema: Object, filter: Function): Array<Object> {
     if (typeof items.type === 'string') {
       copy = copy.concat(findSchema(items, filter));
     } else {
-      Object.keys(items).forEach(key => copy = copy.concat(findSchema(items[key], filter)));
+      Object.keys(items).forEach(key => copy.concat(findSchema(items[key], filter)));
     }
   }
   return copy;
