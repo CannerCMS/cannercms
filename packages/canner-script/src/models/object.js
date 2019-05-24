@@ -1,26 +1,26 @@
 // @flow
 
-import type {CannerSchema} from '../flow-types';
-import BasicModel from './basic';
 import saferEval from 'safer-eval';
-import {flatten} from 'lodash';
+import { flatten } from 'lodash';
+import type { CannerSchema } from '../flow-types';
+import BasicModel from './basic';
 
 export default class ObjectModel extends BasicModel {
   // https://github.com/babel/babel/issues/8417
-  /*:: attributes: Object; */
+  /* :: attributes: Object; */
 
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
     super('object', attrs);
-    let {builder} = this.attributes;
+    let { builder } = this.attributes;
     if (typeof builder === 'string') {
       builder = saferEval(builder);
     }
-    
+
     if (typeof builder === 'function') {
-      this.toJson = () => builder({attributes: {...attrs, builder: undefined}, children});
+      this.toJson = () => builder({ attributes: { ...attrs, builder: undefined }, children });
       return this;
     }
-    
+
     if (children && children.length) {
       const flattenChildren = flatten((children: Array<any>));
       this.attributes.items = flattenChildren.reduce((result, child) => {

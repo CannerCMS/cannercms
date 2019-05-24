@@ -1,33 +1,30 @@
 // @flow
 
-import React, {forwardRef, useImperativeHandle, useMemo} from 'react';
-import {Parser, Traverser} from 'canner-compiler';
-import {pickBy, isEqual} from 'lodash';
+import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
+import { Parser, Traverser } from 'canner-compiler';
+import { pickBy, isEqual } from 'lodash';
 import { ApolloProvider } from 'react-apollo';
+// $FlowFixMe: cant resolve
+import en from 'react-intl/locale-data/en';
+// $FlowFixMe: cant resolve
+import zh from 'react-intl/locale-data/zh';
+import { IntlProvider, addLocaleData } from 'react-intl';
+import componentLocales from '@canner/antd-locales';
 import Router from './Router';
 // hooks
 import useProvider from '../hooks/useProvider';
 import useFormType from '../hooks/useFormType';
 // i18n
-// $FlowFixMe: cant resolve
-import en from 'react-intl/locale-data/en';
-// $FlowFixMe: cant resolve
-import zh from 'react-intl/locale-data/zh';
-import {IntlProvider, addLocaleData} from 'react-intl';
 import cannerLocales from './locale';
-import componentLocales from '@canner/antd-locales';
-addLocaleData([...en, ...zh]);
 
 // type
-import type {CMSProps} from './types';
+import type { CMSProps } from './types';
+
+addLocaleData([...en, ...zh]);
 
 type Props = CMSProps;
 
-export default (React.memo(forwardRef(CannerCMS), function(prevProps, nextProps) {
-  return Object.entries(nextProps).reduce((eq, [k, v]: any) => {
-    return isEqual(v, prevProps[k]) && eq;
-  }, true)
-}): any);
+export default (React.memo(forwardRef(CannerCMS), (prevProps, nextProps) => Object.entries(nextProps).reduce((eq, [k, v]: any) => isEqual(v, prevProps[k]) && eq, true)): any);
 
 function CannerCMS({
   schema,
@@ -38,8 +35,8 @@ function CannerCMS({
     locale: 'en',
     defaultLocale: 'en',
     messages: {
-      'en': {}
-    }
+      en: {},
+    },
   },
   routerParams = {},
   routes = [],
@@ -47,7 +44,7 @@ function CannerCMS({
   hideButtons,
   errorHandler = defaultErrorHandler,
   defaultKey,
-  client
+  client,
 }: Props, ref) {
   if (!schema) {
     throw new Error('Missing schema property.');
@@ -64,21 +61,23 @@ function CannerCMS({
   if (!client) {
     throw new Error('Missing client property.');
   }
-  if (!schema.schema ||
-      !schema.visitors ||
-      !schema.imageStorages ||
-      !schema.fileStorages ||
-      !schema.dict || 
-      !schema.pageSchema
+  if (!schema.schema
+      || !schema.visitors
+      || !schema.imageStorages
+      || !schema.fileStorages
+      || !schema.dict
+      || !schema.pageSchema
   ) {
-    throw new Error(`Incorrect schema format. Should have the keys ['schema', 'visitors', 'fileStorages', 'imageStorages', 'dict', 'pageSchema']`);
+    throw new Error('Incorrect schema format. Should have the keys [\'schema\', \'visitors\', \'fileStorages\', \'imageStorages\', \'dict\', \'pageSchema\']');
   }
-  const {visitors, pageSchema, imageStorages, fileStorages, dict} = schema;
+  const {
+    visitors, pageSchema, imageStorages, fileStorages, dict,
+  } = schema;
   const dataSchema = schema.schema;
   const uiSchema = useMemo(() => ({
     ...pageSchema,
-    ...pickBy(dataSchema, v => !v.defOnly)
-  }), [pageSchema, dataSchema])
+    ...pickBy(dataSchema, v => !v.defOnly),
+  }), [pageSchema, dataSchema]);
   const componentTree = useMemo(() => compile(uiSchema, visitors), [uiSchema, visitors]);
   const currentLocale = intl.locale || 'en';
   const provider = useProvider({
@@ -87,9 +86,11 @@ function CannerCMS({
     client,
     dataDidChange,
     errorHandler,
-    afterDeploy
+    afterDeploy,
   });
-  const {formType} = useFormType({routes, routerParams, schema: uiSchema, defaultKey, goTo});
+  const { formType } = useFormType({
+    routes, routerParams, schema: uiSchema, defaultKey, goTo,
+  });
   useImperativeHandle(ref, () => ({
     deploy: provider.deploy,
     reset: provider.reset,
@@ -115,21 +116,21 @@ function CannerCMS({
         ...(componentLocales[currentLocale] || {}),
         ...(cannerLocales[currentLocale] || {}),
         ...(dict[currentLocale] || {}),
-        ...((intl.messages || {})[currentLocale] || {})
+        ...((intl.messages || {})[currentLocale] || {}),
       }}
     >
       <ApolloProvider client={client}>
         <Router uiSchema={uiSchema} provider={provider} commonFormProps={commonFormProps} formType={formType} />
       </ApolloProvider>
     </IntlProvider>
-  )
+  );
 }
 
 function compile(schema, visitors) {
   const parser = new Parser();
   const tree = parser.parse(schema);
   const traverser = new Traverser(tree);
-  visitors.forEach(visitor => {
+  visitors.forEach((visitor) => {
     traverser.addVisitor(visitor);
   });
   const componentTree = traverser.traverse();

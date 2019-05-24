@@ -1,24 +1,24 @@
-import {createEmptyData} from '../src';
+import { createEmptyData } from '../src';
 
 describe('create string empty data', () => {
   it('should return empty string', () => {
     expect(createEmptyData({
-      type: 'string'
+      type: 'string',
     })).toBe('');
   });
 
   it('should return 123', () => {
     expect(createEmptyData({
       type: 'string',
-      defaultValue: '123'
+      defaultValue: '123',
     })).toBe('123');
-  })
+  });
 });
 
 describe('create boolean empty data', () => {
   it('should return false', () => {
     expect(createEmptyData({
-      type: 'boolean'
+      type: 'boolean',
     })).toBe(false);
   });
 });
@@ -26,7 +26,7 @@ describe('create boolean empty data', () => {
 describe('create number empty data', () => {
   it('should return 0', () => {
     expect(createEmptyData({
-      type: 'number'
+      type: 'number',
     })).toBe(0);
   });
 });
@@ -34,13 +34,13 @@ describe('create number empty data', () => {
 describe('create geoPoint empty data', () => {
   it('should return object {lat:0, lng:0, placeId: \'\', address: \'\', _typename: null}', () => {
     expect(createEmptyData({
-      type: 'geoPoint'
+      type: 'geoPoint',
     })).toEqual({
       __typename: null,
       lat: 0,
       lng: 0,
       address: '',
-      placeId: ''
+      placeId: '',
     });
   });
 });
@@ -59,9 +59,10 @@ describe('create file empty data', () => {
       type: 'file',
     })).toEqual({
       __typename: null,
-      contentType: "",
-      name: "",
-      size: 0, url: ""
+      contentType: '',
+      name: '',
+      size: 0,
+      url: '',
     });
   });
 });
@@ -72,9 +73,10 @@ describe('create image empty data', () => {
       type: 'image',
     })).toEqual({
       __typename: null,
-      contentType: "",
-      name: "",
-      size: 0, url: ""
+      contentType: '',
+      name: '',
+      size: 0,
+      url: '',
     });
   });
 });
@@ -82,7 +84,7 @@ describe('create image empty data', () => {
 describe('create json empty data', () => {
   it('should return empty object', () => {
     expect(createEmptyData({
-      type: 'json'
+      type: 'json',
     })).toEqual({});
   });
 });
@@ -93,20 +95,20 @@ describe('create object empty data', () => {
       type: 'object',
       items: {
         input: {
-          type: 'string'
+          type: 'string',
         },
         boolean: {
-          type: 'boolean'
+          type: 'boolean',
         },
         number: {
-          type: 'number'
-        }
-      }
+          type: 'number',
+        },
+      },
     })).toEqual({
       __typename: null,
       input: '',
       boolean: false,
-      number: 0
+      number: 0,
     });
   });
 });
@@ -125,8 +127,8 @@ describe('create relation empty data', () => {
     expect(createEmptyData({
       type: 'relation',
       relation: {
-        type: 'toOne'
-      }
+        type: 'toOne',
+      },
     })).toBe(null);
   });
 
@@ -134,16 +136,16 @@ describe('create relation empty data', () => {
     expect(createEmptyData({
       type: 'relation',
       relation: {
-        type: 'toMany'
-      }
+        type: 'toMany',
+      },
     })).toEqual([]);
   });
-})
+});
 
 describe('create component data', () => {
   it('should return undefined', () => {
     expect(createEmptyData({
-      type: 'component'
+      type: 'component',
     })).toBeUndefined();
   });
 });
@@ -151,7 +153,7 @@ describe('create component data', () => {
 describe('create enum data', () => {
   it('should return empty string', () => {
     expect(createEmptyData({
-      type: 'enum'
+      type: 'enum',
     })).toBe('');
   });
-})
+});

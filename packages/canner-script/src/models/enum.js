@@ -1,7 +1,7 @@
 // @flow
 
 import BasicModel from './basic';
-import type {CannerSchema} from '../flow-types';
+import type { CannerSchema } from '../flow-types';
 
 type attrsTypes = CannerSchema & {
   values: Array<string>

@@ -7,23 +7,19 @@ export default class CannerRefId {
     this._internalArr = initString ? initString.split('/') : [];
   }
 
-  getPathArr = (): Array<string> => {
-    return this._internalArr;
-  }
+  getPathArr = (): Array<string> => this._internalArr
 
-  toString = () => {
-    return this._internalArr.join("/");
-  }
+  toString = () => this._internalArr.join('/')
 
   child = (route: string) => {
-    const newRoute = (this._internalArr && this._internalArr.length) ?
-      this._internalArr.join("/").concat("/", route):
-      route;
+    const newRoute = (this._internalArr && this._internalArr.length)
+      ? this._internalArr.join('/').concat('/', route)
+      : route;
     return new CannerRefId(newRoute);
   }
 
   remove = (count: number = 1) => {
-    const newRoute = this._internalArr.slice(0, -count).join("/");
+    const newRoute = this._internalArr.slice(0, -count).join('/');
     return new CannerRefId(newRoute);
   }
 }

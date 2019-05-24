@@ -1,5 +1,5 @@
 // @flow
-import {get, isPlainObject, isArray} from 'lodash';
+import { get, isPlainObject, isArray } from 'lodash';
 
 export function getFieldValue(value: any, idPathArr: Array<string>) {
   return idPathArr.reduce((result: any, key: string) => {
@@ -8,11 +8,10 @@ export function getFieldValue(value: any, idPathArr: Array<string>) {
         return get(result, ['edges', key, 'node']);
       }
       return get(result, key);
-    } else if (isArray(result)) {
+    } if (isArray(result)) {
       return get(result, key);
-    } else {
-      return result;
     }
+    return result;
   }, value);
 }
 
@@ -23,7 +22,7 @@ export function getRecordValue(rootValue: any, refId: any) {
 export function getEmptyValue({
   type,
   relation,
-  nullable
+  nullable,
 }: {
   type: string,
   relation: any,
@@ -38,9 +37,9 @@ export function getEmptyValue({
         edges: [],
         pageInfo: {
           hasNextPage: false,
-          hasPreviousPage: false
-        }
-      }
+          hasPreviousPage: false,
+        },
+      };
     }
     case 'array': {
       return [];
@@ -63,12 +62,11 @@ export function getEmptyValue({
           edges: [],
           pageInfo: {
             hasNextPage: false,
-            hasPreviousPage: false
-          }
+            hasPreviousPage: false,
+          },
         };
-      } else {
-        return null;
       }
+      return null;
     }
     case 'image':
     case 'file': {
@@ -77,15 +75,15 @@ export function getEmptyValue({
         contentType: '',
         name: '',
         size: 0,
-        __typename: null
-      }
+        __typename: null,
+      };
     }
     case 'geoPoint': {
       return {
         placeId: '',
         address: '',
         lat: 122,
-        lng: 23
+        lng: 23,
       };
     }
     default: {

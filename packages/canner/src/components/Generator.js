@@ -11,12 +11,12 @@
  * some props it maybe needs such as renderChildren
  */
 
-import React, {useState, useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
 import RefId from 'canner-ref-id';
-import {FORM_TYPE} from '../hooks/useFormType';
+import { FORM_TYPE } from '../hooks/useFormType';
 import useTree from '../hooks/useTree';
-import {isComponent} from '../utils/componentTree';
-import type {GeneratorProps, ComponentNode} from './types';
+import { isComponent } from '../utils/componentTree';
+import type { GeneratorProps, ComponentNode } from './types';
 
 type Props = GeneratorProps;
 
@@ -25,8 +25,8 @@ type childrenProps = {
   [string]: any
 };
 
-export default function Generator({componentTree, routes, formType}: Props) {
-  const tree = useTree({componentTree});
+export default function Generator({ componentTree, routes, formType }: Props) {
+  const tree = useTree({ componentTree });
   const [idNodeMap, setIdNodeMap] = useState({});
   const renderComponent = (refId: RefId, props: childrenProps): React$Node => {
     const componentPathArr = refId.getPathArr()
@@ -41,7 +41,7 @@ export default function Generator({componentTree, routes, formType}: Props) {
       } else {
         node = findNode(componentPathArr.slice(), tree[entryKey]);
       }
-      setIdNodeMap(nodeMap => {
+      setIdNodeMap((nodeMap) => {
         nodeMap[componentPath] = node;
         return nodeMap;
       });
@@ -49,13 +49,13 @@ export default function Generator({componentTree, routes, formType}: Props) {
     if (!node) {
       throw new Error(`Can't find the node at refId ${refId.toString()}`);
     }
-    return renderNode(node, {refId: refId.remove(1), keyName: refId.getPathArr().slice(-1)[0], ...props}, 0);
-  }
+    return renderNode(node, { refId: refId.remove(1), keyName: refId.getPathArr().slice(-1)[0], ...props }, 0);
+  };
 
   const renderChildren = useCallback((node: ComponentNode, props: childrenProps | (child: Node, index: number) => childrenProps): React$Node => {
     // just get the props and call renderNode
     // this method is called by components themselves
-    const {children} = node;
+    const { children } = node;
     if (children) {
       return children.map((child, index) => {
         const childProps = typeof props === 'function' ? props(child, index) : props;
@@ -82,7 +82,7 @@ export default function Generator({componentTree, routes, formType}: Props) {
       throw new Error(`Unexpected Error: Want to render a undefined node with refId '${props.refId.toString()}'`);
     }
 
-    const {component, children, ...restNodeData} = node;
+    const { component, children, ...restNodeData } = node;
     if (node.hidden || props.hidden) {
       return null;
     }
@@ -93,7 +93,7 @@ export default function Generator({componentTree, routes, formType}: Props) {
           return renderChildren(node, args[0]);
         }
         return renderChildren(...args);
-      }
+      };
       return (
         <node.component
 
@@ -108,7 +108,7 @@ export default function Generator({componentTree, routes, formType}: Props) {
       );
     }
     return null;
-  }, [])
+  }, []);
   if (!routes[0] || !tree[routes[0]]) {
     return null;
   }
@@ -116,7 +116,7 @@ export default function Generator({componentTree, routes, formType}: Props) {
   if (formType === FORM_TYPE.LIST) {
     return (
       <div>
-        {renderNode(tree[routes[0]], {refId: new RefId('')}, 0)}
+        {renderNode(tree[routes[0]], { refId: new RefId('') }, 0)}
       </div>
     );
   }
@@ -126,25 +126,24 @@ export default function Generator({componentTree, routes, formType}: Props) {
       // map
       return (
         <div>
-          {renderNode(tree[routes[0]], {refId: new RefId('')}, 0)}
-        </div>
-      );
-    } else {
-      // list item
-      // TODO: now renderChildren is executed in withCanner hoc,
-      // should be fixed here
-      return (
-        <div>
-          {renderNode(tree[routes[0]], {refId: new RefId('')}, 0)}
+          {renderNode(tree[routes[0]], { refId: new RefId('') }, 0)}
         </div>
       );
     }
+    // list item
+    // TODO: now renderChildren is executed in withCanner hoc,
+    // should be fixed here
+    return (
+      <div>
+        {renderNode(tree[routes[0]], { refId: new RefId('') }, 0)}
+      </div>
+    );
   }
-  
+
   if (formType === FORM_TYPE.CREATE) {
     return (
       <div>
-        {renderNode(tree[routes[0]], {refId: new RefId('')}, 0)}
+        {renderNode(tree[routes[0]], { refId: new RefId('') }, 0)}
       </div>
     );
   }
@@ -152,18 +151,19 @@ export default function Generator({componentTree, routes, formType}: Props) {
   if (formType === FORM_TYPE.PAGE) {
     return (
       <div>
-        {renderNode(tree[routes[0]], {refId: new RefId('')}, 0)}
+        {renderNode(tree[routes[0]], { refId: new RefId('') }, 0)}
       </div>
     );
   }
 }
 
-export function findNode (pathArr: Array<string>, node: ComponentNode): ?Node {
-  if (pathArr[0])
-  if (isComponent(node) && node.keyName === pathArr[0]) {
-    pathArr = pathArr.slice(1);
-    if (!pathArr.length) {
-      return node;
+export function findNode(pathArr: Array<string>, node: ComponentNode): ?Node {
+  if (pathArr[0]) {
+    if (isComponent(node) && node.keyName === pathArr[0]) {
+      pathArr = pathArr.slice(1);
+      if (!pathArr.length) {
+        return node;
+      }
     }
   }
 

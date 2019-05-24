@@ -21,42 +21,37 @@ type GoToParamsType = {
 
 export default class HistoryRouter {
   baseUrl: string;
+
   history: HistoryType;
 
-  constructor({baseUrl = '/', history}: {baseUrl: string, history: HistoryType}) {
+  constructor({ baseUrl = '/', history }: {baseUrl: string, history: HistoryType}) {
     this.baseUrl = baseUrl;
     this.history = history;
   }
 
   getRoutes = () => {
-    const {location: {pathname}} = this.history;
+    const { location: { pathname } } = this.history;
     const pathnameWithoutBaseUrl = pathname.substring(this.baseUrl.length);
     return deleteFirstSlash(pathnameWithoutBaseUrl).split('/');
   }
 
   getOperator = () => {
-    const {location: {search}} = this.history;
+    const { location: { search } } = this.history;
     const qs = queryString.parse(search);
     return qs.operator || 'update';
   }
 
-  getPayload = () => {
-    return getUrlObjectParams(this.history, 'payload');
-  }
+  getPayload = () => getUrlObjectParams(this.history, 'payload')
 
-  getWhere = () => {
-    return getUrlObjectParams(this.history, 'where');
-  }
+  getWhere = () => getUrlObjectParams(this.history, 'where')
 
-  getSort = () => {
-    return getUrlObjectParams(this.history, 'sort');
-  }
+  getSort = () => getUrlObjectParams(this.history, 'sort')
 
-  getPagination = () => {
-    return getUrlObjectParams(this.history, 'pagination');
-  }
+  getPagination = () => getUrlObjectParams(this.history, 'pagination')
 
-  goTo = ({pathname, operator, payload, where, sort, pagination}: GoToParamsType) => {
+  goTo = ({
+    pathname, operator, payload, where, sort, pagination,
+  }: GoToParamsType) => {
     const pathnameWithoutFirstSlash = deleteFirstSlash(pathname);
     const qs = queryString.stringify({
       operator,
@@ -77,7 +72,7 @@ function deleteFirstSlash(path) {
 }
 
 function getUrlObjectParams(history, key) {
-  const {location: {search}} = history;
+  const { location: { search } } = history;
   const qs = queryString.parse(search);
   return qs[key] ? JSON.parse(qs[key]) : {};
 }

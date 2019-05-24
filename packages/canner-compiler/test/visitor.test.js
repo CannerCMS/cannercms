@@ -2,8 +2,8 @@ import Visitor from '../src/visitor';
 
 const visitor = new Visitor();
 
-describe('visitor', function() {
-  it('merge visitor', function() {
+describe('visitor', () => {
+  it('merge visitor', () => {
     visitor.merge({
       name: () => {},
     });
@@ -11,7 +11,7 @@ describe('visitor', function() {
     expect(visitor.getVisitor().name.exit.length).toBe(0);
   });
 
-  it('visitor enter', function() {
+  it('visitor enter', () => {
     const fn = jest.fn();
     const times = 5;
     for (let i = times; i > 0; i--) {
@@ -19,7 +19,7 @@ describe('visitor', function() {
         test: fn,
       });
     }
-    visitor.getVisitor().test.enter.forEach((func) => func());
+    visitor.getVisitor().test.enter.forEach(func => func());
     expect(fn).toHaveBeenCalledTimes(times);
   });
 });

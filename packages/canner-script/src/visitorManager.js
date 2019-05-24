@@ -1,6 +1,6 @@
 // @flow
 
-import {default as V} from './visitors'; // default visitors
+import { default as V } from './visitors'; // default visitors
 
 type Visitor = {
   [string]: Object
@@ -8,6 +8,7 @@ type Visitor = {
 
 class VisitorManager {
   defaultVisitors = [...V];
+
   visitors = [];
 
   resetVisitors = () => {
@@ -22,10 +23,7 @@ class VisitorManager {
     this.defaultVisitors = [...visitors];
   }
 
-  getAllVisitors = () => {
-    return [...this.visitors, ...this.defaultVisitors];
-  }
-
+  getAllVisitors = () => [...this.visitors, ...this.defaultVisitors]
 }
 
 export default new VisitorManager();

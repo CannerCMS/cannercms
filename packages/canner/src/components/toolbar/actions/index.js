@@ -1,7 +1,9 @@
 // @flow
-import React, {Component} from 'react';
-import {Button, Icon, Dropdown, Menu} from 'antd';
-import {FormattedMessage} from 'react-intl';
+import React, { Component } from 'react';
+import {
+  Button, Icon, Dropdown, Menu,
+} from 'antd';
+import { FormattedMessage } from 'react-intl';
 import ExportModal from './exportModal';
 import ImportModal from './importModal';
 
@@ -34,24 +36,24 @@ type State = {
 export default class Actions extends Component<Props, State> {
   state = {
     exportModalVisible: false,
-    importModalVisible: false
+    importModalVisible: false,
   }
 
   triggerExportModal = () => {
     this.setState({
-      exportModalVisible: !this.state.exportModalVisible
+      exportModalVisible: !this.state.exportModalVisible,
     });
   }
 
   triggerImportModal = () => {
     this.setState({
-      importModalVisible: !this.state.importModalVisible
+      importModalVisible: !this.state.importModalVisible,
     });
   }
 
 
   addFilter = (e: Object) => {
-    const {displayedFilters, addFilter} = this.props;
+    const { displayedFilters, addFilter } = this.props;
     const index = Number(e.key);
     if (displayedFilters.indexOf(index) === -1) {
       addFilter(index);
@@ -68,15 +70,15 @@ export default class Actions extends Component<Props, State> {
       items,
       filter,
       request,
-      deploy
+      deploy,
     } = this.props;
     const exp = this.props.export || {};
     const imp = this.props.import || {};
     const exportFields = exp.fields || Object.keys(items).map(keyName => items[keyName]);
     let importFields = exp.fields || Object.keys(items).map(keyName => items[keyName]);
     // in csv format, it's difficult to write array or object type
-    importFields = importFields.filter(item => ['string', 'number', 'boolean'].indexOf(item.type) >= 0)
-    const {exportModalVisible, importModalVisible} = this.state;
+    importFields = importFields.filter(item => ['string', 'number', 'boolean'].indexOf(item.type) >= 0);
+    const { exportModalVisible, importModalVisible } = this.state;
     const menu = (
       <Menu onClick={this.addFilter}>
         {
@@ -95,7 +97,7 @@ export default class Actions extends Component<Props, State> {
             this.props.export && (
               <Button onClick={this.triggerExportModal} data-testid="actions-export-button">
                 <Icon type="download" />
-                <FormattedMessage id="query.actions.export"/>
+                <FormattedMessage id="query.actions.export" />
               </Button>
             )
           }
@@ -103,7 +105,7 @@ export default class Actions extends Component<Props, State> {
             this.props.import && (
               <Button onClick={this.triggerImportModal} data-testid="actions-import-button">
                 <Icon type="upload" />
-                <FormattedMessage id="query.actions.import"/>
+                <FormattedMessage id="query.actions.import" />
               </Button>
             )
           }
@@ -112,7 +114,7 @@ export default class Actions extends Component<Props, State> {
               <Dropdown overlay={menu} data-testid="actions-filter-dropdown">
                 <Button data-testid="actions-filter-button">
                   <Icon type="filter" />
-                  <FormattedMessage id="query.actions.filter"/>
+                  <FormattedMessage id="query.actions.filter" />
                 </Button>
               </Dropdown>
             )
@@ -144,6 +146,6 @@ export default class Actions extends Component<Props, State> {
           keyName={keyName}
         />
       </React.Fragment>
-    )
+    );
   }
 }

@@ -1,13 +1,14 @@
 // @flow
+/* eslint import/no-cycle: 0 */
 import mapValues from 'lodash/mapValues';
-import {types} from './types';
+import { types } from './types';
 import ScalarField from './scalarField';
 import ArrayField from './arrayField';
 import ObjectField from './objectField';
 import RelationField from './relationField';
 import CompositeField from './compositeField';
 
-import type {Types, Field} from './types';
+import type { Types, Field } from './types';
 
 export const getType = (type: string): Types | null => {
   const upperType = type.toUpperCase();
@@ -19,13 +20,17 @@ export const createField = (key: string, rootSchema: any, schema: any, isEntity?
   const type = getType(schema.type);
   switch (type) {
     case types.ARRAY:
-      return new ArrayField({key, rootSchema, schema, isEntity});
+      return new ArrayField({
+        key, rootSchema, schema, isEntity,
+      });
 
     case types.OBJECT:
-      return new ObjectField({key, rootSchema, schema, isEntity});
+      return new ObjectField({
+        key, rootSchema, schema, isEntity,
+      });
 
     case types.RELATION:
-      return new RelationField({key, rootSchema, schema});
+      return new RelationField({ key, rootSchema, schema });
 
     /**
      * File {contentType: string, name: string, size: string, url: string}
@@ -34,12 +39,14 @@ export const createField = (key: string, rootSchema: any, schema: any, isEntity?
     case types.FILE:
     case types.IMAGE: {
       const childFields = {
-        contentType: {type: 'string'},
-        name: {type: 'string'},
-        size: {type: 'string'},
-        url: {type: 'string'}
+        contentType: { type: 'string' },
+        name: { type: 'string' },
+        size: { type: 'string' },
+        url: { type: 'string' },
       };
-      return new CompositeField({key, type, rootSchema, childFields});
+      return new CompositeField({
+        key, type, rootSchema, childFields,
+      });
     }
 
     /**
@@ -47,24 +54,22 @@ export const createField = (key: string, rootSchema: any, schema: any, isEntity?
      */
     case types.GEOPOINT: {
       const childFields = {
-        lat: {type: 'string'},
-        lng: {type: 'string'},
-        placeId: {type: 'string'},
-        address: {type: 'string'}
+        lat: { type: 'string' },
+        lng: { type: 'string' },
+        placeId: { type: 'string' },
+        address: { type: 'string' },
       };
-      return new CompositeField({key, type, rootSchema, childFields});
+      return new CompositeField({
+        key, type, rootSchema, childFields,
+      });
     }
 
     default:
-      return new ScalarField({key, schema, type});
+      return new ScalarField({ key, schema, type });
   }
 };
 
-export const createSchema = (rootSchema: any) => {
-  return mapValues(rootSchema, (fieldSchema, key) => {
-    return createField(key, rootSchema, rootSchema[key], true);
-  });
-};
+export const createSchema = (rootSchema: any) => mapValues(rootSchema, (fieldSchema, key) => createField(key, rootSchema, rootSchema[key], true));
 
 export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 

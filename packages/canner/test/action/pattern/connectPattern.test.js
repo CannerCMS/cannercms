@@ -7,10 +7,10 @@ const connectAction1 = {
     id: 'id1',
     path: 'category',
     value: {
-      id: 1
-    }
-  }
-}
+      id: 1,
+    },
+  },
+};
 
 const connectAction2 = {
   type: 'CONNECT',
@@ -19,10 +19,10 @@ const connectAction2 = {
     id: 'id1',
     path: 'category',
     value: {
-      id: 2
-    }
-  }
-}
+      id: 2,
+    },
+  },
+};
 
 const disconnectAction1 = {
   type: 'DISCONNECT',
@@ -31,10 +31,10 @@ const disconnectAction1 = {
     id: 'id1',
     path: 'category',
     value: {
-      id: 1
-    }
-  }
-}
+      id: 1,
+    },
+  },
+};
 
 const disconnectAction2 = {
   type: 'DISCONNECT',
@@ -43,10 +43,10 @@ const disconnectAction2 = {
     id: 'id1',
     path: 'category',
     value: {
-      id: 2
-    }
-  }
-}
+      id: 2,
+    },
+  },
+};
 
 const createAndConnectAction = {
   type: 'CREATE_AND_CONNECT',
@@ -55,10 +55,10 @@ const createAndConnectAction = {
     id: 'random1',
     path: 'category',
     value: {
-      title: 'title'
-    }
-  }
-}
+      title: 'title',
+    },
+  },
+};
 
 const disconnectAndDeleteAction1 = {
   type: 'DISCONNECT_AND_DELET',
@@ -67,14 +67,14 @@ const disconnectAndDeleteAction1 = {
     id: 'random2',
     path: 'category',
     value: {
-      id: 1
-    }
-  }
-}
+      id: 1,
+    },
+  },
+};
 
 describe('connect pattern', () => {
   let connectPattern;
-  
+
   beforeEach(() => {
     connectPattern = new ConnectPattern();
   });
@@ -105,4 +105,3 @@ describe('connect pattern', () => {
     expect(connectPattern.getActions()[3]).toEqual(disconnectAndDeleteAction1);
   });
 });
-

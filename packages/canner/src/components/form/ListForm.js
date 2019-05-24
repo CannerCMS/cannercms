@@ -1,9 +1,10 @@
 // @flow
 
-import React, {useMemo} from 'react';
-import {Context} from 'canner-helpers';
-import {isEqual} from 'lodash';
-export default (React.memo: any)(function ListForm(props: any) {
+import React, { useMemo } from 'react';
+import { Context } from 'canner-helpers';
+import { isEqual } from 'lodash';
+
+export default (React.memo: any)((props: any) => {
   const {
     data,
     rootValue,
@@ -33,8 +34,8 @@ export default (React.memo: any)(function ListForm(props: any) {
     query,
     deploy,
     updateQuery,
-    ...rest
-  }), [rootValue, data, routes, routerParams, goTo])
+    ...rest,
+  }), [rootValue, data, routes, routerParams, goTo]);
   return (
     <Context.Provider value={contextValue}>
       {isFetching ? loading : (
@@ -43,16 +44,14 @@ export default (React.memo: any)(function ListForm(props: any) {
           goTo,
           routes,
           routerParams: routerParams || {},
-          defaultKey
+          defaultKey,
         })
       )}
     </Context.Provider>
-  )
-}, function(prevProps, nextProps) {
-  return Object.entries(nextProps).reduce((eq, [k, v]: any) => {
-    if (k === 'refId') {
-      return eq && prevProps[k].toString() === v.toString();
-    }
-    return isEqual(v, prevProps[k]) && eq;
-  }, true)
-})
+  );
+}, (prevProps, nextProps) => Object.entries(nextProps).reduce((eq, [k, v]: any) => {
+  if (k === 'refId') {
+    return eq && prevProps[k].toString() === v.toString();
+  }
+  return isEqual(v, prevProps[k]) && eq;
+}, true));

@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+
 type ApolloClient = any;
 export type CannerSchema = {
   [string]: any
@@ -62,7 +63,7 @@ export type Router = {
   getOperator: () => 'create' | 'update',
   getPayload: () => Object,
   getWhere: () => Object,
-  getSort: () => Object, 
+  getSort: () => Object,
   getPagination: () => Object,
   goTo: ({
     pathname: string,

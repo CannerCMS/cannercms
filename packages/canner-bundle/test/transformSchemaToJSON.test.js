@@ -1,58 +1,59 @@
-import { resolve } from "../src/utils/transformSchemaToJSON";
+/* eslint import/no-unresolved: 0 */
+import { resolve } from '../src/utils/transformSchemaToJSON';
 
-describe("resolve", () => {
-  test("should remove component and page type", () => {
+describe('resolve', () => {
+  test('should remove component and page type', () => {
     const schema = {
       page: {
-        type: "page",
+        type: 'page',
         items: {
           test: {
-            type: "component"
+            type: 'component',
           },
           test2: {
-            type: "component"
-          }
-        }
+            type: 'component',
+          },
+        },
       },
       array: {
-        type: "array",
+        type: 'array',
         items: {
-          type: "object",
+          type: 'object',
           items: {
             test1: {
-              type: "string"
+              type: 'string',
             },
             test2: {
-              type: "array",
+              type: 'array',
               items: {
-                type: "string"
-              }
+                type: 'string',
+              },
             },
             test3: {
-              type: "component"
-            }
-          }
-        }
+              type: 'component',
+            },
+          },
+        },
       },
       object: {
-        type: "object",
+        type: 'object',
         items: {
           test1: {
-            type: "string"
+            type: 'string',
           },
           test2: {
-            type: "object",
+            type: 'object',
             items: {
               test3: {
-                type: "string"
+                type: 'string',
               },
               test4: {
-                type: "component"
-              }
-            }
-          }
-        }
-      }
+                type: 'component',
+              },
+            },
+          },
+        },
+      },
     };
     expect(resolve(schema)).toMatchInlineSnapshot(`
 Object {

@@ -1,17 +1,23 @@
 // @flow
+/* eslint import/no-cycle: 0 */
 
 import forEach from 'lodash/forEach';
-import type {Field, Types} from './types';
+import type { Field, Types } from './types';
 import { createField } from './utils';
 import NullField from './nullField';
 
 export default class CompositeField implements Field {
   rootSchema: any;
+
   childFields: any;
+
   key: string;
+
   type: Types;
 
-  constructor({type, rootSchema, childFields, key}: {type: Types, rootSchema: any, childFields: any, key: string}) {
+  constructor({
+    type, rootSchema, childFields, key,
+  }: {type: Types, rootSchema: any, childFields: any, key: string}) {
     this.key = key;
     this.type = type;
     this.rootSchema = rootSchema;
@@ -32,7 +38,7 @@ export default class CompositeField implements Field {
 
   getChild(fieldName: string) {
     if (!this.childFields || !this.childFields[fieldName]) {
-      return new NullField({key: fieldName});
+      return new NullField({ key: fieldName });
     }
 
     const field = createField(fieldName, this.rootSchema, this.childFields[fieldName]);

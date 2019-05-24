@@ -3,7 +3,8 @@ module.exports = {
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "airbnb"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -28,7 +29,19 @@ module.exports = {
     "no-implicit-coercion": 0,
     "max-len": 0,
     "react/react-in-jsx-scope": 0,
-    "no-unused-vars": ["error", {varsIgnorePattern: "CannerScript"}]
+    "no-unused-vars": ["error", {varsIgnorePattern: "CannerScript"}],
+    "no-use-before-define": 0,
+    "no-shadow": 0,
+    "class-methods-use-this": 0,
+    "import/no-extraneous-dependencies": 0,
+    "no-return-await": 0,
+    "prefer-destructuring": 0,
+    "no-underscore-dangle": 0,
+    "import/prefer-default-export": 0,
+    "react/jsx-filename-extension": 0,
+    "consistent-return": 0,
+    "react/no-unused-prop-types": 0,
+    "comma-dangle": 0
   },
   "globals": {
     "Promise": true

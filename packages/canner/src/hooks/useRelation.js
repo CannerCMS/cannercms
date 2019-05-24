@@ -1,22 +1,24 @@
 // @flow
-import React, {useState, useContext, useRef, useEffect} from 'react';
-import {Context} from 'canner-helpers';
+import React, {
+  useState, useContext, useRef, useEffect,
+} from 'react';
+import { Context } from 'canner-helpers';
 import gql from 'graphql-tag';
-import {isEmpty} from 'lodash';
-import {Icon, Spin} from 'antd';
-import {Query} from '../query';
-import Toolbar from '../components/toolbar/index';
+import { isEmpty } from 'lodash';
+import { Icon, Spin } from 'antd';
 import RefId from 'canner-ref-id';
-import {parseConnectionToNormal} from '../hocs/utils';
+import { Query } from '../query';
+import Toolbar from '../components/toolbar/index';
+import { parseConnectionToNormal } from '../hocs/utils';
 
-export default function({
+export default function ({
   relation = {},
   type,
   graphql,
   variables,
   fetchPolicy,
   refId,
-  toolbar
+  toolbar,
 }: {
   relation: any,
   type: string,
@@ -28,21 +30,21 @@ export default function({
 }) {
   const {
     schema,
-    client
+    client,
   } = useContext(Context);
   const isRelationComponent = !isEmpty(relation);
   const [fetching, setFetching] = useState(false);
   const [data, setData] = useState({});
   const [rootValue, setRootValue] = useState({});
-  const queryRef = useRef(new Query({schema}));
+  const queryRef = useRef(new Query({ schema }));
   const updateRelationValue = (data: Object) => {
-    const removeSelfRootValue = {[relation.to]: removeSelf(data[relation.to], refId, relation.to)};
-    let parsedRootValue = removeSelfRootValue;
+    const removeSelfRootValue = { [relation.to]: removeSelf(data[relation.to], refId, relation.to) };
+    const parsedRootValue = removeSelfRootValue;
     const rootValue = parseConnectionToNormal(parsedRootValue);
     setData(parsedRootValue);
     setRootValue(rootValue);
     setFetching(false);
-  }
+  };
   const queryData = async (): Promise<*> => {
     if (!isRelationComponent) {
       return Promise.resolve();
@@ -50,10 +52,10 @@ export default function({
     setFetching(true);
     if (type === 'relation' && graphql) {
       // customize query
-      const {data, error, errors} = await client.query({
+      const { data, error, errors } = await client.query({
         query: gql`${graphql}`,
         variables: variables || queryRef.current.getVariables(),
-        fetchPolicy
+        fetchPolicy,
       });
       if (error) {
         throw new Error(errors);
@@ -62,50 +64,52 @@ export default function({
     }
     const gqlStr = queryRef.current.toGQL(relation.to);
     const gqlVariables = queryRef.current.getVariables();
-    const {data} = await client.query({
+    const { data } = await client.query({
       query: gql`${gqlStr}`,
       variables: gqlVariables,
-      fetchPolicy
+      fetchPolicy,
     });
     return updateRelationValue(data);
-  }
+  };
   const getArgs = () => {
     if (!relation.to) {
       return {};
     }
     return queryRef.current.getArgs(relation.to);
-  }
+  };
 
   const updateQuery = (paths: Array<string>, args: Object) => {
     queryRef.current.updateQueries(paths, 'args', args);
     queryData();
-  }
+  };
 
   useEffect(() => {
     queryData();
   }, [refId.toString()]);
-  const relationToolbar =  isRelationComponent ? ({children, ...restProps}: any) => <Toolbar
-    {...restProps}
-    items={schema[relation.to].items.items}
-    toolbar={toolbar || {pagination: {type: 'pagination'}}}
-    args={getArgs()}
-    query={queryRef.current}
-    keyName={relation.to}
-    refId={new RefId(relation.to)}
-    originRootValue={data}
-    updateQuery={updateQuery}
-    rootValue={rootValue}
-  >
-    {/* $FlowFixMe */}
-    <SpinWrapper isFetching={fetching}>
-      {children}
-    </SpinWrapper>
-  </Toolbar> : null;
+  const relationToolbar = isRelationComponent ? ({ children, ...restProps }: any) => (
+    <Toolbar
+      {...restProps}
+      items={schema[relation.to].items.items}
+      toolbar={toolbar || { pagination: { type: 'pagination' } }}
+      args={getArgs()}
+      query={queryRef.current}
+      keyName={relation.to}
+      refId={new RefId(relation.to)}
+      originRootValue={data}
+      updateQuery={updateQuery}
+      rootValue={rootValue}
+    >
+      {/* $FlowFixMe */}
+      <SpinWrapper isFetching={fetching}>
+        {children}
+      </SpinWrapper>
+    </Toolbar>
+  ) : null;
   return {
     relationToolbar,
     relationFetching: fetching,
-    relationValue: data[relation.to] || {edges: []}
-  }
+    relationValue: data[relation.to] || { edges: [] },
+  };
 }
 
 
@@ -114,15 +118,15 @@ export function removeSelf(value: any, refId: RefId, relationTo: string) {
   if (key !== relationTo) {
     return value;
   }
-  return {...value, edges: value.edges.filter((v, i) => i !== Number(index))};
+  return { ...value, edges: value.edges.filter((v, i) => i !== Number(index)) };
 }
 
-const antIcon = <Icon type="loading" style={{fontSize: 24}} spin />;
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 function SpinWrapper({
   isFetching,
   children,
-  value
+  value,
 }: {
   isFetching: boolean,
   children: Function,
@@ -132,5 +136,5 @@ function SpinWrapper({
     <Spin indicator={antIcon} spinning={isFetching}>
       {children(value)}
     </Spin>
-  )
+  );
 }

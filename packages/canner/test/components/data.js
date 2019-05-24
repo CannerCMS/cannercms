@@ -1,22 +1,30 @@
 export const defaultData = {
   posts: [
-    {id: '1', title: '123', author: '1', notes: [{text: 'note1'}, {text: 'note2'}]},
-    {id: '2', title: '123', author: '2', notes: [{text: 'note3'}, {text: 'note4'}]}
+    {
+      id: '1', title: '123', author: '1', notes: [{ text: 'note1' }, { text: 'note2' }],
+    },
+    {
+      id: '2', title: '123', author: '2', notes: [{ text: 'note3' }, { text: 'note4' }],
+    },
   ],
   users: [
-    {id: '1', age: 10, name: 'user1', email: 'wwwy3y3@gmail.com', images: [{url: 'url'}], posts: ['1', '2']},
-    {id: '2', age: 20, name: 'user2', email: 'wwwy3y3@gmail.com', images: [{url: 'url'}], posts: ['1', '2']}
+    {
+      id: '1', age: 10, name: 'user1', email: 'wwwy3y3@gmail.com', images: [{ url: 'url' }], posts: ['1', '2'],
+    },
+    {
+      id: '2', age: 20, name: 'user2', email: 'wwwy3y3@gmail.com', images: [{ url: 'url' }], posts: ['1', '2'],
+    },
   ],
   home: {
     header: {
       title: 'largeTitle',
-      subTitle: 'subTitle'
+      subTitle: 'subTitle',
     },
     count: 10,
-    navs: [{text: 'nav1'}, {text: 'nav2'}],
+    navs: [{ text: 'nav1' }, { text: 'nav2' }],
     staredPosts: ['1', '2'],
-    bestAuthor: '1'
-  }
+    bestAuthor: '1',
+  },
 };
 
 export const schema = {
@@ -29,14 +37,14 @@ export const schema = {
           type: 'id',
         },
         title: {
-          type: 'string'
+          type: 'string',
         },
         author: {
           type: 'relation',
           relation: {
             type: 'toOne',
-            to: 'users'
-          }
+            to: 'users',
+          },
         },
         notes: {
           type: 'array',
@@ -44,13 +52,13 @@ export const schema = {
             type: 'object',
             items: {
               text: {
-                type: 'string'
-              }
-            }
-          }
-        }
-      }
-    }
+                type: 'string',
+              },
+            },
+          },
+        },
+      },
+    },
   },
 
   // users
@@ -60,32 +68,32 @@ export const schema = {
       type: 'object',
       items: {
         id: {
-          type: 'id'
+          type: 'id',
         },
         age: {
-          type: 'int'
+          type: 'int',
         },
         name: {
-          type: 'string'
+          type: 'string',
         },
         email: {
-          type: 'string'
+          type: 'string',
         },
         images: {
           type: 'array',
           items: {
-            type: 'image'
-          }
+            type: 'image',
+          },
         },
         posts: {
           type: 'relation',
           relation: {
             type: 'toMany',
-            to: 'posts'
-          }
-        }
-      }
-    }
+            to: 'posts',
+          },
+        },
+      },
+    },
   },
 
   // home
@@ -96,15 +104,15 @@ export const schema = {
         type: 'object',
         items: {
           title: {
-            type: 'string'
+            type: 'string',
           },
           subTitle: {
-            type: 'string'
-          }
-        }
+            type: 'string',
+          },
+        },
       },
       count: {
-        type: 'int'
+        type: 'int',
       },
       navs: {
         type: 'array',
@@ -112,27 +120,27 @@ export const schema = {
           type: 'object',
           items: {
             text: {
-              type: 'string'
-            }
-          }
-        }
+              type: 'string',
+            },
+          },
+        },
       },
       staredPosts: {
         type: 'relation',
         relation: {
           type: 'toMany',
-          to: 'posts'
-        }
+          to: 'posts',
+        },
       },
       bestAuthor: {
         type: 'relation',
         relation: {
           type: 'toOne',
           to: 'users',
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 };
 
 export function getAuthorById(authorId) {

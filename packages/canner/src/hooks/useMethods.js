@@ -1,13 +1,13 @@
 // @flow
-import {useContext, useState} from 'react';
-import {Context} from 'canner-helpers';
-import {mapValues, groupBy, isArray} from 'lodash';
-import {isCompleteContain, genPaths} from '../utils/renderType';
+import { useContext, useState } from 'react';
+import { Context } from 'canner-helpers';
+import { mapValues, groupBy, isArray } from 'lodash';
+import RefId from 'canner-ref-id';
+import { isCompleteContain, genPaths } from '../utils/renderType';
 import useCache from './useCache';
 import useOnDeployManager from './useOnDeployManager';
 import useActionManager from './useActionManager';
-import type {Action, ActionType} from '../action/types';
-import RefId from 'canner-ref-id';
+import type { Action, ActionType } from '../action/types';
 
 export default ({
   pattern,
@@ -23,7 +23,7 @@ export default ({
     data,
   } = useContext(Context);
   const [key] = routes;
-  const cache = useCache({[key]: {rootValue, data}});
+  const cache = useCache({ [key]: { rootValue, data } });
   const onDeployManager = useOnDeployManager();
   const actionManager = useActionManager();
   const [changedData, setChangedData] = useState(null);
@@ -31,13 +31,13 @@ export default ({
   const updateCachedData = (actions: Array<Action<ActionType>> | Action<ActionType>) => {
     cache.mutate(key, actions);
     return cache.getData(key);
-  }
+  };
   const _request = (action: Array<Action<ActionType>> | Action<ActionType>): Promise<*> => {
     // use action manager cache the actions
     // update state.actions
     if (isArray(action)) {
       // $FlowFixMe
-      action.forEach(ac => {
+      action.forEach((ac) => {
         actionManager.addAction(ac);
       });
     } else {
@@ -46,19 +46,15 @@ export default ({
     updateDataChanged();
     updateCachedData(action);
     return Promise.resolve();
-  }
+  };
 
-  const _onDeploy = (key: string, callback: any) => {
-    return onDeployManager.subscribe(key, callback);
-  }
+  const _onDeploy = (key: string, callback: any) => onDeployManager.subscribe(key, callback);
 
-  const _removeOnDeploy = (key: string, callbackId: string) => {
-    return  onDeployManager.unsubscribe(key, callbackId);
-  }
+  const _removeOnDeploy = (key: string, callbackId: string) => onDeployManager.unsubscribe(key, callbackId);
 
   const _deploy = (key: string, id?: string): Promise<*> => {
     const cachedData = cache.getData(key).data;
-    const {error} = onDeployManager.publish(key, cachedData[key]);
+    const { error } = onDeployManager.publish(key, cachedData[key]);
     if (error) {
       return Promise.reject();
     }
@@ -72,7 +68,7 @@ export default ({
       return deploy(key, id);
     }
     return Promise.resolve();
-  }
+  };
 
   const _reset = (k: string, id?: string): Promise<*> => {
     // remove sepicfic cached actions in actionManager
@@ -82,31 +78,29 @@ export default ({
     }
     actionManager.removeActions(resetKey, id);
     updateDataChanged();
-    cache.setData(resetKey, {data, rootValue});
+    cache.setData(resetKey, { data, rootValue });
     return Promise.resolve();
-  }
+  };
 
   const updateDataChanged = () => {
     const actions = actionManager.getActions();
     let changedData = groupBy(actions, (action => action.payload.key));
-    changedData = mapValues(changedData, value => {
+    changedData = mapValues(changedData, (value) => {
       if (value[0].type === 'UPDATE_OBJECT') {
         return true;
       }
       return value.map(v => v.payload.id);
     });
-    setChangedData(changedData)
-  }
-
-  const _updateQuery = (paths: Array<string>, args: Object) => {
-    return updateQuery(paths, args)
-      .then(reWatch => {
-        if (reWatch) {
-          _reset(paths[0])
-        }
-        return reWatch;
-      });
+    setChangedData(changedData);
   };
+
+  const _updateQuery = (paths: Array<string>, args: Object) => updateQuery(paths, args)
+    .then((reWatch) => {
+      if (reWatch) {
+        _reset(paths[0]);
+      }
+      return reWatch;
+    });
 
   const value = cache.getData(key);
   return {
@@ -117,14 +111,14 @@ export default ({
     onDeploy: _onDeploy,
     removeOnDeploy: _removeOnDeploy,
     deploy: _deploy,
-    ...value
-  }
-}
+    ...value,
+  };
+};
 
 export function isRoutesEndAtMe({
   routes,
   path,
-  pattern
+  pattern,
 }: {
   routes: Array<string>,
   path: string,

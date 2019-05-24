@@ -1,5 +1,5 @@
-//@flow
-import type {Path} from '../flow-types';
+// @flow
+import type { Path } from '../flow-types';
 
 /**
   these vistors handles the body layout that all first level components will move into
@@ -7,7 +7,7 @@ import type {Path} from '../flow-types';
 
 const arrayBody = {
   'component.array': {
-    exit: function(path: Path) {
+    exit(path: Path) {
       if (path.node.inBody) {
         // already has body layout
         return;
@@ -15,10 +15,10 @@ const arrayBody = {
       if (path.node.pattern === 'array') {
         const componentInBody = {
           nodeType: 'layout.body',
-          ui: "body",
+          ui: 'body',
           children: [{
             nodeType: 'layout.block',
-            ui: "block",
+            ui: 'block',
             children: [path.node],
           }],
         };
@@ -31,7 +31,7 @@ const arrayBody = {
 };
 const objectBody = {
   'component.object': {
-    exit: function(path: Path) {
+    exit(path: Path) {
       if (path.node.inBody) {
         // already has body layout
         return;
@@ -42,7 +42,7 @@ const objectBody = {
           ui: 'body',
           children: [{
             nodeType: 'layout.block',
-            ui: "block",
+            ui: 'block',
             children: [path.node],
           }],
         };
@@ -55,14 +55,14 @@ const objectBody = {
 };
 const pageBody = {
   'page.page': {
-    exit: function(path: Path) {
+    exit(path: Path) {
       if (path.node.inBody) {
         // already has body layout
         return;
       }
       const componentInBody = {
         nodeType: 'layout.body',
-        ui: "body",
+        ui: 'body',
         children: [path.node],
       };
       // remove title description to body container

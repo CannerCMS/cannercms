@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Alert} from 'antd';
+import { Alert } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 type State = {
@@ -14,15 +14,17 @@ export default function errorCatch(Com: React.ComponentType<*>) {
   return class ComponentErrorCatch extends React.Component<any, State> {
     state = {
       error: false,
-      errorInfo: {componentStack: null}
+      errorInfo: { componentStack: null },
     }
 
     shouldComponentUpdate(nextProps: any, nextState: State) {
-      if (nextState.error !== this.state.error) {
+      const { error } = this.state;
+      const { refId } = this.props;
+      if (nextState.error !== error) {
         return true;
       }
 
-      if (nextProps.refId.toString() !== this.props.refId.toString()) {
+      if (nextProps.refId.toString() !== refId.toString()) {
         return true;
       }
 
@@ -34,24 +36,26 @@ export default function errorCatch(Com: React.ComponentType<*>) {
       console.log(e, info);
       this.setState({
         error: e,
-        errorInfo: info
+        errorInfo: info,
       });
     }
 
     render() {
-      const {error} = this.state;
+      const { error } = this.state;
       if (error) {
-        return <Alert
-          message={<FormattedMessage id="hocs.errorCatch.message" />}
-          type="error"
-          closable
-          closeText={
-            <FormattedMessage id="hocs.errorCatch.refresh" />
+        return (
+          <Alert
+            message={<FormattedMessage id="hocs.errorCatch.message" />}
+            type="error"
+            closable
+            closeText={
+              <FormattedMessage id="hocs.errorCatch.refresh" />
           }
-          afterClose={() => location.reload()}
-        />
+            afterClose={() => window.location.reload()}
+          />
+        );
       }
-      return <Com {...this.props} />
+      return <Com {...this.props} />;
     }
   };
 }

@@ -1,4 +1,4 @@
-import {generateAction} from '../../src/action/generateAction';
+import { generateAction } from '../../src/action/generateAction';
 
 const rootValue = {
   user: {
@@ -6,36 +6,36 @@ const rootValue = {
     info: {
       address: {
         lat: 23,
-        lng: 120
+        lng: 120,
       },
       phone: [
-        {type: 'H', value: 'xxx'},
-        {type: 'C', value: 'yyy'}
-      ]
-    }
+        { type: 'H', value: 'xxx' },
+        { type: 'C', value: 'yyy' },
+      ],
+    },
   },
   posts: [{
     id: 'id1',
     title: 'title1',
     comment: [{
       text: 'xxx',
-      author: 'xxx'
+      author: 'xxx',
     }, {
       text: 'yyy',
-      author: 'yyy'
+      author: 'yyy',
     }],
-    users: [{}]
+    users: [{}],
   }, {
     id: 'id2',
     title: 'title1',
     comment: [{
       text: 'xxx',
-      author: 'xxx'
+      author: 'xxx',
     }, {
       text: 'yyy',
-      author: 'yyy'
+      author: 'yyy',
     }],
-    users: [{id: 'user1', name: 'name1'}, {id: 'user2', name: 'name2'}]
+    users: [{ id: 'user1', name: 'name1' }, { id: 'user2', name: 'name2' }],
   }],
 };
 
@@ -55,12 +55,12 @@ describe('update action', () => {
         value: {
           comment: rootValue.posts[0].comment.map((c, index) => {
             if (index === 0) {
-              return {...c, text: 'zzz'}
+              return { ...c, text: 'zzz' };
             }
             return c;
-          })
-        }
-      }
+          }),
+        },
+      },
     });
   });
 
@@ -71,15 +71,15 @@ describe('update action', () => {
       value: 'C',
       rootValue,
     });
-    const newUser = {...rootValue.user};
+    const newUser = { ...rootValue.user };
     newUser.info.phone[0].type = 'C';
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
-        id: "",
-        value: {info: newUser.info}
-      }
+        id: '',
+        value: { info: newUser.info },
+      },
     });
   });
 });
@@ -93,7 +93,7 @@ describe('create action', () => {
         id: 'id2',
         title: '',
         comments: [],
-        users: []
+        users: [],
       },
       rootValue,
     });
@@ -106,9 +106,9 @@ describe('create action', () => {
           id: 'id2',
           title: '',
           comments: [],
-          users: []
-        }
-      }
+          users: [],
+        },
+      },
     });
   });
 
@@ -117,20 +117,20 @@ describe('create action', () => {
       id: 'posts/0/users',
       updateType: 'create',
       value: {
-        name: ''
+        name: '',
       },
       rootValue,
     });
-    const newValue = {...rootValue};
-    newValue.posts[0].users.push({name: ''});
+    const newValue = { ...rootValue };
+    newValue.posts[0].users.push({ name: '' });
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
         id: 'id1',
-        value: {users: newValue.posts[0].users}
-          
-      }
+        value: { users: newValue.posts[0].users },
+
+      },
     });
   });
 
@@ -140,19 +140,19 @@ describe('create action', () => {
       updateType: 'create',
       value: {
         type: '',
-        value: ''
+        value: '',
       },
       rootValue,
     });
-    const newUser = {...rootValue.user};
-    newUser.info.phone.push({type: '',  value: ''});
+    const newUser = { ...rootValue.user };
+    newUser.info.phone.push({ type: '', value: '' });
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
         id: '',
-        value: {phone: newUser.phone}
-      }
+        value: { phone: newUser.phone },
+      },
     });
   });
 
@@ -161,11 +161,11 @@ describe('create action', () => {
       id: 'posts/0/users',
       updateType: 'create',
       value: {
-        name: ''
+        name: '',
       },
       relation: {
         to: 'users',
-        type: 'toMany'
+        type: 'toMany',
       },
       rootValue,
     });
@@ -176,9 +176,9 @@ describe('create action', () => {
         id: 'id1',
         path: 'users',
         value: {
-          name: ''
-        }
-      }
+          name: '',
+        },
+      },
     });
   });
 });
@@ -195,8 +195,8 @@ describe('delete action', () => {
       payload: {
         key: 'posts',
         id: 'id1',
-        value: {}
-      }
+        value: {},
+      },
     });
   });
 
@@ -206,20 +206,20 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
-    const newPost1 = {...rootValue.posts[1]};
+    const newPost1 = { ...rootValue.posts[1] };
     newPost1.users.shift();
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
         id: 'id2',
-        value: {users: newPost1.users}
-      }
+        value: { users: newPost1.users },
+      },
     });
   });
 
   it('delete array item in object', () => {
-    const newUser = {...rootValue.user};
+    const newUser = { ...rootValue.user };
     const action = generateAction({
       id: 'user/info/phone/1',
       updateType: 'delete',
@@ -231,8 +231,8 @@ describe('delete action', () => {
       payload: {
         key: 'user',
         id: '',
-        value: {info: newUser.info}
-      }
+        value: { info: newUser.info },
+      },
     });
   });
 
@@ -241,11 +241,11 @@ describe('delete action', () => {
       id: 'posts/0/users',
       updateType: 'delete',
       value: {
-        id: 'user2'
+        id: 'user2',
       },
       relation: {
         to: 'users',
-        type: 'toMany'
+        type: 'toMany',
       },
       rootValue,
     });
@@ -256,9 +256,9 @@ describe('delete action', () => {
         id: 'id1',
         path: 'users',
         value: {
-          id: 'user2'
-        }
-      }
+          id: 'user2',
+        },
+      },
     });
   });
 });
@@ -268,17 +268,17 @@ describe('swap action', () => {
     const action = generateAction({
       id: {
         firstId: 'posts/0',
-        secondId: 'posts/1'
+        secondId: 'posts/1',
       },
       updateType: 'swap',
-      rootValue
+      rootValue,
     });
     expect(action).toMatchObject({
       type: 'NOOP',
       payload: {
         key: '',
-        value: {}
-      }
+        value: {},
+      },
     });
   });
 
@@ -289,7 +289,7 @@ describe('swap action', () => {
         secondId: 'posts/1/comment/1',
       },
       updateType: 'swap',
-      rootValue
+      rootValue,
     });
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
@@ -299,13 +299,13 @@ describe('swap action', () => {
         value: {
           comment: [{
             text: 'yyy',
-            author: 'yyy'
+            author: 'yyy',
           }, {
             text: 'xxx',
-            author: 'xxx'
-          }]
-        }
-      }
+            author: 'xxx',
+          }],
+        },
+      },
     });
   });
 
@@ -316,23 +316,23 @@ describe('swap action', () => {
         secondId: 'user/info/phone/1',
       },
       updateType: 'swap',
-      rootValue
+      rootValue,
     });
-    const newUser = {...rootValue.user};
+    const newUser = { ...rootValue.user };
     newUser.info.phone = [{
       type: 'C',
-      value: 'yyy'
+      value: 'yyy',
     }, {
       type: 'H',
-      value: 'xxx'
+      value: 'xxx',
     }];
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
         id: '',
-        value: {info: newUser.info}
-      }
+        value: { info: newUser.info },
+      },
     });
   });
 });
@@ -343,10 +343,10 @@ describe('connect action', () => {
       id: 'posts/0/users',
       updateType: 'connect',
       value: {
-        id: 'id1'
+        id: 'id1',
       },
       rootValue,
-      relation: {}
+      relation: {},
     });
     expect(action).toMatchObject({
       type: 'CONNECT',
@@ -355,9 +355,9 @@ describe('connect action', () => {
         id: 'id1',
         path: 'users',
         value: {
-          id: 'id1'
-        }
-      }
+          id: 'id1',
+        },
+      },
     });
   });
 });
@@ -368,10 +368,10 @@ describe('disconnect action', () => {
       id: 'posts/0/users',
       updateType: 'disconnect',
       value: {
-        id: 'id1'
+        id: 'id1',
       },
       rootValue,
-      relation: {}
+      relation: {},
     });
     expect(action).toMatchObject({
       type: 'DISCONNECT',
@@ -380,9 +380,9 @@ describe('disconnect action', () => {
         id: 'id1',
         path: 'users',
         value: {
-          id: 'id1'
-        }
-      }
+          id: 'id1',
+        },
+      },
     });
   });
 });

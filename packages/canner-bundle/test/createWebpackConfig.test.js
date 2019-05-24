@@ -1,12 +1,13 @@
 
-import {
-  createConfig
-} from '../src/utils/createWebpackConfig';
 import tmp from 'tmp';
 import path from 'path';
+import {
+  createConfig,
+} from '../src/utils/createWebpackConfig';
+
 jest.mock('tmp');
 tmp.fileSync.mockReturnValue({
-  name: 'file-name'
+  name: 'file-name',
 });
 afterAll(() => {
   const fs = require('fs');
@@ -16,8 +17,8 @@ afterAll(() => {
 });
 const replacePath = path.resolve(__dirname, '../../..');
 expect.addSnapshotSerializer({
-  test:(val) => typeof val === 'string' && val.indexOf(replacePath) !== -1,
-  print:(val) => val.replace(replacePath, '')
+  test: val => typeof val === 'string' && val.indexOf(replacePath) !== -1,
+  print: val => val.replace(replacePath, ''),
 });
 describe('createBothConfig', () => {
   const config = createConfig({
@@ -35,7 +36,7 @@ describe('createBothConfig', () => {
     authPath: 'authPath',
     schemaPlugins: ['schemaPlugins'],
     webPlugins: ['webPlugins'],
-    i18nMessages :'i18nMessages',
+    i18nMessages: 'i18nMessages',
   });
   it('webpack config', () => {
     expect(config).toMatchSnapshot();

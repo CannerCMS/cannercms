@@ -6,7 +6,7 @@ type Rules = {
 }
 export default function rbac({
   keyName,
-  rules
+  rules,
 }: {
   keyName: string,
   rules?: Rules
@@ -15,10 +15,10 @@ export default function rbac({
     disabled: {
       create: false,
       update: false,
-      delete: false
+      delete: false,
     },
-    hidden: false
-  }
+    hidden: false,
+  };
   if (isEmpty(rules)) {
     return result;
   }
@@ -51,7 +51,7 @@ export function mergeDisabled(propsDisabled, rbacDisabled) {
     return {
       create: true,
       update: true,
-      delete: true
+      delete: true,
     };
   }
 
@@ -60,7 +60,7 @@ export function mergeDisabled(propsDisabled, rbacDisabled) {
       create: propsDisabled.create || rbacDisabled.create,
       update: propsDisabled.update || rbacDisabled.update,
       delete: propsDisabled.delete || rbacDisabled.delete,
-    }
+    };
   }
   return rbacDisabled;
 }

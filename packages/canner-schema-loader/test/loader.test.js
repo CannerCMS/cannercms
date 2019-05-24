@@ -3,8 +3,9 @@
  */
 
 import compiler from './compiler.js';
+
 test('Inserts schema and outputs JSONSchema and componentTree', async () => {
-  const stats = await compiler('test.schema.js', {test: true});
+  const stats = await compiler('test.schema.js', { test: true });
   const output = stats.toJson().modules.find(module => module.name === './test.schema.js').source
     // ignore different path for CI
     .replace(new RegExp(process.cwd(), 'g'), 'IGNORED_PATH');

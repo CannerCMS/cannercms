@@ -1,26 +1,29 @@
 import React, { useContext, useCallback } from 'react';
-import {ResetButton, ConfirmButton, Context} from 'canner-helpers';
+import { ResetButton, ConfirmButton, Context } from 'canner-helpers';
+
 export default function Buttons({
   shouldRenderCancelButton,
-  shouldRenderSubmitButton
+  shouldRenderSubmitButton,
 }) {
-  const {routes, goTo} = useContext(Context);
+  const { routes, goTo } = useContext(Context);
   const backToList = useCallback(() => {
-    goTo({pathname: routes[0]});
+    goTo({ pathname: routes[0] });
   });
-  return <React.Fragment>
-    {
+  return (
+    <React.Fragment>
+      {
       (shouldRenderCancelButton || shouldRenderSubmitButton) && (
         <div
           style={{
-            textAlign: "right",
-            marginTop:  60
+            textAlign: 'right',
+            marginTop: 60,
           }}
         >
-          {shouldRenderCancelButton && <ResetButton style={{marginRight: 16}} callback={backToList} />}
-          {shouldRenderSubmitButton && <ConfirmButton callback={backToList}/>}
+          {shouldRenderCancelButton && <ResetButton style={{ marginRight: 16 }} callback={backToList} />}
+          {shouldRenderSubmitButton && <ConfirmButton callback={backToList} />}
         </div>
       )
     }
-  </React.Fragment>
+    </React.Fragment>
+  );
 }

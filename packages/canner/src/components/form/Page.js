@@ -1,5 +1,5 @@
 import React from 'react';
-import {Context} from 'canner-helpers';
+import { Context } from 'canner-helpers';
 
 export default function Page({
   data,
@@ -29,8 +29,8 @@ export default function Page({
     query,
     deploy,
     updateQuery,
-    ...props
-  }
+    ...props,
+  };
   return (
     <Context.Provider value={contextValue}>
       {React.cloneElement(children, {
@@ -40,5 +40,5 @@ export default function Page({
         routerParams: routerParams || {},
       })}
     </Context.Provider>
-  )
+  );
 }

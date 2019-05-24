@@ -3,10 +3,10 @@
 import * as React from 'react';
 // eslint-disable-next-line
 import {Button, message} from 'antd';
-import store from './store';
-import type {onChangeFunc, UpdateType} from './store';
-import {Context, createEmptyData} from 'canner-helpers';
+import { Context, createEmptyData } from 'canner-helpers';
 import RefId from 'canner-ref-id';
+import store from './store';
+import type { onChangeFunc, UpdateType } from './store';
 
 type Props = {
   value: *,
@@ -26,25 +26,24 @@ type State = {
   refId: RefId
 }
 
-const wrap = (Com: React.ComponentType<*>) => {
-  return class wrappedComponent extends React.PureComponent<Props, State> {
-    constructor(props: Props) {
-      super(props);
-      const refId = props.refId ?
-        props.refId.child(props.keyName) :
-        new RefId(props.keyName)
-      this.state = {
-        value: getValue(store.getValue(), refId),
-        refId
-      }
-    }
+const wrap = (Com: React.ComponentType<*>) => class wrappedComponent extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    const refId = props.refId
+      ? props.refId.child(props.keyName)
+      : new RefId(props.keyName);
+    this.state = {
+      value: getValue(store.getValue(), refId),
+      refId,
+    };
+  }
 
-    componentWillReceiveProps() {
-      this.updateValue();
-    }
+  componentWillReceiveProps() {
+    this.updateValue();
+  }
 
     onChange = (refId: RefId, type: UpdateType, delta: *) => {
-      const {items = {}, onChange} = this.props;
+      const { items = {}, onChange } = this.props;
       if (onChange) {
         onChange(refId, type, delta);
       }
@@ -59,26 +58,31 @@ const wrap = (Com: React.ComponentType<*>) => {
 
     updateValue = () => {
       this.setState({
-        value: getValue(store.getValue(), this.state.refId)
+        value: getValue(store.getValue(), this.state.refId),
       });
     }
 
     render() {
-      const {value, refId} = this.state;
-      let {children, title, liteCMS, className, style = {}, ...rest} = this.props;
+      const { value, refId } = this.state;
+      const {
+        children, title, liteCMS, className, style = {}, ...rest
+      } = this.props;
       const contextValue = {
-        renderChildren: (props) => children ? React.Children.map(children, (child) => React.cloneElement(child, props)) : 'this is content',
-        renderComponent: (props) => liteCMS ? <liteCMS {...props} /> : 'this is content',
-        renderConfirmButton: genFakeButton({text: 'Confirm'}),
-        renderCancelButton: genFakeButton({text: 'Cancel'}),
-        refId
-      }
-      return(
+        renderChildren: props => (children ? React.Children.map(children, child => React.cloneElement(child, props)) : 'this is content'),
+        renderComponent: props => (liteCMS ? <liteCMS {...props} /> : 'this is content'),
+        renderConfirmButton: genFakeButton({ text: 'Confirm' }),
+        renderCancelButton: genFakeButton({ text: 'Cancel' }),
+        refId,
+      };
+      return (
         <Context.Provider value={contextValue}>
-          <div className={className} style={{
-            marginTop: 16,
-            ...style
-          }}>
+          <div
+            className={className}
+            style={{
+              marginTop: 16,
+              ...style,
+            }}
+          >
             <h3>
               {title || this.props.keyName.toUpperCase()}
             </h3>
@@ -91,10 +95,9 @@ const wrap = (Com: React.ComponentType<*>) => {
             />
           </div>
         </Context.Provider>
-      )
+      );
     }
-  }
-}
+};
 export default wrap;
 
 function getValue(value, refId) {
@@ -123,12 +126,12 @@ function genFakeButton({
     // eslint-disable-next-line
     callback = () => {},
     text = text,
-    component = Button
+    component = Button,
   } = {}) {
     return React.createElement(component, {
       disabled,
-      style: style,
-      onClick: () => {}
+      style,
+      onClick: () => {},
     }, text);
   };
 }

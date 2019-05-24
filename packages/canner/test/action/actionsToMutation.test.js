@@ -1,7 +1,7 @@
-import actionToMutation from '../../src/action/actionToMutation';
-import {objectToQueries} from '../../src/query/utils';
-import {get} from 'lodash';
+import { get } from 'lodash';
 import gql from 'graphql-tag';
+import actionToMutation from '../../src/action/actionToMutation';
+import { objectToQueries } from '../../src/query/utils';
 
 describe('actions to variables', () => {
   it('update array', () => {
@@ -11,24 +11,24 @@ describe('actions to variables', () => {
         key: 'posts',
         id: 'id1',
         value: {
-          "title": "123"
-        }
-      }
-    }
+          title: '123',
+        },
+      },
+    };
 
     expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
       $payload: 'PostUpdateInput!',
-      $where: 'PostWhereUniqueInput!'
+      $where: 'PostWhereUniqueInput!',
     });
 
     expect(get(actionToMutation(updateAction), 'mutation.fields.updatePost')).toEqual({
       args: {
         data: '$payload',
-        where: '$where'
+        where: '$where',
       },
       fields: {
-        id: null
-      }
+        id: null,
+      },
     });
   });
 
@@ -39,10 +39,10 @@ describe('actions to variables', () => {
         key: 'posts',
         id: 'id1',
         value: {
-          "title": "123"
-        }
-      }
-    }
+          title: '123',
+        },
+      },
+    };
 
     expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
       $payload: 'PostCreateInput!',
@@ -50,11 +50,11 @@ describe('actions to variables', () => {
 
     expect(get(actionToMutation(updateAction), 'mutation.fields.createPost')).toEqual({
       args: {
-        data: '$payload'
+        data: '$payload',
       },
       fields: {
-        id: null
-      }
+        id: null,
+      },
     });
   });
 
@@ -65,22 +65,22 @@ describe('actions to variables', () => {
         key: 'posts',
         id: 'id1',
         value: {
-          "title": "123"
-        }
-      }
-    }
+          title: '123',
+        },
+      },
+    };
 
     expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
-      $where: 'PostWhereUniqueInput!'
+      $where: 'PostWhereUniqueInput!',
     });
 
     expect(get(actionToMutation(updateAction), 'mutation.fields.deletePost')).toEqual({
       args: {
-        where: '$where'
+        where: '$where',
       },
       fields: {
-        id: null
-      }
+        id: null,
+      },
     });
   });
 
@@ -90,22 +90,22 @@ describe('actions to variables', () => {
       payload: {
         key: 'user',
         value: {
-          "title": "123"
-        }
-      }
-    }
+          title: '123',
+        },
+      },
+    };
 
     expect(get(actionToMutation(updateAction), 'mutation.args')).toEqual({
-      $payload: 'UserUpdateInput!'
+      $payload: 'UserUpdateInput!',
     });
 
     expect(get(actionToMutation(updateAction), 'mutation.fields.updateUser')).toEqual({
       args: {
-        data: '$payload'
+        data: '$payload',
       },
       fields: {
-        __typename: null
-      }
+        __typename: null,
+      },
     });
   });
 });
@@ -117,13 +117,11 @@ describe('integration', () => {
       payload: {
         key: 'user',
         value: {
-          "title": "123"
-        }
-      }
+          title: '123',
+        },
+      },
     };
     const mutation = objectToQueries(actionToMutation(updateAction), false);
-    expect(() => {
-      gql`${mutation}`;
-    }).not.toThrow();
+    expect(() => gql`${mutation}`).not.toThrow();
   });
 });

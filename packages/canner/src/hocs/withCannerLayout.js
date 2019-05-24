@@ -1,32 +1,33 @@
 // @flow
 
-import React, {useContext, useMemo} from 'react';
-import {Context} from 'canner-helpers';
-import {isFunction, isEqual} from 'lodash';
+import React, { useContext, useMemo } from 'react';
+import { Context } from 'canner-helpers';
+import { isFunction, isEqual } from 'lodash';
 // hooks
 import useRefId from '../hooks/useRefId';
 import useOnChange from '../hooks/useOnChange';
 import useRecordValue from '../hooks/useRecordValue';
+
 export default function withCannerLayout(Com: any) {
-  return (React.memo: any)(function LayoutWithCanner(props: any) {
+  return (React.memo: any)((props: any) => {
     const {
       pattern,
       keyName,
       renderChildren,
-      refId
+      refId,
     } = props;
     const contextValue = useContext(Context);
     const {
       rootValue,
-      request
+      request,
     } = contextValue;
-    const myRefId = useRefId({pattern, keyName, refId});
-    const {onChange} = useOnChange({rootValue, request});
-    const {recordValue} = useRecordValue({rootValue, refId});
+    const myRefId = useRefId({ pattern, keyName, refId });
+    const { onChange } = useOnChange({ rootValue, request });
+    const { recordValue } = useRecordValue({ rootValue, refId });
     const myContextValue = useMemo(() => ({
       ...contextValue,
       refId: myRefId,
-      renderChildren
+      renderChildren,
     }), [myRefId.toString(), recordValue, rootValue]);
     return (
       <Context.Provider value={myContextValue}>
@@ -38,16 +39,14 @@ export default function withCannerLayout(Com: any) {
           onChange={onChange}
         />
       </Context.Provider>
-    )
-  }, function(prevProps, nextProps) {
-    return Object.entries(nextProps).reduce((eq, [k, v]: any) => {
-      if (isFunction(v)) {
-        return eq;
-      }
-      if (k === 'refId') {
-        return eq && prevProps[k].toString() === v.toString();
-      }
-      return isEqual(v, prevProps[k]) && eq;
-    }, true)
-  })
+    );
+  }, (prevProps, nextProps) => Object.entries(nextProps).reduce((eq, [k, v]: any) => {
+    if (isFunction(v)) {
+      return eq;
+    }
+    if (k === 'refId') {
+      return eq && prevProps[k].toString() === v.toString();
+    }
+    return isEqual(v, prevProps[k]) && eq;
+  }, true));
 }

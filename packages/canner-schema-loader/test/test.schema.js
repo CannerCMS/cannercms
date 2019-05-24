@@ -9,19 +9,21 @@ export default <root>
     <array keyName="withBuilder" ui="tag" />
     <array keyName="withBuilder2" ui="gallery" />
     <object keyName="withBuilder3" ui="variants" />
-    <array keyName="withCannerConfigInPackageJson" ui="table"/>
-    <array keyName="uiParams" ui="table"
+    <array keyName="withCannerConfigInPackageJson" ui="table" />
+    <array
+      keyName="uiParams"
+      ui="table"
       uiParams={{
         columns: [{
           title: 'name',
-          dataIndex: 'name'
-        }]
+          dataIndex: 'name',
+        }],
       }}
     >
       <array keyName="nested">
-        <string keyName="string"/>
+        <string keyName="string" />
       </array>
     </array>
     <string keyName="packageName" packageName="./fake-string-component" />
-  </object>  
-</root>
+  </object>
+</root>;

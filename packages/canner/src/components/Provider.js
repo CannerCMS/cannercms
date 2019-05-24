@@ -2,12 +2,12 @@
  * @flow
  */
 
-import React, {useState, useImperativeHandle, forwardRef} from 'react';
-import {ApolloProvider} from 'react-apollo';
-import {actionToMutation, actionsToVariables} from '../action';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
+import { ApolloProvider } from 'react-apollo';
 import gql from 'graphql-tag';
-import {objectToQueries} from '../query/utils';
-import {groupBy, mapValues} from 'lodash';
+import { groupBy, mapValues } from 'lodash';
+import { actionToMutation, actionsToVariables } from '../action';
+import { objectToQueries } from '../query/utils';
 import log from '../utils/log';
 import { parseConnectionToNormal } from '../hocs/utils';
 import useActionManager from '../hooks/useActionManager';
@@ -15,8 +15,8 @@ import useQuery from '../hooks/useQuery';
 import useApollo from '../hooks/useApollo';
 import useOnDeployManager from '../hooks/useOnDeployManager';
 import useCache from '../hooks/useCache';
-import type {ProviderProps} from './types';
-import type {Action, ActionType} from '../action/types';
+import type { ProviderProps } from './types';
+import type { Action, ActionType } from '../action/types';
 
 type Props = ProviderProps;
 
@@ -29,7 +29,7 @@ function Provider({
   dataDidChange,
   errorHandler,
   children,
-  afterDeploy
+  afterDeploy,
 }: Props, ref: any) {
   if (!schema) {
     throw new Error('Missing schema property.');
@@ -50,18 +50,18 @@ function Provider({
   const apollo = useApollo({
     schema,
     routes,
-    client
+    client,
   });
   const cache = useCache();
   const onDeployManager = useOnDeployManager();
 
   const [changedData, setChangedData] = useState(null);
-  
+
 
   const updateChangedData = () => {
     const actions = actionManager.getActions();
     let changedData = groupBy(actions, (action => action.payload.key));
-    changedData = mapValues(changedData, value => {
+    changedData = mapValues(changedData, (value) => {
       if (value[0].type === 'UPDATE_OBJECT') {
         return true;
       }
@@ -70,7 +70,7 @@ function Provider({
     if (dataDidChange) {
       dataDidChange(changedData);
     }
-    setChangedData(changedData)
+    setChangedData(changedData);
   };
 
   const fetch = (key: string, refetch: boolean = false): Promise<*> => {
@@ -82,11 +82,11 @@ function Provider({
       return Promise.resolve(cachedData);
     }
     // get the data from apollo and store in cache
-    return apollo.fetch(key, query).then(({data}) => {
+    return apollo.fetch(key, query).then(({ data }) => {
       const cachedData = {
         data,
-        rootValue: parseConnectionToNormal(data)
-      }
+        rootValue: parseConnectionToNormal(data),
+      };
       log('fetch', 'apollo', cachedData);
       cache.setData(queryKey, cachedData);
       return cachedData;
@@ -97,14 +97,14 @@ function Provider({
     const queryKey = query.getQueryKey(key);
     const subscriptionId = cache.subscribe(queryKey, callback);
     return {
-      unsubscribe: () => cache.unsubscribe(queryKey, subscriptionId)
-    }
-  }
+      unsubscribe: () => cache.unsubscribe(queryKey, subscriptionId),
+    };
+  };
 
   const updateQuery = (paths: Array<string>, args: Object): Promise<*> => {
     query.updateQueries(paths, 'args', args);
     const variables = query.getVariables();
-    log('updateQuery', {variables})
+    log('updateQuery', { variables });
     return fetch(paths[0], true)
       .then(() => true);
   };
@@ -118,7 +118,7 @@ function Provider({
     updateChangedData();
 
     return Promise.resolve();
-  }
+  };
 
   const deploy = async (key: string, id?: string): Promise<*> => {
     let actions = actionManager.getActions(key, id);
@@ -131,7 +131,7 @@ function Provider({
     const queryKey = query.getQueryKey(key);
     const cachedData = cache.getData(queryKey);
     const mutatedData = cachedData.data[key];
-    const {error} = onDeployManager.publish(key, mutatedData);
+    const { error } = onDeployManager.publish(key, mutatedData);
     if (error) {
       errorHandler && errorHandler(new Error('Invalid field'));
       return Promise.reject(error);
@@ -139,15 +139,15 @@ function Provider({
     try {
       const result = await client.mutate({
         mutation: gql`${mutation}`,
-        variables
+        variables,
       });
-      const {data} = result;
+      const { data } = result;
       await reset();
       log('deploy', key, {
         id,
         result,
         mutation,
-        variables
+        variables,
       });
       actionManager.removeActions(key, id);
       updateChangedData();
@@ -155,7 +155,7 @@ function Provider({
         key,
         id: id || '',
         result: data,
-        actions
+        actions,
       });
       return data;
     } catch (e) {
@@ -163,16 +163,15 @@ function Provider({
       log('deploy', e, key, {
         id,
         mutation,
-        variables
+        variables,
       });
       // to hocs
       throw e;
     }
-
   };
 
-  const request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = {write: true}): Promise<*> => {
-    const {write = true} = options;
+  const request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = { write: true }): Promise<*> => {
+    const { write = true } = options;
     const actions = [].concat(action);
     if (actions.length === 0) {
       return Promise.resolve();
@@ -184,13 +183,13 @@ function Provider({
       log('request', action, data);
     }
     return Promise.resolve();
-  }
+  };
 
   const updateCachedData = (actions: Array<Action<ActionType>>) => {
     const queryKey = query.getQueryKey(routes[0]);
     cache.mutate(queryKey, actions);
     return cache.getData(queryKey);
-  }
+  };
 
   useImperativeHandle(ref, () => ({
     deploy,
@@ -201,24 +200,24 @@ function Provider({
     <ApolloProvider client={client}>
       {/* $FlowFixMe */}
       {React.cloneElement(children, {
-        request: request,
-        deploy: deploy,
-        fetch: fetch,
-        reset: reset,
+        request,
+        deploy,
+        fetch,
+        reset,
         updateQuery,
         subscribe,
-        query: query,
+        query,
         client,
         onDeploy: onDeployManager.subscribe,
         removeOnDeploy: onDeployManager.unsubscribe,
-        dataChanged: changedData
+        dataChanged: changedData,
       })}
     </ApolloProvider>
   );
 }
 
 function removeIdInCreateArray(actions: Array<Action<ActionType>>) {
-  return actions.map(action => {
+  return actions.map((action) => {
     if (action.type === 'CREATE_ARRAY') {
       const newAction = JSON.parse(JSON.stringify(action));
       delete newAction.payload.value.id;

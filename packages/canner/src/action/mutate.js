@@ -1,20 +1,25 @@
 // @flow
-import produce, {setAutoFreeze} from 'immer';
-import {get, set, findIndex, remove, isArray} from 'lodash';
+import produce, { setAutoFreeze } from 'immer';
+import {
+  get, set, findIndex, remove, isArray,
+} from 'lodash';
 
-import type {Action, ActionType} from './types';
+import type { Action, ActionType } from './types';
+
 setAutoFreeze(false);
 
 export default function mutate(originValue: Object, action: Action<ActionType>): any {
-  let {key, id, value, path, relation} = action.payload;
-  return produce(originValue, draft => {
+  const {
+    key, id, value, path, relation,
+  } = action.payload;
+  return produce(originValue, (draft) => {
     switch (action.type) {
       case 'CREATE_ARRAY': {
         if (draft[key].edges) { // array connection
           draft[key].edges.push({
             __typename: null,
             cursor: value.id,
-            node: value
+            node: value,
           });
         } else {
           draft[key].push(value);
@@ -23,25 +28,21 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
       }
       case 'UPDATE_ARRAY': {
         if (draft[key].edges) {
-          draft[key].edges = draft[key].edges.map(item => {
-            return item.cursor === id ?
-              {
-                __typename: item.__typename,
-                cursor: id,
-                node: {...item.node, ...value}
-              }:
-              item
-          });
+          draft[key].edges = draft[key].edges.map(item => (item.cursor === id
+            ? {
+              __typename: item.__typename,
+              cursor: id,
+              node: { ...item.node, ...value },
+            }
+            : item));
         } else {
-          draft[key] = draft[key].map(item => {
-            return item.id === id ?
-              {...item, ...value} :
-              item
-          });
-        }      
+          draft[key] = draft[key].map(item => (item.id === id
+            ? { ...item, ...value }
+            : item));
+        }
         break;
       }
-      
+
       case 'DELETE_ARRAY': {
         if (draft[key].edges) {
           draft[key].edges = draft[key].edges.filter(item => item.cursor !== id);
@@ -52,7 +53,7 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
       }
 
       case 'UPDATE_OBJECT': {
-        draft[key] = {...draft[key], ...value};
+        draft[key] = { ...draft[key], ...value };
         break;
       }
 
@@ -63,29 +64,26 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
           // $FlowFixMe
           let relationValue = get(draft, [key, 'edges', index, 'node'].concat(path.split('/')), []);
           if (relation && relation.type === 'toOne') {
-            relationValue = {...value, __typename: null};
+            relationValue = { ...value, __typename: null };
           } else {
-            const index = relationValue.findIndex(function(v) {return v.id === value.id});
+            const index = relationValue.findIndex(v => v.id === value.id);
             if (index === -1) {
-              relationValue.push({...value, __typename: null});
+              relationValue.push({ ...value, __typename: null });
             } else {
-              relationValue[index] = {...value, __typename: null};
+              relationValue[index] = { ...value, __typename: null };
             }
           }
           // $FlowFixMe
           set(draft, [key, 'edges', index, 'node'].concat(path.split('/')), relationValue);
+        } else if (relation && relation.type === 'toOne') {
+          // $FlowFixMe
+          set(draft, [key].concat(path.split('/')), { ...value, __typename: null });
         } else {
-          if (relation && relation.type === 'toOne') {
-            // $FlowFixMe
-            set(draft, [key].concat(path.split('/')), {...value, __typename: null});
-          } else {
-            // $FlowFixMe
-            const relationValue = get(draft, [key].concat(path.split('/')), []);
-            relationValue.push({...value, __typename: null});
-            // $FlowFixMe
-            set(draft, [key].concat(path.split('/')), relationValue);
-
-          }
+          // $FlowFixMe
+          const relationValue = get(draft, [key].concat(path.split('/')), []);
+          relationValue.push({ ...value, __typename: null });
+          // $FlowFixMe
+          set(draft, [key].concat(path.split('/')), relationValue);
         }
         break;
       }
@@ -120,24 +118,20 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
         if (id) {
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
           if (index === -1) {
-            throw new Error(`Can't find the id in rootValue`);
+            throw new Error('Can\'t find the id in rootValue');
           }
           let relationValue = draft[key].edges[index].node[path] || [];
           if (relation && relation.type === 'toOne') {
-            relationValue = {...value, __typename: null};
-          } else {
-            if(!relationValue.find(v => v.id === value.id)) {
-              relationValue.push({...value, __typename: null});
-            }
+            relationValue = { ...value, __typename: null };
+          } else if (!relationValue.find(v => v.id === value.id)) {
+            relationValue.push({ ...value, __typename: null });
           }
           draft[key].edges[index].node[path] = relationValue;
+        } else if (relation && relation.type === 'toOne') {
+          draft[key][path] = { ...value, __typename: null };
         } else {
-          if (relation && relation.type === 'toOne') {
-            draft[key][path] = {...value, __typename: null};
-          } else {
-            draft[key][path] = draft[key][path] || [];
-            draft[key][path].push({...value, __typename: null});
-          }
+          draft[key][path] = draft[key][path] || [];
+          draft[key][path].push({ ...value, __typename: null });
         }
         break;
       }
@@ -146,7 +140,7 @@ export default function mutate(originValue: Object, action: Action<ActionType>):
         if (id) {
           const index = findIndex(draft[key].edges || [], item => item.cursor === id);
           if (index === -1) {
-            throw new Error(`Can't find the id in rootValue`);
+            throw new Error('Can\'t find the id in rootValue');
           }
           const relationValue = draft[key].edges[index].node[path];
           if (isArray(relationValue)) {

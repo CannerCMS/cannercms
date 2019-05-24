@@ -1,20 +1,26 @@
 // @flow
+/* eslint import/no-cycle: 0 */
 
 import forEach from 'lodash/forEach';
-import {createField, isCompositeType} from './utils';
-import {types} from './types';
+import { createField, isCompositeType } from './utils';
+import { types } from './types';
 import NullField from './nullField';
 
-import type {Field} from './types';
+import type { Field } from './types';
 
 
 export default class ArrayField implements Field {
   schema: any;
+
   rootSchema: any;
+
   key: string;
+
   isEntity: boolean;
 
-  constructor({rootSchema, schema, key, isEntity}: {rootSchema: any, schema: any, key: string, isEntity?: ?boolean}) {
+  constructor({
+    rootSchema, schema, key, isEntity,
+  }: {rootSchema: any, schema: any, key: string, isEntity?: ?boolean}) {
     this.key = key;
     this.rootSchema = rootSchema;
     this.schema = schema;
@@ -39,7 +45,7 @@ export default class ArrayField implements Field {
 
   getChild(fieldName: string) {
     if (!this.schema.items || !this.schema.items.items || !this.schema.items.items[fieldName]) {
-      return new NullField({key: fieldName});
+      return new NullField({ key: fieldName });
     }
 
     if (isCompositeType(this.schema.items.type)) {

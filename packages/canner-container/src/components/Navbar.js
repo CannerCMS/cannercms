@@ -1,17 +1,20 @@
 // @flow
 
-import React from 'react'
-// $FlowFixMe: antd.notification
-import {Button, Layout, Menu, Badge, Icon, notification, Drawer} from 'antd';
-import type {NavbarProps} from './types';
+import React from 'react';
+import {
+  // $FlowFixMe: antd.notification
+  Button, Layout, Menu, Badge, Icon, notification, Drawer,
+} from 'antd';
 import styled from 'styled-components';
-const {Header} = Layout;
+import type { NavbarProps } from './types';
+
+const { Header } = Layout;
 // TODO: fix flow type
 
 const MenuText = styled.span`
-  color: ${(props: any) => props.theme === 'dark' ? 'rgba(255, 255, 255, .65)' : 'rgba(0, 0, 0, .85)'}
+  color: ${(props: any) => (props.theme === 'dark' ? 'rgba(255, 255, 255, .65)' : 'rgba(0, 0, 0, .85)')}
   &:hover {
-    color: ${(props: any) => props.theme === 'dark' ? '#fff' : '#333'}
+    color: ${(props: any) => (props.theme === 'dark' ? '#fff' : '#333')}
   }
 `;
 
@@ -36,38 +39,38 @@ type State = {
 export default class Navbar extends React.Component<NavbarProps, State> {
   state = {
     deploying: false,
-    drawerVisible: false
+    drawerVisible: false,
   }
 
   triggerDrawer = () => {
-    this.setState({
-      drawerVisible: !this.state.drawerVisible
-    });
+    this.setState(prevState => ({
+      drawerVisible: !prevState.drawerVisible,
+    }));
   }
 
   deploy = () => {
-    const {deploy, dataChanged} = this.props;
+    const { deploy, dataChanged } = this.props;
     if (deploy) {
       this.setState({
-        deploying: true
+        deploying: true,
       });
       const key = Object.keys(dataChanged)[0];
       return deploy(key)
         .then(() => {
           setTimeout(() => {
             this.setState({
-              deploying: false
+              deploying: false,
             });
             notification.success({
               message: 'Save successfully!',
               description: 'Your changes have been saved.',
-              placement: 'bottomRight'
+              placement: 'bottomRight',
             });
-          }, 1000)
+          }, 1000);
         })
         .catch(() => {
           this.setState({
-            deploying: false
+            deploying: false,
           });
         });
     }
@@ -80,9 +83,11 @@ export default class Navbar extends React.Component<NavbarProps, State> {
   }
 
   render() {
-    const {dataChanged, logo, renderMenu, showSaveButton, theme = "dark", style = {}, menuStyle = {}, drawerStyle = {}} = this.props;
-    const {drawerVisible} = this.state;
-    const {deploying} = this.state;
+    const {
+      dataChanged, logo, renderMenu, showSaveButton, theme = 'dark', style = {}, menuStyle = {}, drawerStyle = {},
+    } = this.props;
+    const { drawerVisible } = this.state;
+    const { deploying } = this.state;
     const hasChanged = dataChanged && Object.keys(dataChanged).length;
     const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
@@ -93,14 +98,16 @@ export default class Navbar extends React.Component<NavbarProps, State> {
 
     const renderNav = ({
       mode,
-      theme
+      theme,
     }) => (
       <React.Fragment>
-        { renderMenu && renderMenu({mode, theme}) }
+        { renderMenu && renderMenu({ mode, theme }) }
         <Menu
           mode={mode}
           theme={theme}
-          style={{ lineHeight: '60px', borderBottom: 'none', display: mode === 'horizontal' ? 'inline-block' : 'block', ...menuStyle }}
+          style={{
+            lineHeight: '60px', borderBottom: 'none', display: mode === 'horizontal' ? 'inline-block' : 'block', ...menuStyle,
+          }}
           selectedKeys={[]}
           onClick={this.headerMenuOnClick}
         >
@@ -113,40 +120,44 @@ export default class Navbar extends React.Component<NavbarProps, State> {
           }
           {
             showSaveButton && !deploying && (
-              hasChanged ?
-              <Menu.Item key="deploy" data-testid="navbar-deploy-button" >
-                <Badge dot>
-                  <MenuText theme={theme}>
+              hasChanged
+                ? (
+                  <Menu.Item key="deploy" data-testid="navbar-deploy-button">
+                    <Badge dot>
+                      <MenuText theme={theme}>
                     Save
-                  </MenuText>
-                </Badge>
-              </Menu.Item> :
-              <Menu.Item key="saved" data-testid="navbar-saved-button">
-                <MenuText theme={theme}>
+                      </MenuText>
+                    </Badge>
+                  </Menu.Item>
+                )
+                : (
+                  <Menu.Item key="saved" data-testid="navbar-saved-button">
+                    <MenuText theme={theme}>
                   Saved
-                </MenuText>
-              </Menu.Item>
+                    </MenuText>
+                  </Menu.Item>
+                )
             )
           }
         </Menu>
       </React.Fragment>
     );
     return (
-      <Header style={{padding: "0 20px", textAlign: 'right', ...style}}>
+      <Header style={{ padding: '0 20px', textAlign: 'right', ...style }}>
         <HeaderMenu>
-          {renderNav({mode: 'horizontal', theme})}
+          {renderNav({ mode: 'horizontal', theme })}
         </HeaderMenu>
         <DrawerMenu>
-          <Button icon="setting" shape="circle" ghost onClick={this.triggerDrawer} style={{border: 0}}/>
+          <Button icon="setting" shape="circle" ghost onClick={this.triggerDrawer} style={{ border: 0 }} />
           <Drawer
             height="auto"
-            style={{padding: 0, height: 'auto', ...drawerStyle}}
-            placement={"top"}
+            style={{ padding: 0, height: 'auto', ...drawerStyle }}
+            placement="top"
             closable={false}
             visible={drawerVisible}
             onClose={this.triggerDrawer}
           >
-          {renderNav({mode: 'inline', theme})}
+            {renderNav({ mode: 'inline', theme })}
           </Drawer>
         </DrawerMenu>
       </Header>

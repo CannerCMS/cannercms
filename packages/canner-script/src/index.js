@@ -16,26 +16,26 @@ import {
   ComponentModel,
   EnumModel,
   PageModel,
-  JsonModel
+  JsonModel,
 } from './models';
-import type {CannerSchema, Props} from './flow-types';
-import {createLayoutVisitor} from './layout';
+import type { CannerSchema, Props } from './flow-types';
+import { createLayoutVisitor } from './layout';
 import visitorManager from './visitorManager';
 import validator from './validator';
 import configuration from './configure';
-import {getIntlMessage} from './utils';
+import { getIntlMessage } from './utils';
 
 // layout
 export const Layout = 'Layout';
-export const Collapse = ({attributes, children}: Props) => <Layout ui="collapse" {...attributes}>{children}</Layout>;
-export const Block = ({attributes, children}: Props) => <Layout ui="block" {...attributes}>{children}</Layout>;
-export const Default = ({attributes, children}: Props) => <Layout ui="default" {...attributes}>{children}</Layout>;
-export const Tabs = ({attributes, children}: Props) => <Layout ui="tabs" {...attributes}>{children}</Layout>;
-export const Focus = ({attributes, children}: Props) => <Layout ui="focus" {...attributes}>{children}</Layout>;
-export const Condition = ({attributes, children}: Props) => <Layout ui="condition" {...attributes}>{children}</Layout>;
-export const Row = ({attributes, children}: Props) => <Layout ui="row" {...attributes}>{children}</Layout>;
-export const Col = ({attributes, children}: Props) => <Layout ui="col" {...attributes}>{children}</Layout>;
-export const Body = ({attributes, children}: Props) => <Layout ui="body" {...attributes}>{children}</Layout>;
+export const Collapse = ({ attributes, children }: Props) => <Layout ui="collapse" {...attributes}>{children}</Layout>;
+export const Block = ({ attributes, children }: Props) => <Layout ui="block" {...attributes}>{children}</Layout>;
+export const Default = ({ attributes, children }: Props) => <Layout ui="default" {...attributes}>{children}</Layout>;
+export const Tabs = ({ attributes, children }: Props) => <Layout ui="tabs" {...attributes}>{children}</Layout>;
+export const Focus = ({ attributes, children }: Props) => <Layout ui="focus" {...attributes}>{children}</Layout>;
+export const Condition = ({ attributes, children }: Props) => <Layout ui="condition" {...attributes}>{children}</Layout>;
+export const Row = ({ attributes, children }: Props) => <Layout ui="row" {...attributes}>{children}</Layout>;
+export const Col = ({ attributes, children }: Props) => <Layout ui="col" {...attributes}>{children}</Layout>;
+export const Body = ({ attributes, children }: Props) => <Layout ui="body" {...attributes}>{children}</Layout>;
 
 // validator config
 export const configure = configuration.configure;
@@ -49,13 +49,13 @@ export default function builder(tag: string | Function, attributes: Object, ...c
   if (typeof tag === 'function') {
     return tag({
       attributes,
-      children
+      children,
     });
   }
   attributes = attributes || {};
   // transform some value to react intl component
   i18n(attributes);
-  switch(tag) {
+  switch (tag) {
     case 'string':
       return createJSON(StringModel, [attributes, children]);
     case 'number':
@@ -67,9 +67,9 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     case 'object':
       return createJSON(ObjectModel, [attributes, children]);
     case 'arrayType':
-      return createJSON(ArrayModel, [{...attributes, defOnly: true}, children]);
+      return createJSON(ArrayModel, [{ ...attributes, defOnly: true }, children]);
     case 'objectType':
-      return createJSON(ObjectModel, [{...attributes, defOnly: true}, children]);
+      return createJSON(ObjectModel, [{ ...attributes, defOnly: true }, children]);
     case 'geoPoint':
       return createJSON(GeoPointModel, [attributes, children]);
     case 'dateTime':
@@ -93,61 +93,61 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     case 'toolbar': {
       return children.reduce((result, child) => {
         result[child.type] = {
-          ...child
+          ...child,
         };
         return result;
       }, {
         ...attributes,
-        __TOOLBAR__: true
+        __TOOLBAR__: true,
       });
     }
     case 'sorter': {
       return {
         ...attributes,
-        type: 'sorter'
-      }
+        type: 'sorter',
+      };
     }
     case 'pagination': {
       return {
         ...attributes,
-        type: 'pagination'
-      }
+        type: 'pagination',
+      };
     }
     case 'textFilter': {
       return {
         ...attributes,
-        type: 'text'
+        type: 'text',
       };
     }
     case 'numberFilter': {
       return {
         ...attributes,
-        type: 'number'
+        type: 'number',
       };
     }
     case 'dateFilter': {
       return {
         ...attributes,
-        type: 'date'
+        type: 'date',
       };
     }
     case 'relationSelectFilter': {
       return {
         ...attributes,
-        type: 'relation'
+        type: 'relation',
       };
     }
     case 'selectFilter': {
       return {
         ...attributes,
-        type: 'select'
+        type: 'select',
       };
     }
     case 'filter': {
       return {
         ...attributes,
         type: 'filter',
-        filters: children
+        filters: children,
       };
     }
     case 'actions': {
@@ -157,26 +157,26 @@ export default function builder(tag: string | Function, attributes: Object, ...c
           result[child.type] = child;
           return result;
         }, {}),
-        type: 'actions'
+        type: 'actions',
       };
     }
     case 'export': {
       return {
         ...attributes,
-        type: 'export'
+        type: 'export',
       };
     }
     case 'import': {
       return {
         ...attributes,
-        type: 'import'
+        type: 'import',
       };
     }
     case 'Layout': {
       const insertionVistor = createLayoutVisitor(attributes, children).visitor;
       visitorManager.addVisitor(insertionVistor);
       if (attributes.injectValue) {
-        const injectVistor = createLayoutVisitor({...attributes, layoutType: 'injection'}, children).visitor;
+        const injectVistor = createLayoutVisitor({ ...attributes, layoutType: 'injection' }, children).visitor;
         visitorManager.addVisitor(injectVistor);
       }
       return children;
@@ -187,13 +187,13 @@ export default function builder(tag: string | Function, attributes: Object, ...c
 }
 
 function createJSON(Model: any, args: Array<*>) {
-  let json = new Model(...args).toJson();
+  const json = new Model(...args).toJson();
   validator.validate(json);
   return json;
 }
 
 function i18n(attrs: Object) {
-  ['title', 'description', 'uiParams', 'label', 'options', 'placeholder', 'fields'].forEach(key => {
+  ['title', 'description', 'uiParams', 'label', 'options', 'placeholder', 'fields'].forEach((key) => {
     if (key in attrs) {
       attrs[key] = getIntlMessage(attrs[key]);
     }

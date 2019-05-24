@@ -1,11 +1,11 @@
 // @flow
 
 import BasicModel from './basic';
-import type {CannerSchema} from '../flow-types';
+import type { CannerSchema } from '../flow-types';
 
 export default class RelationModel extends BasicModel {
   // https://github.com/babel/babel/issues/8417
-  /*::
+  /* ::
   attributes: Object;
   */
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
@@ -17,7 +17,7 @@ export default class RelationModel extends BasicModel {
       }
     } else {
       this.attributes.toolbar = {
-        pagination: {}
+        pagination: {},
       };
     }
   }

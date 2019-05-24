@@ -1,5 +1,5 @@
 // @flow
-import type {ApolloClient} from "apollo-boost";
+import type { ApolloClient } from 'apollo-boost';
 import * as React from 'react';
 
 export type CannerSchema = {

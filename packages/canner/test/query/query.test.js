@@ -1,8 +1,11 @@
-import {Query} from '../../src/query';
-import {schemaToQueriesObject} from '../../src/query/utils';
+import { Query } from '../../src/query';
+import { schemaToQueriesObject } from '../../src/query/utils';
 
 describe('query', () => {
-  let schema, queries, query, variables;
+  let schema;
+  let queries;
+  let query;
+  let variables;
   beforeEach(() => {
     schema = {
       posts: {
@@ -11,16 +14,16 @@ describe('query', () => {
           type: 'object',
           items: {
             title: {
-              type: 'string'
-            }
-          }
-        }
-      }
+              type: 'string',
+            },
+          },
+        },
+      },
     };
-    queries = schemaToQueriesObject(schema, schema, {firstLayer: true}).queriesObj;
-    variables = schemaToQueriesObject(schema, schema, {firstLayer: true}).variables;
+    queries = schemaToQueriesObject(schema, schema, { firstLayer: true }).queriesObj;
+    variables = schemaToQueriesObject(schema, schema, { firstLayer: true }).variables;
     query = new Query({
-      schema
+      schema,
     });
   });
 
@@ -46,29 +49,29 @@ describe('query', () => {
 
   it('should update posts args', () => {
     query.updateQueries(['posts'], 'args', {
-      orderBy: 'title_DESC'
+      orderBy: 'title_DESC',
     });
     expect(query.variables.$postsOrderBy).toEqual('title_DESC');
   });
 
   it('should get gql when toolbar sync', () => {
-    expect(query.toGQL('posts')).toEqual(`query($postsWhere: PostWhereInput){posts: postsConnection(where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
+    expect(query.toGQL('posts')).toEqual('query($postsWhere: PostWhereInput){posts: postsConnection(where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}');
   });
 
   it('should get gql when toolbar async', () => {
     schema.posts.toolbar = {
-      async: true
-    }
+      async: true,
+    };
     query = new Query({
-      schema
+      schema,
     });
-    expect(query.toGQL('posts')).toEqual(`query($postsFirst: Int,$postsWhere: PostWhereInput){posts: postsConnection(first: $postsFirst,where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
+    expect(query.toGQL('posts')).toEqual('query($postsFirst: Int,$postsWhere: PostWhereInput){posts: postsConnection(first: $postsFirst,where: $postsWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}');
   });
 
   it('should get queryKey', () => {
     query = new Query({
-      schema
+      schema,
     });
-    expect(query.getQueryKey('posts')).toEqual(`posts: postsConnection(first: $postsFirst,after: $postsAfter,last: $postsLast,before: $postsBefore,where: $postsWhere,orderBy: $postsOrderBy)`);
+    expect(query.getQueryKey('posts')).toEqual('posts: postsConnection(first: $postsFirst,after: $postsAfter,last: $postsLast,before: $postsBefore,where: $postsWhere,orderBy: $postsOrderBy)');
   });
 });

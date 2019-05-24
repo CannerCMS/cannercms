@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Item} from 'canner-helpers';
+import { Item } from 'canner-helpers';
 import type CannerRefId from 'canner-ref-id';
 
 type Props = {
@@ -22,7 +22,7 @@ type Props = {
 };
 
 export default function Condition({
-  recordValue, match, defaultMode = 'hidden', routerParams: {operator}, disabled, hidden
+  recordValue, match, defaultMode = 'hidden', routerParams: { operator }, disabled, hidden,
 }: Props) {
   const matchHidden = defaultMode === 'hidden' ? match(recordValue, operator) : true;
   const matchDisabled = defaultMode === 'disabled' ? !match(recordValue, operator) : false;

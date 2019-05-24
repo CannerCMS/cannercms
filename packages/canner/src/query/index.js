@@ -1,16 +1,20 @@
 // @flow
 
-import {schemaToQueriesObject, objectToQueries} from './utils';
-import {mapValues, get, set, mapKeys} from 'lodash';
+import {
+  mapValues, get, set, mapKeys,
+} from 'lodash';
+import { schemaToQueriesObject, objectToQueries } from './utils';
 
 export class Query {
   schema: Object
+
   queries: Object
+
   variables: Object
 
-  constructor({schema}: {schema: Object}) {
+  constructor({ schema }: {schema: Object}) {
     this.schema = schema;
-    const {queriesObj, variables} = schemaToQueriesObject(schema);
+    const { queriesObj, variables } = schemaToQueriesObject(schema);
     this.variables = variables;
     this.queries = queriesObj;
   }
@@ -19,11 +23,15 @@ export class Query {
     const path = `${pathArr.join('.fields.')}.${field}`;
     if (field === 'args') {
       const args = get(this.queries, path) || {};
-      this.variables = {...this.variables, ...Object.keys(args).reduce((result: any, key: string) => {
-        result[args[key]] = value[key];
+      this.variables = {
+        ...this.variables,
+        ...Object.keys(args).reduce((result: any, key: string) => {
+          const rtn = result;
+          rtn[args[key]] = value[key];
 
-        return result;
-      }, {})};
+          return rtn;
+        }, {}),
+      };
     } else {
       set(this.queries, path, value);
     }
@@ -31,29 +39,27 @@ export class Query {
 
   getQueries = (pathArr: Array<string>): Object => {
     if (!pathArr || pathArr.length === 0) {
-      return {...this.queries};
+      return { ...this.queries };
     }
     const path = pathArr.join('.fields.');
-    return {...get(this.queries, path, {})};
+    return { ...get(this.queries, path, {}) };
   }
 
   toGQL = (key?: string): string => {
     const variables = this.getVariables();
     if (key) {
       const obj = this.getQueries([key]);
-      return objectToQueries({[key]: obj}, !obj.declareArgs, variables);  
-    } else {
-      return objectToQueries(this.queries, false, variables);
+      return objectToQueries({ [key]: obj }, !obj.declareArgs, variables);
     }
+    return objectToQueries(this.queries, false, variables);
   }
 
-  getGQLMap = (): Object => {
-    return Object.keys(this.schema).reduce((gqlMap, key) => {
-      const customizedGql = this.schema[key].graphql;
-      gqlMap[key] = customizedGql || this.toGQL(key);
-      return gqlMap
-    }, {});
-  }
+  getGQLMap = (): Object => Object.keys(this.schema).reduce((gqlMap, key) => {
+    const rtn = gqlMap;
+    const customizedGql = this.schema[key].graphql;
+    rtn[key] = customizedGql || this.toGQL(key);
+    return rtn;
+  }, {})
 
   getQueryKey = (key: string): string => {
     // return the string which includes the information of this query excluding the fields and declareArgs
@@ -61,12 +67,10 @@ export class Query {
     const queries = this.getQueries([key]);
     delete queries.fields;
     delete queries.declareArgs;
-    return objectToQueries({[key]: queries}, false)
+    return objectToQueries({ [key]: queries }, false);
   }
 
-  getVariables = () => {
-    return mapKeys(this.variables, (value, key) => key.substr(1));
-  }
+  getVariables = () => mapKeys(this.variables, (value, key) => key.substr(1))
 
   getArgs = (path: string) => {
     const queries = this.getQueries(path.split('/')).args || {};

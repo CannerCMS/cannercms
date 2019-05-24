@@ -1,10 +1,10 @@
-import {OnDeployManager} from '../../src/onDeployManager';
+import { OnDeployManager } from '../../src/onDeployManager';
 
 describe('onDeployManager class', () => {
   let onDeployManager;
 
   beforeEach(() => {
-    onDeployManager = new OnDeployManager(); 
+    onDeployManager = new OnDeployManager();
   });
 
   it('registerCallback', () => {

@@ -1,4 +1,4 @@
-import {genDefaultValue} from '../src/utils';
+import { genDefaultValue } from '../src/utils';
 
 describe('genDefaultValue', () => {
   it('should return value with given string', () => {
@@ -9,5 +9,5 @@ describe('genDefaultValue', () => {
   it('should retrun value with given funciton', () => {
     const defaultValue = () => 'value';
     expect(genDefaultValue(defaultValue)).toBe(defaultValue());
-  })
-})
+  });
+});

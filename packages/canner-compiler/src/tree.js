@@ -1,13 +1,14 @@
+/* eslint no-param-reassign: 0 */
 // @flow
-
 import get from 'lodash/get';
 import set from 'lodash/set';
 import isArray from 'lodash/isArray';
 import unset from 'lodash/unset';
-import type {Tree, NodeType, Route} from './types';
+import type { Tree, NodeType, Route } from './types';
 
 export default class TreeHandler {
   tree: Tree;
+
   constructor(tree: Tree) {
     this.tree = tree;
   }
@@ -57,7 +58,7 @@ export default class TreeHandler {
     routes.push('children');
     const children = get(this.tree, routes, []);
     children.forEach((child, i) => {
-      child = {...child, ...opts};
+      child = { ...child, ...opts };
       set(this.tree, routes.concat(i), child);
     });
     return this;
@@ -69,7 +70,7 @@ export default class TreeHandler {
     const children = get(this.tree, routes, []);
     children.forEach((child, i) => {
       if (filter(child)) {
-        child = {...child, ...opts};
+        child = { ...child, ...opts };
         set(this.tree, routes.concat(i), child);
       }
     });
@@ -123,7 +124,7 @@ export default class TreeHandler {
 
   getAncestryNodesFrom(route: Route, filter: Function) {
     const nodes = [];
-    let routes = route.split('.');
+    const routes = route.split('.');
     while (routes.length) {
       const parent = this.getParentNode(routes.join('.'));
       if (filter(parent)) {

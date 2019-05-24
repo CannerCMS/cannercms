@@ -22,24 +22,24 @@ beforeEach(() => {
   tree = new Tree(ast);
 });
 
-describe('get node from tree', function() {
-  it('get node', function() {
+describe('get node from tree', () => {
+  it('get node', () => {
     expect(tree.getNode('info.0'))
       .toEqual(ast.info.children[0]);
   });
-  it('get path', function() {
+  it('get path', () => {
     expect(tree.getPath('info.0'))
       .toMatchObject({
         parent: ast.info,
         node: ast.info.children[0],
       });
   });
-  it('get parent', function() {
+  it('get parent', () => {
     expect(tree.getParentNode('info.0'))
       .toEqual(ast.info);
   });
 
-  it('get sibling', function() {
+  it('get sibling', () => {
     expect(tree.getSiblingNodes('info.1'))
       .toEqual({
         top: [ast.info.children[0]],
@@ -47,22 +47,20 @@ describe('get node from tree', function() {
       });
   });
 
-  it('get ancestry', function() {
+  it('get ancestry', () => {
     expect(tree.getAncestryNodes('info.0'))
       .toEqual([ast, ast.info]);
   });
 
-  it('get ancestry from', function() {
-    expect(tree.getAncestryNodesFrom('info.0', (node) => {
-      return node.name === 'info';
-    }))
+  it('get ancestry from', () => {
+    expect(tree.getAncestryNodesFrom('info.0', node => node.name === 'info'))
       .toEqual([ast.info]);
   });
 });
 
-describe('edit node', function() {
-  it('set node', function() {
-    const newTree = {...ast};
+describe('edit node', () => {
+  it('set node', () => {
+    const newTree = { ...ast };
     const newNode = {
       name: 'address',
       nodeType: 'component.string.input',
@@ -71,8 +69,8 @@ describe('edit node', function() {
     expect(tree.setNode('info.0', newNode).getTree())
       .toEqual(newTree);
   });
-  it('setChildren', function() {
-    const newTree = {...ast};
+  it('setChildren', () => {
+    const newTree = { ...ast };
     const newNodes = [{
       name: 'address',
       nodeType: 'component.string.input',
@@ -81,19 +79,19 @@ describe('edit node', function() {
     expect(tree.setChildren('info', newNodes).getTree())
       .toEqual(newTree);
   });
-  it('injectChildren', function() {
-    expect(tree.injectChildren('info', {nice: true}).getTree().info.children[0].nice)
+  it('injectChildren', () => {
+    expect(tree.injectChildren('info', { nice: true }).getTree().info.children[0].nice)
       .toBe(true);
   });
-  it('remove node', function() {
-    const newTree = {...ast};
+  it('remove node', () => {
+    const newTree = { ...ast };
     newTree.info.children.shift();
     expect(tree.removeNode('info.0').getTree())
       .toEqual(newTree);
   });
 
-  it('push children', function() {
-    const newTree = {...ast};
+  it('push children', () => {
+    const newTree = { ...ast };
     const newNode = {
       name: 'address',
       nodeType: 'component.string.input',
@@ -102,8 +100,8 @@ describe('edit node', function() {
     expect(tree.pushChildren('info', newNode).getTree())
       .toEqual(newTree);
   });
-  it('unshift children', function() {
-    const newTree = {...ast};
+  it('unshift children', () => {
+    const newTree = { ...ast };
     const newNode = {
       name: 'address',
       nodeType: 'component.string.input',

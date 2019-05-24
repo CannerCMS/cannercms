@@ -10,7 +10,7 @@ module.exports = <root>
       <dateTime keyName="createAt" />
       <boolean keyName="draft" />
     </object>
-    <file keyName="featureImage" contentType="image"/>
+    <file keyName="featureImage" contentType="image" />
     <object keyName="pageProperty">
       <boolean keyName="onTop" />
       <number keyName="order" />
@@ -24,4 +24,4 @@ module.exports = <root>
       <geoPoint keyName="position" />
     </object>
   </array>
-</root>
+</root>;

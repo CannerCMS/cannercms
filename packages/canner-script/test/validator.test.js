@@ -39,17 +39,17 @@ describe('setConfig', () => {
   it('should change throwError', () => {
     validator.throwError = true;
     validator.setConfig({
-      throwError: false
+      throwError: false,
     });
     expect(validator.throwError).toBe(false);
   });
 
   it('should not add any new config', () => {
     validator.setConfig({
-      haha: true
+      haha: true,
     });
     expect(validator.haha).toBeUndefined();
-  })
+  });
 });
 
 describe('invalid', () => {
@@ -61,5 +61,5 @@ describe('invalid', () => {
   it('should return false', () => {
     validator.throwError = false;
     expect(validator.invalid()).toBe(false);
-  })
+  });
 });

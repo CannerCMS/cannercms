@@ -1,12 +1,12 @@
 // @flow
 
-import React, {useState, useCallback} from 'react';
-import {Layout} from 'antd';
-import {pickBy} from 'lodash';
+import React, { useState, useCallback } from 'react';
+import { Layout } from 'antd';
+import { pickBy } from 'lodash';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 // type
-import type {CannerContainerProps, MenuConfig} from './types';
+import type { CannerContainerProps, MenuConfig } from './types';
 
 function CannerContainer(props: CannerContainerProps) {
   const {
@@ -14,10 +14,10 @@ function CannerContainer(props: CannerContainerProps) {
     sidebarConfig,
     navbarConfig,
     children,
-    router
+    router,
   } = props;
-  const uiSchema = {...schema.pageSchema, ...pickBy(schema.schema, v => !v.defOnly)};
-  let menuConfig = sidebarConfig.menuConfig
+  const uiSchema = { ...schema.pageSchema, ...pickBy(schema.schema, v => !v.defOnly) };
+  const menuConfig = sidebarConfig.menuConfig;
   if (sidebarConfig.menuConfig === true) {
     transformSchemaToMenuConfig(uiSchema);
   }
@@ -30,57 +30,57 @@ function CannerContainer(props: CannerContainerProps) {
     payload: router.getPayload(),
     where: router.getWhere(),
     sort: router.getSort(),
-    pagination: router.getPagination()
+    pagination: router.getPagination(),
   };
   const dataDidChange = useCallback((dataChanged: Object) => {
     if (props.dataDidChange) {
       props.dataDidChange(dataChanged);
     }
     setDataChanged(dataChanged);
-  }, [])
+  }, []);
   return (
     <Layout
       style={{
-          WebkitBoxOrient: 'horizontal',
-          WebkitBoxDirection: 'normal',
-          WebkitFlexDirection: 'row',
-          MsFlexDirection: 'row',
-          flexDirection: 'row',
-          minHeight: '100vh'
-        }}
+        WebkitBoxOrient: 'horizontal',
+        WebkitBoxDirection: 'normal',
+        WebkitFlexDirection: 'row',
+        MsFlexDirection: 'row',
+        flexDirection: 'row',
+        minHeight: '100vh',
+      }}
     >
-        <Sidebar
+      <Sidebar
+        dataChanged={dataChanged}
+        goTo={router.goTo}
+        reset={cannerRef.current && cannerRef.current.reset}
+        routes={routes}
+        schema={uiSchema}
+        {...sidebarConfig}
+        menuConfig={menuConfig}
+      />
+      <Layout>
+        {navbarConfig && (
+        <Navbar
           dataChanged={dataChanged}
-          goTo={router.goTo}
-          reset={cannerRef.current && cannerRef.current.reset}
-          routes={routes}
-          schema={uiSchema}
-          {...sidebarConfig}
-          menuConfig={menuConfig}
+          deploy={cannerRef.current && cannerRef.current.deploy}
+          {...navbarConfig}
         />
-        <Layout>
-          {navbarConfig && (
-            <Navbar
-              dataChanged={dataChanged}
-              deploy={cannerRef.current && cannerRef.current.deploy}
-              {...navbarConfig}
-            />
-          )}
-          <Layout.Content>
-            { 
+        )}
+        <Layout.Content>
+          {
               React.cloneElement(children, {
                 ref: cannerRef,
-                dataDidChange: dataDidChange,
+                dataDidChange,
                 schema,
                 goTo: router.goTo,
                 routes,
-                routerParams
+                routerParams,
               })
             }
-          </Layout.Content>
-        </Layout>
+        </Layout.Content>
       </Layout>
-  )
+    </Layout>
+  );
 }
 
 export function transformSchemaToMenuConfig(schema: Object): MenuConfig {
@@ -88,7 +88,7 @@ export function transformSchemaToMenuConfig(schema: Object): MenuConfig {
     .filter(key => !schema[key].defOnly)
     .map(key => ({
       title: schema[key].title,
-      pathname: `/${schema[key].keyName}`
+      pathname: `/${schema[key].keyName}`,
     }));
 }
 

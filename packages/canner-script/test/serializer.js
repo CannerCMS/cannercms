@@ -5,8 +5,8 @@ export default {
   },
   test(val) {
     return val && typeof val === 'object';
-  } 
-}
+  },
+};
 
 function renderVal(val) {
   return {
@@ -16,7 +16,7 @@ function renderVal(val) {
     childrenName: val.childrenName && `[${val.childrenName.join(',')}]`,
     hocs: (val.hocs && val.hocs.join) && `[${val.hocs.join(',')}]`,
     children: val.children,
-  }
+  };
 }
 
 function loop(val) {
@@ -25,14 +25,13 @@ function loop(val) {
       val.children = val.children.map(child => loop(child));
     }
     return renderVal(val);
-  } else {
-    return mapValues(val, loop);
   }
+  return mapValues(val, loop);
 }
 
 function mapValues(obj, func) {
   const newObj = {};
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     newObj[key] = func(obj[key]);
   });
   return newObj;

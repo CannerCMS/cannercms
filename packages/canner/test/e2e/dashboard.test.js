@@ -1,26 +1,26 @@
-const puppeteer = require('puppeteer')
+const puppeteer = require('puppeteer');
 
 let browser;
 let page;
 jest.setTimeout(30000);
 
 describe('on page load', () => {
-  beforeAll(async () => { 
+  beforeAll(async () => {
     browser = await puppeteer.launch({
       headless: false,
       slowMo: 0,
       devtools: true,
-    }) 
+    });
     page = (await browser.pages())[0];
     await page.goto('http://localhost:8080/');
     await page.waitForSelector('div[data-testid="dashboard"]');
-    page.setViewport({ width: 900, height: 800 })
+    page.setViewport({ width: 900, height: 800 });
   });
-  
+
   afterAll(() => {
     browser.close();
-  })
-  
+  });
+
   test('should render dashboard', async () => {
     const dom = await page.$('div[data-testid="dashboard/banner"]');
     const dom1 = await page.$('[data-testid="dashboard/last7days-visitor-indicator"]');
@@ -41,4 +41,4 @@ describe('on page load', () => {
     expect(dom7).not.toBeNull();
     expect(dom8).not.toBeNull();
   });
-})
+});

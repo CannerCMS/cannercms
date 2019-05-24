@@ -1,14 +1,16 @@
 // @flow
 
 import React from 'react';
-import {createEmptyData} from 'canner-helpers';
-import { Alert, Modal, Form, Button, Upload, Icon } from 'antd';
+import { createEmptyData } from 'canner-helpers';
+import {
+  Alert, Modal, Form, Button, Upload, Icon,
+} from 'antd';
 import {
   get,
-  set
+  set,
 } from 'lodash';
 import { withApollo } from 'react-apollo';
-import {FormattedMessage, injectIntl} from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 const Dragger = Upload.Dragger;
 
@@ -46,9 +48,9 @@ export default class ImportModal extends React.Component<Props, State> {
     success: false,
     error: false,
     errorMessage: '',
-    list: []
+    list: [],
   };
-  
+
   download = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const {
@@ -60,37 +62,39 @@ export default class ImportModal extends React.Component<Props, State> {
     download(fileName, csv);
     triggerModal();
   }
-  
+
   handleCancel = () => {
     this.props.triggerModal();
   }
-  
+
   customRequest = ({
     onSuccess,
     onError,
-    file
+    file,
   }: Object) => {
-    const {deploy, keyName} = this.props;
+    const { deploy, keyName } = this.props;
     const reader = new FileReader();
     reader.readAsText(file);
     reader.onload = (e) => {
       const csv = parseCSV(e.target.result, '\n', ',');
       this.setState({
-        list: csv.slice(1)
+        list: csv.slice(1),
       });
       this.request(csv)
         .then(() => deploy(keyName))
         .then(() => {
           onSuccess('done');
         })
-        .catch(e => {
+        .catch((e) => {
           onError(e);
         });
     };
   }
 
   request = (csv: Array<Array<string>>): Promise<*> => {
-    const {request, fields, keyName, items, intl} = this.props;
+    const {
+      request, fields, keyName, items, intl,
+    } = this.props;
     const fieldsLength = fields.length;
     return new Promise((resolve, reject) => {
       try {
@@ -107,7 +111,7 @@ export default class ImportModal extends React.Component<Props, State> {
           }, {});
           if (values.length !== fieldsLength) {
             throw new Error(intl.formatMessage({
-              id: 'actions.import.error.invalidFormat'
+              id: 'actions.import.error.invalidFormat',
             }));
           }
           const tmpId = Math.random().toString(36).substr(2, 12);
@@ -116,8 +120,10 @@ export default class ImportModal extends React.Component<Props, State> {
             payload: {
               key: keyName,
               id: tmpId,
-              value: {...createEmptyData(items), ...payload, id: tmpId, __typename: null}
-            }
+              value: {
+                ...createEmptyData(items), ...payload, id: tmpId, __typename: null,
+              },
+            },
           }).catch(e => e));
         }, Promise.resolve()).then(resolve);
       } catch (e) {
@@ -127,10 +133,10 @@ export default class ImportModal extends React.Component<Props, State> {
   }
 
   uploadChange = (info: Object) => {
-    const {file} = info;
+    const { file } = info;
     if (file.status === 'done') {
       this.setState({
-        success: true
+        success: true,
       });
     } else if (file.status === 'error') {
       this.setState({
@@ -141,14 +147,16 @@ export default class ImportModal extends React.Component<Props, State> {
     } else {
       this.setState({
         success: false,
-        error: false
+        error: false,
       });
     }
   }
 
   render() {
-    const {visible, title, keyName } = this.props;
-    const {success, list, error, errorMessage} = this.state;
+    const { visible, title, keyName } = this.props;
+    const {
+      success, list, error, errorMessage,
+    } = this.state;
     return (
       <Modal
         title={<FormattedMessage id="actions.import.modal.title" />}
@@ -159,7 +167,7 @@ export default class ImportModal extends React.Component<Props, State> {
         onCancel={this.handleCancel}
       >
         <React.Fragment>
-          <div style={{marginBottom: 24}}>
+          <div style={{ marginBottom: 24 }}>
             <FormattedMessage id="actions.import.step1" tagName="div" />
             <Button onClick={this.download} data-testid="actions-import-download-button">
               <Icon type="download" />
@@ -186,18 +194,18 @@ export default class ImportModal extends React.Component<Props, State> {
           {
             success && (
               <Alert
-                message={
+                message={(
                   <FormattedMessage
                     id="actions.import.upload.success"
                     values={{
                       length: list.length,
-                      title: title || keyName
+                      title: title || keyName,
                     }}
                   />
-                }
+)}
                 type="success"
               />
-              
+
             )
           }
           {
@@ -206,7 +214,7 @@ export default class ImportModal extends React.Component<Props, State> {
                 message={errorMessage}
                 type="error"
               />
-              
+
             )
           }
         </React.Fragment>
@@ -217,16 +225,16 @@ export default class ImportModal extends React.Component<Props, State> {
 
 function parseCSV(text, lineTerminator, cellTerminator) {
   const rows = [];
-  //break the lines apart
-  var lines = text.split(lineTerminator);
-  for(var j = 0; j<lines.length; j++){
+  // break the lines apart
+  const lines = text.split(lineTerminator);
+  for (let j = 0; j < lines.length; j++) {
     const values = [];
-    if(lines[j] != ""){
-      //create a table row 
-      //split the rows at the cellTerminator character
-      var information = lines[j].split(cellTerminator);
-      for(var k = 0; k < information.length; k++){
-        //append the cell to the row
+    if (lines[j] != '') {
+      // create a table row
+      // split the rows at the cellTerminator character
+      const information = lines[j].split(cellTerminator);
+      for (let k = 0; k < information.length; k++) {
+        // append the cell to the row
         values.push(information[k]);
       }
     }
@@ -264,6 +272,6 @@ function download(fileName, csvContent) {
   link.setAttribute('download', `${fileName}.csv`);
   link.innerHTML = '';
   document.body && document.body.appendChild(link); // Required for FF
-  
+
   link.click();
 }

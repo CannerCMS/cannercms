@@ -1,9 +1,9 @@
 // @flow
 
-export default class CannerGoogleCloudStorage{
+export default class CannerGoogleCloudStorage {
   appId: string;
-  
-  constructor({appId}: {appId: string}) {
+
+  constructor({ appId }: {appId: string}) {
     this.appId = appId;
   }
 }

@@ -1,10 +1,12 @@
 // @flow
 
 import React from 'react';
-import { Modal, Form, Radio, Select, Button } from 'antd';
+import {
+  Modal, Form, Radio, Select, Button,
+} from 'antd';
 import get from 'lodash/get';
 import { withApollo } from 'react-apollo';
-import {FormattedMessage, injectIntl} from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import gql from 'graphql-tag';
 
 const FormItem = Form.Item;
@@ -43,7 +45,7 @@ const DOWNLOAD = 'DOWNLOAD';
 @Form.create()
 export default class ExportModal extends React.Component<Props, State> {
   state = {
-    downloading: false
+    downloading: false,
   };
 
   handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
@@ -57,11 +59,11 @@ export default class ExportModal extends React.Component<Props, State> {
       fields,
       client,
       query,
-      keyName
+      keyName,
     } = this.props;
     form.validateFields((err, values) => {
       if (!err) {
-        const {exportData, exportFieldKeys, exportWay} = values;
+        const { exportData, exportFieldKeys, exportWay } = values;
         let getData = Promise.resolve([]);
         if (exportData === ALL) {
           // have to fetch data without pagination data
@@ -71,14 +73,12 @@ export default class ExportModal extends React.Component<Props, State> {
           delete variables[queries.after.substr(1)];
           delete variables[queries.last.substr(1)];
           delete variables[queries.before.substr(1)];
-          
+
           getData = client.query({
             query: gql`${query.toGQL(keyName)}`,
             // remove pagination field
-            variables
-          }).then(result => {
-            return result.data[keyName].edges.map(edge => edge.node);
-          })
+            variables,
+          }).then(result => result.data[keyName].edges.map(edge => edge.node));
         } else if (exportData === THIS_PAGE) {
           getData = Promise.resolve(value);
         } else if (exportData === SELECTED) {
@@ -87,7 +87,7 @@ export default class ExportModal extends React.Component<Props, State> {
         const fieldsData = fields.filter(field => exportFieldKeys.find(key => key === field.keyName));
         if (exportWay === DOWNLOAD) {
           this.setState({
-            downloading: true
+            downloading: true,
           });
           getData
             .then((data: Array<Object>) => {
@@ -95,7 +95,7 @@ export default class ExportModal extends React.Component<Props, State> {
               download(fileName, csv);
             }).then(() => {
               this.setState({
-                downloading: false
+                downloading: false,
               }, triggerModal);
             });
         } else {
@@ -110,8 +110,10 @@ export default class ExportModal extends React.Component<Props, State> {
   }
 
   render() {
-    const {selectedValue, visible, fields, form: {getFieldDecorator}, title, intl} = this.props;
-    const {downloading} = this.state;
+    const {
+      selectedValue, visible, fields, form: { getFieldDecorator }, title, intl,
+    } = this.props;
+    const { downloading } = this.state;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -142,26 +144,26 @@ export default class ExportModal extends React.Component<Props, State> {
               initialValue: selectedValue.length ? 'SELECTED' : 'ALL',
             })(
               <RadioGroup>
-                <Radio value={ALL} data-testid={`actions-export-data-all`}>
+                <Radio value={ALL} data-testid="actions-export-data-all">
                   <FormattedMessage id="actions.export.data.all" />
                   {title}
                 </Radio>
-                <Radio value={THIS_PAGE} data-testid={`actions-export-data-this-page`}>
+                <Radio value={THIS_PAGE} data-testid="actions-export-data-this-page">
                   <FormattedMessage id="actions.export.data.thisPage" />
                 </Radio>
-                <Radio value="SELECTED" disabled={!selectedValue.length}  data-testid={`actions-export-data-selected`}>
+                <Radio value="SELECTED" disabled={!selectedValue.length} data-testid="actions-export-data-selected">
                   <FormattedMessage
                     id="actions.export.data.selected"
                     values={{
                       length: selectedValue.length,
-                      title
+                      title,
                     }}
                   />
                 </Radio>
-              </RadioGroup>
+              </RadioGroup>,
             )}
           </FormItem>
-          
+
           <FormItem
             {...formItemLayout}
             label={
@@ -171,11 +173,11 @@ export default class ExportModal extends React.Component<Props, State> {
             {getFieldDecorator('exportWay', {
               initialValue: DOWNLOAD,
             })(
-              <RadioGroup disabled={true}>
-                <Radio value={DOWNLOAD} data-testid={`actions-export-way-csv`}>
+              <RadioGroup disabled>
+                <Radio value={DOWNLOAD} data-testid="actions-export-way-csv">
                   <FormattedMessage id="actions.export.way.csv" />
                 </Radio>
-              </RadioGroup>
+              </RadioGroup>,
             )}
           </FormItem>
           <FormItem
@@ -190,25 +192,25 @@ export default class ExportModal extends React.Component<Props, State> {
               <Select
                 mode="multiple"
                 placeholder={intl.formatMessage({
-                  id: "actions.export.fields.placeholder"
+                  id: 'actions.export.fields.placeholder',
                 })}
-                data-testid={`actions-export-fields-select`}
+                data-testid="actions-export-fields-select"
               >
                 {
                   fields.map((field, index) => (
                     <Option data-testid={`actions-export-fields-option-${index}`} value={field.keyName} key={field.keyName}>{field.title || field.keyName}</Option>
                   ))
                 }
-              </Select>
+              </Select>,
             )}
           </FormItem>
           <FormItem
             wrapperCol={{ span: 12, offset: 5 }}
           >
-            <Button data-testid={`actions-export-cancel-button`}  htmlType="button" onClick={this.handleCancel}>
+            <Button data-testid="actions-export-cancel-button" htmlType="button" onClick={this.handleCancel}>
               <FormattedMessage id="actions.export.modal.cancelButton" />
             </Button>
-            <Button data-testid={`actions-export-confirm-button`} loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }}>
+            <Button data-testid="actions-export-confirm-button" loading={downloading} type="primary" htmlType="submit" style={{ marginLeft: 24 }}>
               <FormattedMessage id="actions.export.modal.confirmButton" />
             </Button>
           </FormItem>

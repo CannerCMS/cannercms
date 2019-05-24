@@ -6,7 +6,7 @@ import type { ApolloClient } from 'apollo-boost';
 export default ({
   client,
   routes,
-  schema
+  schema,
 }: {
   client: ApolloClient,
   routes: Array<string>,
@@ -24,16 +24,13 @@ export default ({
     return client.query({
       query: gql`${gqlString}`,
       variables,
-    })
-  }
+    });
+  };
 
-  const reset = (): Promise<*> => {
-    return client.clearStore();
-  }
+  const reset = (): Promise<*> => client.clearStore();
 
   return {
     fetch,
-    reset
-  }
-}
-
+    reset,
+  };
+};

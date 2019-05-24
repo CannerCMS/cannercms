@@ -27,10 +27,10 @@ export default class Error extends Component {
         <Inner>
           <Content>
             <Alert
-              type='error'
+              type="error"
               showIcon
-              message='Invalid sidebar menu'
-              description={`We occurs error while rendering your sidebar menu's settings, please upload a fixed version`}
+              message="Invalid sidebar menu"
+              description={'We occurs error while rendering your sidebar menu\'s settings, please upload a fixed version'}
             />
           </Content>
         </Inner>

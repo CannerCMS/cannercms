@@ -1,44 +1,38 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Input, Select} from 'antd';
+// @flow
+import React, { Component } from 'react';
+import { Input, Select } from 'antd';
 import isNaN from 'lodash/isNaN';
 import isEmpty from 'lodash/isEmpty';
-import {injectIntl} from 'react-intl';
+import { injectIntl } from 'react-intl';
+
 const Option = Select.Option;
 const InputGroup = Input.Group;
 const operators = [
-  {symbol: '>', value: 'gt'},
-  {symbol: '<', value: 'lt'},
-  {symbol: '=', value: 'eq'},
-  {symbol: '≥', value: 'gte'},
-  {symbol: '≤', value: 'lte'},
+  { symbol: '>', value: 'gt' },
+  { symbol: '<', value: 'lt' },
+  { symbol: '=', value: 'eq' },
+  { symbol: '≥', value: 'gte' },
+  { symbol: '≤', value: 'lte' },
 ];
+type Props = {
+  onChange: Function,
+  name: string,
+  label: string,
+  intl: Object,
+  index: number,
+};
 
+// @FloxFixMe decorator
 @injectIntl
-export default class NumberRangeFilter extends Component {
-  static propTypes = {
-    onChange: PropTypes.func,
-    name: PropTypes.string,
-    label: PropTypes.string,
-    intl: PropTypes.object,
-    index: PropTypes.number
+export default class NumberRangeFilter extends Component<Props> {
+  state = {
+    input: '',
+    lowInput: '',
+    operator: 'gt',
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      input: '',
-      lowInput: '',
-      operator: 'gt',
-    };
-    this.onInputLow = this.onInputLow.bind(this);
-    this.onInput = this.onInput.bind(this);
-    this.changeOperator = this.changeOperator.bind(this);
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onInputLow(e) {
-    const {value} = e.target;
+  onInputLow = (e: SyntheticEvent<HTMLInputElement>) => {
+    const { value } = e.target;
     const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
     if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
       this.setState({
@@ -47,8 +41,8 @@ export default class NumberRangeFilter extends Component {
     }
   }
 
-  onInput(e) {
-    const {value} = e.target;
+  onInput = (e: SyntheticEvent<HTMLInputElement>) => {
+    const { value } = e.target;
     const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
     if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
       this.setState({
@@ -57,53 +51,55 @@ export default class NumberRangeFilter extends Component {
     }
   }
 
-  changeOperator(val) {
+  changeOperator = (val) => {
     this.setState({
       operator: val,
     }, this.onChange);
   }
 
   onChange() {
-    const {lowInput, input, operator} = this.state;
-    const {name, onChange} = this.props;
+    const { lowInput, input, operator } = this.state;
+    const { name, onChange } = this.props;
     if (operator === '$between') {
       onChange({
         name: {
           $gt: isEmpty(lowInput) ? -Infinity : Number(lowInput),
           $lt: isEmpty(input) ? Infinity : Number(input),
-        }
+        },
       });
     } else {
       onChange(isEmpty(input) ? undefined : {
         [name]: {
-          [operator]: Number(input)
-        }
+          [operator]: Number(input),
+        },
       });
     }
   }
 
   render() {
-    const {intl, index} = this.props;
-    const {operator, input} = this.state;
+    const { intl, index } = this.props;
+    const { operator, input } = this.state;
     const placeholder = intl.formatMessage({
       id: 'query.numberRange.placeholder',
     });
     return (
       <InputGroup compact>
-        <Select style={{width: 60}}
+        <Select
+          style={{ width: 60 }}
           value={operator}
           onChange={this.changeOperator}
           data-testid={`number-filter-${index}-select`}
         >
           {
-            operators.map((operator) =>
+            operators.map(operator => (
               <Option key={operator.value} value={operator.value}>
                 {operator.symbol}
-              </Option>)
+              </Option>
+            ))
           }
         </Select>
         <Input
-          style={{width: 120}}
+          style={{ width: 120 }}
           data-testid={`number-filter-${index}-input`}
           placeholder={placeholder}
           value={input}

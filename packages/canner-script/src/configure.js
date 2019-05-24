@@ -5,9 +5,9 @@ import VisitorManager from './visitorManager';
 
 class Configuration {
   configure = (config: Object) => {
-    const {validator, visitorManager} = config;
+    const { validator, visitorManager } = config;
     if (!validator && !visitorManager) {
-      throw new Error(`Configure in canner-script must have the following key: validator, visitorManager, but receive ${JSON.stringify(config)}`)
+      throw new Error(`Configure in canner-script must have the following key: validator, visitorManager, but receive ${JSON.stringify(config)}`);
     }
 
     if (validator) {
@@ -15,14 +15,14 @@ class Configuration {
     }
 
     if (visitorManager) {
-      const {defaultVisitors, visitors} = visitorManager;
+      const { defaultVisitors, visitors } = visitorManager;
 
       if (defaultVisitors) {
         VisitorManager.setDefaultVisitors(defaultVisitors);
       }
 
       if (visitors && visitors.length) {
-        visitors.forEach(visitor => {
+        visitors.forEach((visitor) => {
           VisitorManager.addVisitor(visitor);
         });
       }

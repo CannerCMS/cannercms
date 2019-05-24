@@ -1,8 +1,9 @@
 import Parser from '../src/parser';
+
 const parser = new Parser();
 
-describe('parser', function() {
-  it('parse plugin', function() {
+describe('parser', () => {
+  it('parse plugin', () => {
     const schema = {
       type: 'string',
       ui: 'input',
@@ -17,10 +18,10 @@ describe('parser', function() {
       pattern: 'object.string',
       path: 'info/name',
     };
-    expect(parser.parsePlugin('name', schema, {pattern: 'object', path: 'info'})).toMatchObject(tree);
+    expect(parser.parsePlugin('name', schema, { pattern: 'object', path: 'info' })).toMatchObject(tree);
   });
 
-  it('object parse', function() {
+  it('object parse', () => {
     const schema = {
       type: 'object',
       items: {
@@ -59,7 +60,7 @@ describe('parser', function() {
     })).toMatchObject(tree);
   });
 
-  it('array parse', function() {
+  it('array parse', () => {
     const schema = {
       type: 'array',
       ui: 'tab',
@@ -106,7 +107,7 @@ describe('parser', function() {
     })).toMatchObject(tree);
   });
 
-  it('parse', function() {
+  it('parse', () => {
     const schema = {
       info: {
         type: 'object',
@@ -156,15 +157,15 @@ describe('parser', function() {
           highestPrice: {
             keyName: 'highestPrice',
             type: 'component',
-            ui: 'amount'
+            ui: 'amount',
           },
           lineChart: {
             keyName: 'lineChart',
             type: 'component',
-            ui: 'line'
-          }
-        }
-      }
+            ui: 'line',
+          },
+        },
+      },
     };
     const tree = {
       overview: {
@@ -175,31 +176,31 @@ describe('parser', function() {
           highestPrice: {
             keyName: 'highestPrice',
             type: 'component',
-            ui: 'amount'
+            ui: 'amount',
           },
           lineChart: {
             keyName: 'lineChart',
             type: 'component',
-            ui: 'line'
-          }
+            ui: 'line',
+          },
         },
-        children: [ {
+        children: [{
           keyName: 'highestPrice',
           type: 'component',
           ui: 'amount',
           nodeType: 'page.component.amount',
           pattern: 'page.component',
-          path: 'overview/highestPrice'
+          path: 'overview/highestPrice',
         }, {
           keyName: 'lineChart',
           type: 'component',
           ui: 'line',
           nodeType: 'page.component.line',
           pattern: 'page.component',
-          path: 'overview/lineChart'
-        }]
-      }
-    }
+          path: 'overview/lineChart',
+        }],
+      },
+    };
     expect(new Parser().parse(pageSchmea)).toMatchObject(tree);
-  })
+  });
 });

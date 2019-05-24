@@ -1,5 +1,5 @@
-describe('PackageName', function() {
-  it('should have unit test!', function() {
+describe('PackageName', () => {
+  it('should have unit test!', () => {
     expect(true);
   });
 });

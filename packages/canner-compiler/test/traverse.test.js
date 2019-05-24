@@ -17,7 +17,7 @@ beforeEach(() => {
         },
       },
       blocks: [
-        {leftKeys: ['name'], rightKeys: []},
+        { leftKeys: ['name'], rightKeys: [] },
       ],
       children: [{
         name: 'name',
@@ -37,7 +37,7 @@ beforeEach(() => {
         },
       },
       blocks: [
-        {leftKeys: [], rightKeys: ['name']},
+        { leftKeys: [], rightKeys: ['name'] },
       ],
       children: [{
         name: 'name',
@@ -50,8 +50,8 @@ beforeEach(() => {
   traverser = new Traverser(tree);
 });
 
-describe('PackageName', function() {
-  it('vistor queue', function() {
+describe('PackageName', () => {
+  it('vistor queue', () => {
     const fn = jest.fn();
     const visitor = {
       'component.string.input': fn,
@@ -63,7 +63,7 @@ describe('PackageName', function() {
     expect(fn).toHaveBeenCalledTimes(6);
   });
 
-  it('vistor order', function() {
+  it('vistor order', () => {
     const traversePath = [];
     const visitor = {
       component: {
@@ -82,31 +82,31 @@ describe('PackageName', function() {
     traverser.addVisitor(visitor);
     traverser.traverse();
     expect(traversePath).toEqual([
-      {info: 'enter'},
-      {name: 'enter'},
-      {name: 'exit'},
-      {info: 'exit'},
-      {info2: 'enter'},
-      {name: 'enter'},
-      {name: 'exit'},
-      {info2: 'exit'},
+      { info: 'enter' },
+      { name: 'enter' },
+      { name: 'exit' },
+      { info: 'exit' },
+      { info2: 'enter' },
+      { name: 'enter' },
+      { name: 'exit' },
+      { info2: 'exit' },
     ]);
   });
 
-  it('node name should change', function() {
+  it('node name should change', () => {
     const visitor = {
       'component.object.fieldset': (path) => {
         path.node.name = 'test';
       },
     };
-    const newTree = {...tree};
+    const newTree = { ...tree };
     newTree.info.name = 'test';
     traverser.addVisitor(visitor);
     expect(traverser.traverse())
       .toEqual(newTree);
   });
 
-  it('route should update if first slibings change', function() {
+  it('route should update if first slibings change', () => {
     tree.info.children.push({
       name: 'name2',
       type: 'string',
@@ -136,7 +136,7 @@ describe('PackageName', function() {
         }
       },
     };
-    const newTree = {...tree};
+    const newTree = { ...tree };
     newTree.info.name = 'test';
     traverser.addVisitor(visitor);
     traverser.addVisitor(visitor2);
@@ -185,7 +185,7 @@ describe('PackageName', function() {
   //     .toHaveBeenCalledTimes(2);
   // });
 
-  it('should add children', function() {
+  it('should add children', () => {
     const newNode = {
       name: 'address',
       type: 'string',
@@ -198,14 +198,14 @@ describe('PackageName', function() {
         path.tree.pushChildren(path.route, newNode);
       },
     };
-    const newTree = {...tree};
+    const newTree = { ...tree };
     newTree.info.children.push(newNode);
     traverser.addVisitor(visitor);
     expect(traverser.traverse())
       .toEqual(newTree);
   });
 
-  it('add decorators for all plugin', function() {
+  it('add decorators for all plugin', () => {
     const visitor = {
       component: (path) => {
         if (isArray(path.node.decorators)) {
@@ -222,13 +222,13 @@ describe('PackageName', function() {
         expect(node.decorators.length).toBe(1);
       }
       if (node.children) {
-        node.children.forEach((node) => checkNode(node));
+        node.children.forEach(node => checkNode(node));
       }
     }
     checkNode(newTree);
   });
 
-  it('wrap the block container on children', function() {
+  it('wrap the block container on children', () => {
     const visitor = {
       'component.object': (path) => {
         const children = path.node.children;
@@ -240,7 +240,7 @@ describe('PackageName', function() {
               nodeType: 'container.block',
               leftKeys: block.leftKeys,
               rightKeys: block.rightKeys,
-              children: children.filter((child) => keys.indexOf(child.name) !== -1),
+              children: children.filter(child => keys.indexOf(child.name) !== -1),
             };
           });
           path.tree.setChildren(path.route, childrenWithContainers);
@@ -254,7 +254,7 @@ describe('PackageName', function() {
     expect(tree.info2.children[0].children.length).toBe(1);
   });
 
-  it('wrap the block container on children', function() {
+  it('wrap the block container on children', () => {
     const visitor = {
       'component.object': (path) => {
         const children = path.node.children;
@@ -266,7 +266,7 @@ describe('PackageName', function() {
               nodeType: 'container.block',
               leftKeys: block.leftKeys,
               rightKeys: block.rightKeys,
-              children: children.filter((child) => keys.indexOf(child.name) !== -1),
+              children: children.filter(child => keys.indexOf(child.name) !== -1),
             };
           });
           path.tree.setChildren(path.route, childrenWithContainers);

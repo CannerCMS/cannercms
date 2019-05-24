@@ -1,11 +1,14 @@
+/* eslint import/no-unresolved: 0 */
+
+import path from 'path';
 import {
   createSchemaConfig,
 } from '../src/utils/createWebpackConfig';
-import path from 'path';
+
 const replacePath = path.resolve(__dirname, '../../..');
 expect.addSnapshotSerializer({
-  test:(val) => typeof val === 'string' && val.indexOf(replacePath) !== -1,
-  print:(val) => val.replace(replacePath, '')
+  test: val => typeof val === 'string' && val.indexOf(replacePath) !== -1,
+  print: val => val.replace(replacePath, ''),
 });
 describe('createSchemaConfig', () => {
   const config = createSchemaConfig({

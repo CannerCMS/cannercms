@@ -8,11 +8,11 @@ type Props = {
 
 export default class LiteCMS extends React.Component<Props> {
   render() {
-    const {refId, ...rest} = this.props;
+    const { refId, ...rest } = this.props;
     return (
       <Context.Consumer>
         {value => value.renderComponent(refId, {
-          ...rest
+          ...rest,
         })}
       </Context.Consumer>
     );

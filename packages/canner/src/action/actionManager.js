@@ -1,22 +1,23 @@
 // @flow
-import type {ActionManagerDef, Action, ActionType } from './types';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import updateWith from 'lodash/updateWith';
 import isArray from 'lodash/isArray';
 import isPlainObject from 'lodash/isPlainObject';
+import type { ActionManagerDef, Action, ActionType } from './types';
 import ObjectPattern from './pattern/objectPattern';
 import ArrayPattern from './pattern/arrayPattern';
 import ConnectPattern from './pattern/connectPattern';
 
 export class ActionManager implements ActionManagerDef {
   store = {};
+
   addAction = (action: Action<ActionType>): void => {
-    const {key, id} = action.payload;
+    const { key, id } = action.payload;
     if (action.type === 'UPDATE_OBJECT') {
       const patternItem = get(this.store, [key], {
         connect: new ConnectPattern(),
-        object: new ObjectPattern()
+        object: new ObjectPattern(),
       });
       patternItem.object.addAction(action);
       set(this.store, [key], patternItem);
@@ -24,12 +25,12 @@ export class ActionManager implements ActionManagerDef {
       let patternItem = get(this.store, [key], []).find(item => item.id === id);
       if (patternItem) {
         patternItem.array.addAction(action);
-        updateWith(this.store, key, list => list.map(item => item.id === id ? patternItem : item));
+        updateWith(this.store, key, list => list.map(item => (item.id === id ? patternItem : item)));
       } else {
         patternItem = {
           id,
           array: new ArrayPattern(),
-          connect: new ConnectPattern()
+          connect: new ConnectPattern(),
         };
         // $FlowFixMe
         patternItem.array.addAction(action);
@@ -45,7 +46,7 @@ export class ActionManager implements ActionManagerDef {
       if (patternItem) {
         patternItem.connect.addAction(action);
         if (id) {
-          updateWith(this.store, key, list => list.map(item => item.id === id ? patternItem : item));
+          updateWith(this.store, key, list => list.map(item => (item.id === id ? patternItem : item)));
         } else {
           updateWith(this.store, key, patternItem);
         }
@@ -53,7 +54,7 @@ export class ActionManager implements ActionManagerDef {
         patternItem = {
           id,
           array: new ArrayPattern(),
-          connect: new ConnectPattern()
+          connect: new ConnectPattern(),
         };
         // $FlowFixMe
         patternItem.connect.addAction(action);
@@ -61,7 +62,7 @@ export class ActionManager implements ActionManagerDef {
       } else {
         patternItem = {
           object: new ObjectPattern(),
-          connect: new ConnectPattern()
+          connect: new ConnectPattern(),
         };
         // $FlowFixMe
         patternItem.connect.addAction(action);
@@ -72,37 +73,33 @@ export class ActionManager implements ActionManagerDef {
 
   getActions = (key?: string, id?: string): Array<any> => {
     if (!key) {
-      return Object.keys(this.store).reduce((result: any, key: any) => {
-        return result.concat(this.getActions(key));
-      }, []);
+      return Object.keys(this.store).reduce((result: any, key: any) => result.concat(this.getActions(key)), []);
     }
     const item = get(this.store, key);
     if (isPlainObject(item)) {
       return item.object.getActions().concat(item.connect.getActions());
-    } else if (isArray(item)) {
+    } if (isArray(item)) {
       if (id) {
         // get action by key, id
         const patternItem = item.find(item => item.id === id) || {
           array: new ArrayPattern(),
-          connect: new ConnectPattern()
+          connect: new ConnectPattern(),
         };
         // $FlowFixMe
         return patternItem.array.getActions().concat(patternItem.connect.getActions());
-      } else {
-        // get all key action
-        return item.reduce((result: Array<any>, currItem: Object) => {
-          const actions = currItem.array.getActions().concat(currItem.connect.getActions());
-          return result.concat(actions);
-        }, []);
       }
-    } else {
-      return [];
+      // get all key action
+      return item.reduce((result: Array<any>, currItem: Object) => {
+        const actions = currItem.array.getActions().concat(currItem.connect.getActions());
+        return result.concat(actions);
+      }, []);
     }
+    return [];
   }
 
   removeActions = (key: string, id?: string) => {
     if (!key) {
-      return Object.keys(this.store).forEach(key => {
+      return Object.keys(this.store).forEach((key) => {
         this.removeActions(key);
       });
     }

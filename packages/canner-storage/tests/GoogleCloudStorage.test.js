@@ -1,11 +1,11 @@
+import { GoogleCloudStorage } from '../src';
+
 jest.mock('axios', () => {
   const request = {
-    put: jest.fn().mockImplementation(() => Promise.resolve())
+    put: jest.fn().mockImplementation(() => Promise.resolve()),
   };
   return request;
 });
-
-import {GoogleCloudStorage} from '../src';
 
 
 describe('GoogleCloudStorage', () => {
@@ -14,12 +14,12 @@ describe('GoogleCloudStorage', () => {
       url: 'url',
     };
     const getUploadUrl = jest.fn().mockImplementation(() => Promise.resolve(data));
-    const arg = {googleCloud: {}, getUploadUrl: getUploadUrl};
+    const arg = { googleCloud: {}, getUploadUrl };
     const storage = new GoogleCloudStorage(arg);
     const onProgress = jest.fn();
-    const options = {filename: 'filename'};
-    const file = new File(["test"], "test.jpg", {
-      type: "image/jpeg",
+    const options = { filename: 'filename' };
+    const file = new File(['test'], 'test.jpg', {
+      type: 'image/jpeg',
     });
     const result = await storage.upload(file, options, onProgress);
     expect(result.link).toBe(data.url);

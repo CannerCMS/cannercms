@@ -1,23 +1,23 @@
 // @flow
-import {useState, useEffect, useCallback} from 'react';
-import {createEmptyData} from 'canner-helpers';
+import { useState, useEffect, useCallback } from 'react';
+import { createEmptyData } from 'canner-helpers';
 
 export default function useCreateForm({
   provider,
   schema,
   routes,
-  isCreateForm
+  isCreateForm,
 }: {
   provider: Object,
   schema: Object,
   routes: Array<string>,
   isCreateForm: boolean
 }) {
-  const [result, setResult] = useState({data: {}, rootValue: {}});
+  const [result, setResult] = useState({ data: {}, rootValue: {} });
   const [isFetching, setIsFetching] = useState(true);
   const key = routes[0];
   const createItem = async () => {
-    const {items} = schema[key];
+    const { items } = schema[key];
     const defaultData = createEmptyData(items);
     const id = randomId();
     const action = {
@@ -26,12 +26,12 @@ export default function useCreateForm({
         key,
         id,
         value: defaultData,
-        path: ''
-      }
+        path: '',
+      },
     };
-    await provider.updateQuery([key], {where: {id}})
+    await provider.updateQuery([key], { where: { id } });
     return provider.request(action);
-  }
+  };
   const subscribeValue = () => provider.subscribe(routes[0], (result) => {
     setResult(result);
   });
@@ -44,7 +44,7 @@ export default function useCreateForm({
       .then(() => {
         setIsFetching(false);
       });
-    const {unsubscribe} = subscribeValue();
+    const { unsubscribe } = subscribeValue();
     return unsubscribe;
   }, [isCreateForm, JSON.stringify(routes)]);
   const onClickSubmitButton = useCallback(() => {}, []);
@@ -58,8 +58,8 @@ export default function useCreateForm({
     onClickSubmitButton,
     onClickCancelButton,
     onClickBackButton,
-    ...provider
-  }
+    ...provider,
+  };
 }
 function randomId() {
   return Math.random().toString(36).substr(2, 12);

@@ -1,24 +1,28 @@
 // @flow
-import {update, set, merge, isPlainObject, isArray, mapValues, pickBy} from 'lodash';
+import {
+  update, set, merge, isPlainObject, isArray, mapValues, pickBy,
+} from 'lodash';
 
-import type {Action, ActionType} from './types';
-import type {CannerSchema} from '../components/types';
+import type { Action, ActionType } from './types';
+import type { CannerSchema } from '../components/types';
 
 /**
  * change actions to variables which is the argument of graphql mutation
  */
 export default function actionsToVariables(actions: Array<Action<ActionType>>, schema: CannerSchema) {
-  const variables = {payload: {}, where: {}};
+  const variables = { payload: {}, where: {} };
 
-  actions.forEach(action => {
-    let {path = '', value, id, relation, key, transformGqlPayload} = action.payload;
+  actions.forEach((action) => {
+    let {
+      path = '', value, id, relation, key, transformGqlPayload,
+    } = action.payload;
     const relationField = genRelationField(schema, key);
     const schemaWithPath = addPath(schema[key], '');
     const jsonPath = findSchema(schemaWithPath, s => s.type === 'json')
       .map(v => v.path);
     value = parseArrayToSet(value, relationField, jsonPath, path ? `${key}/${path}` : key);
-    
-    switch(action.type) {
+
+    switch (action.type) {
       case 'CREATE_ARRAY': {
         // remove null relation
         const ensureValue = pickBy(value, (v: any, k: string) => v !== null && relationField.indexOf(k) === -1);
@@ -28,13 +32,13 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
       case 'UPDATE_ARRAY':
       case 'UPDATE_OBJECT': {
         merge(variables.payload, value);
-        merge(variables.where, {id});
+        merge(variables.where, { id });
         break;
       }
       case 'CONNECT': {
         if (relation && relation.type === 'toMany') {
-          update(variables.payload, path.split('/').concat('connect'), arr => {
-            let connectValue = {id: value.id};
+          update(variables.payload, path.split('/').concat('connect'), (arr) => {
+            let connectValue = { id: value.id };
             /* transformGqlPayload is a experimental usage */
             if (transformGqlPayload) {
               connectValue = transformGqlPayload(connectValue, action);
@@ -45,10 +49,10 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
             return arr.concat(connectValue);
           });
         } else {
-          set(variables.payload, path.split('/').concat('connect'), {id: value.id});
+          set(variables.payload, path.split('/').concat('connect'), { id: value.id });
         }
         if (id) {
-          merge(variables.where, {id});
+          merge(variables.where, { id });
         }
         break;
       }
@@ -58,17 +62,17 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
         } else {
           set(variables.payload, path.split('/').concat('create'), value);
         }
-        merge(variables.where, {id});
+        merge(variables.where, { id });
         break;
       }
       case 'DISCONNECT':
         if (relation && relation.type === 'toMany') {
-          update(variables.payload, path.split('/').concat('disconnect'), arr => (arr || []).concat({id: value.id}));
+          update(variables.payload, path.split('/').concat('disconnect'), arr => (arr || []).concat({ id: value.id }));
         } else {
           set(variables.payload, path.split('/').concat('disconnect'), true);
         }
         if (id) {
-          merge(variables.where, {id});
+          merge(variables.where, { id });
         }
         break;
       case 'DISCONNECT_AND_DELETE':
@@ -77,10 +81,10 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
         } else {
           set(variables.payload, path.split('/').concat('delete'), true);
         }
-        merge(variables.where, {id});
+        merge(variables.where, { id });
         break;
       case 'DELETE_ARRAY':
-        merge(variables.where, {id});
+        merge(variables.where, { id });
         break;
       default:
         break;
@@ -98,10 +102,10 @@ export default function actionsToVariables(actions: Array<Action<ActionType>>, s
  */
 export function removeTypename(payload: any): any {
   if (isPlainObject(payload)) {
-    const newPayload = {...payload};
+    const newPayload = { ...payload };
     delete newPayload.__typename;
     return mapValues(newPayload, value => removeTypename(value));
-  } else if (Array.isArray(payload)) {
+  } if (Array.isArray(payload)) {
     return payload.map(item => removeTypename(item));
   }
   return payload;
@@ -112,24 +116,21 @@ export function addTypename(payload: any): any {
     return payload.map(item => addTypename(item));
   }
   if (isPlainObject(payload)) {
-    return mapValues(payload, (item, key) => {
-      return key === '__typename' ?
-        item :
-        addTypename(item)
-    });
-  } else {
-    return payload;
+    return mapValues(payload, (item, key) => (key === '__typename'
+      ? item
+      : addTypename(item)));
   }
+  return payload;
 }
 
 /**
- * 
+ *
  * In canner graphql interface,
  * an array value should become a object with `set` keyword.
- * 
+ *
  * for examples:
  * origin payload = {
- *   hobbies: ['basketball', 'swim'] 
+ *   hobbies: ['basketball', 'swim']
  *   name: 'James'
  * }
  * will become
@@ -138,7 +139,7 @@ export function addTypename(payload: any): any {
  *     set: ['basketball', 'swim']
  *   },
  *   name: 'James'
- * } 
+ * }
  *
  */
 export function parseArrayToSet(payload: any, relationField: Array<string>, jsonPath: Array<string>, path: string): any {
@@ -148,13 +149,12 @@ export function parseArrayToSet(payload: any, relationField: Array<string>, json
 
   if (isArray(payload) && relationField.indexOf(path) === -1) {
     return {
-      set: payload.map(v => parseArrayToSet(v, relationField, jsonPath, path))
+      set: payload.map(v => parseArrayToSet(v, relationField, jsonPath, path)),
     };
-  } else if (isPlainObject(payload)) {
+  } if (isPlainObject(payload)) {
     return mapValues(payload, (v, k) => parseArrayToSet(v, relationField, jsonPath, path ? `${path}/${k}` : k));
-  } else {
-    return payload
   }
+  return payload;
 }
 
 export function genJsonPath(schema: Object, key: string): any {
@@ -163,7 +163,7 @@ export function genJsonPath(schema: Object, key: string): any {
   if (keySchema.type === 'object') {
     items = keySchema.items;
   } else if (keySchema.type === 'array') {
-    items = keySchema.items.items
+    items = keySchema.items.items;
   } else {
     return [];
   }
@@ -177,7 +177,7 @@ export function findSchema(schema: Object, filter: Function): Array<Object> {
   if (filter(schema)) {
     copy.push(schema);
   }
-  const {items} = schema;
+  const { items } = schema;
   if (items) {
     if (typeof items.type === 'string') {
       copy = copy.concat(findSchema(items, filter));
@@ -189,7 +189,7 @@ export function findSchema(schema: Object, filter: Function): Array<Object> {
 }
 
 export function addPath(schema: Object, path: string) {
-  const {items, keyName} = schema;
+  const { items, keyName } = schema;
   let schemaPath = path;
   if (keyName) {
     schemaPath = path ? `${path}/${keyName}` : keyName;
@@ -214,7 +214,7 @@ export function genRelationField(schema: Object, key: string): Array<string> {
   if (keySchema.type === 'object') {
     items = keySchema.items;
   } else if (keySchema.type === 'array') {
-    items = keySchema.items.items
+    items = keySchema.items.items;
   } else {
     return [];
   }

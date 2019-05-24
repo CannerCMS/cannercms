@@ -1,9 +1,10 @@
 // @flow
-import React, {Component} from 'react';
-import {Select, Icon} from 'antd';
-const Option = Select.Option;
+import React, { Component } from 'react';
+import { Select, Icon } from 'antd';
 import styled from 'styled-components';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
+
+const Option = Select.Option;
 
 const Selector = styled(Select)`
   width: 150px;
@@ -17,12 +18,12 @@ const OrderSwitch = styled.div`
 `;
 
 const UpIcon = styled(Icon)`
-  color: ${(props: any) => props.order > 0 ? '#333' : '#ccc'};
+  color: ${(props: any) => (props.order > 0 ? '#333' : '#ccc')};
 `;
 
 const DownIcon = styled(Icon)`
-  color: ${(props: any) => props.order > 0 ? '#ccc' : '#333'};
-`
+  color: ${(props: any) => (props.order > 0 ? '#ccc' : '#333')};
+`;
 
 type Props = {
   orderField: ?string,
@@ -56,35 +57,39 @@ export default class Sort extends Component<Props, State> {
 
   onChange = (value: string) => {
     this.setState({
-      key: value
+      key: value,
     }, this.submit);
   }
 
   changeOrder = () => {
-    this.setState({
-      order: !this.state.order,
-    }, this.submit);
+    this.setState(preState => ({
+      order: !preState.order,
+    }), this.submit);
   }
 
   submit = () => {
-    const {changeOrder} = this.props;
-    const {key, order} = this.state;
+    const { changeOrder } = this.props;
+    const { key, order } = this.state;
     changeOrder({
       orderField: key,
-      orderType: order ? 'ASC' : 'DESC'
+      orderType: order ? 'ASC' : 'DESC',
     });
   }
 
   render() {
-    const {options, defaultField} = this.props;
-    const {key, order} = this.state;
+    const { options, defaultField } = this.props;
+    const { key, order } = this.state;
     return (
-      <div style={{display: 'flex'}}>
-        <Selector onChange={this.onChange} value={key} defaultValue={defaultField} allowClear
-            placeholder={<FormattedMessage id="query.sort.placeholder"/>}
-            data-testid="sorter-select"
+      <div style={{ display: 'flex' }}>
+        <Selector
+          onChange={this.onChange}
+          value={key}
+          defaultValue={defaultField}
+          allowClear
+          placeholder={<FormattedMessage id="query.sort.placeholder" />}
+          data-testid="sorter-select"
         >
-          {(options || []).map((option, i) => <Option key={i} value={option.field}>{option.label}</Option>)}
+          {(options || []).map(option => <Option key={option.field} value={option.field}>{option.label}</Option>)}
         </Selector>
         <OrderSwitch onClick={this.changeOrder}>
           <UpIcon order={order} type="caret-up" data-testid="sorter-up" />

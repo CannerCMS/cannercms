@@ -1,7 +1,8 @@
 // @flow
 
-import React, {useMemo} from 'react';
-import {Context} from 'canner-helpers';
+import React, { useMemo } from 'react';
+import { Context } from 'canner-helpers';
+
 export default function UpdateForm(props: any) {
   const {
     data,
@@ -22,7 +23,7 @@ export default function UpdateForm(props: any) {
     routes,
     routerParams,
     goTo,
-    ...rest
+    ...rest,
   }), [data, routes]);
   // TODO: move buttons from HOC to here
   return (
@@ -33,9 +34,9 @@ export default function UpdateForm(props: any) {
           goTo,
           routes,
           routerParams: routerParams || {},
-          defaultKey
+          defaultKey,
         })
       )}
     </Context.Provider>
-  )
+  );
 }

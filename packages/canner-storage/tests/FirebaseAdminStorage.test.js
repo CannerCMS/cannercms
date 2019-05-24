@@ -1,11 +1,11 @@
+import { FirebaseAdminStorage } from '../src';
+
 jest.mock('axios', () => {
   const request = {
-    put: jest.fn().mockImplementation(() => Promise.resolve())
+    put: jest.fn().mockImplementation(() => Promise.resolve()),
   };
   return request;
 });
-
-import {FirebaseAdminStorage} from '../src';
 
 
 describe('FirebaseAdminStorage', () => {
@@ -14,12 +14,12 @@ describe('FirebaseAdminStorage', () => {
       url: 'url',
     };
     const getUploadUrl = jest.fn().mockImplementation(() => Promise.resolve(data));
-    const arg = {firebase: {}, getUploadUrl: getUploadUrl};
+    const arg = { firebase: {}, getUploadUrl };
     const storage = new FirebaseAdminStorage(arg);
     const onProgress = jest.fn();
-    const options = {filename: 'filename'};
-    const file = new File(["test"], "test.jpg", {
-      type: "image/jpeg",
+    const options = { filename: 'filename' };
+    const file = new File(['test'], 'test.jpg', {
+      type: 'image/jpeg',
     });
     const result = await storage.upload(file, options, onProgress);
     expect(result.link).toBe(data.url);

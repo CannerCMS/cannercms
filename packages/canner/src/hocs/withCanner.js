@@ -1,10 +1,10 @@
 // @flow
 
-import React, {useContext, useMemo} from 'react';
-import {Context} from 'canner-helpers';
+import React, { useContext, useMemo } from 'react';
+import { Context } from 'canner-helpers';
+import { isEqual, isFunction } from 'lodash';
 import CannerItem from '../components/item';
 import Toolbar from '../components/toolbar';
-import {isEqual, isFunction} from 'lodash';
 
 // hooks
 import useRefId from '../hooks/useRefId';
@@ -17,7 +17,7 @@ import useRenderType from '../hooks/useRenderType';
 import useButtons from '../hooks/useButtons';
 
 export default function withCanner(Com: any) {
-  return (React.memo: any)(function ComWithCanner(props: any) {
+  return (React.memo: any)((props: any) => {
     const {
       pattern,
       keyName,
@@ -53,13 +53,13 @@ export default function withCanner(Com: any) {
       query,
       routes,
       routerParams,
-      reset
+      reset,
     } = contextValue;
-    const myRefId = useRefId({pattern, keyName, refId});
+    const myRefId = useRefId({ pattern, keyName, refId });
     const {
       relationToolbar,
       relationValue,
-      relationFetching
+      relationFetching,
     } = useRelation({
       relation,
       toolbar,
@@ -67,16 +67,16 @@ export default function withCanner(Com: any) {
       graphql,
       variables,
       fetchPolicy,
-      refId: myRefId
-    })
-    const {renderType} = useRenderType({pattern, path, refId: myRefId});
-    const {onChange} = useOnChange({rootValue, request});
-    const {fieldValue} = useFieldValue({rootValue, refId: myRefId});
-    const {error, errorInfo} = useValidation({
+      refId: myRefId,
+    });
+    const { renderType } = useRenderType({ pattern, path, refId: myRefId });
+    const { onChange } = useOnChange({ rootValue, request });
+    const { fieldValue } = useFieldValue({ rootValue, refId: myRefId });
+    const { error, errorInfo } = useValidation({
       value: fieldValue,
       refId: myRefId,
       required,
-      validation
+      validation,
     });
     const componentOnDeploy = useOnDeploy({
       onDeploy,
@@ -86,7 +86,9 @@ export default function withCanner(Com: any) {
     const {
       shouldRenderCancelButton,
       shouldRenderSubmitButton,
-    } = useButtons({deploy, reset, rootValue, refId, controlDeployAndResetButtons, hideButtons, path, pattern})
+    } = useButtons({
+      deploy, reset, rootValue, refId, controlDeployAndResetButtons, hideButtons, path, pattern,
+    });
 
     const item = (
       <CannerItem
@@ -111,7 +113,7 @@ export default function withCanner(Com: any) {
         renderType={renderType}
         shouldRenderCancelButton={shouldRenderCancelButton}
         shouldRenderSubmitButton={shouldRenderSubmitButton}
-        render={(cannerItemProps) => <Com {...props} {...contextValue} {...cannerItemProps} />}
+        render={cannerItemProps => <Com {...props} {...contextValue} {...cannerItemProps} />}
         // external
         error={error}
         errorInfo={errorInfo}
@@ -135,7 +137,7 @@ export default function withCanner(Com: any) {
             keyName={keyName}
             originRootValue={data}
             rootValue={rootValue}
-            updateQuery={ updateQuery}
+            updateQuery={updateQuery}
             request={request}
             deploy={deploy}
           >
@@ -149,15 +151,13 @@ export default function withCanner(Com: any) {
         {item}
       </Context.Provider>
     );
-  }, function(prevProps, nextProps) {
-    return Object.entries(nextProps).reduce((eq, [k, v]: any) => {
-      if (isFunction(v)) {
-        return eq;
-      }
-      if (k === 'refId') {
-        return eq && prevProps[k].toString() === v.toString();
-      }
-      return isEqual(v, prevProps[k]) && eq;
-    }, true)
-  })
+  }, (prevProps, nextProps) => Object.entries(nextProps).reduce((eq, [k, v]: any) => {
+    if (isFunction(v)) {
+      return eq;
+    }
+    if (k === 'refId') {
+      return eq && prevProps[k].toString() === v.toString();
+    }
+    return isEqual(v, prevProps[k]) && eq;
+  }, true));
 }

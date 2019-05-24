@@ -5,20 +5,20 @@ export default function log(type: string, ...payload: any) {
   if (process.env.NODE_ENV !== 'development') {
     return;
   }
-  let color = "black";
+  let color = 'black';
 
   switch (type) {
-    case "request":
-      color = "Green";
+    case 'request':
+      color = 'Green';
       break;
-    case "fetch":
-      color = "DodgerBlue";
+    case 'fetch':
+      color = 'DodgerBlue';
       break;
-    case "deploy":
-      color = "Red";
+    case 'deploy':
+      color = 'Red';
       break;
-    case "subscribe":
-      color = "Orange";
+    case 'subscribe':
+      color = 'Orange';
       break;
     case 'updateQuery':
       color = 'Brown';

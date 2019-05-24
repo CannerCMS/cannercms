@@ -1,14 +1,14 @@
 // @flow
 
-import {useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Ajv from 'ajv';
 import type RefId from 'canner-ref-id';
-import {isPlainObject, get, isArray} from 'lodash';
+import { isPlainObject, get, isArray } from 'lodash';
 
 export default ({
   value,
   required,
-  validation = {}
+  validation = {},
 }: {
   value: any,
   required: boolean,
@@ -23,46 +23,46 @@ export default ({
     // Ajv validation
     const ajv = new Ajv();
     const validate = ajv.compile(validation);
-    
+
     // custom validator
-    const {validator, errorMessage} = validation;
-    const reject = message => ({error: true, message});
+    const { validator, errorMessage } = validation;
+    const reject = message => ({ error: true, message });
     const validatorResult = validator && validator(value, reject);
 
-    let customValid = !(validatorResult && validatorResult.error);
+    const customValid = !(validatorResult && validatorResult.error);
     // if value is empty, should not validate with ajv
     if (customValid && isRequiredValid && (!value || validate(value))) {
       setError(false);
       errorInfoRef.current = [];
       return;
     }
-    
+
     // TODO: fix type
     const errorInfo: any = []
       .concat(isRequiredValid ? [] : {
-        message: 'should be required'
+        message: 'should be required',
       })
-      .concat(validate.errors ? (errorMessage ? {message: errorMessage} : validate.errors) : [])
+      // eslint-disable-next-line
+      .concat(validate.errors ? (errorMessage ? { message: errorMessage } : validate.errors) : [])
       .concat(customValid ? [] : validatorResult);
-    
+
     setError(true);
     errorInfoRef.current = errorInfo;
-  }
+  };
   useEffect(() => {
     _validate();
   }, [value]);
   return {
     error,
-    errorInfo: errorInfoRef.current
-  }
-}
-
+    errorInfo: errorInfoRef.current,
+  };
+};
 
 
 export function splitRefId({
   refId,
   rootValue,
-  pattern
+  pattern,
 }: {
   refId: RefId,
   rootValue: any,
@@ -75,8 +75,8 @@ export function splitRefId({
   }
   return {
     key,
-    id
-  }
+    id,
+  };
 }
 
 export function getValueAndPaths(value: Object, idPathArr: Array<string>) {
@@ -97,10 +97,10 @@ export function getValueAndPaths(value: Object, idPathArr: Array<string>) {
     }
     return {
       value: v,
-      paths
-    }
+      paths,
+    };
   }, {
     value,
-    paths: []
+    paths: [],
   });
 }

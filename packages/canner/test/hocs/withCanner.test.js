@@ -1,51 +1,52 @@
 import React from 'react';
-import {render, cleanup} from 'react-testing-library';
+import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import RefId from 'canner-ref-id';
+import { Context } from 'canner-helpers';
 import withCanner from '../../src/hocs/withCanner';
-import {Context} from 'canner-helpers';
+
 afterEach(cleanup);
 
 describe('withCanner', () => {
   it('should render', async () => {
     // com
-    let Com = () => <div data-testid="mock-com">mock-com</div>;
-    let ComWithCanner = withCanner(Com);
+    const Com = () => <div data-testid="mock-com">mock-com</div>;
+    const ComWithCanner = withCanner(Com);
     // props
-    let renderChildren = () => <div data-test-id="mock-children">mock-children</div>;
-    let pattern = 'array';
-    let keyName = 'posts';
-    let type = 'array';
-    let required = false;
-    let validation = undefined;
-    let layout = undefined;
-    let description = 'description';
-    let title = 'title';
-    let path = 'posts';
-    let hideTitle = false;
-    let refId = new RefId('posts');
-    let items = {type: 'object', items: {title: {type: 'string'}}};
-    let toolbar = {};
-    let graphql = undefined;
-    let variables = undefined;
-    let fetchPolicy = undefined;
-    let relation = undefined;
-    let controlDeployAndResetButtons = undefined;
-    let hideButtons = undefined;
+    const renderChildren = () => <div data-test-id="mock-children">mock-children</div>;
+    const pattern = 'array';
+    const keyName = 'posts';
+    const type = 'array';
+    const required = false;
+    const validation = null;
+    const layout = null;
+    const description = 'description';
+    const title = 'title';
+    const path = 'posts';
+    const hideTitle = false;
+    const refId = new RefId('posts');
+    const items = { type: 'object', items: { title: { type: 'string' } } };
+    const toolbar = {};
+    const graphql = null;
+    const variables = null;
+    const fetchPolicy = null;
+    const relation = null;
+    const controlDeployAndResetButtons = null;
+    const hideButtons = null;
     // contextValue
-    let rootValue = {[keyName]: []};
-    let request = jest.fn().mockResolvedValue();
-    let imageStorage = {upload: jest.fn().mockResolvedValue()};
-    let onDeploy = jest.fn();
-    let removeOnDeploy = jest.fn();
-    let deploy = jest.fn().mockResolvedValue();
-    let data = {[keyName]: []};
-    let updateQuery = jest.fn().mockResolvedValue();
-    let query = jest.fn().mockResolvedValue();
-    let routes = [keyName];
-    let routerParams = {};
-    let reset = jest.fn().mockResolvedValue();
-    const {getByTestId} = render(
+    const rootValue = { [keyName]: [] };
+    const request = jest.fn().mockResolvedValue();
+    const imageStorage = { upload: jest.fn().mockResolvedValue() };
+    const onDeploy = jest.fn();
+    const removeOnDeploy = jest.fn();
+    const deploy = jest.fn().mockResolvedValue();
+    const data = { [keyName]: [] };
+    const updateQuery = jest.fn().mockResolvedValue();
+    const query = jest.fn().mockResolvedValue();
+    const routes = [keyName];
+    const routerParams = {};
+    const reset = jest.fn().mockResolvedValue();
+    const { getByTestId } = render(
       <Context.Provider value={{
         rootValue,
         request,
@@ -58,32 +59,33 @@ describe('withCanner', () => {
         query,
         routes,
         routerParams,
-        reset 
-      }}>
+        reset,
+      }}
+      >
         <ComWithCanner
-           pattern={pattern}
-           keyName={keyName}
-           type={type}
-           required={required}
-           validation={validation}
-           layout={layout}
-           description={description}
-           title={title}
-           path={path}
-           hideTitle={hideTitle}
-           refId={refId}
-           renderChildren={renderChildren}
-           items={items}
-           toolbar={toolbar}
-           graphql={graphql}
-           variables={variables}
-           fetchPolicy={fetchPolicy}
-           relation={relation}
-           controlDeployAndResetButtons={controlDeployAndResetButtons}
-           hideButtons={hideButtons}
+          pattern={pattern}
+          keyName={keyName}
+          type={type}
+          required={required}
+          validation={validation}
+          layout={layout}
+          description={description}
+          title={title}
+          path={path}
+          hideTitle={hideTitle}
+          refId={refId}
+          renderChildren={renderChildren}
+          items={items}
+          toolbar={toolbar}
+          graphql={graphql}
+          variables={variables}
+          fetchPolicy={fetchPolicy}
+          relation={relation}
+          controlDeployAndResetButtons={controlDeployAndResetButtons}
+          hideButtons={hideButtons}
         />
-      </Context.Provider>
+      </Context.Provider>,
     );
     expect(getByTestId('mock-com')).toHaveTextContent('mock-com');
   });
-})
+});

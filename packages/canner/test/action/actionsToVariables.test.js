@@ -6,8 +6,8 @@ const schema = {
     keyName: 'posts',
     path: 'posts',
     items: {
-      items: {}
-    }
+      items: {},
+    },
   },
   info: {
     type: 'object',
@@ -21,21 +21,21 @@ const schema = {
             keyName: 'images',
             type: 'array',
             items: {
-              type: 'string'
-            }
-          }
-        }
-      }
-    }
+              type: 'string',
+            },
+          },
+        },
+      },
+    },
   },
   authors: {
     type: 'array',
     keyName: 'authors',
     items: {
-      items: {}
-    }
-  }
-}
+      items: {},
+    },
+  },
+};
 
 const updateArrayAction = {
   type: 'UPDATE_ARRAY',
@@ -43,9 +43,9 @@ const updateArrayAction = {
     id: 'post1',
     key: 'posts',
     value: {
-      "title": "123"
-    }
-  }
+      title: '123',
+    },
+  },
 };
 
 const updateArrayWithNestedArrayAction = {
@@ -58,12 +58,12 @@ const updateArrayWithNestedArrayAction = {
       tags: ['1', '2'],
       info: {
         images: [{
-          url: 'url1'
-        }]
-      }
-    }
-  }
-}
+          url: 'url1',
+        }],
+      },
+    },
+  },
+};
 
 const createArrayAction = {
   type: 'CREATE_ARRAY',
@@ -71,9 +71,9 @@ const createArrayAction = {
     id: 'post2',
     key: 'posts',
     value: {
-      "title": "123"
-    }
-  }
+      title: '123',
+    },
+  },
 };
 
 const deleteArrayAction = {
@@ -81,19 +81,19 @@ const deleteArrayAction = {
   payload: {
     id: 'post3',
     key: 'posts',
-    value: {}
-  }
-}
+    value: {},
+  },
+};
 
 const updateObjectAction = {
   type: 'UPDATE_OBJECT',
   payload: {
     key: 'info',
     value: {
-      name: '321'
-    }
-  }
-}
+      name: '321',
+    },
+  },
+};
 
 const updateJSONWithNestedArrayAction = {
   type: 'UPDATE_OBJECT',
@@ -101,11 +101,11 @@ const updateJSONWithNestedArrayAction = {
     key: 'info',
     value: {
       jsonField: {
-        images: []
-      }
-    }
-  }
-}
+        images: [],
+      },
+    },
+  },
+};
 
 const updateObjectWithNestedArrayAction = {
   type: 'UPDATE_OBJECT',
@@ -116,12 +116,12 @@ const updateObjectWithNestedArrayAction = {
       tags: ['1', '2'],
       info: {
         images: [{
-          url: 'url1'
-        }]
-      }
-    }
-  }
-}
+          url: 'url1',
+        }],
+      },
+    },
+  },
+};
 
 
 const connectToOneAction = {
@@ -131,14 +131,14 @@ const connectToOneAction = {
     key: 'posts',
     path: 'author',
     relation: {
-      type: 'toOne'
+      type: 'toOne',
     },
     value: {
       id: 'id1',
-      name: 'newAuthor'
-    }
-  }
-}
+      name: 'newAuthor',
+    },
+  },
+};
 
 const connectToManyAction = {
   type: 'CONNECT',
@@ -147,14 +147,14 @@ const connectToManyAction = {
     key: 'posts',
     path: 'author',
     relation: {
-      type: 'toMany'
+      type: 'toMany',
     },
     value: {
       id: 'id1',
-      name: 'newAuthor'
-    }
-  }
-}
+      name: 'newAuthor',
+    },
+  },
+};
 
 const createAndConnectToOneAction = {
   type: 'CREATE_AND_CONNECT',
@@ -163,14 +163,14 @@ const createAndConnectToOneAction = {
     key: 'posts',
     path: 'author',
     relation: {
-      type: 'toOne'
+      type: 'toOne',
     },
     value: {
       id: 'id1',
-      name: 'newAuthor'
-    }
-  }
-}
+      name: 'newAuthor',
+    },
+  },
+};
 
 const createAndConnectToManyAction = {
   type: 'CREATE_AND_CONNECT',
@@ -179,14 +179,14 @@ const createAndConnectToManyAction = {
     key: 'posts',
     path: 'author',
     relation: {
-      type: 'toMany'
+      type: 'toMany',
     },
     value: {
       id: 'id1',
-      name: 'newAuthor'
-    }
-  }
-}
+      name: 'newAuthor',
+    },
+  },
+};
 
 const disconnectToOneAction = {
   type: 'DISCONNECT',
@@ -195,13 +195,13 @@ const disconnectToOneAction = {
     key: 'posts',
     path: 'author',
     relation: {
-      type: 'toOne'
+      type: 'toOne',
     },
     value: {
-      id: '67428a37-107a-4a59-811d-15810c7c49a9'
-    }
-  }
-}
+      id: '67428a37-107a-4a59-811d-15810c7c49a9',
+    },
+  },
+};
 
 
 const disconnectToManyAction = {
@@ -211,13 +211,13 @@ const disconnectToManyAction = {
     key: 'posts',
     path: 'author',
     relation: {
-      type: 'toMany'
+      type: 'toMany',
     },
     value: {
-      id: '67428a37-107a-4a59-811d-15810c7c49a9'
-    }
-  }
-}
+      id: '67428a37-107a-4a59-811d-15810c7c49a9',
+    },
+  },
+};
 
 const disconnectAndDeleteToOneAction = {
   type: 'DISCONNECT_AND_DELETE',
@@ -226,13 +226,13 @@ const disconnectAndDeleteToOneAction = {
     key: 'posts',
     path: 'author',
     relation: {
-      type: 'toOne'
+      type: 'toOne',
     },
     value: {
-      id: '67428a37-107a-4a59-811d-15810c7c49a9'
-    }
-  }
-}
+      id: '67428a37-107a-4a59-811d-15810c7c49a9',
+    },
+  },
+};
 
 const disconnectAndDeleteToManyAction = {
   type: 'DISCONNECT_AND_DELETE',
@@ -241,20 +241,20 @@ const disconnectAndDeleteToManyAction = {
     key: 'posts',
     path: 'author',
     relation: {
-      type: 'toMany'
+      type: 'toMany',
     },
     value: {
-      id: '67428a37-107a-4a59-811d-15810c7c49a9'
-    }
-  }
-}
+      id: '67428a37-107a-4a59-811d-15810c7c49a9',
+    },
+  },
+};
 
 describe('single action to variable', () => {
   test('update array', () => {
     expect(actionsToVariables([updateArrayAction], schema))
       .toMatchObject({
         payload: updateArrayAction.payload.value,
-        where: {id: updateArrayAction.payload.id}
+        where: { id: updateArrayAction.payload.id },
       });
   });
 
@@ -265,22 +265,22 @@ describe('single action to variable', () => {
         payload: {
           ...value,
           tags: {
-            set: value.tags
+            set: value.tags,
           },
           info: {
             images: {
-              set: value.info.images
-            }
-          }
+              set: value.info.images,
+            },
+          },
         },
-        where: {id: updateArrayWithNestedArrayAction.payload.id}
+        where: { id: updateArrayWithNestedArrayAction.payload.id },
       });
   });
 
   test('create array', () => {
     expect(actionsToVariables([createArrayAction], schema))
       .toMatchObject({
-        payload: createArrayAction.payload.value
+        payload: createArrayAction.payload.value,
       });
   });
 
@@ -289,7 +289,7 @@ describe('single action to variable', () => {
     expect(actionsToVariables([updateJSONWithNestedArrayAction], schema))
       .toMatchObject({
         payload: value,
-        where: {id: updateObjectWithNestedArrayAction.payload.id}
+        where: { id: updateObjectWithNestedArrayAction.payload.id },
       });
   });
 
@@ -300,31 +300,31 @@ describe('single action to variable', () => {
         payload: {
           ...value,
           tags: {
-            set: value.tags
+            set: value.tags,
           },
           info: {
             images: {
-              set: value.info.images
-            }
-          }
+              set: value.info.images,
+            },
+          },
         },
-        where: {id: updateObjectWithNestedArrayAction.payload.id}
+        where: { id: updateObjectWithNestedArrayAction.payload.id },
       });
   });
 
   test('delete array', () => {
     expect(actionsToVariables([deleteArrayAction], schema))
       .toMatchObject({
-        payload: deleteArrayAction.payload.value
-      })
+        payload: deleteArrayAction.payload.value,
+      });
   });
 
   test('update object', () => {
     expect(actionsToVariables([updateObjectAction], schema))
       .toMatchObject({
-        payload: updateObjectAction.payload.value
+        payload: updateObjectAction.payload.value,
       });
-  })
+  });
 
   test('connect to one', () => {
     expect(actionsToVariables([connectToOneAction], schema))
@@ -332,12 +332,12 @@ describe('single action to variable', () => {
         payload: {
           [connectToOneAction.payload.path]: {
             connect: {
-              id: connectToOneAction.payload.value.id
-            }
-          }
+              id: connectToOneAction.payload.value.id,
+            },
+          },
         },
-        where: {id: connectToOneAction.payload.id}
-      })
+        where: { id: connectToOneAction.payload.id },
+      });
   });
 
   test('connect to many', () => {
@@ -346,53 +346,51 @@ describe('single action to variable', () => {
         payload: {
           [connectToManyAction.payload.path]: {
             connect: [{
-              id: connectToManyAction.payload.value.id
-            }]
-          }
+              id: connectToManyAction.payload.value.id,
+            }],
+          },
         },
-        where: {id: connectToManyAction.payload.id}
-      })
+        where: { id: connectToManyAction.payload.id },
+      });
   });
 
   test('to many connect multiple', () => {
-    const connectToManyAction2 = {...connectToManyAction};
+    const connectToManyAction2 = { ...connectToManyAction };
     connectToManyAction2.payload.value.id = 'id2';
     expect(actionsToVariables([connectToManyAction, connectToManyAction2], schema))
       .toMatchObject({
         payload: {
           [connectToManyAction.payload.path]: {
             connect: [{
-              id: connectToManyAction.payload.value.id
+              id: connectToManyAction.payload.value.id,
             }, {
-              id: connectToManyAction2.payload.value.id
-            }]
-          }
+              id: connectToManyAction2.payload.value.id,
+            }],
+          },
         },
-        where: {id: connectToManyAction.payload.id}
-      })
+        where: { id: connectToManyAction.payload.id },
+      });
   });
 
   /* experimental usage */
   test('connect to many with transformGqlPayload', () => {
-    const action = {...connectToManyAction}
-    action.payload.transformGqlPayload = (originGqlPayload, action) => {
-      return {
-        ...originGqlPayload,
-        name: action.payload.value.name
-      }
-    }
+    const action = { ...connectToManyAction };
+    action.payload.transformGqlPayload = (originGqlPayload, action) => ({
+      ...originGqlPayload,
+      name: action.payload.value.name,
+    });
     expect(actionsToVariables([action], schema))
       .toMatchObject({
         payload: {
           [action.payload.path]: {
             connect: [{
               id: action.payload.value.id,
-              name: action.payload.value.name
-            }]
-          }
+              name: action.payload.value.name,
+            }],
+          },
         },
-        where: {id: action.payload.id}
-      })
+        where: { id: action.payload.id },
+      });
   });
 
   test('create and connect to one action', () => {
@@ -401,11 +399,11 @@ describe('single action to variable', () => {
         payload: {
           [createAndConnectToOneAction.payload.path]: {
             create: {
-              id: createAndConnectToOneAction.payload.value.id
-            }
-          }
+              id: createAndConnectToOneAction.payload.value.id,
+            },
+          },
         },
-        where: {id: createAndConnectToOneAction.payload.id}
+        where: { id: createAndConnectToOneAction.payload.id },
       });
   });
 
@@ -415,11 +413,11 @@ describe('single action to variable', () => {
         payload: {
           [createAndConnectToManyAction.payload.path]: {
             create: [{
-              id: createAndConnectToManyAction.payload.value.id
-            }]
-          }
+              id: createAndConnectToManyAction.payload.value.id,
+            }],
+          },
         },
-        where: {id: createAndConnectToManyAction.payload.id}
+        where: { id: createAndConnectToManyAction.payload.id },
       });
   });
 
@@ -428,10 +426,10 @@ describe('single action to variable', () => {
       .toMatchObject({
         payload: {
           [disconnectToOneAction.payload.path]: {
-            disconnect: true
-          }
+            disconnect: true,
+          },
         },
-        where: {id: disconnectToOneAction.payload.id}
+        where: { id: disconnectToOneAction.payload.id },
       });
   });
 
@@ -441,35 +439,35 @@ describe('single action to variable', () => {
         payload: {
           [disconnectToManyAction.payload.path]: {
             disconnect: [{
-              id: disconnectToManyAction.payload.value.id
-            }]
-          }
+              id: disconnectToManyAction.payload.value.id,
+            }],
+          },
         },
-        where: {id: disconnectToManyAction.payload.id}
+        where: { id: disconnectToManyAction.payload.id },
       });
   });
 
   test('to many disconnect multiple', () => {
-    const disconnectToManyAction2 = {...disconnectToManyAction};
+    const disconnectToManyAction2 = { ...disconnectToManyAction };
     disconnectToManyAction2.payload.value.id = 'id2';
     expect(actionsToVariables([disconnectToManyAction, disconnectToManyAction2], schema))
       .toMatchObject({
         payload: {
           [disconnectToManyAction.payload.path]: {
             disconnect: [{
-              id: disconnectToManyAction.payload.value.id
+              id: disconnectToManyAction.payload.value.id,
             }, {
-              id: disconnectToManyAction2.payload.value.id
-            }]
-          }
+              id: disconnectToManyAction2.payload.value.id,
+            }],
+          },
         },
-        where: {id: disconnectToManyAction.payload.id}
-      })
+        where: { id: disconnectToManyAction.payload.id },
+      });
   });
 
   test('to many connect and disconnect multiple', () => {
-    const connectToManyAction2 = {...connectToManyAction};
-    const disconnectToManyAction2 = {...disconnectToManyAction};
+    const connectToManyAction2 = { ...connectToManyAction };
+    const disconnectToManyAction2 = { ...disconnectToManyAction };
     disconnectToManyAction2.payload.value.id = 'id2';
     connectToManyAction2.payload.value.id = 'id2';
     expect(actionsToVariables([connectToManyAction, connectToManyAction2, disconnectToManyAction, disconnectToManyAction2], schema))
@@ -477,19 +475,19 @@ describe('single action to variable', () => {
         payload: {
           [connectToManyAction.payload.path]: {
             disconnect: [{
-              id: disconnectToManyAction.payload.value.id
+              id: disconnectToManyAction.payload.value.id,
             }, {
-              id: disconnectToManyAction2.payload.value.id
-            }]
-          }
+              id: disconnectToManyAction2.payload.value.id,
+            }],
+          },
         },
-        where: {id: disconnectToManyAction.payload.id}
-      })
+        where: { id: disconnectToManyAction.payload.id },
+      });
   });
 
   test('to many connect and disconnect multiple', () => {
-    const connectToManyAction2 = {...connectToManyAction};
-    const disconnectToManyAction2 = {...disconnectToManyAction};
+    const connectToManyAction2 = { ...connectToManyAction };
+    const disconnectToManyAction2 = { ...disconnectToManyAction };
     disconnectToManyAction2.payload.value.id = 'id2';
     connectToManyAction2.payload.value.id = 'id2';
     expect(actionsToVariables([disconnectToManyAction, disconnectToManyAction2, connectToManyAction, connectToManyAction2], schema))
@@ -497,33 +495,33 @@ describe('single action to variable', () => {
         payload: {
           [connectToManyAction.payload.path]: {
             connect: [{
-              id: connectToManyAction.payload.value.id
+              id: connectToManyAction.payload.value.id,
             }, {
-              id: connectToManyAction2.payload.value.id
-            }]
-          }
+              id: connectToManyAction2.payload.value.id,
+            }],
+          },
         },
-        where: {id: connectToManyAction.payload.id}
-      })
+        where: { id: connectToManyAction.payload.id },
+      });
   });
 
   test('to many connect and disconnect multiple', () => {
-    const connectToManyAction2 = {...connectToManyAction};
+    const connectToManyAction2 = { ...connectToManyAction };
     connectToManyAction2.payload.value.id = 'id2';
     expect(actionsToVariables([disconnectToManyAction, connectToManyAction2], schema))
       .toMatchObject({
         payload: {
           [connectToManyAction.payload.path]: {
             connect: [{
-              id: connectToManyAction.payload.value.id
+              id: connectToManyAction.payload.value.id,
             }],
             disconnect: [{
-              id: disconnectToManyAction.payload.value.id
-            }]
-          }
+              id: disconnectToManyAction.payload.value.id,
+            }],
+          },
         },
-        where: {id: connectToManyAction.payload.id}
-      })
+        where: { id: connectToManyAction.payload.id },
+      });
   });
 
   test('disconnect and delete to one', () => {
@@ -531,10 +529,10 @@ describe('single action to variable', () => {
       .toMatchObject({
         payload: {
           [disconnectAndDeleteToOneAction.payload.path]: {
-            delete: true
-          }
+            delete: true,
+          },
         },
-        where: {id: disconnectAndDeleteToOneAction.payload.id}
+        where: { id: disconnectAndDeleteToOneAction.payload.id },
       });
   });
 
@@ -544,14 +542,13 @@ describe('single action to variable', () => {
         payload: {
           [disconnectAndDeleteToManyAction.payload.path]: {
             delete: [{
-              id: disconnectAndDeleteToManyAction.payload.value.id
-            }]
-          }
+              id: disconnectAndDeleteToManyAction.payload.value.id,
+            }],
+          },
         },
-        where: {id: disconnectAndDeleteToManyAction.payload.id}
+        where: { id: disconnectAndDeleteToManyAction.payload.id },
       });
   });
-
 });
 
 describe('multiple actions to variables', () => {
@@ -559,21 +556,21 @@ describe('multiple actions to variables', () => {
     expect(actionsToVariables([
       updateArrayAction,
       createAndConnectToOneAction,
-      disconnectToOneAction
+      disconnectToOneAction,
     ], schema)).toMatchObject({
-      "payload": {
-        "title": "123",
-        "author": {
-            "create": {
-              "name": "newAuthor"
-            },
-            "disconnect": true
-          }
+      payload: {
+        title: '123',
+        author: {
+          create: {
+            name: 'newAuthor',
+          },
+          disconnect: true,
+        },
       },
-      "where": {
-        'id': 'post1'
-      }
-    })
+      where: {
+        id: 'post1',
+      },
+    });
   });
 });
 
@@ -590,14 +587,14 @@ describe('find schema', () => {
             type: 'object',
             items: {
               image: {
-                type: 'image'
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+                type: 'image',
+              },
+            },
+          },
+        },
+      },
+    },
+  };
 
   it('should find 2 array', () => {
     expect(findSchema(schema, schema => schema.type === 'array').length).toBe(2);
@@ -622,11 +619,11 @@ describe('addPath', () => {
         items: {
           title: {
             keyName: 'title',
-            type: 'string'
+            type: 'string',
           },
           content: {
             keyName: 'content',
-            type: 'editor'
+            type: 'editor',
           },
           images: {
             keyName: 'images',
@@ -636,13 +633,13 @@ describe('addPath', () => {
               items: {
                 image: {
                   keyName: 'image',
-                  type: 'image'
-                }
-              }
-            }
-          }
-        }
-      }
+                  type: 'image',
+                },
+              },
+            },
+          },
+        },
+      },
     };
     expect(addPath(schema, '')).toMatchObject({
       keyName: 'posts',
@@ -654,12 +651,12 @@ describe('addPath', () => {
           title: {
             path: 'posts/title',
             keyName: 'title',
-            type: 'string'
+            type: 'string',
           },
           content: {
             path: 'posts/content',
             keyName: 'content',
-            type: 'editor'
+            type: 'editor',
           },
           images: {
             path: 'posts/images',
@@ -670,13 +667,13 @@ describe('addPath', () => {
               items: {
                 image: {
                   path: 'posts/images/image',
-                  type: 'image'
-                }
-              }
-            }
-          }
-        }
-      }
+                  type: 'image',
+                },
+              },
+            },
+          },
+        },
+      },
     });
   });
-})
+});

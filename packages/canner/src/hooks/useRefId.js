@@ -1,14 +1,14 @@
-import {useContext} from 'react';
-import {Context} from 'canner-helpers';
+import { useContext } from 'react';
+import { Context } from 'canner-helpers';
 import RefId from 'canner-ref-id';
 
 export default ({
   pattern,
   keyName,
-  refId
+  refId,
 }) => {
   const contextValue = useContext(Context);
-  const {routerParams, routes} = contextValue;
+  const { routerParams, routes } = contextValue;
   const parentRefId = refId || contextValue.refId;
 
   if (!pattern || !keyName) {
@@ -18,10 +18,9 @@ export default ({
   if (routerParams.operator === 'create' && pattern === 'array') {
     // in create form, the index must be 0
     return new RefId(`${keyName}/0`);
-  } else if (pattern === 'array' && routes.length > 1) {
+  } if (pattern === 'array' && routes.length > 1) {
     // in update form, the index must be 0
     return new RefId(`${keyName}/0`);
-  } else {
-    return parentRefId ? parentRefId.child(keyName) : new RefId(keyName);
   }
-}
+  return parentRefId ? parentRefId.child(keyName) : new RefId(keyName);
+};

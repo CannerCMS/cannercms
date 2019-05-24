@@ -1,26 +1,33 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Select} from 'antd';
+// @flow
+import React, { Component } from 'react';
+import { Select } from 'antd';
 import isUndefined from 'lodash/isUndefined';
-const Option = Select.Option;
-import {injectIntl} from 'react-intl';
+import { injectIntl } from 'react-intl';
 
+const Option = Select.Option;
+
+type Props = {
+  onChange: Function,
+  name: string,
+  options?: Array<{text: string, condition: any}>,
+  label: string,
+  intl: Object,
+  index: number
+}
+
+// $FlowFixMe: decorator
 @injectIntl
-export default class SelectFilter extends Component {
+export default class SelectFilter extends Component<Props> {
   static propTypes = {
-    onChange: PropTypes.func,
-    name: PropTypes.string,
-    options: PropTypes.array,
-    label: PropTypes.string,
-    intl: PropTypes.object,
+
   };
 
   static defaultProps = {
-    options: []
+    options: [],
   }
 
-  onSelect = val => {
-    const {onChange, options} = this.props;
+  onSelect = (val: number) => {
+    const { onChange, options = [] } = this.props;
     if (isUndefined(val)) {
       return onChange({});
     }
@@ -29,18 +36,19 @@ export default class SelectFilter extends Component {
   }
 
   render() {
-    const {options, intl, index} = this.props;
-    const placeholder = intl.formatMessage({id: 'query.filter.select.placeholder'});
+    const { options, intl, index } = this.props;
+    const placeholder = intl.formatMessage({ id: 'query.filter.select.placeholder' });
     return (
       <Select
         data-testid={`select-filter-${index}`}
-        style={{width: 120}}
+        style={{ width: 120 }}
         placeholder={placeholder}
-        onChange={(val) => this.onSelect(val)}
+        onChange={val => this.onSelect(val)}
         allowClear
       >
-        {options.map((cond, i) => (
-          <Option value={i} key={i} data-testid={`select-filter-${index}-option-${i}`} >
+        {(options || []).map((cond, i) => (
+          // eslint-disable-next-line
+          <Option value={i} key={i} data-testid={`select-filter-${index}-option-${i}`}>
             {cond.text}
           </Option>
         ))}

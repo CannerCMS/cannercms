@@ -1,10 +1,10 @@
 // @flow
 
-import type {CannerSchema} from '../flow-types';
+import type { CannerSchema } from '../flow-types';
 
 export default class PageModel {
   // babel bug
-  /*::
+  /* ::
   items: CannerSchema | {[string]: CannerSchema};
   keyName: string;
   title: string;
@@ -31,7 +31,7 @@ export default class PageModel {
       keyName: this.keyName,
       type: 'page',
       items: this.items,
-      title: this.title
+      title: this.title,
     };
   }
 }

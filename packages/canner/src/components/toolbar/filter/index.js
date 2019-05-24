@@ -1,13 +1,13 @@
 // @flow
 import * as React from 'react';
-import SelectFilter from './select';
-import NumberFilter from './number';
-import TextFilter from './text';
 import styled from 'styled-components';
-import {Icon} from 'antd';
+import { Icon } from 'antd';
 import debounce from 'lodash/debounce';
 // import DateRangeFilter from './dateRange';
 import isEmpty from 'lodash/isEmpty';
+import TextFilter from './text';
+import NumberFilter from './number';
+import SelectFilter from './select';
 // import {FormattedMessage} from 'react-intl';
 // import defaultMessage from '../locale';
 
@@ -53,20 +53,20 @@ const FilterWrapper = styled.div`
   h5 {
     margin-bottom: 0;
   }
-`
+`;
 
 export default class FilterGroup extends React.Component<Props, State> {
   onChange = (cond: Object) => {
-    let {where, changeFilter} = this.props;
+    const { where, changeFilter } = this.props;
     if (isEmpty(cond)) {
       changeFilter({});
     } else {
-      Object.keys(cond).forEach(key => {
+      Object.keys(cond).forEach((key) => {
         const newCond = cond[key];
         if (newCond === undefined) {
           delete where[key];
         } else {
-          where[key] = cond[key]
+          where[key] = cond[key];
         }
       });
       changeFilter(where);
@@ -74,26 +74,27 @@ export default class FilterGroup extends React.Component<Props, State> {
   }
 
   deleteFilter = (index: number) => {
-    const {deleteFilter, filters} = this.props;
+    const { deleteFilter, filters } = this.props;
     const filter = filters[index];
     if (filter.type === 'select') {
       const allField = filter.options.reduce((result: Object, option: Object) => {
-        Object.keys(option.condition).forEach(key => {
+        const rtn = result;
+        Object.keys(option.condition).forEach((key) => {
           if (!(key in result)) {
-            result[key] = undefined;
+            rtn[key] = undefined;
           }
         });
         return result;
       }, {});
       this.onChange(allField);
     } else {
-      this.onChange({[filter.field]: undefined});
+      this.onChange({ [filter.field]: undefined });
     }
     deleteFilter(index);
   }
 
   render() {
-    const {filters = [], displayedFilters, where} = this.props;
+    const { filters = [], displayedFilters, where } = this.props;
     if (!filters || !filters.length) {
       return null;
     }
@@ -101,19 +102,20 @@ export default class FilterGroup extends React.Component<Props, State> {
     const renderFilter = (filter, index) => {
       switch (filter.type) {
         case 'select':
-          return <SelectFilter index={index} onChange={debounceChange} options={filter.options} where={where}/>;
+          // $FlowFixMe: intl
+          return <SelectFilter index={index} onChange={debounceChange} options={filter.options} where={where} />;
         case 'number':
-          return <NumberFilter index={index} onChange={debounceChange} name={filter.field} where={where}/>;
+          return <NumberFilter index={index} onChange={debounceChange} name={filter.field} where={where} />;
         /*
         case 'dateRange':
           return <DateRangeFilter onChange={debounceChange} schema={{[filter.field]: filter}}/>
         */
         case 'text':
-          return <TextFilter index={index} onChange={debounceChange} name={filter.field} where={where}/>;
+          return <TextFilter index={index} onChange={debounceChange} label={filter.label} name={filter.field} where={where} />;
         default:
           return null;
       }
-    }
+    };
     return (
       <React.Fragment>
         {
@@ -127,7 +129,7 @@ export default class FilterGroup extends React.Component<Props, State> {
                 )
               }
             </FilterWrapper>
-            
+
           ))
         }
       </React.Fragment>

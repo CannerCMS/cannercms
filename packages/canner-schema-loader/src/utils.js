@@ -1,4 +1,5 @@
 import objectPath from 'object-path';
+
 export const componentMap = {
   _map: {
     string: {
@@ -10,13 +11,13 @@ export const componentMap = {
       textarea: '@canner/antd-string-textarea',
       time: '@canner/antd-string-time_picker',
       markdown: '@canner/antd-string-mde',
-      default: '@canner/antd-string-input'
+      default: '@canner/antd-string-input',
     },
     number: {
       input: '@canner/antd-number-input',
       rate: '@canner/antd-number-rate',
       slider: '@canner/antd-number-slider',
-      default: '@canner/antd-number-input'
+      default: '@canner/antd-number-input',
     },
     array: {
       tab: '@canner/antd-array-tabs',
@@ -32,48 +33,48 @@ export const componentMap = {
       tag: '@canner/antd-array-tag',
       tableRoute: '@canner/antd-array-table_route',
       tree: '@canner/antd-array-tree',
-      default: '@canner/antd-array-table'
+      default: '@canner/antd-array-table',
     },
     object: {
       variants: '@canner/antd-object-variants',
       options: '@canner/antd-object-options',
       editor: '@canner/antd-object-editor',
       fieldset: '', // no package
-      default: '' // no package
+      default: '', // no package
     },
     json: {
       variants: '@canner/antd-object-variants',
       options: '@canner/antd-object-options',
       editor: '@canner/antd-object-editor',
       fieldset: '', // no package
-      default: '' // no package
+      default: '', // no package
     },
     relation: {
       singleSelect: '@canner/antd-relation-single_select',
       multipleSelect: '@canner/antd-relation-multiple_select',
       singleSelectTree: '@canner/antd-relation-single_select_tree',
       multipleSelectTree: '@canner/antd-relation-multiple_select_tree',
-      default: '@canner/antd-relation-single_select'
+      default: '@canner/antd-relation-single_select',
     },
     boolean: {
       switch: '@canner/antd-boolean-switch',
       card: '@canner/antd-boolean-card',
-      default: '@canner/antd-boolean-switch'
+      default: '@canner/antd-boolean-switch',
     },
     geoPoint: {
-      default: '@canner/antd-object-map'
+      default: '@canner/antd-object-map',
     },
     file: {
       file: '@canner/antd-object-image',
-      default: '@canner/antd-object-image'
+      default: '@canner/antd-object-image',
     },
     image: {
       image: '@canner/antd-object-image',
-      default: '@canner/antd-object-image'
+      default: '@canner/antd-object-image',
     },
     dateTime: {
-      dateTime: '@canner/antd-string-date_time_picker', 
-      default: '@canner/antd-string-date_time_picker'
+      dateTime: '@canner/antd-string-date_time_picker',
+      default: '@canner/antd-string-date_time_picker',
     },
     chart: {
       line: '@canner/vega-chart-line',
@@ -86,15 +87,15 @@ export const componentMap = {
     indicator: {
       list: '@canner/antd-indicator-list',
       amount: '@canner/antd-indicator-amount',
-      default: '@canner/antd-indicator-amount'
+      default: '@canner/antd-indicator-amount',
     },
     enum: {
       select: '@canner/antd-string-select',
       radio: '@canner/antd-string-radio',
-      default: '@canner/antd-string-select'
-    }
+      default: '@canner/antd-string-select',
+    },
   },
-  get: function(type, ui = 'default') {
+  get(type, ui = 'default') {
     if (!(type in this._map)) {
       return undefined;
     }
@@ -105,8 +106,8 @@ export const componentMap = {
 
     return objectPath.get(this._map, `${type}.${ui}`, ui);
   },
-  set: function(path, name) {
+  set(path, name) {
     const paths = path.split('.');
     objectPath.set(this._map, paths, name);
-  }
+  },
 };

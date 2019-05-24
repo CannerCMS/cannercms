@@ -1,13 +1,14 @@
-import {useRef, useEffect} from 'react';
+import { useRef, useEffect } from 'react';
 
 export default function useTraceUpdate(props) {
   const prev = useRef(props);
   useEffect(() => {
     const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
+      const rtn = ps;
       if (prev.current[k] !== v) {
-        ps[k] = [prev.current[k], v];
+        rtn[k] = [prev.current[k], v];
       }
-      return ps;
+      return rtn;
     }, {});
     if (Object.keys(changedProps).length > 0) {
       // eslint-disable-next-line no-console

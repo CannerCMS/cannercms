@@ -1,12 +1,12 @@
 // @flow
 
-import type {Field} from './types';
-import {types} from './types';
+import type { Field } from './types';
+import { types } from './types';
 
 export default class NullField implements Field {
   key: string;
 
-  constructor({key}: {key: string}) {
+  constructor({ key }: {key: string}) {
     this.key = key;
   }
 
@@ -23,10 +23,10 @@ export default class NullField implements Field {
   }
 
   forEach() {
-    return;
+
   }
 
   getChild(fieldName: string) {
-    return new NullField({key: fieldName});
+    return new NullField({ key: fieldName });
   }
 }

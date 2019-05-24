@@ -1,23 +1,22 @@
 // @flow
 
 // $FlowFixMe: unresolved
-import {fromJS} from 'immutable';
+import { fromJS } from 'immutable';
 import RefId from 'canner-ref-id';
 
 export type UpdateType = 'update' | 'create' | 'delete';
 export type SwapType = 'swap';
 
-export type onChangeFunc =  ((path: RefId, type: UpdateType, delta: *) => void) &
+export type onChangeFunc = ((path: RefId, type: UpdateType, delta: *) => void) &
   ((path: {firstRefId: RefId, secondRefId: RefId}, type: SwapType) => void);
 
 class Store {
   // eslint-disable-next-line
   subcriber = (value: *) => {};
+
   value = fromJS({});
 
-  getValue = () => {
-    return this.value;
-  }
+  getValue = () => this.value
 
   listen(subcriber: (value: *) => void) {
     this.subcriber = subcriber;
@@ -45,7 +44,7 @@ class Store {
 
   // $FlowFixMe: flow can't work pretty on function overloading , so using any to temp resolve
   onChange: onChangeFunc = (path: any, type, delta: any) => {
-    switch(type) {
+    switch (type) {
       case 'update': {
         this.setValueByPath(path, delta);
         break;
@@ -68,7 +67,7 @@ class Store {
         break;
       }
       case 'swap': {
-        const {firstRefId, secondRefId} = path;
+        const { firstRefId, secondRefId } = path;
         const collection = this.getValueByPath(firstRefId.remove());
         const firstRefIdArr = firstRefId.getPathArr();
         const secondRefIdArr = secondRefId.getPathArr();

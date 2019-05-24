@@ -15,8 +15,8 @@
 
 import invariant from 'invariant';
 import faker from 'faker';
-import {mapSchema} from './utils';
-import type {Schema, SchemaMap} from './types';
+import { mapSchema } from './utils';
+import type { Schema, SchemaMap } from './types';
 // createFakeData = (schema: Object, listLength: number) => *
 
 
@@ -25,7 +25,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
     return null;
   }
   const firstLevelKeys = getFirstLevelKeys(root);
-  return root.hasOwnProperty('type') ? loop(((root: any): Schema), ((root: any): Schema).keyName): mapSchema(((root: any): SchemaMap), loop);
+  return root.hasOwnProperty('type') ? loop(((root: any): Schema), ((root: any): Schema).keyName) : mapSchema(((root: any): SchemaMap), loop);
 
   // Loop schema
   function loop(schema: Schema, key: ?string) {
@@ -35,8 +35,8 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
       case 'object': {
         if (schema.ui === 'editor') {
           result = {
-            html: `<p>${faker.lorem.paragraphs()}</p>`
-          }
+            html: `<p>${faker.lorem.paragraphs()}</p>`,
+          };
           break;
         }
         result = mapSchema(schema.items, loop);
@@ -55,7 +55,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
           lat: faker.address.latitude(),
           lng: faker.address.longitude(),
           address: faker.address.city(),
-          placeId: faker.random.uuid()
+          placeId: faker.random.uuid(),
         };
         break;
       case 'dateTime':
@@ -67,7 +67,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
           contentType: faker.system.mimeType(),
           size: faker.random.number(),
           name: faker.system.commonFileName(),
-          url: faker.internet.url()
+          url: faker.internet.url(),
         };
         break;
       case 'image':
@@ -76,7 +76,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
           contentType: 'image/jpeg',
           size: faker.random.number(),
           name: faker.system.commonFileName(),
-          url: randomImg()
+          url: randomImg(),
         };
         break;
       case 'boolean':
@@ -88,7 +88,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
           result = faker.internet.email();
         } else if (lowerKeyName.indexOf('phone') > -1) {
           result = faker.phone.phoneNumber();
-        } else if (schema.ui === "textarea") {
+        } else if (schema.ui === 'textarea') {
           result = faker.lorem.paragraphs();
         } else {
           result = faker.random.word();
@@ -133,13 +133,13 @@ function getArrayData(schema: any, key: string, listLength: number, loop: Functi
     if (schema.items && schema.items.items) {
       item = mapSchema(schema.items.items, loop);
     } else {
-      item = schema.items.hasOwnProperty('type') ? loop(schema.items, schema.items.keyName): mapSchema(schema.items, loop);
+      item = schema.items.hasOwnProperty('type') ? loop(schema.items, schema.items.keyName) : mapSchema(schema.items, loop);
     }
 
     if (typeof item === 'object' && key) {
       item = {
         ...item,
-        id: `${key}${i+1}`
+        id: `${key}${i + 1}`,
       };
     }
     result.push(item);
@@ -148,7 +148,7 @@ function getArrayData(schema: any, key: string, listLength: number, loop: Functi
 }
 
 function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
-  const {type, to} = (schema: any).relation;
+  const { type, to } = (schema: any).relation;
   const isInFirstLevel = Array.isArray(firstLevelKeys) && firstLevelKeys.indexOf(to) > -1 && listLength > 0;
   let result: any;
 
@@ -156,7 +156,7 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
     case 'toMany':
       result = [];
       if (isInFirstLevel) {
-        for(let i = 0; i < listLength; ++i) {
+        for (let i = 0; i < listLength; ++i) {
           if (Math.random() > 0.5 && to !== schema.keyName) {
             result.push(`${to}${i + 1}`);
           }
@@ -181,5 +181,5 @@ export function getRandomNumber(min: number, max: number) {
 }
 
 export function randomImg() {
-  return `https://placeimg.com/${getRandomNumber(250, 350)}/${getRandomNumber(300, 400)}/any`
+  return `https://placeimg.com/${getRandomNumber(250, 350)}/${getRandomNumber(300, 400)}/any`;
 }

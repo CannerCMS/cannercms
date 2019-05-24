@@ -6,10 +6,10 @@ export function isCompleteContain(paths: Array<string>, routes: Array<string>) {
 
 export function genPaths(path: string, pattern: string): Array<string> {
   const patterns = pattern.split('.');
-  const indexs = patterns.map((type, i) => type === 'array' ? i : -1)
+  const indexs = patterns.map((type, i) => (type === 'array' ? i : -1))
     .filter(index => index !== -1);
-  let paths = path.split('/')
-    .map((route, i) => indexs.indexOf(i) === -1 ? route : [].concat(route, '__ARRAY_INDEX__'))
+  const paths = path.split('/')
+    .map((route, i) => (indexs.indexOf(i) === -1 ? route : [].concat(route, '__ARRAY_INDEX__')))
     .reduce((result: any, curr: any) => result.concat(curr), []);
   return paths;
 }
@@ -17,7 +17,7 @@ export function genPaths(path: string, pattern: string): Array<string> {
 export function isRoutesEndAtMe({
   routes,
   path,
-  pattern
+  pattern,
 }: {
   routes: Array<string>,
   path: string,

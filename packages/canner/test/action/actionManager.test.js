@@ -1,8 +1,8 @@
-import {ActionManager} from '../../src/action';
+import { ActionManager } from '../../src/action';
 import {
   ArrayPattern,
   ObjectPattern,
-  ConnectPattern
+  ConnectPattern,
 } from '../../src/action/pattern';
 
 const objectAction = {
@@ -10,10 +10,10 @@ const objectAction = {
   payload: {
     key: 'user',
     value: {
-      name: 'User'
-    }
-  }
-}
+      name: 'User',
+    },
+  },
+};
 
 const updateArrayAction = {
   type: 'UPDATE_ARRAY',
@@ -21,10 +21,10 @@ const updateArrayAction = {
     key: 'posts',
     id: 'id1',
     value: {
-      title: 'POST1'
-    }
-  }
-}
+      title: 'POST1',
+    },
+  },
+};
 
 const createArrayAction = {
   type: 'CREATE_ARRAY',
@@ -32,10 +32,10 @@ const createArrayAction = {
     key: 'posts',
     id: 'id1',
     value: {
-      title: 'POST2'
-    }
-  }
-}
+      title: 'POST2',
+    },
+  },
+};
 
 const connectAction = {
   type: 'CONNECT',
@@ -44,10 +44,10 @@ const connectAction = {
     path: 'author',
     id: 'id1',
     value: {
-      id: 'author1'
-    }
-  }
-}
+      id: 'author1',
+    },
+  },
+};
 
 const disconnectAction = {
   type: 'DISCONNECT',
@@ -56,10 +56,10 @@ const disconnectAction = {
     path: 'author',
     id: 'id1',
     value: {
-      id: 'author1'
-    }
-  }
-}
+      id: 'author1',
+    },
+  },
+};
 
 describe('add action', () => {
   let actionManager;
@@ -71,7 +71,7 @@ describe('add action', () => {
     actionManager.addAction(objectAction);
     expect(actionManager.store.user).toMatchObject({
       object: expect.any(ObjectPattern),
-      connect: expect.any(ConnectPattern)
+      connect: expect.any(ConnectPattern),
     });
   });
 
@@ -97,7 +97,7 @@ describe('add action', () => {
     actionManager.addAction(objectAction);
     actionManager.addAction(createArrayAction);
     expect(actionManager.getActions(objectAction.payload.key).length).toBe(1);
-    const {key, id} = createArrayAction.payload;
+    const { key, id } = createArrayAction.payload;
     expect(actionManager.getActions(key, id).length).toBe(1);
     expect(actionManager.getActions(key).length).toBe(1);
   });
@@ -122,9 +122,8 @@ describe('add action', () => {
     expect(actionManager.getActions('haha')).toEqual([]);
     actionManager.addAction(objectAction);
     actionManager.addAction(createArrayAction);
-    const {key, id} = createArrayAction.payload;
+    const { key, id } = createArrayAction.payload;
     actionManager.removeActions(key, id);
     expect(actionManager.store.posts.length).toBe(0);
   });
-
-})
+});

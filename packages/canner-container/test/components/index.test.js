@@ -1,8 +1,9 @@
 
 import * as React from 'react';
-import {render, cleanup} from 'react-testing-library';
+import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
-import CannerContainer from  '../../src/components/index';
+import CannerContainer from '../../src/components/index';
+
 afterEach(cleanup);
 
 function TestChildren() {
@@ -13,27 +14,27 @@ const sidebarConfig = {
   logo: 'http://www.img.jpg',
   menuConfig: [{
     title: 'My Info',
-    pathname: '/info'
+    pathname: '/info',
   }, {
     title: 'Posts',
-    pathname: '/posts'
+    pathname: '/posts',
   }, {
     title: 'Authors',
-    pathname: '/authors'
-  }]
+    pathname: '/authors',
+  }],
 };
 
 const navbarConfig = {
   showSaveButton: true,
-  renderMenu: jest.fn()
+  renderMenu: jest.fn(),
 };
 
 const schema = {
   schema: {
-    info: {type: 'object', title: 'My Info', keyName: 'info'},
-    posts: {type: 'array', title: 'Posts', keyName: 'posts'},
-    users: {type: 'array', title: 'Authors', keyName: 'authors'}
-  }
+    info: { type: 'object', title: 'My Info', keyName: 'info' },
+    posts: { type: 'array', title: 'Posts', keyName: 'posts' },
+    users: { type: 'array', title: 'Authors', keyName: 'authors' },
+  },
 };
 
 const router = {
@@ -43,31 +44,31 @@ const router = {
   getWhere: jest.fn(),
   getSort: jest.fn(),
   getPagination: jest.fn(),
-  goTo: jest.fn()
-}
+  goTo: jest.fn(),
+};
 
 describe('<CannerContainer>', () => {
   it('should render children', () => {
-    const {getByTestId} = render(<CannerContainer
+    const { getByTestId } = render(<CannerContainer
       sidebarConfig={sidebarConfig}
       navbarConfig={navbarConfig}
       schema={schema}
       router={router}
     >
       <TestChildren />
-    </CannerContainer>);
+                                   </CannerContainer>);
     expect(getByTestId('children')).toHaveTextContent('children');
   });
 
   it('should initial dataChanged state be {}', () => {
-    const {getByTestId} = render(<CannerContainer
+    const { getByTestId } = render(<CannerContainer
       sidebarConfig={sidebarConfig}
       navbarConfig={navbarConfig}
       schema={schema}
       router={router}
     >
       <TestChildren />
-    </CannerContainer>);
+                                   </CannerContainer>);
     expect(getByTestId('navbar-saved-button')).toHaveTextContent('Saved');
   });
 });

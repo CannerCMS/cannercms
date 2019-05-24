@@ -1,23 +1,35 @@
 // @flow
 
-import type {CannerSchema} from '../flow-types';
-import {parseConnector, parseGraphqlClient,
-  parseGraphqlClients, parseResolvers, genStorages
+import type { CannerSchema } from '../flow-types';
+import {
+  parseConnector, parseGraphqlClient,
+  parseGraphqlClients, parseResolvers, genStorages,
 } from '../utils';
 import visitorManager from '../visitorManager';
 
 export default class RootModel {
   items: CannerSchema | {[string]: CannerSchema};
+
   keyName: string;
+
   dict: Object;
+
   schema: Object;
+
   pageSchema: Object;
+
   connector: any;
+
   resolvers: Object;
+
   visitors: Array<any>;
+
   entry: Array<any>;
+
   imageStorages: Object;
+
   fileStorages: Object;
+
   graphqlClient: any;
 
   constructor(attrs: CannerSchema, children: Array<CannerSchema>) {
@@ -30,8 +42,8 @@ export default class RootModel {
         if (child.type === 'array' && !child.toolbar) {
           // default pagination in first array
           child.toolbar = {
-            pagination: {}
-          }
+            pagination: {},
+          };
         }
         result[child.keyName] = child;
         return result;
@@ -62,7 +74,7 @@ export default class RootModel {
       fileStorages: this.fileStorages,
       resolvers: this.resolvers,
       connector: this.connector,
-      graphqlClient: this.graphqlClient
+      graphqlClient: this.graphqlClient,
     };
   }
 }

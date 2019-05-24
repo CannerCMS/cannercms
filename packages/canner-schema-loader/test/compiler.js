@@ -15,12 +15,12 @@ export default (fixture, options = {}) => {
         test: /(\.schema\.js|canner\.def\.js)/,
         use: [{
           loader: path.resolve(__dirname, '../src/index.js'),
-          options
+          options,
         }, {
-          loader: 'babel-loader'
-        }]
-      }]
-    }
+          loader: 'babel-loader',
+        }],
+      }],
+    },
   });
 
   compiler.outputFileSystem = new memoryfs();
@@ -32,4 +32,4 @@ export default (fixture, options = {}) => {
       resolve(stats);
     });
   });
-}
+};

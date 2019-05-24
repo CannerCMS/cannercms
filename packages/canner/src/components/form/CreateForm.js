@@ -1,7 +1,7 @@
 // @flow
 
-import React, {useMemo} from 'react';
-import {Context} from 'canner-helpers';
+import React, { useMemo } from 'react';
+import { Context } from 'canner-helpers';
 
 export default function CreateForm(props: any) {
   const {
@@ -23,7 +23,7 @@ export default function CreateForm(props: any) {
     routes,
     routerParams,
     goTo,
-    ...rest
+    ...rest,
   }), [routes, routerParams, rootValue]);
   return (
     <Context.Provider value={contextValue}>
@@ -37,5 +37,5 @@ export default function CreateForm(props: any) {
         })
       )}
     </Context.Provider>
-  )
+  );
 }

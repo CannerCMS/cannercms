@@ -1,5 +1,5 @@
-import {createFakeData} from '../src';
-import {getRandomNumber, randomImg} from '../src/createFakeData';
+import { createFakeData } from '../src';
+import { getRandomNumber, randomImg } from '../src/createFakeData';
 
 describe('null', () => {
   it('should return null', () => {
@@ -10,7 +10,7 @@ describe('null', () => {
 describe('Non-exist type', () => {
   it('should return undefined', () => {
     expect(createFakeData({
-      type: 'NON_EXIST_TYPE'
+      type: 'NON_EXIST_TYPE',
     })).toBe(undefined);
   });
 });
@@ -18,29 +18,29 @@ describe('Non-exist type', () => {
 describe('create string data', () => {
   it('should return a string', () => {
     expect(typeof createFakeData({
-      type: 'string'
+      type: 'string',
     })).toBe('string');
   });
 
   it('should be different', () => {
     expect(createFakeData({
-      type: 'string'
+      type: 'string',
     })).not.toBe(createFakeData({
-      type: 'string'
+      type: 'string',
     }));
   });
 
   it('should gen email format', () => {
     expect(createFakeData({
       type: 'string',
-      keyName: 'userEmail'
+      keyName: 'userEmail',
     }).indexOf('@') > -1).toBe(true);
   });
 
   it('should gen phone format', () => {
     expect(createFakeData({
       type: 'string',
-      keyName: 'userPhone'
+      keyName: 'userPhone',
     }).match(/\d/)).toBeDefined();
   });
 });
@@ -50,14 +50,14 @@ describe('create enum data', () => {
   it('should return a string', () => {
     expect(typeof createFakeData({
       type: 'enum',
-      values: ['a', 'b']
+      values: ['a', 'b'],
     })).toBe('string');
   });
 
   it('should be one of values', () => {
     expect(['a', 'b'].includes(createFakeData({
       type: 'enum',
-      values: ['a', 'b']
+      values: ['a', 'b'],
     }))).toBe(true);
   });
 });
@@ -65,7 +65,7 @@ describe('create enum data', () => {
 describe('create boolean data', () => {
   it('should return a boolean value', () => {
     expect(typeof createFakeData({
-      type: 'boolean'
+      type: 'boolean',
     })).toBe('boolean');
   });
 });
@@ -73,15 +73,15 @@ describe('create boolean data', () => {
 describe('create number data', () => {
   it('should return a number', () => {
     expect(typeof createFakeData({
-      type: 'number'
+      type: 'number',
     })).toBe('number');
   });
 
   it('should be different', () => {
     expect(createFakeData({
-      type: 'number'
+      type: 'number',
     })).not.toBe(createFakeData({
-      type: 'number'
+      type: 'number',
     }));
   });
 });
@@ -93,19 +93,19 @@ describe('create editor data', () => {
       ui: 'editor',
       items: {
         html: {
-          type: 'string'
-        }
-      }
+          type: 'string',
+        },
+      },
     });
     expect(editor.html.startsWith('<p>')).toBe(true);
     expect(editor.html.endsWith('</p>')).toBe(true);
-  })
-})
+  });
+});
 
 describe('create geoPoint data', () => {
   it('should return a geo object', () => {
     const geoPoint = createFakeData({
-      type: 'geoPoint'
+      type: 'geoPoint',
     });
     expect(typeof geoPoint.lat).toBe('string');
     expect(typeof geoPoint.lng).toBe('string');
@@ -115,9 +115,9 @@ describe('create geoPoint data', () => {
 
   it('should be different', () => {
     expect(createFakeData({
-      type: 'geoPoint'
+      type: 'geoPoint',
     }).lat).not.toBe(createFakeData({
-      type: 'geoPoint'
+      type: 'geoPoint',
     }).lat);
   });
 });
@@ -151,9 +151,9 @@ describe('create file data', () => {
 
   it('should be different', () => {
     expect(createFakeData({
-      type: 'file'
+      type: 'file',
     }).name).not.toBe(createFakeData({
-      type: 'file'
+      type: 'file',
     }).name);
   });
 });
@@ -171,9 +171,9 @@ describe('create image data', () => {
 
   it('should be different', () => {
     expect(createFakeData({
-      type: 'image'
+      type: 'image',
     }).name).not.toBe(createFakeData({
-      type: 'image'
+      type: 'image',
     }).name);
   });
 });
@@ -181,7 +181,7 @@ describe('create image data', () => {
 describe('create json empty data', () => {
   it('should return empty object', () => {
     expect(createFakeData({
-      type: 'json'
+      type: 'json',
     })).toEqual({});
   });
 });
@@ -192,15 +192,15 @@ describe('create object data', () => {
       type: 'object',
       items: {
         input: {
-          type: 'string'
+          type: 'string',
         },
         boolean: {
-          type: 'boolean'
+          type: 'boolean',
         },
         number: {
-          type: 'number'
-        }
-      }
+          type: 'number',
+        },
+      },
     });
     expect(typeof data.input).toBe('string');
     expect(typeof data.boolean).toBe('boolean');
@@ -216,11 +216,11 @@ describe('create object data', () => {
           hobbies: {
             type: 'array',
             items: {
-              type: 'string'
-            }
-          }
-        }
-      }
+              type: 'string',
+            },
+          },
+        },
+      },
     }, 5);
 
     expect(data.info).toBeDefined();
@@ -245,16 +245,16 @@ describe('create an array data', () => {
         type: 'object',
         items: {
           input: {
-            type: 'string'
+            type: 'string',
           },
           boolean: {
-            type: 'boolean'
+            type: 'boolean',
           },
           number: {
-            type: 'number'
-          }
-        }
-      }
+            type: 'number',
+          },
+        },
+      },
     }, listLength).length).toBe(listLength);
   });
 
@@ -263,15 +263,15 @@ describe('create an array data', () => {
     expect(createFakeData({
       type: 'array',
       items: {
-        type: 'string'
-      }
+        type: 'string',
+      },
     }, listLength).length).toBe(listLength);
 
     expect(typeof createFakeData({
       type: 'array',
       items: {
-        type: 'string'
-      }
+        type: 'string',
+      },
     }, listLength)[0]).toBe('string');
   });
 });
@@ -282,8 +282,8 @@ describe('create relation empty data', () => {
     expect(createFakeData({
       type: 'relation',
       relation: {
-        type: 'toOne'
-      }
+        type: 'toOne',
+      },
     })).toBe(null);
   });
 
@@ -294,15 +294,15 @@ describe('create relation empty data', () => {
         type: 'array',
         items: {
           author: {
-             type: 'relation',
-             relation: {
-               to: 'users',
-               type: 'toOne' 
-             } 
-          }
-        }
-      }
-    }, 2)).toEqual({"posts": [{"author": null, "id": "posts1"}, {"author": null, "id": "posts2"}]});
+            type: 'relation',
+            relation: {
+              to: 'users',
+              type: 'toOne',
+            },
+          },
+        },
+      },
+    }, 2)).toEqual({ posts: [{ author: null, id: 'posts1' }, { author: null, id: 'posts2' }] });
   });
 
   it('should return toOne relation data ', () => {
@@ -312,21 +312,21 @@ describe('create relation empty data', () => {
         type: 'array',
         items: {
           author: {
-             type: 'relation',
-             relation: {
-               to: 'users',
-               type: 'toOne' 
-             } 
-          }
-        }
+            type: 'relation',
+            relation: {
+              to: 'users',
+              type: 'toOne',
+            },
+          },
+        },
       },
       users: {
         type: 'array',
         items: {
           keyName: 'name',
-          type: 'string'
-        }
-      }
+          type: 'string',
+        },
+      },
     }, 2).posts[0].author).toBe('string');
   });
 
@@ -334,8 +334,8 @@ describe('create relation empty data', () => {
     expect(createFakeData({
       type: 'relation',
       relation: {
-        type: 'toMany'
-      }
+        type: 'toMany',
+      },
     })).toEqual([]);
   });
 
@@ -346,15 +346,15 @@ describe('create relation empty data', () => {
         type: 'array',
         items: {
           authors: {
-             type: 'relation',
-             relation: {
-               to: 'users',
-               type: 'toMany' 
-             } 
-          }
-        }
-      }
-    }, 2)).toEqual({"posts": [{"authors": [], "id": "posts1"}, {"authors": [], "id": "posts2"}]});
+            type: 'relation',
+            relation: {
+              to: 'users',
+              type: 'toMany',
+            },
+          },
+        },
+      },
+    }, 2)).toEqual({ posts: [{ authors: [], id: 'posts1' }, { authors: [], id: 'posts2' }] });
   });
 
   it('should return toMany relation data', () => {
@@ -364,25 +364,25 @@ describe('create relation empty data', () => {
         type: 'array',
         items: {
           authors: {
-             type: 'relation',
-             relation: {
-               to: 'users',
-               type: 'toMany' 
-             } 
-          }
-        }
+            type: 'relation',
+            relation: {
+              to: 'users',
+              type: 'toMany',
+            },
+          },
+        },
       },
       users: {
         type: 'array',
         items: {
           keyName: 'name',
-          type: 'string'
-        }
-      }
+          type: 'string',
+        },
+      },
     }, 2).posts[0].authors;
     expect(Object.keys(data)).toBeDefined();
   });
-})
+});
 
 describe('getRandomNumber', () => {
   it.each`
@@ -400,15 +400,15 @@ describe('getRandomNumber', () => {
     ${2} | ${5}
     ${2} | ${5}
     ${2} | ${5}
-  `('should get number between $min and $max', ({min, max}) => {
-    const number = getRandomNumber(min, max);
-    expect(number <= max).toBe(true);
-    expect(number >= min).toBe(true);
-  })
+  `('should get number between $min and $max', ({ min, max }) => {
+  const number = getRandomNumber(min, max);
+  expect(number <= max).toBe(true);
+  expect(number >= min).toBe(true);
+});
 });
 
 describe('randomImg', () => {
   test('should get valid placimg url', () => {
     expect(randomImg()).toMatch(/https:\/\/placeimg.com\/\d+\/\d+\/any/);
-  })
+  });
 });

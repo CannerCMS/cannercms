@@ -1,23 +1,25 @@
 // @flow
-import {useState, useEffect, useCallback, useMemo} from 'react';
+import {
+  useState, useEffect, useCallback, useMemo,
+} from 'react';
 
 export default function useListForm({
   provider,
   schema,
   routes,
-  isListForm
+  isListForm,
 }: {
   provider: Object,
   schema: Object,
   routes: Array<string>,
   isListForm: boolean
 }) {
-  const [result, setResult] = useState({data: {}, rootValue: {}});
+  const [result, setResult] = useState({ data: {}, rootValue: {} });
   const [isFetching, setIsFetching] = useState(true);
   const key = routes[0];
   const getArgs = () => {
     if (isListForm) {
-      return provider.query.getArgs(key)
+      return provider.query.getArgs(key);
     }
     return {};
   };
@@ -31,14 +33,14 @@ export default function useListForm({
     }
     setIsFetching(true);
     getListValue()
-      .then(result => {
+      .then((result) => {
         setResult(result);
         setIsFetching(false);
       });
-    
-    const {unsubscribe} = subscribeListValue();
+
+    const { unsubscribe } = subscribeListValue();
     return unsubscribe;
-  }, [isListForm, key])
+  }, [isListForm, key]);
   const args = useMemo(getArgs, [key, isListForm]);
   const onClickAddButton = useCallback(() => {}, []);
   return {
@@ -49,6 +51,6 @@ export default function useListForm({
     items: (schema[routes[0]] || {}).items,
     args,
     onClickAddButton,
-    ...provider
-  }
+    ...provider,
+  };
 }

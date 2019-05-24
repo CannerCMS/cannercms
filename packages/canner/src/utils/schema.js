@@ -1,5 +1,5 @@
 // @flow
-import {isPlainObject} from 'lodash';
+import { isPlainObject } from 'lodash';
 
 export function findSchemaByRefId(schema: Object, refId: any) {
   let paths = [];
@@ -8,7 +8,7 @@ export function findSchemaByRefId(schema: Object, refId: any) {
   } else {
     paths = refId.getPathArr();
   }
-  let pattern = '';
+  const pattern = '';
   return loop(schema, paths, pattern);
 }
 
@@ -19,7 +19,7 @@ export function loop(schema: Object, paths: Array<string>, pattern: string): any
   if (paths.length === 0) {
     return {
       ...schema,
-      pattern: removeFirstSlash(pattern)
+      pattern: removeFirstSlash(pattern),
     };
   }
 
@@ -35,7 +35,7 @@ export function loop(schema: Object, paths: Array<string>, pattern: string): any
     if (paths.length === 1) {
       // paths = [index], so just return
       return loop(schema, [], pattern);
-    } else if (schema.items.type === 'object') {
+    } if (schema.items.type === 'object') {
       // path[0] is index, so we take the paths[1]
       return loop(schema.items.items[paths[1]], paths.slice(2), `${pattern}/${schema.items.items[paths[1]].type}`);
     }

@@ -1,10 +1,11 @@
 
-//@flow
-import type {CannerSchema, Path} from './flow-types';
+// @flow
+import type { CannerSchema, Path } from './flow-types';
+
 export const CANNER_KEY = '__CANNER_KEY__';
 
 export function createLayoutVisitor(attrs: Object, children: Array<CannerSchema>, getCannerKey: () => string = getRandomKey) {
-  const {layoutType} = attrs;
+  const { layoutType } = attrs;
   switch (layoutType) {
     case 'injection': {
       return createInjectionLayout(attrs, children, getCannerKey);
@@ -21,33 +22,35 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
     throw new Error('Layout required one child at least');
   }
 
-  const {component, ui, title, description} = attrs;
+  const {
+    component, ui, title, description,
+  } = attrs;
   if (!component && !ui) {
     throw new Error('Layout should have one of properties `component` and `ui` at least.');
   }
 
-  let cannerKey = getCannerKey();
+  const cannerKey = getCannerKey();
 
   // add cannerKey in the children of layout
-  children.forEach(child => {
+  children.forEach((child) => {
     if (child[CANNER_KEY]) {
       child[CANNER_KEY].push(cannerKey);
     } else {
       child[CANNER_KEY] = [cannerKey];
     }
-  })
+  });
 
   const visitor = (path: Path) => {
-    const {children} = path.node;
-    
+    const { children } = path.node;
+
     if (!children) return;
-    
+
     if (ui === 'body' && CANNER_KEY in path.node && path.node[CANNER_KEY].indexOf(cannerKey) > -1) {
       const layout = {
         ...attrs,
         nodeType: 'layout.body',
-        ui: "body",
-        children: [path.node]
+        ui: 'body',
+        children: [path.node],
       };
       path.node.hideTitle = true;
       path.node.inBody = true;
@@ -56,9 +59,7 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
     }
 
     // we use cannerKey to find the children should put into the new layout component
-    const childrenOfLayout = children.filter(child => {
-      return child[CANNER_KEY] && child[CANNER_KEY].indexOf(cannerKey) !== -1;
-    });
+    const childrenOfLayout = children.filter(child => child[CANNER_KEY] && child[CANNER_KEY].indexOf(cannerKey) !== -1);
 
     // if there is any children is the layout, the component tree don't have to be changed
     if (!childrenOfLayout.length) {
@@ -70,14 +71,14 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
       ...attrs,
       nodeType: `layout.${attrs.ui}`,
       childrenName: childrenOfLayout.map(child => child.keyName),
-      title: title,
-      description: description,
+      title,
+      description,
       children: childrenOfLayout,
       // concatenate the cannerKeys of children to make this layout can be wrapped by other layouts.
       [CANNER_KEY]: childrenOfLayout.reduce(((result, child) => result.concat(child[CANNER_KEY] || [])), []),
-    }
+    };
     let meetChildOfLayout = false;
-    
+
     // change the children of the node
     // they should become a layout node and others children node that is not included in the layout node.
     const newChildren = children.reduce((result, child) => {
@@ -102,17 +103,17 @@ export function createInsertionLayout(attrs: Object, children: Array<CannerSchem
   return {
     visitor: {
       'component.object.fieldset': {
-        exit: visitor
+        exit: visitor,
       },
       'component.array': {
-        exit: visitor
+        exit: visitor,
       },
       'page.page': {
-        exit: visitor
-      }
+        exit: visitor,
+      },
     },
-    cannerKey
-  }
+    cannerKey,
+  };
 }
 
 export function createInjectionLayout(attrs: Object, children: Array<CannerSchema>, getCannerKey: () => string = getRandomKey) {
@@ -120,7 +121,7 @@ export function createInjectionLayout(attrs: Object, children: Array<CannerSchem
     throw new Error('Layout required one child at least');
   }
 
-  const {injectValue} = attrs;
+  const { injectValue } = attrs;
 
   if (!injectValue) {
     throw new Error('Injection Layout need a injectValue');
@@ -129,22 +130,22 @@ export function createInjectionLayout(attrs: Object, children: Array<CannerSchem
   const cannerKey = getCannerKey();
 
   // add cannerKey in the children of layout
-  children.forEach(child => {
+  children.forEach((child) => {
     if (child[CANNER_KEY]) {
       child[CANNER_KEY].push(cannerKey);
     } else {
       child[CANNER_KEY] = [cannerKey];
     }
-  })
+  });
 
-  const visitor = function(path) {
+  const visitor = function (path) {
     if (!path.node[CANNER_KEY] || path.node[CANNER_KEY].indexOf(cannerKey) === -1) {
-      return ;
+      return;
     }
-    Object.keys(injectValue).forEach(key => {
+    Object.keys(injectValue).forEach((key) => {
       path.node[key] = injectValue[key];
     });
-  }
+  };
   const allVisitor = children.reduce((result, child) => {
     if (`component.${child.type}` in result) {
       return result;
@@ -156,8 +157,8 @@ export function createInjectionLayout(attrs: Object, children: Array<CannerSchem
 
   return {
     visitor: allVisitor,
-    cannerKey
-  }
+    cannerKey,
+  };
 }
 
 export function getRandomKey() {

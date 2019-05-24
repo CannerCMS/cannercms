@@ -2,14 +2,14 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import {Tooltip, Icon} from 'antd';
+import { Tooltip, Icon } from 'antd';
 
 const Title = styled.div`
   color: rgba(0, 0, 0, 0.85);
-  padding: ${(props: any) => props.layout === 'horizontal' ? '0' : '0 0 8px'}
+  padding: ${(props: any) => (props.layout === 'horizontal' ? '0' : '0 0 8px')}
 
   & > span:before {
-    content: ${(props: any) => props.required && props.title ? '"* "' : '""'};
+    content: ${(props: any) => (props.required && props.title ? '"* "' : '""')};
     color: red;
   }
 `;
@@ -18,7 +18,7 @@ export default function Label({
   required,
   description,
   title,
-  layout
+  layout,
 }: {
   required: boolean,
   description: string,
@@ -31,10 +31,10 @@ export default function Label({
       {
         title && description && (
           <Tooltip placement="top" title={description}>
-            <Icon type="info-circle-o" style={{marginLeft: 12, color: '#aaa'}}/>
+            <Icon type="info-circle-o" style={{ marginLeft: 12, color: '#aaa' }} />
           </Tooltip>
         )
       }
     </Title>
-  )
+  );
 }

@@ -1,33 +1,36 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {Input} from 'antd';
+// @flow
+import React, { Component } from 'react';
+import { Input } from 'antd';
 import get from 'lodash/get';
 import set from 'lodash/set';
 
-export default class TextFilter extends Component {
-  static propTypes = {
-    onChange: PropTypes.func,
-    name: PropTypes.string,
-    label: PropTypes.string,
-    index: PropTypes.number
-  };
+type Props = {
+  onChange: Function,
+  where: Object,
+  name: string,
+  label: string,
+  index: number,
+}
 
-  onInput = e => {
-    const {name, onChange} = this.props;
-    const {value} = e.target;
+export default class TextFilter extends Component<Props> {
+  onInput = (e: SyntheticEvent<HTMLInputElement>) => {
+    const { name, onChange } = this.props;
+    const { value } = (e.target: any);
     if (!value) {
       onChange();
     } else {
-      onChange(set({}, `${name}.eq`,  value));
+      onChange(set({}, `${name}.eq`, value));
     }
   }
 
   render() {
-    const {label, where, name, index} = this.props;
+    const {
+      label, where, name, index,
+    } = this.props;
     return (
       <Input
         data-testid={`text-filter-${index}`}
-        style={{width: 140}}
+        style={{ width: 140 }}
         placeholder={label}
         onChange={this.onInput}
         defaultValue={get(where, `${name}.eq`, '')}

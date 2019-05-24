@@ -1,10 +1,13 @@
 // @flow
 
-import React from 'react'
-import {Layout, Menu, Modal, Icon} from 'antd';
+import React from 'react';
+import {
+  Layout, Menu, Modal, Icon,
+} from 'antd';
 import styled from 'styled-components';
-import type {SidebarProps, MenuParams} from './types';
+import type { SidebarProps, MenuParams } from './types';
 import Error from './Error';
+
 const confirm = Modal.confirm;
 
 type State = {
@@ -14,17 +17,19 @@ type State = {
 export const LogoContainer = styled.div`
   background: ${(props: any) => `url(${props.url}) center no-repeat`};
   background-size: contain;
-  margin: ${(props: any) => props.margin || `auto`};
+  margin: ${(props: any) => props.margin || 'auto'};
   width: ${(props: any) => ensureString(props.width) || '150px'};
   height: ${(props: any) => ensureString(props.height) || '64px'};
 `;
 
 export default class Sidebar extends React.PureComponent<SidebarProps, State> {
-  state = {hasError: false}
+  state = { hasError: false }
 
   siderMenuOnClick = (menuItem: {key: string, params: MenuParams}) => {
-    const {goTo, dataChanged, reset, routes, schema} = this.props;
-    const {key, params} = menuItem;
+    const {
+      goTo, dataChanged, reset, routes, schema,
+    } = this.props;
+    const { key, params } = menuItem;
     if (Object.keys(schema).indexOf(removeFirstSlash(key).split('/')[0]) === -1) {
       // not include in schema
       return;
@@ -35,19 +40,17 @@ export default class Sidebar extends React.PureComponent<SidebarProps, State> {
         content: <div>Leaving without deployment will reset all changes.</div>,
         okText: 'Yes',
         cancelText: 'No',
-        onOk: () => {
-          return new Promise(resolve => {
-            setTimeout(resolve, 1000);
-          }).then(reset)
-            .then(() => {
-              goTo({pathname: key, ...params});
-            });
-        },
+        onOk: () => new Promise((resolve) => {
+          setTimeout(resolve, 1000);
+        }).then(reset)
+          .then(() => {
+            goTo({ pathname: key, ...params });
+          }),
         onCancel: () => {
         },
       });
     } else {
-      goTo({pathname: key, ...params});
+      goTo({ pathname: key, ...params });
     }
   }
 
@@ -59,8 +62,10 @@ export default class Sidebar extends React.PureComponent<SidebarProps, State> {
   }
 
   render() {
-    const {menuConfig, logo, routes, theme = 'dark', mode = 'inline', style = {}, menuStyle = {}} = this.props;
-    const {hasError} = this.state;
+    const {
+      menuConfig, logo, routes, theme = 'dark', mode = 'inline', style = {}, menuStyle = {},
+    } = this.props;
+    const { hasError } = this.state;
 
     // if user's customize Menu is has error, display error messages
     if (hasError) {
@@ -74,7 +79,7 @@ export default class Sidebar extends React.PureComponent<SidebarProps, State> {
     const Logo = getLogo(logo, theme);
 
     return (
-      <Layout.Sider breakpoint="sm" width={style.width || 200} collapsedWidth={0} style={{zIndex: 1, ...style}} theme={theme}>
+      <Layout.Sider breakpoint="sm" width={style.width || 200} collapsedWidth={0} style={{ zIndex: 1, ...style }} theme={theme}>
         {Logo}
         <Menu
           // $FlowFixMe: antd flow typed
@@ -82,13 +87,11 @@ export default class Sidebar extends React.PureComponent<SidebarProps, State> {
           selectedKeys={[`${routes[0]}`]}
           mode={mode}
           theme={theme}
-          style={{paddingTop: 12, border: 'none', ...menuStyle}}
+          style={{ paddingTop: 12, border: 'none', ...menuStyle }}
         >
           {
             // $FlowIgnore
-            menuConfig.length > 0 && menuConfig.map(item => {
-              return renderMenu(item);
-            })
+            menuConfig.length > 0 && menuConfig.map(item => renderMenu(item))
           }
         </Menu>
       </Layout.Sider>
@@ -115,7 +118,7 @@ function renderMenuItem(item: Object) {
       {renderIcon(item.icon)}
       {item.title || null}
     </Menu.Item>
-  )
+  );
 }
 
 function renderItemGroup(item: Object) {
@@ -126,7 +129,7 @@ function renderItemGroup(item: Object) {
         item.items.map(i => renderMenu(i))
       }
     </Menu.ItemGroup>
-  )
+  );
 }
 
 function renderSubMenu(item: Object) {
@@ -137,14 +140,14 @@ function renderSubMenu(item: Object) {
         item.items.map(i => renderMenu(i))
       }
     </Menu.SubMenu>
-  )
+  );
 }
 
 function renderIcon(icon: any) {
   if (icon) {
-    return typeof icon === 'string' ?
-      <Icon type={icon} />:
-      icon;
+    return typeof icon === 'string'
+      ? <Icon type={icon} />
+      : icon;
   }
   return null;
 }
@@ -160,7 +163,7 @@ function removeFirstSlash(key) {
 function getLogo(logo: any, theme: 'dark' | 'light') {
   if (typeof logo === 'string') {
     return (
-      <LogoContainer url={logo} theme={theme} style={{}}/>
+      <LogoContainer url={logo} theme={theme} style={{}} />
     );
   }
   if (typeof logo === 'function') {
@@ -168,12 +171,13 @@ function getLogo(logo: any, theme: 'dark' | 'light') {
   }
   if (logo && typeof logo === 'object' && logo.src) {
     return (
-      <a href={logo.href}
+      <a
+        href={logo.href}
         style={
           logo.backgroundColor ? {
             backgroundColor: logo.backgroundColor,
-            display: 'block'
-          }: {}
+            display: 'block',
+          } : {}
         }
       >
         <LogoContainer
@@ -187,7 +191,7 @@ function getLogo(logo: any, theme: 'dark' | 'light') {
     );
   }
   // react component
-  return logo || <div></div>; // render emptry div instead of null to make space-between works
+  return logo || <div />; // render emptry div instead of null to make space-between works
 }
 
 function ensureString(length: number | string): string {

@@ -1,13 +1,13 @@
 // @flow
 import Promise from 'promise-polyfill';
-import type {UploadOptions, OnProgressType} from './types';
+import type { UploadOptions, OnProgressType } from './types';
 
 export default class FirebaseClientStorage {
   firebase: any;
-  
-  constructor({firebase}: {firebase: any}) {
+
+  constructor({ firebase }: {firebase: any}) {
     if (!firebase) {
-      throw new Error("firebase client instance is required.");
+      throw new Error('firebase client instance is required.');
     }
     this.firebase = firebase;
   }
@@ -20,21 +20,20 @@ export default class FirebaseClientStorage {
 
     const uploadTask = images.put(file);
 
-    return new Promise((resolve, reject) => {  
+    return new Promise((resolve, reject) => {
       uploadTask.on(this.firebase.storage.TaskEvent.STATE_CHANGED,
-        function(snapshot) {
+        (snapshot) => {
           const percent = snapshot.bytesTransferred / snapshot.totalBytes * 100;
           onProgress({ percent });
         },
-        function(e) {
+        (e) => {
           reject(e);
         },
-        function() {
-          uploadTask.snapshot.ref.getDownloadURL().then(link => {
-            resolve({link})
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((link) => {
+            resolve({ link });
           });
-        }
-      );
+        });
     });
   }
 }

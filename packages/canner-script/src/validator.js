@@ -1,6 +1,6 @@
 // @flow
-import type {CannerSchema} from './flow-types';
-import {componentMap} from './utils';
+import type { CannerSchema } from './flow-types';
+import { componentMap } from './utils';
 
 const TYPES = ['string', 'number', 'boolean', 'array', 'object', 'relation', 'json', 'component'];
 const CANNER_DATA_TYPES = Object.keys(componentMap._map);
@@ -11,6 +11,7 @@ type ValidatorConfig = {
 
 class Validator {
   throwError = true;
+
   setConfig = (config: ValidatorConfig) => {
     if ('throwError' in config) {
       this.throwError = config.throwError;
@@ -35,7 +36,7 @@ class Validator {
   }
 
   validate = (json: {type: string, packageName: string} & CannerSchema) => {
-    const {packageName, type} = json;
+    const { packageName, type } = json;
     if (type === 'component') {
       return true;
     }
@@ -43,7 +44,7 @@ class Validator {
     if (packageName === '@canner/antd-object-fieldset') {
       return true;
     }
-    
+
     return this.validatePackageName(packageName) && this.validateCannerDataType(type);
   }
 
@@ -57,9 +58,7 @@ class Validator {
     }
   }
 
-  parseType = (packageName: string) => {
-    return packageName.replace(/\\/g, '/').split('/').slice(-1)[0].split('-')[1];
-  }
+  parseType = (packageName: string) => packageName.replace(/\\/g, '/').split('/').slice(-1)[0].split('-')[1]
 }
 
-export default new Validator()
+export default new Validator();

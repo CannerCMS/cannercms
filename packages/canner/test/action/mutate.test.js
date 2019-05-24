@@ -1,10 +1,10 @@
 import mutate from '../../src/action/mutate';
 
-let originValue = {
+const originValue = {
   info: {
     basicInfo: {
-      name: 'name'
-    }
+      name: 'name',
+    },
   },
   posts: {
     edges: [{
@@ -13,19 +13,19 @@ let originValue = {
         id: 'post1',
         title: 'post1',
         nested: {
-          author:  [{
+          author: [{
             id: 'author1',
-            name: 'author1'
-          }]
+            name: 'author1',
+          }],
         },
         author: [{
           id: 'author1',
-          name: 'author1'
-        }]
-      }
-    }]
-  }
-}
+          name: 'author1',
+        }],
+      },
+    }],
+  },
+};
 
 describe('mutate', () => {
   test('update object', () => {
@@ -35,10 +35,10 @@ describe('mutate', () => {
         key: 'info',
         value: {
           basicInfo: {
-            name: 'name2'
-          }
-        }
-      }
+            name: 'name2',
+          },
+        },
+      },
     };
     expect(mutate(originValue, action).info.basicInfo.name).toEqual('name2');
   });
@@ -51,16 +51,16 @@ describe('mutate', () => {
         id: 'post1',
         value: {
           title: 'post2',
-        }
-      }
+        },
+      },
     };
     expect(mutate(originValue, action).posts.edges[0].node).toMatchObject({
       id: 'post1',
       title: 'post2',
       author: [{
         name: 'author1',
-        id: 'author1'
-      }]
+        id: 'author1',
+      }],
     });
   });
 
@@ -74,18 +74,18 @@ describe('mutate', () => {
           title: 'post2',
           author: [{
             name: 'author1',
-            id: 'author1'
-          }]
-        }
-      }
+            id: 'author1',
+          }],
+        },
+      },
     };
     expect(mutate(originValue, action).posts.edges[1].node).toMatchObject({
       id: expect.anything(String),
       title: 'post2',
       author: [{
         name: 'author1',
-        id: 'author1'
-      }]
+        id: 'author1',
+      }],
     });
   });
 
@@ -95,7 +95,7 @@ describe('mutate', () => {
       payload: {
         key: 'posts',
         id: 'post1',
-      }
+      },
     };
     expect(mutate(originValue, action).posts.edges.length).toEqual(0);
   });
@@ -109,16 +109,16 @@ describe('mutate', () => {
         path: 'author',
         value: {
           id: 'author2',
-          name: 'author2'
+          name: 'author2',
         },
         relation: {
-          type: 'toMany'
-        }
-      }
+          type: 'toMany',
+        },
+      },
     };
     expect(mutate(originValue, action).posts.edges[0].node.author[1]).toMatchObject({
       id: 'author2',
-      name: 'author2'
+      name: 'author2',
     });
   });
 
@@ -131,28 +131,28 @@ describe('mutate', () => {
         path: 'nested/author',
         value: {
           id: 'author2',
-          name: 'author2'
+          name: 'author2',
         },
         relation: {
-          type: 'toMany'
-        }
-      }
+          type: 'toMany',
+        },
+      },
     };
     expect(mutate(originValue, action).posts.edges[0].node).toMatchObject({
       title: 'post1',
       author: [{
         id: 'author1',
-        name: 'author1'
+        name: 'author1',
       }],
       nested: {
         author: [{
           id: 'author1',
-          name: 'author1'
+          name: 'author1',
         }, {
           id: 'author2',
-          name: 'author2'
-        }]
-      }
+          name: 'author2',
+        }],
+      },
     });
   });
 
@@ -165,13 +165,13 @@ describe('mutate', () => {
         id: 'post1',
         value: {
           id: 'author2',
-          name: 'author2'
-        }
-      }
+          name: 'author2',
+        },
+      },
     };
     expect(mutate(originValue, action).posts.edges[0].node.author[1]).toMatchObject({
       id: 'author2',
-      name: 'author2'
+      name: 'author2',
     });
   });
 
@@ -183,9 +183,9 @@ describe('mutate', () => {
         id: 'post1',
         path: 'author',
         value: {
-          id: 'author1'
-        }
-      }
+          id: 'author1',
+        },
+      },
     };
     expect(mutate(originValue, action).posts.edges[0].node.author.length).toEqual(0);
   });
@@ -198,10 +198,10 @@ describe('mutate', () => {
         id: 'post1',
         path: 'author',
         value: {
-          id: 'author1'
-        }
-      }
+          id: 'author1',
+        },
+      },
     };
     expect(mutate(originValue, action).posts.edges[0].node.author.length).toEqual(0);
-  })
-})
+  });
+});

@@ -15,8 +15,8 @@ export const types = {
   JSON: 'JSON',
   RELATION: 'RELATION',
   NULL: null,
-  COMPONENT: 'COMPONENT'
-}
+  COMPONENT: 'COMPONENT',
+};
 
 export type Types = $Values<typeof types>;
 

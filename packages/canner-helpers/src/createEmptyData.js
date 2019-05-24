@@ -13,8 +13,8 @@
  * if dateTime => string
  */
 
-import {mapSchema, genDefaultValue} from './utils';
-import type {Schema, SchemaMap} from './types';
+import { mapSchema, genDefaultValue } from './utils';
+import type { Schema, SchemaMap } from './types';
 
 
 function loop(schema: Schema) {
@@ -40,7 +40,7 @@ function loop(schema: Schema) {
         lat: 0,
         lng: 0,
         address: '',
-        placeId: ''
+        placeId: '',
       };
       break;
     case 'dateTime':
@@ -52,7 +52,7 @@ function loop(schema: Schema) {
         contentType: '',
         size: 0,
         name: '',
-        url: ''
+        url: '',
       };
       break;
     case 'image':
@@ -61,7 +61,7 @@ function loop(schema: Schema) {
         contentType: '',
         size: 0,
         name: '',
-        url: ''
+        url: '',
       };
       break;
     case 'boolean':
@@ -71,7 +71,7 @@ function loop(schema: Schema) {
       result = '';
       break;
     case 'relation': {
-      const {type} = schema.relation;
+      const { type } = schema.relation;
       switch (type) {
         case 'toMany':
           result = [];
@@ -99,7 +99,7 @@ function loop(schema: Schema) {
   return result;
 }
 
-export default function(schema: Schema | SchemaMap) {
+export default function (schema: Schema | SchemaMap) {
   if (!schema) {
     return null;
   }

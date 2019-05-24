@@ -1,5 +1,7 @@
 // @flow
-import {mapValues, get, isPlainObject, isArray} from 'lodash';
+import {
+  mapValues, get, isPlainObject, isArray,
+} from 'lodash';
 
 export function getValue(value: any, idPathArr: Array<string>) {
   return idPathArr.reduce((result: any, key: string) => {
@@ -8,11 +10,10 @@ export function getValue(value: any, idPathArr: Array<string>) {
         return get(result, ['edges', key, 'node']);
       }
       return get(result, key);
-    } else if (isArray(result)) {
+    } if (isArray(result)) {
       return get(result, key);
-    } else {
-      return result;
     }
+    return result;
   }, value);
 }
 
@@ -22,11 +23,10 @@ export function parseConnectionToNormal(value: any) {
       return value.edges.map(edge => parseConnectionToNormal(edge.node));
     }
     return mapValues(value, item => parseConnectionToNormal(item));
-  } else if (isArray(value)) {
-    return value.map(item => parseConnectionToNormal(item))
-  } else {
-    return value;
+  } if (isArray(value)) {
+    return value.map(item => parseConnectionToNormal(item));
   }
+  return value;
 }
 
 export function defaultValue(type: string, relation: any, nullable?: boolean) {
@@ -39,9 +39,9 @@ export function defaultValue(type: string, relation: any, nullable?: boolean) {
         edges: [],
         pageInfo: {
           hasNextPage: false,
-          hasPreviousPage: false
-        }
-      }
+          hasPreviousPage: false,
+        },
+      };
     }
     case 'array': {
       return [];
@@ -64,12 +64,11 @@ export function defaultValue(type: string, relation: any, nullable?: boolean) {
           edges: [],
           pageInfo: {
             hasNextPage: false,
-            hasPreviousPage: false
-          }
+            hasPreviousPage: false,
+          },
         };
-      } else {
-        return null;
       }
+      return null;
     }
     case 'image':
     case 'file': {
@@ -78,15 +77,15 @@ export function defaultValue(type: string, relation: any, nullable?: boolean) {
         contentType: '',
         name: '',
         size: 0,
-        __typename: null
-      }
+        __typename: null,
+      };
     }
     case 'geoPoint': {
       return {
         placeId: '',
         address: '',
         lat: 122,
-        lng: 23
+        lng: 23,
       };
     }
     default: {
@@ -104,13 +103,11 @@ export function paginate(rootValue: Object, field: string, currentPage: number, 
 
 export function filterByWhere(rootValue: Object, field: string, where: Object) {
   const copyValue = JSON.parse(JSON.stringify(rootValue));
-  copyValue[field].edges = copyValue[field].edges.filter(edge => {
-    return Object.keys(where).reduce((result, key) => {
-      const condition = where[key];
-      const data = edge.node[key];
-      return result && passCondition(data , condition);
-    }, true);
-  });
+  copyValue[field].edges = copyValue[field].edges.filter(edge => Object.keys(where).reduce((result, key) => {
+    const condition = where[key];
+    const data = edge.node[key];
+    return result && passCondition(data, condition);
+  }, true));
   return copyValue;
 }
 
@@ -118,7 +115,7 @@ export function passCondition(data: any, condition: Object) {
   return Object.keys(condition).reduce((result, conditionKey) => {
     let isPass = true;
     const conditionValue = condition[conditionKey];
-    switch(conditionKey) {
+    switch (conditionKey) {
       case 'contains':
         isPass = data.indexOf(conditionValue) !== -1;
         break;
@@ -137,6 +134,8 @@ export function passCondition(data: any, condition: Object) {
       case 'lte':
         isPass = data <= conditionValue;
         break;
+      default:
+        throw new Error(`Unsupport condition key ${conditionKey}`);
     }
     return result && isPass;
   }, true);

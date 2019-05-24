@@ -6,37 +6,37 @@ const createAction = {
     value: {
       title: '',
       info: {
-        author: []
-      }
-    }
-  }
-}
+        author: [],
+      },
+    },
+  },
+};
 
 const updateAction1 = {
   type: 'UPDATE_ARRAY',
   payload: {
     value: {
-      title: 'title'
-    }
-  }
-}
+      title: 'title',
+    },
+  },
+};
 
 const updateAction2 = {
   type: 'UPDATE_ARRAY',
   payload: {
     value: {
       info: {
-        author: []
-      }
-    }
-  }
-}
+        author: [],
+      },
+    },
+  },
+};
 
 const deleteAction = {
   type: 'DELETE_ARRAY',
   payload: {
-  }
-}
+  },
+};
 
 describe('array pattern', () => {
   let arrayPattern;
@@ -69,9 +69,9 @@ describe('array pattern', () => {
     expect(arrayPattern.getActions().length).toBe(1);
     expect(arrayPattern.getActions()[0].payload.value).toEqual({
       info: {
-        author: []
+        author: [],
       },
-      title: 'title'
+      title: 'title',
     });
   });
 
@@ -84,16 +84,15 @@ describe('array pattern', () => {
     expect(arrayPattern.getActions()[0].type).toBe('CREATE_ARRAY');
     expect(arrayPattern.getActions()[0].payload.value).toEqual({
       info: {
-        author: []
+        author: [],
       },
-      title: 'title'
+      title: 'title',
     });
   });
 });
 
 function wait(ms) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, ms);
-  })
+  });
 }
-

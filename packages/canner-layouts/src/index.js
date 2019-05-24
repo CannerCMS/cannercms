@@ -19,5 +19,5 @@ export default {
   tabs: Tabs,
   condition: Condition,
   row: Row,
-  col: Col
+  col: Col,
 };

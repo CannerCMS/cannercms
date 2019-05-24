@@ -1,11 +1,11 @@
-import {getUploadPercent} from '../src/utils';
+import { getUploadPercent } from '../src/utils';
 
 
 describe('getUploadPercent', () => {
   it('should get 80', async () => {
     const e = {
       position: 80,
-      totalSize: 100
+      totalSize: 100,
     };
     expect(getUploadPercent(e)).toBe(80);
   });
@@ -13,7 +13,7 @@ describe('getUploadPercent', () => {
   it('should get 20', async () => {
     const e = {
       loaded: 20,
-      total: 100
+      total: 100,
     };
     expect(getUploadPercent(e)).toBe(20);
   });

@@ -3,7 +3,8 @@ import traverse from 'babel-traverse';
 import generate from 'babel-generator';
 import * as t from 'babel-types';
 import template from 'babel-template';
-import {componentMap} from './utils'
+import { componentMap } from './utils';
+
 const UNEXISTING = 'UNEXISTING';
 const buildDynamicImport = template(`
   new Promise((resolve) => {
@@ -15,7 +16,7 @@ const buildDynamicImport = template(`
 
 const buildRequire = template(`
   require(DEF_FILE).default ? require(DEF_FILE).default : require(DEF_FILE)
-`)
+`);
 
 export default function loader(source, map, meta) {
   const ast = babylon.parse(source);
@@ -25,49 +26,48 @@ export default function loader(source, map, meta) {
   // first traverse, we collect all resolve promise and store in promises array
   traverseAst(
     ast,
-    ({packageName}) => {
+    ({ packageName }) => {
       promises.push(generatePaths(packageName, that));
     },
-    ({packageName}) => {
+    ({ packageName }) => {
       promises.push(generatePaths(packageName, that));
-    }
+    },
   );
   generate(ast, {}, source).code;
 
   // second traverse, we get the generatePaths from the promises array
-  Promise.all(promises).then(paths => {
+  Promise.all(promises).then((paths) => {
     const copyPaths = paths.slice();
     traverseAst(
       ast,
-      ({path, type}) => {
+      ({ path, type }) => {
         const {
           absPackageName,
           absPackageJson,
           absDefJs,
-          packageName
+          packageName,
         } = copyPaths.shift();
         path.get('arguments.1').replaceWith(
           t.objectExpression([
             t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)),
             t.objectProperty(t.stringLiteral('loader'), buildLoader(absPackageName)),
             t.objectProperty(t.stringLiteral('builder'), buildBuilder(absDefJs, that)),
-            ...buildCannerConfig(absPackageJson, type)
-          ])
+            ...buildCannerConfig(absPackageJson, type),
+          ]),
         );
       },
-      ({propsNode, type}) => {
+      ({ propsNode, type }) => {
         const {
           absPackageName,
           absPackageJson,
           absDefJs,
-          packageName
+          packageName,
         } = copyPaths.shift();
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('packageName'), t.stringLiteral(packageName)));
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('loader'), buildLoader(absPackageName)));
         propsNode.node.properties.push(t.objectProperty(t.stringLiteral('builder'), buildBuilder(absDefJs, that)));
         propsNode.node.properties = propsNode.node.properties.concat(buildCannerConfig(absPackageJson, type));
-
-      }
+      },
     );
     const result = generate(ast, {}, source).code;
     callback(null, result, map, meta);
@@ -77,7 +77,10 @@ export default function loader(source, map, meta) {
 function traverseAst(ast, nullPropsCallback, ObjectPropsCallback) {
   traverse(ast, {
     CallExpression(path) {
-      let typeNode, propsNode, type, packageName;
+      let typeNode,
+        propsNode,
+        type,
+        packageName;
       if (path.node.arguments.length < 2) {
         return;
       }
@@ -93,7 +96,7 @@ function traverseAst(ast, nullPropsCallback, ObjectPropsCallback) {
           packageName,
           type,
           propsNode,
-          path
+          path,
         });
       }
 
@@ -112,20 +115,18 @@ function traverseAst(ast, nullPropsCallback, ObjectPropsCallback) {
           packageName,
           type,
           path,
-          propsNode
+          propsNode,
         });
       }
-    }
+    },
   });
 }
 
 function getProperties(propsNode) {
-  return propsNode.node.properties.reduce((result, property) => {
-    return {
-      ...result,
-      [getPropertyKey(property)]: getPropertyValue(property)
-    }
-  }, {});
+  return propsNode.node.properties.reduce((result, property) => ({
+    ...result,
+    [getPropertyKey(property)]: getPropertyValue(property),
+  }), {});
 }
 
 function getPropertyKey(property) {
@@ -141,14 +142,14 @@ function getPropertyValue(property) {
 }
 
 function absPath(path, context) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     context.resolve(context.context, path, (err, result) => {
       if (err) {
         resolve(UNEXISTING);
       }
       resolve(result);
     });
-  })
+  });
 }
 
 export async function generatePaths(sourcePkgName, context) {
@@ -162,13 +163,13 @@ export async function generatePaths(sourcePkgName, context) {
     absPackageName,
     absPackageJson,
     absDefJs,
-    packageName: sourcePkgName
-  }
+    packageName: sourcePkgName,
+  };
 }
 
 function buildLoader(packageName) {
   return buildDynamicImport({
-    PACKAGE_NAME: t.stringLiteral(packageName)
+    PACKAGE_NAME: t.stringLiteral(packageName),
   }).expression;
 }
 
@@ -177,27 +178,28 @@ function buildBuilder(defFile) {
     return t.nullLiteral();
   }
   return buildRequire({
-    DEF_FILE: t.stringLiteral(defFile)
+    DEF_FILE: t.stringLiteral(defFile),
   }).expression;
 }
 
 function buildCannerConfig(packageJson, type) {
-  let canner = {}, properties = [];
+  let canner = {},
+    properties = [];
   try {
     canner = require(packageJson).canner || {};
   } catch (e) {
     canner = {};
   }
-  Object.keys(canner).forEach(key => {
+  Object.keys(canner).forEach((key) => {
     if (key === 'cannerDataType') {
       if (type !== 'json') { // the component of json type is same as object, but the type can't be changed
         properties.push(t.objectProperty(t.stringLiteral('type'), t.stringLiteral(canner[key])));
       }
-    } else if (typeof canner[key] === 'string'){
+    } else if (typeof canner[key] === 'string') {
       properties.push(t.objectProperty(t.stringLiteral(key), t.stringLiteral(canner[key])));
-    } else if (typeof canner[key] === 'number'){
+    } else if (typeof canner[key] === 'number') {
       properties.push(t.objectProperty(t.stringLiteral(key), t.numberLiteral(canner[key])));
-    } else if (typeof canner[key] === 'boolean'){
+    } else if (typeof canner[key] === 'boolean') {
       properties.push(t.objectProperty(t.stringLiteral(key), t.booleanLiteral(canner[key])));
     } else {
       throw new Error(`Not support the type of object and array config in canner yet, but got key: ${key} with value: ${canner[key]}.`);

@@ -1,6 +1,8 @@
 // @flow
 
-import {pick, update, set, get} from 'lodash';
+import {
+  pick, update, set, get,
+} from 'lodash';
 import {
   isCreateArray,
   isCreateNestedArrayInArray,
@@ -23,10 +25,10 @@ import {
   isConnect,
   isDisconnect,
 
-  isArrayAction
+  isArrayAction,
 } from './isAction';
 
-import type {UpdateType, Action, ActionType} from './types';
+import type { UpdateType, Action, ActionType } from './types';
 
 
 export function generateAction(arg: {
@@ -38,19 +40,21 @@ export function generateAction(arg: {
   transformGqlPayload?: Function
 }): Action<ActionType> {
   if (isCreateArray(arg)) {
-    const {key} = splitId(arg.id, arg.rootValue);
+    const { key } = splitId(arg.id, arg.rootValue);
     return {
       type: 'CREATE_ARRAY',
       payload: {
         key,
         id: arg.value.id,
-        value: arg.value
-      }
-    }
+        value: arg.value,
+      },
+    };
   }
 
   if (isCreateNestedArrayInArray(arg)) {
-    const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
+    const {
+      key, id, index, paths,
+    } = splitId(arg.id, arg.rootValue);
     const item = get(arg.rootValue, [key, index]);
     update(item, paths, arr => arr.concat(arg.value));
     return {
@@ -58,27 +62,27 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: pick(item, paths.slice(0, 1))
-      }
-    }
+        value: pick(item, paths.slice(0, 1)),
+      },
+    };
   }
 
   if (isCreateNestedArrayInObject(arg)) {
-    const {key, id, paths} = splitId(arg.id, arg.rootValue);
+    const { key, id, paths } = splitId(arg.id, arg.rootValue);
     const item = get(arg.rootValue, [key]);
-    update(item, paths, arr => arr ? arr.concat(arg.value) : [arg.value]);
+    update(item, paths, arr => (arr ? arr.concat(arg.value) : [arg.value]));
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        value: pick(item, paths.slice(0, 1))
-      }
-    }
+        value: pick(item, paths.slice(0, 1)),
+      },
+    };
   }
 
   if (isCreateAndConnect(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const { key, id, path } = splitId(arg.id, arg.rootValue);
     return {
       type: 'CREATE_AND_CONNECT',
       payload: {
@@ -86,29 +90,31 @@ export function generateAction(arg: {
         id,
         path,
         value: arg.value,
-        relation: arg.relation
-      }
-    }
+        relation: arg.relation,
+      },
+    };
   }
 
   if (isDeleteArray(arg)) {
-    const {key, id} = splitId(arg.id, arg.rootValue);
+    const { key, id } = splitId(arg.id, arg.rootValue);
     return {
       type: 'DELETE_ARRAY',
       payload: {
         key,
         id,
-        value: {}
-      }
-    }
+        value: {},
+      },
+    };
   }
 
   if (isDeleteNestedArrayInArray(arg)) {
-    const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
+    const {
+      key, id, index, paths,
+    } = splitId(arg.id, arg.rootValue);
     const prePaths = paths.slice(0, -1);
     const deleteIndex = paths.slice(-1)[0];
     const item = get(arg.rootValue, [key, index]);
-    update(item, prePaths, arr => {
+    update(item, prePaths, (arr) => {
       arr.splice(deleteIndex, 1);
       return arr;
     });
@@ -118,17 +124,17 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: pick(item, paths.slice(0, 1))
-      }
-    }
+        value: pick(item, paths.slice(0, 1)),
+      },
+    };
   }
 
   if (isDeleteNestedArrayInObject(arg)) {
-    const {key, id, paths} = splitId(arg.id, arg.rootValue);
+    const { key, id, paths } = splitId(arg.id, arg.rootValue);
     const prePaths = paths.slice(0, -1);
     const deleteIndex = paths.slice(-1)[0];
     const item = get(arg.rootValue, [key]);
-    update(item, prePaths, arr => {
+    update(item, prePaths, (arr) => {
       arr.splice(deleteIndex, 1);
       return arr;
     });
@@ -138,13 +144,13 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: pick(item, paths.slice(0, 1))
-      }
-    }
+        value: pick(item, paths.slice(0, 1)),
+      },
+    };
   }
 
   if (isDisconnectAndDelete(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const { key, id, path } = splitId(arg.id, arg.rootValue);
     return {
       type: 'DISCONNECT_AND_DELETE',
       payload: {
@@ -152,13 +158,15 @@ export function generateAction(arg: {
         id,
         path,
         value: arg.value,
-        relation: arg.relation
-      }
+        relation: arg.relation,
+      },
     };
   }
 
   if (isUpdateArray(arg)) {
-    const {key, id, paths, index} = splitId(arg.id, arg.rootValue);
+    const {
+      key, id, paths, index,
+    } = splitId(arg.id, arg.rootValue);
     const item = get(arg.rootValue, [key, index]);
     set(item, paths, arg.value);
     return {
@@ -166,8 +174,8 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: pick(item, paths.slice(0, 1))
-      }
+        value: pick(item, paths.slice(0, 1)),
+      },
     };
   }
 
@@ -178,7 +186,7 @@ export function generateAction(arg: {
   }
 
   if (isUpdateObject(arg)) {
-    const {key, id, paths} = splitId(arg.id, arg.rootValue);
+    const { key, id, paths } = splitId(arg.id, arg.rootValue);
     const item = get(arg.rootValue, key);
     set(item, paths, arg.value);
     return {
@@ -186,8 +194,8 @@ export function generateAction(arg: {
       payload: {
         key,
         id,
-        value: pick(item, paths.slice(0, 1))
-      }
+        value: pick(item, paths.slice(0, 1)),
+      },
     };
   }
 
@@ -198,56 +206,58 @@ export function generateAction(arg: {
   }
 
   if (isSwapArrayInArray(arg)) {
-    const {key, id, index, paths} = splitId(arg.id, arg.rootValue);
+    const {
+      key, id, index, paths,
+    } = splitId(arg.id, arg.rootValue);
     // $FlowFixMe
-    const {firstId, secondId} = arg.id;
+    const { firstId, secondId } = arg.id;
     const nestedArrPath = paths.slice(0, -1);
     const item = get(arg.rootValue, [key, index]);
     const firstIndex = firstId.split('/').slice(-1)[0];
     const secondIndex = secondId.split('/').slice(-1)[0];
-    update(item, nestedArrPath, arr => {
-      let newArr = arr.slice();
+    update(item, nestedArrPath, (arr) => {
+      const newArr = arr.slice();
       newArr[firstIndex] = arr[secondIndex];
       newArr[secondIndex] = arr[firstIndex];
       return newArr;
-    })
+    });
 
     return {
       type: 'UPDATE_ARRAY',
       payload: {
         key,
         id,
-        value: pick(item, paths.slice(0, 1))
-      }
-    }
+        value: pick(item, paths.slice(0, 1)),
+      },
+    };
   }
 
   if (isSwapArrayInObject(arg)) {
-    const {key, id, paths} = splitId(arg.id, arg.rootValue);
+    const { key, id, paths } = splitId(arg.id, arg.rootValue);
     // $FlowFixMe
-    const {firstId, secondId} = arg.id;
+    const { firstId, secondId } = arg.id;
     const nestedArrPath = paths.slice(0, -1);
     const item = get(arg.rootValue, [key]);
     const firstIndex = firstId.split('/').slice(-1)[0];
     const secondIndex = secondId.split('/').slice(-1)[0];
-    update(item, nestedArrPath, arr => {
-      let newArr = arr.slice();
+    update(item, nestedArrPath, (arr) => {
+      const newArr = arr.slice();
       newArr[firstIndex] = arr[secondIndex];
       newArr[secondIndex] = arr[firstIndex];
       return newArr;
-    })    
+    });
     return {
       type: 'UPDATE_OBJECT',
       payload: {
         key,
         id,
-        value: pick(item, paths.slice(0, 1))
-      }
-    }
+        value: pick(item, paths.slice(0, 1)),
+      },
+    };
   }
 
   if (isConnect(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const { key, id, path } = splitId(arg.id, arg.rootValue);
     return {
       type: 'CONNECT',
       payload: {
@@ -256,22 +266,22 @@ export function generateAction(arg: {
         path,
         value: arg.value,
         relation: arg.relation,
-        transformGqlPayload: arg.transformGqlPayload
-      }
+        transformGqlPayload: arg.transformGqlPayload,
+      },
     };
   }
 
   if (isDisconnect(arg)) {
-    const {key, id, path} = splitId(arg.id, arg.rootValue);
+    const { key, id, path } = splitId(arg.id, arg.rootValue);
     return {
       type: 'DISCONNECT',
       payload: {
-       key,
-       id,
-       path,
-       value: arg.value,
-       relation: arg.relation
-      }
+        key,
+        id,
+        path,
+        value: arg.value,
+        relation: arg.relation,
+      },
     };
   }
 
@@ -279,9 +289,9 @@ export function generateAction(arg: {
     type: 'NOOP',
     payload: {
       key: '',
-      value: {}
-    }
-  }
+      value: {},
+    },
+  };
 }
 
 function splitId(id, rootValue) {
@@ -294,18 +304,17 @@ function splitId(id, rootValue) {
         id: item && item.id,
         index,
         paths: path,
-        path: path.join('/')
-      };
-    } else {
-      const [key, ...path] = id.split('/');
-      return {
-        key,
         path: path.join('/'),
-        paths: path,
-        id: '',
-        index: ''
       };
     }
+    const [key, ...path] = id.split('/');
+    return {
+      key,
+      path: path.join('/'),
+      paths: path,
+      id: '',
+      index: '',
+    };
   }
 
   return splitId(id.firstId, rootValue);

@@ -1,47 +1,47 @@
 // @flow
 
-import {useContext, useState, useEffect} from 'react';
-import {Context} from 'canner-helpers';
-import {isCompleteContain, genPaths} from '../utils/renderType';
+import { useContext, useState, useEffect } from 'react';
+import { Context } from 'canner-helpers';
 import type RefId from 'canner-ref-id';
+import { isCompleteContain, genPaths } from '../utils/renderType';
 
 export const RENDER_TYPE = {
   CHILDREN: 'CHILDREN',
   NULL: 'NULL',
-  COMPONENT: 'COMPONENT'
-}
+  COMPONENT: 'COMPONENT',
+};
 
 export default ({
   pattern,
   path,
   hideBackButton = false,
-  refId
+  refId,
 }: {
   pattern: string,
   path: string,
   hideBackButton?: boolean,
   refId: RefId
 }) => {
-  const {hideButtons, routes, routerParams: {operator}} = useContext(Context);
+  const { hideButtons, routes, routerParams: { operator } } = useContext(Context);
   const [renderType, setRenderType] = useState(() => getRenderType({
     routes,
     path,
     pattern,
-    operator
+    operator,
   }));
   const [showListButton, setShowListButton] = useState(() => getShowListButton({
     hideBackButton,
     pattern,
     routes,
     refId,
-    operator
+    operator,
   }));
   const [showSubmitAndCancelButtons, setSubmitAndCancelButtons] = useState(() => getSubmitAndCancelButtons({
     pattern,
     hideButtons,
     routes,
     refId,
-    operator
+    operator,
   }));
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default ({
       routes,
       path,
       pattern,
-      operator
+      operator,
     });
     setRenderType(renderType);
   }, [JSON.stringify(routes), pattern, path, operator]);
@@ -60,7 +60,7 @@ export default ({
       pattern,
       routes,
       refId,
-      operator
+      operator,
     });
     setShowListButton(showListButton);
   }, [hideBackButton, JSON.stringify(routes), pattern, refId.toString(), operator]);
@@ -71,7 +71,7 @@ export default ({
       hideButtons,
       routes,
       refId,
-      operator
+      operator,
     });
     setSubmitAndCancelButtons(showSubmitAndCancelButtons);
   }, [JSON.stringify(routes), pattern, hideButtons, refId.toString(), operator]);
@@ -79,16 +79,16 @@ export default ({
   return {
     renderType,
     showListButton,
-    showSubmitAndCancelButtons
-  }
-}
+    showSubmitAndCancelButtons,
+  };
+};
 
 
 export function getSubmitAndCancelButtons({
   pattern,
   hideButtons,
   routes,
-  operator
+  operator,
 }: {
   pattern: string,
   hideButtons: boolean,
@@ -101,7 +101,7 @@ export function getSubmitAndCancelButtons({
   const isUpdateView = routes.length === 2;
 
   const shouldRenderButtons = (isFirstArray && (isUpdateView || isCreateView)) && !hideButtons;
-  return shouldRenderButtons
+  return shouldRenderButtons;
 }
 
 export function getShowListButton({
@@ -109,7 +109,7 @@ export function getShowListButton({
   pattern,
   routes,
   refId,
-  operator
+  operator,
 }: {
   hideBackButton: boolean,
   pattern: string,
@@ -119,14 +119,14 @@ export function getShowListButton({
 }) {
   const routesLength = routes.length;
   const pathArrLength = refId.getPathArr().length;
-  return !hideBackButton && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'))
+  return !hideBackButton && pattern === 'array' && (routesLength === pathArrLength || (routesLength + 1 === pathArrLength && operator === 'create'));
 }
 
 export function getRenderType({
   routes,
   path,
   pattern,
-  operator
+  operator,
 }: {
   routes: Array<string>,
   path: string,
@@ -135,7 +135,7 @@ export function getRenderType({
 }) {
   if (!pattern && !path) {
     // layout
-    return RENDER_TYPE.COMPONENT
+    return RENDER_TYPE.COMPONENT;
   }
   const paths = genPaths(path, pattern);
   const pathsLength = paths.length;
@@ -155,7 +155,7 @@ export function getRenderType({
       return RENDER_TYPE.CHILDREN;
     }
     return RENDER_TYPE.NULL;
-  } else if (type === 'array') {
+  } if (type === 'array') {
     if (routesLength === pathsLength && isCompleteContain(paths, routes)) {
       return RENDER_TYPE.CHILDREN;
     }
@@ -169,16 +169,15 @@ export function getRenderType({
       return RENDER_TYPE.COMPONENT;
     }
     return RENDER_TYPE.NULL;
-  } else {
-    if (routesLength === pathsLength && isCompleteContain(paths, routes)) {
-      return RENDER_TYPE.NULL;
-    }
-    if (routesLength < pathsLength) {
-      return RENDER_TYPE.COMPONENT;
-    }
-    if (routesLength > pathsLength) {
-      return RENDER_TYPE.COMPONENT;
-    }
+  }
+  if (routesLength === pathsLength && isCompleteContain(paths, routes)) {
     return RENDER_TYPE.NULL;
   }
+  if (routesLength < pathsLength) {
+    return RENDER_TYPE.COMPONENT;
+  }
+  if (routesLength > pathsLength) {
+    return RENDER_TYPE.COMPONENT;
+  }
+  return RENDER_TYPE.NULL;
 }

@@ -1,4 +1,4 @@
-import {schemaToQueriesObject} from '../../src/query/utils';
+import { schemaToQueriesObject } from '../../src/query/utils';
 
 describe('schema to queries object', () => {
   it('should works', () => {
@@ -21,8 +21,8 @@ describe('schema to queries object', () => {
               type: 'relation',
               relation: {
                 type: 'toMany',
-                to: 'posts'
-              }
+                to: 'posts',
+              },
             },
             bestAuthor: {
               keyName: 'bestAuthor',
@@ -31,24 +31,24 @@ describe('schema to queries object', () => {
               relation: {
                 type: 'toOne',
                 to: 'users',
-                typename: 'User'
-              }
+                typename: 'User',
+              },
             },
             images: {
               keyName: 'images',
               path: 'posts/images',
               type: 'array',
               items: {
-                type: 'image'
-              }
+                type: 'image',
+              },
             },
             wildCard: {
               keyName: 'wildCard',
               path: 'posts/wildCard',
-              type: 'component'
-            }
-          }
-        }
+              type: 'component',
+            },
+          },
+        },
       },
       users: {
         type: 'array',
@@ -58,41 +58,41 @@ describe('schema to queries object', () => {
           items: {
             name: {
               path: 'users/name',
-              type: 'string'
+              type: 'string',
             },
             email: {
               path: 'users/email',
-              type: 'string'
+              type: 'string',
             },
             images: {
               path: 'users/images',
               type: 'array',
               items: {
-                type: 'image'
-              }
+                type: 'image',
+              },
             },
             posts: {
               path: 'users/posts',
               type: 'relation',
               relation: {
                 type: 'toMany',
-                to: 'posts'
-              }
+                to: 'posts',
+              },
             },
             variants: {
               path: 'users/variants',
               type: 'json',
               items: {
                 options: {
-                  type: 'array'
+                  type: 'array',
                 },
                 variants: {
-                  type: 'array'
-                }
-              }
-            }
-          }
-        }
+                  type: 'array',
+                },
+              },
+            },
+          },
+        },
       },
     };
     expect(schemaToQueriesObject(schema)).toMatchSnapshot();

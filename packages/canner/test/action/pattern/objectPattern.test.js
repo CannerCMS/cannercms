@@ -5,8 +5,8 @@ const value = {
   nickname: 'nickname',
   communicationInfo: {
     address: 'zzz',
-    phone: ['xxx', 'yyy']
-  }
+    phone: ['xxx', 'yyy'],
+  },
 };
 
 
@@ -15,20 +15,20 @@ const action1 = {
   payload: {
     key: 'person',
     value: {
-      name: 'name'
-    }
-  }
-}
+      name: 'name',
+    },
+  },
+};
 
 const action2 = {
   type: 'UPDATE_OBJECT',
   payload: {
     key: 'person',
     value: {
-      nickname: 'nickname'
-    }
-  }
-}
+      nickname: 'nickname',
+    },
+  },
+};
 
 const action3 = {
   type: 'UPDATE_OBJECT',
@@ -37,14 +37,13 @@ const action3 = {
     value: {
       communicationInfo: {
         address: 'zzz',
-        phone: ['xxx', 'yyy']
-      }
-    }
-  }
-}
+        phone: ['xxx', 'yyy'],
+      },
+    },
+  },
+};
 
 describe('object pattern', () => {
-
   it('should merge actions everytime', async () => {
     const pattern = new ObjectPattern();
     pattern.addAction(action1);
@@ -61,7 +60,7 @@ describe('object pattern', () => {
 });
 
 function wait(ms) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, ms);
-  })
+  });
 }

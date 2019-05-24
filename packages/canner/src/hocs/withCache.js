@@ -1,6 +1,6 @@
 // @flow
-import React, {useMemo, useContext} from 'react';
-import {Context} from 'canner-helpers';
+import React, { useMemo, useContext } from 'react';
+import { Context } from 'canner-helpers';
 import useCacheMethods from '../hooks/useMethods';
 
 export default function withCache(Com: any) {
@@ -14,7 +14,7 @@ export default function withCache(Com: any) {
       removeOnDeploy,
       deploy,
       data,
-      rootValue
+      rootValue,
     } = useCacheMethods(props);
     const myContextValue = useMemo(() => ({
       ...contextValue,
@@ -25,17 +25,18 @@ export default function withCache(Com: any) {
       removeOnDeploy,
       deploy,
       data,
-      rootValue
+      rootValue,
     }), [data, rootValue]);
     const renderChildrenWithCacheMethods = (...args) => (
       <Context.Provider value={myContextValue}>
+        {/* eslint-disable-next-line */}
         {props.renderChildren(...args)}
       </Context.Provider>
     );
     return (
-      <Context.Provider value={{...contextValue, deploy, reset}}>
+      <Context.Provider value={{ ...contextValue, deploy, reset }}>
         <Com {...props} renderChildren={renderChildrenWithCacheMethods} />
       </Context.Provider>
-    )
-  }
+    );
+  };
 }

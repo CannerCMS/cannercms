@@ -1,12 +1,15 @@
 // @flow
 // $FlowFixMe: Unresolved
 import axios from 'axios';
-import {getUploadPercent} from './utils';
+import { getUploadPercent } from './utils';
 
 export default class CannerStorage {
   env: ?string;
+
   appId: ?string;
+
   apiToken: ?string;
+
   getEndpoint: () => string
 
   setEnv = (env: string) => {
@@ -31,30 +34,26 @@ export default class CannerStorage {
         appId: this.appId,
         env: this.env,
         contentType: file.type,
-        filePath: filename
+        filePath: filename,
       }, {
         headers: {
-          Accept: "application/json",
+          Accept: 'application/json',
           Authentication: `Bearer ${this.apiToken || ''}`,
-        }
+        },
       });
   }
-  
+
   upload(file: File, options: any, onProgress: (obj: {percent: number}) => {}) {
     return this.getUploadUrl(file, options.filename)
-      .then(({uploadUrl, publicUrl}) => {
-        return axios
-          .put(uploadUrl, file, {
-            onUploadProgress: e => (onProgress({ percent: getUploadPercent(e) })),
-            headers: {
-              "Content-Type": file.type,
-              "X-Upload-Content-Type": file.type,
-              "X-Upload-Content-Length": file.size
-            }
-          })
-          .then(() => {
-            return {url: publicUrl};
-          })
-      })
+      .then(({ uploadUrl, publicUrl }) => axios
+        .put(uploadUrl, file, {
+          onUploadProgress: e => (onProgress({ percent: getUploadPercent(e) })),
+          headers: {
+            'Content-Type': file.type,
+            'X-Upload-Content-Type': file.type,
+            'X-Upload-Content-Length': file.size,
+          },
+        })
+        .then(() => ({ url: publicUrl })));
   }
 }

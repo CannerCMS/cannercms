@@ -1,10 +1,11 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
+
 export const FORM_TYPE = {
   NONE: 'NONE',
   LIST: 'LIST',
   UPDATE: 'UPDATE',
   CREATE: 'CREATE',
-  PAGE: 'PAGE'
+  PAGE: 'PAGE',
 };
 
 export default function useFormType({
@@ -12,14 +13,14 @@ export default function useFormType({
   schema,
   routerParams,
   goTo,
-  defaultKey
+  defaultKey,
 }) {
   const key = routes[0];
   const redirect = () => {
     goTo({
-      pathname: `/${defaultKey || Object.keys(schema)[0]}`
+      pathname: `/${defaultKey || Object.keys(schema)[0]}`,
     });
-  }
+  };
   let formType = FORM_TYPE.NONE;
   if (!key || !(key in schema)) {
     formType = FORM_TYPE.NONE;
@@ -27,7 +28,7 @@ export default function useFormType({
     formType = FORM_TYPE.CREATE;
   } else if (routes.length === 1 && routerParams.operator === 'update' && schema[key].type === 'array') {
     formType = FORM_TYPE.LIST;
-  } else if (routes.length >= 1 && ( schema[key].type === 'array' || schema[key].type === 'object')) {
+  } else if (routes.length >= 1 && (schema[key].type === 'array' || schema[key].type === 'object')) {
     formType = FORM_TYPE.UPDATE;
   } else if (routes.length >= 1 && schema[key].type === 'page') {
     formType = FORM_TYPE.PAGE;
@@ -37,10 +38,9 @@ export default function useFormType({
   useEffect(() => {
     if (!key || !(key in schema)) {
       redirect();
-      return;
     }
   }, [key]);
   return {
-    formType
-  }
+    formType,
+  };
 }

@@ -2,11 +2,15 @@
 
 import TreeHandler from './tree';
 import VisitorHandler from './visitor';
-import type {Tree, NodeType, InputVisitor, ParentNode, Route, Path} from './types';
+import type {
+  Tree, NodeType, InputVisitor, ParentNode, Route, Path,
+} from './types';
 
 export default class Traverser {
   tree: TreeHandler;
+
   visitor: VisitorHandler;
+
   constructor(tree: Tree, visitor: InputVisitor) {
     this.tree = new TreeHandler(tree);
     this.visitor = new VisitorHandler(visitor);
@@ -25,10 +29,10 @@ export default class Traverser {
 
   traverseNode(node: NodeType, parent: ?ParentNode, route: Route) {
     const path: Path = {
-      node: node,
-      parent: parent,
+      node,
+      parent,
       tree: this.tree,
-      route: route,
+      route,
     };
     this.nodeCallEnter(path);
     if (node.children && node.children.length) {
@@ -61,16 +65,16 @@ export default class Traverser {
       } else {
         nodeType += `.${type}`;
       }
-      let nodeVisitor = visitor[nodeType];
+      const nodeVisitor = visitor[nodeType];
       if (nodeVisitor && 'enter' in nodeVisitor) {
-        nodeVisitor.enter.forEach((method) => method(path));
+        nodeVisitor.enter.forEach(method => method(path));
       }
     });
   }
 
   nodeCallExit(path: Path) {
     const visitor = this.visitor.getVisitor();
-    let nodeTypes = path.node.nodeType.split('.');
+    const nodeTypes = path.node.nodeType.split('.');
     let nodeType = '';
     nodeTypes.map((type) => {
       if (nodeType === '') {
@@ -81,9 +85,9 @@ export default class Traverser {
       return nodeType;
     }).reverse()
       .forEach((type) => {
-        let nodeVisitor = visitor[type];
+        const nodeVisitor = visitor[type];
         if (nodeVisitor && 'exit' in nodeVisitor) {
-          nodeVisitor.exit.forEach((method) => method(path));
+          nodeVisitor.exit.forEach(method => method(path));
         }
       });
   }

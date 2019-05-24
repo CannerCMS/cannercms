@@ -1,14 +1,18 @@
 // @flow
 
+import type {
+  Tree, NodeType, Schema, ParentNode,
+} from './types';
+
 type State = {
   path: string;
   pattern: string;
 }
-import type {Tree, NodeType, Schema, ParentNode} from './types';
 
 
 export default class Parser {
   ast: Tree;
+
   constructor() {
     this.ast = {
     };
@@ -51,10 +55,10 @@ export default class Parser {
       ...schema,
       name: key,
       nodeType: generateNodeType(schema),
-      children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
+      children: Object.keys(children).map(key => this.parsePlugin(key, children[key], state)),
       pattern: state.pattern,
       path: state.path,
-      ui: ui,
+      ui,
     };
   }
 
@@ -70,10 +74,10 @@ export default class Parser {
       ...schema,
       name: key,
       nodeType: generateNodeType(schema),
-      children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
+      children: Object.keys(children).map(key => this.parsePlugin(key, children[key], state)),
       pattern: state.pattern,
       path: state.path,
-      ui: ui,
+      ui,
     };
   }
 
@@ -89,10 +93,10 @@ export default class Parser {
       ...schema,
       name: key,
       nodeType: generateNodeType(schema),
-      children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
+      children: Object.keys(children).map(key => this.parsePlugin(key, children[key], state)),
       pattern: state.pattern,
       path: state.path,
-      ui: ui,
+      ui,
     };
   }
 
@@ -107,7 +111,7 @@ export default class Parser {
         ...schema,
         name: key,
         nodeType: generateNodeType(schema),
-        children: Object.keys(children).map((key) => this.parsePlugin(key, children[key], state)),
+        children: Object.keys(children).map(key => this.parsePlugin(key, children[key], state)),
         pattern: state.pattern,
         path: state.path,
         ui,
@@ -124,7 +128,7 @@ export default class Parser {
   }
 
   parsePlugin(key: string, schema: Schema, state: State): NodeType {
-    const {path, pattern} = state;
+    const { path, pattern } = state;
     if (schema.type === 'object') {
       return this.parseObject(key, schema, {
         pattern: `${pattern}.object`,
@@ -147,7 +151,7 @@ export default class Parser {
     }
 
     const ui = schema.ui || getDefaultUI(schema.type);
-    
+
     return {
       ...schema,
       name: key,

@@ -1,7 +1,7 @@
 // @flow
-import {generateAction} from '../action';
-import {update, merge, isPlainObject} from 'lodash';
-import {createEmptyData} from 'canner-helpers';
+import { update, merge, isPlainObject } from 'lodash';
+import { createEmptyData } from 'canner-helpers';
+import { generateAction } from '../action';
 
 export function createAction({
   relation,
@@ -11,25 +11,25 @@ export function createAction({
   config,
   rootValue,
   items,
-  transformGqlPayload
-}: { 
+  transformGqlPayload,
+}: {
   relation: any,
   id: {firstId: string, secondId: string} | string,
   type: 'create' | 'update' | 'delete' | 'swap',
   value: any,
   config: any,
   rootValue: any,
-  value: any,
   items: any,
   transformGqlPayload?: Function
 }) {
+  let newValue = null;
   if (type === 'create') {
     if (!config) {
       const emptyData = createEmptyData(items);
       if (isPlainObject(emptyData)) {
-        value = merge(emptyData, value);
+        newValue = merge(emptyData, value);
       } else {
-        value = emptyData;
+        newValue = emptyData;
       }
     }
     if (typeof id === 'string' && id.split('/').length === 1) {
@@ -39,10 +39,10 @@ export function createAction({
   return generateAction({
     id,
     updateType: type,
-    value,
+    value: newValue || value,
     rootValue,
     relation,
-    transformGqlPayload
+    transformGqlPayload,
   });
 }
 

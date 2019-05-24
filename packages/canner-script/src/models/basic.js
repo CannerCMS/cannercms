@@ -1,7 +1,7 @@
 // @flow
 
-import type {CannerSchema} from '../flow-types';
-import {componentMap} from '../utils';
+import type { CannerSchema } from '../flow-types';
+import { componentMap } from '../utils';
 
 export default class BasicModel {
   attributes: {
@@ -18,6 +18,7 @@ export default class BasicModel {
   }
 
   attributes = {}
+
   constructor(tagName: string, attrs: CannerSchema) {
     const ui = attrs.ui || this.getDefaultUI();
     const type = attrs.type || tagName;
@@ -28,27 +29,25 @@ export default class BasicModel {
       description: attrs.description || '',
       uiParams: attrs.uiParams || {},
       type,
-      packageName: attrs.packageName || componentMap.get(type, ui)
-    }
+      packageName: attrs.packageName || componentMap.get(type, ui),
+    };
   }
 
-  toJson = (): Object => {
-    return {
-      ...this.attributes
-    }
-  }
+  toJson = (): Object => ({
+    ...this.attributes,
+  })
 
   getDefaultUI() {
     return 'default';
   }
 
   withToolBar(children: Array<Object>) {
-    const toolbar = children.find((child) => child.__TOOLBAR__);
+    const toolbar = children.find(child => child.__TOOLBAR__);
 
     if (toolbar) {
       this.attributes = {
         ...this.attributes,
-        toolbar
+        toolbar,
       };
     }
   }

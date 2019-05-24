@@ -9,8 +9,8 @@ import Filter from './toolbar/filter';
 
 configure({
   visitorManager: {
-    defaultVisitors: []
-  }
+    defaultVisitors: [],
+  },
 });
 
 describe('builder', () => {
@@ -23,7 +23,7 @@ describe('builder', () => {
       expect(<string />).toMatchObject({
         type: 'string',
         ui: 'input',
-        packageName: '@canner/antd-string-input'
+        packageName: '@canner/antd-string-input',
       });
     });
   });
@@ -32,7 +32,7 @@ describe('builder', () => {
     it('should work', () => {
       expect(<boolean />).toMatchObject({
         type: 'boolean',
-        ui: 'switch'
+        ui: 'switch',
       });
     });
   });
@@ -41,7 +41,7 @@ describe('builder', () => {
     it('should work', () => {
       expect(<number />).toMatchObject({
         type: 'number',
-        ui: 'input'
+        ui: 'input',
       });
     });
   });
@@ -50,27 +50,29 @@ describe('builder', () => {
     it('should work', () => {
       expect(<relation relation={{
         type: 'toOne',
-        to: 'users'
-      }} />).toMatchObject({
+        to: 'users',
+      }}
+      />).toMatchObject({
         type: 'relation',
         ui: 'singleSelect',
         relation: {
           type: 'toOne',
-          to: 'users'
+          to: 'users',
         },
         toolbar: {
           pagination: {
-            
-          }
-        }
+
+          },
+        },
       });
     });
 
     it('should have toolbar attrs', () => {
       expect(<relation relation={{
         type: 'toOne',
-        to: 'users'
-      }}>
+        to: 'users',
+      }}
+      >
         <toolbar>
           <pagination />
         </toolbar>
@@ -79,40 +81,42 @@ describe('builder', () => {
         ui: 'singleSelect',
         relation: {
           type: 'toOne',
-          to: 'users'
+          to: 'users',
         },
         toolbar: {
           pagination: {
-            type: 'pagination'
-          }
-        }
+            type: 'pagination',
+          },
+        },
       });
     });
   });
 
   describe('array', () => {
     it('array of string without keyName', () => {
-      const array = (<array>
-        <string />
-      </array>);
+      const array = (
+        <array>
+          <string />
+        </array>
+      );
       expect(array).toMatchObject({
         type: 'array',
         ui: 'table',
         items: {
-          type: 'string'
-        }
+          type: 'string',
+        },
       });
     });
 
     it('should layout works in map function', () => {
       const configs = ['test1', 'test2'];
-      let schema = (
+      const schema = (
         <array keyName="test">
           <string keyName="top" />
           {
             configs.map(keyName => (
               <Block key={keyName}>
-                <string keyName={keyName}/>
+                <string keyName={keyName} />
               </Block>
             ))
           }
@@ -126,25 +130,27 @@ describe('builder', () => {
           items: {
             top: {
               keyName: 'top',
-              type: 'string'
+              type: 'string',
             },
             test1: {
               keyName: 'test1',
-              type: 'string'
+              type: 'string',
             },
             test2: {
               keyName: 'test2',
-              type: 'string'
-            }
-          }
-        }
+              type: 'string',
+            },
+          },
+        },
       });
     });
 
     it('array of string with keyName', () => {
-      const array = (<array>
-        <string keyName="test"/>
-      </array>);
+      const array = (
+        <array>
+          <string keyName="test" />
+        </array>
+      );
       expect(array).toMatchObject({
         type: 'array',
         ui: 'table',
@@ -153,18 +159,20 @@ describe('builder', () => {
           items: {
             test: {
               type: 'string',
-              keyName: 'test'
-            }
-          }
-        }
+              keyName: 'test',
+            },
+          },
+        },
       });
     });
 
     it('auto object in array', () => {
-      const array = (<array>
-        <string keyName="test" />
-        <string keyName="test2" />
-      </array>);
+      const array = (
+        <array>
+          <string keyName="test" />
+          <string keyName="test2" />
+        </array>
+      );
       expect(array).toMatchObject({
         type: 'array',
         ui: 'table',
@@ -173,23 +181,25 @@ describe('builder', () => {
           items: {
             test: {
               type: 'string',
-              keyName: 'test'
+              keyName: 'test',
             },
             test2: {
               type: 'string',
-              keyName: 'test2'
-            }
-          }
-        }
+              keyName: 'test2',
+            },
+          },
+        },
       });
     });
 
     it('manual object without keyName in array', () => {
-      const array = (<array>
-        <object>
-          <string keyName="test" />
-        </object>
-      </array>);
+      const array = (
+        <array>
+          <object>
+            <string keyName="test" />
+          </object>
+        </array>
+      );
       expect(array).toMatchObject({
         type: 'array',
         ui: 'table',
@@ -198,19 +208,21 @@ describe('builder', () => {
           items: {
             test: {
               type: 'string',
-              keyName: 'test'
-            }
-          }
-        }
+              keyName: 'test',
+            },
+          },
+        },
       });
     });
 
     it('manual object with keyName in array', () => {
-      const array = (<array>
-        <object keyName="obj">
-          <string keyName="test" />
-        </object>
-      </array>);
+      const array = (
+        <array>
+          <object keyName="obj">
+            <string keyName="test" />
+          </object>
+        </array>
+      );
       expect(array).toMatchObject({
         type: 'array',
         ui: 'table',
@@ -223,42 +235,44 @@ describe('builder', () => {
               items: {
                 test: {
                   type: 'string',
-                  keyName: 'test'
-                }
-              }
-            }
-          }
-        }
+                  keyName: 'test',
+                },
+              },
+            },
+          },
+        },
       });
     });
   });
 
   describe('object', () => {
     it('should work', () => {
-      const object = <object>
-        <string keyName="title"/>
-      </object>
+      const object = (
+        <object>
+          <string keyName="title" />
+        </object>
+      );
       expect(object).toMatchObject({
         type: 'object',
         ui: 'fieldset',
         items: {
           title: {
             type: 'string',
-            keyName: 'title'
-          }
-        }
+            keyName: 'title',
+          },
+        },
       });
     });
 
     it('should layout works in map function', () => {
       const configs = ['test1', 'test2'];
-      let schema = (
+      const schema = (
         <object keyName="test">
           <string keyName="top" />
           {
             configs.map(keyName => (
               <Block key={keyName}>
-                <string keyName={keyName}/>
+                <string keyName={keyName} />
               </Block>
             ))
           }
@@ -270,17 +284,17 @@ describe('builder', () => {
         items: {
           top: {
             keyName: 'top',
-            type: 'string'
+            type: 'string',
           },
           test1: {
             keyName: 'test1',
-            type: 'string'
+            type: 'string',
           },
           test2: {
             keyName: 'test2',
-            type: 'string'
-          }
-        }
+            type: 'string',
+          },
+        },
       });
     });
   });
@@ -298,17 +312,17 @@ describe('builder', () => {
         toolbar: {
           sorter: {
             component: Sorter,
-            type: 'sorter'
+            type: 'sorter',
           },
           pagination: {
             component: Pagination,
-            type: 'pagination'
+            type: 'pagination',
           },
           filter: {
             component: Filter,
-            type: 'filter'
-          }
-        }
+            type: 'filter',
+          },
+        },
       });
     });
   });
@@ -318,58 +332,60 @@ describe('builder', () => {
       expect(
         <toolbar>
           <filter>
-            <textFilter label="Title" field="title"/>
-            <numberFilter label="Clicks" field="clicks"/>
-            <dateFilter label="CreatedDate" field="createdDate"/>
-            <relationSelectFilter label="Author" field="author" textCol="name"/>
+            <textFilter label="Title" field="title" />
+            <numberFilter label="Clicks" field="clicks" />
+            <dateFilter label="CreatedDate" field="createdDate" />
+            <relationSelectFilter label="Author" field="author" textCol="name" />
             <selectFilter
               label="Status"
               options={[{
-                  text: 'Draft',
-                  condition: {
-                    draft_eq: true,
-                    trash_eq: false
-                  }
-              }, {
-                text: 'All',
-                condition: {}
-              }]}
-            />
-          </filter>
-        </toolbar>).toMatchObject({
-            filter: {
-              filters: [{
-              type: 'text',
-              label: 'Title',
-              field: 'title' 
-            }, {
-              type: 'number',
-              label: 'Clicks',
-              field: 'clicks'
-            }, {
-              type: 'date',
-              label: 'CreatedDate',
-              field: 'createdDate'
-            }, {
-              type: 'relation',
-              label: 'Author',
-              field: 'author',
-              textCol: 'name'
-            }, {
-              type: 'select',
-              label: 'Status',
-              options: [{
                 text: 'Draft',
                 condition: {
                   draft_eq: true,
-                  trash_eq: false
-                }
+                  trash_eq: false,
+                },
+              }, {
+                text: 'All',
+                condition: {},
+              }]}
+            />
+          </filter>
+        </toolbar>,
+      ).toMatchObject({
+        filter: {
+          filters: [{
+            type: 'text',
+            label: 'Title',
+            field: 'title',
+          }, {
+            type: 'number',
+            label: 'Clicks',
+            field: 'clicks',
+          }, {
+            type: 'date',
+            label: 'CreatedDate',
+            field: 'createdDate',
+          }, {
+            type: 'relation',
+            label: 'Author',
+            field: 'author',
+            textCol: 'name',
+          }, {
+            type: 'select',
+            label: 'Status',
+            options: [{
+              text: 'Draft',
+              condition: {
+                draft_eq: true,
+                trash_eq: false,
+              },
             }, {
               text: 'All',
-              condition: {}
-            }]
-            }]}
-        });
+              condition: {},
+            }],
+          }],
+        },
+      });
     });
   });
 
@@ -377,57 +393,61 @@ describe('builder', () => {
     it('should work', () => {
       expect(<toolbar>
         <actions exportButton importButton filterButton />
-      </toolbar>).toMatchObject({actions: {
-        exportButton: true,
-        importButton: true,
-        filterButton: true
-      }});
+      </toolbar>).toMatchObject({
+        actions: {
+          exportButton: true,
+          importButton: true,
+          filterButton: true,
+        },
+      });
     });
     it('should child tag work', () => {
       expect(<toolbar>
         <actions>
           <export fields={['test']} />
-          <import test/>
+          <import test />
           <filter />
         </actions>
-      </toolbar>).toMatchObject({actions: {
-        export: {
-          fields: ['test']
+      </toolbar>).toMatchObject({
+        actions: {
+          export: {
+            fields: ['test'],
+          },
+          import: {
+            test: true,
+          },
+          filter: {},
         },
-        import: {
-          test: true
-        },
-        filter: {}
-      }});
+      });
     });
   });
 
   describe('geoPoint', () => {
     it('should work', () => {
-      expect(<geoPoint keyName="map"/>).toMatchObject({
+      expect(<geoPoint keyName="map" />).toMatchObject({
         type: 'geoPoint',
         ui: 'default',
-        keyName: 'map'
+        keyName: 'map',
       });
     });
   });
 
   describe('dateTime', () => {
     it('should work', () => {
-      expect(<dateTime keyName="date"/>).toMatchObject({
+      expect(<dateTime keyName="date" />).toMatchObject({
         type: 'dateTime',
         ui: 'dateTime',
-        keyName: 'date'
+        keyName: 'date',
       });
     });
   });
 
   describe('file', () => {
     it('should work', () => {
-      expect(<file keyName="file"/>).toMatchObject({
+      expect(<file keyName="file" />).toMatchObject({
         type: 'file',
         ui: 'file',
-        keyName: 'file'
+        keyName: 'file',
       });
     });
   });
@@ -442,48 +462,48 @@ describe('builder', () => {
         items: {
           test: {
             type: 'string',
-            keyName: 'test'
-          }
-        }
+            keyName: 'test',
+          },
+        },
       });
     });
   });
 
   describe('image', () => {
     it('should work', () => {
-      expect(<image keyName="image"/>).toMatchObject({
+      expect(<image keyName="image" />).toMatchObject({
         type: 'image',
         ui: 'image',
-        keyName: 'image'
+        keyName: 'image',
       });
     });
   });
 
   describe('component', () => {
     it('should work', () => {
-      expect(<component keyName="component"/>).toMatchObject({
+      expect(<component keyName="component" />).toMatchObject({
         type: 'component',
         ui: 'default',
-        keyName: 'component'
+        keyName: 'component',
       });
     });
 
     it('should work with children', () => {
       expect(
         <component keyName="component">
-           <toolbar>
-              <filter />
+          <toolbar>
+            <filter />
           </toolbar>
-        </component>
+        </component>,
       ).toMatchObject({
         type: 'component',
         ui: 'default',
         keyName: 'component',
         toolbar: {
           filter: {
-            "type": "filter"
-          }
-        }
+            type: 'filter',
+          },
+        },
       });
     });
 
@@ -494,27 +514,29 @@ describe('builder', () => {
 
   describe('enum', () => {
     it('should work', () => {
-      expect(<enum keyName="enum" values={['A', 'B', 'C']}/>).toMatchObject({
+      expect(<enum keyName="enum" values={['A', 'B', 'C']} />).toMatchObject({
         type: 'enum',
         ui: 'select',
         keyName: 'enum',
-        values: ['A', 'B', 'C']
+        values: ['A', 'B', 'C'],
       });
     });
   });
 
   describe('root', () => {
     it('should work', () => {
-      const root = <root dict={{en: {title: 'title'}}} imageStorage={'imageStorage'} fileStorage={'fileStorage'}>
-        <object keyName="info" >
-          <string keyName="name"/>
-        </object>
-      </root>
+      const root = (
+        <root dict={{ en: { title: 'title' } }} imageStorage="imageStorage" fileStorage="fileStorage">
+          <object keyName="info">
+            <string keyName="name" />
+          </object>
+        </root>
+      );
       expect(root.imageStorages).toMatchObject({
-        info: 'imageStorage'
+        info: 'imageStorage',
       });
       expect(root.fileStorages).toMatchObject({
-        info: 'fileStorage'
+        info: 'fileStorage',
       });
       expect(root.schema).toMatchObject({
         info: {
@@ -524,31 +546,33 @@ describe('builder', () => {
             name: {
               keyName: 'name',
               ui: 'input',
-              type: 'string'
-            }
-          }
-        }
+              type: 'string',
+            },
+          },
+        },
       });
-      expect(root.dict).toMatchObject({en: {title: 'title'}});
+      expect(root.dict).toMatchObject({ en: { title: 'title' } });
     });
 
     it('should work with <page>child', () => {
-      const root = <root>
-        <page keyName="overview">
-          <component keyName="line" />
-        </page>
-      </root>
+      const root = (
+        <root>
+          <page keyName="overview">
+            <component keyName="line" />
+          </page>
+        </root>
+      );
       expect(root.pageSchema).toMatchObject({
         overview: {
           keyName: 'overview',
           type: 'page',
           items: {
-              line: {
-                  type: 'component',
-                  keyName: 'line'
-              }
-          }
-        }
+            line: {
+              type: 'component',
+              keyName: 'line',
+            },
+          },
+        },
       });
     });
   });
@@ -556,30 +580,36 @@ describe('builder', () => {
 
   describe('page', () => {
     it('should work', () => {
-      const page = <page keyName="overview">
-        <component keyName="key"/>
-      </page>
+      const page = (
+        <page keyName="overview">
+          <component keyName="key" />
+        </page>
+      );
       expect(page).toMatchObject({
         keyName: 'overview',
         type: 'page',
         items: {
           key: {
-              type: 'component',
-              ui: 'default',
-              keyName: 'key'
-          }
-        }
+            type: 'component',
+            ui: 'default',
+            keyName: 'key',
+          },
+        },
       });
     });
   });
 
   describe('children with map', () => {
     it('should work', () => {
-      const schema = <root>
-        {['info', 'info2'].map(name => <object key={name} keyName={name}>
-          <string keyName={`${name}-string`}></string>
-        </object>)}
-      </root>;
+      const schema = (
+        <root>
+          {['info', 'info2'].map(name => (
+            <object key={name} keyName={name}>
+              <string keyName={`${name}-string`} />
+            </object>
+          ))}
+        </root>
+      );
 
       expect(schema.schema).toMatchObject({
         info: {
@@ -587,31 +617,33 @@ describe('builder', () => {
           items: {
             'info-string': {
               type: 'string',
-              keyName: 'info-string'
-            }
-          }
+              keyName: 'info-string',
+            },
+          },
         },
         info2: {
           type: 'object',
           items: {
             'info2-string': {
               type: 'string',
-              keyName: 'info2-string'
-            }
-          }
-        }
+              keyName: 'info2-string',
+            },
+          },
+        },
       });
     });
   });
 
   describe('Define type only', () => {
     it('objectType', () => {
-      const schema = <root>
-        <objectType keyName="info">
-          <string keyName="title" />
-        </objectType>
-      </root>;
-  
+      const schema = (
+        <root>
+          <objectType keyName="info">
+            <string keyName="title" />
+          </objectType>
+        </root>
+      );
+
       expect(schema.schema).toMatchObject({
         info: {
           keyName: 'info',
@@ -619,20 +651,22 @@ describe('builder', () => {
           defOnly: true,
           items: {
             title: {
-              type: 'string'
-            }
-          }
-        }
+              type: 'string',
+            },
+          },
+        },
       });
     });
-  
+
     it('arrayType', () => {
-      const schema = <root>
-        <arrayType keyName="posts">
-          <string keyName="title" />
-        </arrayType>
-      </root>;
-  
+      const schema = (
+        <root>
+          <arrayType keyName="posts">
+            <string keyName="title" />
+          </arrayType>
+        </root>
+      );
+
       expect(schema.schema).toMatchObject({
         posts: {
           keyName: 'posts',
@@ -642,15 +676,14 @@ describe('builder', () => {
             type: 'object',
             items: {
               title: {
-                type: 'string'
-              }
-            }
-          }
-        }
+                type: 'string',
+              },
+            },
+          },
+        },
       });
     });
-  
-  })
+  });
 
   it('blog schema', () => {
     const blog = require('./blog');
@@ -661,10 +694,10 @@ describe('builder', () => {
     // eslint-disable-next-line
     const Variants = ({attributes, children}) => (
       <object {...attributes}>
-        <string keyName="title" /> 
+        <string keyName="title" />
         {children}
       </object>
-    )
+    );
     expect(<Variants keyName="variants">
       <string keyName="desc" />
     </Variants>).toMatchSnapshot();
@@ -728,7 +761,7 @@ describe('builder', () => {
   //           "title": "",
   //           "type": "string",
   //           "ui": "input",
-            
+
   //         },
   //       },
   //       "keyName": "variants",
@@ -736,7 +769,7 @@ describe('builder', () => {
   //       "title": "",
   //       "type": "object",
   //       "ui": "fieldset",
-        
+
   //     });
   //   });
   // })
@@ -745,7 +778,7 @@ describe('builder', () => {
     const list = ['a', 'b', 'c'];
     expect(<object keyName="variants">
       <string keyName="desc" />
-      {list.map(name => <string key={name} keyName={name}/>)}
+      {list.map(name => <string key={name} keyName={name} />)}
     </object>).toMatchSnapshot();
   });
 

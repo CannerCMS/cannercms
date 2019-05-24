@@ -1,6 +1,6 @@
 // @flow
 
-import type {SchemaMap} from './types';
+import type { SchemaMap } from './types';
 
 
 export function mapSchema(schemaMap: SchemaMap, fn: Function): any {

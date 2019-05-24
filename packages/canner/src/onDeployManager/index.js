@@ -1,6 +1,6 @@
 // @flow
 
-import {set, unset, get} from 'lodash';
+import { set, unset, get } from 'lodash';
 
 export class OnDeployManager {
   _map: {
@@ -8,21 +8,21 @@ export class OnDeployManager {
       [string]: Function
     }
   };
+
   _map = {}
+
   execute = ({
     key,
-    value
+    value,
   }: {
     key: string,
     value: any
   }): any => {
     const callbacks = this.findCallback(key);
-    return callbacks.reduce((result: any, callback: Function) => callback(result), {data: value});
+    return callbacks.reduce((result: any, callback: Function) => callback(result), { data: value });
   }
 
-  findCallback = (key: string): Array<any> => {
-    return Object.values(get(this._map, [key], {}));
-  }
+  findCallback = (key: string): Array<any> => Object.values(get(this._map, [key], {}))
 
   registerCallback = (key: string, callback: Function) => {
     const callbackId = randomStr();

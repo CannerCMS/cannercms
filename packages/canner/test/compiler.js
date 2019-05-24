@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-import memoryfs from 'memory-fs';
+import Memoryfs from 'memory-fs';
 
 export default (fixture, options = {}) => {
   const compiler = webpack({
@@ -15,15 +15,15 @@ export default (fixture, options = {}) => {
         test: /schema\.js/,
         use: [{
           loader: 'canner-schema-loader',
-          options: options
+          options,
         }, {
-          loader: 'babel-loader'
-        }]
-      },]
-    }
+          loader: 'babel-loader',
+        }],
+      }],
+    },
   });
 
-  compiler.outputFileSystem = new memoryfs();
+  compiler.outputFileSystem = new Memoryfs();
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
@@ -32,4 +32,4 @@ export default (fixture, options = {}) => {
       resolve(stats);
     });
   });
-}
+};

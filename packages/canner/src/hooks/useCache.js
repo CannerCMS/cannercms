@@ -1,9 +1,9 @@
-//@flow
+// @flow
 
-import {useRef} from 'react';
+import { useRef } from 'react';
 // $FlowFixMe cache type
 import Cache from '@canner/cache';
-import {mutate} from '../action';
+import { mutate } from '../action';
 import { parseConnectionToNormal } from '../hocs/utils';
 
 export default function useCache(defaultData: any) {
@@ -12,10 +12,10 @@ export default function useCache(defaultData: any) {
       const mutatedData = mutate(cachedData.data, action);
       return {
         data: mutatedData,
-        rootValue: parseConnectionToNormal(mutatedData)
-      }
+        rootValue: parseConnectionToNormal(mutatedData),
+      };
     },
-    defaultData
+    defaultData,
   }));
   return cacheRef.current;
 }

@@ -1,5 +1,5 @@
-describe('canner-tree', function() {
-  it('canner-tree', function() {
+describe('canner-tree', () => {
+  it('canner-tree', () => {
     expect(true);
   });
 });
