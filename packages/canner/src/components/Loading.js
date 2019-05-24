@@ -3,12 +3,12 @@ import React from 'react';
 import { Alert } from 'antd';
 import { List } from 'react-content-loader';
 
-export default function Loading(props: any) {
-  if (props.error) {
+export default function Loading({ error }: any) {
+  if (error) {
     return (
       <Alert
         message="Something went wrong."
-        description={props.error}
+        description={error}
         type="error"
         closable
       />
