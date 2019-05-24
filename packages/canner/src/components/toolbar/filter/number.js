@@ -51,12 +51,6 @@ export default class NumberRangeFilter extends Component<Props> {
     }
   }
 
-  changeOperator = (val) => {
-    this.setState({
-      operator: val,
-    }, this.onChange);
-  }
-
   onChange() {
     const { lowInput, input, operator } = this.state;
     const { name, onChange } = this.props;
@@ -74,6 +68,12 @@ export default class NumberRangeFilter extends Component<Props> {
         },
       });
     }
+  }
+
+  changeOperator = (val) => {
+    this.setState({
+      operator: val,
+    }, this.onChange);
   }
 
   render() {
