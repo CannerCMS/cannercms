@@ -189,20 +189,22 @@ export function findSchema(schema: Object, filter: Function): Array<Object> {
 }
 
 export function addPath(schema: Object, path: string) {
-  const { items, keyName } = schema;
+  const newSchema = { ...schema };
+  const { items, keyName } = newSchema;
   let schemaPath = path;
   if (keyName) {
     schemaPath = path ? `${path}/${keyName}` : keyName;
   }
-  schema.path = schemaPath;
+
+  newSchema.path = schemaPath;
   if (items) {
     if (typeof items.type !== 'string') {
-      Object.keys(items).forEach(key => addPath(schema.items[key], schema.path));
+      Object.keys(items).forEach(key => addPath(newSchema.items[key], newSchema.path));
     } else {
-      addPath(items, schema.path);
+      addPath(items, newSchema.path);
     }
   }
-  return schema;
+  return newSchema;
 }
 
 /**
