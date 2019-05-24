@@ -133,7 +133,9 @@ function Provider({
     const mutatedData = cachedData.data[key];
     const { error } = onDeployManager.publish(key, mutatedData);
     if (error) {
-      errorHandler && errorHandler(new Error('Invalid field'));
+      if (errorHandler) {
+        errorHandler(new Error('Invalid field'));
+      }
       return Promise.reject(error);
     }
     try {
@@ -151,15 +153,19 @@ function Provider({
       });
       actionManager.removeActions(key, id);
       updateChangedData();
-      afterDeploy && afterDeploy({
-        key,
-        id: id || '',
-        result: data,
-        actions,
-      });
+      if (afterDeploy) {
+        afterDeploy({
+          key,
+          id: id || '',
+          result: data,
+          actions,
+        });
+      }
       return data;
     } catch (e) {
-      errorHandler && errorHandler(e);
+      if (errorHandler) {
+        errorHandler(e);
+      }
       log('deploy', e, key, {
         id,
         mutation,
