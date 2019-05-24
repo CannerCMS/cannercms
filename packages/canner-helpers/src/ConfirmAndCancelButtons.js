@@ -3,7 +3,7 @@ import ConfirmButton from './confirmButton';
 import Context from './context';
 import ResetButton from './cancelButton';
 
-export default function Buttons({
+export default function ConfirmAndCancelButtons({
   cancelButtonProps = {},
   shouldRenderCancelButton,
   shouldRenderSubmitButton,

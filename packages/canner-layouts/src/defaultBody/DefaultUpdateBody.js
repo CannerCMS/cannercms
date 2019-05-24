@@ -3,7 +3,7 @@
 import  React from 'react';
 // $FlowFixMe: antd Breadcrumb
 import {Breadcrumb, Icon} from 'antd';
-import {BackButton, Buttons, Item} from 'canner-helpers';
+import {BackButton, ConfirmAndCancelButtons, Item} from 'canner-helpers';
 
 type Props = {
   id: string,
@@ -63,7 +63,7 @@ export default function DefaultUpdateBody({title, description, schema, routes}: 
         }}>
           <BackButton />
           <Item />
-          <Buttons
+          <ConfirmAndCancelButtons
             cancelButtonProps={cancelButtonProps}
             shouldRenderCancelButton
             shouldRenderSubmitButton
