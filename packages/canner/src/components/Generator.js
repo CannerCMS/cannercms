@@ -30,7 +30,7 @@ export default function Generator({ componentTree, routes, formType }: Props) {
   const [idNodeMap, setIdNodeMap] = useState({});
   const renderComponent = (refId: RefId, props: childrenProps): React$Node => {
     const componentPathArr = refId.getPathArr()
-      .filter(path => isNaN(Number(path)));
+      .filter(path => Number.isNaN(Number(path)));
     const componentPath = componentPathArr.join('/');
     let node = idNodeMap[componentPath];
     const entryKey = componentPathArr[0];
