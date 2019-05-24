@@ -106,7 +106,8 @@ export default class ExportModal extends React.Component<Props, State> {
   }
 
   handleCancel = () => {
-    this.props.triggerModal();
+    const { triggerModal } = this.props;
+    triggerModal();
   }
 
   render() {
