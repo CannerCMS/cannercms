@@ -182,29 +182,31 @@ export function findSchema(schema: Object, filter: Function): Array<Object> {
     if (typeof items.type === 'string') {
       copy = copy.concat(findSchema(items, filter));
     } else {
-      Object.keys(items).forEach(key => copy.concat(findSchema(items[key], filter)));
+      Object.keys(items).forEach((key: string) => {
+        copy = copy.concat(findSchema(items[key], filter));
+      });
     }
   }
   return copy;
 }
 
 export function addPath(schema: Object, path: string) {
-  const newSchema = { ...schema };
-  const { items, keyName } = newSchema;
+  /* eslint-disable no-param-reassign */
+  const { items, keyName } = schema;
   let schemaPath = path;
   if (keyName) {
     schemaPath = path ? `${path}/${keyName}` : keyName;
   }
 
-  newSchema.path = schemaPath;
+  schema.path = schemaPath;
   if (items) {
     if (typeof items.type !== 'string') {
-      Object.keys(items).forEach(key => addPath(newSchema.items[key], newSchema.path));
+      Object.keys(items).forEach(key => addPath(schema.items[key], schema.path));
     } else {
-      addPath(items, newSchema.path);
+      addPath(items, schema.path);
     }
   }
-  return newSchema;
+  return schema;
 }
 
 /**

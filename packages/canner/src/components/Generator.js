@@ -161,9 +161,10 @@ export default function Generator({ componentTree, routes, formType }: Props) {
 }
 
 export function findNode(pathArr: Array<string>, node: ComponentNode): ?Node {
-  if (pathArr[0]) {
-    if (isComponent(node) && node.keyName === pathArr[0]) {
-      const newPathArr = pathArr.slice(1);
+  let newPathArr = pathArr;
+  if (newPathArr[0]) {
+    if (isComponent(node) && node.keyName === newPathArr[0]) {
+      newPathArr = newPathArr.slice(1);
       if (!newPathArr.length) {
         return node;
       }
@@ -172,7 +173,7 @@ export function findNode(pathArr: Array<string>, node: ComponentNode): ?Node {
 
   if (node.children) {
     return node.children
-      .map(child => findNode(pathArr, child))
+      .map(child => findNode(newPathArr, child))
       .find(node => !!node);
   }
 }

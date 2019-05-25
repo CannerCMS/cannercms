@@ -18,7 +18,7 @@ describe('withCanner', () => {
     const keyName = 'posts';
     const type = 'array';
     const required = false;
-    const validation = null;
+    const validation = undefined;
     const layout = null;
     const description = 'description';
     const title = 'title';
@@ -30,7 +30,7 @@ describe('withCanner', () => {
     const graphql = null;
     const variables = null;
     const fetchPolicy = null;
-    const relation = null;
+    const relation = {};
     const controlDeployAndResetButtons = null;
     const hideButtons = null;
     // contextValue

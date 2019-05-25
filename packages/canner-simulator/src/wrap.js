@@ -31,7 +31,7 @@ const wrap = (Com: React.ComponentType<*>) => class wrappedComponent extends Rea
     refId: null,
     items: {},
     onChange: () => Promise.resolve(),
-    className: '',
+    className: undefined,
     liteCMS: null,
     style: {},
     title: ''
