@@ -1,5 +1,5 @@
 // @flow
-
+/* eslint-disable no-param-reassign */
 import type { SchemaMap } from './types';
 
 

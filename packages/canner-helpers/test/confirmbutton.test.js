@@ -27,9 +27,11 @@ describe('confirm button', () => {
   });
 
   it('should execute deploy with key', () => {
-    const { getByTestId } = render(<Context.Provider value={context}>
-      <ConfirmButton />
-                                   </Context.Provider>);
+    const { getByTestId } = render(
+      <Context.Provider value={context}>
+        <ConfirmButton />
+      </Context.Provider>
+    );
     fireEvent.click(getByTestId('confirm-button'));
     expect(context.deploy).toHaveBeenCalledWith(context.refId.getPathArr()[0]);
   });

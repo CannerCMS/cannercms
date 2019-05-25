@@ -11,6 +11,7 @@ export default function Tab({
     <Tabs>
       {
         childrenNode.map((child, i) => (
+          // eslint-disable-next-line
           <TabPane key={i} tab={child.title} data-testid={`tabs-${child.keyName}`}>
             <Item
               hideTitle

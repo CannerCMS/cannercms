@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Alert } from 'antd';
 import styled from 'styled-components';
 
@@ -20,21 +20,19 @@ const Content = styled.div`
   margin: 0 auto;
 `;
 
-export default class Error extends Component {
-  render() {
-    return (
-      <Wrapper>
-        <Inner>
-          <Content>
-            <Alert
-              type="error"
-              showIcon
-              message="Invalid sidebar menu"
-              description={'We occurs error while rendering your sidebar menu\'s settings, please upload a fixed version'}
-            />
-          </Content>
-        </Inner>
-      </Wrapper>
-    );
-  }
+export default function Error() {
+  return (
+    <Wrapper>
+      <Inner>
+        <Content>
+          <Alert
+            type="error"
+            showIcon
+            message="Invalid sidebar menu"
+            description={'We occurs error while rendering your sidebar menu\'s settings, please upload a fixed version'}
+          />
+        </Content>
+      </Inner>
+    </Wrapper>
+  );
 }

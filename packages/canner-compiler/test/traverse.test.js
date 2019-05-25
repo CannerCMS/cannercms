@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import isArray from 'lodash/isArray';
 import Traverser from '../src/traverser';
 // import c from '../src/canner-node';

@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import compiler from './compiler.js';
+import compiler from './compiler';
 
 test('Inserts schema and outputs JSONSchema and componentTree', async () => {
   const stats = await compiler('test.schema.js', { test: true });

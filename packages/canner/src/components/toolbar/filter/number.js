@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import { injectIntl } from 'react-intl';
 
 const Option = Select.Option;
+// $FlowFixMe antd Input
 const InputGroup = Input.Group;
 const operators = [
   { symbol: '>', value: 'gt' },
@@ -22,9 +23,15 @@ type Props = {
   index: number,
 };
 
-// @FloxFixMe decorator
+type State = {
+  input: string;
+  lowInput: string;
+  operator: string;
+};
+
+// $FlowFixMe decorator
 @injectIntl
-export default class NumberRangeFilter extends Component<Props> {
+export default class NumberRangeFilter extends Component<Props, State> {
   state = {
     input: '',
     lowInput: '',
@@ -32,7 +39,7 @@ export default class NumberRangeFilter extends Component<Props> {
   };
 
   onInputLow = (e: SyntheticEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+    const { value } = e.currentTarget;
     const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
     if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
       this.setState({
@@ -42,7 +49,7 @@ export default class NumberRangeFilter extends Component<Props> {
   }
 
   onInput = (e: SyntheticEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+    const { value } = e.currentTarget;
     const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
     if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
       this.setState({
@@ -70,7 +77,7 @@ export default class NumberRangeFilter extends Component<Props> {
     }
   }
 
-  changeOperator = (val) => {
+  changeOperator = (val: string) => {
     this.setState({
       operator: val,
     }, this.onChange);

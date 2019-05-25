@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-param-reassign */
 
 import type { CannerSchema } from '../flow-types';
 import {

@@ -1,7 +1,6 @@
 // @flow
 
 import { useRef } from 'react';
-// $FlowFixMe cache type
 import Cache from '@canner/cache';
 import { mutate } from '../action';
 import { parseConnectionToNormal } from '../hocs/utils';

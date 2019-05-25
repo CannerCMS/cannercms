@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-param-reassign */
 import objectPath from 'object-path';
 import * as React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';

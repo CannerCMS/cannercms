@@ -111,7 +111,8 @@ function renderMenu(item: Object) {
 
 function renderMenuItem(item: Object) {
   if (item.href) {
-    item.onClick = () => location.href = item.href;
+    // eslint-disable-next-line no-param-reassign
+    item.onClick = () => { window.location.href = item.href; };
   }
   return (
     <Menu.Item key={item.pathname} params={item.params} onClick={item.onClick} data-testid={`sidebar-${item.pathname}`}>

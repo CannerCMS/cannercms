@@ -19,14 +19,24 @@ type Props = {
   liteCMS?: React.ComponentType<*>,
   style?: Object,
   title?: string
-}
+};
 
 type State = {
   value: *,
   refId: RefId
-}
+};
 
 const wrap = (Com: React.ComponentType<*>) => class wrappedComponent extends React.PureComponent<Props, State> {
+  static defaultProps = {
+    refId: null,
+    items: {},
+    onChange: () => Promise.resolve(),
+    className: '',
+    liteCMS: null,
+    style: {},
+    title: ''
+  }
+
   constructor(props: Props) {
     super(props);
     const refId = props.refId
@@ -43,29 +53,30 @@ const wrap = (Com: React.ComponentType<*>) => class wrappedComponent extends Rea
   }
 
     onChange = (refId: RefId, type: UpdateType, delta: *) => {
+      let cpDelta = delta;
       const { items = {}, onChange } = this.props;
       if (onChange) {
         onChange(refId, type, delta);
       }
 
       if (type === 'create') {
-        delta = createEmptyData(items);
+        cpDelta = createEmptyData(items);
       }
 
-      store.onChange(refId, type, delta);
+      store.onChange(refId, type, cpDelta);
       this.updateValue();
     }
 
     updateValue = () => {
-      this.setState({
-        value: getValue(store.getValue(), this.state.refId),
-      });
+      this.setState(prevState => ({
+        value: getValue(store.getValue(), prevState.refId),
+      }));
     }
 
     render() {
       const { value, refId } = this.state;
       const {
-        children, title, liteCMS, className, style = {}, ...rest
+        children, title, liteCMS, className, style = {}, keyName, ...rest
       } = this.props;
       const contextValue = {
         renderChildren: props => (children ? React.Children.map(children, child => React.cloneElement(child, props)) : 'this is content'),
@@ -84,10 +95,11 @@ const wrap = (Com: React.ComponentType<*>) => class wrappedComponent extends Rea
             }}
           >
             <h3>
-              {title || this.props.keyName.toUpperCase()}
+              {title || keyName.toUpperCase()}
             </h3>
             <Com
               {...rest}
+              keyName={keyName}
               onChange={this.onChange}
               value={value}
               refId={refId}

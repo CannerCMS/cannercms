@@ -49,26 +49,30 @@ const router = {
 
 describe('<CannerContainer>', () => {
   it('should render children', () => {
-    const { getByTestId } = render(<CannerContainer
-      sidebarConfig={sidebarConfig}
-      navbarConfig={navbarConfig}
-      schema={schema}
-      router={router}
-    >
-      <TestChildren />
-                                   </CannerContainer>);
+    const { getByTestId } = render(
+      <CannerContainer
+        sidebarConfig={sidebarConfig}
+        navbarConfig={navbarConfig}
+        schema={schema}
+        router={router}
+      >
+        <TestChildren />
+      </CannerContainer>
+    );
     expect(getByTestId('children')).toHaveTextContent('children');
   });
 
   it('should initial dataChanged state be {}', () => {
-    const { getByTestId } = render(<CannerContainer
-      sidebarConfig={sidebarConfig}
-      navbarConfig={navbarConfig}
-      schema={schema}
-      router={router}
-    >
-      <TestChildren />
-                                   </CannerContainer>);
+    const { getByTestId } = render(
+      <CannerContainer
+        sidebarConfig={sidebarConfig}
+        navbarConfig={navbarConfig}
+        schema={schema}
+        router={router}
+      >
+        <TestChildren />
+      </CannerContainer>
+    );
     expect(getByTestId('navbar-saved-button')).toHaveTextContent('Saved');
   });
 });

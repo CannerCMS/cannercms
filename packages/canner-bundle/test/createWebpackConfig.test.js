@@ -3,6 +3,7 @@ import tmp from 'tmp';
 import path from 'path';
 import {
   createConfig,
+// eslint-disable-next-line
 } from '../src/utils/createWebpackConfig';
 
 jest.mock('tmp');
@@ -10,6 +11,7 @@ tmp.fileSync.mockReturnValue({
   name: 'file-name',
 });
 afterAll(() => {
+// eslint-disable-next-line
   const fs = require('fs');
   if (fs.existsSync('file-name')) {
     fs.unlinkSync('file-name');

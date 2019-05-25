@@ -1,5 +1,6 @@
-
 // @flow
+/* eslint-disable no-param-reassign */
+
 import type { CannerSchema, Path } from './flow-types';
 
 export const CANNER_KEY = '__CANNER_KEY__';
@@ -138,14 +139,14 @@ export function createInjectionLayout(attrs: Object, children: Array<CannerSchem
     }
   });
 
-  const visitor = function (path) {
+  function visitor(path) {
     if (!path.node[CANNER_KEY] || path.node[CANNER_KEY].indexOf(cannerKey) === -1) {
       return;
     }
     Object.keys(injectValue).forEach((key) => {
       path.node[key] = injectValue[key];
     });
-  };
+  }
   const allVisitor = children.reduce((result, child) => {
     if (`component.${child.type}` in result) {
       return result;

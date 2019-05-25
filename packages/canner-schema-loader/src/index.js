@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import * as babylon from 'babylon';
 import traverse from 'babel-traverse';
 import generate from 'babel-generator';
@@ -33,7 +35,7 @@ export default function loader(source, map, meta) {
       promises.push(generatePaths(packageName, that));
     },
   );
-  generate(ast, {}, source).code;
+  generate(ast, {}, source);
 
   // second traverse, we get the generatePaths from the promises array
   Promise.all(promises).then((paths) => {
@@ -77,15 +79,13 @@ export default function loader(source, map, meta) {
 function traverseAst(ast, nullPropsCallback, ObjectPropsCallback) {
   traverse(ast, {
     CallExpression(path) {
-      let typeNode,
-        propsNode,
-        type,
-        packageName;
+      let type;
+      let packageName;
       if (path.node.arguments.length < 2) {
         return;
       }
-      typeNode = path.get('arguments.0');
-      propsNode = path.get('arguments.1');
+      const typeNode = path.get('arguments.0');
+      const propsNode = path.get('arguments.1');
       if (typeNode.isStringLiteral() && propsNode.isNullLiteral()) {
         type = typeNode.node.value;
         packageName = componentMap.get('type');
@@ -183,9 +183,10 @@ function buildBuilder(defFile) {
 }
 
 function buildCannerConfig(packageJson, type) {
-  let canner = {},
-    properties = [];
+  let canner = {};
+  const properties = [];
   try {
+    // eslint-disable-next-line
     canner = require(packageJson).canner || {};
   } catch (e) {
     canner = {};

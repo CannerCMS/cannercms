@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable import/no-cycle */
 
 export { default as StringModel } from './string';
 export { default as NumberModel } from './number';

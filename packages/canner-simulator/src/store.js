@@ -42,8 +42,7 @@ class Store {
     this.push();
   }
 
-  // $FlowFixMe: flow can't work pretty on function overloading , so using any to temp resolve
-  onChange: onChangeFunc = (path: any, type, delta: any) => {
+  onChange = (path: any, type: UpdateType | SwapType, delta: any) => {
     switch (type) {
       case 'update': {
         this.setValueByPath(path, delta);
@@ -51,10 +50,11 @@ class Store {
       }
       case 'create': {
         let collection = this.getValueByPath(path);
+        let newDelta;
         if (isEntry(path)) {
-          delta = delta.set('_id', getRandomString());
+          newDelta = delta.set('_id', getRandomString());
         }
-        collection = collection.push(delta);
+        collection = collection.push(newDelta);
         this.setValueByPath(path, collection);
         break;
       }

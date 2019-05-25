@@ -1,5 +1,6 @@
 export default {
   print(val) {
+    // eslint-disable-next-line
     val = loop(val);
     return JSON.stringify(val, null, 2);
   },
@@ -22,6 +23,7 @@ function renderVal(val) {
 function loop(val) {
   if (val.nodeType) {
     if (val.children) {
+      // eslint-disable-next-line
       val.children = val.children.map(child => loop(child));
     }
     return renderVal(val);

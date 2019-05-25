@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
-import memoryfs from 'memory-fs';
+import Memoryfs from 'memory-fs';
 
 export default (fixture, options = {}) => {
   const compiler = webpack({
@@ -23,7 +23,7 @@ export default (fixture, options = {}) => {
     },
   });
 
-  compiler.outputFileSystem = new memoryfs();
+  compiler.outputFileSystem = new Memoryfs();
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {

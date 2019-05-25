@@ -2,6 +2,7 @@ import tmp from 'tmp';
 import path from 'path';
 import {
   createWebConfig,
+// eslint-disable-next-line
 } from '../src/utils/createWebpackConfig';
 
 jest.mock('tmp');
@@ -18,6 +19,7 @@ expect.addSnapshotSerializer({
 });
 
 afterAll(() => {
+// eslint-disable-next-line
   const fs = require('fs');
   if (fs.existsSync('file-name')) {
     fs.unlinkSync('file-name');

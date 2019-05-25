@@ -8,15 +8,16 @@ configure({
 });
 
 describe('LiteCMS', () => {
-  let context,
-    MockChildren;
+  let context;
+  let MockChildren;
 
   beforeEach(() => {
     MockChildren = function MockChildren(props) {
+      const { refId, uiParams } = props;
       return (
         <div>
-          <p className="refId">{props.refId}</p>
-          <p className="uiParams">{JSON.stringify(props.uiParams)}</p>
+          <p className="refId">{refId}</p>
+          <p className="uiParams">{JSON.stringify(uiParams)}</p>
         </div>
       );
     };
@@ -26,9 +27,11 @@ describe('LiteCMS', () => {
   });
 
   it('should pass props', () => {
-    const component = mount(<Context.Provider value={context}>
-      <LiteCMS refId="refId/0" uiParams={{ test: 123 }} />
-    </Context.Provider>);
+    const component = mount(
+      <Context.Provider value={context}>
+        <LiteCMS refId="refId/0" uiParams={{ test: 123 }} />
+      </Context.Provider>
+    );
     expect(component.find('.refId').text()).toBe('refId/0');
     expect(component.find('.uiParams').text()).toBe(JSON.stringify({ test: 123 }));
   });

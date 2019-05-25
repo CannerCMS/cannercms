@@ -1,9 +1,7 @@
 import * as React from 'react';
 
-export default class Sort extends React.Component {
-  render() {
-    return (
-      <div>123</div>
-    );
-  }
+export default function Sort() {
+  return (
+    <div>123</div>
+  );
 }

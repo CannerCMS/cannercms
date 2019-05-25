@@ -6,15 +6,16 @@ import 'jest-dom/extend-expect';
 afterEach(cleanup);
 
 describe('children', () => {
-  let context,
-    MockChildren;
+  let context;
+  let MockChildren;
 
   beforeEach(() => {
     MockChildren = function MockChildren(props) {
+      const { refId, routes } = props;
       return (
         <div>
-          <p data-testid="refId">{props.refId}</p>
-          <p data-testid="routes">{JSON.stringify(props.routes)}</p>
+          <p data-testid="refId">{refId}</p>
+          <p data-testid="routes">{JSON.stringify(routes)}</p>
         </div>
       );
     };
@@ -30,6 +31,7 @@ describe('children', () => {
           childrenProps = props(child);
         }
         if (childrenProps.hidden) return null;
+        // eslint-disable-next-line
         return <MockChildren key={i} {...childrenProps} />;
       })),
       refId: 'refId',
@@ -48,17 +50,21 @@ describe('children', () => {
   });
 
   it('should overwrite props', () => {
-    const { getByTestId } = render(<Context.Provider value={context}>
-      <Item refId="refId/0" routes={[]} />
-    </Context.Provider>);
+    const { getByTestId } = render(
+      <Context.Provider value={context}>
+        <Item refId="refId/0" routes={[]} />
+      </Context.Provider>
+    );
     expect(getByTestId('refId')).toHaveTextContent('refId/0');
     expect(getByTestId('routes')).toHaveTextContent('[]');
   });
 
   it('should hidden', () => {
-    const { queryByTestId } = render(<Context.Provider value={context}>
-      <Item refId="refId/0" routes={[]} filter={node => node.keyName === 'child0'} />
-    </Context.Provider>);
+    const { queryByTestId } = render(
+      <Context.Provider value={context}>
+        <Item refId="refId/0" routes={[]} filter={node => node.keyName === 'child0'} />
+      </Context.Provider>
+    );
     expect(queryByTestId('refId')).toBe(null);
     expect(queryByTestId('routes')).toBe(null);
   });

@@ -27,9 +27,11 @@ describe('confirm button', () => {
   });
 
   it('should execute reset with key', () => {
-    const { getByTestId } = render(<Context.Provider value={context}>
-      <ResetButton />
-                                   </Context.Provider>);
+    const { getByTestId } = render(
+      <Context.Provider value={context}>
+        <ResetButton />
+      </Context.Provider>
+    );
     fireEvent.click(getByTestId('reset-button'));
     expect(context.reset).toHaveBeenCalledWith(context.refId.getPathArr()[0]);
   });

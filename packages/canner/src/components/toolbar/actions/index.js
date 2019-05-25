@@ -38,7 +38,7 @@ export default class Actions extends Component<Props, State> {
     export: {},
     filter: {},
     import: {},
-    selectedValue: ''
+    selectedValue: []
   }
 
   state = {

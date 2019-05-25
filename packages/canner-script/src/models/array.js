@@ -1,5 +1,5 @@
 // @flow
-
+/* eslint-disable no-param-reassign */
 import saferEval from 'safer-eval';
 import { flatten } from 'lodash';
 import type { CannerSchema } from '../flow-types';

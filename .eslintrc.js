@@ -41,7 +41,9 @@ module.exports = {
     "react/jsx-filename-extension": 0,
     "consistent-return": 0,
     "react/no-unused-prop-types": 0,
-    "comma-dangle": 0
+    "comma-dangle": 0,
+    "import/no-named-default": 0,
+    "no-plusplus": 0
   },
   "globals": {
     "Promise": true

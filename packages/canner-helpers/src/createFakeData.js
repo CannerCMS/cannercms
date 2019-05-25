@@ -25,6 +25,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
     return null;
   }
   const firstLevelKeys = getFirstLevelKeys(root);
+  // eslint-disable-next-line
   return root.hasOwnProperty('type') ? loop(((root: any): Schema), ((root: any): Schema).keyName) : mapSchema(((root: any): SchemaMap), loop);
 
   // Loop schema
@@ -83,7 +84,7 @@ export default function createFakeData(root: Schema | SchemaMap, listLength: num
         result = faker.random.boolean();
         break;
       case 'string': {
-        const lowerKeyName = schema.keyName && schema.keyName.toLowerCase() || '';
+        const lowerKeyName = (schema.keyName && schema.keyName.toLowerCase()) || '';
         if (lowerKeyName.indexOf('email') > -1) {
           result = faker.internet.email();
         } else if (lowerKeyName.indexOf('phone') > -1) {
@@ -128,11 +129,13 @@ function getFirstLevelKeys(root: Schema | SchemaMap) {
 
 function getArrayData(schema: any, key: string, listLength: number, loop: Function) {
   const result = [];
+  // eslint-disable-next-line
   for (let i = 0; i < listLength; ++i) {
     let item;
     if (schema.items && schema.items.items) {
       item = mapSchema(schema.items.items, loop);
     } else {
+      // eslint-disable-next-line
       item = schema.items.hasOwnProperty('type') ? loop(schema.items, schema.items.keyName) : mapSchema(schema.items, loop);
     }
 
@@ -156,6 +159,7 @@ function getRelation(schema: Schema, firstLevelKeys: any, listLength: number) {
     case 'toMany':
       result = [];
       if (isInFirstLevel) {
+        // eslint-disable-next-line
         for (let i = 0; i < listLength; ++i) {
           if (Math.random() > 0.5 && to !== schema.keyName) {
             result.push(`${to}${i + 1}`);

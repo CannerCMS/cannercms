@@ -105,6 +105,7 @@ export default class FilterGroup extends React.Component<Props, State> {
           // $FlowFixMe: intl
           return <SelectFilter index={index} onChange={debounceChange} options={filter.options} where={where} />;
         case 'number':
+          // $FlowFixMe: intl
           return <NumberFilter index={index} onChange={debounceChange} name={filter.field} where={where} />;
         /*
         case 'dateRange':

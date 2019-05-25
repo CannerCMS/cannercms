@@ -27,12 +27,14 @@ describe('componentMap', () => {
 });
 
 describe('getIntlMessage', () => {
+  // eslint-disable-next-line
   it('should be string, if not match /${(,*)}/', () => {
     const message = getIntlMessage('title');
     expect(message).toBe('title');
   });
 
   it('should be a react component', () => {
+  // eslint-disable-next-line
     const message = getIntlMessage('${title}');
     function Intl() {
       return (

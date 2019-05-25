@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-param-reassign */
 import type { Path } from '../flow-types';
 
 /**

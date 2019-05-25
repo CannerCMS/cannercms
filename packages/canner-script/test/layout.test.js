@@ -11,8 +11,8 @@ configure({
 });
 
 describe('insertion layout', () => {
-  let node,
-    node2;
+  let node;
+  let node2;
   beforeEach(() => {
     node = {
       type: 'string',
@@ -204,9 +204,9 @@ describe('insertion layout', () => {
 });
 
 describe('injection layout', () => {
-  let node,
-    node2,
-    injectBlock;
+  let node;
+  let node2;
+  let injectBlock;
   beforeEach(() => {
     node = {
       keyName: 'name',

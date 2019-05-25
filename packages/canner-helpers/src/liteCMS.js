@@ -6,15 +6,13 @@ type Props = {
   [string]: any
 };
 
-export default class LiteCMS extends React.Component<Props> {
-  render() {
-    const { refId, ...rest } = this.props;
-    return (
-      <Context.Consumer>
-        {value => value.renderComponent(refId, {
-          ...rest,
-        })}
-      </Context.Consumer>
-    );
-  }
+export default function LiteCMS(props: Props) {
+  const { refId, ...rest } = props;
+  return (
+    <Context.Consumer>
+      {value => value.renderComponent(refId, {
+        ...rest,
+      })}
+    </Context.Consumer>
+  );
 }

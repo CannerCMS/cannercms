@@ -1,6 +1,6 @@
 /** @jsx builder */
 // @flow
-
+/* eslint-disable no-param-reassign */
 import {
   StringModel,
   NumberModel,
@@ -85,7 +85,7 @@ export default function builder(tag: string | Function, attributes: Object, ...c
     case 'component':
       return createJSON(ComponentModel, [attributes, children]);
     case 'enum':
-      return new createJSON(EnumModel, [attributes, children]);
+      return createJSON(EnumModel, [attributes, children]);
     case 'page':
       return new PageModel(attributes, children).toJson();
     case 'root':

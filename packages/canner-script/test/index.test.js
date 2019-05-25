@@ -68,15 +68,17 @@ describe('builder', () => {
     });
 
     it('should have toolbar attrs', () => {
-      expect(<relation relation={{
-        type: 'toOne',
-        to: 'users',
-      }}
-      >
-        <toolbar>
-          <pagination />
-        </toolbar>
-      </relation>).toMatchObject({
+      expect(
+        <relation relation={{
+          type: 'toOne',
+          to: 'users',
+        }}
+        >
+          <toolbar>
+            <pagination />
+          </toolbar>
+        </relation>
+      ).toMatchObject({
         type: 'relation',
         ui: 'singleSelect',
         relation: {
@@ -301,13 +303,15 @@ describe('builder', () => {
 
   describe('toolbar', () => {
     it('should work', () => {
-      expect(<array>
-        <toolbar>
-          <sorter component={Sorter} />
-          <pagination component={Pagination} />
-          <filter component={Filter} />
-        </toolbar>
-      </array>).toMatchObject({
+      expect(
+        <array>
+          <toolbar>
+            <sorter component={Sorter} />
+            <pagination component={Pagination} />
+            <filter component={Filter} />
+          </toolbar>
+        </array>
+      ).toMatchObject({
         type: 'array',
         toolbar: {
           sorter: {
@@ -391,9 +395,11 @@ describe('builder', () => {
 
   describe('actions', () => {
     it('should work', () => {
-      expect(<toolbar>
-        <actions exportButton importButton filterButton />
-      </toolbar>).toMatchObject({
+      expect(
+        <toolbar>
+          <actions exportButton importButton filterButton />
+        </toolbar>
+      ).toMatchObject({
         actions: {
           exportButton: true,
           importButton: true,
@@ -402,13 +408,15 @@ describe('builder', () => {
       });
     });
     it('should child tag work', () => {
-      expect(<toolbar>
-        <actions>
-          <export fields={['test']} />
-          <import test />
-          <filter />
-        </actions>
-      </toolbar>).toMatchObject({
+      expect(
+        <toolbar>
+          <actions>
+            <export fields={['test']} />
+            <import test />
+            <filter />
+          </actions>
+        </toolbar>
+      ).toMatchObject({
         actions: {
           export: {
             fields: ['test'],
@@ -454,9 +462,11 @@ describe('builder', () => {
 
   describe('json', () => {
     it('should work', () => {
-      expect(<json keyName="variants">
-        <string keyName="test" />
-      </json>).toMatchObject({
+      expect(
+        <json keyName="variants">
+          <string keyName="test" />
+        </json>
+      ).toMatchObject({
         type: 'json',
         keyName: 'variants',
         items: {
@@ -686,6 +696,7 @@ describe('builder', () => {
   });
 
   it('blog schema', () => {
+    // eslint-disable-next-line
     const blog = require('./blog');
     expect(blog).toMatchSnapshot();
   });
@@ -698,9 +709,11 @@ describe('builder', () => {
         {children}
       </object>
     );
-    expect(<Variants keyName="variants">
-      <string keyName="desc" />
-    </Variants>).toMatchSnapshot();
+    expect(
+      <Variants keyName="variants">
+        <string keyName="desc" />
+      </Variants>
+    ).toMatchSnapshot();
   });
 
   // TODO: jest can't transform canner.def.js for now, need to be fixed
@@ -776,19 +789,24 @@ describe('builder', () => {
 
   it('map chilren', () => {
     const list = ['a', 'b', 'c'];
-    expect(<object keyName="variants">
-      <string keyName="desc" />
-      {list.map(name => <string key={name} keyName={name} />)}
-    </object>).toMatchSnapshot();
+    expect(
+      <object keyName="variants">
+        <string keyName="desc" />
+        {list.map(name => <string key={name} keyName={name} />)}
+      </object>
+    ).toMatchSnapshot();
   });
 
   it('null', () => {
-    expect(<object keyName="info">
-      {null}
-    </object>).toMatchSnapshot();
+    expect(
+      <object keyName="info">
+        {null}
+      </object>
+    ).toMatchSnapshot();
   });
 
   it('should throw error, if cannerDataType is invalid', () => {
+    // eslint-disable-next-line
     expect(() => <object keyName="info" type="error-type" />).toThrow('there is no type error-type');
   });
 });
