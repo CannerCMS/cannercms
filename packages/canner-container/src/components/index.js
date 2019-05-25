@@ -68,15 +68,15 @@ function CannerContainer(props: CannerContainerProps) {
         )}
         <Layout.Content>
           {
-              React.cloneElement(children, {
-                ref: cannerRef,
-                dataDidChange,
-                schema,
-                goTo: router.goTo,
-                routes,
-                routerParams,
-              })
-            }
+            React.cloneElement(children, {
+              ref: cannerRef,
+              dataDidChange,
+              schema,
+              goTo: router.goTo,
+              routes,
+              routerParams,
+            })
+          }
         </Layout.Content>
       </Layout>
     </Layout>
