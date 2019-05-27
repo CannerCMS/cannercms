@@ -70,9 +70,9 @@ describe('canner-layouts', () => {
       );
 
       expect(getByTestId('list-body')).toBeInTheDocument();
-      const backButtonElement = document.querySelector('back-button')
-      const confirmButtonElement = document.querySelector('confirm-button')
-      const resetButtonElement = document.querySelector('reset-button')
+      const backButtonElement = document.querySelector('back-button');
+      const confirmButtonElement = document.querySelector('confirm-button');
+      const resetButtonElement = document.querySelector('reset-button');
       expect(backButtonElement).not.toBeInTheDocument();
       expect(confirmButtonElement).not.toBeInTheDocument();
       expect(resetButtonElement).not.toBeInTheDocument();
@@ -167,14 +167,16 @@ describe('canner-layouts', () => {
     });
 
     it('Should render <DefaultUpdateBody /> with object type', () => {
-      const {getByTestId} = render(
+      const { getByTestId } = render(
         <CannerHelperContext>
-          <Context.Provider value={{
-            formType: FORM_TYPE.UPDATE,
-            renderChildren
-          }}>
+          <Context.Provider
+            value={{
+              formType: FORM_TYPE.UPDATE,
+              renderChildren
+            }}
+          >
             <Body
-              routes={["categories"]}
+              routes={['categories']}
               schema={schema}
             />
           </Context.Provider>
