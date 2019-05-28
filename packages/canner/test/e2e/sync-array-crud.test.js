@@ -117,10 +117,10 @@ async function getProduct1(page) {
 }
 
 async function updateProduct1(page, value) {
-  await page.type('div[data-testid="products/no"] input', value.no);
-  await page.type('div[data-testid="products/name"] input', value.name);
-  await page.type('div[data-testid="products/price"] input', value.price);
-  await page.type('div[data-testid="products/promo"] input', value.promo);
+  await page.type('div[data-testid="products/no"] input', value.no, { delay: 100 });
+  await page.type('div[data-testid="products/name"] input', value.name, { delay: 100 });
+  await page.type('div[data-testid="products/price"] input', value.price, { delay: 100 });
+  await page.type('div[data-testid="products/promo"] input', value.promo, { delay: 100 });
 }
 
 async function deleteProduct(page) {

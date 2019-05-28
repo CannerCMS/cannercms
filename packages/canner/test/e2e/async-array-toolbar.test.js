@@ -97,7 +97,7 @@ describe('on page load', () => {
     await clickAndWait(page, testIdSelector('edit-button'), testIdSelector('customers/name'));
 
     // update customer name
-    await page.type(testIdSelector('customers/name'), 'hi');
+    await page.type(testIdSelector('customers/name'), 'hi', { delay: 100 });
 
     // [CONFIRM BUTTON] click confirm to customer list and the rowLength should be 1
     await clickAndWait(page, testIdSelector('confirm-button'), testIdSelector('edit-button'));
@@ -114,7 +114,7 @@ describe('on page load', () => {
     await page.waitForSelector(testIdSelector('actions-filter-dropdown-menu-0'));
     page.click(testIdSelector('actions-filter-dropdown-menu-0'));
     await page.waitForSelector(testIdSelector('text-filter-0'));
-    page.type(testIdSelector('text-filter-0'), 'FILTER_STRING');
+    page.type(testIdSelector('text-filter-0'), 'FILTER_STRING', { delay: 100 });
 
     // remove filter
     page.click(testIdSelector('filter-0-delete-icon'));
@@ -132,7 +132,7 @@ async function addCustomerNameFilter(page, name) {
   await page.waitForSelector(testIdSelector('actions-filter-dropdown-menu-0'));
   page.click(testIdSelector('actions-filter-dropdown-menu-0'));
   await page.waitForSelector(testIdSelector('text-filter-0'));
-  page.type(testIdSelector('text-filter-0'), name);
+  page.type(testIdSelector('text-filter-0'), name, { delay: 100 });
 }
 
 async function getCustomerFromIndex(page, index) {
