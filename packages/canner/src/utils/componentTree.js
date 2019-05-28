@@ -78,11 +78,13 @@ export function generateComponent(node: any) {
       return wrapByHOC(component, ['withCanner', 'withCache', 'errorCatch']);
     }
     return wrapByHOC(component, ['withCanner', 'errorCatch']);
-  } if (isPage(node)) {
+  }
+  if (isPage(node)) {
     if (isPageRoot(node)) {
       component = () => <Item />;
       return wrapByHOC(component, ['withCannerLayout']);
-    } if (inPage(node)) {
+    }
+    if (inPage(node)) {
       component = createLoadableComponnet(node);
       return wrapByHOC(component, ['graphqlQuery']);
     }

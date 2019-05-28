@@ -13,7 +13,7 @@ describe('on page load', () => {
     });
     page = (await browser.pages())[0];
     await page.goto('http://localhost:8080/');
-    await page.waitForSelector('div[data-testid="dashboard"]');
+    await page.waitForSelector('div[data-testid="dashboard/banner"]');
     page.setViewport({ width: 900, height: 800 });
   });
 
@@ -22,7 +22,7 @@ describe('on page load', () => {
   });
 
   test('should render dashboard', async () => {
-    const dom = await page.$('div[data-testid="dashboard/banner"]');
+    const dom = await page.$('[data-testid="dashboard/banner"]');
     const dom1 = await page.$('[data-testid="dashboard/last7days-visitor-indicator"]');
     const dom2 = await page.$('[data-testid="dashboard/last6month-orders-indicator"]');
     const dom3 = await page.$('[data-testid="dashboard/victory-online-visitors"]');

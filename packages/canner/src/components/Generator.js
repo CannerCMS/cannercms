@@ -89,7 +89,6 @@ export default function Generator({ componentTree, routes, formType }: Props) {
     if (node.hidden || props.hidden) {
       return null;
     }
-
     if (component) {
       const wrappedRenderChildren = (...args) => {
         if (args.length === 1) {

@@ -13,7 +13,9 @@ export default function withQuery(Com: any) {
     const contextValue = useContext(Context);
     if (!graphql) {
       return (
-        <Com {...restProps} />
+        <div data-testid={props['data-testid']}>
+          <Com {...restProps} />
+        </div>
       );
     }
     const myContextValue = useMemo(() => ({
@@ -38,7 +40,9 @@ export default function withQuery(Com: any) {
           }
           return (
             <Context.Provider value={myContextValue}>
-              <Com value={value} {...restProps} {...graphqlProps} {...myContextValue} />
+              <div data-testid={props['data-testid']}>
+                <Com value={value} {...restProps} {...graphqlProps} {...myContextValue} />
+              </div>
             </Context.Provider>
           );
         }}
