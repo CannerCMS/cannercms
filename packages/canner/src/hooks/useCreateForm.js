@@ -1,5 +1,7 @@
 // @flow
-import { useState, useEffect, useCallback } from 'react';
+import {
+  useState, useEffect, useCallback, useRef
+} from 'react';
 import { createEmptyData } from 'canner-helpers';
 
 export default function useCreateForm({
@@ -16,6 +18,13 @@ export default function useCreateForm({
   const [result, setResult] = useState({ data: {}, rootValue: {} });
   const [isFetching, setIsFetching] = useState(true);
   const key = routes[0];
+  const getArgs = () => {
+    if (isCreateForm) {
+      return provider.query.getArgs(routes[0]);
+    }
+    return {};
+  };
+  const originArgsRef = useRef(getArgs());
   const createItem = async () => {
     const { items } = schema[key];
     const defaultData = createEmptyData(items);
@@ -45,7 +54,10 @@ export default function useCreateForm({
         setIsFetching(false);
       });
     const { unsubscribe } = subscribeValue();
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+      provider.updateQuery(routes.slice(0, 1), originArgsRef.current);
+    };
   }, [isCreateForm, JSON.stringify(routes)]);
   const onClickSubmitButton = useCallback(() => {}, []);
   const onClickCancelButton = useCallback(() => {}, []);
