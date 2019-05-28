@@ -36,6 +36,7 @@ export default function withCanner(Com: any) {
       variables,
       fetchPolicy,
       relation,
+      nodeType
     } = props;
     const contextValue = useContext(Context);
     const {
@@ -51,7 +52,9 @@ export default function withCanner(Com: any) {
       routes,
       routerParams,
     } = contextValue;
-    const myRefId = useRefId({ pattern, keyName, refId });
+    const myRefId = useRefId({
+      nodeType, pattern, keyName, refId
+    });
     const {
       relationToolbar,
       relationValue,

@@ -1,7 +1,7 @@
 /** @jsx builder */
 
-import builder, {Body} from 'canner-script';
-import Dashboard from './schema/Dashboard.schema';
+import builder, { Body } from 'canner-script';
+import Dashboard from './schema/dashboard.schema';
 import Customers from './schema/customers.schema';
 import Home from './schema/home.schema';
 import Orders from './schema/orders.schema';
@@ -20,20 +20,20 @@ const schema = (
     </Body>
     <objectType keyName="chart">
       <array keyName="visitData">
-        <number keyName="x"/>
-        <number keyName="y"/>
+        <number keyName="x" />
+        <number keyName="y" />
       </array>
       <array keyName="salesData">
-        <number keyName="x"/>
-        <number keyName="y"/>
+        <number keyName="x" />
+        <number keyName="y" />
       </array>
       <array keyName="salesTypeDataOnline">
-        <string keyName="x"/>
-        <number keyName="y"/>
+        <string keyName="x" />
+        <number keyName="y" />
       </array>
       <array keyName="salesTypeDataOffline">
-        <string keyName="x"/>
-        <number keyName="y"/>
+        <string keyName="x" />
+        <number keyName="y" />
       </array>
     </objectType>
     <Body component={ProductsBody}>
@@ -52,4 +52,4 @@ const schema = (
 
 export default {
   ...schema
-}
+};

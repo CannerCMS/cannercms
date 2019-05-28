@@ -20,7 +20,6 @@ export default ({
     let id;
     if (isArray(refId)) { // changeQueue
       const changeQueue = refId;
-      // $FlowFixMe
       return Promise.all(changeQueue.map((args) => {
         const {
           refId, type, value, config, transformGqlPayload,

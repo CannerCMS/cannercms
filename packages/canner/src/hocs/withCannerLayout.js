@@ -15,13 +15,16 @@ export default function withCannerLayout(Com: any) {
       keyName,
       renderChildren,
       refId,
+      nodeType
     } = props;
     const contextValue = useContext(Context);
     const {
       rootValue,
       request,
     } = contextValue;
-    const myRefId = useRefId({ pattern, keyName, refId });
+    const myRefId = useRefId({
+      nodeType, pattern, keyName, refId
+    });
     const { onChange } = useOnChange({ rootValue, request });
     const { recordValue } = useRecordValue({ rootValue, refId });
     const myContextValue = useMemo(() => ({

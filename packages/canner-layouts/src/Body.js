@@ -4,7 +4,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
 /* eslint-enable import/no-duplicates */
-// $FlowFixMe: antd Breadcrumb
 import { Context } from 'canner-helpers';
 import { FORM_TYPE } from 'canner/src/hooks/useFormType';
 
