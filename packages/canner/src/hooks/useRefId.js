@@ -24,7 +24,7 @@ export default ({
   } if (pattern === 'array' && routes.length > 1) {
     // in update form, the index must be 0
     return new RefId(`${keyName}/0`);
-  } if (pattern === 'object') {
+  } if (pattern === 'object' || pattern === 'array') {
     return new RefId(`${keyName}`);
   }
 
