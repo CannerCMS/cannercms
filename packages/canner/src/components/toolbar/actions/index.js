@@ -93,10 +93,13 @@ export default class Actions extends Component<Props, State> {
     const menu = (
       <Menu onClick={this.addFilter}>
         {
-          filters.map(filter => (
+          filters.map((filter, i) => (
             <Menu.Item
-              key={filter.label}
-              data-testid={`actions-filter-dropdown-menu-${filter.label}`}
+              // this key has to be index
+              // so that we can find the correct filter
+              // eslint-disable-next-line
+              key={i}
+              data-testid={`actions-filter-dropdown-menu-${i}`}
             >
               {filter.label}
             </Menu.Item>

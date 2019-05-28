@@ -30,6 +30,11 @@ export default function useUpdateForm({
     setResult(result);
   });
   useEffect(() => {
+    if (isUpdateForm) {
+      originArgsRef.current = getArgs();
+    }
+  }, [isUpdateForm]);
+  useEffect(() => {
     if (!isUpdateForm) {
       return;
     }
