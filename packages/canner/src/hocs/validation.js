@@ -23,7 +23,7 @@ const checkValidator = (validator) => {
   return (isFunction(validator))
 }
 
-const keepRequired = async (value) => {
+const promiseRequired = async (value) => {
   const valid = Boolean(value)
   return {
     error: !valid,
@@ -31,7 +31,7 @@ const keepRequired = async (value) => {
   }
 }
 
-const keepSchemaValidation = (schema, errorMessage) => {
+const promiseSchemaValidation = (schema, errorMessage) => {
   const ajv = new Ajv();
   const validate = ajv.compile(schema);
   return async (value) => {
@@ -52,7 +52,7 @@ const keepSchemaValidation = (schema, errorMessage) => {
 
   }
 }
-const keepCustomizedValidator = (validator) => async (value) => {
+const promiseCustomizedValidator = (validator) => async (value) => {
   try {
     const errorMessage = await validator(value);
     const error = Boolean(errorMessage);
@@ -123,18 +123,18 @@ export default function withValidation(Com: React.ComponentType<*>) {
       try{
         // check whether value is required in first step
         if(required) {
-          promiseQueue.push(keepRequired(value));
+          promiseQueue.push(promiseRequired(value));
         }
   
         // skip validation if object validation is undefined or empty
         if(checkValidation(validation)) {
           const {schema, errorMessage, validator} = validation;
           if(value && checkSchema(schema)) {
-            promiseQueue.push(keepSchemaValidation(schema, errorMessage)(value));
+            promiseQueue.push(promiseSchemaValidation(schema, errorMessage)(value));
           }
           if(validator) {
             if(checkValidator(validator)) {
-              promiseQueue.push(keepCustomizedValidator(validator)(value));
+              promiseQueue.push(promiseCustomizedValidator(validator)(value));
             } else {
               throw 'Validator should be a function'
             }
