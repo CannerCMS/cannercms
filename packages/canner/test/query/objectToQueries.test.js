@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import { objectToQueries } from '../../src/query/utils';
 
-describe('object to quries', () => {
+describe('object to queries', () => {
   it('query should works', () => {
     const obj = {
       posts: {
@@ -67,6 +67,41 @@ describe('object to quries', () => {
     expect(objectToQueries(obj, false).replace(/\n+|\s+/g, '')).toBe(`
       mutation($payload: any, $where: any) {
         createPost(data: $payload, where: $where)
+      }
+    `.replace(/\n+|\s+/g, ''));
+  });
+
+  it('with correct key name about case problem', () => {
+    const obj = {
+      otherMenuItem: {
+        declareArgs: {
+          $randomKey1: 'OthermenuitemWhereInput',
+          $randomKey2: 'OthermenuitemOrderByInput',
+          $randomKey3: 'Int',
+        },
+        args: {
+          where: '$randomKey1',
+          orderBy: '$randomKey2',
+          first: '$randomKey3',
+        },
+        fields: {
+          id: null,
+          title: null,
+        }
+      }
+    };
+    const variables = {
+      randomKey1: {},
+      randomKey2: {},
+      randomKey3: 10,
+    };
+
+    expect(objectToQueries(obj, false, variables).replace(/\n+|\s+/g, '')).toBe(`
+      query($randomKey1: OthermenuitemWhereInput, $randomKey2: OthermenuitemOrderByInput, $randomKey3: Int) {
+        otherMenuItem(where: $randomKey1, orderBy: $randomKey2, first: $randomKey3) {
+          id
+          title
+        }
       }
     `.replace(/\n+|\s+/g, ''));
   });

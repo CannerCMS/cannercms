@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`schema to queries object should not changed to lower case 1`] = `
+Object {
+  "queriesObj": Object {
+    "otherMenuItem": Object {
+      "alias": "otherMenuItem",
+      "args": Object {
+        "after": "$otherMenuItemAfter",
+        "before": "$otherMenuItemBefore",
+        "first": "$otherMenuItemFirst",
+        "last": "$otherMenuItemLast",
+        "orderBy": "$otherMenuItemOrderBy",
+        "where": "$otherMenuItemWhere",
+      },
+      "connection": true,
+      "declareArgs": Object {
+        "$otherMenuItemAfter": "String",
+        "$otherMenuItemBefore": "String",
+        "$otherMenuItemFirst": "Int",
+        "$otherMenuItemLast": "Int",
+        "$otherMenuItemOrderBy": "OthermenuitemOrderByInput",
+        "$otherMenuItemWhere": "OthermenuitemWhereInput",
+      },
+      "fields": Object {
+        "id": null,
+        "pathName": null,
+        "title": null,
+      },
+      "isPlural": true,
+    },
+  },
+  "variables": Object {
+    "$otherMenuItemFirst": undefined,
+    "$otherMenuItemWhere": Object {},
+  },
+}
+`;
+
 exports[`schema to queries object should works 1`] = `
 Object {
   "queriesObj": Object {

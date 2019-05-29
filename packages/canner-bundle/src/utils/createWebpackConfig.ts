@@ -291,11 +291,6 @@ export function createWebConfig({
         filename: 'style.css',
         chunkFilename: '[name].css'
       }),
-      // temp solution for firebase undefined, since we will remove the canner-graphql-interface in the future
-      new webpack.NormalModuleReplacementPlugin(
-        /firebase/,
-        path.resolve(__dirname, 'mock')
-      ),
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
       }),

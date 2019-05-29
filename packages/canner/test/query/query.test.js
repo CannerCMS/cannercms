@@ -20,8 +20,8 @@ describe('query', () => {
         },
       },
     };
-    queries = schemaToQueriesObject(schema, schema, { firstLayer: true }).queriesObj;
-    variables = schemaToQueriesObject(schema, schema, { firstLayer: true }).variables;
+    queries = schemaToQueriesObject(schema).queriesObj;
+    variables = schemaToQueriesObject(schema).variables;
     query = new Query({
       schema,
     });
@@ -73,5 +73,27 @@ describe('query', () => {
       schema,
     });
     expect(query.getQueryKey('posts')).toEqual('posts: postsConnection(first: $postsFirst,after: $postsAfter,last: $postsLast,before: $postsBefore,where: $postsWhere,orderBy: $postsOrderBy)');
+  });
+
+  // eslint-disable-next-line
+  it('should confirm lower case for ${lowercase}Connection', () => {
+    schema = {
+      otherMenuItem: {
+        type: 'array',
+        items: {
+          type: 'object',
+          items: {
+            title: {
+              type: 'string'
+            }
+          }
+        }
+      }
+    };
+    query = new Query({
+      schema
+    });
+    // eslint-disable-next-line
+    expect(query.toGQL('otherMenuItem')).toEqual(`query($otherMenuItemWhere: OthermenuitemWhereInput){otherMenuItem: othermenuitemsConnection(where: $otherMenuItemWhere){edges{cursor node{title id}} pageInfo{hasNextPage hasPreviousPage}}}`);
   });
 });

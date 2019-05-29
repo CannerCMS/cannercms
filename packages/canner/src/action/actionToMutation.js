@@ -1,6 +1,6 @@
 // @flow
 import pluralize from 'pluralize';
-import { upperFirst, set, isEmpty } from 'lodash';
+import { capitalize, set, isEmpty } from 'lodash';
 
 import type { Action, ActionType } from './types';
 
@@ -88,16 +88,16 @@ export default function actionToMutation(action: Action<ActionType>) {
           $payload: genUpdateInputType(action),
         };
         actionArgs = {
-          data: '$payload',
+          data: '$payload'
         };
-        name = `update${upperFirst(key)}`;
+        name = `update${capitalize(key)}`;
         fields = {
           // $FlowFixMe
           [action.payload.path]: {
             fields: {
-              id: null,
-            },
-          },
+              id: null
+            }
+          }
         };
       }
       break;
@@ -129,5 +129,5 @@ function genWhereInputType(action) {
 }
 
 export function transformKey(key: string) {
-  return upperFirst(pluralize.singular(key));
+  return capitalize(pluralize.singular(key));
 }

@@ -1,8 +1,8 @@
 // @flow
 
 import pluralize from 'pluralize';
+import capitalize from 'lodash/capitalize';
 import lowerFirst from 'lodash/lowerFirst';
-import upperFirst from 'lodash/upperFirst';
 import { merge, mapValues, set } from 'lodash';
 import { createSchema } from './schema/utils';
 import { types, Field } from './schema/types';
@@ -203,7 +203,7 @@ export function objectToQueries(o: Object, close: boolean = true, variables?: Ob
     }
 
     if (element.connection) {
-      query = `${query}Connection`;
+      query = `${query.toLowerCase()}Connection`;
     }
 
     if (element.alias) {
@@ -278,5 +278,5 @@ function genDeclareArgs(args, variables) {
 }
 
 function typeKey(key) {
-  return upperFirst(pluralize.singular(key));
+  return capitalize(pluralize.singular(key));
 }
