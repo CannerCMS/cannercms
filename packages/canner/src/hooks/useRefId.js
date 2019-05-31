@@ -32,8 +32,7 @@ export default ({
     } else {
       newRefIdString = parentRefId.toString();
     }
-  }
-  if (routerParams.operator === 'create' && pattern === 'array') {
+  } else if (routerParams.operator === 'create' && pattern === 'array') {
     // in create form, the index must be 0
     newRefIdString = `${keyName}/0`;
   } else if (pattern === 'array' && routes.length > 1) {

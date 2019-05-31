@@ -1,8 +1,7 @@
 // @flow
 import React, {
-  useState, useContext, useRef, useEffect,
+  useRef, useEffect, useReducer, useCallback, useMemo
 } from 'react';
-import { Context } from 'canner-helpers';
 import gql from 'graphql-tag';
 import { isEmpty } from 'lodash';
 import { Icon, Spin } from 'antd';
@@ -19,6 +18,8 @@ export default function ({
   fetchPolicy,
   refId,
   toolbar,
+  schema,
+  client
 }: {
   relation: any,
   type: string,
@@ -26,89 +27,107 @@ export default function ({
   variables: Object,
   fetchPolicy: string,
   refId: RefId,
-  toolbar: Object
+  toolbar: Object,
+  schema: any,
+  client: any
 }) {
-  const {
-    schema,
-    client,
-  } = useContext(Context);
   const isRelationComponent = !isEmpty(relation);
-  const [fetching, setFetching] = useState(false);
-  const [data, setData] = useState({});
-  const [rootValue, setRootValue] = useState({});
+  const [state, dispatch] = useReducer(reducer, {
+    fetching: false,
+    data: {},
+    rootValue: {}
+  });
   const queryRef = useRef(new Query({ schema }));
-  const updateRelationValue = (data: Object) => {
-    const removeSelfRootValue = { [relation.to]: removeSelf(data[relation.to], refId, relation.to) };
-    const parsedRootValue = removeSelfRootValue;
-    const rootValue = parseConnectionToNormal(parsedRootValue);
-    setData(parsedRootValue);
-    setRootValue(rootValue);
-    setFetching(false);
-  };
-  const queryData = async (): Promise<*> => {
-    if (!isRelationComponent) {
-      return Promise.resolve();
+  const relationTo = relation.to;
+  const customizedQueryData = useCallback(async () => {
+    const { data, error, errors } = await client.query({
+      query: gql`${graphql}`,
+      variables: variables || queryRef.current.getVariables(),
+      fetchPolicy,
+    });
+    if (error) {
+      throw new Error(errors);
     }
-    setFetching(true);
-    if (type === 'relation' && graphql) {
-      // customize query
-      const { data, error, errors } = await client.query({
-        query: gql`${graphql}`,
-        variables: variables || queryRef.current.getVariables(),
-        fetchPolicy,
-      });
-      if (error) {
-        throw new Error(errors);
+    return dispatch({
+      type: 'fetched',
+      payload: {
+        data,
+        relationTo,
+        refId
       }
-      return updateRelationValue(data);
-    }
-    const gqlStr = queryRef.current.toGQL(relation.to);
+    });
+  }, [dispatch, client, graphql, variables, relationTo, refId]);
+  const defaultQueryData = useCallback(async () => {
+    const gqlStr = queryRef.current.toGQL(relationTo);
     const gqlVariables = queryRef.current.getVariables();
     const { data } = await client.query({
       query: gql`${gqlStr}`,
       variables: gqlVariables,
       fetchPolicy,
     });
-    return updateRelationValue(data);
-  };
-  const getArgs = () => {
-    if (!relation.to) {
-      return {};
+    return dispatch({
+      type: 'fetched',
+      payload: {
+        data,
+        relationTo,
+        refId
+      }
+    });
+  }, [client, fetchPolicy, relation, refId]);
+  const queryData = useCallback(() => {
+    if (!isRelationComponent) {
+      return Promise.resolve();
     }
-    return queryRef.current.getArgs(relation.to);
-  };
+    dispatch({
+      type: 'isFetching'
+    });
+    if (type === 'relation' && graphql) {
+      // customize query
+      customizedQueryData();
+    }
+    defaultQueryData();
+  }, [isRelationComponent, customizedQueryData, defaultQueryData]);
+  let args = {};
+  if (relationTo) {
+    args = queryRef.current.getArgs(relationTo);
+  }
 
-  const updateQuery = (paths: Array<string>, args: Object) => {
+  const updateQuery = useCallback((paths: Array<string>, args: Object) => {
     queryRef.current.updateQueries(paths, 'args', args);
     queryData();
-  };
+  }, [queryData]);
 
   useEffect(() => {
     queryData();
-  }, [refId.toString()]);
-  const relationToolbar = isRelationComponent ? ({ children, ...restProps }: any) => (
-    <Toolbar
-      {...restProps}
-      items={schema[relation.to].items.items}
-      toolbar={toolbar || { pagination: { type: 'pagination' } }}
-      args={getArgs()}
-      query={queryRef.current}
-      keyName={relation.to}
-      refId={new RefId(relation.to)}
-      originRootValue={data}
-      updateQuery={updateQuery}
-      rootValue={rootValue}
-    >
-      {/* $FlowFixMe */}
-      <SpinWrapper isFetching={fetching}>
-        {children}
-      </SpinWrapper>
-    </Toolbar>
-  ) : null;
+  }, [queryData]);
+  const relationToolbar = useMemo(() => {
+    if (isRelationComponent) {
+      return ({ children, ...restProps }: any) => (
+        <Toolbar
+          {...restProps}
+          items={schema[relationTo].items.items}
+          toolbar={toolbar || { pagination: { type: 'pagination' } }}
+          args={args}
+          query={queryRef.current}
+          keyName={relationTo}
+          refId={new RefId(relationTo)}
+          originRootValue={state.data}
+          updateQuery={updateQuery}
+          rootValue={state.rootValue}
+        >
+          {/* $FlowFixMe */}
+          <SpinWrapper isFetching={state.fetching}>
+            {children}
+          </SpinWrapper>
+        </Toolbar>
+      );
+    }
+    return null;
+  }, [isRelationComponent, schema, relationTo, toolbar, args, state.data, updateQuery, state.rootValue]);
   return {
     relationToolbar,
-    relationFetching: fetching,
-    relationValue: data[relation.to] || { edges: [] },
+    relationFetching: state.fetching,
+    relationValue: state.data[relation.to] || { edges: [] },
   };
 }
 
@@ -137,4 +156,42 @@ function SpinWrapper({
       {children(value)}
     </Spin>
   );
+}
+
+type State = {
+  data: Object;
+  rootValue: Object;
+  fetching: boolean;
+}
+
+type Action = {
+  type: 'isFetching'
+} | {
+  type: 'fetched',
+  payload: any
+};
+
+function reducer(state: State, action: Action) {
+  switch (action.type) {
+    case 'fetched': {
+      const {
+        relationTo,
+        data,
+        refId
+      } = action.payload;
+      const removeSelfRootValue = { [relationTo]: removeSelf(data[relationTo], refId, relationTo) };
+      const parsedRootValue = removeSelfRootValue;
+      const rootValue = parseConnectionToNormal(parsedRootValue);
+      return {
+        data: parsedRootValue,
+        rootValue,
+        fetching: false
+      };
+    }
+    case 'isFetching': {
+      return { ...state, fetching: true };
+    }
+    default:
+      return state;
+  }
 }

@@ -51,6 +51,8 @@ export default function withCanner(Com: any) {
       query,
       routes,
       routerParams,
+      client,
+      schema
     } = contextValue;
     const myRefId = useRefId({
       nodeType,
@@ -72,6 +74,8 @@ export default function withCanner(Com: any) {
       variables,
       fetchPolicy,
       refId: myRefId,
+      client,
+      schema
     });
     const { renderType } = useRenderType({ pattern, path, refId: myRefId });
     const { onChange } = useOnChange({ rootValue, request });
