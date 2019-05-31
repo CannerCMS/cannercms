@@ -52,7 +52,9 @@ export default function withCanner(Com: any) {
       routes,
       routerParams,
       client,
-      schema
+      schema,
+      hideBackButton,
+      hideButtons
     } = contextValue;
     const myRefId = useRefId({
       nodeType,
@@ -77,7 +79,15 @@ export default function withCanner(Com: any) {
       client,
       schema
     });
-    const { renderType } = useRenderType({ pattern, path, refId: myRefId });
+    const { renderType } = useRenderType({
+      pattern,
+      path,
+      refId: myRefId,
+      hideBackButton,
+      hideButtons,
+      routerParams,
+      routes
+    });
     const { onChange } = useOnChange({ rootValue, request });
     const { fieldValue } = useFieldValue({ rootValue, refId: myRefId });
     const { error, errorInfo } = useValidation({

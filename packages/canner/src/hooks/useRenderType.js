@@ -1,9 +1,18 @@
 // @flow
 
-import { useContext, useState, useEffect } from 'react';
-import { Context } from 'canner-helpers';
+import { useEffect, useReducer } from 'react';
 import type RefId from 'canner-ref-id';
 import { isCompleteContain, genPaths } from '../utils/renderType';
+
+type Props = {
+  pattern: string,
+  path: string,
+  hideBackButton?: boolean,
+  refId: RefId,
+  hideButtons: boolean,
+  routes: Array<string>,
+  routerParams: {operator: 'update' | 'create'}
+};
 
 export const RENDER_TYPE = {
   CHILDREN: 'CHILDREN',
@@ -16,71 +25,39 @@ export default ({
   path,
   hideBackButton = false,
   refId,
-}: {
-  pattern: string,
-  path: string,
-  hideBackButton?: boolean,
-  refId: RefId
-}) => {
-  const { hideButtons, routes, routerParams: { operator } } = useContext(Context);
-  const [renderType, setRenderType] = useState(() => getRenderType({
+  hideButtons,
+  routes,
+  routerParams: { operator }
+}: Props) => {
+  const [state, dispatch] = useReducer(reducer, getValues({
     routes,
     path,
     pattern,
     operator,
-  }));
-  const [showListButton, setShowListButton] = useState(() => getShowListButton({
     hideBackButton,
-    pattern,
-    routes,
-    refId,
-    operator,
-  }));
-  const [showSubmitAndCancelButtons, setSubmitAndCancelButtons] = useState(() => getSubmitAndCancelButtons({
-    pattern,
     hideButtons,
-    routes,
     refId,
-    operator,
+    routerParams: { operator }
   }));
 
   useEffect(() => {
-    const renderType = getRenderType({
+    const newValues = getValues({
       routes,
       path,
       pattern,
       operator,
+      hideBackButton,
+      hideButtons,
+      refId,
+      routerParams: { operator }
     });
-    setRenderType(renderType);
+    dispatch({
+      type: 'update_state',
+      payload: newValues
+    });
   }, [JSON.stringify(routes), pattern, path, operator]);
 
-  useEffect(() => {
-    const showListButton = getShowListButton({
-      hideBackButton,
-      pattern,
-      routes,
-      refId,
-      operator,
-    });
-    setShowListButton(showListButton);
-  }, [hideBackButton, JSON.stringify(routes), pattern, refId.toString(), operator]);
-
-  useEffect(() => {
-    const showSubmitAndCancelButtons = getSubmitAndCancelButtons({
-      pattern,
-      hideButtons,
-      routes,
-      refId,
-      operator,
-    });
-    setSubmitAndCancelButtons(showSubmitAndCancelButtons);
-  }, [JSON.stringify(routes), pattern, hideButtons, refId.toString(), operator]);
-
-  return {
-    renderType,
-    showListButton,
-    showSubmitAndCancelButtons,
-  };
+  return state;
 };
 
 
@@ -105,13 +82,13 @@ export function getSubmitAndCancelButtons({
 }
 
 export function getShowListButton({
-  hideBackButton,
+  hideBackButton = false,
   pattern,
   routes,
   refId,
   operator,
 }: {
-  hideBackButton: boolean,
+  hideBackButton?: boolean,
   pattern: string,
   routes: Array<string>,
   refId: RefId,
@@ -180,4 +157,76 @@ export function getRenderType({
     return RENDER_TYPE.COMPONENT;
   }
   return RENDER_TYPE.NULL;
+}
+
+type State = {
+  renderType: $Values<typeof RENDER_TYPE>,
+  showListButton: boolean,
+  showSubmitAndCancelButtons: boolean
+};
+
+type Action = {
+  type: 'change_render_type',
+  payload: $Values<typeof RENDER_TYPE>
+} | {
+  type: 'toggle_list_button'
+} | {
+  type: 'toggle_submit_cancel_button'
+} | {
+  type: 'update_state',
+  payload: State
+};
+
+function reducer(state: State, action: Action) {
+  switch (action.type) {
+    case 'change_render_type': {
+      return { ...state, renderType: action.payload };
+    }
+    case 'toggle_list_button': {
+      return { ...state, showListButton: !state.showListButton };
+    }
+    case 'toggle_submit_cancel_button': {
+      return { ...state, showListButton: !state.showSubmitAndCancelButtons };
+    }
+    case 'update_state': {
+      return action.payload;
+    }
+    default:
+      return state;
+  }
+}
+
+function getValues({
+  routes,
+  path,
+  pattern,
+  operator,
+  hideBackButton,
+  refId,
+  hideButtons
+}: Props & {
+  operator: 'update' | 'create',
+}) {
+  return {
+    renderType: getRenderType({
+      routes,
+      path,
+      pattern,
+      operator,
+    }),
+    showListButton: getShowListButton({
+      hideBackButton,
+      pattern,
+      routes,
+      refId,
+      operator,
+    }),
+    showSubmitAndCancelButtons: getSubmitAndCancelButtons({
+      pattern,
+      hideButtons,
+      routes,
+      refId,
+      operator,
+    })
+  };
 }
