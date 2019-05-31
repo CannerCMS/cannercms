@@ -53,7 +53,12 @@ export default function withCanner(Com: any) {
       routerParams,
     } = contextValue;
     const myRefId = useRefId({
-      nodeType, pattern, keyName, refId
+      nodeType,
+      pattern,
+      keyName,
+      refId,
+      routes,
+      routerParams
     });
     const {
       relationToolbar,

@@ -21,9 +21,16 @@ export default function withCannerLayout(Com: any) {
     const {
       rootValue,
       request,
+      routes,
+      routerParams
     } = contextValue;
     const myRefId = useRefId({
-      nodeType, pattern, keyName, refId
+      nodeType,
+      pattern,
+      keyName,
+      refId,
+      routes,
+      routerParams
     });
     const { onChange } = useOnChange({ rootValue, request });
     const { recordValue } = useRecordValue({ rootValue, refId });
