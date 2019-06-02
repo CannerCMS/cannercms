@@ -88,7 +88,7 @@ export default function withCanner(Com: any) {
       routerParams,
       routes
     });
-    const { onChange } = useOnChange({ rootValue, request });
+    const { onChange } = useOnChange({ rootValue, request, schema });
     const { fieldValue } = useFieldValue({ rootValue, refId: myRefId });
     const { error, errorInfo } = useValidation({
       value: fieldValue,

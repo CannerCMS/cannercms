@@ -22,7 +22,8 @@ export default function withCannerLayout(Com: any) {
       rootValue,
       request,
       routes,
-      routerParams
+      routerParams,
+      schema
     } = contextValue;
     const myRefId = useRefId({
       nodeType,
@@ -32,7 +33,7 @@ export default function withCannerLayout(Com: any) {
       routes,
       routerParams
     });
-    const { onChange } = useOnChange({ rootValue, request });
+    const { onChange } = useOnChange({ rootValue, request, schema });
     const { recordValue } = useRecordValue({ rootValue, refId });
     const myContextValue = useMemo(() => ({
       ...contextValue,
