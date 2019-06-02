@@ -1,11 +1,11 @@
 import React from 'react';
 import { Row, Col, Alert } from 'antd';
-import { isEmpty, isEqual, isFunction } from 'lodash';
+import { isEmpty } from 'lodash';
 import { RENDER_TYPE } from '../../hooks/useRenderType';
 import Label from './Label';
 import ErrorMessage from './ErrorMessage';
 
-export default React.memo((props) => {
+export default (props) => {
   const {
     renderChildren,
     refId,
@@ -21,10 +21,12 @@ export default React.memo((props) => {
     renderType,
     render,
   } = props;
+  // eslint-disable-next-line react/destructuring-assignment
   const labelCol = layout === 'horizontal' ? props.labelCol || {
     span: 6,
   } : null;
 
+  // eslint-disable-next-line react/destructuring-assignment
   const itemCol = layout === 'horizontal' ? props.itemCol || {
     span: 14,
   } : null;
@@ -32,6 +34,7 @@ export default React.memo((props) => {
     <Row
       type={layout === 'horizontal' ? 'flex' : ''}
       style={{ marginBottom: 24 }}
+      // eslint-disable-next-line react/destructuring-assignment
       data-testid={props['data-testid']}
     >
       <Col {...labelCol}>
@@ -61,12 +64,4 @@ export default React.memo((props) => {
       </Col>
     </Row>
   );
-}, (prevProps, nextProps) => Object.entries(nextProps).reduce((eq, [k, v]) => {
-  if (isFunction(v)) {
-    return eq;
-  }
-  if (k === 'refId') {
-    return eq && prevProps[k].toString() === v.toString();
-  }
-  return isEqual(v, prevProps[k]) && eq;
-}, true));
+};

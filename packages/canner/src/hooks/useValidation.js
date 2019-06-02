@@ -7,6 +7,8 @@ import Ajv from 'ajv';
 import type RefId from 'canner-ref-id';
 import { isPlainObject, get, isArray } from 'lodash';
 
+const defaultErrorInfo = [];
+
 export default ({
   value,
   required,
@@ -17,7 +19,7 @@ export default ({
   validation: any
 }) => {
   const [error, setError] = useState(false);
-  const errorInfoRef = useRef([]);
+  const errorInfoRef = useRef(defaultErrorInfo);
   const validate = useCallback(() => {
     // required
     const isRequiredValid = required ? Boolean(value) : true;
@@ -35,7 +37,7 @@ export default ({
     // if value is empty, should not validate with ajv
     if (customValid && isRequiredValid && (!value || validate(value))) {
       setError(false);
-      errorInfoRef.current = [];
+      errorInfoRef.current = defaultErrorInfo;
       return;
     }
 

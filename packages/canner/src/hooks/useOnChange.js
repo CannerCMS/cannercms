@@ -1,5 +1,5 @@
 // @flow
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { isArray } from 'lodash';
 import RefId from 'canner-ref-id';
 import { createAction } from '../utils/action';
@@ -16,6 +16,10 @@ export default ({
   request: Function,
   schema: Object
 }) => {
+  const rootValueRef = useRef(rootValue);
+  useEffect(() => {
+    rootValueRef.current = rootValue;
+  });
   const onChange = useCallback((refId: RefId | {firstRefId: RefId, secondRefId: RefId} | changeQueue, type: any, delta: any, config: any, transformGqlPayload?: Function): Promise<*> => {
     let id;
     if (isArray(refId)) { // changeQueue
@@ -42,7 +46,7 @@ export default ({
       type,
       value: delta,
       config,
-      rootValue,
+      rootValue: rootValueRef.current,
       items,
       pattern,
       transformGqlPayload,
@@ -54,7 +58,7 @@ export default ({
       return Promise.resolve();
     }
     return request(action);
-  }, [rootValue, request, schema]);
+  }, [request, schema]);
   return {
     onChange,
   };

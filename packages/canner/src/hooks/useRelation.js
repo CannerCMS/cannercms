@@ -3,12 +3,15 @@ import React, {
   useRef, useEffect, useReducer, useCallback, useMemo
 } from 'react';
 import gql from 'graphql-tag';
-import { isEmpty } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import { Icon, Spin } from 'antd';
 import RefId from 'canner-ref-id';
 import { Query } from '../query';
 import Toolbar from '../components/toolbar/index';
 import { parseConnectionToNormal } from '../hocs/utils';
+
+const defaultRelationValue = { edges: [] };
+const defaultArgs = {};
 
 export default function ({
   relation = {},
@@ -87,10 +90,13 @@ export default function ({
     }
     defaultQueryData();
   }, [isRelationComponent, customizedQueryData, defaultQueryData]);
-  let args = {};
-  if (relationTo) {
-    args = queryRef.current.getArgs(relationTo);
-  }
+  const argsRef = useRef(defaultArgs);
+  useEffect(() => {
+    if (relationTo) {
+      argsRef.current = queryRef.current.getArgs(relationTo);
+    }
+  });
+
 
   const updateQuery = useCallback((paths: Array<string>, args: Object) => {
     queryRef.current.updateQueries(paths, 'args', args);
@@ -107,7 +113,7 @@ export default function ({
           {...restProps}
           items={schema[relationTo].items.items}
           toolbar={toolbar || { pagination: { type: 'pagination' } }}
-          args={args}
+          args={argsRef.current}
           query={queryRef.current}
           keyName={relationTo}
           refId={new RefId(relationTo)}
@@ -123,11 +129,11 @@ export default function ({
       );
     }
     return null;
-  }, [isRelationComponent, schema, relationTo, toolbar, args, state.data, updateQuery, state.rootValue]);
+  }, [isRelationComponent, schema, relationTo, toolbar, updateQuery, state.data, state.rootValue]);
   return {
     relationToolbar,
     relationFetching: state.fetching,
-    relationValue: state.data[relation.to] || { edges: [] },
+    relationValue: state.data[relation.to] || defaultRelationValue,
   };
 }
 
@@ -181,6 +187,12 @@ function reducer(state: State, action: Action) {
       } = action.payload;
       const removeSelfRootValue = { [relationTo]: removeSelf(data[relationTo], refId, relationTo) };
       const parsedRootValue = removeSelfRootValue;
+      if (isEqual(state.data, parsedRootValue)) {
+        // if data is same, we don't have to update state;
+        return {
+          ...state, fetching: false
+        };
+      }
       const rootValue = parseConnectionToNormal(parsedRootValue);
       return {
         data: parsedRootValue,

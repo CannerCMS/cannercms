@@ -12,7 +12,10 @@ export default function useTraceUpdate(props) {
     }, {});
     if (Object.keys(changedProps).length > 0) {
       // eslint-disable-next-line no-console
-      console.log('Changed props:', changedProps);
+      console.log('Changed props:', {
+        id: props.refId ? props.refId.toString() : 'no-id',
+        ...changedProps,
+      });
     }
     prev.current = props;
   });

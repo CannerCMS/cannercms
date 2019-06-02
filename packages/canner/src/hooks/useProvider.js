@@ -2,7 +2,7 @@
  * @flow
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import gql from 'graphql-tag';
 import { createEmptyData } from 'canner-helpers';
 import { groupBy, mapValues } from 'lodash';
@@ -182,7 +182,7 @@ export default function useProvider({
     }
   };
 
-  const request = (action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = { write: true }): Promise<*> => {
+  const request = useCallback((action: Array<Action<ActionType>> | Action<ActionType>, options: {write: boolean} = { write: true }): Promise<*> => {
     const { write = true } = options;
     const actions = [].concat(action);
     if (actions.length === 0) {
@@ -195,7 +195,7 @@ export default function useProvider({
       log('request', action, data);
     }
     return Promise.resolve();
-  };
+  }, []);
 
   const updateCachedData = (actions: Array<Action<ActionType>>) => {
     const queryKey = query.getQueryKey(routes[0]);

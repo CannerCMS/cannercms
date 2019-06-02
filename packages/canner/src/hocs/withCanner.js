@@ -105,7 +105,7 @@ export default function withCanner(Com: any) {
 
     const render = useCallback(cannerItemProps => (
       <Com {...props} {...contextValue} {...cannerItemProps} />
-    ), [props, contextValue]);
+    ), []);
 
     const item = useMemo(() => (
       <CannerItem
@@ -145,7 +145,7 @@ export default function withCanner(Com: any) {
       ...contextValue,
       refId: myRefId,
       renderChildren,
-    }), [myRefId.toString(), fieldValue]);
+    }), [contextValue, myRefId, renderChildren]);
     const isListForm = (pattern === 'array' && routes.length === 1 && routerParams.operator === 'update');
     if (isListForm) {
       return (
