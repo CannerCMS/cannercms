@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useCallback } from 'react';
 import { Context } from 'canner-helpers';
 import { isEqual, isFunction } from 'lodash';
 import CannerItem from '../components/item';
@@ -103,7 +103,11 @@ export default function withCanner(Com: any) {
       routes
     });
 
-    const item = (
+    const render = useCallback(cannerItemProps => (
+      <Com {...props} {...contextValue} {...cannerItemProps} />
+    ), [props, contextValue]);
+
+    const item = useMemo(() => (
       <CannerItem
         data-testid={props['data-testid']}
         refId={myRefId}
@@ -124,12 +128,19 @@ export default function withCanner(Com: any) {
         renderChildren={renderChildren}
         removeOnDeploy={componentOnDeploy.removeOnDeploy}
         renderType={renderType}
-        render={cannerItemProps => <Com {...props} {...contextValue} {...cannerItemProps} />}
+        render={render}
         // external
         error={error}
         errorInfo={errorInfo}
       />
-    );
+    ), [
+      props['data-testid'], myRefId, fieldValue, layout,
+      required, relationFetching, type, items,
+      description, hideTitle, imageStorage, title,
+      relationToolbar, relationValue, onChange, componentOnDeploy.onDeploy,
+      componentOnDeploy.removeOnDeploy, renderChildren, renderType, render,
+      error, errorInfo
+    ]);
     const myContextValue = useMemo(() => ({
       ...contextValue,
       refId: myRefId,
