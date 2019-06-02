@@ -2,7 +2,6 @@
 
 import React, { useContext, useMemo, useCallback } from 'react';
 import { Context } from 'canner-helpers';
-import { isEqual, isFunction } from 'lodash';
 import CannerItem from '../components/item';
 import Toolbar from '../components/toolbar';
 
@@ -16,7 +15,7 @@ import useFieldValue from '../hooks/useFieldValue';
 import useRenderType from '../hooks/useRenderType';
 
 export default function withCanner(Com: any) {
-  return (React.memo: any)((props: any) => {
+  return function ComWithCanner(props: any) {
     const {
       pattern,
       keyName,
@@ -134,6 +133,7 @@ export default function withCanner(Com: any) {
         errorInfo={errorInfo}
       />
     ), [
+      // eslint-disable-next-line react/destructuring-assignment
       props['data-testid'], myRefId, fieldValue, layout,
       required, relationFetching, type, items,
       description, hideTitle, imageStorage, title,
@@ -173,13 +173,5 @@ export default function withCanner(Com: any) {
         {item}
       </Context.Provider>
     );
-  }, (prevProps, nextProps) => Object.entries(nextProps).reduce((eq, [k, v]: any) => {
-    if (isFunction(v)) {
-      return eq;
-    }
-    if (k === 'refId') {
-      return eq && prevProps[k].toString() === v.toString();
-    }
-    return isEqual(v, prevProps[k]) && eq;
-  }, true));
+  };
 }
