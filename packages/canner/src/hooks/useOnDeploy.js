@@ -1,29 +1,32 @@
 // @flow
 
-import { useContext, useCallback } from 'react';
-import { Context } from 'canner-helpers';
+import { useCallback } from 'react';
 import RefId from 'canner-ref-id';
+import produce, { setAutoFreeze } from 'immer';
 import {
   set, get, isArray, isPlainObject,
 } from 'lodash';
+
+setAutoFreeze(false);
 
 export default function ({
   onDeploy,
   removeOnDeploy,
   refId,
+  routes
 }: {
   onDeploy: Function,
   removeOnDeploy: Function,
   refId: RefId,
+  routes: Array<string>
 }) {
-  const { routes } = useContext(Context);
   const firstKey = routes[0];
   const _removeOnDeploy = useCallback((arg1: string, callbackId: string) => {
     if (callbackId) {
       return removeOnDeploy(arg1, callbackId);
     }
     return removeOnDeploy(firstKey, arg1);
-  }, [refId.toString()]);
+  }, [firstKey, removeOnDeploy]);
 
   const _onDeploy = useCallback((arg1: string | Function, callback: Function): string => {
     if (typeof arg1 === 'string') {
@@ -40,11 +43,13 @@ export default function ({
       const { paths, value } = getValueAndPaths(result.data, restPathArr);
       return {
         ...result,
-        // $FlowFixMe
-        data: set(result.data, paths, arg1(value)),
+        data: produce(result.data, (draft) => {
+          // $FlowFixMe
+          set(draft, paths, arg1(value));
+        }),
       };
     });
-  }, [refId.toString()]);
+  }, [firstKey, refId, onDeploy]);
   return {
     removeOnDeploy: _removeOnDeploy,
     onDeploy: _onDeploy,

@@ -100,6 +100,7 @@ export default function withCanner(Com: any) {
       onDeploy,
       removeOnDeploy,
       refId: myRefId,
+      routes
     });
 
     const item = (
