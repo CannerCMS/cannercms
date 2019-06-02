@@ -3,6 +3,7 @@
 import {
   pick, update, set, get,
 } from 'lodash';
+import produce, { setAutoFreeze } from 'immer';
 import {
   isCreateArray,
   isCreateNestedArrayInArray,
@@ -30,6 +31,7 @@ import {
 
 import type { UpdateType, Action, ActionType } from './types';
 
+setAutoFreeze(false);
 
 export function generateAction(arg: {
   id: string,
@@ -55,8 +57,10 @@ export function generateAction(arg: {
     const {
       key, id, index, paths,
     } = splitId(arg.id, arg.rootValue);
-    const item = get(arg.rootValue, [key, index]);
-    update(item, paths, arr => arr.concat(arg.value));
+    let item = get(arg.rootValue, [key, index]);
+    item = produce(item, (draft) => {
+      update(draft, paths, arr => arr.concat(arg.value));
+    });
     return {
       type: 'UPDATE_ARRAY',
       payload: {
@@ -69,8 +73,10 @@ export function generateAction(arg: {
 
   if (isCreateNestedArrayInObject(arg)) {
     const { key, id, paths } = splitId(arg.id, arg.rootValue);
-    const item = get(arg.rootValue, [key]);
-    update(item, paths, arr => (arr ? arr.concat(arg.value) : [arg.value]));
+    let item = get(arg.rootValue, [key]);
+    item = produce(item, (draft) => {
+      update(draft, paths, arr => (arr ? arr.concat(arg.value) : [arg.value]));
+    });
     return {
       type: 'UPDATE_OBJECT',
       payload: {
@@ -113,11 +119,14 @@ export function generateAction(arg: {
     } = splitId(arg.id, arg.rootValue);
     const prePaths = paths.slice(0, -1);
     const deleteIndex = paths.slice(-1)[0];
-    const item = get(arg.rootValue, [key, index]);
-    update(item, prePaths, (arr) => {
-      arr.splice(deleteIndex, 1);
-      return arr;
+    let item = get(arg.rootValue, [key, index]);
+    item = produce(item, (draft) => {
+      update(draft, prePaths, (arr) => {
+        arr.splice(deleteIndex, 1);
+        return arr;
+      });
     });
+
 
     return {
       type: 'UPDATE_ARRAY',
@@ -133,10 +142,12 @@ export function generateAction(arg: {
     const { key, id, paths } = splitId(arg.id, arg.rootValue);
     const prePaths = paths.slice(0, -1);
     const deleteIndex = paths.slice(-1)[0];
-    const item = get(arg.rootValue, [key]);
-    update(item, prePaths, (arr) => {
-      arr.splice(deleteIndex, 1);
-      return arr;
+    let item = get(arg.rootValue, [key]);
+    item = produce(item, (draft) => {
+      update(draft, prePaths, (arr) => {
+        arr.splice(deleteIndex, 1);
+        return arr;
+      });
     });
 
     return {
@@ -167,8 +178,10 @@ export function generateAction(arg: {
     const {
       key, id, paths, index,
     } = splitId(arg.id, arg.rootValue);
-    const item = get(arg.rootValue, [key, index]);
-    set(item, paths, arg.value);
+    let item = get(arg.rootValue, [key, index]);
+    item = produce(item, (draft) => {
+      set(draft, paths, arg.value);
+    });
     return {
       type: 'UPDATE_ARRAY',
       payload: {
@@ -187,8 +200,10 @@ export function generateAction(arg: {
 
   if (isUpdateObject(arg)) {
     const { key, id, paths } = splitId(arg.id, arg.rootValue);
-    const item = get(arg.rootValue, key);
-    set(item, paths, arg.value);
+    let item = get(arg.rootValue, key);
+    item = produce(item, (draft) => {
+      set(draft, paths, arg.value);
+    });
     return {
       type: 'UPDATE_OBJECT',
       payload: {
@@ -209,17 +224,19 @@ export function generateAction(arg: {
     const {
       key, id, index, paths,
     } = splitId(arg.id, arg.rootValue);
+    const nestedArrPath = paths.slice(0, -1);
     // $FlowFixMe
     const { firstId, secondId } = arg.id;
-    const nestedArrPath = paths.slice(0, -1);
-    const item = get(arg.rootValue, [key, index]);
     const firstIndex = firstId.split('/').slice(-1)[0];
     const secondIndex = secondId.split('/').slice(-1)[0];
-    update(item, nestedArrPath, (arr) => {
-      const newArr = arr.slice();
-      newArr[firstIndex] = arr[secondIndex];
-      newArr[secondIndex] = arr[firstIndex];
-      return newArr;
+    let item = get(arg.rootValue, [key, index]);
+    item = produce(item, (draft) => {
+      update(draft, nestedArrPath, (arr) => {
+        const newArr = arr.slice();
+        newArr[firstIndex] = arr[secondIndex];
+        newArr[secondIndex] = arr[firstIndex];
+        return newArr;
+      });
     });
 
     return {
@@ -237,15 +254,18 @@ export function generateAction(arg: {
     // $FlowFixMe
     const { firstId, secondId } = arg.id;
     const nestedArrPath = paths.slice(0, -1);
-    const item = get(arg.rootValue, [key]);
     const firstIndex = firstId.split('/').slice(-1)[0];
     const secondIndex = secondId.split('/').slice(-1)[0];
-    update(item, nestedArrPath, (arr) => {
-      const newArr = arr.slice();
-      newArr[firstIndex] = arr[secondIndex];
-      newArr[secondIndex] = arr[firstIndex];
-      return newArr;
+    let item = get(arg.rootValue, [key]);
+    item = produce(item, (draft) => {
+      update(draft, nestedArrPath, (arr) => {
+        const newArr = arr.slice();
+        newArr[firstIndex] = arr[secondIndex];
+        newArr[secondIndex] = arr[firstIndex];
+        return newArr;
+      });
     });
+
     return {
       type: 'UPDATE_OBJECT',
       payload: {
