@@ -14,7 +14,7 @@ export default function useFieldValue({
   useEffect(() => {
     const fieldValue = getFieldValue(rootValue, refId.getPathArr());
     setFieldValue(fieldValue);
-  }, [refId.toString(), rootValue]);
+  }, [refId, rootValue]);
   return {
     fieldValue,
   };
