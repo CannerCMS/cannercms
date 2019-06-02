@@ -1,6 +1,8 @@
 // @flow
 
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState, useEffect, useRef, useCallback
+} from 'react';
 import Ajv from 'ajv';
 import type RefId from 'canner-ref-id';
 import { isPlainObject, get, isArray } from 'lodash';
@@ -16,7 +18,7 @@ export default ({
 }) => {
   const [error, setError] = useState(false);
   const errorInfoRef = useRef([]);
-  const _validate = () => {
+  const validate = useCallback(() => {
     // required
     const isRequiredValid = required ? Boolean(value) : true;
 
@@ -48,10 +50,10 @@ export default ({
 
     setError(true);
     errorInfoRef.current = errorInfo;
-  };
+  }, [value, required, validation]);
   useEffect(() => {
-    _validate();
-  }, [value]);
+    validate();
+  }, [validate]);
   return {
     error,
     errorInfo: errorInfoRef.current,
