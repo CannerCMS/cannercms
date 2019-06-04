@@ -1,3 +1,4 @@
+import { pick } from 'lodash';
 import { generateAction } from '../../src/action/generateAction';
 
 const rootValue = {
@@ -71,14 +72,14 @@ describe('update action', () => {
       value: 'C',
       rootValue,
     });
-    const newUser = { ...rootValue.user };
+    const newUser = deepCopy(rootValue.user);
     newUser.info.phone[0].type = 'C';
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
         id: '',
-        value: { info: newUser.info },
+        value: pick(newUser, ['info']),
       },
     });
   });
@@ -121,22 +122,21 @@ describe('create action', () => {
       },
       rootValue,
     });
-    const newValue = { ...rootValue };
+    const newValue = deepCopy(rootValue);
     newValue.posts[0].users.push({ name: '' });
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
         id: 'id1',
-        value: { users: newValue.posts[0].users },
-
+        value: pick(newValue.posts[0], ['users']),
       },
     });
   });
 
   it('create array item in object', () => {
     const action = generateAction({
-      id: 'user/phone',
+      id: 'user/info/phone',
       updateType: 'create',
       value: {
         type: '',
@@ -144,14 +144,14 @@ describe('create action', () => {
       },
       rootValue,
     });
-    const newUser = { ...rootValue.user };
+    const newUser = deepCopy(rootValue.user);
     newUser.info.phone.push({ type: '', value: '' });
     expect(action).toMatchObject({
       type: 'UPDATE_OBJECT',
       payload: {
         key: 'user',
         id: '',
-        value: { phone: newUser.phone },
+        value: pick(newUser, ['info']),
       },
     });
   });
@@ -206,20 +206,20 @@ describe('delete action', () => {
       updateType: 'delete',
       rootValue,
     });
-    const newPost1 = { ...rootValue.posts[1] };
+    const newPost1 = deepCopy(rootValue.posts[1]);
     newPost1.users.shift();
     expect(action).toMatchObject({
       type: 'UPDATE_ARRAY',
       payload: {
         key: 'posts',
         id: 'id2',
-        value: { users: newPost1.users },
+        value: pick(newPost1, ['users']),
       },
     });
   });
 
   it('delete array item in object', () => {
-    const newUser = { ...rootValue.user };
+    const newUser = deepCopy(rootValue.user);
     const action = generateAction({
       id: 'user/info/phone/1',
       updateType: 'delete',
@@ -231,7 +231,7 @@ describe('delete action', () => {
       payload: {
         key: 'user',
         id: '',
-        value: { info: newUser.info },
+        value: pick(newUser, ['info']),
       },
     });
   });
@@ -318,7 +318,7 @@ describe('swap action', () => {
       updateType: 'swap',
       rootValue,
     });
-    const newUser = { ...rootValue.user };
+    const newUser = deepCopy(rootValue.user);
     newUser.info.phone = [{
       type: 'C',
       value: 'yyy',
@@ -331,7 +331,7 @@ describe('swap action', () => {
       payload: {
         key: 'user',
         id: '',
-        value: { info: newUser.info },
+        value: pick(newUser, ['info']),
       },
     });
   });
@@ -386,3 +386,8 @@ describe('disconnect action', () => {
     });
   });
 });
+
+
+function deepCopy(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
