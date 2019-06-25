@@ -123,6 +123,8 @@ Full documentation: https://www.cannercms.com/docs
 
 <a href="https://opencollective.com/cannercms/backer/0/website" target="_blank"><img src="https://opencollective.com/cannercms/backer/0/avatar.svg"></a>
 <a href="https://opencollective.com/cannercms/backer/1/website" target="_blank"><img src="https://opencollective.com/cannercms/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/backer/2/website" target="_blank"><img src="https://opencollective.com/cannercms/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/cannercms/backer/3/website" target="_blank"><img src="https://opencollective.com/cannercms/backer/3/avatar.svg"></a>
 
 ## Sponsors
 
