@@ -2,8 +2,8 @@
   <a href="#"><img src="./docs/logo-word.png" /></a>
 </p>
 
-<div align="center">
 
+<div align="center">
 [![npm version](https://badge.fury.io/js/%40canner%2Fcli.svg)](https://badge.fury.io/js/%40canner%2Fcli)
 [![npm download](https://img.shields.io/npm/dm/canner.svg)](https://www.npmjs.com/package/%40canner%2Fcli)
 [![CircleCI branch](https://img.shields.io/circleci/project/github/Canner/canner/master.svg)](https://circleci.com/gh/Canner/canner)
